@@ -72,7 +72,7 @@ class UnitsTableTest extends AppCakeTestCase
     {
         $this->amount = 'random-string';
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Die Anzahl muss eine Zahl sein. Die Anzahl muss größer als 0 sein.');
+        $this->expectExceptionMessage('Die Menge muss eine Zahl sein. Die Menge muss größer als 0 sein.');
         $this->doSave();
     }
 
@@ -80,7 +80,7 @@ class UnitsTableTest extends AppCakeTestCase
     {
         $this->amount = 0;
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Die Anzahl muss größer als 0 sein.');
+        $this->expectExceptionMessage('Die Menge muss größer als 0 sein.');
         $this->doSave();
     }
 

@@ -128,7 +128,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->post('/api/updateProducts.json', $data);
         $this->assertResponseOk();
         $this->assertJsonOk();
-        $this->assertResponseContains('Es wurden 1 Produkt und 0 Varianten (Bild, Name, Lagerprodukt, Anzahl, Preis, Pfand, Lieferrhythmus, Status) erfolgreich synchronisiert.');
+        $this->assertResponseContains('Es wurden 1 Produkt und 0 Varianten (Bild, Name, Lagerprodukt, Menge, Preis, Pfand, Lieferrhythmus, Status) erfolgreich synchronisiert.');
 
         $productsTable = $this->getTableLocator()->get('Products');
         $product = $productsTable->find('all',

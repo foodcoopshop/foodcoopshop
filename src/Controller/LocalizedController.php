@@ -357,7 +357,7 @@ class LocalizedController extends Controller
                 'Name' => __('Name'),
                 'NameAdditionalInfo' => __('Name_additional_info'),
                 'StockProduct' => __('Stock_product'),
-                'Quantity' => __('Quantity'),
+                'Quantity' => __('Amount'),
                 'Price' => __('Price'),
                 'Deposit' => __('Deposit'),
                 'DeliveryRhythm' => __('Delivery_rhythm'),
