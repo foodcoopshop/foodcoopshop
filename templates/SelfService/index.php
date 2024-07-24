@@ -157,7 +157,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceModeAutoGenerateInvoice')){
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }
