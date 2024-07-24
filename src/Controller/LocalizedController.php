@@ -113,6 +113,8 @@ class LocalizedController extends Controller
                 'forEach' => __('for_each'),
                 'approx' => __('approx.'),
                 'PickupDay' => __('Pickup_day'),
+                'selfServiceShowConfirmDialog' => __('Self_service_show_confirm_dialog'),
+                'selfServiceConfirmPurchase' => __('Confirm_self_service_purchase'),
             ],
             'mobile' => [
                 'home' => __('Home'),

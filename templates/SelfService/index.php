@@ -157,13 +157,13 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceModeAutoGenerateInvoice')){
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }
         echo $this->element('selfService/paymentType');
     ?>
-    <button type="submit" class="btn btn-success btn-order">
+    <button type="submit" class="btn btn-success btn-order btn-order-self-service">
         <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
     </button>
     <?php echo $this->Form->end(); ?>
