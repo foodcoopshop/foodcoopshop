@@ -85,6 +85,7 @@ trait DeleteTrait
                 $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
             }
 
+
             // send email to customer
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
@@ -124,8 +125,9 @@ trait DeleteTrait
             }
 
             if ($newQuantity !== false) {
+                $formattedNewQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newQuantity, $unitObject->name ?? '');
                 $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
-                    Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0)
+                    $formattedNewQuantity,
                 ]);
             }
 
