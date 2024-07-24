@@ -177,6 +177,9 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([4]);
         $this->assertChangedStockAvailable($productId, 999);
 
+        $this->runAndAssertQueue();
+        $this->assertMailContainsAt(1, 'Menge: <b>10,6 kg</b>');
+
     }
 
     private function deleteAndAssertRemoveFromDatabase($orderDetailIds)

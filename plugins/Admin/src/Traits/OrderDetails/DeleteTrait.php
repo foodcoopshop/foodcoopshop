@@ -85,6 +85,10 @@ trait DeleteTrait
                 $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
             }
 
+            $cancelledQuantity = $orderDetail->product_amount;
+            if ($isAmountBasedOnQuantityInUnits) {
+                $cancelledQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $orderDetail->order_detail_unit->product_quantity_in_units, $orderDetail->order_detail_unit->unit_name);
+            }
 
             // send email to customer
             $email = new AppMailer();
@@ -95,7 +99,8 @@ trait DeleteTrait
                 'orderDetail' => $orderDetail,
                 'newsletterCustomer' => $orderDetail->customer,
                 'identity' => $this->identity,
-                'cancellationReason' => $cancellationReason
+                'cancellationReason' => $cancellationReason,
+                'cancelledQuantity' => $cancelledQuantity,
             ]);
             $email->addToQueue();
 
