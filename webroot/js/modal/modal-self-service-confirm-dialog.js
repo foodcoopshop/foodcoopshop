@@ -12,45 +12,48 @@
  * @link          https://www.foodcoopshop.com
  */
 foodcoopshop.ModalSelfServiceConfirmDialog = {
-
-    init : function() {
+   
+    init : function(redirect) {
 
         var modalSelector = '#self-service-confirm-dialog';
 
-        $('.btn-order-self-service').on('click', function() {
-            var title = '';
-            var html='';
-            var redirectUrl = '';
-            title = foodcoopshop.LocalizedJs.cart.emptyCart + '?';
-            html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchase + '</p>';
+        var title = '';
+        var html='';
+        var redirectUrl = '';
+        title = foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseDialog + '?';
+        html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchase + '</p>';
 
-            foodcoopshop.Modal.appendModalToDom(
-                modalSelector,
-                title,
-                html
-            );
+        foodcoopshop.Modal.appendModalToDom(
+            modalSelector,
+            title, //foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseDialog,
+            html
+        );
 
-            foodcoopshop.ModalProductTaxEdit.getOpenHandler($(this), modalSelector);
-
-            foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-                foodcoopshop.ModalProductTaxEdit.getSuccessHandler(modalSelector);
-            });
-
-            $(modalSelector).on('hidden.bs.modal', function (e) {
-                foodcoopshop.ModalProductTaxEdit.getCloseHandler(modalSelector);
-            });
-
+        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+            foodcoopshop.ModalSelfServiceConfirmDialog.getSuccessHandler(modalSelector);
         });
+
+        $('btn-order-self-service').on('click', function () {
+            foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
+        });
+       /* $('a.logout-button').on('click', function () {
+            foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
+        });*/
 
     },
 
-    getCloseHandler : function(modalSelector) {
-        $(modalSelector).remove();
+    getHtml : function() {
+        return '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceShowConfirmDialog + '</p>';
     },
 
     getSuccessHandler : function(modalSelector) {
         foodcoopshop.Helper.disableButton($(this));
         foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
         $(this).closest('form').submit();
+    },
+
+    getOpenHandler : function(modalSelector) {
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
+
 };

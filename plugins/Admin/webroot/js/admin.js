@@ -20,6 +20,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();
+        foodcoopshop.ModalSelfServiceConfirmDialog.init();
         this.initRowMarkerAll();
         this.setMenuFixed();
         this.adaptContentMargin();

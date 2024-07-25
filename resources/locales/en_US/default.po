@@ -271,6 +271,9 @@ msgstr "Start self service"
 msgid "For_self_service_with_account"
 msgstr "For self service with account"
 
+msgid "Confirm_self_service_purchase_dialog"
+msgstr "Confirm purchase"
+
 msgid "Confirm_self_service_purchase"
 msgstr "I confirm my purchase and accept the general terms and rights of withdrawal."
 
