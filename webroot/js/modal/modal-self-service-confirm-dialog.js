@@ -33,12 +33,9 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
             foodcoopshop.ModalSelfServiceConfirmDialog.getSuccessHandler(modalSelector);
         });
 
-        $('btn-order-self-service').on('click', function () {
+        $('button.btn-order-self-service').on('click', function () {
             foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
         });
-       /* $('a.logout-button').on('click', function () {
-            foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
-        });*/
 
     },
 
