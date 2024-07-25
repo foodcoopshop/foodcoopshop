@@ -46,9 +46,6 @@ use App\Services\ProductQuantityService;
                 echo '<div title="' . $tooltip . '" class="ordered-products-total-amount">' . $orderedTotalAmount . '</div>';
             }
         }
-    ?>
-
-    <?php
 
         if (!$hideIsStockProductIcon && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
             echo '<i class="is-stock-product fa fas fa-store" title="'.__('Stock_product').'"></i>';
@@ -57,11 +54,11 @@ use App\Services\ProductQuantityService;
         $isStockProduct = $product->is_stock_product && $product->manufacturer->stock_management_enabled;
         $availableQuantity = $stockAvailable->quantity - $stockAvailable->quantity_limit;
         
-        if (($isStockProduct || (!$isStockProduct && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW'))) && !$stockAvailable->always_available) {
+        if (($isStockProduct || ((!$isStockProduct && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW'))) && !$stockAvailable->always_available)) {
             $productQuantityService = new ProductQuantityService();
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject);
-            $formattedAvailableQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $availableQuantity, $unitObject->name ?? '');
-            echo '<span ' . (!$hideAmountSelector ? 'class="below-input availibility"' : '') . '>(' . $formattedAvailableQuantity . ' ' . __('available') . ')</span>';
+            $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitObject->name ?? '');
+            echo '<span ' . (!$hideAmountSelector ? 'class="below-input availibility"' : '') . '>(' . $formattedQuantity . ' ' . __('available') . ')</span>';
         }
     
     ?>
