@@ -25,7 +25,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            title, //foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseDialog,
+            title,
             html
         );
 
