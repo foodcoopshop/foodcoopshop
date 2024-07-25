@@ -100,9 +100,8 @@ trait EditProductQuantityTrait
             $productQuantityService->changeStockAvailable($oldOrderDetail, $increaseQuantity);
         }
 
-        $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
+        $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
-            $oldOrderDetail->product_amount,
             Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name,
             Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name
         ]);

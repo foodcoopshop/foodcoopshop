@@ -505,8 +505,8 @@ msgstr "Das gelieferte Gewicht ist nicht gültig."
 msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
 msgstr "Der neue Preis wäre {0} für {1}. Bitte überprüfe die Einheit."
 
-msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "Das Gewicht des bestellten Produktes {0} (Menge: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+msgid "The_weight_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}."
+msgstr "Das Gewicht des bestellten Produktes {0} wurde erfolgreich von {1} auf {2} angepasst."
 
 msgid "Weight_adapted_for_\"0\":"
 msgstr "Gewicht angepasst für \"{0}\":"

@@ -26,14 +26,12 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                <?php echo __d('admin', 'The_weight_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
-                    $oldOrderDetail->product_amount,
-                    $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
-                    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
-                ]); ?>
+                <?php echo __d('admin', 'The_weight_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?>
             </p>
 
             <ul style="padding-left: 10px;">
+                <li><?php echo __d('admin', 'Manufacturer'); ?>: <?php echo $oldOrderDetail->product->manufacturer->name; ?></b></li>
+                <li><?php echo __d('admin', 'Order_date'); ?>: <?php echo $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
                 <li><?php echo __d('admin', 'Old_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
                 <li><?php echo __d('admin', 'New_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
             </ul>
