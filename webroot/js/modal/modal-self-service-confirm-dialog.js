@@ -34,9 +34,11 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         });
 
         $('button.btn-order-self-service').on('click', function () {
-            foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
+         //   if (app.selfServiceShowConfirmDialogOnSubmit){ 
+                foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
+         //   }
         });
-
+        
     },
 
     getHtml : function() {
