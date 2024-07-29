@@ -85,7 +85,6 @@ trait EditQuantityTrait
                 ],
             );
         } catch (\Exception $e) {
-            pr($e->getMessage());
             return $this->sendAjaxError($e);
         }
 
