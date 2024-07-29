@@ -27,9 +27,14 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Cart.initCartFinish();".
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
+
+if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Cart.initCartFinish();"
+    ]);
+}
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>
@@ -162,11 +167,21 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             echo $this->element('cart/cancellationTermsCheckbox');
         }
         echo $this->element('selfService/paymentType');
-    ?>
-    <button type="submit" class="btn btn-success btn-order btn-order-self-service">
-        <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
-    </button>
-    <?php echo $this->Form->end(); ?>
+    if (Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
+        ?>
+        <button type="button" class="btn btn-success btn-order btn-order-self-service">
+           <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+        </button>
+        <?php   
+    }
+    else{
+        ?>
+        <button type="submit" class="btn btn-success btn-order btn-order-self-service">
+           <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+        </button>
+        <?php   
+    }
+    echo $this->Form->end(); ?>
     <?php if ($isMobile && !$identity->use_camera_for_barcode_scanning) { ?>
         <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
