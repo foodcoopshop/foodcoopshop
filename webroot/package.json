@@ -36,9 +36,9 @@
     "mathjs": "^13.0.3",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "11.1.7",
+    "swiper": "11.1.8",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.19.0",
+    "uglify-js": "^3.19.1",
     "webrtc-adapter": "^9.0.1"
   }
 }
