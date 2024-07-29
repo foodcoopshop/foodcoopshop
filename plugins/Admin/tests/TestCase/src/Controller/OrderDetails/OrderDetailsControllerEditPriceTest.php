@@ -86,6 +86,40 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
         $this->assertMailContainsHtmlAt(1, 'Hallo Demo Gemüse-Hersteller');
         $this->assertMailContainsHtmlAt(1, 'D.S. - ID 92');
+        $this->assertMailContainsHtmlAt(1, 'Menge: <b>1</b>');
+    }
+
+    public function testEditOrderDetailPriceAsSuperadminWithUseWeightAsAmount()
+    {
+        $this->loginAsSuperadmin();
+
+        $newExpectedOrderDetailId = 4;
+        $productId = 351;
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(8);
+        $data = [
+            'use_weight_as_amount' => 1,
+            'quantity_in_units' => 5.3,
+        ];
+        $patchedEntity = $unitsTable->patchEntity($unitEntityA, $data);
+        $unitsTable->save($patchedEntity);
+
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($productId, 1);
+        $this->finishCart(1, 1);
+
+        $this->editOrderDetailPrice($newExpectedOrderDetailId, $this->newPrice, $this->editPriceReason, true);
+
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$newExpectedOrderDetailId]);
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
+
+        $this->runAndAssertQueue();
+        $this->assertMailSubjectContainsAt(2, 'Preis angepasst: Lagerprodukt 2');
+        $this->assertMailContainsHtmlAt(2, 'Der Preis des Produktes <b>Lagerprodukt 2</b> wurde erfolgreich angepasst.');
+        $this->assertMailContainsHtmlAt(2, $this->editPriceReason);
+        $this->assertMailContainsHtmlAt(2, $this->newPrice);
+        $this->assertMailContainsHtmlAt(2, 'Demo Gemüse-Hersteller');
+
     }
 
     public function testEditOrderDetailPriceIfPriceWasZero()

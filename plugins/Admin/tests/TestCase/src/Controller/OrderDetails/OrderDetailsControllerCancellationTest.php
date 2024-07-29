@@ -157,7 +157,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdC, 10);
     }
 
-    public function testCancellationStockProductWithPricePerWeightUseAmountAsWeight()
+    public function testCancellationStockProductWithPricePerWeightUseWeightAsAmount()
     {
         $productId = 351;
         $unitsTable = $this->getTableLocator()->get('Units');

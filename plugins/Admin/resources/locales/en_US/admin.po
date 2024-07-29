@@ -490,8 +490,8 @@ msgstr "The name of the ordered product {0} was successfully changed to {1}."
 msgid "The_price_is_not_valid."
 msgstr "The price is not valid."
 
-msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "The price of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+msgid "The_price_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}."
+msgstr "The price of the ordered product {0} was successfully adapted from {1} to {2}."
 
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
@@ -2349,9 +2349,6 @@ msgstr "The following products are affected"
 
 msgid "The_price_of_the_product_{0}_has_been_adapted."
 msgstr "The price of the product {0} has been adapted."
-
-msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
-msgstr "You have ordered {0} unit(s) of it on {1} at manufacturer {2}."
 
 msgid "Old_price"
 msgstr "Old price"

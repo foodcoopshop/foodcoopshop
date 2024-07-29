@@ -495,8 +495,8 @@ msgstr "Название заказанного товара {0} было усп
 msgid "The_price_is_not_valid."
 msgstr "Цена недействительна."
 
-msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "Цена заказанного товара {0} (количество {1}) была успешно скорректирована с {2} в {3}."
+msgid "The_price_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}."
+msgstr "Цена заказанного товара {0} была успешно скорректирована с {1} в {2}."
 
 msgid "Ordered_price_adapted"
 msgstr "Цена скорректирована"
@@ -2357,9 +2357,6 @@ msgstr "Повлияло на следующие товары"
 
 msgid "The_price_of_the_product_{0}_has_been_adapted."
 msgstr "Цена товара {0} была скорректирована."
-
-msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
-msgstr "Вы заказали {0} единицу(ц) {1} у производителя {2}."
 
 msgid "Old_price"
 msgstr "Старая цена"

@@ -7,6 +7,8 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
 use App\Services\ChangeSellingPriceService;
+use Cake\Datasource\FactoryLocator;
+use App\Services\ProductQuantityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -66,11 +68,16 @@ trait EditProductPriceTrait
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
 
-        $message = __d('admin', 'The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
+        $unitsTable = FactoryLocator::get('Table')->get('Units');
+        $unitObject = $unitsTable->getUnitsObject($object->product_id, $object->product_attribute_id);
+
+        $productQuantityService = new ProductQuantityService();
+        $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($object->product, $unitObject);
+
+        $message = __d('admin', 'The_price_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
-            $oldOrderDetail->product_amount,
-            Configure::read('app.numberHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl),
-            Configure::read('app.numberHelper')->formatAsDecimal($productPrice)
+            Configure::read('app.numberHelper')->formatAsCurrency($oldOrderDetail->total_price_tax_incl),
+            Configure::read('app.numberHelper')->formatAsCurrency($productPrice),
         ]);
 
         $emailRecipients = [];
@@ -86,6 +93,7 @@ trait EditProductPriceTrait
                 'newOrderDetail' => $newOrderDetail,
                 'identity' => $this->identity,
                 'editPriceReason' => $editPriceReason,
+                'isAmountBasedOnQuantityInUnits' => $isAmountBasedOnQuantityInUnits,
             ]);
             $email->addToQueue();
             $emailRecipients[] = $oldOrderDetail->customer->name;
@@ -105,9 +113,14 @@ trait EditProductPriceTrait
                 'newOrderDetail' => $newOrderDetail,
                 'identity' => $this->identity,
                 'editPriceReason' => $editPriceReason,
+                'isAmountBasedOnQuantityInUnits' => $isAmountBasedOnQuantityInUnits,
             ]);
             $email->addToQueue();
             $emailRecipients[] = $oldOrderDetail->product->manufacturer->name;
+        }
+
+        if (!$isAmountBasedOnQuantityInUnits) {
+            $message .= ' ' . __d('admin', 'Amount').': <b>' . $oldOrderDetail->product_amount . '</b>';
         }
 
         if ($editPriceReason != '') {

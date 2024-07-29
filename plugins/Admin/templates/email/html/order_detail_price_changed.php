@@ -26,16 +26,19 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                <?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
-                    $oldOrderDetail->product_amount,
-                    $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
-                    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
-                ]); ?>
+                <?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?>
             </p>
 
             <ul style="padding-left: 10px;">
                 <li><?php echo __d('admin', 'Old_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
                 <li><?php echo __d('admin', 'New_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
+                <?php if (Configure::read('app.showManufacturerListAndDetailPage')) { ?>
+                    <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b></li>
+                <?php } ?>
+                <?php if (!$isAmountBasedOnQuantityInUnits) { ?>
+                    <li><?php echo __d('admin', 'Amount'); ?>: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
+                <?php } ?>
+                <li><?php echo __d('admin', 'Order_date'); ?>: <b><?php echo $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
             </ul>
 
             <?php if ($editPriceReason != '') { ?>
