@@ -76,14 +76,16 @@ trait EditQuantityTrait
             if (in_array('soldOutLimit', array_keys($this->getRequest()->getData()))) {
                 $object2save['sold_out_limit'] = $this->getRequest()->getData('soldOutLimit');
             }
+
             $this->Product->changeQuantity(
                 [
                     [
-                        $originalProductId => $object2save
-                    ]
-                ]
+                        $originalProductId => $object2save,
+                    ],
+                ],
             );
         } catch (\Exception $e) {
+            pr($e->getMessage());
             return $this->sendAjaxError($e);
         }
 
@@ -98,16 +100,16 @@ trait EditQuantityTrait
 
             $dirtyFieldsWithNewValues = [];
             $unitName = $unitObject->name ?? '';
+
             foreach($entity->getDirty() as $dirtyField) {
+
                 $newValue = $entity->get($dirtyField);
-
-                // quantity_limit was always logged (0 vs 0.000)
                 $originalValue = $oldProduct->stock_available->getOriginal($dirtyField);
-                if ($originalValue === null && $newValue === null) {
-                    continue;
-                }
 
-                if ($originalValue !== null && (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) == Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3))) {
+                $originalValueToCompare = $originalValue !== null ? Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3) : null;
+                $newValueToCompare = $newValue !== null ? Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) : null;
+
+                if ($originalValueToCompare == $newValueToCompare) {
                     continue;
                 }
 

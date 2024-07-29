@@ -691,6 +691,39 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('tax-for-dialog');
     }
 
+    public function testEditQuantityOk() {
+    
+        $this->loginAsSuperadmin();
+        $productId = 346;
+
+        $this->ajaxPost('/admin/products/editQuantity', [
+            'productId' => $productId,
+            'alwaysAvailable' => 0,
+            'quantity' => 10,
+            'quantityLimit' => -5,
+            'defaultQuantityAfterSendingOrderLists' => 5,
+            'changeReason' => 'change reason',
+        ]);
+
+        $product = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $productId,
+            ],
+            contain: [
+                'StockAvailables',
+            ],
+        )->first();
+
+        $actionLogsTable = FactoryLocator::get('Table')->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
+
+        $this->assertEquals('Die Menge des Produktes <b>Artischocke</b> vom Hersteller <b>Demo Gemüse-Hersteller</b> wurde geändert: Verfügbare Menge: Alter Wert: <b>97</b> Neuer Wert: <b>10</b>, Standard-Menge pro Lieferrhythmus: <b>5</b>, Bestellbar bis zu einer Menge von: <b>-5</b>, Änderungsgrund: <b>change reason</b>.', $actionLogs[0]->text);
+
+        $this->assertEquals(10, $product->stock_available->quantity);
+        $this->assertEquals(-5, $product->stock_available->quantity_limit);
+        $this->assertEquals(5, $product->stock_available->default_quantity_after_sending_order_lists);
+
+    }
 
     private function deleteProduct($productId)
     {
