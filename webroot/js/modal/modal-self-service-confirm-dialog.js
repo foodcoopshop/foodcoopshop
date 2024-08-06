@@ -50,13 +50,13 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
 
     },*/
     getSuccessHandler : function() {
-       //var selfSForm = $('#SelfServiceForm');
-       // foodcoopshop.SelfService.submitForm(selfSForm, 'fa-fw fas fa-check');
-       //selfSForm.submit();
+       var selfSForm = $('#SelfServiceForm');
+       //foodcoopshop.SelfService.submitForm(selfSForm, 'fa-fw fas fa-check');
+       selfSForm.submit();
        //$(this).closest('form').submit();
-       $(this).closest('#container').find('form.fcs-form').submit();
-       var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService;
-       document.location.href = redirectUrl;
+       //$(this).closest('#container').find('form.fcs-form').submit();
+       //var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService;
+       //document.location.href = redirectUrl;
     },
 
     getOpenHandler : function(modalSelector) {
