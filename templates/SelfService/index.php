@@ -35,6 +35,11 @@ if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
         Configure::read('app.jsNamespace').".Cart.initCartFinish();"
     ]);
 }
+else{
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"
+    ]);      
+}
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>

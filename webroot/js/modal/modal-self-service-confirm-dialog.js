@@ -13,13 +13,11 @@
  */
 foodcoopshop.ModalSelfServiceConfirmDialog = {
    
-    init : function(redirect) {
+    init : function() {
 
         var modalSelector = '#self-service-confirm-dialog';
-
         var title = '';
         var html='';
-        var redirectUrl = '';
         title = foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseDialog + '?';
         html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchase + '</p>';
 
@@ -30,13 +28,11 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalSelfServiceConfirmDialog.getSuccessHandler(redirect);
+            foodcoopshop.ModalSelfServiceConfirmDialog.getSuccessHandler();
         });
 
         $('button.btn-order-self-service').on('click', function () {
-         //   if (app.selfServiceShowConfirmDialogOnSubmit){ 
-                foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
-         //   }
+            foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
         });
         
     },
@@ -53,12 +49,14 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         $(this).closest('#container').find('form.fcs-form').submit();
 
     },*/
-    getSuccessHandler : function(redirect) {
-        var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService;
-        if (redirect !== undefined) {
-            redirectUrl += '?redirect=' + redirect;
-        }
-        document.location.href = redirectUrl;
+    getSuccessHandler : function() {
+       //var selfSForm = $('#SelfServiceForm');
+       // foodcoopshop.SelfService.submitForm(selfSForm, 'fa-fw fas fa-check');
+       //selfSForm.submit();
+       //$(this).closest('form').submit();
+       $(this).closest('#container').find('form.fcs-form').submit();
+       var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService;
+       document.location.href = redirectUrl;
     },
 
     getOpenHandler : function(modalSelector) {
