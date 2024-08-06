@@ -22,7 +22,6 @@ foodcoopshop.Helper = {
     init: function () {
         this.initMenu();
         foodcoopshop.ModalLogout.init();
-        foodcoopshop.ModalSelfServiceConfirmDialog.init();
         this.changeOutgoingLinksTargetToBlank();
         this.initCookieBanner();
         foodcoopshop.ColorMode.init();

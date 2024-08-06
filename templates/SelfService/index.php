@@ -31,13 +31,11 @@ $this->element('addScript', ['script' =>
 ]);
 
 if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartFinish();"
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"
     ]);
 }
 else{
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"
     ]);      
 }
 

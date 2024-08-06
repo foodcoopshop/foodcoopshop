@@ -151,10 +151,30 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceWithActiveShowConfirmDialogOnSubmitConfig() {
         Configure::write('app.selfServiceShowConfirmDialogOnSubmit', true);
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart(349, 1);
+        $this->addProductToSelfServiceCart(344, 1);
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
+        ])->first();
+
+        $cart = $this->getCartById($cart->id_cart);
+
+        $this->assertEquals(1, count($cart->cart_products));
+
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        }
+
+        $this->assertMailCount(1);
+
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
+        $this->assertMailContainsHtmlAt(0, 'Knoblauch');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }
 
     public function testSelfServiceRemoveProductWithPricePerUnit()
