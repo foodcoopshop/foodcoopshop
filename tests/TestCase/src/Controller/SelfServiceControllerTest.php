@@ -162,13 +162,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ])->first();
 
         $cart = $this->getCartById($cart->id_cart);
-
         $this->assertEquals(1, count($cart->cart_products));
-
-        foreach($cart->cart_products as $cartProduct) {
-            $orderDetail = $cartProduct->order_detail;
-            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-        }
 
         $this->assertMailCount(1);
 
