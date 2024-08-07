@@ -19,12 +19,17 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         var title = '';
         var html='';
         title = foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseDialog + '?';
-        html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchase + '</p>';
+       // html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchase + '</p>';
+        var buttons = [
+            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.cart.selfServiceDenyPurchaseButton, null, true)
+        ];
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             title,
-            html
+            html,
+            buttons
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

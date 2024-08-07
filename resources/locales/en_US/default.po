@@ -277,6 +277,12 @@ msgstr "Confirm purchase"
 msgid "Confirm_self_service_purchase"
 msgstr "I confirm my purchase and accept the general terms and rights of withdrawal."
 
+msgid "Confirm_self_service_purchase_button"
+msgstr "Confirm order and pay"
+
+msgid "Deny_self_service_purchase_button"
+msgstr "Deny order"
+
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr "Signing in failed. Accout inactive or password wrong?"
 
