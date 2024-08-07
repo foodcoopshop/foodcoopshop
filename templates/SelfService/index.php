@@ -30,25 +30,18 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
-if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"
-    ]);
-}
-else{
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"
-    ]);      
+if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')) {
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"]);    
+} else {
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"]);
 }
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
-    ]);
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"]);
 }
 
 if ($orderCustomerService->isSelfServiceModeByUrl()) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
-    ]);
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"]);
 }
 
 echo $this->element('autoPrintInvoice');
