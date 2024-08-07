@@ -25,6 +25,7 @@ use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
 use Cake\Datasource\FactoryLocator;
+use App\Model\Entity\Cart;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -146,6 +147,25 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseContains('Bitte akzeptiere die AGB.');
         $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+    }
+
+    public function testSelfServiceWithActiveShowConfirmDialogOnSubmitConfig() {
+        Configure::write('app.selfServiceShowConfirmDialogOnSubmit', true);
+        $this->loginAsCustomer();
+        $this->addProductToSelfServiceCart(344, 1);
+        $this->finishSelfServiceCart(0, 0);
+        $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
+        $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', 
+        conditions: [
+            'Carts.id_customer' => Configure::read('test.customerId'),
+            'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
+        ],
+        order: [
+            'Carts.id_cart' => 'DESC',
+        ])->first();
+        $this->assertEquals(0, $cart->status);
     }
 
     public function testSelfServiceRemoveProductWithPricePerUnit()

@@ -268,6 +268,18 @@ msgstr "Anmelden ist fehlgeschlagen."
 msgid "Start_self_service"
 msgstr "Klicke auf deinen Standort um die Selbstbedienung zu starten"
 
+msgid "Confirm_self_service_purchase_dialog"
+msgstr "Einkauf abschließen"
+
+msgid "Confirm_self_service_purchase"
+msgstr "Ich bestätige den Einkauf & akzeptiere ABG sowie Rücktrittsrecht."
+
+msgid "Confirm_self_service_purchase_button"
+msgstr "Einkauf abschließen & bezahlen"
+
+msgid "Deny_self_service_purchase_button"
+msgstr "Einkauf abbrechen"
+
 msgid "For_self_service_with_account"
 msgstr "Für Selbstbedienung mit Mitgliedskonto"
 

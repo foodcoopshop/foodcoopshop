@@ -53,16 +53,24 @@ class CartsTable extends AppTable
 
     public function validationDefault(Validator $validator): Validator
     {
+        $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
+
+        if (Configure::read('app.selfServiceShowConfirmDialogOnSubmit') && (new OrderCustomerService())->isSelfServiceMode()) {
+            return $validator;
+        }
+
         if (Configure::read('app.rightOfWithdrawalEnabled')) {
             $validator->requirePresence('cancellation_terms_accepted', true, __('Please_accept_the_information_about_right_of_withdrawal'));
             $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
         }
+
         if (Configure::read('app.generalTermsAndConditionsEnabled')) {
             $validator->requirePresence('general_terms_and_conditions_accepted', true, __('Please_accept_the_general_terms_and_conditions.'));
             $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
         }
-        $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
+
         return $validator;
+
     }
 
     /**

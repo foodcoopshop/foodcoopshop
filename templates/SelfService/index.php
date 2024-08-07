@@ -27,20 +27,21 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Cart.initCartFinish();".
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
+if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')) {
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"]);    
+} else {
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"]);
+}
+
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
-    ]);
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"]);
 }
 
 if ($orderCustomerService->isSelfServiceModeByUrl()) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
-    ]);
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"]);
 }
 
 echo $this->element('autoPrintInvoice');
@@ -157,16 +158,17 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }
         echo $this->element('selfService/paymentType');
-    ?>
-    <button type="submit" class="btn btn-success btn-order">
-        <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
-    </button>
-    <?php echo $this->Form->end(); ?>
+        ?>
+        <button type="<?php echo Configure::read('app.selfServiceShowConfirmDialogOnSubmit') ? 'button' : 'submit';?>" class="btn btn-success btn-order btn-order-self-service">
+           <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+        </button>
+        <?php  
+    echo $this->Form->end(); ?>
     <?php if ($isMobile && !$identity->use_camera_for_barcode_scanning) { ?>
         <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
