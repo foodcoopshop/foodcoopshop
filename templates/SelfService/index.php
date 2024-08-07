@@ -170,20 +170,11 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             echo $this->element('cart/cancellationTermsCheckbox');
         }
         echo $this->element('selfService/paymentType');
-    if (Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
         ?>
-        <button type="button" class="btn btn-success btn-order btn-order-self-service">
+        <button type="<?php echo Configure::read('app.selfServiceShowConfirmDialogOnSubmit') ? 'button' : 'submit';?>" class="btn btn-success btn-order btn-order-self-service">
            <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
         </button>
-        <?php   
-    }
-    else{
-        ?>
-        <button type="submit" class="btn btn-success btn-order btn-order-self-service">
-           <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
-        </button>
-        <?php   
-    }
+        <?php  
     echo $this->Form->end(); ?>
     <?php if ($isMobile && !$identity->use_camera_for_barcode_scanning) { ?>
         <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>

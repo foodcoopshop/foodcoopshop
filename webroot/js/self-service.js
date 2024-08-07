@@ -17,7 +17,6 @@ foodcoopshop.SelfService = {
     currentLogoutTimer : 0,
 
     init : function() {
-
         foodcoopshop.ModalLogout.init(document.location.href);
         foodcoopshop.ColorMode.init();
         this.initWindowResize();

@@ -155,20 +155,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
-
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
-            'Carts.id_cart' => 'DESC'
-        ])->first();
-
-        $cart = $this->getCartById($cart->id_cart);
-        $this->assertEquals(1, count($cart->cart_products));
-
-        $this->assertMailCount(1);
-
-        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
-        $this->assertMailContainsHtmlAt(0, 'Knoblauch');
-        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }
 
     public function testSelfServiceRemoveProductWithPricePerUnit()

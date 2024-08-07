@@ -41,22 +41,9 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         return '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceShowConfirmDialog + '</p>';
     },
 
-  /*  getSuccessHandler : function(modalSelector) {
-        foodcoopshop.Helper.disableButton($(this));
-        foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
-       // $(this).closest('form').submit();
-
-        $(this).closest('#container').find('form.fcs-form').submit();
-
-    },*/
     getSuccessHandler : function() {
        var selfSForm = $('#SelfServiceForm');
-       //foodcoopshop.SelfService.submitForm(selfSForm, 'fa-fw fas fa-check');
        selfSForm.submit();
-       //$(this).closest('form').submit();
-       //$(this).closest('#container').find('form.fcs-form').submit();
-       //var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService;
-       //document.location.href = redirectUrl;
     },
 
     getOpenHandler : function(modalSelector) {
