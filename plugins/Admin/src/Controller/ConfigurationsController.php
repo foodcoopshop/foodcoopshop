@@ -47,6 +47,7 @@ class ConfigurationsController extends AdminAppController
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $configuration = $this->Configuration->find('all', conditions: [
             'Configurations.name' => $name,
+            'Configurations.type NOT IN' => ['hidden', 'readonly'],
         ])->first();
 
         if (empty($configuration)) {
