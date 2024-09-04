@@ -61,7 +61,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_OFF;
-        $this->get('/admin/products/editStatus/' . $productId . '/' . $status);
+        $this->get('/admin/products/editStatus/' . $productId . '/0/' . $status);
         $product = $this->Product->find('all',
             conditions: [
                 'Products.id_product' => $productId,
