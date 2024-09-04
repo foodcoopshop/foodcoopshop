@@ -22,6 +22,13 @@ foodcoopshop.ModalProductStatusEdit = {
             var productId = $(this).attr('id').split('-');
             productId = productId[productId.length - 1];
 
+            var previousMainProductRow = $(this).closest('tr').nextAll('.main-product').first();
+            var previousProductId = 0;
+            if (previousMainProductRow.length > 0) {
+                previousProductId = previousMainProductRow.attr('id').split('-');
+                previousProductId = previousProductId[previousProductId.length - 1];
+            }
+
             var newState = 1;
             var newStateText = foodcoopshop.LocalizedJs.admin.ActivateProduct;
             var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
@@ -40,7 +47,7 @@ foodcoopshop.ModalProductStatusEdit = {
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-                foodcoopshop.ModalProductStatusEdit.getSuccessHandler(productId, newState);
+                foodcoopshop.ModalProductStatusEdit.getSuccessHandler(productId, previousProductId, newState);
             });
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
@@ -55,8 +62,8 @@ foodcoopshop.ModalProductStatusEdit = {
         $(modalSelector).remove();
     },
 
-    getSuccessHandler : function(productId, newState) {
-        document.location.href = '/admin/products/editStatus/' + productId + '/' + newState;
+    getSuccessHandler : function(productId, previousProductId, newState) {
+        document.location.href = '/admin/products/editStatus/' + productId + '/' + previousProductId + '/' + newState;
     },
 
     getOpenHandler : function(modalSelector) {

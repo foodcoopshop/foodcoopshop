@@ -69,7 +69,7 @@ trait EditStatusTrait
 
     }
 
-    public function editStatus($productId, $status)
+    public function editStatus($productId, $previousProductId, $status)
     {
         $this->Product->changeStatus(
             [
@@ -98,6 +98,10 @@ trait EditStatusTrait
             ]);
             $actionLogType = 'product_set_active';
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+        }
+
+        if ($status == 0 && $previousProductId > 0) {
+            $this->getRequest()->getSession()->write('highlightedRowId', $previousProductId);
         }
 
         $this->Flash->success($actionLogMessage);
