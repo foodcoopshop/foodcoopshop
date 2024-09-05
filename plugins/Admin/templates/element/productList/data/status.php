@@ -19,37 +19,41 @@ use Cake\Core\Configure;
 
 echo '<td class="status">';
 
-    if ($product->active == 1) {
-        echo $this->Html->link(
-            '<i class="fas fa-check-circle ok"></i>',
-            'javascript:void(0);',
-            [
-                'class' => 'btn btn-outline-light set-status-to-inactive product-status-edit',
-                'id' => 'product-status-edit-' . $product->id_product,
-                'title' => __d('admin', 'deactivate'),
-                'escape' => false
-            ]
-        );
-    }
+    if (! empty($product->product_attributes) || isset($product->product_attributes)) {
 
-    if ($product->active == 0) {
-        echo $this->Html->link(
-            '<i class="fas fa-minus-circle ok"></i>',
-            'javascript:void(0);',
-            [
-                'class' => 'btn btn-outline-light set-status-to-active product-status-edit',
-                'id' => 'product-status-edit-' . $product->id_product,
-                'title' => __d('admin', 'activate'),
-                'escape' => false
-            ]
-        );
-    }
+        if ($product->active == 1) {
+            echo $this->Html->link(
+                '<i class="fas fa-check-circle ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light set-status-to-inactive product-status-edit',
+                    'id' => 'product-status-edit-' . $product->id_product,
+                    'title' => __d('admin', 'deactivate'),
+                    'escape' => false
+                ]
+            );
+        }
 
-    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') &&
-        empty($product->product_attributes) &&
-        !$product->purchase_price_is_set
-        ) {
-            echo '<i class="fas fa-exclamation not-ok purchase-price-not-set-info-text" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
+        if ($product->active == 0) {
+            echo $this->Html->link(
+                '<i class="fas fa-minus-circle ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light set-status-to-active product-status-edit',
+                    'id' => 'product-status-edit-' . $product->id_product,
+                    'title' => __d('admin', 'activate'),
+                    'escape' => false
+                ]
+            );
+        }
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') &&
+            empty($product->product_attributes) &&
+            !$product->purchase_price_is_set
+            ) {
+                echo '<i class="fas fa-exclamation not-ok purchase-price-not-set-info-text" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
+        }
+
     }
 
 echo '</td>';
