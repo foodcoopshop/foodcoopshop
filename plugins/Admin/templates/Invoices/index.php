@@ -182,21 +182,38 @@ $this->Paginator->setPaginated($invoices);
 
             // hello cash has no filename set
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+
+                $invoiceCreatedBeforeHelloCashAccountChangedDate = $invoice->created->greaterThan(DateTime::createFromFormat('Y-m-d', Configure::read('app.helloCashAccountChangedDate')));
+
                 echo '<td style="text-align:center;">';
                 if ($invoice->filename == '') {
                     $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
                     if (!empty($invoice->cancelled_invoice)) {
                         $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, true);
                     }
-                    echo $this->Html->link(
-                        '<i class="fas fa-arrow-right ok"></i>',
-                        $receiptLink,
-                        [
-                            'class' => 'btn btn-outline-light',
-                            'target' => '_blank',
-                            'escape' => false,
-                        ],
-                    );
+                    if ($invoiceCreatedBeforeHelloCashAccountChangedDate) {
+                        echo $this->Html->link(
+                            '<i class="fas fa-arrow-right ok"></i>',
+                            $receiptLink,
+                            [
+                                'class' => 'btn btn-outline-light',
+                                'target' => '_blank',
+                                'escape' => false,
+                            ],
+                        );
+                    } else {
+                        echo $this->Html->link(
+                            '<i class="fas fa-arrow-right ok"></i>',
+                            'javascript:void(0);',
+                            [
+                                'class' => 'btn btn-outline-light',
+                                'escape' => false,
+                                'onclick' => "alert('" . __d('admin', 'To_download_this_invoice_please_drop_an_email_to_{0}', [
+                                    Configure::read('appDb.FCS_APP_EMAIL'),
+                                ]) . "');",
+                            ],
+                        );
+                    }
                 }
                 echo '</td>';
             }
@@ -212,6 +229,8 @@ $this->Paginator->setPaginated($invoices);
             }
 
             echo '<td style="text-align:center;">';
+
+            if ($invoiceCreatedBeforeHelloCashAccountChangedDate) {
                 echo $this->Html->link(
                     '<i class="fas fa-arrow-right ok"></i>',
                     $invoiceDownloadLink,
@@ -221,8 +240,21 @@ $this->Paginator->setPaginated($invoices);
                         'escape' => false,
                     ],
                 );
-            echo '</td>';
+            } else {
+                echo $this->Html->link(
+                    '<i class="fas fa-arrow-right ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'escape' => false,
+                        'onclick' => "alert('" . __d('admin', 'To_download_this_invoice_please_drop_an_email_to_{0}', [
+                            Configure::read('appDb.FCS_APP_EMAIL'),
+                            ]) . "');",
+                        ],
+                );
+            }
 
+            echo '</td>';
             echo '<td style="text-align:center;">';
 
                 if (!empty($invoice->cancellation_invoice)) {
