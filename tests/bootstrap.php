@@ -32,7 +32,13 @@ $migrator->runMany([
 // 2) run new migrations (located in main folder)
 //$migrator->run([], false); // causes "Going to drop all tables in this source, and re-apply migrations."
 $migrations = new Migrations();
-$migrations->markMigrated('20240313184917_ManufacturerLoginFix', ['connection' => 'test']);
+$markAsMigratedMigrations = [
+    '20240313184917_ManufacturerLoginFix',
+    '20230612181632_AddConfigurationTextForHome',
+];
+foreach($markAsMigratedMigrations as $markAsMigratedMigration) {
+    $migrations->markMigrated($markAsMigratedMigration, ['connection' => 'test']);
+}
 $migrations->migrate(['connection' => 'test']);
 
 Configure::write('appDb.FCS_DEFAULT_LOCALE', 'de_DE'); // manually set locale as fixtures are not loaded yet

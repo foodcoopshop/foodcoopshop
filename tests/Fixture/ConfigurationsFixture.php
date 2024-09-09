@@ -402,6 +402,13 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3500,
         ],
+        [
+            'active' => 1,
+            'name' => 'FCS_HOME_TEXT',
+            'value' => '',
+            'type' => 'textarea_big',
+            'position' => 1290,
+        ],
     ];
 
 }
