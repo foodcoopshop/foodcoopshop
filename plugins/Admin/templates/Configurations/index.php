@@ -281,6 +281,13 @@ $this->element('addScript', [
             <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
         </tr>
 
+        <?php if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) { ?>
+            <tr>
+                <td>app.helloCashAccountChangedDate</td>
+                <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.helloCashAccountChangedDate'))); ?></td>
+            </tr>
+        <?php } ?>
+
         <tr>
             <td>app.customerMainNamePart</td>
             <td><?php echo Configure::read('app.customerMainNamePart'); ?></td>

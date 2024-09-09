@@ -193,6 +193,8 @@ return [
             'payment_type_cashless' => 'Guthaben-System',
         ],
 
+        'helloCashAccountChangedDate' => '2020-01-01',
+
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),

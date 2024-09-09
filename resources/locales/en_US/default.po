@@ -3118,3 +3118,6 @@ msgstr "Member and manufacturer feedback enabled?"
 
 msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
 msgstr "Members and manufacturers can write feedback."
+
+msgid "To_download_this_invoice_please_drop_an_email_to_{0}"
+msgstr "To download this invoice please drop an email to {0}"

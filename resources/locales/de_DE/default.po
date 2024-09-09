@@ -3121,3 +3121,6 @@ msgstr "Mitglieder- und Hersteller-Feedback aktiv?"
 
 msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
 msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://foodcoopshop.github.io/de/user-feedback.html\" target=\"_blank\">Mehr Infos</a>"
+
+msgid "To_download_this_invoice_please_drop_an_email_to_{0}"
+msgstr "Zum Download dieser Rechnung bitte eine E-Mail an {0} schicken."
