@@ -41,7 +41,7 @@ trait ImportTrait
             __d('admin', 'Unit') => 'unity',
             __d('admin', 'Gross_price') => 'price',
             __d('admin', 'Tax_rate') => 'id_tax',
-            __d('admin', 'Deposit') => 'product_deposit',
+            __d('admin', 'Deposit') => 'deposit_product',
             __d('admin', 'Amount') => 'stock_available',
             __d('admin', 'Status') => 'active',
             __d('admin', 'Product_declaration') => 'is_declaration_ok',
