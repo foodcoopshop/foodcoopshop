@@ -180,12 +180,12 @@ $this->Paginator->setPaginated($invoices);
                 }
             echo '</td>';
 
-            // hello cash has no filename set
+
+            $invoiceCreatedBeforeHelloCashAccountChangedDate = $invoice->created->greaterThan(DateTime::createFromFormat('Y-m-d', Configure::read('app.helloCashAccountChangedDate')));
+
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-
-                $invoiceCreatedBeforeHelloCashAccountChangedDate = $invoice->created->greaterThan(DateTime::createFromFormat('Y-m-d', Configure::read('app.helloCashAccountChangedDate')));
-
                 echo '<td style="text-align:center;">';
+                // hello cash has no filename set
                 if ($invoice->filename == '') {
                     $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
                     if (!empty($invoice->cancelled_invoice)) {
