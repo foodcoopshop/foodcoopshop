@@ -474,7 +474,7 @@ class CartService
                     $newQuantity = $stockAvailableQuantity - ($unitObject->quantity_in_units * $cartProduct['amount']);
                 }
 
-                if ($orderCustomerService->isSelfServiceModeByUrl() && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
+                if ($productQuantityService->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject) && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
                     $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
                 }
 
