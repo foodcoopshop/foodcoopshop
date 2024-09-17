@@ -24,6 +24,8 @@ use Cake\TestSuite\IntegrationTestTrait;
 class SavedLocalizedJsAsStaticFileCommand extends AppCommand
 {
 
+    protected $appPluginsToLoad = [];
+
     use IntegrationTestTrait;
 
     /**
