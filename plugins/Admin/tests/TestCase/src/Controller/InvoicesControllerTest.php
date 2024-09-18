@@ -200,4 +200,32 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
+    public function testIndexAndMyIndex() {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->get(Configure::read('app.slugHelper')->getInvoices());
+        $this->assertResponseOk();
+        $this->assertResponseContains('2024-000001');
+        $this->assertResponseContains('38,03');
+
+        $this->get(Configure::read('app.slugHelper')->getMyInvoices());
+        $this->assertResponseOk();
+        $this->assertResponseContains('2024-000001');
+        $this->assertResponseContains('38,03');
+
+        $this->loginAsAdmin();
+        $this->get(Configure::read('app.slugHelper')->getMyInvoices());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('2024-000001');
+        $this->assertResponseNotContains('38,03');
+
+    }
+
 }
