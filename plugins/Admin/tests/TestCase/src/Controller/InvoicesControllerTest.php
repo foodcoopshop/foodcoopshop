@@ -180,4 +180,24 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
+    public function testDownloadAsZipFile() {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->get('/admin/invoices/downloadAsZipFile?dateFrom=' . date('Y-m-d') . '&dateTo=' . date('Y-m-d'));
+
+        $this->assertResponseOk();
+        $this->assertContentType('application/zip');
+        $this->assertHeaderContains('Content-Disposition', 'inline; filename="Rechnungen.zip"');
+
+    }
+
 }
