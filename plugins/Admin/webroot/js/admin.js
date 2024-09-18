@@ -559,23 +559,40 @@ foodcoopshop.Admin = {
         var customerDropdown = $(selector).closest('.bootstrap-select').find('.dropdown-toggle');
 
         if (selectedCustomerId > 0) {
-            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange);
+            this.populateDropdownWithCustomers(customerDropdown, [selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
         }
 
         customerDropdown.on('click', function () {
             if ($(selector + ' optgroup').length == 0) {
-                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange);
+                foodcoopshop.Admin.populateDropdownWithCustomers($(this), [selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
             }
         });
 
     },
 
-    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange) {
+    initCustomerMultiDropdown: function (selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange) {
+
+        selector = selector || 'select#customerids';
+        var customerDropdown = $(selector).closest('.bootstrap-select').find('.dropdown-toggle');
+        
+        if (selectedCustomerIds.length > 0) {
+            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
+        }
+
+        customerDropdown.on('click', function () {
+            if ($(selector + ' optgroup').length == 0) {
+                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
+            }
+        });
+
+    },
+
+    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange) {
         this.populateDropdownWithData(
             '/admin/customers/getCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
             selector,
             customerDropdown,
-            selectedCustomerId,
+            selectedCustomerIds,
             onChange
         );
     },

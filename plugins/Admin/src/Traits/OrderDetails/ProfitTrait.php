@@ -41,11 +41,15 @@ trait ProfitTrait
         }
         $this->set('dateTo', $dateTo);
 
-        $customerId = '';
-        if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = h($this->getRequest()->getQuery('customerId'));
+        $customerIds = [];
+        if (! empty($this->getRequest()->getQuery('customerIds'))) {
+            $customerIds = h($this->getRequest()->getQuery('customerIds'));
         }
-        $this->set('customerId', $customerId);
+        // click on "all members" resets the filter
+        if (isset($customerIds[0]) && $customerIds[0] == '') {
+            $customerIds = [];
+        }
+        $this->set('customerIds', $customerIds);
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
@@ -76,8 +80,8 @@ trait ProfitTrait
             return $exp;
         });
 
-        if ($customerId != '') {
-            $orderDetails->where(['OrderDetails.id_customer' => $customerId]);
+        if (!empty($customerIds)) {
+            $orderDetails->where(['OrderDetails.id_customer IN' => $customerIds]);
         }
 
         if ($manufacturerId != '') {

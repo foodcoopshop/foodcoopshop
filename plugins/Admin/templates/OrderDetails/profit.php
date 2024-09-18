@@ -26,7 +26,7 @@ $this->element('addScript', [
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
-        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
+        Configure::read('app.jsNamespace') . ".Admin.initCustomerMultiDropdown(" . json_encode($customerIds) . ", 0, 1);".
         Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
         Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
 ]);
@@ -38,7 +38,7 @@ $this->element('addScript', [
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
         <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
         <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
-        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
+        <?php echo $this->Form->control('customerIds', ['type' => 'select', 'multiple' => true, 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
         <div class="right">
             <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
         </div>
@@ -103,7 +103,7 @@ echo '<table class="list profit-table">';
                 echo '<span class="product-name">';
                     echo $this->Html->link(
                         $orderDetail->product_name,
-                        $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $manufacturerId, $orderDetail->product_id),
+                        $this->Slug->getProfit($dateFrom, $dateTo, $orderDetail->id_customer, $manufacturerId, $orderDetail->product_id),
                     );
                 echo '</span>';
             echo '</td>';
@@ -117,7 +117,7 @@ echo '<table class="list profit-table">';
             echo '<td>';
                 echo $this->Html->link(
                     $orderDetail->product->manufacturer->name,
-                    $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $orderDetail->product->id_manufacturer, $productId),
+                    $this->Slug->getProfit($dateFrom, $dateTo, $orderDetail->id_customer, $orderDetail->product->id_manufacturer, $productId),
                     [
                         'escape' => false
                     ]);

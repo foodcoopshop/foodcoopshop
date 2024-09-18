@@ -22,7 +22,6 @@ use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PaymentsTable;
 use App\Model\Table\ProductsTable;
 use Cake\View\JsonView;
-use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
