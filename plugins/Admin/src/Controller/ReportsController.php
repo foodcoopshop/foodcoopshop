@@ -12,6 +12,7 @@ use Cake\ORM\Exception\PersistenceFailedException;
 use App\Services\Csv\Reader\Banking\BankingReaderServiceFactory;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Payment;
+use App\Services\Csv\Reader\Banking\BankingReaderService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -48,6 +49,11 @@ class ReportsController extends AdminAppController
         if (!empty($this->getRequest()->getData('upload'))) {
 
             $upload = $this->getRequest()->getData('upload');
+            if (!in_array($upload->getClientMediaType(), BankingReaderService::ALLOWED_UPLOAD_MIME_TYPES)) {
+                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
+                return;
+            }
+
             $content = $upload->getStream()->getContents();
             $bankingReaderService = BankingReaderServiceFactory::get(Configure::read('app.bankNameForCreditSystem'));
             $reader = $bankingReaderService::createFromString($content);

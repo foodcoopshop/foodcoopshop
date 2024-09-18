@@ -25,6 +25,8 @@ use Cake\I18n\DateTime;
 
 abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
+    public const ALLOWED_UPLOAD_MIME_TYPES = ['text/csv'];
+    
     public $csvHasIsoFormat = false;
 
     protected function getCustomerByPersonalTransactionCode($content): ?Customer

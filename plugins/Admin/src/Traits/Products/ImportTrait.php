@@ -99,6 +99,11 @@ trait ImportTrait
         if (!empty($this->getRequest()->getData('upload'))) {
 
             $upload = $this->getRequest()->getData('upload');
+            if (!in_array($upload->getClientMediaType(), ProductReaderService::ALLOWED_UPLOAD_MIME_TYPES)) {
+                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
+                return;
+            }
+
             $content = $upload->getStream()->getContents();
             $reader = ProductReaderService::createFromString($content);
             $reader->configureType();

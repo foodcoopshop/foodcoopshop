@@ -22,6 +22,7 @@ use Cake\Core\Configure;
 
 class ProductReaderService extends Reader {
 
+    public const ALLOWED_UPLOAD_MIME_TYPES = ['text/csv'];
     public const COLUMN_COUNT = 11;
 
     public function configureType(): void

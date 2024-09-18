@@ -298,6 +298,8 @@ class PaymentsControllerTest extends AppCakeTestCase
                     $uploadFile,
                     filesize($uploadFile),
                     UPLOAD_ERR_OK,
+                    'raiffeisen.csv',
+                    'text/csv',
                 ),
             ]
 
