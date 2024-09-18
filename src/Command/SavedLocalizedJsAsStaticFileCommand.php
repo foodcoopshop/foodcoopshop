@@ -24,6 +24,8 @@ use Cake\TestSuite\IntegrationTestTrait;
 class SavedLocalizedJsAsStaticFileCommand extends AppCommand
 {
 
+    public const ROUTE = '/js/localized-javascript.js';
+
     protected $appPluginsToLoad = [];
 
     use IntegrationTestTrait;
@@ -42,7 +44,7 @@ class SavedLocalizedJsAsStaticFileCommand extends AppCommand
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        $this->get('/js/localized-javascript.js');
+        $this->get(SELF::ROUTE);
         $jsFile = fopen(WWW_ROOT . '/cache/localized-javascript-static.js', 'w');
         fwrite($jsFile, $this->_response->getBody()->__toString());
         fclose($jsFile);

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Command\SavedLocalizedJsAsStaticFileCommand;
 use App\Model\Entity\Payment;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -50,6 +51,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getListOfAllergens(),
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy(),
+            SavedLocalizedJsAsStaticFileCommand::ROUTE,
         ];
         $this->assertPagesForErrors($testUrls);
     }
