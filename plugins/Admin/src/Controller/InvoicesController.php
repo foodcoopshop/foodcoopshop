@@ -420,9 +420,9 @@ class InvoicesController extends AdminAppController
 
         $customerId = $this->identity->getId();
 
-        $this->set('customerId', $customerId);
+        $this->set('customerIds', [$customerId]);
 
-        $this->processIndex($dateFrom, $dateTo, $customerId);
+        $this->processIndex($dateFrom, $dateTo, [$customerId]);
 
         $this->set('isOverviewMode', false);
 
