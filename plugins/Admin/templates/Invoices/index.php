@@ -22,7 +22,7 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
+        Configure::read('app.jsNamespace') . ".Admin.initCustomerMultiDropdown(" . json_encode($customerIds) . ", 0, 1);".
         Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();".
         Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
 ]);
@@ -48,7 +48,7 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
         <?php
             if ($isOverviewMode) {
-                echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]);
+                echo $this->Form->control('customerIds', ['type' => 'select', 'multiple' => true, 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]);
             }
          ?>
         <div class="right">

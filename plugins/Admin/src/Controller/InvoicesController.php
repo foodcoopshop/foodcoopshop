@@ -447,20 +447,24 @@ class InvoicesController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $customerId = '';
-        if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = h($this->getRequest()->getQuery('customerId'));
+        $customerIds = [];
+        if (! empty($this->getRequest()->getQuery('customerIds'))) {
+            $customerIds = h($this->getRequest()->getQuery('customerIds'));
         }
-        $this->set('customerId', $customerId);
+        // click on "all members" resets the filter
+        if (isset($customerIds[0]) && $customerIds[0] == '') {
+            $customerIds = [];
+        }
+        $this->set('customerIds', $customerIds);
 
-        $this->processIndex($dateFrom, $dateTo, $customerId);
+        $this->processIndex($dateFrom, $dateTo, $customerIds);
 
         $this->set('title_for_layout', __d('admin', 'Journal'));
         $this->set('isOverviewMode', true);
 
     }
 
-    protected function processIndex($dateFrom, $dateTo, $customerId)
+    protected function processIndex($dateFrom, $dateTo, $customerIds)
     {
 
         $this->Customer = $this->getTableLocator()->get('Customers');
@@ -472,7 +476,7 @@ class InvoicesController extends AdminAppController
             'CancellationInvoices',
             'CancelledInvoices',
         ]);
-        $query = $this->setInvoiceConditions($query, $dateFrom, $dateTo, $customerId);
+        $query = $this->setInvoiceConditions($query, $dateFrom, $dateTo, $customerIds);
 
         $invoices = $this->paginate($query, [
             'sortableFields' => [
@@ -514,7 +518,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerId)
+    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerIds)
     {
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
@@ -524,8 +528,8 @@ class InvoicesController extends AdminAppController
             return $exp;
         });
 
-        if ($customerId != '') {
-            $query->where(['Invoices.id_customer' => $customerId]);
+        if (!empty($customerIds)) {
+            $query->where(['Invoices.id_customer IN' => $customerIds]);
         }
 
         return $query;

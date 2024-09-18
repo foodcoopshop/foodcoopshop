@@ -328,7 +328,7 @@ class SlugHelper extends Helper
         return '/'.__('route_request_new_password');
     }
 
-    public function getProfit($dateFrom=null, $dateTo=null, $customerId=null, $manufacturerId=null, $productId=null)
+    public function getProfit($dateFrom=null, $dateTo=null, $customerIds=null, $manufacturerId=null, $productId=null)
     {
         $url = '/admin/order-details/profit';
         if ($dateFrom !== null) {
@@ -337,8 +337,8 @@ class SlugHelper extends Helper
         if ($dateTo !== null) {
             $urlParams['dateTo'] = $dateTo;
         }
-        if ($customerId !== null) {
-            $urlParams['customerId'] = $customerId;
+        if ($customerIds !== null) {
+            $urlParams['customerIds'] = $customerIds;
         }
         if ($manufacturerId !== null) {
             $urlParams['manufacturerId'] = $manufacturerId;
