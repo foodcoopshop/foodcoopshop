@@ -23,7 +23,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Neuer Bestätigungsdialog bei "Einkauf abschließen" im SB-Modus anstelle AGB und Rücktrittsrecht-Häkchen. [I#1075](https://github.com/foodcoopshop/foodcoopshop/pull/1075) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>s
 
 ### Neue Funktionen für den [Einzelhandels-Modus](https://foodcoopshop.github.io/de/dorfladen-online.html)
-- Das Kunden-Dropdown bei Rechnungen und Gewinn-Übersicht ist jetzt ein Multi-Dropdown, dh. es können mehrere Kunden ausgewählt werden. [I#1026](https://github.com/foodcoopshop/foodcoopshop/issues/1026) / [PR#xxx](https://github.com/foodcoopshop/foodcoopshop/pull/xxx) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Das Kunden-Dropdown bei Rechnungen und Gewinn-Übersicht ist jetzt ein Multi-Dropdown, dh. es können mehrere Kunden ausgewählt werden. [I#1026](https://github.com/foodcoopshop/foodcoopshop/issues/1026) / [PR#1080](https://github.com/foodcoopshop/foodcoopshop/pull/1080) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### For developers
 - Für die Tests werden jetzt ChecksumTestFixtures verwendet, was zu einer massiven Performance-Steigerung führt (ca. 3:40 min => ca. 2:20 min auf Github Actions). [I#1040](https://github.com/foodcoopshop/foodcoopshop/issues/1040) / [PR#1049](https://github.com/foodcoopshop/foodcoopshop/pull/1049) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
