@@ -194,12 +194,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->logout();
     }
 
-    protected function debug($content)
-    {
-        pr($content);
-        ob_flush();
-    }
-
     protected function changeManufacturerNoDeliveryDays(int $manufacturerId, string $noDeliveryDays = ''): void
     {
         $this->changeManufacturer($manufacturerId, 'no_delivery_days', $noDeliveryDays);
