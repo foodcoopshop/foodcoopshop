@@ -30,7 +30,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
-if (!Configure::read('app.selfServiceShowConfirmDialogOnSubmit')) {
+if (!Configure::read('app.selfServiceEasyModeEnabled')) {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"]);    
 } else {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"]);
@@ -158,13 +158,13 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceShowConfirmDialogOnSubmit')){
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceEasyModeEnabled')){
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }
         echo $this->element('selfService/paymentType');
         ?>
-        <button type="<?php echo Configure::read('app.selfServiceShowConfirmDialogOnSubmit') ? 'button' : 'submit';?>" class="btn btn-success btn-order btn-order-self-service">
+        <button type="<?php echo Configure::read('app.selfServiceEasyModeEnabled') ? 'button' : 'submit';?>" class="btn btn-success btn-order btn-order-self-service">
            <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
         </button>
         <?php  

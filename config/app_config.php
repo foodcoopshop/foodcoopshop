@@ -104,7 +104,7 @@ return [
             //     'customerId' => 33,
             // ],
         ],
-        'selfServiceShowConfirmDialogOnSubmit' => false,
+        'selfServiceEasyModeEnabled' => false,
         'showOrderedProductsTotalAmountInCatalog' => false,
         'applyOpenOrderCheckForOrderReminder' => true,
         'changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled' => false,
