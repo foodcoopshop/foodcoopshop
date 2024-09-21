@@ -113,7 +113,7 @@ body.self_services #content {
     width: 26%;
 }
 .self-service #flashMessage {
-    top: 442px;
+    top: 452px;
     z-index: 1200;
     left: 45px;
     width: 820px;
