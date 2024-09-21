@@ -32,8 +32,8 @@ body.self_services #content {
 }
 .self-service .right-box {
     position: fixed;
-    left: 865px;
-    width: 368px;
+    left: 840px;
+    width: 393px;
     top: 0;
     overflow-y: auto;
     background-color: #fff;
@@ -49,12 +49,13 @@ body.self_services #content {
 }
 .self-service .header h2 {
     padding-top: 10px;
+    font-size: 35px;
 }
 .self-service .bootstrap-select {
     width: 203px ! important;
 }
 .self-service .product-search-form-wrapper {
-    top: 110px;
+    top: 135px;
     left: 8px;
 }
 .self-service .product-search-form-wrapper .btn {
@@ -66,13 +67,13 @@ body.self_services #content {
     height: 40px;
 }
 .self-service .product-search-form-wrapper input[name="keyword"] {
-    width: 416px;
-    font-size: 16px;
+    width: 470px;
+    font-size: 18px;
     height: 40px;
 }
 .self-service .product-search-form-wrapper .btn[type="button"] {
     height: 40px;
-    font-size: 16px;
+    font-size: 18px;
     width: 211px;
     margin-left: 30px;
 }
@@ -91,12 +92,13 @@ body.self_services #content {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 80px;
-    padding-top: 50px;
+    padding-top: 80px;
     min-height: calc(100vh - 100px - 66px - 2px);
+    font-size: 18px;
 }
 .self-service .pw {
     border-right: 1px solid #d6d4d4;
-    width: 70%;
+    width: 68%;
 }
 .self-service .pw div.c1 {
     width: 26%;
@@ -111,10 +113,12 @@ body.self_services #content {
     width: 26%;
 }
 .self-service #flashMessage {
-    top: 46px;
+    top: 442px;
     z-index: 1200;
-    left: 315px;
-    width: 396px;
+    left: 45px;
+    width: 820px;
+    font-size:28px;
+    line-height: 28px;
 }
 .self-service #login-form form {
     padding-top: 10px;
@@ -132,20 +136,24 @@ body.self_services #content {
 }
 .self-service #login-form h1 {
     padding-left: 0;
-    font-size: 38px;
+    font-size: 45px;
 }
 .self-service #login-form h2 {
    width: 100%;
    text-align: center;
    border-bottom: 1px solid #ccc;
    line-height: 0.1em;
-   margin: 15px 0 25px;
+   margin: 10px 0 25px;
    float: left;
    font-size: 18px;
 }
 .self-service #login-form h2 span {
     background: #fff;
     padding:0 10px;
+}
+.self-service h5 {
+    line-height: 75px;
+    font-size: 35px;
 }
 .self-service #login-form h7 {
     padding-left: 0;
@@ -168,7 +176,7 @@ body.self_services #content {
     top: 0;
     left: 0;
     height: 160px;
-    width: 865px;
+    width: 830px;
     z-index: 1000;
     padding-left: 10px;
 }
@@ -218,6 +226,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     border-top: none;
     border-right: none;
     width: 100%;
+    font-size: 18px;
 }
 .self-service .cart span.product-name-wrapper {
     width: 270px;

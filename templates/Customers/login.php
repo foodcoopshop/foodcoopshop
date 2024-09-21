@@ -43,7 +43,6 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                     echo '<h7>' . __('Start_self_service') . '</h7>';
                     echo '</br>';
                     echo '</br>';
-                    echo '</br>';
                 }
                 $buttonHtml = '';
                 foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {

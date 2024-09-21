@@ -286,6 +286,9 @@ msgstr "Für Kunden mit Mitgliedskonto"
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr "Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?"
 
+msgid "Signing_in_failed_info_click_location_button_for_self_service"
+msgstr "Für Selbstbedienungs-Einkauf ohne Kundenkonto bitte auf deinen Standort klicken um die Selbstbedienung zu starten."
+
 msgid "{0}_created_an_account."
 msgstr "{0} hat ein Mitgliedskonto erstellt."
 
@@ -2490,7 +2493,7 @@ msgid "Scan_product"
 msgstr "Scanne das gewünschte Produkt:"
 
 msgid "No_products_found."
-msgstr "Keine Produkte gefunden -> Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
+msgstr "Keine Produkte gefunden </br> -> In Suchfeld klicken & Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"

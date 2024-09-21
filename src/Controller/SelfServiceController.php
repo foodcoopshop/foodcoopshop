@@ -104,7 +104,7 @@ class SelfServiceController extends FrontendController
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
         $products = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'), page: $page);
-        $totalProductCount = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $totalProductCount = null;
         $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
 

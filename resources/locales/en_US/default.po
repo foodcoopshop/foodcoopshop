@@ -286,6 +286,9 @@ msgstr "Deny order"
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr "Signing in failed. Accout inactive or password wrong?"
 
+msgid "Signing_in_failed_info_click_location_button_for_self_service"
+msgstr "For purchase without customer account please click on your location for starting self-service."
+
 msgid "{0}_created_an_account."
 msgstr "{0} created an account."
 

@@ -292,8 +292,8 @@ body.customers.new_password_request #inner-content form {
     padding: 10px;
     width: 100%;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 60px;
+    margin-top: 0px;
+    margin-bottom: 50px;
 }
 #login-form .self-service-login-button-wrapper a {
     padding: 5px 15px;
