@@ -257,7 +257,7 @@ msgid "Sign_in"
 msgstr "Anmelden"
 
 msgid "Sign_in_for_self_service"
-msgstr "Anmelden zur Selbstbedienung"
+msgstr "Selbstbedienung"
 
 msgid "You_are_already_signed_in."
 msgstr "Du bist bereits angemeldet."
@@ -266,7 +266,7 @@ msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
 msgid "Start_self_service"
-msgstr "Klicke auf deinen Standort um die Selbstbedienung zu starten"
+msgstr "Klicke auf deinen Standort um die SELBSTBEDIENUNG zu STARTEN"
 
 msgid "Confirm_self_service_purchase_dialog"
 msgstr "Einkauf abschließen"

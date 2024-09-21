@@ -40,7 +40,10 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             echo '<div class="self-service-login-button-wrapper">';
                 $hasMulipleButtons = count($selfServiceLoginCustomers) > 1;
                 if ($hasMulipleButtons) {
-                    echo '<h6>' . __('Start_self_service') . '</h6>';
+                    echo '<h7>' . __('Start_self_service') . '</h7>';
+                    echo '</br>';
+                    echo '</br>';
+                    echo '</br>';
                 }
                 $buttonHtml = '';
                 foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
@@ -55,6 +58,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                     );
                 }
             echo '</div>';
+            echo '</br>';
             echo '<h6>' . __('For_self_service_with_account') . '</h6>';
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace').".SelfService.injectLoginButtons('".base64_encode($buttonHtml)."');"
