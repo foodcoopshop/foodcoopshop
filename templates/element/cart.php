@@ -50,13 +50,15 @@ if ($identity->getProducts() !== null) {
 ?>
 
 <div id="cart" class="box cart">
-
     <h3>
         <i class="fas <?php echo $icon; ?>"></i>
         <?php echo $name; ?>
-        <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
+        <?php
+        if (!Configure::read('app.selfServiceEasyModeEnabled') || !$identity->isSelfServiceCustomer()){
+        ?>
+            <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
+        <?php } ?>
     </h3>
-
     <div class="inner">
 
         <?php
