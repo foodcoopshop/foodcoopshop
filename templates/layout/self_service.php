@@ -45,7 +45,7 @@ echo $this->element('layout/header');
             </div>
             <div class="right-wrapper">
                 <?php
-                if (!Configure::read('app.selfServiceEasyModeEnabled') || (!$identity == null && !$identity->isSelfServiceCustomer())){
+                if (!Configure::read('app.selfServiceEasyModeEnabled')){
                 ?>
                     <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
                         <i class="fas fa-home"></i> <?php echo __('Home'); ?>
