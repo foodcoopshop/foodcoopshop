@@ -32,8 +32,8 @@ body.self_services #content {
 }
 .self-service .right-box {
     position: fixed;
-    left: 840px;
-    width: 393px;
+    left: 865px;
+    width: 368px;
     top: 0;
     overflow-y: auto;
     background-color: #fff;
@@ -49,13 +49,12 @@ body.self_services #content {
 }
 .self-service .header h2 {
     padding-top: 10px;
-    font-size: 35px;
 }
 .self-service .bootstrap-select {
     width: 203px ! important;
 }
 .self-service .product-search-form-wrapper {
-    top: 135px;
+    top: 110px;
     left: 8px;
 }
 .self-service .product-search-form-wrapper .btn {
@@ -67,13 +66,13 @@ body.self_services #content {
     height: 40px;
 }
 .self-service .product-search-form-wrapper input[name="keyword"] {
-    width: 470px;
-    font-size: 18px;
+    width: 416px;
+    font-size: 16px;
     height: 40px;
 }
 .self-service .product-search-form-wrapper .btn[type="button"] {
     height: 40px;
-    font-size: 18px;
+    font-size: 16px;
     width: 211px;
     margin-left: 30px;
 }
@@ -92,13 +91,12 @@ body.self_services #content {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 80px;
-    padding-top: 80px;
+    padding-top: 50px;
     min-height: calc(100vh - 100px - 66px - 2px);
-    font-size: 18px;
 }
 .self-service .pw {
     border-right: 1px solid #d6d4d4;
-    width: 68%;
+    width: 70%;
 }
 .self-service .pw div.c1 {
     width: 26%;
@@ -113,15 +111,13 @@ body.self_services #content {
     width: 26%;
 }
 .self-service #flashMessage {
-    top: 452px;
+    top: 46px;
     z-index: 1200;
-    left: 45px;
-    width: 820px;
-    font-size:28px;
-    line-height: 28px;
+    left: 315px;
+    width: 396px;
 }
 .self-service #login-form form {
-    padding-top: 10px;
+    padding-top: 20px;
     position: relative;
 }
 .self-service #login-form hr {
@@ -136,14 +132,13 @@ body.self_services #content {
 }
 .self-service #login-form h1 {
     padding-left: 0;
-    font-size: 45px;
 }
 .self-service #login-form h2 {
    width: 100%;
    text-align: center;
    border-bottom: 1px solid #ccc;
    line-height: 0.1em;
-   margin: 10px 0 25px;
+   margin: 15px 0 25px;
    float: left;
    font-size: 18px;
 }
@@ -151,14 +146,9 @@ body.self_services #content {
     background: #fff;
     padding:0 10px;
 }
-.self-service h5 {
-    line-height: 75px;
-    font-size: 35px;
-}
-.self-service #login-form h7 {
-    padding-left: 0;
-    font-size: 50px;
-    line-height: 65px;
+.self-service h7 {
+    font-size: 16px;
+    font-weight: 500;
 }
 .self-service .footer {
     background: #fff;
@@ -176,7 +166,7 @@ body.self_services #content {
     top: 0;
     left: 0;
     height: 160px;
-    width: 830px;
+    width: 865px;
     z-index: 1000;
     padding-left: 10px;
 }
@@ -226,7 +216,6 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     border-top: none;
     border-right: none;
     width: 100%;
-    font-size: 18px;
 }
 .self-service .cart span.product-name-wrapper {
     width: 270px;

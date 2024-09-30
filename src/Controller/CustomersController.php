@@ -327,7 +327,7 @@ class CustomersController extends FrontendController
                 } else {
                     $errorMessageSigningInFailed = __('Signing_in_failed_account_inactive_or_password_wrong?');
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-                    && ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer())
+                    && $orderCustomerService->isSelfServiceMode()
                     && !empty(Configure::read('app.selfServiceLoginCustomers'))) {
                         $errorMessageSigningInFailed .= '</br></br>'.__('Signing_in_failed_info_click_location_button_for_self_service');
                     }

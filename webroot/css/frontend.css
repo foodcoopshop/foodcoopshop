@@ -263,12 +263,12 @@ body.categories.detail div.description-wrapper {
     display: none ! important; /* never show third level */
 }
 #login-form {
-    width: 740px;
+    width: 440px;
     margin: 0 auto;
     text-align: center;
 }
 #login-form h1 {
-    line-height: 60px;
+    line-height: 30px;
     margin-bottom: 0px;
     padding: 10px;
 }
@@ -282,23 +282,23 @@ body.customers.new_password_request #inner-content form {
     padding: 0;
 }
 #login-form .input label {
-    width: 155px;
+    width: 145px;
     float: left;
     text-align: right;
     line-height: 25px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 #login-form .self-service-login-button-wrapper {
     padding: 10px;
     width: 100%;
     text-align: center;
-    margin-top: 0px;
-    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-bottom: 60px;
 }
 #login-form .self-service-login-button-wrapper a {
     padding: 5px 15px;
     margin-left: 10px;
-    font-size: 35px;
+    font-size: 20px;
 }
 #login-form .self-service-login-button-wrapper a:first-of-type {
     margin-left: 0;
@@ -346,8 +346,6 @@ body.customers.new_password_request .input {
 }
 #login-form div.input {
     text-align: left;
-    margin-left: 125px;
-    margin-right: 10px;
 }
 #login-form .input.text input,
 #login-form .input.tel input,
@@ -357,9 +355,6 @@ body.customers.new_password_request .input input {
     width: 255px;
     padding: 3px;
     border-radius: 3px;
-}
-#login-form a {
-    margin-left: 150px;
 }
 body.customers.new_password_request .input {
     margin-right: 10px;
@@ -380,7 +375,7 @@ body.customers.new_password_request .input input {
 }
 #login-form #LoginForm button {
     float: right;
-    margin-right: 190px;
+    margin-right: 5px;
     margin-top: -61px;
 }
 form div.error-message {
