@@ -43,17 +43,17 @@ echo $this->element('layout/header');
                         <?php } ?>
                 <?php } ?>
             </div>
-            <?php
-            if (!Configure::read('app.selfServiceEasyModeEnabled') || (!$identity == null && !$identity->isSelfServiceCustomer())){
-            ?>
-                <div class="right-wrapper">
+            <div class="right-wrapper">
+                <?php
+                if (!Configure::read('app.selfServiceEasyModeEnabled') || (!$identity == null && !$identity->isSelfServiceCustomer())){
+                ?>
                     <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
                         <i class="fas fa-home"></i> <?php echo __('Home'); ?>
                     </a>
-                    <?php echo $this->element('selfService/addDeposit'); ?>
-                    <?php echo $this->element('logo'); ?>
-                </div>
-            <?php } ?>
+                <?php } ?>
+                <?php echo $this->element('selfService/addDeposit'); ?>
+                <?php echo $this->element('logo'); ?>
+            </div>
         </div>
     <?php } ?>
 
