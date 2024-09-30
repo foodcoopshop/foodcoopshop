@@ -54,7 +54,7 @@ if ($identity->getProducts() !== null) {
         <i class="fas <?php echo $icon; ?>"></i>
         <?php echo $name; ?>
         <?php
-        if (!Configure::read('app.selfServiceEasyModeEnabled') || !$identity->isSelfServiceCustomer()){
+        if (!(Configure::read('app.selfServiceEasyModeEnabled') && $orderCustomerService->isSelfServiceMode())){
         ?>
             <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
         <?php } ?>
