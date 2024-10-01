@@ -84,7 +84,7 @@ class PurchasePriceProductsTable extends AppTable
         $purchasePriceNet = $productTable->getNetPrice($purchasePriceGross, $purchasePriceTaxRate);
 
         if ($purchasePriceNet == 0) {
-            return false;
+            return 0;
         }
 
         $surcharge = $this->calculateSurchargeBySellingPriceNet($sellingPriceNet, $purchasePriceNet);
