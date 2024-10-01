@@ -23,8 +23,9 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     return false;
 }
 
+
 $paymentTypeAsString = '';
-if (!Configure::read('appDb.selfServiceEasyModeEnabled')){
+if (!(Configure::read('appDb.selfServiceEasyModeEnabled'))){
     $cartsTable = FactoryLocator::get('Table')->get('Carts');
     $paymentTypeAsString = __('Credit');
     if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
@@ -34,12 +35,13 @@ if (!Configure::read('appDb.selfServiceEasyModeEnabled')){
     $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
     if(!empty($selfServicePaymentTypes)){
       $countSelfServicePaymentTypes = count($selfServicePaymentTypes);
-      $countI = 0;
+      $countI = 1;
         foreach($selfServicePaymentTypes as $selfServicePaymentType) {
-            $paymentTypeAsString .= $selfServicePaymentType['name'];
-            if ($countI > 0 && !($countI == $countSelfServicePaymentTypes)){
+            $paymentTypeAsString .= $selfServicePaymentType['payment_type'];
+            if ($countSelfServicePaymentTypes > 1 && !($countI == $countSelfServicePaymentTypes)){
               $paymentTypeAsString .= ', ';
             }
+            $countI++;
         }
     }
 }
