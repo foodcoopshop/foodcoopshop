@@ -266,7 +266,7 @@ msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
 msgid "Start_self_service"
-msgstr "Klicke auf deinen Standort um die Selbstbedienung zu starten"
+msgstr "Klicke auf deinen Standort um die SELBSTBEDIENUNG zu STARTEN"
 
 msgid "Confirm_self_service_purchase_dialog"
 msgstr "Einkauf abschließen"
@@ -281,10 +281,13 @@ msgid "Deny_self_service_purchase_button"
 msgstr "Einkauf abbrechen"
 
 msgid "For_self_service_with_account"
-msgstr "Für Selbstbedienung mit Mitgliedskonto"
+msgstr "Du hast ein Mitgliedskonto und möchtest mit deinem Guthaben einkaufen?</br>Melde dich hier an:"
 
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr "Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?"
+
+msgid "Signing_in_failed_info_click_location_button_for_self_service"
+msgstr "Für Selbstbedienungs-Einkauf ohne Mitgliedskonto bitte auf deinen Standort klicken um die Selbstbedienung zu starten."
 
 msgid "{0}_created_an_account."
 msgstr "{0} hat ein Mitgliedskonto erstellt."
@@ -2490,7 +2493,7 @@ msgid "Scan_product"
 msgstr "Scanne das gewünschte Produkt:"
 
 msgid "No_products_found."
-msgstr "Keine Produkte gefunden -> Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
+msgstr "Keine Produkte gefunden </br> → In Suchfeld klicken & Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"

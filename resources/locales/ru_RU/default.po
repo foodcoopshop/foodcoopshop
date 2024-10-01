@@ -262,6 +262,9 @@ msgstr "Вы уже вошли."
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr "Вход не удался. Учётная запись не активирована или неправильный пароль?"
 
+msgid "Signing_in_failed_info_click_location_button_for_self_service"
+msgstr "Для самообслуживания покупателей без учетной записи клиента, пожалуйста, нажмите на свое местоположение, чтобы начать самообслуживание."
+
 msgid "{0}_created_an_account."
 msgstr "{0} учётная запись создана."
 
