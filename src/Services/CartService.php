@@ -273,9 +273,9 @@ class CartService
                 $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             }
     
+            $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'] ?? -1;
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
             if ($isAmountBasedOnQuantityInUnits) {
-                $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'];
                 if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
                     $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $cartProduct['amount'];
                 }
