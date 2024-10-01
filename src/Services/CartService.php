@@ -252,6 +252,7 @@ class CartService
         $stockAvailable2saveConditions = [];
 
         $contain = $this->getProductContain();
+        $productQuantityService = new ProductQuantityService();
 
         foreach ($this->identity->getProducts() as $cartProduct) {
 
@@ -271,6 +272,14 @@ class CartService
             if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
                 $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             }
+    
+            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
+            if ($isAmountBasedOnQuantityInUnits) {
+                $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'];
+                if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+                    $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $cartProduct['amount'];
+                }
+            }
 
             $message = $this->isAmountAvailableProduct(
                 $product->is_stock_product,
@@ -278,8 +287,9 @@ class CartService
                 $product->stock_available->always_available,
                 $ids['attributeId'],
                 $stockAvailableAvailableQuantity,
-                $cartProduct['amount'],
+                $isAmountBasedOnQuantityInUnits ? $orderedQuantityInUnits : $cartProduct['amount'],
                 $product->name,
+                $isAmountBasedOnQuantityInUnits ? $product->unit_product->name : '',
             );
             if ($message !== true) {
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
