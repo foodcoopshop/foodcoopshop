@@ -23,12 +23,27 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     return false;
 }
 
-$cartsTable = FactoryLocator::get('Table')->get('Carts');
-$paymentTypeAsString = __('Credit');
-if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
-    $paymentTypeAsString =  __('Cash');
+$paymentTypeAsString = '';
+if (!Configure::read('appDb.selfServiceEasyModeEnabled')){
+    $cartsTable = FactoryLocator::get('Table')->get('Carts');
+    $paymentTypeAsString = __('Credit');
+    if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
+        $paymentTypeAsString =  __('Cash');
+    }
+} else{
+    $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
+    if(!empty($selfServicePaymentTypes)){
+      $countSelfServicePaymentTypes = count($selfServicePaymentTypes);
+      $countI = 0;
+        foreach($selfServicePaymentTypes as $selfServicePaymentType) {
+            $paymentTypeAsString .= $selfServicePaymentType['name'];
+            if ($countI > 0 && !($countI == $countSelfServicePaymentTypes)){
+              $paymentTypeAsString .= ', ';
+            }
+        }
+    }
 }
-
-echo '<p class="payment-type">' .  __('Payment_type') . ': ' . $paymentTypeAsString . '</p>';
-
+if ($paymentTypeAsString != ''){
+    echo '<p class="payment-type">' .  __('Payment_type') . ': ' . $paymentTypeAsString . '</p>';
+}
 ?>
