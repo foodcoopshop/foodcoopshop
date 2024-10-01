@@ -44,9 +44,13 @@ echo $this->element('layout/header');
                 <?php } ?>
             </div>
             <div class="right-wrapper">
-                <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
-                    <i class="fas fa-home"></i> <?php echo __('Home'); ?>
-                </a>
+                <?php
+                if (!Configure::read('app.selfServiceEasyModeEnabled')){
+                ?>
+                    <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
+                        <i class="fas fa-home"></i> <?php echo __('Home'); ?>
+                    </a>
+                <?php } ?>
                 <?php echo $this->element('selfService/addDeposit'); ?>
                 <?php echo $this->element('logo'); ?>
             </div>

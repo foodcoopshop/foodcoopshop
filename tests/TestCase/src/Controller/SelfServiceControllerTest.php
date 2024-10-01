@@ -150,7 +150,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     }
 
     public function testSelfServiceWithActiveShowConfirmDialogOnSubmitConfig() {
-        Configure::write('app.selfServiceShowConfirmDialogOnSubmit', true);
+        Configure::write('app.selfServiceEasyModeEnabled', true);
         $this->loginAsCustomer();
         $this->addProductToSelfServiceCart(344, 1);
         $this->finishSelfServiceCart(0, 0);

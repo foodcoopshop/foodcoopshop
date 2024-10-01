@@ -17,7 +17,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 ?>
-<div class="logo-wrapper">
+<div class="logo-wrapper <?php echo Configure::read('app.selfServiceEasyModeEnabled') ? 'no-pointer' : ''?>">
     <a class="not-in-moblie-menu" href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
         <img class="logo" src="/files/images/<?php echo Configure::read('app.logoFileName'); ?>?<?php echo filemtime(WWW_ROOT.'files'.DS.'images'.DS.Configure::read('app.logoFileName'))?>" />
     </a>

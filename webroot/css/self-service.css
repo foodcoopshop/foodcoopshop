@@ -195,6 +195,9 @@ body.self_services #content {
 .self-service .footer .right-wrapper img {
     height: 53px;
 }
+.no-pointer{
+    pointer-events: none;
+}
 body.customers.login .self-service .footer {
     position: static;
     background: transparent;

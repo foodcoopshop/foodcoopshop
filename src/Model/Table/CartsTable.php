@@ -55,7 +55,7 @@ class CartsTable extends AppTable
     {
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
 
-        if (Configure::read('app.selfServiceShowConfirmDialogOnSubmit') && (new OrderCustomerService())->isSelfServiceMode()) {
+        if (Configure::read('app.selfServiceEasyModeEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
             return $validator;
         }
 
