@@ -25,7 +25,10 @@ use Cake\I18n\DateTime;
 
 abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
-    public const ALLOWED_UPLOAD_MIME_TYPES = ['text/csv'];
+    public const ALLOWED_UPLOAD_MIME_TYPES = [
+        'text/csv',
+        'application/vnd.ms-excel', // for firefox
+    ];
     
     public $csvHasIsoFormat = false;
 
