@@ -13,13 +13,20 @@
  */
 foodcoopshop.ModalSelfServiceConfirmDialog = {
    
-    init : function(title, html) {
+    init : function(title, html, dialogbuttons) {
 
         var modalSelector = '#self-service-confirm-dialog';
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.cart.selfServiceDenyPurchaseButton, null, true)
         ];
+        dialogbuttons = $.parseJSON(dialogbuttons);
+
+        if (dialogbuttons.length == 0) {
+            return;
+        }
+
+        for(var i=0;i<dialogbuttons.length;i++) {
+           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].html, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton)];
+        }
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
