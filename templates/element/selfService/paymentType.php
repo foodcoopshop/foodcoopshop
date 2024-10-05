@@ -25,7 +25,7 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 
 
 $paymentTypeAsString = '';
-if (!(Configure::read('appDb.selfServiceEasyModeEnabled'))){
+if (!Configure::read('app.selfServiceEasyModeEnabled')){
     $cartsTable = FactoryLocator::get('Table')->get('Carts');
     $paymentTypeAsString = __('Credit');
     if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
