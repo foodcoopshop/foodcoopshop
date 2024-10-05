@@ -33,7 +33,7 @@ $this->element('addScript', ['script' =>
 if (!Configure::read('app.selfServiceEasyModeEnabled')) {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"]);    
 } else {
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"]);
+        $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init(". (empty(Configure::read('app.selfServicePaymentTypes')) ? __('Confirm_self_service_purchase_dialog') . '?' : __('Choose_paymenttype_for_self_service_purchase_dialog')) .", ". (empty(Configure::read('app.selfServicePaymentTypes')) ? '<p>' . __('Confirm_self_service_purchase') . '</p>' : '<p>' . __('Confirm_self_service_purchase_with_paymenttypes') . '</p>') .")"]);
 }
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
