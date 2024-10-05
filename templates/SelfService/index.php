@@ -36,45 +36,38 @@ if (!Configure::read('app.selfServiceEasyModeEnabled')) {
 else {
   $title='';
   $html='';
-  $dialogbuttons=[];
+  $dialogButtons=[];
+  $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
 
-  if (empty(Configure::read('app.selfServicePaymentTypes'))){
+  if (empty($selfServicePaymentTypes)){
     $title=__('Confirm_self_service_purchase_dialog') .'?';
     $html='<p>' . __('Confirm_self_service_purchase') . '</p>';
-    $dialogbuttons = [
-        [
-            'classes' => 'btn-success',
-            'title' => __('Confirm_self_service_purchase_button'),
-            'faIcon' => 'fa-fw fas fa-check',
-            'isCloseButton' => null
-        ],
-        [
-            'classes' => 'btn-outline-light',
-            'title' => __('Deny_self_service_purchase_button'),
-            'faIcon' => null,
-            'isCloseButton' => true
-        ]
-      ];
+    $dialogButtons[] = [
+        'classes' => 'btn-success',
+        'title' => __('Confirm_self_service_purchase_button'),
+        'faIcon' => 'fa-fw fas fa-check',
+        'isCloseButton' => null
+    ];
   }
   else{
     $title=__('Choose_paymenttype_for_self_service_purchase_dialog');
     $html='<p>' . __('Confirm_self_service_purchase_with_paymenttypes') . '</p>';
-    $dialogbuttons = [
-        [
-            'classes' => 'btn-success',
-            'title' => __('Confirm_self_service_purchase_button'),
-            'faIcon' => 'fa-fw fas fa-check',
-            'isCloseButton' => null
-        ],
-        [
-            'classes' => 'btn-outline-light',
-            'title' => __('Deny_self_service_purchase_button'),
-            'faIcon' => null,
-            'isCloseButton' => true
-        ]
+    foreach($selfServicePaymentTypes as $selfServicePaymentType) {
+      $dialogButtons[] = [
+        'classes' => 'btn-success',
+        'title' => $selfServicePaymentType['payment_type'],
+        'faIcon' => 'fa-fw fas fa-check',
+        'isCloseButton' => null
       ];
+    }
   }
-  $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init('$title', '$html', '".json_encode($dialogbuttons)."');" ]);
+  $dialogButtons[] = [
+      'classes' => 'btn-outline-light',
+      'title' => __('Deny_self_service_purchase_button'),
+      'faIcon' => null,
+      'isCloseButton' => true
+  ];
+  $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init('$title', '$html', '".json_encode($dialogButtons)."');" ]);
 }
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {

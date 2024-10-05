@@ -25,7 +25,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         }
 
         for(var i=0;i<dialogbuttons.length;i++) {
-           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].html, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton)];
+           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton)];
         }
 
         foodcoopshop.Modal.appendModalToDom(
