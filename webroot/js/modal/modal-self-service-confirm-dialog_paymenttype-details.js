@@ -34,9 +34,16 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler();
         });
+    },
 
-        $('button.btn-order-self-service').on('click', function () {
-            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler(modalSelector);
-        });
+    getSuccessHandler : function() {
+       var selfSForm = $('#SelfServiceForm');
+       selfSForm.submit();
+    },
+
+    getOpenHandler : function(modalSelector) {
+        $(this).closest('#container').find('form.fcs-form').submit();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
+    
 };

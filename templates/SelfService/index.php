@@ -46,7 +46,7 @@ else {
         'classes' => 'btn-success',
         'title' => __('Confirm_self_service_purchase_button'),
         'faIcon' => 'fa-fw fas fa-check',
-        'isCloseButton' => null
+        'isCloseButton' => null,
     ];
   }
   else{
@@ -54,12 +54,13 @@ else {
     $html='<p>' . __('Confirm_self_service_purchase_with_paymenttypes') . '</p>';
     foreach($selfServicePaymentTypes as $selfServicePaymentType) {
       $dialogButtons[] = [
-        'classes' => 'btn-success btn-paymenttype-details',
+        'classes' => 'btn-paymenttype-details',
         'title' => $selfServicePaymentType['payment_type'],
         'faIcon' => 'fa-fw fas fa-check',
-        'isCloseButton' => null
+        'isCloseButton' => null,
       ];
     }
+    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServicePaymenttypeDetailsDialog.init();" ]);
   }
   $dialogButtons[] = [
       'classes' => 'btn-outline-light',

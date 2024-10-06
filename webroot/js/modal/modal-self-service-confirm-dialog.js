@@ -44,24 +44,22 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         });
 
         $('button.btn-paymenttype-details').on('click', function () {
-            foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details');
+            foodcoopshop.ModalSelfServiceConfirmDialog.getCloseHandler(modalSelector);
+            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog_paymenttype-details');
         });  
-    },
-
-    getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceShowConfirmDialog + '</p>';
     },
 
     getSuccessHandler : function() {
        var selfSForm = $('#SelfServiceForm');
        selfSForm.submit();
-
-       // initPaymentTypeDetailDialog : function() {
-       // foodcoopshop.ModalPaymentAdd.initDepositSingle('.btn-add-deposit', $('#add-payment-deposit-form'));
     },
 
     getOpenHandler : function(modalSelector) {
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
-    }
+    },
+
+    getCloseHandler : function(modalSelector) {
+        $(modalSelector).remove();
+    },
 
 };
