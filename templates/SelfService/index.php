@@ -46,7 +46,7 @@ else {
         'classes' => 'btn-success',
         'title' => __('Confirm_self_service_purchase_button'),
         'faIcon' => 'fa-fw fas fa-check',
-        'isCloseButton' => null,
+        'isCloseButton' => null
     ];
   }
   else{
@@ -58,6 +58,7 @@ else {
         'title' => $selfServicePaymentType['payment_type'],
         'faIcon' => 'fa-fw fas fa-check',
         'isCloseButton' => null,
+        'value' => $selfServicePaymentType['payment_text']
       ];
     }
   }

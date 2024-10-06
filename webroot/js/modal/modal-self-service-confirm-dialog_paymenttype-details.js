@@ -18,15 +18,12 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
        selfSForm.submit();
     },
 
-    getOpenHandler : function(modalSelector, buttonName) {
+    getOpenHandler : function(modalSelector, paymentName, paymentText) {
         $(this).closest('#container').find('form.fcs-form').submit();
 
         var modalSelector = '#self-service-confirm-dialog_paymenttype-details';
-        var title = buttonName;
-
-        var getSelfServicePaymentTypesConfig = '<?php echo $app.selfServicePaymentTypes?>';
-
-        var html='<p>' + 'testtext' + '</p>';
+        var title = paymentName;
+        var html='<p>' + paymentText + '</p>';
 
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),
@@ -44,16 +41,6 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler();
         });
 
-  /*      foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.initWithDialogText(buttonName);
-
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalImage.getCloseHandler(modalSelector);
-        });
-        var image = $('<img />');
-        image.attr('src', button.data('modal-image'));
-        $(modalSelector + ' .modal-body').append(image);
-        $(modalSelector + ' .modal-title').html(button.data('modal-title'));
-*/
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
     

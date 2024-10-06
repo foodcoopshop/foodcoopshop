@@ -52,10 +52,13 @@ foodcoopshop.Modal = {
         $('.tooltipster-base ').remove();
     },
 
-    createButton: function(classes, title, faIcon, isCloseButton) {
+    createButton: function(classes, title, faIcon, isCloseButton, value=null) {
         var buttonHtml = '<button type="button" class="btn ' + classes.join(' ') + '"';
         if (isCloseButton) {
             buttonHtml += ' data-bs-dismiss="modal"';
+        }
+        if(value){
+            buttonHtml += ' value="' + value + '"';
         }
         buttonHtml += '>';
         if (faIcon) {

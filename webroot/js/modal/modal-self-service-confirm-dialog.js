@@ -25,7 +25,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         }
 
         for(var i=0;i<dialogbuttons.length;i++) {
-           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton)];
+           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton, [dialogbuttons[i].value])];
         }
 
         foodcoopshop.Modal.appendModalToDom(
@@ -45,7 +45,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
 
         $('button.btn-paymenttype-details').on('click', function () {
             foodcoopshop.ModalSelfServiceConfirmDialog.getCloseHandler(modalSelector);
-            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog_paymenttype-details', 'Zahlungsart ' + $(this).text());
+            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog_paymenttype-details', 'Zahlungsart ' + $(this).text(), $(this).attr('value'));
         });  
     },
 
