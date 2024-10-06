@@ -60,7 +60,6 @@ else {
         'isCloseButton' => null,
       ];
     }
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServicePaymenttypeDetailsDialog.init();" ]);
   }
   $dialogButtons[] = [
       'classes' => 'btn-outline-light',
