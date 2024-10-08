@@ -67,7 +67,7 @@ return [
         'short' => [
             'prefix' => 'example_com_',
         ],
-        '_cake_core_' => [
+        '_cake_translations_' => [
             'prefix' => 'example_com_',
         ],
         '_cake_model_' => [
