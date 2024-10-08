@@ -60,12 +60,12 @@ class ProductQuantityService
     public function changeStockAvailable($orderDetail, $increaseQuantity): int|float
     {
         $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
-        $stockAvailable = $stockAvailablesTable->find('all', [
-            'conditions' => [
+        $stockAvailable = $stockAvailablesTable->find('all',
+            conditions: [
                 'id_product' => $orderDetail->product_id,
                 'id_product_attribute' => $orderDetail->product_attribute_id,
             ],
-        ])->first();
+        )->first();
         $newStockAvailableQuantity = $stockAvailable->quantity + $increaseQuantity;
         $stockAvailable2saveData = [
             [

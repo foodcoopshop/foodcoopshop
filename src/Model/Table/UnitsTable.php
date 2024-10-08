@@ -97,9 +97,9 @@ class UnitsTable extends AppTable
                 'Units.id_product_attribute' => $productAttributeId,
             ];
         }
-        $unitObject = $this->find('all', [
-            'conditions' => $unitProductConditions,
-        ])->first();
+        $unitObject = $this->find('all',
+            conditions: $unitProductConditions,
+        )->first();
         return $unitObject;
     }
 

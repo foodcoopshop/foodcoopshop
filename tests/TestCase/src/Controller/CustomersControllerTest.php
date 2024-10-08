@@ -65,11 +65,11 @@ class CustomersControllerTest extends AppCakeTestCase
             'customerId' => $customerId,
             'groupId' => Customer::GROUP_ADMIN,
         ]);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId,
             ],
-        ])->first();
+        )->first();
         $this->assertEquals(Customer::GROUP_ADMIN, $customer->id_default_group);
     }
 
@@ -82,11 +82,11 @@ class CustomersControllerTest extends AppCakeTestCase
             'customerId' => $customerId,
             'groupId' => Customer::GROUP_SUPERADMIN,
         ]);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId,
             ],
-        ])->first();
+        )->first();
         $this->assertEquals(Customer::GROUP_MEMBER, $customer->id_default_group);
     }
 
