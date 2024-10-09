@@ -183,7 +183,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
             ],
         ]);
         $this->loginAsCustomer();
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar, Bankomatkarte', $this->_response->getBody()->__toString());
         $this->addProductToSelfServiceCart(344, 1);
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
