@@ -62,8 +62,4 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         $(modalSelector).remove();
     },
 
-    getButtonName: function (button) {
-        button.attr('name');
-    }
-
 };
