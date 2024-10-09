@@ -168,6 +168,38 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $cart->status);
     }
 
+    public function testSelfServiceWithEasyModeAndPaymentTypesConfig() {
+        Configure::write('app.selfServiceEasyModeEnabled', true);
+        Configure::write('app.selfServicePaymentTypes', [
+            [
+                'id' => 1,
+                'payment_type' => 'Bar',
+                'payment_text' => 'Bitte Einkauf in Bar bezahlen.',
+            ],
+            [
+                'id' => 1,
+                'payment_type' => 'Bankomatkarte',
+                'payment_text' => 'Bitte Einkauf mit Bankomatkarte bezahlen.',
+            ],
+        ]);
+        $this->loginAsCustomer();
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar, Bankomatkarte', $this->_response->getBody()->__toString());
+        $this->addProductToSelfServiceCart(344, 1);
+        $this->finishSelfServiceCart(0, 0);
+        $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
+        $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', 
+        conditions: [
+            'Carts.id_customer' => Configure::read('test.customerId'),
+            'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
+        ],
+        order: [
+            'Carts.id_cart' => 'DESC',
+        ])->first();
+        $this->assertEquals(0, $cart->status);
+    }
+
     public function testSelfServiceRemoveProductWithPricePerUnit()
     {
         $this->loginAsSuperadmin();
