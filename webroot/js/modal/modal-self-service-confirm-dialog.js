@@ -59,7 +59,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
     },
 
     getCloseHandler : function(modalSelector) {
-        $(modalSelector).remove();
+        foodcoopshop.Modal.destroy($(modalSelector));
     },
 
 };
