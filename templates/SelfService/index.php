@@ -30,46 +30,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
-if (!Configure::read('app.selfServiceEasyModeEnabled')) {
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"]);    
-}
-else {
-  $title='';
-  $html='';
-  $dialogButtons=[];
-  $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
-
-  if (empty($selfServicePaymentTypes)){
-    $title=__('Confirm_self_service_purchase_dialog') .'?';
-    $html='<p>' . __('Confirm_self_service_purchase') . '</p>';
-    $dialogButtons[] = [
-        'classes' => 'btn-success',
-        'title' => __('Confirm_self_service_purchase_button'),
-        'faIcon' => 'fa-fw fas fa-check',
-        'isCloseButton' => null
-    ];
-  }
-  else{
-    $title=__('Choose_paymenttype_for_self_service_purchase_dialog');
-    $html='<p>' . __('Confirm_self_service_purchase_with_paymenttypes') . '</p>';
-    foreach($selfServicePaymentTypes as $selfServicePaymentType) {
-      $dialogButtons[] = [
-        'classes' => 'btn-paymenttype-details',
-        'title' => $selfServicePaymentType['payment_type'],
-        'faIcon' => 'fa-fw fas fa-check',
-        'isCloseButton' => true,
-        'value' => $selfServicePaymentType['payment_text']
-      ];
-    }
-  }
-  $dialogButtons[] = [
-      'classes' => 'btn-outline-light',
-      'title' => __('Deny_self_service_purchase_button'),
-      'faIcon' => null,
-      'isCloseButton' => true
-  ];
-  $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init('$title', '$html', '".json_encode($dialogButtons)."');" ]);
-}
+$this->element('selfService/initCartFinishDialog');
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"]);
