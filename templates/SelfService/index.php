@@ -57,7 +57,7 @@ else {
         'classes' => 'btn-paymenttype-details',
         'title' => $selfServicePaymentType['payment_type'],
         'faIcon' => 'fa-fw fas fa-check',
-        'isCloseButton' => null,
+        'isCloseButton' => true,
         'value' => $selfServicePaymentType['payment_text']
       ];
     }
