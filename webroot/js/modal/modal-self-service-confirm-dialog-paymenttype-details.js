@@ -21,7 +21,8 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
     getOpenHandler : function(modalSelector, paymentName, paymentText) {
         var modalSelector = '#self-service-confirm-dialog-paymenttype-details';
         var title = paymentName;
-        var html='<p>' + paymentText + '</p>';
+        var amount = $('p.total-sum-wrapper > span.sum').html();
+        var html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceAmountToBePaid + amount + paymentText+ '</p>';
 
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),

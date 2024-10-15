@@ -286,6 +286,9 @@ msgstr "Einkauf abschließen & bezahlen"
 msgid "Deny_self_service_purchase_button"
 msgstr "Einkauf abbrechen"
 
+msgid "Amount_to_be_paid"
+msgstr "Zu zahlenden Betrag von "
+
 msgid "For_self_service_with_account"
 msgstr "Du hast ein Mitgliedskonto und möchtest mit deinem Guthaben einkaufen?</br>Melde dich hier an:"
 
