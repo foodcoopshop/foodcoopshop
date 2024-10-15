@@ -42,7 +42,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
             foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
         });
 
-        $('button.btn-paymenttype-details').on('click', function () {
+        $('button.btn-success.no-auto-bind').on('click', function () {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details', 'Zahlungsart ' + $(this).text(), $(this).attr('value'));
         });  
     },

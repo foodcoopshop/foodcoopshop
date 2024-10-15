@@ -41,7 +41,7 @@ if (empty($selfServicePaymentTypes)) {
     $html = '<p>' . __('Confirm_self_service_purchase_with_paymenttypes') . '</p>';
     foreach($selfServicePaymentTypes as $selfServicePaymentType) {
         $dialogButtons[] = [
-            'classes' => 'btn-paymenttype-details',
+            'classes' => 'btn-success no-auto-bind',
             'title' => $selfServicePaymentType['payment_type'],
             'faIcon' => 'fa-fw fas fa-check',
             'isCloseButton' => true,

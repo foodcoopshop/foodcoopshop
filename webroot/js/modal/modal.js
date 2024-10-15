@@ -15,13 +15,13 @@
 foodcoopshop.Modal = {
 
     getSuccessButton : function(selector) {
-        return $(selector + ' .modal-footer .btn-success');
+        return $(selector + ' .modal-footer .btn-success:not(.no-auto-bind');
     },
 
     bindSuccessButton: function(selector, callback) {
 
         this.getSuccessButton(selector).on('click', function() {
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
+            foodcoopshop.Helper.addSpinnerToButton( $(this), 'fa-check');
             foodcoopshop.Helper.disableButton($(this));
             callback();
         });

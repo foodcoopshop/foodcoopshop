@@ -44,26 +44,6 @@ body.self_services #content {
     height: 60px;
     font-size: 20px;
 }
-.btn-paymenttype-details {
-    border-color: var(--theme-color);
-    background-color: var(--theme-color);
-    --bs-btn-color: #fff;
-    --bs-btn-hover-color: #fff;
-}
-.btn-paymenttype-details:active {
-    border-color: transparent;
-    opacity: 1;
-}
-.btn-paymenttype-details:hover {
-    opacity: 0.8;
-}
-.btn-paymenttype-details:hover,
-.btn-paymenttype-details:focus,
-.btn-paymenttype-details:active,
-.btn-paymenttype-details.disabled {
-    background-color: var(--theme-color) ! important;
-    border-color: var(--theme-color);
-}
 .self-service .header h1 span {
     margin-right: 10px;
 }
