@@ -13,17 +13,19 @@
  */
 foodcoopshop.ModalSelfServiceConfirmDialog = {
    
-    init : function() {
+    init : function(title, html, dialogbuttons) {
 
         var modalSelector = '#self-service-confirm-dialog';
-        var title = '';
-        var html='';
-        title = foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseDialog + '?';
-        html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchase + '</p>';
-        var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.cart.selfServiceDenyPurchaseButton, null, true)
-        ];
+        var buttons = [];
+        dialogbuttons = $.parseJSON(dialogbuttons);
+
+        if (dialogbuttons.length == 0) {
+            return;
+        }
+
+        for(var i=0;i<dialogbuttons.length;i++) {
+           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton, [dialogbuttons[i].value])];
+        }
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
@@ -39,11 +41,10 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         $('button.btn-order-self-service').on('click', function () {
             foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
         });
-        
-    },
 
-    getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceShowConfirmDialog + '</p>';
+        $('button.btn-success.no-auto-bind').on('click', function () {
+            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details', $(this).text(), $(this).attr('value'));
+        });  
     },
 
     getSuccessHandler : function() {
@@ -53,6 +54,6 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
 
     getOpenHandler : function(modalSelector) {
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
-    }
+    },
 
 };

@@ -271,14 +271,23 @@ msgstr "Klicke auf deinen Standort um die SELBSTBEDIENUNG zu STARTEN"
 msgid "Confirm_self_service_purchase_dialog"
 msgstr "Einkauf abschließen"
 
+msgid "Choose_paymenttype_for_self_service_purchase_dialog"
+msgstr "Zahlungsart wählen"
+
 msgid "Confirm_self_service_purchase"
 msgstr "Ich bestätige den Einkauf & akzeptiere ABG sowie Rücktrittsrecht."
+
+msgid "Confirm_self_service_purchase_with_paymenttypes"
+msgstr "Ich akzeptiere ABG sowie Rücktrittsrecht und wähle als Zahlungsart für meinen Einkauf:"
 
 msgid "Confirm_self_service_purchase_button"
 msgstr "Einkauf abschließen & bezahlen"
 
 msgid "Deny_self_service_purchase_button"
 msgstr "Einkauf abbrechen"
+
+msgid "Amount_to_be_paid"
+msgstr "Zu zahlenden Betrag von "
 
 msgid "For_self_service_with_account"
 msgstr "Du hast ein Mitgliedskonto und möchtest mit deinem Guthaben einkaufen?</br>Melde dich hier an:"

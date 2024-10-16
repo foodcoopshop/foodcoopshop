@@ -30,11 +30,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
-if (!Configure::read('app.selfServiceEasyModeEnabled')) {
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Cart.initCartFinish();"]);    
-} else {
-    $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init();"]);
-}
+$this->element('selfService/initCartFinishDialog');
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"]);

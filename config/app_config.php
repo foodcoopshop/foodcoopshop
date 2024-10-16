@@ -104,6 +104,13 @@ return [
             //     'customerId' => 33,
             // ],
         ],
+        'selfServicePaymentTypes' => [
+            // [
+            //     'id' => 1, 
+            //     'payment_type' => 'Bar',
+            //     'payment_text' => 'Bitte Einkauf in Bar bezahlen.',
+            // ],
+        ],
         'selfServiceEasyModeEnabled' => false,
         'showOrderedProductsTotalAmountInCatalog' => false,
         'applyOpenOrderCheckForOrderReminder' => true,

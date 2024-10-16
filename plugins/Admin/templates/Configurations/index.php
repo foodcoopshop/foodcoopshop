@@ -364,6 +364,16 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.selfServicePaymentTypes</td>
+            <td><?php
+                $output = array_map(function($selfServicePaymentType) {
+                    return $selfServicePaymentType['payment_type'];
+                }, Configure::read('app.selfServicePaymentTypes'));
+                echo $output ? join(' / ', $output) : '';
+            ?></td>
+        </tr>
+
+        <tr>
             <td>app.showTaxInOrderConfirmationEmail</td>
             <td><?php echo Configure::read('app.showTaxInOrderConfirmationEmail') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
