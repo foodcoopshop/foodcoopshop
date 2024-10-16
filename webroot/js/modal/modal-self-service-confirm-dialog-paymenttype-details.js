@@ -20,10 +20,6 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
     getOpenHandler : function(modalSelector, paymentName, paymentText) {
         var modalSelector = '#self-service-confirm-dialog-paymenttype-details';
-        var title = paymentName;
-        var amount = $('p.total-sum-wrapper > span.sum').html();
-        var html = '<p>' + foodcoopshop.LocalizedJs.cart.selfServiceAmountToBePaid + amount + paymentText+ '</p>';
-
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.cart.selfServiceDenyPurchaseButton, null, true)
@@ -31,10 +27,14 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            title,
-            html,
+            '',
+            '',
             buttons
         );
+
+        var amount = $('p.total-sum-wrapper > span.sum').html();
+        $(modalSelector + ' .modal-title').text(paymentName);
+        $(modalSelector + ' .modal-body').html('<p>' + foodcoopshop.LocalizedJs.cart.selfServiceAmountToBePaid + amount + paymentText + '</p>');
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler();
