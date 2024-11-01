@@ -567,6 +567,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ]);
         $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
         $this->assertSession($selfServiceCustomerId, 'Auth.id_customer');
+        $this->assertRedirect($this->Slug->getSelfService());
     }
 
     public function testAutoLoginAsSelfServiceCustomerNotOk()
@@ -581,6 +582,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ]);
         $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
         $this->assertFlashMessage('Anmelden ist fehlgeschlagen.');
+        $this->assertRedirect($this->Slug->getHome());
     }
 
     private function doBarCodeLogin()

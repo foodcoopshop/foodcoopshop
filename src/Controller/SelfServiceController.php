@@ -53,7 +53,7 @@ class SelfServiceController extends FrontendController
         });
         if (empty($selfServiceLoginCustomer)) {
             $this->Flash->error(__('Signing_in_failed.'));
-            $this->redirect(Configure::read('app.slugHelper')->getHome());
+            return $this->redirect(Configure::read('app.slugHelper')->getHome());
         }
 
         $customerId =   reset($selfServiceLoginCustomer)['customerId'];
@@ -69,10 +69,10 @@ class SelfServiceController extends FrontendController
             Router::setRequest($this->getRequest());
         } else {
             $this->Flash->error(__('Signing_in_failed.'));
-            $this->redirect(Configure::read('app.slugHelper')->getHome());
+            return $this->redirect(Configure::read('app.slugHelper')->getHome());
         }
 
-        $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+        return $this->redirect(Configure::read('app.slugHelper')->getSelfService());
     }
 
     public function index()
