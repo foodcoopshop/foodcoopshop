@@ -42,6 +42,9 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
         $('btn-outline-light').on('click', function () {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getCloseHandler(modalSelector);
+        });
+        $('btn-close').on('click', function () {
+            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getCloseHandler(modalSelector);
         }); 
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
@@ -49,6 +52,7 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
     getCloseHandler : function(modalSelector) {
         foodcoopshop.Modal.destroy($('#self-service-confirm-dialog-paymenttype-details'));
+        foodcoopshop.SelfService.setFocusToSearchInputField();
     },
     
 };
