@@ -981,6 +981,10 @@ foodcoopshop.Helper = {
             }, 500, function () {
                 $(this).remove();
             });
+            var searchInputField = document.getElementById('input[name="keyword"]');
+            if (searchInputField.length){
+              foodcoopshop.SelfService.setFocusToSearchInputField();
+            }
         });
         $(document).one('keydown', function(event) {
             if (event.keyCode == 27) {
