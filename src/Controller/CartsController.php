@@ -234,11 +234,15 @@ class CartsController extends FrontendController
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
 
-        $this->set([
+        $result = [
             'status' => 1,
-            'msg' => 'ok',
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            'msg' => 'ok'
+        ];
+        if ((new OrderCustomerService())->isSelfServiceModeByReferer()) {
+            $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
+        }
+        $this->set($result);
+        $this->viewBuilder()->setOption('serialize', array_keys($result));
     }
 
     public function emptyCart()
