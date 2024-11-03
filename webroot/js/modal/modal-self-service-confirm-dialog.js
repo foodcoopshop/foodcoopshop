@@ -42,9 +42,17 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
             foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
         });
 
-        $('button.btn-success.no-auto-bind').on('click', function () {
+        $(modalSelector + ' button.btn-success.no-auto-bind').on('click', function () {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details', $(this).text(), $(this).attr('value'));
-        });  
+        });
+
+        $(modalSelector + ' button.btn-outline-light').on('click', function () {
+            foodcoopshop.ModalSelfServiceConfirmDialog.getCloseHandler(modalSelector);
+        });
+
+        $(modalSelector + ' button.btn-close').on('click', function () {
+            foodcoopshop.ModalSelfServiceConfirmDialog.getCloseHandler(modalSelector);
+        }); 
     },
 
     getSuccessHandler : function() {
@@ -54,6 +62,10 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
 
     getOpenHandler : function(modalSelector) {
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
+    },
+
+    getCloseHandler : function(modalSelector) {
+        foodcoopshop.SelfService.setFocusToSearchInputField();
     },
 
 };
