@@ -981,9 +981,9 @@ foodcoopshop.Helper = {
             }, 500, function () {
                 $(this).remove();
             });
-            var searchInputField = document.getElementById('input[name="keyword"]');
-            if (searchInputField.length){
-              foodcoopshop.SelfService.setFocusToSearchInputField();
+            var searchInputField = $('form#product-search-1 input[name="keyword"]');
+            if (searchInputField.length > 0) {
+                foodcoopshop.SelfService.setFocusToSearchInputField();
             }
         });
         $(document).one('keydown', function(event) {
