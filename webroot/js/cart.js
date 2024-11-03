@@ -634,6 +634,9 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.removeSpinnerFromButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        if (data.callback) {
+                            eval(data.callback);
+                        }
                     },
                     onError: function (data) {
                         $('.cart p.products .product.' + productId).addClass('error').remove();
@@ -643,6 +646,9 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.showErrorMessage(data.msg);
                         foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        if (data.callback) {
+                            eval(data.callback);
+                        }
                     }
                 }
             );
