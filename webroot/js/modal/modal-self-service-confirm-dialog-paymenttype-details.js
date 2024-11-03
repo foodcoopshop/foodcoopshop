@@ -40,10 +40,10 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler();
         });
 
-        $('btn-outline-light').on('click', function () {
+        $(modalSelector + ' button.btn-outline-light').on('click', function () {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getCloseHandler(modalSelector);
         });
-        $('btn-close').on('click', function () {
+        $(modalSelector + ' button.btn-close').on('click', function () {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getCloseHandler(modalSelector);
         }); 
 
