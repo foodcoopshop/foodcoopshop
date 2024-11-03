@@ -42,15 +42,15 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
             foodcoopshop.ModalSelfServiceConfirmDialog.getOpenHandler(modalSelector);
         });
 
-        $('button.btn-success.no-auto-bind').on('click', function () {
+        $(modalSelector + ' button.btn-success.no-auto-bind').on('click', function () {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details', $(this).text(), $(this).attr('value'));
-        });  
+        });
 
-        $('btn-outline-light').on('click', function () {
+        $(modalSelector + ' button.btn-outline-light').on('click', function () {
             foodcoopshop.ModalSelfServiceConfirmDialog.getCloseHandler(modalSelector);
         });
 
-        $('btn-close').on('click', function () {
+        $(modalSelector + ' button.btn-close').on('click', function () {
             foodcoopshop.ModalSelfServiceConfirmDialog.getCloseHandler(modalSelector);
         }); 
     },
