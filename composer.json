@@ -40,7 +40,7 @@
     "require-dev": {
         "cakephp/debug_kit": "5.*",
         "cakephp/cakephp-codesniffer": "^5.0",
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^11.0",
         "phpstan/phpstan": "^1.0",
         "cakephp/bake": "^3.0.0",
         "ergebnis/phpstan-rules": "^2.0",
