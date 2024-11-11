@@ -52,6 +52,7 @@ use Cake\Core\Configure;
 
     echo '<tr class="sort">';
     echo '<th>'.__d('admin', 'Invoice_date').'</th>';
+    echo '<th>'.__d('admin', 'Invoice_number').'</th>';
     echo '<th>'.__d('admin', 'Manufacturer').'</th>';
     echo '<th>'.__d('admin', 'Invoice').'</th>';
     echo '</tr>';
@@ -64,6 +65,10 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Time->formatToDateShort($file['invoice_date']);
+        echo '</td>';
+
+        echo '<td>';
+        echo $file['invoice_number'];
         echo '</td>';
 
         echo '<td>';

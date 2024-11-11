@@ -109,7 +109,7 @@ class ListsController extends AdminAppController
             
         }
 
-        $files = Hash::sort($files, '{n}.invoice_date', 'asc');
+        $files = Hash::sort($files, '{n}.invoice_date', 'desc');
         $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
         $this->set('files', $files);
 
