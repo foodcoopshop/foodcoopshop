@@ -32,12 +32,12 @@ class ListsController extends AdminAppController
         $path = realpath(Configure::read('app.folder_invoices'));
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
-        $year = h($this->getRequest()->getQuery('year', ''));
-        $this->set('year', $year);
-
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $firstOrderYear = $orderDetailsTable->getFirstOrderYear((string) $this->identity->getManufacturerId());
         $lastOrderYear = $orderDetailsTable->getLastOrderYear((string) $this->identity->getManufacturerId());
+
+        $year = h($this->getRequest()->getQuery('year', $lastOrderYear));
+        $this->set('year', $year);
 
         $years = null;
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
