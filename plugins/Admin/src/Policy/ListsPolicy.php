@@ -33,6 +33,7 @@ class ListsPolicy implements RequestPolicyInterface
         }
 
         return match($request->getParam('action')) {
+            'invoices' => !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isManufacturer(),
             'getInvoice' => (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity !== null) ||
                 ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer()),
              default => $identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer(),

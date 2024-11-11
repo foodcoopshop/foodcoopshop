@@ -7,6 +7,8 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Http\Exception\UnauthorizedException;
 use App\Services\DeliveryRhythmService;
+use Cake\Controller\Exception\InvalidParameterException;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,10 +26,100 @@ use App\Services\DeliveryRhythmService;
 class ListsController extends AdminAppController
 {
 
+    public function invoices()
+    {
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $path = realpath(Configure::read('app.folder_invoices'));
+        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+
+        $year = h($this->getRequest()->getQuery('year', ''));
+        $this->set('year', $year);
+
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $firstOrderYear = $orderDetailsTable->getFirstOrderYear((string) $this->identity->getManufacturerId());
+        $lastOrderYear = $orderDetailsTable->getLastOrderYear((string) $this->identity->getManufacturerId());
+
+        $years = null;
+        if ($lastOrderYear !== false && $firstOrderYear !== false) {
+            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
+        }
+        $this->set('years', $years);
+
+        if (!in_array($year, $years)) {
+            throw new InvalidParameterException('year not allowed');
+        }
+
+        $dateFrom = $year . '-01-01';
+        $dateTo = $year . '-12-31';
+
+        $files = [];
+
+        foreach ($objects as $name => $object) {
+
+            if (!preg_match('/\.pdf$/', $object->getFileName())) {
+                continue;
+            }
+
+            if (!preg_match('/'.__d('admin', '_Invoice_filename_').'/', $object->getFileName(), $matches)) {
+                continue;
+            }
+
+            $invoiceDate = substr($object->getFileName(), 0, 10);
+            $explodedString = explode('_', $object->getFileName());
+            $manufacturerId = (int) $explodedString[2];
+            $invoiceNumber = (int) $explodedString[4];
+
+            // date check
+            if (!(strtotime($invoiceDate) >= strtotime($dateFrom) && strtotime($invoiceDate) <= strtotime($dateTo))) {
+                continue;
+            }
+
+            if ($this->identity->isManufacturer() && $manufacturerId != $this->identity->getManufacturerId()) {
+                continue;
+            }
+
+            if (!$manufacturerId) {
+                $message = 'error: ManufacturerId not found in ' . $object->getFileName();
+                Log::error($message);
+                continue;
+            }
+
+            $manufacturer = $manufacturersTable->find('all', conditions: [
+                'Manufacturers.id_manufacturer' => $manufacturerId,
+            ])->first();
+
+            if ($manufacturer === null) {
+                $message = 'error: Manufacturer not found, manufacturerId: ' . $manufacturerId;
+                Log::error($message);
+                continue;
+            }
+
+            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices') . DS, '', $name);
+            $invoiceLink = str_replace(DS, '/', $invoiceLink);
+            
+            $files[] = [
+                'invoice_date' => $invoiceDate,
+                'invoice_number' => $invoiceNumber,
+                'manufacturer_name' => $manufacturer->name,
+                'invoice' => [
+                    'label' => __d('admin', 'Download'), 'link' => $invoiceLink, 'icon' => 'fa-arrow-right',
+                ],
+                'manufacturer_id' => $manufacturerId,
+            ];
+            
+        }
+
+        $files = Hash::sort($files, '{n}.invoice_date', 'asc');
+        $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
+        $this->set('files', $files);
+
+        $this->set('title_for_layout', __d('admin', 'Invoices'));
+    }
+
     public function orderLists()
     {
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $path = realpath(Configure::read('app.folder_order_lists'));
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
@@ -89,7 +181,7 @@ class ListsController extends AdminAppController
                 return;
             }
 
-            $manufacturer = $this->Manufacturer->find('all', conditions: [
+            $manufacturer = $manufacturersTable->find('all', conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ])->first();
 

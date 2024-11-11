@@ -100,6 +100,11 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/lists/order-lists';
     }
 
+    public function getManufacturerInvoices()
+    {
+        return $this->getAdminHome().'/lists/invoices';
+    }
+
     public function getAcceptTermsOfUse()
     {
         return '/'.__('route_accept_terms_of_use');
