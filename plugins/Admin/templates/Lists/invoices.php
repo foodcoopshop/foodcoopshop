@@ -52,7 +52,7 @@ use Cake\Core\Configure;
 
     echo '<tr class="sort">';
     echo '<th>'.__d('admin', 'Invoice_date').'</th>';
-    echo '<th>'.__d('admin', 'Invoice_number').'</th>';
+    echo '<th>'.__d('admin', 'Invoice_number_abbreviation').'</th>';
     echo '<th>'.__d('admin', 'Manufacturer').'</th>';
     echo '<th>'.__d('admin', 'Invoice').'</th>';
     echo '</tr>';

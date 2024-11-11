@@ -67,7 +67,7 @@ class ListsController extends AdminAppController
             $invoiceDate = substr($object->getFileName(), 0, 10);
             $explodedString = explode('_', $object->getFileName());
             $manufacturerId = (int) $explodedString[2];
-            $invoiceNumber = (int) $explodedString[4];
+            $invoiceNumber = $explodedString[4];
 
             // date check
             if (!(strtotime($invoiceDate) >= strtotime($dateFrom) && strtotime($invoiceDate) <= strtotime($dateTo))) {
