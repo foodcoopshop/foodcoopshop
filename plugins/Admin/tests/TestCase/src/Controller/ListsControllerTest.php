@@ -34,6 +34,7 @@ class ListsControllerTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
+        $this->prepareSendingInvoices();
     }
 
     public function testAccessDownloadableInvoice()
@@ -99,8 +100,8 @@ class ListsControllerTest extends AppCakeTestCase
         }
         sort($files);
 
-        $orderListDownloadUrlClearText = '/admin/lists/getOrderList?file=' . $files[0];
-        $orderListDownloadUrlAnonymized = '/admin/lists/getOrderList?file=' . $files[6];
+        $orderListDownloadUrlClearText = Configure::read('app.slugHelper')->getOrderListDownloadRoute($files[0]);
+        $orderListDownloadUrlAnonymized = Configure::read('app.slugHelper')->getOrderListDownloadRoute($files[6]);
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
@@ -145,6 +146,63 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Gemüse-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Milch-Hersteller</td>');
+
+    }
+
+    /**
+     * this method is not split up into separated test methods because
+     * generating the pdfs for the test needs a lot of time
+     */
+    public function testAccessManufacturerInvoicesPageAndDownloadableFile()
+    {
+        $this->loginAsSuperadmin();
+        $this->addProductToCart(346, 1);
+        $this->addProductToCart(346, 1);
+        $this->finishCart();
+        $this->logout();
+
+        $this->exec('send_invoices_to_manufacturers 2018-03-11 10:20:30');
+        $this->runAndAssertQueue();
+
+        $listPageUrl = $this->Slug->getManufacturerInvoices();
+
+        $path = realpath(Configure::read('app.folder_invoices'));
+        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+
+        $files = [];
+        foreach ($objects as $name => $object) {
+            if (!preg_match('/\.pdf$/', $name)) {
+                continue;
+            }
+            $files[] = str_replace(Configure::read('app.folder_invoices'), '', $object->getPathName());
+        }
+        sort($files);
+
+        $invoiceDownloadUrlMeatManufacturer = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($files[0]);
+        $invoiceDownloadUrlMilkManufacturer = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($files[2]);
+
+        // check list page as manufacturer
+        $this->loginAsMeatManufacturer();
+        $this->get($listPageUrl);
+        $this->assertResponseContains('<b>1</b> Datensatz');
+        $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
+        $this->assertResponseNotContains('<td>Demo Gemüse-Hersteller</td>');
+        $this->assertResponseNotContains('<td>Demo Milch-Hersteller</td>');
+
+        // check downloadable file as correct manufacturer
+        $this->get($invoiceDownloadUrlMeatManufacturer);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+
+        // check downloadable file as wrong manufacturer
+        $this->get($invoiceDownloadUrlMilkManufacturer);
+        $this->assertResponseCode(401);
+
+        // check downloadable file as admin
+        $this->loginAsAdmin();
+        $this->get($invoiceDownloadUrlMeatManufacturer);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
 
     }
 
