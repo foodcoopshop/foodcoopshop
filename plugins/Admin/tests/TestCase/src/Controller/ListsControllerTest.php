@@ -100,8 +100,8 @@ class ListsControllerTest extends AppCakeTestCase
         }
         sort($files);
 
-        $orderListDownloadUrlClearText = '/admin/lists/getOrderList?file=' . $files[0];
-        $orderListDownloadUrlAnonymized = '/admin/lists/getOrderList?file=' . $files[6];
+        $orderListDownloadUrlClearText = Configure::read('app.slugHelper')->getOrderListDownloadRoute($files[0]);
+        $orderListDownloadUrlAnonymized = Configure::read('app.slugHelper')->getOrderListDownloadRoute($files[6]);
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
@@ -178,8 +178,8 @@ class ListsControllerTest extends AppCakeTestCase
         }
         sort($files);
 
-        $invoiceDownloadUrlMeatManufacturer = '/admin/lists/getInvoice?file=' . $files[0];
-        $invoiceDownloadUrlMilkManufacturer = '/admin/lists/getInvoice?file=' . $files[2];
+        $invoiceDownloadUrlMeatManufacturer = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($files[0]);
+        $invoiceDownloadUrlMilkManufacturer = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($files[2]);
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();

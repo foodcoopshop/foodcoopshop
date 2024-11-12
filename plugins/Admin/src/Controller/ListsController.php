@@ -94,7 +94,8 @@ class ListsController extends AdminAppController
                 continue;
             }
 
-            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices') . DS, '', $name);
+            $file = str_replace(Configure::read('app.folder_invoices') . DS, '', $name);
+            $invoiceLink = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($file);
             $invoiceLink = str_replace(DS, '/', $invoiceLink);
             
             $files[] = [
@@ -183,7 +184,8 @@ class ListsController extends AdminAppController
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ])->first();
 
-            $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists') . DS, '', $name);
+            $filenameForDownloadLink = str_replace(Configure::read('app.folder_order_lists') . DS, '', $name);
+            $productListLink = Configure::read('app.slugHelper')->getOrderListDownloadRoute($filenameForDownloadLink);
             $productListLink = str_replace(DS, '/', $productListLink);
             $customerListLink = preg_replace(
                 '/' . str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . $matches[1] . '/',

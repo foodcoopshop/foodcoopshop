@@ -44,9 +44,14 @@ class SlugHelper extends Helper
         return '/admin/feedbacks/form/' . $customerId;
     }
 
-    public function getInvoiceDownloadRoute($invoiceFilename)
+    public function getInvoiceDownloadRoute($filename)
     {
-        return '/admin/lists/getInvoice?file=' . $invoiceFilename;
+        return '/admin/lists/getInvoice?file=' . $filename;
+    }
+
+    public function getOrderListDownloadRoute($filename)
+    {
+        return '/admin/lists/getOrderList?file=' . $filename;
     }
 
     public function getHelloCashInvoice($invoiceId, $cancellation=0)
