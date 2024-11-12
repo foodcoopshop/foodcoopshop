@@ -175,10 +175,8 @@ class ListsController extends AdminAppController
 
             if (!$manufacturerId) {
                 $message = 'error: ManufacturerId not found in ' . $object->getFileName();
-                $this->Flash->error($message);
-                $this->log($message);
-                $this->set('files', []);
-                return;
+                Log::error($message);
+                continue;
             }
 
             $manufacturer = $manufacturersTable->find('all', conditions: [
