@@ -17,6 +17,7 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use App\View\Helper\MyHtmlHelper;
 use Cake\View\View;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MyHtmlHelperTest extends AppCakeTestCase
 {
@@ -45,9 +46,7 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->assertEquals($result, $this->MyHtmlHelper->anonymizeCustomerName($name, $id));
     }
     
-    /**
-     * @dataProvider removeTimestampFromFileDataProvider
-     */
+    #[DataProvider('removeTimestampFromFileDataProvider')]
     public function testRemoveTimestampFromFile(string $filename, string $result): void
     {
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
