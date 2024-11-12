@@ -287,6 +287,17 @@ class ListsController extends AdminAppController
             }
         }
 
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isManufacturer()) {
+            $string = h($this->getRequest()->getQuery('file'));
+            $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
+            $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
+            $manufacturerId = (int) explode('_', $string)[2];
+            if ($manufacturerId != $this->identity->getManufacturerId()) {
+                throw new UnauthorizedException();
+            }
+
+        }
+
         return $this->getFile($filenameWithPath);
     }
 
