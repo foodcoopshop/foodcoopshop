@@ -247,13 +247,6 @@ if ($identity->isManufacturer()) {
             'fa-icon' => 'fa-fw ok fa-cogs'
         ]
     ];
-    $invoicesMenuElement = [
-        'slug' => $this->Slug->getManufacturerInvoices(),
-        'name' => __d('admin', 'Invoices'),
-        'options' => [
-            'fa-icon' => 'fa-fw ok fa-file-invoice',
-            ]
-    ];
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $od = FactoryLocator::get('Table')->get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($identity->getManufacturerId(), false);
@@ -273,7 +266,6 @@ if ($identity->isManufacturer()) {
     }
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
-    $menu[] = $invoicesMenuElement;
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
     }
@@ -281,10 +273,17 @@ if ($identity->isManufacturer()) {
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $menu[] = [
+            'slug' => $this->Slug->getManufacturerInvoices(),
+            'name' => __d('admin', 'Invoices'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-file-invoice',
+                ]
+        ];
+        $menu[] = [
             'slug' => $this->Slug->getMyStatistics(),
             'name' => __d('admin', 'Turnover_statistics'),
             'options' => [
-                'fa-icon' => 'fa-fw ok fa-chart-bar'
+                'fa-icon' => 'fa-fw ok fa-chart-bar',
             ]
         ];
     }
