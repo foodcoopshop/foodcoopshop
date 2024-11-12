@@ -137,11 +137,10 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     }
 
     private function assertChangedOrderDetails($orderDetails, $newPickupDay, $orderState) {
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail IN' => $orderDetails
-            ]
-        ])->toArray();
+        $orderDetails = $this->OrderDetail->find()->where([ 
+            'OrderDetails.id_order_detail IN' => $orderDetails
+        ]
+        )->toArray();
         foreach($orderDetails as $orderDetail) {
             $this->assertEquals($newPickupDay, $orderDetail->pickup_day->i18nFormat(Configure::read('DateFormat.Database')));
             $this->assertEquals($orderState, $orderDetail->order_state);
