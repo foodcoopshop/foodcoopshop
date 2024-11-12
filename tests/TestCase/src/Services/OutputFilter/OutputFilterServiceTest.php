@@ -17,13 +17,12 @@ declare(strict_types=1);
 
 use App\Services\OutputFilter\OutputFilterService;
 use App\Test\TestCase\AppCakeTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class OutputFilterServiceTest extends AppCakeTestCase
 {
 
-    /**
-     * @dataProvider protectEmailAdressesDataProvider
-     */
+    #[DataProvider('protectEmailAdressesDataProvider')]
     public function testProtectEmailAdresses(string $input, int $count)
     {
         $result = OutputFilterService::protectEmailAdresses($input);
