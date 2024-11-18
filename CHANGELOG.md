@@ -27,6 +27,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen für den [Einzelhandels-Modus](https://foodcoopshop.github.io/de/dorfladen-online.html)
 - Das Kunden-Dropdown bei Rechnungen und Gewinn-Übersicht ist jetzt ein Multi-Dropdown, dh. es können mehrere Kunden ausgewählt werden. [I#1026](https://github.com/foodcoopshop/foodcoopshop/issues/1026) / [PR#1080](https://github.com/foodcoopshop/foodcoopshop/pull/1080) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Bugfixes
+- Wenn ein Produkt bereits im Warenkorb eines Mitgliedes war und danach vom Hersteller gelöscht wurde, konnte es trotzdem bestellt werden. [I#1097](https://github.com/foodcoopshop/foodcoopshop/issues/1097) / [PR#1098](https://github.com/foodcoopshop/foodcoopshop/pull/1098) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ### For developers
 - Für die Tests werden jetzt ChecksumTestFixtures verwendet, was zu einer massiven Performance-Steigerung führt (ca. 3:40 min => ca. 2:20 min auf Github Actions). [I#1040](https://github.com/foodcoopshop/foodcoopshop/issues/1040) / [PR#1049](https://github.com/foodcoopshop/foodcoopshop/pull/1049) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 

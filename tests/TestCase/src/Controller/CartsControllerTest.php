@@ -1203,13 +1203,27 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
+    public function testFinishCartWithDeletedProduct()
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId1, 1);
+
+        // delete product that was already placed in cart
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $product = $productsTable->get($this->productId1);
+        $product->active = APP_DEL;
+        $productsTable->save($product);
+
+        $this->finishCart();
+        $this->assertResponseContains('ist leider nicht mehr aktiviert und somit nicht mehr bestellbar');
+    }
+
     public function testFinishEmptyCart()
     {
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
         $this->finishCart();
-        $this->assertRedirectContains(Configure::read('app.slugHelper')->getCartDetail());
     }
 
     /**

@@ -54,7 +54,7 @@ trait CartValidatorTrait
     public function isProductActive($active, $productName): bool|string
     {
         $result = true;
-        if (!$active) {
+        if ($active != APP_ON) {
             $result = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $productName . '</b>']);
         }
         return $result;
@@ -69,7 +69,7 @@ trait CartValidatorTrait
 
         $result = true;
 
-        if (!$active || (!$orderCustomerService->isOrderForDifferentCustomerMode()
+        if ($active != APP_ON || (!$orderCustomerService->isOrderForDifferentCustomerMode()
             && !$orderCustomerService->isSelfServiceModeByReferer()
             && $productsTable->deliveryBreakManufacturerEnabled($noDeliveryDays, $nextDeliveryDay, $stockManagementEnabled, $isStockProduct))) {
                 $result = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $productName . '</b>']);
