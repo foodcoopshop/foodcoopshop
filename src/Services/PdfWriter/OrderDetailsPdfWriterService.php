@@ -30,6 +30,10 @@ class OrderDetailsPdfWriterService extends PdfWriterService
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new ListTcpdfService());
+        if (Configure::read('app.additionalTextForReceipt') != '') {
+            Configure::write('appDb.FCS_APP_ADDRESS',  Configure::read('appDb.FCS_APP_ADDRESS') . '<br />' . Configure::read('app.additionalTextForReceipt'));
+        }
+
     }
 
     public function prepareAndSetData($pickupDay, $order)
