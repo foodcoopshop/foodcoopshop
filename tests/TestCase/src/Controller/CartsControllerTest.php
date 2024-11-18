@@ -1224,6 +1224,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
         $this->finishCart();
+        $this->assertRedirectContains(Configure::read('app.slugHelper')->getCartDetail());
     }
 
     /**
