@@ -1358,7 +1358,7 @@ class ProductsTable extends AppTable
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
 
-        if ($barcode != '' && isset($barcodeEntity2Save)) {
+        if ($barcode != '') {
             $barcodeEntity2Save->product_id = $newProductId;
             $barcodeProductsTable->save($barcodeEntity2Save);
         }
