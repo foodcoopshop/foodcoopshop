@@ -272,13 +272,17 @@ if ($identity->isManufacturer()) {
     $menu[] = $actionLogsMenuElement;
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        $menu[] = [
-            'slug' => $this->Slug->getManufacturerInvoices(),
-            'name' => __d('admin', 'Invoices'),
-            'options' => [
-                'fa-icon' => 'fa-fw ok fa-file-invoice',
-                ]
-        ];
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $firstOrderYear = $orderDetailsTable->getFirstOrderYear((string) $identity->getManufacturerId());
+        if ($firstOrderYear !== false) {
+            $menu[] = [
+                'slug' => $this->Slug->getManufacturerInvoices(),
+                'name' => __d('admin', 'Invoices'),
+                'options' => [
+                    'fa-icon' => 'fa-fw ok fa-file-invoice',
+                    ]
+            ];
+        }
         $menu[] = [
             'slug' => $this->Slug->getMyStatistics(),
             'name' => __d('admin', 'Turnover_statistics'),
