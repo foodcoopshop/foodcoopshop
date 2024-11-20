@@ -31,17 +31,23 @@ if (!Configure::read('app.selfServiceEasyModeEnabled')) {
         $paymentTypeAsString =  __('Cash');
     }
 } else {
-    $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
-    if(!empty($selfServicePaymentTypes)) {
-        $countSelfServicePaymentTypes = count($selfServicePaymentTypes);
-        $i = 1;
-        foreach($selfServicePaymentTypes as $selfServicePaymentType) {
-            $paymentTypeAsString .= $selfServicePaymentType['payment_type'];
-            if ($countSelfServicePaymentTypes > 1 && !($i == $countSelfServicePaymentTypes)){
-                $paymentTypeAsString .= ', ';
-            }
-            $i++;
-        }
+    if($identity->isSelfServiceCustomer()){
+      $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
+      if(!empty($selfServicePaymentTypes)) {
+          $countSelfServicePaymentTypes = count($selfServicePaymentTypes);
+          $i = 1;
+          foreach($selfServicePaymentTypes as $selfServicePaymentType) {
+              $paymentTypeAsString .= $selfServicePaymentType['payment_type'];
+              if ($countSelfServicePaymentTypes > 1 && !($i == $countSelfServicePaymentTypes)){
+                  $paymentTypeAsString .= ', ';
+              }
+              $i++;
+          }
+      } else{
+        $paymentTypeAsString =  __('Cash');
+      }
+    }else{
+      $paymentTypeAsString =  __('Credit');
     }
 }
 
