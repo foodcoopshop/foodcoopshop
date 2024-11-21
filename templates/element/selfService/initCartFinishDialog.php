@@ -27,7 +27,7 @@ $html = '';
 $dialogButtons = [];
 $selfServicePaymentTypes = Configure::read('app.selfServicePaymentTypes');
 
-if (empty($selfServicePaymentTypes)) {
+if (empty($selfServicePaymentTypes) || !$identity->isSelfServiceCustomer()) {
     $title = __('Confirm_self_service_purchase_dialog') .'?';
     $html = '<p>' . __('Confirm_self_service_purchase') . '</p>';
     $dialogButtons[] = [
