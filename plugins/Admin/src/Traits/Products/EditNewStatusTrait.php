@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +21,7 @@ use Cake\I18n\DateTime;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditNewStatusTrait 
+trait EditNewStatusTrait
 {
 
     public function editNewStatus($productId, $status)
@@ -44,9 +45,9 @@ trait EditNewStatusTrait
             ]
         )->first();
 
-        $product->created = DateTime::now();
+        $product->new = Date::now();
         if ($status == APP_OFF) {
-            $product->created = DateTime::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+            $product->new = Date::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
         }
         $this->Product->save($product);
 

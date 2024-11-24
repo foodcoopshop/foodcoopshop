@@ -807,7 +807,7 @@ class ProductsTable extends AppTable
 
             $product->is_new = true;
             if ($product->created) {
-                $product->is_new = $this->isNew($product->created->i18nFormat(Configure::read('DateFormat.Database')));
+                $product->is_new = $this->isNew($product->new->i18nFormat(Configure::read('DateFormat.Database')));
             }
 
             $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;

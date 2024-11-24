@@ -577,7 +577,7 @@ class CatalogService
             $products[$i]->gross_price = $grossPrice;
             $products[$i]->calculated_tax = $grossPrice - $products[$i]->price;
             $products[$i]->tax->rate = $taxRate;
-            $products[$i]->is_new = $this->Product->isNew($products[$i]->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
+            $products[$i]->is_new = $this->Product->isNew($products[$i]->new->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
             if (!Configure::read('app.isDepositEnabled')) {
                 $products[$i]->deposit_product->deposit = 0;
