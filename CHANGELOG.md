@@ -14,7 +14,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Bei Lagerprodukten wird die verfügbare Menge (Lagerstand) im Produktkatalog jetzt immer angezeigt. [I#1073](https://github.com/foodcoopshop/foodcoopshop/issues/1073) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Beim Ändern der Produkt-Menge kann jetzt ein Änderungsgrund mit angegeben werden, der dann im Aktivitäten-Log erscheit. Weiters gibt es jetzt die Möglichkeit, die neue Menge mithilfe des eingebauten Taschenrechners zu berechnen. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Software wurde auf Russisch übersetzt. [I#975](https://github.com/foodcoopshop/foodcoopshop/issues/975) / [PR#1071](https://github.com/foodcoopshop/foodcoopshop/pull/1071) <a href="https://github.com/guland2000"><img src="https://github.com/guland2000.png" width="20"></a>
-- Vereinfachung der Übersetzungen: Configuration Text und Subtext werden nicht mehr in der Datenbank gespeichert. [I#1072](https://github.com/foodcoopshop/foodcoopshop/issues/1072) / [PR#1074](https://github.com/foodcoopshop/foodcoopshop/pull/1074) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Hersteller finden ihre Rechnungen jetzt im Hersteller-Bereich. [I#1090](https://github.com/foodcoopshop/foodcoopshop/issues/1090) / [PR#1096](https://github.com/foodcoopshop/foodcoopshop/pull/1096) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Neue Funktionen für den Selbstbedienungs-Modus
@@ -32,6 +31,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### For developers
 - Für die Tests werden jetzt ChecksumTestFixtures verwendet, was zu einer massiven Performance-Steigerung führt (ca. 3:40 min => ca. 2:20 min auf Github Actions). [I#1040](https://github.com/foodcoopshop/foodcoopshop/issues/1040) / [PR#1049](https://github.com/foodcoopshop/foodcoopshop/pull/1049) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Vereinfachung der Übersetzungen: Configuration Text und Subtext werden nicht mehr in der Datenbank gespeichert. [I#1072](https://github.com/foodcoopshop/foodcoopshop/issues/1072) / [PR#1074](https://github.com/foodcoopshop/foodcoopshop/pull/1074) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 ## v4.0
 
