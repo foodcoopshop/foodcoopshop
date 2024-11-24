@@ -307,7 +307,7 @@ class CatalogService
         }
 
         $query->where(function (QueryExpression $exp) {
-            return $exp->lte('Products.new', Date::now()->format('Y-m-d'));
+            return $exp->gt('Products.new', Date::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW'))->format('Y-m-d'));
         });
 
         return $query;
