@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +27,8 @@ use App\Controller\Component\StringComponent;
     const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     const ALLOWED_STATUSES = [APP_OFF, APP_ON];
     const NAME_SEPARATOR = ': ';
+
+    protected array $_virtual = ['is_new'];
 
     public $nameSetterMethodEnabled = true;
 
@@ -50,6 +53,16 @@ use App\Controller\Component\StringComponent;
     public function _setUnity($value)
     {
         return StringComponent::removeSpecialChars(strip_tags(trim($value)));
+    }
+
+    public function _getIsNew()
+    {
+        if ($this->new === null) {
+            return false;
+        }
+
+        return $this->new->addDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW'))->isFuture();
+
     }
 
 }
