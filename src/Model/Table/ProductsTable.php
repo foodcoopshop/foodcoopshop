@@ -1304,14 +1304,8 @@ class ProductsTable extends AppTable
                 }
 
             } else {
-
-                // delete db records
-                $imagesTable->deleteAll([
-                    'Images.id_image' => $image->id_image
-                ]);
-
+                $imagesTable->delete($image);
                 FolderService::nonRecursivelyRemoveAllFiles($thumbsPath);
-
             }
         }
 
