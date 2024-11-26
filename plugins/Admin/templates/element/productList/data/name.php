@@ -30,6 +30,10 @@ echo '<td class="cell-name">';
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && isset($storageLocationsForForDropdown[$product->id_storage_location])) {
             $title[] = '<b>'.__d('admin', 'Storage_location').'</b>: '.$storageLocationsForForDropdown[$product->id_storage_location];
         }
+
+        $title[] = '<b>'.__d('admin', 'changed').'</b><br /> '.date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($product->modified));
+        $title[] = '<b>'.__d('admin', 'created').'</b><br />'.date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($product->created));
+
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',

@@ -668,15 +668,6 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function isNew(string $date): bool
-    {
-        $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
-        if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
-            return true;
-        }
-        return false;
-    }
-
     public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '',  $addProductNameToAttributes = false, $controller = null)
     {
 
@@ -804,11 +795,6 @@ class ProductsTable extends AppTable
                 }
             }
             $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
-
-            $product->is_new = true;
-            if ($product->created) {
-                $product->is_new = $this->isNew($product->created->i18nFormat(Configure::read('DateFormat.Database')));
-            }
 
             $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;
             $product->gross_price = $this->getGrossPrice($product->price, $taxRate);

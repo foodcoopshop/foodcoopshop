@@ -151,6 +151,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2015-08-19T09:35:46+02:00",
             "modified": "2015-08-19T09:35:45+02:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 686,
@@ -239,7 +240,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 1.82,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -247,7 +247,8 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Artischocke",
-            "row_class": "main-product custom-odd"
+            "row_class": "main-product custom-odd",
+            "is_new": false
         },
         {
             "id_product": 339,
@@ -270,6 +271,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2015-09-07T12:05:38+02:00",
             "modified": "2015-02-26T13:54:07+01:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 674,
@@ -350,7 +352,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -358,7 +359,8 @@
             "price_is_zero": true,
             "unit": null,
             "unchanged_name": "Kartoffel",
-            "row_class": "main-product"
+            "row_class": "main-product",
+            "is_new": false
         },
         {
             "id_product": 344,
@@ -381,6 +383,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2015-10-05T17:22:40+02:00",
             "modified": "2015-07-06T10:24:44+02:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 680,
@@ -461,7 +464,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 0.64,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -469,7 +471,8 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Knoblauch",
-            "row_class": "main-product custom-odd"
+            "row_class": "main-product custom-odd",
+            "is_new": false
         },
         {
             "id_product": 349,
@@ -492,6 +495,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2018-08-16T12:15:48+02:00",
             "modified": "2018-08-16T12:16:51+02:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 708,
@@ -586,7 +590,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 5,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -605,7 +608,8 @@
                 "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt",
-            "row_class": "main-product"
+            "row_class": "main-product",
+            "is_new": false
         },
         {
             "id_product": 351,
@@ -628,6 +632,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2019-06-05T15:09:53+02:00",
             "modified": "2019-06-05T15:10:08+02:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 713,
@@ -722,7 +727,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -741,7 +745,8 @@
                 "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt 2",
-            "row_class": "main-product custom-odd"
+            "row_class": "main-product custom-odd",
+            "is_new": false
         },
         {
             "id_product": 352,
@@ -764,6 +769,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2019-06-05T15:09:53+02:00",
             "modified": "2019-06-05T15:10:08+02:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 714,
@@ -858,7 +864,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 1.44,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -877,7 +882,8 @@
                 "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt mit Gewichtsbarcode",
-            "row_class": "main-product"
+            "row_class": "main-product",
+            "is_new": false
         },
         {
             "id_product": 350,
@@ -900,6 +906,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2018-08-16T12:19:06+02:00",
             "modified": "2018-08-16T12:19:23+02:00",
+            "new": null,
             "product_attributes": [
                 {
                     "id_product_attribute": 13,
@@ -1107,7 +1114,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -1115,7 +1121,8 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Lagerprodukt mit Varianten",
-            "row_class": "main-product custom-odd"
+            "row_class": "main-product custom-odd",
+            "is_new": false
         },
         {
             "id_product": "350-13",
@@ -1270,6 +1277,7 @@
             "delivery_rhythm_send_order_list_day": null,
             "created": "2014-07-12T20:41:43+02:00",
             "modified": "2017-07-26T13:24:10+02:00",
+            "new": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 318,
@@ -1350,7 +1358,6 @@
             "selected_categories": [
                 20
             ],
-            "is_new": false,
             "gross_price": 1.36,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
@@ -1358,7 +1365,8 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Mangold",
-            "row_class": "main-product"
+            "row_class": "main-product",
+            "is_new": false
         }
     ]
 }
