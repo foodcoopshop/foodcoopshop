@@ -188,6 +188,8 @@ return [
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
 
+        'maxProductAmountForCart' => 250,
+
         // if set, a paypal.me-link is added to the invoice-to-customer email
         'paypalMeUsername' => '',
 
