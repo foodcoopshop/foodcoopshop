@@ -182,6 +182,23 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
     }
 
+    public function testEditOrderDetailQuantityAsSuperadminQuantityPriceUnchangedWhenQuantityNotChanged()
+    {
+        $this->loginAsSuperadmin();
+        $cart = $this->preparePricePerUnitOrder();
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $newPrice = 11.5;
+        $cart->cart_products[0]->order_detail->total_price_tax_incl = $newPrice;
+        $orderDetailsTable->save($cart->cart_products[0]->order_detail);
+        $this->editOrderDetailQuantity($orderDetailId, 700);
+
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+        $this->assertEquals($newPrice, $changedOrderDetails[0]->total_price_tax_incl);
+    }
+
+
     /*'
      * https://github.com/foodcoopshop/foodcoopshop/issues/836
      * fix is not yet implemented

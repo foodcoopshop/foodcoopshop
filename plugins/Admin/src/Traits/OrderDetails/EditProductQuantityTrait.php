@@ -83,11 +83,18 @@ trait EditProductQuantityTrait
                 return;
             }
         }
-        if (!empty($oldOrderDetail->order_detail_purchase_price)) {
+
+        $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
+
+        if ($quantityWasChanged && !empty($oldOrderDetail->order_detail_purchase_price)) {
             $productPurchasePrice = round((float) $oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
             $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
         }
-        $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
+
+        $newOrderDetail = $oldOrderDetail;
+        if ($quantityWasChanged) {
+            $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
+        }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $unitsTable = FactoryLocator::get('Table')->get('Units');
@@ -105,8 +112,6 @@ trait EditProductQuantityTrait
             Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name,
             Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name
         ]);
-
-        $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
 
         // send email to customer if price was changed
         if ($quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
