@@ -29,7 +29,7 @@ class InitDataSeed extends AbstractSeed
             (1,'FCS_PRODUCT_AVAILABILITY_LOW','10','number',600),
             (1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','7','number',700),
             (1,'FCS_FOOTER_CMS_TEXT',NULL,'textarea_big',920),
-            (1,'FCS_FACEBOOK_URL','https://www.facebook.com/FoodCoopShop/','text',910),
+            (1,'FCS_FACEBOOK_URL','','text',910),
             (1,'FCS_REGISTRATION_EMAIL_TEXT','','textarea_big',1700),
             (1,'FCS_RIGHT_INFO_BOX_HTML','<h3>Abholzeiten</h3>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und die Produkte am Freitag abholen.</p>\r\n','textarea_big',1500),
             (1,'FCS_NO_DELIVERY_DAYS_GLOBAL','','multiple_dropdown',100),
