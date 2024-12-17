@@ -21,6 +21,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Cronjob;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -633,14 +634,36 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($product->active, APP_DEL);
     }
 
-    public function testDeleteProductWithOpenOrder()
+    public function testDeleteProductWithOpenOrdersWithoutInvoiceingEnabled()
     {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $product = $this->deleteProduct($productId);
+        $this->assertEquals($product->active, APP_DEL);
+    }
+
+    public function testDeleteProductWithOpenOrdersWithInvoicingEnabled()
+    {
+        $cronjobsTable = FactoryLocator::get('Table')->get('Cronjobs');
+        $cronjobsTable->save(
+            $cronjobsTable->newEntity(
+                [
+                    'id' => Cronjob::SEND_INVOICES_TO_MANUFACTURERS_CRONJOB_ID,
+                    'name' => 'SendInvoicesToManufacturers',
+                    'time_interval' => 'month',
+                    'day_of_month' => 11,
+                    'weekday' => null,
+                    'not_before_time' => '07:30:00',
+                    'active' => 1,
+                ]
+            )
+        );
         $this->loginAsSuperadmin();
         $productId = 346;
         $product = $this->deleteProduct($productId);
         $this->assertEquals($product->active, APP_ON);
     }
-
+    
     public function testDeleteProductAccessLoggedOut()
     {
         $this->deleteProduct(364);
