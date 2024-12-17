@@ -30,7 +30,7 @@ if (!empty($products)) {
     } else {
         $productImportUrl = $this->Slug->getProductImport($manufacturerId);
     }
-    $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import ok"></i> ' . __d('admin', 'Import_products') . '</a>';
+    $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import"></i> ' . __d('admin', 'Import_products') . '</a>';
     $buttons[] = $this->element('productList/button/exportProducts');
 }
 
