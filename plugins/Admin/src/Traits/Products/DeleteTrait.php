@@ -44,47 +44,50 @@ trait DeleteTrait
             $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
         }
 
-        try {
-            // check if open order exist
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $query = $this->OrderDetail->find('all',
-                conditions: [
-                    'OrderDetails.product_id IN' => $productIds,
-                    'OrderDetails.order_state IN' => [
-                        OrderDetail::STATE_OPEN,
-                        OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+        $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
+        if ($cronjobsTable->isInvoiceCronjobActive()) {
+            try {
+                // check if open order exist
+                $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+                $query = $this->OrderDetail->find('all',
+                    conditions: [
+                        'OrderDetails.product_id IN' => $productIds,
+                        'OrderDetails.order_state IN' => [
+                            OrderDetail::STATE_OPEN,
+                            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+                        ],
                     ],
-                ],
-                contain: [
-                    'Products'
-                ]
-            );
-            $query->select(
-                [
-                    'orderDetailsCount' => $query->func()->count('OrderDetails.product_id'),
-                    'productName' => 'Products.name'
-                ]
-            );
-            $query->groupBy('OrderDetails.product_id');
+                    contain: [
+                        'Products'
+                    ]
+                );
+                $query->select(
+                    [
+                        'orderDetailsCount' => $query->func()->count('OrderDetails.product_id'),
+                        'productName' => 'Products.name'
+                    ]
+                );
+                $query->groupBy('OrderDetails.product_id');
 
-            $errors = [];
-            if ($query->count() > 0) {
-                foreach($query as $orderDetail) {
-                    $errors[] = __d('admin', 'The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
-                        [
-                            '<b>' . $orderDetail->productName . '</b>',
-                            $orderDetail->orderDetailsCount,
-                        ]
-                    );
+                $errors = [];
+                if ($query->count() > 0) {
+                    foreach($query as $orderDetail) {
+                        $errors[] = __d('admin', 'The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
+                            [
+                                '<b>' . $orderDetail->productName . '</b>',
+                                $orderDetail->orderDetailsCount,
+                            ]
+                        );
+                    }
                 }
+                if (!empty($errors)) {
+                    $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
+                    $errorString .= __d('admin', 'Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
+                    throw new \Exception($errorString);
+                }
+            } catch (\Exception $e) {
+                return $this->sendAjaxError($e);
             }
-            if (!empty($errors)) {
-                $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
-                $errorString .= __d('admin', 'Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
-                throw new \Exception($errorString);
-            }
-        } catch (\Exception $e) {
-            return $this->sendAjaxError($e);
         }
 
         // 1) set field active to -1

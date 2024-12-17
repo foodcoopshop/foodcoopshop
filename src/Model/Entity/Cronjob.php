@@ -21,6 +21,15 @@ use Cake\ORM\Entity;
 class Cronjob extends Entity
 {
 
+    const BACKUP_DATABASE_ID = 1;
+    const CHECK_CREDIT_BALANCE_ID = 2;
+    const EMAIL_ORDER_REMINDER_ID = 3;
+    const PICKUP_REMINDER_ID = 4;
+    const SEND_INVOICES_TO_MANUFACTURERS_ID = 5;
+    const SEND_ORDER_LISTS_ID = 6;
+    const SEND_INVOICES_TO_CUSTOMERS_ID = 7;
+    const SEND_DELIVERY_NOTES_ID = 8;
+
     protected function _getName($name)
     {
         return match($name) {

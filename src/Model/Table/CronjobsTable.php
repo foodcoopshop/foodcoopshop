@@ -13,6 +13,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\DateTime;
 use App\Command\CronCommandFactory;
+use App\Model\Entity\Cronjob;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -148,6 +149,18 @@ class CronjobsTable extends AppTable
             $timeIntervalString,
         ]));
         return $validator;
+    }
+
+    public function isInvoiceCronjobActive()
+    {
+        $invoiceCronjobs = $this->find()->where([
+            $this->aliasField('id IN') => [
+                Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID,
+                Cronjob::SEND_INVOICES_TO_CUSTOMERS_ID,
+            ],
+            $this->aliasField('active') => APP_ON,
+        ]);
+        return $invoiceCronjobs->count() > 0;
     }
 
     public function getTimeIntervals()
