@@ -648,7 +648,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $cronjobsTable->save(
             $cronjobsTable->newEntity(
                 [
-                    'id' => Cronjob::SEND_INVOICES_TO_MANUFACTURERS_CRONJOB_ID,
+                    'id' => Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID,
                     'name' => 'SendInvoicesToManufacturers',
                     'time_interval' => 'month',
                     'day_of_month' => 11,

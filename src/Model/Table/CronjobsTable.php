@@ -155,8 +155,8 @@ class CronjobsTable extends AppTable
     {
         $invoiceCronjobs = $this->find()->where([
             $this->aliasField('id IN') => [
-                Cronjob::SEND_INVOICES_TO_MANUFACTURERS_CRONJOB_ID,
-                Cronjob::SEND_INVOICES_TO_CUSTOMERS_CRONJOB_ID,
+                Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID,
+                Cronjob::SEND_INVOICES_TO_CUSTOMERS_ID,
             ],
             $this->aliasField('active') => APP_ON,
         ]);
