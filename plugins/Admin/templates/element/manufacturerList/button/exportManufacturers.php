@@ -23,4 +23,4 @@ $queryParams = $this->request->getQueryParams() ?? [];
 $queryString = !empty($queryParams) ? '?' . http_build_query($queryParams) : '';
 $exportUrl = '/admin/manufacturers/export' . $queryString;
 
-echo '<a id="exportManufacturersButton" target="_blank" class="dropdown-item" href="'.$exportUrl.'"><i class="fa-fw fas fa-file-export ok"></i> ' . __d('admin', 'Export_{0}', [__('All') . ' ' . __d('admin', 'Manufacturers')]) . '</a>';
+echo '<a id="exportManufacturersButton" target="_blank" class="dropdown-item" href="'.$exportUrl.'"><i class="fa-fw fas fa-file-export"></i> ' . __d('admin', 'Export_{0}', [__('All') . ' ' . __d('admin', 'Manufacturers')]) . '</a>';
