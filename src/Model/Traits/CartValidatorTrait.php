@@ -64,15 +64,16 @@ trait CartValidatorTrait
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            return true;
+            $hasEnabledDeliveryBreak = false;
+        } else {
+            $hasEnabledDeliveryBreak = !$orderCustomerService->isOrderForDifferentCustomerMode()
+            && !$orderCustomerService->isSelfServiceModeByReferer()
+            && $productsTable->deliveryBreakManufacturerEnabled($noDeliveryDays, $nextDeliveryDay, $stockManagementEnabled, $isStockProduct);
         }
 
         $result = true;
-
-        if ($active != APP_ON || (!$orderCustomerService->isOrderForDifferentCustomerMode()
-            && !$orderCustomerService->isSelfServiceModeByReferer()
-            && $productsTable->deliveryBreakManufacturerEnabled($noDeliveryDays, $nextDeliveryDay, $stockManagementEnabled, $isStockProduct))) {
-                $result = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $productName . '</b>']);
+        if (!$active == APP_ON || $hasEnabledDeliveryBreak) {
+            $result = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $productName . '</b>']);
         }
 
         return $result;
