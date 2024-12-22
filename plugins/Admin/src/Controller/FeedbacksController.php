@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Model\Table\FeedbacksTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Services\SanitizeService;
 use Cake\I18n\DateTime;
@@ -71,7 +70,8 @@ class FeedbacksController extends AdminAppController
             throw new RecordNotFoundException('customer ' . $customerId . ' not found');
         }
         $name = $customer->name;
-        $manufacturer = $this->Customer->getManufacturerByCustomerId($this->customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturer = $customersTable->getManufacturerByCustomerId($this->customerId);
         if (!empty($manufacturer)) {
             $name = $manufacturer->name;
         }
