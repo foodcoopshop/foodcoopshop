@@ -97,8 +97,8 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td style="text-align:center;">';
     if ($cronjob->day_of_month != '') {
-        $cm = TableRegistry::getTableLocator()->get('Cronjobs');
-        echo $cm->getDaysOfMonth()[$cronjob->day_of_month];
+        $cronjobsTable = TableRegistry::getTableLocator()->get('Cronjobs');
+        echo $cronjobsTable->getDaysOfMonth()[$cronjob->day_of_month];
     }
     echo '</td>';
 
@@ -126,6 +126,7 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td>';
     if (!empty($cronjob->cronjob_logs[0])) {
+        /** @phpstan-ignore-next-line */
         $name = $cronjob->getOriginalValues()['name'];
         $cronjobFilterString = Inflector::underscore($name);
         if (preg_match('/SendInvoicesToManufacturers/', $name)) {

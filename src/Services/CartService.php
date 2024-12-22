@@ -868,12 +868,6 @@ class CartService
         $email->addToQueue();
     }
 
-    /**
-     * called from finish context
-     * saves pdf as file
-     * @param array $cart
-     * @param array $orderDetails
-     */
     private function generateRightOfWithdrawalInformationAndForm($cart, $products)
     {
         $manufacturers = [];
@@ -891,21 +885,12 @@ class CartService
         return $pdfWriter->writeAttachment();
     }
 
-    /**
-     * called from finish context
-     * saves pdf as file
-     */
     private function generateGeneralTermsAndConditions()
     {
         $pdfWriter = new GeneralTermsAndConditionsPdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 
-    /**
-     * called from finish context
-     * saves pdf as file
-     * @param array $cart
-     */
     private function generateOrderConfirmation($cart)
     {
 

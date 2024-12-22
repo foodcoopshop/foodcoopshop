@@ -120,7 +120,7 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DatabaseAlt'));
     }
 
-    public function getNthWeekdayBeforeWeekday($n, $weekday)
+    public function getNthWeekdayBeforeWeekday(int $n, int $weekday): int
     {
         $beforeWeekday = $weekday - $n;
         if ($beforeWeekday < 0) {
@@ -129,10 +129,10 @@ class MyTimeHelper extends TimeHelper
         return $beforeWeekday;
     }
 
-    public function getNthWeekdayAfterWeekday($n, $weekday)
+    public function getNthWeekdayAfterWeekday(int $n, int $weekday): int
     {
         $beforeWeekday = $weekday + $n;
-        if ($beforeWeekday > 6) {
+        if ((int) $beforeWeekday > 6) {
             $beforeWeekday -= 7;
         }
         return $beforeWeekday;
@@ -341,11 +341,7 @@ class MyTimeHelper extends TimeHelper
         return date('t', $timestamp);
     }
 
-    /**
-     * considers windows and unix
-     * @return boolean
-     */
-    public function isDatabaseDateNotSet($date)
+    public function isDatabaseDateNotSet($date): bool
     {
         return $date == '1970-01-01' || $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
     }
@@ -360,10 +356,6 @@ class MyTimeHelper extends TimeHelper
         }
     }
 
-    /**
-     * formats a timestamp to a short date
-     * @param integer $timestamp
-     */
     public function formatToDateShort($dbString)
     {
         $timestamp = strtotime($dbString);
@@ -372,9 +364,7 @@ class MyTimeHelper extends TimeHelper
         }
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
-    /**
-      * @param $dateString
-      */
+
     public function formatToDbFormatDate($dateString)
     {
         $timestamp = strtotime($dateString);

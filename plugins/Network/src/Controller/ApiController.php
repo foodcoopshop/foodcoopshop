@@ -260,7 +260,7 @@ class ApiController extends Controller
 
             if (!empty($products2saveForQuantity)) {
                 $syncFieldsOk[] = __d('network', 'Amount');
-                $updateStatus = $this->Product->changeQuantity($products2saveForQuantity);
+                $this->Product->changeQuantity($products2saveForQuantity);
                 $productIds = [];
                 foreach ($products2saveForQuantity as $p) {
                     $productIds[] = key($p);

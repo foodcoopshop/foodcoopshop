@@ -17,8 +17,7 @@ parameters:
         - plugins/Network/tests
     ignoreErrors:
         - message: '#Access to an undefined property .*#'
-          path: .
-        - message: '#Constant ACCESS_DENIED_MESSAGE not found.#'
+        - message: '#Cannot access property .*#'
         - message: '#Variable \$.* might not be defined#'
           path: templates
         - message: '#Variable \$.* might not be defined#'
@@ -28,7 +27,6 @@ parameters:
         - message: '#Variable \$purchasePriceTaxRate might not be defined#'
           path: src/Model/Table/ProductsTable.php
         - message: '#Call to an undefined method Authorization\\IdentityInterface::*.#'
-          path: .
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
 includes:

@@ -53,12 +53,6 @@ class CartProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    /**
-     * @param int $productId
-     * @param int $attributeId
-     * @param int $amount
-     * @return array || boolean
-     */
     public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
     {
         $identity = Router::getRequest()->getAttribute('identity');

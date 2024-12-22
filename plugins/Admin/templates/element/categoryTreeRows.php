@@ -21,6 +21,7 @@ use Cake\ORM\TableRegistry;
 $categoriesTable = TableRegistry::getTableLocator()->get('Categories');
 
 foreach ($categories as $category) {
+    /** @phpstan-ignore-next-line */
     $level = $categoriesTable->getLevel($category);
 
     $rowClass = [

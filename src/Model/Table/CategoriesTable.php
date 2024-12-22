@@ -149,11 +149,7 @@ class CategoriesTable extends AppTable
         return $flattenedCategories;
     }
 
-    /**
-     *
-     * @param array $conditions
-     */
-    public function prepareTreeResultForMenu($items)
+    public function prepareTreeResultForMenu($items): array
     {
         $itemsForMenu = [];
         foreach ($items as $index => $item) {
