@@ -22,7 +22,8 @@ trait AddProductAttributeTrait
 
     public function addProductAttribute($productId, $productAttributeId)
     {
-        $oldProduct = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $oldProduct = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -31,10 +32,11 @@ trait AddProductAttributeTrait
             ]
         )->first();
 
-        $this->Product->ProductAttributes->add($productId, $productAttributeId);
+        $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
+        $productAttributesTable->add($productId, $productAttributeId);
 
         // get new data
-        $newProduct = $this->Product->find('all',
+        $newProduct = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -59,7 +61,8 @@ trait AddProductAttributeTrait
                 '<b>' . $oldProduct->manufacturer->name . '</b>'
             ]);
             $this->Flash->success($actionLogMessage);
-            $this->ActionLog->customSave('product_attribute_added', $this->identity->getId(), $oldProduct->id_product, 'products', $actionLogMessage);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('product_attribute_added', $this->identity->getId(), $oldProduct->id_product, 'products', $actionLogMessage);
         }
         
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);

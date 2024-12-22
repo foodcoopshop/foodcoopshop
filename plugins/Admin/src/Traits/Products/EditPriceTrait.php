@@ -77,12 +77,13 @@ trait EditPriceTrait
 
         $originalProductId = $this->getRequest()->getData('productId');
 
-        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all',
+        $oldProduct = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
                 'Manufacturers',
@@ -107,7 +108,7 @@ trait EditPriceTrait
         }
 
         try {
-            $this->Product->changePrice(
+            $productsTable->changePrice(
                 [
                     [
                         $originalProductId => [
@@ -138,7 +139,7 @@ trait EditPriceTrait
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
             $taxRate = $oldProduct->tax->rate ?? 0;
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->price, $taxRate));
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($productsTable->getGrossPrice($oldProduct->price, $taxRate));
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
@@ -157,7 +158,8 @@ trait EditPriceTrait
             $actionLogMessage .= '<br />' . $additionalActionLogMessage;
         }
 
-        $this->ActionLog->customSave('product_price_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_price_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set([

@@ -27,23 +27,25 @@ trait EditDefaultAttributeTrait
         $productId = (int) $productId;
         $productAttributeId = (int) $productAttributeId;
 
-        $this->Product->setDefaultAttributeId($productId, $productAttributeId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->setDefaultAttributeId($productId, $productAttributeId);
 
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
                 'Manufacturers',
             ]
         )->first();
 
-        $productAttribute = $this->Product->ProductAttributes->find('all',
+        $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
+        $productAttribute = $productAttributesTable->find('all',
             conditions: [
-                'ProductAttributes.id_product_attribute' => $productAttributeId
+                $productAttributesTable->aliasField('id_product_attribute') => $productAttributeId,
             ],
             contain: [
-                'ProductAttributeCombinations.Attributes'
+                'ProductAttributeCombinations.Attributes',
             ]
         )->first();
 
@@ -53,7 +55,8 @@ trait EditDefaultAttributeTrait
             '<b>' . $productAttribute->product_attribute_combination->attribute->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_default_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_default_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }

@@ -28,12 +28,13 @@ trait EditDepositTrait
 
         $originalProductId = $this->getRequest()->getData('productId');
 
-        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all',
+        $oldProduct = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
                 'DepositProducts',
@@ -43,7 +44,7 @@ trait EditDepositTrait
         )->first();
 
         try {
-            $this->Product->changeDeposit(
+            $productsTable->changeDeposit(
                 [
                     [$originalProductId => $this->getRequest()->getData('deposit')]
                 ]
@@ -79,7 +80,8 @@ trait EditDepositTrait
             Configure::read('app.numberHelper')->formatAsCurrency($deposit)
         ]);
 
-        $this->ActionLog->customSave('product_deposit_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_deposit_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->Flash->success($actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);

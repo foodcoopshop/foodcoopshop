@@ -27,12 +27,13 @@ trait EditIsStockProductTrait
 
         $originalProductId = $this->getRequest()->getData('productId');
 
-        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all',
+        $oldProduct = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
                 'StockAvailables',
@@ -44,7 +45,7 @@ trait EditIsStockProductTrait
         )->first();
 
         try {
-            $this->Product->changeIsStockProduct(
+            $productsTable->changeIsStockProduct(
                 [
                     [
                         $originalProductId => $this->getRequest()->getData('isStockProduct')

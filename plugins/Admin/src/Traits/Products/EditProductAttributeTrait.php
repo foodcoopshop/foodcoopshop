@@ -32,9 +32,10 @@ trait EditProductAttributeTrait
         $barcode = $this->getRequest()->getData('barcode') ?? '';
         $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
 
-        $oldProduct = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $oldProduct = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
                 'Manufacturers',
@@ -52,7 +53,8 @@ trait EditProductAttributeTrait
         }
 
         if ($deleteProductAttribute) {
-            $this->Product->ProductAttributes->deleteProductAttribute($productId, $productAttributeId);
+            $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
+            $productAttributesTable->deleteProductAttribute($productId, $productAttributeId);
             $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
                 '<b>' . $attributeName . '</b>',
                 '<b>' . $oldProduct->name . '</b>',
@@ -62,8 +64,9 @@ trait EditProductAttributeTrait
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         } else {
             try {
-                $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->getEntityToSaveByProductAttributeId($productAttributeId);
-                $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->patchEntity(
+                $barcodeProductAttributesTable = $this->getTableLocator()->get('BarcodeProductAttributes');
+                $entity2Save = $barcodeProductAttributesTable->getEntityToSaveByProductAttributeId($productAttributeId);
+                $entity2Save = $barcodeProductAttributesTable->patchEntity(
                     $entity2Save,
                     [
                         'barcode' => $barcode,
@@ -73,9 +76,9 @@ trait EditProductAttributeTrait
                         'validate' => true,
                     ]);
                 if ($entity2Save->hasErrors()) {
-                    throw new \Exception(join(' ', $this->Product->getAllValidationErrors($entity2Save)));
+                    throw new \Exception(join(' ', $productsTable->getAllValidationErrors($entity2Save)));
                 }
-                $this->Product->ProductAttributes->BarcodeProductAttributes->save($entity2Save);
+                $barcodeProductAttributesTable->save($entity2Save);
             } catch (\Exception $e) {
                 return $this->sendAjaxError($e);
             }
@@ -84,7 +87,8 @@ trait EditProductAttributeTrait
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
-            $this->ActionLog->customSave('product_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('product_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
             $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeId);
         }
         $this->Flash->success($actionLogMessage);
