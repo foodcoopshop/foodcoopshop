@@ -6,7 +6,6 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Services\ChangeSellingPriceService;
-use Cake\Datasource\FactoryLocator;
 use App\Services\ProductQuantityService;
 use Cake\ORM\TableRegistry;
 

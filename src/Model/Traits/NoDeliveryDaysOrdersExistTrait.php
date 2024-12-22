@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Traits;
 
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +28,7 @@ trait NoDeliveryDaysOrdersExistTrait
             $manufacturerId = $context['data']['id_manufacturer'];
         }
 
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         if (!is_null($manufacturerId)) {
             $productsAssociation = $orderDetailsTable->getAssociation('Products');

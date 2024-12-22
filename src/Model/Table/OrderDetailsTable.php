@@ -7,11 +7,11 @@ use App\Services\DeliveryRhythmService;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
-use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -408,7 +408,7 @@ class OrderDetailsTable extends AppTable
         ])
         ->where(function (QueryExpression $exp) use ($oldOrderStates) {
             return $exp->in('OrderDetails.order_state', $oldOrderStates);
-        });;
+        });
 
         if (!empty($orderDetailIds)) {
             $orderDetails->where(function (QueryExpression $exp) use ($orderDetailIds) {
@@ -468,12 +468,12 @@ class OrderDetailsTable extends AppTable
         $this->delete($orderDetail);
 
         if (!empty($orderDetail->order_detail_unit)) {
-            $orderDetailUnitsTable = FactoryLocator::get('Table')->get('OrderDetailUnits');
+            $orderDetailUnitsTable = TableRegistry::getTableLocator()->get('OrderDetailUnits');
             $orderDetailUnitsTable->delete($orderDetail->order_detail_unit);
         }
 
         if (!empty($orderDetail->order_detail_purchase_price)) {
-            $orderDetailPurchasePricesTable = FactoryLocator::get('Table')->get('OrderDetailPurchasePrices');
+            $orderDetailPurchasePricesTable = TableRegistry::getTableLocator()->get('OrderDetailPurchasePrices');
             $orderDetailPurchasePricesTable->delete($orderDetail->order_detail_purchase_price);
         }
 
@@ -524,7 +524,7 @@ class OrderDetailsTable extends AppTable
 
     public function getOpenOrderDetailSum(int $manufacturerId, $dateFrom)
     {
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $query = $this->find('all',
         conditions: [
             $productsTable->aliasField('id_manufacturer') => $manufacturerId,
@@ -685,13 +685,13 @@ class OrderDetailsTable extends AppTable
     public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
     {
         $preparedOrderDetails = [];
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         foreach ($orderDetails as $orderDetail) {
             $preparedOrderDetail = [];
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
+            $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
             $preparedOrderDetail['variable_member_fee'] = $variableMemberFee;
             $preparedOrderDetail['manufacturer_id'] = $orderDetail->product->id_manufacturer;
             $preparedOrderDetail['name'] = $orderDetail->product->manufacturer->name;

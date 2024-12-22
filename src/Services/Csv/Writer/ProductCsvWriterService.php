@@ -16,11 +16,11 @@ declare(strict_types=1);
  */
 namespace App\Services\Csv\Writer;
 
-use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\Product;
 use App\Services\ProductQuantityService;
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
+use Cake\ORM\TableRegistry;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -29,7 +29,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     public function setProductIds($productIds)
     {
-        $productsTable =FactoryLocator::get('Table')->get('Products');
+        $productsTable =TableRegistry::getTableLocator()->get('Products');
         $stockProductIds = $productsTable->find()
         ->where([
             'Products.id_product IN' => $productIds,
@@ -66,7 +66,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     public function getRecords()
     {
-        $productsTable =FactoryLocator::get('Table')->get('Products');
+        $productsTable =TableRegistry::getTableLocator()->get('Products');
         $products = $productsTable->getProductsForBackend(
             productIds: $this->productIds,
             manufacturerId: 'all',

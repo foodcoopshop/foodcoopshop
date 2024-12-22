@@ -16,17 +16,17 @@ declare(strict_types=1);
  */
 namespace App\Services;
 
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use App\Model\Entity\Customer;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 class ChangeSellingPriceService
 {
 
     private function getOpenOrderDetails($productId, $productAttributeId)
     {
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 $orderDetailsTable->aliasField('product_id') => $productId,
@@ -50,7 +50,7 @@ class ChangeSellingPriceService
             return [];
         }
 
-        $orderDetailUnitsTable = FactoryLocator::get('Table')->get('OrderDetailUnits');
+        $orderDetailUnitsTable = TableRegistry::getTableLocator()->get('OrderDetailUnits');
         $changedOpenOrderDetails = [];
         foreach($openOrderDetails as $openOrderDetail) {
 
@@ -121,8 +121,8 @@ class ChangeSellingPriceService
     public function changeOrderDetailPriceDepositTax($orderDetail, $grossPrice, $productAmount)
     {
 
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         $unitPriceExcl = $productsTable->getNetPrice($grossPrice / $productAmount, $orderDetail->tax_rate);
         $unitTaxAmount = $productsTable->getUnitTax($grossPrice, $unitPriceExcl, $productAmount);

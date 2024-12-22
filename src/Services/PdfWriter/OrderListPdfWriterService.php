@@ -18,21 +18,18 @@ namespace App\Services\PdfWriter;
 
 use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\PdfWriter\Traits\SetSumTrait;
+use Cake\ORM\TableRegistry;
 
 abstract class OrderListPdfWriterService extends PdfWriterService
 {
 
     use SetSumTrait;
 
-    public $Manufacturer;
-
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new ListTcpdfService());
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
     }
 
     public function prepareAndSetData($manufacturerId, $pickupDay, $validOrderStates, $orderDetailIds, $isAnonymized)
@@ -48,16 +45,18 @@ abstract class OrderListPdfWriterService extends PdfWriterService
             throw new \Exception('type not valid: ' . $type);
         }
 
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => $manufacturerId
+                $manufacturersTable->aliasField('id_manufacturer') => $manufacturerId,
             ],
             contain: [
-                'AddressManufacturers'
+                'AddressManufacturers',
             ],
         )->first();
 
-        $results = $this->Manufacturer->getDataForInvoiceOrOrderList(
+        $results = $manufacturersTable->getDataForInvoiceOrOrderList(
             $manufacturerId,
             $type,
             $pickupDay,
@@ -68,7 +67,7 @@ abstract class OrderListPdfWriterService extends PdfWriterService
         );
 
         if ($isAnonymized) {
-            $results = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($results);
+            $results = $manufacturersTable->anonymizeCustomersInInvoiceOrOrderList($results);
         }
 
         $this->setSums($results);
@@ -76,7 +75,7 @@ abstract class OrderListPdfWriterService extends PdfWriterService
         $preparedResults = [
             'manufacturer' => $manufacturer,
             'currentDateForOrderLists' => Configure::read('app.timeHelper')->getCurrentDateTimeForFilename(),
-            'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee),
+            'variableMemberFee' => $manufacturersTable->getOptionVariableMemberFee($manufacturer->variable_member_fee),
         ];
 
         if ($type == 'customer') {

@@ -10,10 +10,10 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
 use Cake\I18n\DateTime;
 use App\Command\CronCommandFactory;
 use App\Model\Entity\Cronjob;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -223,7 +223,7 @@ class CronjobsTable extends AppTable
             $this->cronjobRunDay = (int) Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
         }
 
-        $cronjobLogsTable = FactoryLocator::get('Table')->get('CronjobLogs');
+        $cronjobLogsTable = TableRegistry::getTableLocator()->get('CronjobLogs');
         $cronjobLogsTable->deleteOldLogs($this->cronjobRunDay);
 
         $cronjobs = $this->find('all', conditions: [
@@ -303,7 +303,7 @@ class CronjobsTable extends AppTable
         $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(
             $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')
         ));
-        $cronjobLogsTable = FactoryLocator::get('Table')->get('CronjobLogs');
+        $cronjobLogsTable = TableRegistry::getTableLocator()->get('CronjobLogs');
         $entity = $cronjobLogsTable->newEntity(
             [
                 'cronjob_id' => $cronjob->id,

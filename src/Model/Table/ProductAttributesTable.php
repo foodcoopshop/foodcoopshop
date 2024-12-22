@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -55,7 +55,7 @@ class ProductAttributesTable extends AppTable
     public function deleteProductAttribute($productId, $productAttributeId)
     {
 
-        $productAttributeCombinationsTable = FactoryLocator::get('Table')->get('ProductAttributeCombinations');
+        $productAttributeCombinationsTable = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
         $pac = $productAttributeCombinationsTable->find('all',
             conditions: [
                 'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
@@ -71,23 +71,23 @@ class ProductAttributesTable extends AppTable
             'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
         ]);
 
-        $unitProductAttributesTable = FactoryLocator::get('Table')->get('UnitProductAttributes');
+        $unitProductAttributesTable = TableRegistry::getTableLocator()->get('UnitProductAttributes');
         $unitProductAttributesTable->deleteAll([
             'UnitProductAttributes.id_product_attribute' => $productAttributeId,
         ]);
 
-        $purchasePriceProductAttributesTable = FactoryLocator::get('Table')->get('PurchasePriceProductAttributes');
+        $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
         $purchasePriceProductAttributesTable->deleteAll([
             'PurchasePriceProductAttributes.product_attribute_id' => $productAttributeId,
         ]);
 
-        $barcodeProductAttributesTable = FactoryLocator::get('Table')->get('BarcodeProductAttributes');
+        $barcodeProductAttributesTable = TableRegistry::getTableLocator()->get('BarcodeProductAttributes');
         $barcodeProductAttributesTable->deleteAll([
             'BarcodeProductAttributes.product_attribute_id' => $productAttributeId,
         ]);
 
         // deleteAll can only get primary key as condition
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $originalPrimaryKey = $stockAvailablesTable->getPrimaryKey();
         $stockAvailablesTable->setPrimaryKey('id_product_attribute');
         $stockAvailablesTable->deleteAll([
@@ -127,7 +127,7 @@ class ProductAttributesTable extends AppTable
         $statement->execute($params);
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->save(
             $productsTable->patchEntity(
                 $productsTable->get($productId),
@@ -137,7 +137,7 @@ class ProductAttributesTable extends AppTable
             )
         );
 
-        $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+        $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
         $barcodeProductsTable->deleteAll([
             'BarcodeProducts.product_id' => $productId,
         ]);
@@ -152,7 +152,7 @@ class ProductAttributesTable extends AppTable
         $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
 
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->updateQuantityForMainProduct($productId);
     }
 }

@@ -15,7 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\ORM\TableRegistry;
 
 ?>

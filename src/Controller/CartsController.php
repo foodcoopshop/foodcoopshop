@@ -296,7 +296,7 @@ class CartsController extends FrontendController
 
         $message = __('Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart.');
         $message .= '<br />';
-        $message .= __('You_can_add_more_products_now.');;
+        $message .= __('You_can_add_more_products_now.');
 
         if (!empty($errorMessages)) {
             $message .= '<div class="error">';

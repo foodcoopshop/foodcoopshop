@@ -5,10 +5,10 @@ namespace App\View\Helper;
 
 use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
 use App\Services\DeliveryRhythmService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -60,8 +60,8 @@ class ConfigurationHelper extends Helper
                 return $this->getCashlessPaymentAddTypeOptions();
                 break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
-                $productModel = FactoryLocator::get('Table')->get('Products');
-                return $productModel->getForDropdown(0);
+                $productsTable = TableRegistry::getTableLocator()->get('Products');
+                return $productsTable->getForDropdown(0);
                 break;
         }
     }
@@ -93,8 +93,8 @@ class ConfigurationHelper extends Helper
                 break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $value = explode(',', $value);
-                $productModel = FactoryLocator::get('Table')->get('Products');
-                $products = $productModel->find('all',
+                $productsTable = TableRegistry::getTableLocator()->get('Products');
+                $products = $productsTable->find('all',
                     conditions: [
                         'Products.id_product IN' => $value,
                     ]

@@ -5,12 +5,11 @@ namespace App\Model\Table;
 
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Model\Traits\MultipleEmailsRuleTrait;
 use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
-use App\Services\CatalogService;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -238,18 +237,15 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
-    /**
-     * @param string $email
-     */
     public function getCustomerRecord($email)
     {
-        $cm = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
         if (empty($email)) {
             return [];
         }
 
-        $customer = $cm->find('all',
+        $customer = $customersTable->find('all',
             conditions: [
                 'Customers.email' => $email,
             ]
@@ -380,7 +376,7 @@ class ManufacturersTable extends AppTable
 
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $orderClause = match($order) {
             'product' => 'od.product_name ASC, od.tax_rate ASC, ' . $customersTable->getCustomerName('c') . ' ASC',
             'customer' => $customersTable->getCustomerName('c') . ' ASC, od.product_name ASC',

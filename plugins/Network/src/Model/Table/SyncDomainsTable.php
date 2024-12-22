@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Network\Model\Table;
 
 use App\Model\Table\AppTable;
-use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;

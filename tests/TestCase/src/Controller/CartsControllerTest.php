@@ -21,11 +21,11 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use App\Services\DeliveryRhythmService;
-use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -1128,8 +1128,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart(349, 1); // stock product - no notification!
 
-        $cartTable = FactoryLocator::get('Table')->get('Carts');
-        $cart = $cartTable->find()->where(
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find()->where(
             [
                 'Carts.id_customer' => Configure::read('test.customerId'),
                 'Carts.cart_type' => Cart::TYPE_INSTANT_ORDER,
@@ -1209,7 +1209,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
 
         // delete product that was already placed in cart
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->get($this->productId1);
         $product->active = APP_DEL;
         $productsTable->save($product);
@@ -1260,7 +1260,7 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
 
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetail = $orderDetailsTable->get($orderDetailId);
 
         $orderDetail->created = $orderDetail->created->subDays(14);

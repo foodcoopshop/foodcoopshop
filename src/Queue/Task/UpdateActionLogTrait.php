@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Queue\Task;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\I18n\DateTime;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,45 +22,43 @@ use Cake\I18n\DateTime;
 trait UpdateActionLogTrait
 {
 
-    public $ActionLog;
-
     public function updateActionLogFailure($actionLogId, $identifier, $jobId, $errorMessage)
     {
 
-        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
+        $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
 
         $search = 'data-identifier="'.$identifier.'"';
         $now = new DateTime();
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'title="' . $now . ' / JobId: ' . $jobId . ' / ' . h($errorMessage) . '"';
 
-        $query = 'UPDATE ' . $this->ActionLog->getTable() . ' SET text = REPLACE(text, :search, :replace) WHERE id = :actionLogId';
+        $query = 'UPDATE ' . $actionLogsTable->getTable() . ' SET text = REPLACE(text, :search, :replace) WHERE id = :actionLogId';
         $params = [
             'actionLogId' => $actionLogId,
             'search' => $search,
             'replace' => $search . $replace,
         ];
-        $this->ActionLog->getConnection()->getDriver()->prepare($query)->execute($params);
+        $actionLogsTable->getConnection()->getDriver()->prepare($query)->execute($params);
 
     }
 
     public function updateActionLogSuccess($actionLogId, $identifier, $jobId)
     {
 
-        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
+        $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
         $now = new DateTime();
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'ok" title="' . $now . ' / JobId: ' . $jobId . '"';
 
-        $query = 'UPDATE ' . $this->ActionLog->getTable() . ' SET text = REPLACE(text, :search, :replace) WHERE id = :actionLogId';
+        $query = 'UPDATE ' . $actionLogsTable->getTable() . ' SET text = REPLACE(text, :search, :replace) WHERE id = :actionLogId';
         $params = [
             'actionLogId' => $actionLogId,
             'search' => $search,
             'replace' => $replace,
         ];
-        $this->ActionLog->getConnection()->getDriver()->prepare($query)->execute($params);
+        $actionLogsTable->getConnection()->getDriver()->prepare($query)->execute($params);
 
     }
 

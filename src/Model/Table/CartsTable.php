@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
@@ -352,7 +351,7 @@ class CartsTable extends AppTable
         $deposit = !empty($cartProduct->product->deposit_product) ? $cartProduct->product->deposit_product->deposit : 0;
 
         // START: override shopping with purchase prices / zero prices
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $priceInclPerUnit = null;
         if (!empty($unitProduct)) {
             $priceInclPerUnit = $unitProduct->price_incl_per_unit;
@@ -454,7 +453,7 @@ class CartsTable extends AppTable
         $deposit = !empty($cartProduct->product_attribute->deposit_product_attribute) ? $cartProduct->product_attribute->deposit_product_attribute->deposit : 0;
 
         // START: override shopping with purchase prices / zero prices
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $priceInclPerUnit = null;
         if (!empty($unitProductAttribute)) {
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;

@@ -12,7 +12,6 @@ use App\Services\PdfWriter\OrderConfirmationPdfWriterService;
 use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
 use App\Model\Table\ActionLogsTable;
 use App\Model\Table\AttributesTable;
@@ -27,6 +26,7 @@ use Cake\I18n\Date;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -97,7 +97,7 @@ class CartService
     {
 
         $this->saveOrderDetails($orderDetails2save);
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
         $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
@@ -150,7 +150,7 @@ class CartService
             case Cart::TYPE_SELF_SERVICE;
 
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
-                    $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+                    $this->Invoice = TableRegistry::getTableLocator()->get('Invoices');
                     $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
                     $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
 
@@ -198,7 +198,7 @@ class CartService
         }
 
         if (isset($actionLogType) && isset($messageForActionLog) && isset($message)) {
-            $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->controller->Flash->success($message);
         }
@@ -211,17 +211,17 @@ class CartService
 
         $cart = $this->identity->getCart();
 
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $this->PickupDay = FactoryLocator::get('Table')->get('PickupDays');
-        $this->Product = FactoryLocator::get('Table')->get('Products');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
         foreach ($this->identity->getProducts() as $cartProduct) {
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
-                $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+                $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
                 $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->identity->getCartId());
                 $productWithAmount0Found = true;
             }
@@ -308,7 +308,7 @@ class CartService
             $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
-                $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
+                $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
 
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
@@ -618,7 +618,7 @@ class CartService
 
     private function saveOrderDetails($orderDetails2save): void
     {
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->OrderDetail->saveMany(
             $this->OrderDetail->newEntities($orderDetails2save)
         );
@@ -641,7 +641,7 @@ class CartService
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
 
@@ -687,7 +687,7 @@ class CartService
 
     private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
     {
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
@@ -713,7 +713,7 @@ class CartService
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
 
             $productQuantityService = new ProductQuantityService();
-            $unitsTable = FactoryLocator::get('Table')->get('Units');
+            $unitsTable = TableRegistry::getTableLocator()->get('Units');
             $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
             $unitName = !empty($unitObject) ? $unitObject->name : '';
@@ -910,7 +910,7 @@ class CartService
     {
 
         $manufacturers = [];
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all',
             conditions: [
                 'Carts.id_cart' => $cart['Cart']->id_cart,

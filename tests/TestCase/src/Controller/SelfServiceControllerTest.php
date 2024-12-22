@@ -24,16 +24,13 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
-use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\Cart;
+use Cake\ORM\TableRegistry;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
 
-    protected $ActionLog;
     public $Cart;
-    protected $CartProductUnit;
-    protected $Invoice;
 
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
@@ -81,7 +78,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $productId = 351;
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailableObject = $stockAvailablesTable->find('all')->where([
             'id_product' => $productId,
             'id_product_attribute' => 0,
@@ -121,7 +118,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 350;
         $attributeId = 15;
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailableObject = $stockAvailablesTable->find('all')->where([
             'id_product' => $productId,
             'id_product_attribute' => $attributeId,
@@ -205,8 +202,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->removeProductFromSelfServiceCart(351);
         $this->assertJsonOk();
-        $this->CartProductUnit = $this->getTableLocator()->get('CartProductUnits');
-        $cartProductUnits = $this->CartProductUnit->find('all')->toArray();
+        $cartProductUnitsTable = $this->getTableLocator()->get('CartProductUnits');
+        $cartProductUnits = $cartProductUnitsTable->find('all')->toArray();
         $this->assertEmpty($cartProductUnits);
     }
 
@@ -299,14 +296,14 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
-        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailableTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailable = $stockAvailableTable->find('all')->where([
             'id_product' => 350,
             'id_product_attribute' => 15,
         ])->first();
         $this->assertEquals(997.001, $stockAvailable->quantity);
 
-        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailableTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailable = $stockAvailableTable->find('all')->where([
             'id_product' => 351,
             'id_product_attribute' => 0,
@@ -354,8 +351,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all')->toArray();
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
     }
 
@@ -438,8 +435,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->runAndAssertQueue();
         $this->assertSessionNotHasKey('invoiceRouteForAutoPrint');
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoices = $this->Invoice->find('all');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoices = $invoicesTable->find('all');
         $this->assertEquals($invoices->count(), 0);
     }
 
@@ -477,8 +474,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoices = $this->Invoice->find('all');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoices = $invoicesTable->find('all');
         $this->assertEquals($invoices->count(), 1);
         $this->assertEquals($invoices->toArray()[0]->paid_in_cash, 1);
 
@@ -531,12 +528,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->assertMailCount(0);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoiceCount = $this->Invoice->find('all')->count();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoiceCount = $invoicesTable->find('all')->count();
         $this->assertEquals($invoiceCount, 0);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all')->toArray();
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertEquals('carts', $actionLogs[0]->object_type);
         $this->assertEquals($carts[0]->id_cart, $actionLogs[0]->object_id);
         $this->assertEquals($actionLogs[0]->text, 'Demo Superadmin hat eine neue Bestellung für <b>Demo Mitglied</b> getätigt (9,00 €).');

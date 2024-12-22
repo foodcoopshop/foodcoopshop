@@ -17,11 +17,11 @@ declare(strict_types=1);
 namespace App\Services\Csv\Reader\Banking;
 
 use App\Model\Entity\Customer;
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use League\Csv\Reader;
 use Cake\I18n\DateTime;
+use Cake\ORM\TableRegistry;
 
 abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
@@ -34,10 +34,10 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
 
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
-        $customerModel = FactoryLocator::get('Table')->get('Customers');
-        $query = $customerModel->find('all',
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $query = $customersTable->find('all',
             fields: [
-                'personalTransactionCode' => $customerModel->getPersonalTransactionCodeField(),
+                'personalTransactionCode' => $customersTable->getPersonalTransactionCodeField(),
             ]
         );
         $personalTransactionCodes = $query->all()->extract('personalTransactionCode')->toArray();
@@ -47,9 +47,9 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
 
         $foundCustomer = null;
         if (!empty($matches[0][0])) {
-            $foundCustomer = $customerModel->find('all',
+            $foundCustomer = $customersTable->find('all',
                 conditions: [
-                    $customerModel->getPersonalTransactionCodeField() . ' = :personalTransactionCode'
+                    $customersTable->getPersonalTransactionCodeField() . ' = :personalTransactionCode'
                 ]
             )->bind(':personalTransactionCode', $matches[0][0], 'string')
             ->first();

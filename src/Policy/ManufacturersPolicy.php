@@ -5,11 +5,11 @@ namespace App\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,8 +37,8 @@ class ManufacturersPolicy implements RequestPolicyInterface
         switch ($request->getParam('action')) {
             case 'detail':
                 $manufacturerId = (int) $request->getParam('idAndSlug');
-                $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
-                $manufacturer = $manufacturerTable->find('all',
+                $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+                $manufacturer = $manufacturersTable->find('all',
                     conditions: [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
                         'Manufacturers.active' => APP_ON,

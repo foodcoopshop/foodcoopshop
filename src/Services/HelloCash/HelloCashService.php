@@ -19,19 +19,11 @@ namespace App\Services\HelloCash;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Client;
-use Cake\Datasource\FactoryLocator;
 use App\Services\Invoice\SendInvoiceToCustomerService;
+use Cake\ORM\TableRegistry;
 
 class HelloCashService
 {
-
-    protected $Customer;
-
-    protected $Invoice;
-
-    protected $OrderDetail;
-
-    protected $Payment;
 
     protected $QueuedJobs;
 
@@ -59,8 +51,8 @@ class HelloCashService
             'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
         ];
 
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId,
             ],
@@ -79,8 +71,8 @@ class HelloCashService
 
         $taxRates = $this->prepareTaxesFromResponse($responseObject, true);
 
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $newInvoice = $this->Invoice->saveInvoice(
+        $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
+        $newInvoice = $invoicesTable->saveInvoice(
             $responseObject->cancellation_details->cancellation_number,
             $customerId,
             $taxRates,
@@ -210,16 +202,16 @@ class HelloCashService
     protected function afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash)
     {
 
-        $this->Payment = FactoryLocator::get('Table')->get('Payments');
-        $this->Payment->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $paymentsTable->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
 
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $this->OrderDetail->updateOrderDetails($data, $responseObject->invoice_id);
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateOrderDetails($data, $responseObject->invoice_id);
 
         $taxRates = $this->prepareTaxesFromResponse($responseObject, false);
 
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $newInvoice = $this->Invoice->saveInvoice(
+        $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
+        $newInvoice = $invoicesTable->saveInvoice(
             $responseObject->invoice_id,
             $data->id_customer,
             $taxRates,
@@ -240,20 +232,20 @@ class HelloCashService
 
     protected function sendInvoiceToCustomer($customer, $invoice, $isCancellationInvoice, $paidInCash)
     {
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $sendInvoiceToCustomerService = new SendInvoiceToCustomerService();
-        $sendInvoiceToCustomerService->isCancellationInvoice = $isCancellationInvoice;
-        $sendInvoiceToCustomerService->customerName = $customer->name;
-        $sendInvoiceToCustomerService->customerEmail = $customer->email;
-        $sendInvoiceToCustomerService->invoicePdfFile = '';
-        $sendInvoiceToCustomerService->invoiceNumber = $invoice->invoice_number;
-        $sendInvoiceToCustomerService->invoiceSumPriceIncl = $invoice->sumPriceIncl;
-        $sendInvoiceToCustomerService->invoiceDate = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-        $sendInvoiceToCustomerService->invoiceId = $invoice->id;
-        $sendInvoiceToCustomerService->originalInvoiceId = $invoice->original_invoice_id ?? null;
-        $sendInvoiceToCustomerService->creditBalance = $this->Customer->getCreditBalance($customer->id_customer);
-        $sendInvoiceToCustomerService->paidInCash = $paidInCash;
-        $sendInvoiceToCustomerService->run();
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $service = new SendInvoiceToCustomerService();
+        $service->isCancellationInvoice = $isCancellationInvoice;
+        $service->customerName = $customer->name;
+        $service->customerEmail = $customer->email;
+        $service->invoicePdfFile = '';
+        $service->invoiceNumber = $invoice->invoice_number;
+        $service->invoiceSumPriceIncl = $invoice->sumPriceIncl;
+        $service->invoiceDate = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        $service->invoiceId = $invoice->id;
+        $service->originalInvoiceId = $invoice->original_invoice_id ?? null;
+        $service->creditBalance = $customersTable->getCreditBalance($customer->id_customer);
+        $service->paidInCash = $paidInCash;
+        $service->run();
     }
 
     protected function prepareTaxesFromResponse($responseObject, $cancellation)
@@ -279,8 +271,8 @@ class HelloCashService
     protected function createOrUpdateUser($customerId)
     {
 
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId,
             ],

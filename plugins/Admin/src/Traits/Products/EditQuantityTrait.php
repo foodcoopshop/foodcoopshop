@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\ProductQuantityService;
 
 

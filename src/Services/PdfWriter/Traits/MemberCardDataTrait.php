@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Services\PdfWriter\Traits;
 
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 trait MemberCardDataTrait
 {
@@ -28,23 +28,23 @@ trait MemberCardDataTrait
             throw new \Exception('no customer id passed');
         }
 
-        $customerTable = FactoryLocator::get('Table')->get('Customers');
-        $customerTable->dropManufacturersInNextFind();
-        $customers = $customerTable->find('all',
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $customersTable->dropManufacturersInNextFind();
+        $customers = $customersTable->find('all',
             fields: [
-                'system_bar_code' => $customerTable->getBarcodeFieldString(),
+                'system_bar_code' => $customersTable->getBarcodeFieldString(),
             ],
             conditions: [
-                'Customers.id_customer IN' => $customerIds,
+                $customersTable->aliasField('id_customer IN') => $customerIds,
             ],
-            order: $customerTable->getCustomerOrderClause('ASC'),
+            order: $customersTable->getCustomerOrderClause('ASC'),
             contain: [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         );
-        $customers = $customerTable->addCustomersNameForOrderSelect($customers);
-        $customers->select($customerTable);
-        $customers->select($customerTable->AddressCustomers);
+        $customers = $customersTable->addCustomersNameForOrderSelect($customers);
+        $customers->select($customersTable);
+        $customers->select($customersTable->AddressCustomers);
         return $customers;
 
     }
