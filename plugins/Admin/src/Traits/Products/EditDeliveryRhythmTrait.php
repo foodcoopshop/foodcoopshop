@@ -79,7 +79,7 @@ trait EditDeliveryRhythmTrait
         if ($deliveryRhythmSendOrderListWeekday == '') {
             $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, (new DeliveryRhythmService())->getSendOrderListsWeekday());
         }
-        $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $deliveryRhythmSendOrderListWeekday);
+        $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, (int) $deliveryRhythmSendOrderListWeekday);
 
         if (in_array($deliveryRhythmTypeCombined, ['0-individual'])) {
             $product2update['delivery_rhythm_order_possible_until'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmOrderPossibleUntil);
