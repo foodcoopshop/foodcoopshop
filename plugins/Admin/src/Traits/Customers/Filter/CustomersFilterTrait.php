@@ -5,7 +5,7 @@ namespace Admin\Traits\Customers\Filter;
 
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,8 +42,8 @@ trait CustomersFilterTrait
     public function getCustomers($active, $year, $newsletter)
     {
 
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $conditions = [];
         if ($active != 'all') {

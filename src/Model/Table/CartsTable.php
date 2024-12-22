@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -114,8 +115,6 @@ class CartsTable extends AppTable
     public function getCart($identity, $cartType): array
     {
 
-        $this->Product = FactoryLocator::get('Table')->get('Products');
-
         $identity = Router::getRequest()->getAttribute('identity');
         $customerId = $identity->getId();
 
@@ -134,7 +133,7 @@ class CartsTable extends AppTable
             $cart = $this->save($newCartEntity);
         }
 
-        $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all',
             conditions: [
                 'CartProducts.id_cart' => $cart->id_cart,
@@ -292,7 +291,7 @@ class CartsTable extends AppTable
     public function getPricesRespectingPricePerUnit($netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate)
     {
 
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         if ((!empty($unitProduct) && !$unitProduct->price_per_unit_enabled ) || is_null($unitProduct)) {
 
@@ -353,12 +352,12 @@ class CartsTable extends AppTable
         $deposit = !empty($cartProduct->product->deposit_product) ? $cartProduct->product->deposit_product->deposit : 0;
 
         // START: override shopping with purchase prices / zero prices
-        $cm = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
         $priceInclPerUnit = null;
         if (!empty($unitProduct)) {
             $priceInclPerUnit = $unitProduct->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedProductPricesByShoppingPrice($cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
         $cartProduct->product->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProduct)) {
             $unitProduct->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
@@ -455,12 +454,12 @@ class CartsTable extends AppTable
         $deposit = !empty($cartProduct->product_attribute->deposit_product_attribute) ? $cartProduct->product_attribute->deposit_product_attribute->deposit : 0;
 
         // START: override shopping with purchase prices / zero prices
-        $cm = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
         $priceInclPerUnit = null;
         if (!empty($unitProductAttribute)) {
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedAttributePricesByShoppingPrice($cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
         $cartProduct->product_attribute->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProductAttribute)) {
             $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];

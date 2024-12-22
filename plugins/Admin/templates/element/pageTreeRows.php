@@ -16,9 +16,9 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
-$pageTable = FactoryLocator::get('Table')->get('Pages');
+$pageTable = TableRegistry::getTableLocator()->get('Pages');
 
 foreach ($pages as $page) {
     $level = $pageTable->getLevel($page);

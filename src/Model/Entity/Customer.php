@@ -5,10 +5,10 @@ namespace App\Model\Entity;
 
 use Authentication\IdentityInterface;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\OrderCustomerService;
 use App\Model\Entity\Cart;
 use ArrayAccess;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,8 +58,8 @@ class Customer extends AppEntity implements IdentityInterface
         }
 
         if ($this->_manufacturer === 'not-yet-loaded') {
-            $mm = FactoryLocator::get('Table')->get('Manufacturers');
-            $this->_manufacturer = $mm->find('all',
+            $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->_manufacturer = $manufacturersTable->find('all',
                 conditions: [
                     'AddressManufacturers.email' => $this->email,
                     'AddressManufacturers.id_manufacturer > ' . APP_OFF,
@@ -187,14 +187,14 @@ class Customer extends AppEntity implements IdentityInterface
 
     public function getLastOrderDetailsForDropdown()
     {
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getId());
         return $dropdownData;
     }
 
     public function getFutureOrderDetails()
     {
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
         return $futureOrderDetails;
     }
@@ -252,7 +252,7 @@ class Customer extends AppEntity implements IdentityInterface
 
     public function getCreditBalance()
     {
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
         return $customersTable->getCreditBalance($this->getId());
     }
 
@@ -277,7 +277,7 @@ class Customer extends AppEntity implements IdentityInterface
     public function getCart()
     {
         $cartType = $this->getCartType();
-        $cartsTable = FactoryLocator::get('Table')->get('Carts');
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         return $cartsTable->getCart($this, $cartType);
     }
 
@@ -344,7 +344,7 @@ class Customer extends AppEntity implements IdentityInterface
         if ($this->cart === null) {
             return false;
         }
-        $cc = FactoryLocator::get('Table')->get('Carts');
+        $cc = TableRegistry::getTableLocator()->get('Carts');
         $patchedEntity = $cc->patchEntity(
             $cc->get($this->getCartId()), [
                 'status' => APP_OFF,

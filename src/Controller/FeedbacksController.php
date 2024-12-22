@@ -5,8 +5,8 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Datasource\FactoryLocator;
 use Cake\Event\EventInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,8 +43,8 @@ class FeedbacksController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getFeedbackList());
         }
 
-        $feedbacksTable = FactoryLocator::get('Table')->get('Feedbacks');
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
         $feedbacks = $feedbacksTable->find('all',
             conditions: [

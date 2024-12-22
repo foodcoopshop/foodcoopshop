@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Model\Entity\OrderDetail;
 use App\Services\ProductQuantityService;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -74,7 +74,7 @@ trait DeleteTrait
             $this->OrderDetail->deleteOrderDetail($orderDetail);
 
 
-            $unitsTable = FactoryLocator::get('Table')->get('Units');
+            $unitsTable = TableRegistry::getTableLocator()->get('Units');
             $unitObject = $unitsTable->getUnitsObject($orderDetail->product_id, $orderDetail->product_attribute_id);
 
             $productQuantityService = new ProductQuantityService();

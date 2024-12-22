@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace Admin\Policy;
 
-use App\Model\Table\BlogPostsTable;
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,8 +45,8 @@ class BlogPostsPolicy implements RequestPolicyInterface
                 }
                 // manufacturer owner check
                 if ($identity->isManufacturer()) {
-                    $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-                    $blogPost = $blogPostTable->find('all',
+                    $blogPostsTable = TableRegistry::getTableLocator()->get('BlogPosts');
+                    $blogPost = $blogPostsTable->find('all',
                     conditions:  [
                             'BlogPosts.id_blog_post' => $request->getParam('pass')[0],
                         ],

@@ -7,6 +7,7 @@ use App\Model\Table\AppTable;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use Cake\Utility\Hash;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -78,8 +79,8 @@ class SyncDomainsTable extends AppTable
         }
 
         if ($identity->isManufacturer()) {
-            $manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
-            $isAllowed = $manufacturer->getOptionVariableMemberFee(
+            $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+            $isAllowed = $manufacturersTable->getOptionVariableMemberFee(
                 $identity->getManufacturerVariableMemberFee()
             ) == 0;
         }

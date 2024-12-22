@@ -10,6 +10,7 @@ use Cake\Datasource\FactoryLocator;
 use League\Csv\Writer;
 use Cake\Log\Log;
 use App\Services\Csv\Reader\ProductReaderService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -82,7 +83,7 @@ trait ImportTrait
         $this->initializeImportTrait();
 
         $manufacturerId = $this->getManufacturerId();
-        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => (int) $manufacturerId,
@@ -114,7 +115,7 @@ trait ImportTrait
             if ($reader->areAllEntitiesValid($productEntities)) {
                 $messageString = __d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x';
                 $this->Flash->success($messageString);
-                $actionLogsTable = FactoryLocator::get('Table')->get('ActionLogs');
+                $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
                 $actionLogsTable->customSave('product_added', $this->identity->getId(), $manufacturer->id_manufacturer, 'products', $messageString);
                 Log::error($messageString . print_r($productEntities, true));
             } else {

@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use App\Model\Traits\CartValidatorTrait;
 use App\Services\OrderCustomerService;
 use Cake\Routing\Router;
 use App\Services\ProductQuantityService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -64,7 +64,7 @@ class CartProductsTable extends AppTable
         $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
 
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
         if ($amount == 0 || $amount < - 1 || $amount > Configure::read('app.maxProductAmountForCart')) {
@@ -165,8 +165,8 @@ class CartProductsTable extends AppTable
             }
         }
 
-        $cartTable = FactoryLocator::get('Table')->get('Carts');
-        $prices = $cartTable->getPricesRespectingPricePerUnit(
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $prices = $cartsTable->getPricesRespectingPricePerUnit(
             $price,
             $unitObject,
             $amount,
@@ -368,15 +368,15 @@ class CartProductsTable extends AppTable
 
     public function setPickupDays($cartProducts, $customerId, $orderCustomerService)
     {
-        $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
+        $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
             $cartProduct->pickup_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
         }
 
         $pickupDays = [];
-        $uniquePickupDays = $pickupDayTable->getUniquePickupDays($cartProducts);
+        $uniquePickupDays = $pickupDaysTable->getUniquePickupDays($cartProducts);
         if (!empty($uniquePickupDays)) {
-            $pickupDays = $pickupDayTable->find('all',
+            $pickupDays = $pickupDaysTable->find('all',
                 conditions: [
                     'PickupDays.customer_id' => $customerId,
                     'PickupDays.pickup_day IN' => $uniquePickupDays
@@ -395,7 +395,7 @@ class CartProductsTable extends AppTable
 
             if (!empty($missingPickupDays)) {
                 foreach($missingPickupDays as $missingPickupDay) {
-                    $pickupDays[] = $pickupDayTable->newEntity([
+                    $pickupDays[] = $pickupDaysTable->newEntity([
                         'customer_id' => $customerId,
                         'pickup_day' => $missingPickupDay
                     ]);
@@ -412,11 +412,11 @@ class CartProductsTable extends AppTable
             throw new \Exception('wrong cartId: ' . $cartId);
         }
         // deleteAll cannot check associations
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all',
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
-                'Carts.id_customer' => $customerId
+                'Carts.id_customer' => $customerId,
             ]
         )->first();
         if (empty($cart)) {
@@ -449,7 +449,7 @@ class CartProductsTable extends AppTable
         }
 
         $result = $this->deleteAll($cartProduct2remove);
-        $cartProductUnitsTable = FactoryLocator::get('Table')->get('CartProductUnits');
+        $cartProductUnitsTable = TableRegistry::getTableLocator()->get('CartProductUnits');
         $result |= $cartProductUnitsTable->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
 
         return $result;

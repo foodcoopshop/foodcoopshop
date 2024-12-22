@@ -18,6 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\DateTime;
+use Cake\ORM\TableRegistry;
 
 if (empty($csvRecords)) {
     echo $this->Form->create(null, [
@@ -74,8 +75,8 @@ foreach($csvPayments as $csvPayment) {
     echo '<td>';
     echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
     if ($csvPayment->original_id_customer > 0) {
-        $customerModel = FactoryLocator::get('Table')->get('Customers');
-        $customer = $customerModel->find('all',
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
                 'id_customer' => $csvPayment->original_id_customer
             ]

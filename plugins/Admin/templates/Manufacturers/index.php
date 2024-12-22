@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 ?>
 <div id="manufacturers-list">
@@ -316,8 +317,8 @@ foreach ($manufacturers as $manufacturer) {
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
         echo '<td align="center">';
         if (!empty($manufacturer->feedback)) {
-            $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
-            $approved = $feedbackTable->isApproved($manufacturer->feedback);
+            $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
+            $approved = $feedbacksTable->isApproved($manufacturer->feedback);
             $tooltipContent = __d('admin', 'created') . ': ' . $manufacturer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
             $tooltipContent .= __d('admin', 'changed') . ': ' . $manufacturer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
             echo $this->Html->link(

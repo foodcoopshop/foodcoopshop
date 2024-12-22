@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 $this->element('addScript', [
     'script' =>
@@ -97,7 +97,7 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td style="text-align:center;">';
     if ($cronjob->day_of_month != '') {
-        $cm = FactoryLocator::get('Table')->get('Cronjobs');
+        $cm = TableRegistry::getTableLocator()->get('Cronjobs');
         echo $cm->getDaysOfMonth()[$cronjob->day_of_month];
     }
     echo '</td>';

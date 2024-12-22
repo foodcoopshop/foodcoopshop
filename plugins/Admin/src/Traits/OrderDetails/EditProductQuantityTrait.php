@@ -8,6 +8,7 @@ use App\Mailer\AppMailer;
 use App\Services\ChangeSellingPriceService;
 use Cake\Datasource\FactoryLocator;
 use App\Services\ProductQuantityService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -97,7 +98,7 @@ trait EditProductQuantityTrait
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
-        $unitsTable = FactoryLocator::get('Table')->get('Units');
+        $unitsTable = TableRegistry::getTableLocator()->get('Units');
         $unitObject = $unitsTable->getUnitsObject($oldOrderDetail->product_id, $oldOrderDetail->product_attribute_id);
 
         $productQuantityService = new ProductQuantityService();

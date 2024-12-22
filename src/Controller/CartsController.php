@@ -10,9 +10,9 @@ use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
-use Cake\Datasource\FactoryLocator;
 use App\Services\CartService;
 use Cake\View\JsonView;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -255,9 +255,9 @@ class CartsController extends FrontendController
 
     private function doEmptyCart()
     {
-        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
-        $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->removeAll($this->identity->getCartId(), $this->identity->getId());
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+        $cartProductsTable->removeAll($this->identity->getCartId(), $this->identity->getId());
         $this->identity->setCart($this->identity->getCart());
     }
 
@@ -272,7 +272,7 @@ class CartsController extends FrontendController
     {
 
         $this->doEmptyCart();
-        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
@@ -286,7 +286,7 @@ class CartsController extends FrontendController
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
+                $result = $cartProductsTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
@@ -351,7 +351,7 @@ class CartsController extends FrontendController
             (string) $this->getRequest()->getData('orderedQuantityInUnits')
         );
 
-        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
         $result = $cartProductTable->add($ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 

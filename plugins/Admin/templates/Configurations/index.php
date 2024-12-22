@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
@@ -242,7 +242,7 @@ $this->element('addScript', [
         </tr>
 
         <?php
-        $ct = FactoryLocator::get('Table')->get('Configurations');
+        $ct = TableRegistry::getTableLocator()->get('Configurations');
         if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == $ct::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD) { ?>
         <tr>
             <td>app.bankNameForCreditSystem</td>

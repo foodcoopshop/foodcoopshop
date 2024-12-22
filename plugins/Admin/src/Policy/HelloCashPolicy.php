@@ -6,9 +6,9 @@ namespace Admin\Policy;
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -39,7 +39,7 @@ class HelloCashPolicy implements RequestPolicyInterface
 
         if ($identity->isCustomer()) {
             $invoiceId = $request->getParam('pass')[0];
-            $invoiceTable = FactoryLocator::get('Table')->get('Invoices');
+            $invoiceTable = TableRegistry::getTableLocator()->get('Invoices');
             $invoice = $invoiceTable->find('all',
                 conditions : [
                     'Invoices.id' => $invoiceId,

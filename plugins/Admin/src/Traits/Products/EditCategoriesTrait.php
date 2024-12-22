@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,7 +45,7 @@ trait EditCategoriesTrait
             ]
         )->first();
 
-        $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProductsTable = TableRegistry::getTableLocator()->get('CategoryProducts');
         $categoryProductsTable->deleteAll([
             'id_product' => $productId,
         ]);

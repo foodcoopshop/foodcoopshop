@@ -18,7 +18,7 @@ declare(strict_types=1);
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
@@ -41,7 +41,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailableTable = TableRegistry::getTableLocator()->get('StockAvailables');
 
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(8);
@@ -188,7 +188,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $newPrice = 11.5;
         $cart->cart_products[0]->order_detail->total_price_tax_incl = $newPrice;
         $orderDetailsTable->save($cart->cart_products[0]->order_detail);

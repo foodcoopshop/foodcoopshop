@@ -19,9 +19,9 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
-use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Cronjob;
+use Cake\ORM\TableRegistry;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -198,7 +198,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productId, 5);
         $this->finishCart();
 
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->save(
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(1),
@@ -261,7 +261,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productId, 1);
         $this->finishCart();
 
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->save(
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(5),
@@ -644,7 +644,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testDeleteProductWithOpenOrdersWithInvoicingEnabled()
     {
-        $cronjobsTable = FactoryLocator::get('Table')->get('Cronjobs');
+        $cronjobsTable = TableRegistry::getTableLocator()->get('Cronjobs');
         $cronjobsTable->save(
             $cronjobsTable->newEntity(
                 [
@@ -737,7 +737,7 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
         )->first();
 
-        $actionLogsTable = FactoryLocator::get('Table')->get('ActionLogs');
+        $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
 
         $this->assertEquals('Die Menge des Produktes <b>Artischocke</b> vom Hersteller <b>Demo Gemüse-Hersteller</b> wurde geändert: Verfügbare Menge: Alter Wert: <b>97</b> Neuer Wert: <b>10</b>, Standard-Menge pro Lieferrhythmus: <b>5</b>, Bestellbar bis zu einer Menge von: <b>-5</b>, Änderungsgrund: <b>change reason</b>.', $actionLogs[0]->text);
