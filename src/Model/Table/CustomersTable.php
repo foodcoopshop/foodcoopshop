@@ -62,7 +62,6 @@ class CustomersTable extends AppTable
         $this->hasMany('ValidOrderDetails', [
             'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',
-            'limit' => 1
         ]);
         $this->hasMany('Manufacturers', [
             'foreignKey' => 'id_customer'

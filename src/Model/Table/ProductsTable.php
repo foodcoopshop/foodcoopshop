@@ -72,9 +72,6 @@ class ProductsTable extends AppTable
         ]);
         $this->hasOne('Images', [
             'foreignKey' => 'id_product',
-            'order' => [
-                'Images.id_image' => 'DESC'
-            ]
         ]);
         $this->hasOne('ProductAttribute', [
             'foreignKey' => 'id_product'

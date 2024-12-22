@@ -53,7 +53,7 @@ class OrderDetailsTable extends AppTable
         ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'product_id',
-            'type' => 'INNER'
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'product_attribute_id'

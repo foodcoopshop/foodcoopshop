@@ -32,6 +32,8 @@ parameters:
         - message: '#Access to an undefined property#'
           path: src/Model/Entity
         - message: '#Access to an undefined property.*\$(Authentication)#'
-          path: .          
+          path: .
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
+includes:
+    - vendor/cakedc/cakephp-phpstan/extension.neon
