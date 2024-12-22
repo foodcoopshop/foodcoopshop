@@ -231,7 +231,8 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddDepositToManufacturerEmptyGlassesWithDateFuture()
     {
         $this->loginAsSuperadmin();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $dateAdd = '01.01.2099';
         $jsonDecodedContent = $this->addPayment(0, 30, Payment::TYPE_DEPOSIT, $manufacturerId, Payment::TEXT_EMPTY_GLASSES, $dateAdd);
         $this->assertEquals(0, $jsonDecodedContent->status);
@@ -275,14 +276,15 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testDeletePaymentAsCustomer()
     {
-        $creditBalanceBeforeAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $creditBalanceBeforeAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
 
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), '10,5', 'product');
         $response = $this->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
-        $creditBalanceAfterAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
+        $creditBalanceAfterAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
         $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
     }
 
@@ -385,11 +387,11 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = null)
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customersTable = $this->getTableLocator()->get('Customers');
 
         $this->loginAsSuperadmin();
         $amountToAdd = 10;
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
 
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
@@ -415,9 +417,10 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
     {
-        $creditBalanceBeforeAdd = $this->Customer->getCreditBalance($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $creditBalanceBeforeAdd = $customersTable->getCreditBalance($customerId);
         $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
-        $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
+        $creditBalanceAfterAdd = $customersTable->getCreditBalance($customerId);
         $amountToAddAsDecimal = Configure::read('app.numberHelper')->getStringAsFloat($amountToAdd);
 
         $result = number_format($creditBalanceAfterAdd - $creditBalanceBeforeAdd, 1);

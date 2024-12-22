@@ -197,7 +197,8 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testAddProduct()
     {
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $manufacturer = $this->Manufacturer->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId

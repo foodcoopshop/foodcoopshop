@@ -35,12 +35,12 @@ trait DeleteTrait
             throw new ForbiddenException('deleting user ' . $customerId . 'denied');
         }
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
 
         try {
 
-            $customer = $this->Customer->find('all',
+            $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId
             ],
@@ -63,14 +63,14 @@ trait DeleteTrait
             }
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $creditBalance = $this->Customer->getCreditBalance($customerId);
+                $creditBalance = $customersTable->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
                     $errors[] = __d('admin', 'The_credit_is') . ' ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. ' . __d('admin', 'It_needs_to_be_zero.');
                 }
             }
 
             if (Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers')) {
-                $notApprovedPaymentsCount = $this->Payment->find('all', conditions: [
+                $notApprovedPaymentsCount = $paymentsTable->find('all', conditions: [
                     'id_customer' => $customerId,
                     'approval < ' => APP_ON,
                     'status' => APP_ON,
@@ -98,18 +98,20 @@ trait DeleteTrait
             return $this->sendAjaxError($e);
         }
 
-        $this->Customer->deleteAll(['id_customer' => $customerId]);
-        $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
-        $this->Customer->Feedbacks->deleteAll(['customer_id' => $customerId]);
+        $customersTable->deleteAll(['id_customer' => $customerId]);
+        $addressCustomersTable = $this->getTableLocator()->get('AddressCustomers');
+        $feedbacksTable = $this->getTableLocator()->get('Feedbacks');
+        $addressCustomersTable->deleteAll(['id_customer' => $customerId]);
+        $feedbacksTable->deleteAll(['customer_id' => $customerId]);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
-        $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
-        $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
+        $actionLogsTable->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
+        $actionLogsTable->removeCustomerEmailFromAllActionLogs($customer->email);
 
         $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath());
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
             $message = __d('admin', 'Your_account_has_been_deleted_successfully.');
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
@@ -117,7 +119,7 @@ trait DeleteTrait
             $message = __d('admin', '{0}_has_deleted_an_account.', [$this->identity->name]);
             $redirectUrl = $this->getRequest()->getData('referer');
         }
-        $this->ActionLog->customSave('customer_deleted', $this->identity->getId(), $customer->id_customer, 'customers', $message);
+        $actionLogsTable->customSave('customer_deleted', $this->identity->getId(), $customer->id_customer, 'customers', $message);
         $this->Flash->success($message);
 
         if ($isOwnProfile) {

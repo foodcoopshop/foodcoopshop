@@ -49,8 +49,8 @@ trait EditCustomerTrait
             ]
         )->first();
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $newCustomer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $newCustomer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId
             ]
@@ -202,8 +202,8 @@ trait EditCustomerTrait
             ]);
         }
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_customer_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('order_detail_customer_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
         $this->set([

@@ -489,9 +489,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->logout();
 
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $testCustomer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => Configure::read('test.customerId'),
+                $customersTable->aliasField('id_customer') => Configure::read('test.customerId'),
             ]
         )->first();
         $this->get($this->Slug->getOrderDetailsList().'/initSelfServiceOrder/' . Configure::read('test.customerId'));

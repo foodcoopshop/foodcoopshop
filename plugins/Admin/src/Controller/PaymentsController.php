@@ -34,8 +34,6 @@ class PaymentsController extends AdminAppController
 
     protected $allowedPaymentTypes = [];
     protected $paymentType;
-    protected PaymentsTable $Payment;
-    protected OrderDetailsTable $OrderDetail;
 
     public $customerId;
 
@@ -45,21 +43,14 @@ class PaymentsController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function beforeFilter(EventInterface $event)
-    {
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        parent::beforeFilter($event);
-    }
-
     public function previewEmail($paymentId, $approval)
     {
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
         conditions: [
-            'Payments.id' => $paymentId,
-            'Payments.type' => Payment::TYPE_PRODUCT,
+            $paymentsTable->aliasField('id') => $paymentId,
+            $paymentsTable->aliasField('type') => Payment::TYPE_PRODUCT,
         ],
         contain: [
             'Customers'
@@ -94,10 +85,14 @@ class PaymentsController extends AdminAppController
 
         $this->setFormReferer();
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
         conditions: [
-            'Payments.id' => $paymentId,
-            'Payments.type IN' => [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK],
+            $paymentsTable->aliasField('id') => $paymentId,
+            $paymentsTable->aliasField('type IN') => [
+                Payment::TYPE_PRODUCT,
+                Payment::TYPE_PAYBACK,
+            ],
         ],
         contain: [
             'Customers',
@@ -113,7 +108,7 @@ class PaymentsController extends AdminAppController
             return;
         }
 
-        $payment = $this->Payment->patchEntity(
+        $payment = $paymentsTable->patchEntity(
             $payment,
             $this->getRequest()->getData(),
             [
@@ -125,16 +120,16 @@ class PaymentsController extends AdminAppController
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('payment', $payment);
         } else {
-            $payment = $this->Payment->patchEntity(
+            $payment = $paymentsTable->patchEntity(
                 $payment,
                 [
                     'date_changed' => DateTime::now(),
                     'changed_by' => $this->identity->getId()
                 ]
             );
-            $payment = $this->Payment->save($payment);
+            $payment = $paymentsTable->save($payment);
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogType = match($payment->approval) {
                 -1 => 'payment_product_approval_not_ok',
                  0 => 'payment_product_approval_open',
@@ -161,7 +156,7 @@ class PaymentsController extends AdminAppController
                 $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
             }
 
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $payment->id, 'payments', $message . ' (PaymentId: ' . $payment->id.')');
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $payment->id, 'payments', $message . ' (PaymentId: ' . $payment->id.')');
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
@@ -202,8 +197,9 @@ class PaymentsController extends AdminAppController
 
         $dateAdd = $this->getRequest()->getData('dateAdd');
 
+        $paymentsTable = $this->getTableLocator()->get('Payments');
         try {
-            $entity = $this->Payment->newEntity(
+            $entity = $paymentsTable->newEntity(
                 [
                     'amount' => $amount,
                     'date_add' => $dateAdd,
@@ -211,7 +207,7 @@ class PaymentsController extends AdminAppController
                 ['validate' => 'add']
             );
             if ($entity->hasErrors()) {
-                throw new \Exception($this->Payment->getAllValidationErrors($entity)[0]);
+                throw new \Exception($paymentsTable->getAllValidationErrors($entity)[0]);
             }
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
@@ -234,8 +230,9 @@ class PaymentsController extends AdminAppController
             $customerId = (int) $this->getRequest()->getData('customerId');
             if ($customerId > 0) {
                 $userType = 'customer';
-                $customer = $this->Customer->find('all', conditions: [
-                    'Customers.id_customer' => $customerId
+                $customersTable = $this->getTableLocator()->get('Customers');
+                $customer = $customersTable->find('all', conditions: [
+                    $customersTable->aliasField('id_customer') => $customerId,
                 ])->first();
                 if (empty($customer)) {
                     $msg = 'customer id not correct: ' . $customerId;
@@ -253,8 +250,9 @@ class PaymentsController extends AdminAppController
 
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
-                $manufacturer = $this->Manufacturer->find('all', conditions: [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
+                $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+                $manufacturer = $manufacturersTable->find('all', conditions: [
+                    $manufacturersTable->aliasField('id_manufacturer') => $manufacturerId,
                 ])->first();
 
                 if (empty($manufacturer)) {
@@ -289,8 +287,9 @@ class PaymentsController extends AdminAppController
 
         // payments paybacks and product can also be placed for other users
         if (in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK]) && isset($customerId)) {
-            $customer = $this->Customer->find('all', conditions: [
-                'Customers.id_customer' => $customerId
+            $customersTable = $this->getTableLocator()->get('Customers');
+            $customer = $customersTable->find('all', conditions: [
+                $customersTable->aliasField('id_customer') => $customerId,
             ])->first();
             if ($this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
@@ -329,7 +328,8 @@ class PaymentsController extends AdminAppController
         }
 
         // add entry in table payments
-        $entity = $this->Payment->newEntity(
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $entity = $paymentsTable->newEntity(
             [
                 'status' => APP_ON,
                 'type' => $type,
@@ -347,7 +347,7 @@ class PaymentsController extends AdminAppController
             $entity->approval = APP_ON;
         }
 
-        $newPayment = $this->Payment->save($entity);
+        $newPayment = $paymentsTable->save($entity);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
 
@@ -360,7 +360,8 @@ class PaymentsController extends AdminAppController
             '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
         ]);
 
-        $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->identity->getId(), $newPayment->id, 'payments', $message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('payment_' . $actionLogType . '_added', $this->identity->getId(), $newPayment->id, 'payments', $message);
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer']) && isset($customer) && isset($manufacturer)) {
             $message .= '. ';
@@ -388,14 +389,15 @@ class PaymentsController extends AdminAppController
 
         $paymentId = $this->getRequest()->getData('paymentId');
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
         conditions: [
             'Payments.id' => $paymentId,
             'Payments.approval <> ' . APP_ON
         ],
         contain: [
             'Customers',
-            'Manufacturers'
+            'Manufacturers',
         ])->first();
 
         if (empty($payment)) {
@@ -409,8 +411,8 @@ class PaymentsController extends AdminAppController
         }
 
         // TODO add payment owner check (also for manufacturers!)
-        $this->Payment->save(
-            $this->Payment->patchEntity(
+        $paymentsTable->save(
+            $paymentsTable->patchEntity(
                 $payment,
                 [
                     'status' => APP_DEL,
@@ -418,8 +420,6 @@ class PaymentsController extends AdminAppController
                 ]
             )
         );
-
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
 
         $actionLogType = $payment->type;
         if ($payment->type == 'deposit') {
@@ -447,7 +447,8 @@ class PaymentsController extends AdminAppController
             ]);
         }
 
-        $this->ActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->identity->getId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('payment_' . $actionLogType . '_deleted', $this->identity->getId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
         $this->Flash->success($message);
 
@@ -479,7 +480,8 @@ class PaymentsController extends AdminAppController
         $this->paymentType = Payment::TYPE_PRODUCT;
 
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
-            $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->customerId);
+            $customersTable = $this->getTableLocator()->get('Customers');
+            $personalTransactionCode = $customersTable->getPersonalTransactionCode($this->customerId);
             $this->set('personalTransactionCode', $personalTransactionCode);
         }
 
@@ -506,10 +508,11 @@ class PaymentsController extends AdminAppController
         }
 
         $this->preparePayments();
-        $this->set('creditBalance', $this->Customer->getCreditBalance($this->getCustomerId()));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $this->set('creditBalance', $customersTable->getCreditBalance($this->getCustomerId()));
 
         if ($this->identity->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
-            $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->getCustomerId());
+            $personalTransactionCode = $customersTable->getPersonalTransactionCode($this->getCustomerId());
             $this->set('personalTransactionCode', $personalTransactionCode);
         }
 
@@ -517,7 +520,8 @@ class PaymentsController extends AdminAppController
 
     private function preparePayments()
     {
-        $paymentsAssociation = $this->Customer->getAssociation('Payments');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $paymentsAssociation = $customersTable->getAssociation('Payments');
         $paymentsAssociation->setConditions(
             array_merge(
                 $paymentsAssociation->getConditions(),
@@ -525,9 +529,9 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $customer = $this->Customer->find('all',
+        $customer = $customersTable->find('all',
         conditions: [
-            'Customers.id_customer' => $this->getCustomerId()
+            $customersTable->aliasField('id_customer') => $this->getCustomerId(),
         ],
         contain: [
            'Payments'
@@ -556,8 +560,8 @@ class PaymentsController extends AdminAppController
         }
 
         if ($this->paymentType == Payment::TYPE_PRODUCT) {
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProductByCustomer($this->getCustomerId());
+            $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+            $orderDetailsGroupedByMonth = $orderDetailsTable->getMonthlySumProductByCustomer($this->getCustomerId());
 
             if (! empty($orderDetailsGroupedByMonth)) {
                 foreach ($orderDetailsGroupedByMonth as $orderDetail) {

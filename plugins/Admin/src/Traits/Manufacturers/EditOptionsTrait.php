@@ -87,10 +87,6 @@ trait EditOptionsTrait
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
 
-        if (!$this->identity->isManufacturer()) {
-            $this->Customer = $this->getTableLocator()->get('Customers');
-        }
-
         $this->setFormReferer();
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {

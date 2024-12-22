@@ -26,8 +26,6 @@ use App\Model\Table\InvoicesTable;
 trait IndexTrait 
 {
 
-    protected InvoicesTable $Invoice;
-
     public function index()
     {
 
@@ -195,7 +193,6 @@ trait IndexTrait
             ]
         ])->toArray();
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy);
         $this->set('orderDetails', $orderDetails);
 
@@ -265,11 +262,10 @@ trait IndexTrait
             case 'customer':
                 $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-                    $this->Invoice = $this->getTableLocator()->get('Invoices');
-                    $this->Customer = $this->getTableLocator()->get('Customers');
+                    $invoicesTable = $this->getTableLocator()->get('Invoices');
                     foreach($preparedOrderDetails as &$orderDetail) {
-                        $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-                        $orderDetail['latestInvoices'] = $this->Invoice->getLatestInvoicesForCustomer($orderDetail['customer_id']);
+                        $orderDetail['invoiceData'] = $invoicesTable->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+                        $orderDetail['latestInvoices'] = $invoicesTable->getLatestInvoicesForCustomer($orderDetail['customer_id']);
                     }
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');

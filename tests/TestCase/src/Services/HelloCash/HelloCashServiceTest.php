@@ -32,7 +32,6 @@ class HelloCashServiceTest extends AppCakeTestCase
     use PrepareAndTestInvoiceDataTrait;
 
     protected $HelloCashService;
-    protected $Invoice;
 
     public function setUp(): void
     {
@@ -43,7 +42,6 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
         $this->HelloCashService = new HelloCashService();
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
     }
 
     public function testGetUsers() {
@@ -70,7 +68,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $invoice = $this->Invoice->find('all')->first();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all')->first();
 
         // not-owning user must not be able to download receipt
         $this->loginAsCustomer();
@@ -119,7 +118,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $invoice = $this->Invoice->find('all')->first();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all')->first();
 
         $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
         $receiptHtml = $this->_response->getBody()->__toString();
@@ -145,7 +145,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all')->first();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all')->first();
         $this->HelloCashService->getInvoice($invoice->id, false);
         $this->runAndAssertQueue();
 
@@ -154,7 +155,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id' => $invoice->id,
             ],
@@ -183,13 +184,14 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all')->first();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all')->first();
         $this->HelloCashService->getInvoice($invoice->id, false);
         $this->runAndAssertQueue();
 
         $this->assertMailCount(1);
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id' => $invoice->id,
             ],
@@ -208,7 +210,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all',
             contain: [
                 'InvoiceTaxes',
                 'OrderDetails',
@@ -233,7 +236,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id' => $response->invoiceId,
             ],
@@ -262,7 +265,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoiceA = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoiceA = $invoicesTable->find('all',
             contain: [
                 'Customers',
             ],
@@ -273,16 +277,16 @@ class HelloCashServiceTest extends AppCakeTestCase
 
         $this->assertGreaterThan(0, $invoiceA->customer->user_id_registrierkasse);
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->get($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->get($customerId);
         $customer->firstname = 'Superadmin Firstname Changed';
         $customer->lastname = 'Superadmin Lastname Changed';
-        $this->Customer->save($customer);
+        $customersTable->save($customer);
 
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoiceB = $this->Invoice->find('all',
+        $invoiceB = $invoicesTable->find('all',
             contain: [
                 'Customers',
             ],
@@ -306,15 +310,16 @@ class HelloCashServiceTest extends AppCakeTestCase
         $paidInCash = 1;
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->get($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->get($customerId);
         $customer->user_id_registrierkasse = 1234567890;
-        $this->Customer->save($customer);
+        $customersTable->save($customer);
 
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $invoiceA = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoiceA = $invoicesTable->find('all',
             contain: [
                 'Customers',
             ],

@@ -54,7 +54,6 @@ abstract class AppCakeTestCase extends TestCase
     public $Time;
     public $Cart;
     public $Configuration;
-    public $Customer;
     public $Manufacturer;
     public $Network;
     public $Payment;
@@ -77,7 +76,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->Time = new MyTimeHelper($View);
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
-        $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         // enable tokens only for IntegrationTests
@@ -318,9 +316,10 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function changeCustomer(int $customerId, string $field, $value)
     {
-        $newCustomer = $this->Customer->get($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $newCustomer = $customersTable->get($customerId);
         $newCustomer->{$field} = $value;
-        $this->Customer->save($newCustomer);
+        $customersTable->save($newCustomer);
     }
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)
@@ -339,8 +338,8 @@ abstract class AppCakeTestCase extends TestCase
     }
 
     protected function resetCustomerCreditBalance() {
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->Payment->delete($this->Payment->get(2));
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $paymentsTable->delete($paymentsTable->get(2));
     }
 
     private function prepareSendingOrderListsOrInvoices($contentFolder)

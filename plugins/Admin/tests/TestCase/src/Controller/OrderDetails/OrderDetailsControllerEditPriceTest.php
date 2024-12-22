@@ -57,7 +57,8 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public function testEditOrderDetailPriceAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_price_changed_notification', 0);
 
         $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);

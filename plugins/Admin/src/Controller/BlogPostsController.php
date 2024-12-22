@@ -29,12 +29,10 @@ class BlogPostsController extends AdminAppController
 
     use UploadTrait;
 
-    protected BlogPostsTable $BlogPost;
-
     public function add()
     {
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPost = $this->BlogPost->newEntity(
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPost = $blogPostsTable->newEntity(
             [
                 'active' => APP_ON,
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
@@ -56,8 +54,8 @@ class BlogPostsController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPost = $this->BlogPost->find('all', conditions: [
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPost = $blogPostsTable->find('all', conditions: [
             'BlogPosts.id_blog_post' => $blogPostId
         ])->first();
 
@@ -70,7 +68,7 @@ class BlogPostsController extends AdminAppController
         if ($blogPost->show_on_start_page_until && $blogPost->show_on_start_page_until->isPast()) {
             $showOnStartPageUntil = null;
         }
-        $blogPost = $this->BlogPost->patchEntity($blogPost, [
+        $blogPost = $blogPostsTable->patchEntity($blogPost, [
             'update_modified_field' => true,
             'show_on_start_page_until' => $showOnStartPageUntil,
         ]);
@@ -81,6 +79,7 @@ class BlogPostsController extends AdminAppController
 
     private function _processForm($blogPost, $isEditMode)
     {
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
@@ -108,21 +107,21 @@ class BlogPostsController extends AdminAppController
         }
 
         if (!$this->getRequest()->getData('BlogPosts.update_modified_field') && !$this->identity->isManufacturer() && $isEditMode) {
-            $this->BlogPost->removeBehavior('Timestamp');
+            $blogPostsTable->removeBehavior('Timestamp');
         }
 
         $this->setRequest(
             $this->getRequest()->withData('BlogPosts.show_on_start_page_until',
             Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
         ));
-        $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
+        $blogPost = $blogPostsTable->patchEntity($blogPost, $this->getRequest()->getData());
 
         if ($blogPost->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('blogPost', $blogPost);
             $this->render('edit');
         } else {
-            $blogPost = $this->BlogPost->save($blogPost);
+            $blogPost = $blogPostsTable->save($blogPost);
 
             if (!$isEditMode) {
                 $messageSuffix = __d('admin', 'created');
@@ -143,8 +142,8 @@ class BlogPostsController extends AdminAppController
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('BlogPosts.delete_blog_post'))) {
                 $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath());
-                $blogPost = $this->BlogPost->patchEntity($blogPost, ['active' => APP_DEL]);
-                $this->BlogPost->save($blogPost);
+                $blogPost = $blogPostsTable->patchEntity($blogPost, ['active' => APP_DEL]);
+                $blogPostsTable->save($blogPost);
                 $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'blog_post_deleted';
             }
@@ -220,9 +219,7 @@ class BlogPostsController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Blog_posts'));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
     }
 }

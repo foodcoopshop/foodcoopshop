@@ -129,7 +129,7 @@ trait AddEditTrait
                 $actionLogType = 'manufacturer_changed';
             }
 
-            $this->Customer = $this->getTableLocator()->get('Customers');
+            $customersTable = $this->getTableLocator()->get('Customers');
             $customerData = [
                 'email' => $this->getRequest()->getData('Manufacturers.address_manufacturer.email'),
                 'firstname' => $this->getRequest()->getData('Manufacturers.address_manufacturer.firstname'),
@@ -137,11 +137,11 @@ trait AddEditTrait
                 'active' => APP_ON
             ];
             if (empty($customer)) {
-                $customerEntity = $this->Customer->newEntity($customerData);
+                $customerEntity = $customersTable->newEntity($customerData);
             } else {
-                $customerEntity = $this->Customer->patchEntity($customer, $customerData);
+                $customerEntity = $customersTable->patchEntity($customer, $customerData);
             }
-            $this->Customer->save($customerEntity);
+            $customersTable->save($customerEntity);
 
             if (!empty($this->getRequest()->getData('Manufacturers.tmp_image'))) {
                 $this->saveUploadedImage($manufacturer->id_manufacturer, $this->getRequest()->getData('Manufacturers.tmp_image'), Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
@@ -159,9 +159,9 @@ trait AddEditTrait
                 $this->deleteUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer);
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);

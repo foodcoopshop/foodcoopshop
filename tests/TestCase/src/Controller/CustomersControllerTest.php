@@ -27,8 +27,6 @@ class CustomersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public $Customer;
-
     public function testExportCustomers() {
         $this->loginAsSuperadmin();
         $this->get('/admin/customers/export?active=1');
@@ -58,14 +56,14 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public function testEditGroupAsSuperadmin()
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customersTable = $this->getTableLocator()->get('Customers');
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.customerId');
         $this->ajaxPost('/admin/customers/editGroup', [
             'customerId' => $customerId,
             'groupId' => Customer::GROUP_ADMIN,
         ]);
-        $customer = $this->Customer->find('all',
+        $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId,
             ],
@@ -75,14 +73,14 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public function testEditGroupAsAdmin()
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customersTable = $this->getTableLocator()->get('Customers');
         $this->loginAsAdmin();
         $customerId = Configure::read('test.customerId');
         $this->ajaxPost('/admin/customers/editGroup', [
             'customerId' => $customerId,
             'groupId' => Customer::GROUP_SUPERADMIN,
         ]);
-        $customer = $this->Customer->find('all',
+        $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId,
             ],
@@ -92,7 +90,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public function testCustomerEdit()
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customersTable = $this->getTableLocator()->get('Customers');
         $this->loginAsSuperadmin();
         $data = [
             'Customers' => [
@@ -111,7 +109,7 @@ class CustomersControllerTest extends AppCakeTestCase
         ];
         $this->post($this->Slug->getCustomerEdit(Configure::read('test.superadminId')), $data);
 
-        $customer = $this->Customer->find('all',
+        $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => Configure::read('test.superadminId'),
             ],
@@ -155,7 +153,8 @@ class CustomersControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
 
-        $oldCustomer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $oldCustomer = $customersTable->find('all',
         conditions: [
             'Customers.id_customer' => Configure::read('test.superadminId'),
         ],
@@ -172,7 +171,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->post($this->Slug->getChangePassword(Configure::read('test.superadminId')), $data);
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich gespeichert.');
 
-        $newCustomer = $this->Customer->find('all',
+        $newCustomer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => Configure::read('test.superadminId'),
             ],

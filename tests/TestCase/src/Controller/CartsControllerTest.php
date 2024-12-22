@@ -837,7 +837,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishOrderStockNotificationsDisabled()
     {
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_manufacturer', 0);
         $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_contact_person', 0);
         $this->loginAsSuperadmin();
@@ -849,7 +850,8 @@ class CartsControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsCustomer();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'stock_management_enabled', 1);
 
         $this->placeOrderWithStockProducts();
@@ -1115,9 +1117,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->logout();
 
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('all',
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $testCustomer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => Configure::read('test.customerId'),
+                $customersTable->aliasField('id_customer') => Configure::read('test.customerId'),
             ],
         )->first();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));

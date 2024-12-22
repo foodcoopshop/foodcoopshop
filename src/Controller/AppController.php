@@ -30,7 +30,6 @@ class AppController extends Controller
     public $identity = null;
     public $formProtectionEnabled = true;
     
-    protected $Customer;
     protected $Manufacturer;
 
     public function initialize(): void

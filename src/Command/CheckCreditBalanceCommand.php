@@ -27,9 +27,6 @@ use App\Model\Entity\Payment;
 class CheckCreditBalanceCommand extends AppCommand
 {
 
-    public $ActionLog;
-    public $Customer;
-
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
@@ -39,20 +36,20 @@ class CheckCreditBalanceCommand extends AppCommand
 
         $this->startTimeLogging();
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Customer->dropManufacturersInNextFind();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customersTable->dropManufacturersInNextFind();
         $conditions = [
             'Customers.active' => 1,
             'Customers.check_credit_reminder_enabled' => 1,
         ];
-        $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
+        $conditions[] = $customersTable->getConditionToExcludeHostingUser();
 
-        $customers = $this->Customer->find('all',
+        $customers = $customersTable->find('all',
         conditions: $conditions,
         contain: [
             'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
         ]);
-        $customers = $this->Customer->sortByVirtualField($customers, 'name');
+        $customers = $customersTable->sortByVirtualField($customers, 'name');
 
         $i = 0;
         $deltaSum = 0;
@@ -79,10 +76,10 @@ class CheckCreditBalanceCommand extends AppCommand
         }
 
         foreach ($customers as $customer) {
-            $delta = $this->Customer->getCreditBalance($customer->id_customer);
+            $delta = $customersTable->getCreditBalance($customer->id_customer);
             $personalTransactionCode = null;
             if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
-                $personalTransactionCode = $this->Customer->getPersonalTransactionCode($customer->id_customer);
+                $personalTransactionCode = $customersTable->getPersonalTransactionCode($customer->id_customer);
             }
 
             if ($delta < Configure::read('appDb.FCS_CHECK_CREDIT_BALANCE_LIMIT')) {
@@ -110,8 +107,8 @@ class CheckCreditBalanceCommand extends AppCommand
 
         $this->stopTimeLogging();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('cronjob_check_credit_balance', 0, 0, '', $outString . '<br />' . $this->getRuntime());
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('cronjob_check_credit_balance', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $io->out($outString);
         $io->out($this->getRuntime());

@@ -66,9 +66,10 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertContentType('pdf');
 
         // change admin to customer to test access from different customer
-        $customerEntity = $this->Customer->get(Configure::read('test.adminId'));
-        $customerEntity->id_default_group = Customer::GROUP_MEMBER;
-        $this->Customer->save($customerEntity);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->get(Configure::read('test.adminId'));
+        $customer->id_default_group = Customer::GROUP_MEMBER;
+        $customersTable->save($customer);
 
         $this->loginAsAdmin();
         $this->get($downloadUrl);

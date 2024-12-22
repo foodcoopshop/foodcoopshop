@@ -28,9 +28,6 @@ class PickupReminderCommand extends AppCommand
 {
 
     public $cronjobRunDay;
-    public $Customer;
-    public $OrderDetail;
-    public $ActionLog;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -47,17 +44,17 @@ class PickupReminderCommand extends AppCommand
             'Customers.pickup_day_reminder_enabled' => 1,
             'Customers.active' => 1,
         ];
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
-        $this->Customer->dropManufacturersInNextFind();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $conditions[] = $customersTable->getConditionToExcludeHostingUser();
+        $customersTable->dropManufacturersInNextFind();
 
-        $customers = $this->Customer->find('all',
+        $customers = $customersTable->find('all',
         conditions: $conditions,
         contain: [
             'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
         ]);
-        $customers = $this->Customer->sortByVirtualField($customers, 'name');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $customers = $customersTable->sortByVirtualField($customers, 'name');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
         $nextPickupDay = (new DeliveryRhythmService())->getDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
@@ -68,7 +65,7 @@ class PickupReminderCommand extends AppCommand
         $exp = new QueryExpression();
         foreach ($customers as $customer) {
 
-            $futureOrderDetails = $this->OrderDetail->find('all',
+            $futureOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_customer' => $customer->id_customer,
                 $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', date('Y-m-d', $nextPickupDay)),
@@ -107,8 +104,8 @@ class PickupReminderCommand extends AppCommand
 
         $this->stopTimeLogging();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('cronjob_pickup_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('cronjob_pickup_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $io->out($outString);
         $io->out($this->getRuntime());

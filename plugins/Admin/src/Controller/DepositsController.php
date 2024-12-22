@@ -172,10 +172,10 @@ class DepositsController extends AdminAppController
 
         $this->set('years', array_unique($years));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
-        $paymentDepositDelta += $this->Customer->getDepositBalanceForCustomers(APP_OFF);
-        $paymentDepositDelta += $this->Customer->getDepositBalanceForDeletedCustomers();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $paymentDepositDelta = $customersTable->getDepositBalanceForCustomers(APP_ON);
+        $paymentDepositDelta += $customersTable->getDepositBalanceForCustomers(APP_OFF);
+        $paymentDepositDelta += $customersTable->getDepositBalanceForDeletedCustomers();
         $paymentDepositDelta = $paymentDepositDelta * -1 - $manufacturerMoneySum;
         $this->set('paymentDepositDelta', $paymentDepositDelta);
 

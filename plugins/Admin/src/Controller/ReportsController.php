@@ -30,8 +30,6 @@ use App\Services\Csv\Reader\Banking\BankingReaderService;
 class ReportsController extends AdminAppController
 {
 
-    protected PaymentsTable $Payment;
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -41,7 +39,7 @@ class ReportsController extends AdminAppController
     private function handleCsvUpload()
     {
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
 
         $csvPayments = [];
         $csvRecords = [];
@@ -71,7 +69,7 @@ class ReportsController extends AdminAppController
             }
 
             foreach($csvRecords as &$csvRecord) {
-                $csvRecord['already_imported'] = $this->Payment->isAlreadyImported($csvRecord['content'], $csvRecord['date']);
+                $csvRecord['already_imported'] = $paymentsTable->isAlreadyImported($csvRecord['content'], $csvRecord['date']);
             }
 
         }
@@ -83,7 +81,7 @@ class ReportsController extends AdminAppController
 
         if (!empty($csvRecords)) {
 
-            $csvPayments = $this->Payment->newEntities(
+            $csvPayments = $paymentsTable->newEntities(
                 $csvRecords,
                 [
                     'validate' => 'csvImportUpload',
@@ -102,7 +100,7 @@ class ReportsController extends AdminAppController
                             $csvPayment->selected = false;
                         }
                     }
-                    $csvPayment = $this->Payment->patchEntity(
+                    $csvPayment = $paymentsTable->patchEntity(
                         $csvPayment,
                         [
                             'date_transaction_add' => new DateTime($csvPayment->date),
@@ -130,9 +128,8 @@ class ReportsController extends AdminAppController
 
                 if (!$paymentsHaveErrors && $saveRecords) {
 
-                    $this->Customer = $this->getTableLocator()->get('Customers');
-
-                    $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
+                    $paymentsTable = $this->getTableLocator()->get('Payments');
+                    $paymentsTable->getConnection()->transactional(function () use ($csvPayments) {
 
                         $i = 0;
                         $sumAmount = 0;
@@ -140,8 +137,9 @@ class ReportsController extends AdminAppController
                             if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
                                 unset($csvPayments[$i]);
                             } else {
-                                $customer = $this->Customer->find('all', conditions: [
-                                    'id_customer' => $csvPayment->id_customer,
+                                $customersTable = $this->getTableLocator()->get('Customers');
+                                $customer = $customersTable->find('all', conditions: [
+                                    $customersTable->aliasField('id_customer') => $csvPayment->id_customer,
                                 ])->first();
                                 $sumAmount += $csvPayment->amount;
 
@@ -169,7 +167,8 @@ class ReportsController extends AdminAppController
                             $this->redirect($this->referer());
                         }
 
-                        $success = $this->Payment->saveManyOrFail($csvPayments);
+                        $paymentsTable = $this->getTableLocator()->get('Payments');
+                        $success = $paymentsTable->saveManyOrFail($csvPayments);
                         if ($success) {
                             $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}', [
                                 count($csvPayments),
@@ -226,8 +225,8 @@ class ReportsController extends AdminAppController
         // exclude "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $query = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $query = $paymentsTable->find('all',
         conditions: $conditions,
         contain: [
             'Customers',
@@ -257,7 +256,7 @@ class ReportsController extends AdminAppController
         ]);
         $this->set('payments', $payments);
 
-        $this->set('customersForDropdown', $this->Payment->Customers->getForDropdown());
+        $this->set('customersForDropdown', $paymentsTable->Customers->getForDropdown());
         $this->set('title_for_layout', __d('admin', 'Report') . ': ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', $paymentType == Payment::TYPE_DEPOSIT);

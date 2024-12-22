@@ -27,9 +27,6 @@ class SendInvoicesToCustomersCommand extends AppCommand
 {
 
     public $cronjobRunDay;
-    public $ActionLog;
-    public $Customer;
-    public $Invoice;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -39,8 +36,8 @@ class SendInvoicesToCustomersCommand extends AppCommand
         }
         $this->startTimeLogging();
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoiceToCustomerService = new GenerateInvoiceToCustomerService();
 
         if (!$args->getArgumentAt(0)) {
@@ -49,8 +46,8 @@ class SendInvoicesToCustomersCommand extends AppCommand
             $this->cronjobRunDay = $args->getArgumentAt(0);
         }
 
-        $this->Customer->dropManufacturersInNextFind();
-        $customers = $this->Customer->find('all',
+        $customersTable->dropManufacturersInNextFind();
+        $customers = $customersTable->find('all',
         conditions: [
             'Customers.active' => APP_ON,
             'Customers.shopping_price <> "ZP"',
@@ -66,7 +63,7 @@ class SendInvoicesToCustomersCommand extends AppCommand
         $i = 0;
         foreach($customers as $customer) {
 
-            $data = $this->Invoice->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay));
+            $data = $invoicesTable->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay));
 
             if (!$data->new_invoice_necessary) {
                 continue;
@@ -84,9 +81,9 @@ class SendInvoicesToCustomersCommand extends AppCommand
 
         $this->stopTimeLogging();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $message = __('{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully.', [$i]);
-        $this->ActionLog->customSave('invoice_added', 0, 0, 'invoices', $message . '<br />' . $this->getRuntime());
+        $actionLogsTable->customSave('invoice_added', 0, 0, 'invoices', $message . '<br />' . $this->getRuntime());
 
         return static::CODE_SUCCESS;
 

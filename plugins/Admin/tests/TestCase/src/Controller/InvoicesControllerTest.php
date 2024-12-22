@@ -53,8 +53,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertEquals($invoice->paid_in_cash, $paidInCash);
 
         // assert that payment was automatically added
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $credit = $this->Customer->getCreditBalance($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $credit = $customersTable->getCreditBalance($customerId);
         $this->assertEquals(100, $credit);
 
     }
@@ -155,8 +155,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertNotNull($invoice->email_status);
 
         // assert that automatically added payment was removed
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $credit = $this->Customer->getCreditBalance($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $credit = $customersTable->getCreditBalance($customerId);
         $this->assertEquals(61.97, $credit);
 
     }
