@@ -5,10 +5,10 @@ namespace Admin\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -93,7 +93,7 @@ class ProductsPolicy implements RequestPolicyInterface
 
     protected function productExists($request)
     {
-        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productTable = TableRegistry::getTableLocator()->get('Products');
         $ids = $productTable->getProductIdAndAttributeId($request->getData('productId'));
         $productId = $ids['productId'];
         $product = $productTable->find('all',
@@ -110,7 +110,7 @@ class ProductsPolicy implements RequestPolicyInterface
             return true;
         }
 
-        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productTable = TableRegistry::getTableLocator()->get('Products');
 
         // param productIds is passed via ajaxCall
         if (!empty($request->getData('productIds'))) {
