@@ -25,8 +25,6 @@ use Cake\I18n\DateTime;
 class FeedbacksController extends AdminAppController
 {
 
-    protected FeedbacksTable $Feedback;
-
     public $customerId;
     public $isOwnForm;
 
@@ -43,8 +41,8 @@ class FeedbacksController extends AdminAppController
 
     private function getCustomer()
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
         conditions: [
             'Customers.id_customer' => $this->customerId,
         ],
@@ -91,23 +89,24 @@ class FeedbacksController extends AdminAppController
         $customerId = $this->getCustomerId();
         $this->set('isOwnForm', $this->isOwnForm);
 
-        $this->Feedback = $this->getTableLocator()->get('Feedbacks');
+        $feedbacksTable = $this->getTableLocator()->get('Feedbacks');
+        $customersTable = $this->getTableLocator()->get('Customers');
 
         $customer = $this->getCustomer();
         $this->set('customer', $customer);
 
-        $manufacturer = $this->Customer->getManufacturerByCustomerId($this->customerId);
+        $manufacturer = $customersTable->getManufacturerByCustomerId($this->customerId);
         $isManufacturer = false;
         if (!empty($manufacturer)) {
             $isManufacturer = true;
-            $privacyTypes = $this->Feedback->getManufacturerPrivacyTypes($manufacturer);
+            $privacyTypes = $feedbacksTable->getManufacturerPrivacyTypes($manufacturer);
         } else {
-            $privacyTypes = $this->Feedback->getCustomerPrivacyTypes($customer);
+            $privacyTypes = $feedbacksTable->getCustomerPrivacyTypes($customer);
         }
         $this->set('privacyTypes', $privacyTypes);
         $this->set('isManufacturer', $isManufacturer);
 
-        $feedback = $this->Feedback->find('all',
+        $feedback = $feedbacksTable->find('all',
         conditions: [
             'Feedbacks.customer_id' => $customerId,
         ],
@@ -116,7 +115,7 @@ class FeedbacksController extends AdminAppController
         ])->first();
 
         if (!empty($feedback) && $this->identity->isSuperadmin()) {
-            $feedback->approved_checkbox = $this->Feedback->isApproved($feedback);
+            $feedback->approved_checkbox = $feedbacksTable->isApproved($feedback);
         }
 
         $isEditMode = !empty($feedback);
@@ -134,14 +133,14 @@ class FeedbacksController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
 
         if (!$isEditMode) {
-            $feedback = $this->Feedback->newEntity(
+            $feedback = $feedbacksTable->newEntity(
                 $this->getRequest()->getData(),
                 [
                     'validate' => 'edit',
                 ],
             );
         } else {
-            $feedback = $this->Feedback->patchEntity(
+            $feedback = $feedbacksTable->patchEntity(
                 $feedback,
                 $this->getRequest()->getData(),
                 [
@@ -164,7 +163,7 @@ class FeedbacksController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Feedbacks.delete_feedback'))) {
-                $this->Feedback->delete($feedback);
+                $feedbacksTable->delete($feedback);
                 $actionLogType = 'user_feedback_deleted';
                 if ($this->isOwnForm) {
                     $message = __d('admin', 'Your_feedback_has_been_{0}.', [
@@ -194,7 +193,7 @@ class FeedbacksController extends AdminAppController
             if ($isEditMode && $this->identity->isSuperadmin()) {
                 $feedback->approved = $valueForNotApproved;
                 if ($feedback->approved_checkbox) {
-                    $wasApproved = $this->Feedback->isApproved($oldFeedback);
+                    $wasApproved = $feedbacksTable->isApproved($oldFeedback);
                     $feedback->approved = $valueForApproved;
                     if (!$wasApproved) {
                         $actionLogType = 'user_feedback_approved';
@@ -231,7 +230,7 @@ class FeedbacksController extends AdminAppController
             }
 
             $isDirty = $feedback->isDirty('text') || $feedback->isDirty('privacy_type');
-            $feedback = $this->Feedback->save($feedback);
+            $feedback = $feedbacksTable->save($feedback);
             if (!$isEditMode || $isDirty) {
                 $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
             }

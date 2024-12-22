@@ -5,7 +5,6 @@ namespace App\Model\Entity;
 
 use Authentication\IdentityInterface;
 use Cake\Core\Configure;
-use Cake\ORM\Entity;
 use Cake\Datasource\FactoryLocator;
 use App\Services\OrderCustomerService;
 use App\Model\Entity\Cart;
@@ -24,7 +23,7 @@ use ArrayAccess;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Customer extends Entity implements IdentityInterface
+class Customer extends AppEntity implements IdentityInterface
 {
 
     public $cart = null;

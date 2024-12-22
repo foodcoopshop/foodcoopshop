@@ -189,8 +189,10 @@ class BlogPostsController extends AdminAppController
 
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $query = $this->BlogPost->find('all',
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $customersTable = $this->getTableLocator()->get('Customers');
+
+        $query = $blogPostsTable->find('all',
         conditions: $conditions,
         contain: [
             'Customers',
@@ -207,7 +209,7 @@ class BlogPostsController extends AdminAppController
 
         foreach ($blogPosts as $blogPost) {
             if (!empty($blogPost->customer)) {
-                $manufacturerRecord = $this->BlogPost->Customers->getManufacturerRecord($blogPost->customer);
+                $manufacturerRecord = $customersTable->getManufacturerRecord($blogPost->customer);
             }
             if (!empty($manufacturerRecord->manufacturer)) {
                 $blogPost->customer->manufacturer = $manufacturerRecord->manufacturer;

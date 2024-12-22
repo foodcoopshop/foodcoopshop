@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\ORM\Entity;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -16,12 +18,6 @@ namespace App\Model\Entity;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class OrderDetail extends AppEntity
-{
 
-    const STATE_OPEN = 3;
-    const STATE_ORDER_LIST_SENT_TO_MANUFACTURER = 10;
-    const STATE_BILLED_CASHLESS = 11;
-    const STATE_BILLED_CASH = 12;
-
-}
+ class AppEntity extends Entity {
+ }

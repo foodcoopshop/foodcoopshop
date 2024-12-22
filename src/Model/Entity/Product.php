@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
@@ -21,7 +20,7 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
- class Product extends Entity {
+ class Product extends AppEntity {
 
     const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
     const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
