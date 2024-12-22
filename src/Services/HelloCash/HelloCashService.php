@@ -328,7 +328,7 @@ class HelloCashService
 
         if (!array_key_exists('user_id', $data)) {
             $customer->user_id_registrierkasse = $helloCashUser->user_id;
-            $this->Customer->save($customer);
+            $customersTable->save($customer);
         }
 
         return $helloCashUser->user_id;
