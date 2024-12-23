@@ -44,7 +44,8 @@ trait GetOrderListTrait
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 

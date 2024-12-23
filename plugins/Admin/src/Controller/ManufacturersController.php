@@ -62,10 +62,4 @@ class ManufacturersController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-    }
-
 }

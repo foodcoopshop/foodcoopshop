@@ -41,7 +41,8 @@ trait EditOptionsTrait
             throw new NotFoundException;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
@@ -112,7 +113,7 @@ trait EditOptionsTrait
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-        $manufacturer = $this->Manufacturer->patchEntity(
+        $manufacturer = $manufacturersTable->patchEntity(
             $manufacturer,
             $this->getRequest()->getData(),
             [
@@ -174,14 +175,14 @@ trait EditOptionsTrait
             }
 
             // sic! patch again!
-            $manufacturer = $this->Manufacturer->patchEntity(
+            $manufacturer = $manufacturersTable->patchEntity(
                 $manufacturer,
                 $this->getRequest()->getData()
             );
-            $manufacturer = $this->Manufacturer->save($manufacturer);
+            $manufacturer = $manufacturersTable->save($manufacturer);
 
             if (!$this->identity->isManufacturer()) {
-                $manufacturer = $this->Manufacturer->find('all',
+                $manufacturer = $manufacturersTable->find('all',
                     conditions: [
                         'Manufacturers.id_manufacturer' => $manufacturer->id_manufacturer,
                     ],
@@ -189,7 +190,7 @@ trait EditOptionsTrait
                         'AddressManufacturers'
                     ])->first();
         
-                $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
+                $customerRecord = $manufacturersTable->getCustomerRecord($manufacturer->address_manufacturer->email);
                 if (!empty($customerRecord)) {
                     $customersTable = $this->getTableLocator()->get('Customers');
                     $customerRecord->active = $manufacturer->active;

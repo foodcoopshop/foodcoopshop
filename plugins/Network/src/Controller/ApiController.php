@@ -31,10 +31,6 @@ use Cake\View\JsonView;
 class ApiController extends Controller
 {
 
-    protected ActionLogsTable $ActionLog;
-    protected ManufacturersTable $Manufacturer;
-    protected ProductsTable $Product;
-    protected OrderDetailsTable $OrderDetail;
     protected $identity;
 
     public function initialize(): void
@@ -53,10 +49,10 @@ class ApiController extends Controller
     private function getProductDetailLinks($productsData)
     {
         $productDetailLinks = [];
-        $this->Product = $this->getTableLocator()->get('Products');
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($productsData as $originalProduct) {
-            $productIds = $this->Product->getProductIdAndAttributeId($originalProduct['remoteProductId']);
-            $product = $this->Product->find('all',
+            $productIds = $productsTable->getProductIdAndAttributeId($originalProduct['remoteProductId']);
+            $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productIds['productId'],
             ],
@@ -88,9 +84,9 @@ class ApiController extends Controller
             throw new \Exception('Keine Produkte vorhanden.');
         }
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
 
         $products2saveForImage = [];
         $products2saveForName = [];
@@ -106,9 +102,9 @@ class ApiController extends Controller
 
         foreach ($productsData as $product) {
 
-            $productIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
+            $productIds = $productsTable->getProductIdAndAttributeId($product['remoteProductId']);
 
-            $manufacturerIsOwner = $this->Product->find('all', conditions: [
+            $manufacturerIsOwner = $productsTable->find('all', conditions: [
                 'Products.id_product' => $productIds['productId'],
                 'Products.id_manufacturer' => $this->identity->getManufacturerId()
             ])->count();
@@ -159,16 +155,16 @@ class ApiController extends Controller
             }
             if (isset($product['price'])) {
 
-                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->identity->getManufacturerVariableMemberFee());
+                $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($this->identity->getManufacturerVariableMemberFee());
 
                 if ($variableMemberFee > 0) {
 
                     $price = Configure::read('app.numberHelper')->getStringAsFloat($product['price']['gross_price']);
-                    $product['price']['gross_price'] = $this->Manufacturer->increasePriceWithVariableMemberFee($price, $variableMemberFee);
+                    $product['price']['gross_price'] = $manufacturersTable->increasePriceWithVariableMemberFee($price, $variableMemberFee);
 
                     if (isset($product['price']['unit_product_price_incl_per_unit'])) {
                         $pricePerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product['price']['unit_product_price_incl_per_unit']);
-                        $product['price']['unit_product_price_incl_per_unit'] = $this->Manufacturer->increasePriceWithVariableMemberFee($pricePerUnit, $variableMemberFee);
+                        $product['price']['unit_product_price_incl_per_unit'] = $manufacturersTable->increasePriceWithVariableMemberFee($pricePerUnit, $variableMemberFee);
                     }
 
                 }
@@ -224,7 +220,7 @@ class ApiController extends Controller
 
             if (!empty($products2saveForImage)) {
                 $syncFieldsOk[] = __d('network', 'Image');
-                $updateStatus = $this->Product->changeImage($products2saveForImage);
+                $updateStatus = $productsTable->changeImage($products2saveForImage);
                 $productIds = [];
                 foreach ($products2saveForImage as $p) {
                     $productIds[] = key($p);
@@ -233,7 +229,7 @@ class ApiController extends Controller
 
             if (!empty($products2saveForName)) {
                 $syncFieldsOk[] = __d('network', 'Name');
-                $updateStatus = $this->Product->changeName($products2saveForName);
+                $updateStatus = $productsTable->changeName($products2saveForName);
                 $productIds = [];
                 foreach ($products2saveForName as $p) {
                     $productIds[] = key($p);
@@ -243,7 +239,7 @@ class ApiController extends Controller
             if (!empty($products2saveForIsStockProduct)) {
                 $fieldName = __d('network', 'Stock_product');
                 try {
-                    $updateIsStockProduct = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
+                    $updateIsStockProduct = $productsTable->changeIsStockProduct($products2saveForIsStockProduct);
                     if ($updateIsStockProduct) {
                         $syncFieldsOk[] = $fieldName;
                         $productIds = [];
@@ -260,7 +256,7 @@ class ApiController extends Controller
 
             if (!empty($products2saveForQuantity)) {
                 $syncFieldsOk[] = __d('network', 'Amount');
-                $this->Product->changeQuantity($products2saveForQuantity);
+                $productsTable->changeQuantity($products2saveForQuantity);
                 $productIds = [];
                 foreach ($products2saveForQuantity as $p) {
                     $productIds[] = key($p);
@@ -270,7 +266,7 @@ class ApiController extends Controller
             if (!empty($products2saveForPrice)) {
                 $fieldName = __d('network', 'Price');
                 try {
-                    $updateStatus = $this->Product->changePrice($products2saveForPrice);
+                    $updateStatus = $productsTable->changePrice($products2saveForPrice);
                     if ($updateStatus) {
                         $syncFieldsOk[] = $fieldName;
                         $productIds = [];
@@ -287,7 +283,7 @@ class ApiController extends Controller
 
             if (!empty($products2saveForDeposit)) {
                 $syncFieldsOk[] = __d('network', 'Deposit');
-                $updateStatus = $this->Product->changeDeposit($products2saveForDeposit);
+                $updateStatus = $productsTable->changeDeposit($products2saveForDeposit);
                 $productIds = [];
                 foreach ($products2saveForDeposit as $p) {
                     $productIds[] = key($p);
@@ -296,7 +292,7 @@ class ApiController extends Controller
 
             if (!empty($products2saveForDeliveryRhythm)) {
                 $syncFieldsOk[] = __d('network', 'Delivery_rhythm');
-                $updateStatus = $this->Product->changeDeliveryRhythm($products2saveForDeliveryRhythm);
+                $updateStatus = $productsTable->changeDeliveryRhythm($products2saveForDeliveryRhythm);
                 $productIds = [];
                 foreach ($products2saveForDeliveryRhythm as $p) {
                     $productIds[] = key($p);
@@ -306,7 +302,7 @@ class ApiController extends Controller
             if (!empty($products2saveForStatus)) {
                 $fieldName = __d('network', 'Status');
                 try {
-                    $updateStatus = $this->Product->changeStatus($products2saveForStatus);
+                    $updateStatus = $productsTable->changeStatus($products2saveForStatus);
                     if ($updateStatus) {
                         $syncFieldsOk[] = $fieldName;
                         $productIds = [];
@@ -349,7 +345,7 @@ class ApiController extends Controller
             }
 
             if ($actionLogMessage != '') {
-                $this->ActionLog->customSave('product_remotely_changed', $this->identity->getId(), 0, 'products', $actionLogMessage);
+                $actionLogsTable->customSave('product_remotely_changed', $this->identity->getId(), 0, 'products', $actionLogMessage);
             }
         }
 
@@ -374,13 +370,13 @@ class ApiController extends Controller
     public function getProducts()
     {
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
 
-        $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
+        $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee(
             $this->identity->getManufacturerVariableMemberFee()
         );
-        $preparedProducts = $this->Product->getProductsForBackend(
+        $preparedProducts = $productsTable->getProductsForBackend(
             productIds: '',
             manufacturerId: $this->identity->getManufacturerId(),
             active: 'all',
@@ -416,14 +412,14 @@ class ApiController extends Controller
             $this->viewBuilder()->setOption('serialize', ['error']);
             return;
         }
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $conditions = [
             'Products.id_manufacturer' => $this->identity->getManufacturerId(),
         ];
         $exp = new QueryExpression();
         $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $formattedPickupDay);
 
-        $orderDetails = $this->OrderDetail->find('all',
+        $orderDetails = $orderDetailsTable->find('all',
         conditions: $conditions,
         contain: [
             'Products',

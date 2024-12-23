@@ -28,7 +28,6 @@ use Network\Model\Table\SyncManufacturersTable;
 trait IndexTrait
 {
 
-    protected AttributesTable $Attribute;
     protected CategoriesTable $Category;
     protected TaxesTable $Tax;
     protected StorageLocationsTable $StorageLocation;
@@ -73,12 +72,12 @@ trait IndexTrait
         }
         $this->set('products', $preparedProducts);
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $this->set('categoriesForDropdown', $this->Category->getForSelect(null, true));
-        $this->set('categoriesForCheckboxes', $this->Category->getForSelect(null, true, true));
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $this->set('attributesForDropdown', $attributesTable->getForDropdown());
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
+        $this->set('categoriesForCheckboxes', $categoriesTable->getForSelect(null, true, true));
         $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
@@ -86,15 +85,15 @@ trait IndexTrait
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (is_int($manufacturerId)) {
-            $manufacturer = $this->Manufacturer->find('all',
+            $manufacturer = $manufacturersTable->find('all',
                 conditions: [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ]
             )
-            ->select($this->Product->Manufacturers)
+            ->select($manufacturersTable)
             ->first();
             $this->set('manufacturer', $manufacturer);
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+            $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFee', $variableMemberFee);
         }
 

@@ -29,7 +29,8 @@ trait SetElFinderUploadPathTrait
         if ($this->identity->isManufacturer()) {
             $manufacturerId = $this->identity->getManufacturerId();
         } else {
-            $manufacturer = $this->Manufacturer->find('all', conditions: [
+            $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+            $manufacturer = $manufacturersTable->find('all', conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ])->first();
             $manufacturerId = $manufacturer->id_manufacturer;

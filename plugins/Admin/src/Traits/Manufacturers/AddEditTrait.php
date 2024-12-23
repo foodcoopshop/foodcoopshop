@@ -37,7 +37,8 @@ trait AddEditTrait
 
     public function add()
     {
-        $manufacturer = $this->Manufacturer->newEntity(
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->newEntity(
             [
                 'active' => APP_ON,
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
@@ -64,9 +65,10 @@ trait AddEditTrait
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
         conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ],
         contain: [
             'AddressManufacturers'
@@ -103,7 +105,8 @@ trait AddEditTrait
             $unchangedManufacturerAddress = clone $manufacturer->address_manufacturer;
         }
 
-        $manufacturer = $this->Manufacturer->patchEntity(
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->patchEntity(
             $manufacturer,
             $this->getRequest()->getData(),
             [
@@ -117,14 +120,14 @@ trait AddEditTrait
             $this->set('manufacturer', $manufacturer);
             $this->render('edit');
         } else {
-            $manufacturer = $this->Manufacturer->save($manufacturer);
+            $manufacturer = $manufacturersTable->save($manufacturer);
 
             if (!$isEditMode) {
                 $customer = [];
                 $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'manufacturer_added';
             } else {
-                $customer = $this->Manufacturer->getCustomerRecord($unchangedManufacturerAddress->email);
+                $customer = $manufacturersTable->getCustomerRecord($unchangedManufacturerAddress->email);
                 $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'manufacturer_changed';
             }

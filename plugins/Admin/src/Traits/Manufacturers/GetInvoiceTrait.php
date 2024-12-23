@@ -29,7 +29,8 @@ trait GetInvoiceTrait
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 

@@ -106,8 +106,8 @@ trait DeleteTrait
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
+            $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+            $sendOrderedProductDeletedNotification = $manufacturersTable->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
             if (! $this->identity->isManufacturer() && $orderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [

@@ -59,12 +59,12 @@ class StatisticsController extends AdminAppController
             }
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
         if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
             $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         }
-        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Manufacturer->getForDropdown());
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->set('manufacturerId', $manufacturerId);
 
@@ -82,7 +82,7 @@ class StatisticsController extends AdminAppController
             $conditions[] = 'Manufacturers.id_manufacturer > 0';
         }
 
-        $manufacturers = $this->Manufacturer->find('all', conditions: $conditions)->toArray();
+        $manufacturers = $manufacturersTable->find('all', conditions: $conditions)->toArray();
         $this->set('manufacturers', $manufacturers);
 
         if ($manufacturerId != 'all') {

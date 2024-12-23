@@ -99,8 +99,8 @@ trait EditProductPriceTrait
             $emailRecipients[] = $oldOrderDetail->customer->name;
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $sendOrderedProductPriceChangedNotification = $manufacturersTable->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->identity->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $orderDetailForManufacturerEmail = $oldOrderDetail;
             $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;

@@ -83,8 +83,8 @@ class BlogPostsController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
 
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/blog_posts",

@@ -29,8 +29,6 @@ class AppController extends Controller
     public $protectEmailAddresses = false;
     public $identity = null;
     public $formProtectionEnabled = true;
-    
-    protected $Manufacturer;
 
     public function initialize(): void
     {

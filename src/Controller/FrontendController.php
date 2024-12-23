@@ -111,8 +111,8 @@ class FrontendController extends AppController
             ]);
             $manufacturersForMenu = Cache::read($cacheKey);
             if ($manufacturersForMenu === null) {
-                $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-                $manufacturersForMenu = $this->Manufacturer->getForMenu();
+                $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+                $manufacturersForMenu = $manufacturersTable->getForMenu();
                 Cache::write($cacheKey, $manufacturersForMenu);
             }
             $manufacturersForMenu = $manufacturersForMenu ?? [];

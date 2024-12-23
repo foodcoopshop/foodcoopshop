@@ -198,10 +198,12 @@ class ProductsTableTest extends AppCakeTestCase
     public function testAddProduct()
     {
         $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+
         $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
         )->first();
 
@@ -234,7 +236,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->description, $description);
         $this->assertEquals($product->unity, 'piece');
         $this->assertEquals($product->is_declaration_ok, $isDeclarationOk);
-        $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
+        $this->assertEquals($product->id_tax, $manufacturersTable->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
         $this->assertEquals($product->id_storage_location, $idStorageLocation);
         $this->assertEquals($product->barcode_product->barcode, $barcode);

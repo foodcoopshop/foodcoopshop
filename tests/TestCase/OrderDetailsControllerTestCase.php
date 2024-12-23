@@ -50,7 +50,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         parent::setUp();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
     protected function simulateSendOrderListsCronjob($orderDetailId)

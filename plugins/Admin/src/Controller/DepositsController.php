@@ -205,8 +205,8 @@ class DepositsController extends AdminAppController
             $manufacturerId = '';
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
@@ -214,7 +214,7 @@ class DepositsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
@@ -289,10 +289,10 @@ class DepositsController extends AdminAppController
 
         $manufacturerId = $this->getManufacturerId();
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);

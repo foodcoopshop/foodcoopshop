@@ -28,9 +28,6 @@ class ManufacturersController extends FrontendController
 
     use PaginatedProductsTrait;
 
-    protected $Manufacturer;
-    protected $BlogPost;
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -50,8 +47,8 @@ class ManufacturersController extends FrontendController
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturers = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturers = $manufacturersTable->find('all',
         conditions: $conditions,
         order: [
             'Manufacturers.name' => 'ASC'
@@ -88,15 +85,12 @@ class ManufacturersController extends FrontendController
             'Manufacturers.active' => APP_ON
         ];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
         conditions: $conditions,
         contain: [
-            'AddressManufacturers'
-        ])
-        ->select($this->Manufacturer)
-        ->select($this->Manufacturer->AddressManufacturers)
-        ->first();
+            'AddressManufacturers',
+        ])->first();
 
         if (empty($manufacturer)) {
             throw new RecordNotFoundException('manufacturer not found or not active');
@@ -123,8 +117,8 @@ class ManufacturersController extends FrontendController
 
         }
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($manufacturerId, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts($manufacturerId, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);

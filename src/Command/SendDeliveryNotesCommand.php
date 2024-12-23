@@ -27,9 +27,6 @@ class SendDeliveryNotesCommand extends AppCommand
 {
 
     public $cronjobRunDay;
-    public $ActionLog;
-    public $Manufacturer;
-    public $OrderDetail;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -49,10 +46,11 @@ class SendDeliveryNotesCommand extends AppCommand
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
-        $manufacturers = $this->Manufacturer->find('all',
+        $manufacturers = $manufacturersTable->find('all',
         conditions: [
             'Manufacturers.send_delivery_notes' => APP_ON,
         ],
@@ -68,7 +66,7 @@ class SendDeliveryNotesCommand extends AppCommand
         $manufacturersWithData = [];
         foreach($manufacturers as $manufacturer) {
 
-            $orderDetails = $this->OrderDetail->getOrderDetailsForDeliveryNotes($manufacturer->id_manufacturer, $dateFrom, $dateTo);
+            $orderDetails = $orderDetailsTable->getOrderDetailsForDeliveryNotes($manufacturer->id_manufacturer, $dateFrom, $dateTo);
             if ($orderDetails->count() == 0) {
                 continue;
             }
@@ -87,13 +85,12 @@ class SendDeliveryNotesCommand extends AppCommand
 
         $this->stopTimeLogging();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $message = join('<br />', $actionLogDatas);
         if (count($actionLogDatas) > 0) {
             $message .= '<br />';
         }
         $message .=  __('{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully.', [count($manufacturersWithData)]);
-        $actionLog = $this->ActionLog->customSave('cronjob_send_delivery_notes', 0, 0, 'manufacturers', $message . '<br />' . $this->getRuntime());
+        $actionLog = $actionLogsTable->customSave('cronjob_send_delivery_notes', 0, 0, 'manufacturers', $message . '<br />' . $this->getRuntime());
 
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 

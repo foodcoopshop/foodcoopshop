@@ -54,7 +54,6 @@ abstract class AppCakeTestCase extends TestCase
     public $Time;
     public $Cart;
     public $Configuration;
-    public $Manufacturer;
     public $Network;
     public $Payment;
     public $PricePerUnit;
@@ -76,7 +75,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->Time = new MyTimeHelper($View);
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         // enable tokens only for IntegrationTests
         if (method_exists($this, 'enableSecurityToken')) {
@@ -309,9 +307,10 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function changeManufacturer(int $manufacturerId, string $field, $value)
     {
-        $newManufacturer = $this->Manufacturer->get($manufacturerId);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $newManufacturer = $manufacturersTable->get($manufacturerId);
         $newManufacturer->{$field} = $value;
-        $this->Manufacturer->save($newManufacturer);
+        $manufacturersTable->save($newManufacturer);
     }
 
     protected function changeCustomer(int $customerId, string $field, $value)

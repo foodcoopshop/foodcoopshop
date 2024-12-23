@@ -37,9 +37,6 @@ class ProductsTable extends AppTable
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use ProductImportTrait;
 
-    protected $Manufacturer;
-    protected $Unit;
-
     public function initialize(array $config): void
     {
         $this->setTable('product');
@@ -1292,12 +1289,12 @@ class ProductsTable extends AppTable
     {
         $defaultQuantity = 0;
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturer->id_manufacturer,
-                'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
+                'id_tax' => $manufacturersTable->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => $productName,
                 'delivery_rhythm_send_order_list_weekday' => (new DeliveryRhythmService())->getSendOrderListsWeekday(),
                 'description_short' => $descriptionShort,
@@ -1339,7 +1336,7 @@ class ProductsTable extends AppTable
             $patchedEntity = $purchasePriceProductsTable->patchEntity(
                 $entity2Save,
                 [
-                    'tax_id' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
+                    'tax_id' => $manufacturersTable->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
                 ],
             );
             $purchasePriceProductsTable->save($patchedEntity);

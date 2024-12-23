@@ -641,11 +641,11 @@ class CartService
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
 
-            $manufacturer = $this->Manufacturer->find('all',
+            $manufacturer = $manufacturersTable->find('all',
                 conditions: [
                     'Manufacturers.id_manufacturer' => $manufacturerId,
                 ],
@@ -661,7 +661,7 @@ class CartService
                 $productSum += $cartProduct['price'];
             }
 
-            $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
+            $sendInstantOrderNotification = $manufacturersTable->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             if ($sendInstantOrderNotification) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
                 $email = new AppMailer();
