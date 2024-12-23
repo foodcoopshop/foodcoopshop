@@ -29,6 +29,8 @@ trait MemberCardDataTrait
         }
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $addressCustomersTable = TableRegistry::getTableLocator()->get('AddressCustomers');
+
         $customersTable->dropManufacturersInNextFind();
         $customers = $customersTable->find('all',
             fields: [
@@ -44,7 +46,7 @@ trait MemberCardDataTrait
         );
         $customers = $customersTable->addCustomersNameForOrderSelect($customers);
         $customers->select($customersTable);
-        $customers->select($customersTable->AddressCustomers);
+        $customers->select($addressCustomersTable);
         return $customers;
 
     }

@@ -28,8 +28,6 @@ class FrontendController extends AppController
 {
 
     public $protectEmailAddresses = true;
-    protected $Category;
-    protected $Page;
 
     protected function resetOriginalLoggedCustomer()
     {
@@ -75,10 +73,10 @@ class FrontendController extends AppController
         $categoriesForMenu = Cache::read($cacheKey);
         if ($categoriesForMenu === null) {
             if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
-                $this->Category = $this->getTableLocator()->get('Categories');
+                $categoriesTable = $this->getTableLocator()->get('Categories');
                 $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
                 $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
-                $categoriesForMenu = $this->Category->getForMenu();
+                $categoriesForMenu = $categoriesTable->getForMenu();
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                     'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
@@ -118,7 +116,7 @@ class FrontendController extends AppController
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
-        $this->Page = $this->getTableLocator()->get('Pages');
+        $pagesTable = $this->getTableLocator()->get('Pages');
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
@@ -126,7 +124,7 @@ class FrontendController extends AppController
             $conditions['Pages.is_private'] = APP_OFF;
         }
 
-        $pages = $this->Page->getThreaded($conditions);
+        $pages = $pagesTable->getThreaded($conditions);
         $pagesForHeader = [];
         $pagesForFooter = [];
         foreach ($pages as $page) {

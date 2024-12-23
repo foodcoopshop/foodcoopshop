@@ -30,9 +30,6 @@ use Cake\ORM\TableRegistry;
 class CartsController extends FrontendController
 {
 
-    protected $BlogPost;
-    protected $Cart;
-
     protected $cartService;
 
     public function initialize(): void
@@ -136,8 +133,8 @@ class CartsController extends FrontendController
     {
         $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', conditions: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', conditions: [
             'Carts.id_cart' => $cartId,
             'Carts.id_customer' => $this->identity->getId()
         ])->first();
@@ -147,8 +144,8 @@ class CartsController extends FrontendController
         }
         $this->set('cart', $cart);
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Your_order_has_been_placed'));

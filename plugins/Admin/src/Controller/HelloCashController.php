@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Model\Table\InvoicesTable;
 use App\Services\HelloCash\HelloCashService;
 
 /**
@@ -23,7 +22,6 @@ class HelloCashController extends AdminAppController
 {
 
     protected $helloCashService;
-    protected InvoicesTable $Invoice;
 
     public function initialize(): void
     {

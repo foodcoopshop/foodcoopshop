@@ -1008,8 +1008,8 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                        $productAttributesTable = TableRegistry::getTableLocator()->get('ProductAttributes');
-                        $preparedProduct['purchase_price_is_set'] = $productAttributesTable->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
+                        $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
+                        $preparedProduct['purchase_price_is_set'] = $purchasePriceProductAttributesTable->isPurchasePriceSet($attribute);
                         $preparedProduct['purchase_price_is_zero'] = true;
 
                         $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;

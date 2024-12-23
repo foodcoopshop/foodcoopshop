@@ -51,8 +51,8 @@ trait EditOptionsTrait
         }
         $this->set('title_for_layout', $manufacturer->name . ': ' . __d('admin', 'Edit_settings'));
 
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $taxesTable->getForDropdown());
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $noDeliveryBreakOptions = (new DeliveryRhythmService())->getNextWeeklyDeliveryDays();
@@ -91,10 +91,10 @@ trait EditOptionsTrait
         $this->setFormReferer();
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+            $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
-            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
-            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->identity);
+            $this->set('syncDomainsForDropdown', $syncDomainsTable->getForDropdown());
+            $isAllowedEditManufacturerOptionsDropdown = $syncDomainsTable->isAllowedEditManufacturerOptionsDropdown($this->identity);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
 
@@ -212,8 +212,8 @@ trait EditOptionsTrait
 
             $this->Flash->success($message);
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
             $this->redirect($this->getPreparedReferer());
         }

@@ -51,7 +51,6 @@ trait EditCategoriesTrait
             'id_product' => $productId,
         ]);
 
-        $this->Category = $this->getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
         $data = [];
         $categoriesTable = $this->getTableLocator()->get('Categories');

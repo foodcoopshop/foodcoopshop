@@ -19,25 +19,18 @@ use App\Test\TestCase\AppCakeTestCase;
 class PurchasePriceProductsTableTest extends AppCakeTestCase
 {
 
-    protected $PurchasePriceProduct;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
-    }
-
     public function testGetSellingPricesWithSurcharge()
     {
 
-        $entity = $this->PurchasePriceProduct->newEntity(
+        $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+        $entity = $purchasePriceProductsTable->newEntity(
             [
                 'product_id' => 340,
                 'tax_id' => 0,
                 'price' => 10,
             ],
         );
-        $this->PurchasePriceProduct->save($entity);
+        $purchasePriceProductsTable->save($entity);
 
         $productIds = [
             103, // Bratwürstel with 0 % purchase price
@@ -49,7 +42,7 @@ class PurchasePriceProductsTableTest extends AppCakeTestCase
         ];
 
         $surcharge = 40;
-        $result = $this->PurchasePriceProduct->getSellingPricesWithSurcharge($productIds, $surcharge);
+        $result = $purchasePriceProductsTable->getSellingPricesWithSurcharge($productIds, $surcharge);
 
         $this->assertEquals(5, count($result['preparedProductsForActionLog']));
         $this->assertEquals(5, count($result['pricesToChange']));

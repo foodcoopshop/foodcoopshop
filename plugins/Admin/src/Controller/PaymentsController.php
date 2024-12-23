@@ -345,9 +345,6 @@ class PaymentsController extends AdminAppController
         }
 
         $newPayment = $paymentsTable->save($entity);
-
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-
         $paymentPastDateMessage = '';
         if ($type == 'deposit' && $paymentPastDate) {
             $paymentPastDateMessage = ' ' . __d('admin', 'for_the') . ' <b>' . $dateAddForEntity->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</b>';

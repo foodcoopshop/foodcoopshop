@@ -123,7 +123,8 @@ trait EditCustomerTrait
             if (!empty($newEntity->order_detail_unit)) {
                 $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;
                 $newEntity->order_detail_unit->setNew(true);
-                $newOrderDetailUnitEntity = $orderDetailsTable->OrderDetailUnits->save($newEntity->order_detail_unit);
+                $orderDetailUnitsTable = $this->getTableLocator()->get('OrderDetailUnits');
+                $newOrderDetailUnitEntity = $orderDetailUnitsTable->save($newEntity->order_detail_unit);
                 $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
                 $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
                 $this->changeOrderDetailQuantity($savedEntity->order_detail_unit, $productQuantity);
@@ -132,7 +133,8 @@ trait EditCustomerTrait
             if (!empty($newEntity->order_detail_purchase_price)) {
                 $newEntity->order_detail_purchase_price->id_order_detail = $savedEntity->id_order_detail;
                 $newEntity->order_detail_purchase_price->setNew(true);
-                $newOrderDetailPurchasePriceEntity = $orderDetailsTable->OrderDetailPurchasePrices->save($newEntity->order_detail_purchase_price);
+                $orderDetailPurchasePricesTable = $this->getTableLocator()->get('OrderDetailPurchasePrices');
+                $newOrderDetailPurchasePriceEntity = $orderDetailPurchasePricesTable->save($newEntity->order_detail_purchase_price);
                 $savedEntity->order_detail_purchase_price = $newOrderDetailPurchasePriceEntity;
                 $productPurchasePrice = $productPurchasePrice / $newAmountForOldOrderDetail * $amount;
                 $this->changeOrderDetailPurchasePrice($savedEntity->order_detail_purchase_price, $productPurchasePrice, $amount);

@@ -41,11 +41,8 @@ class PagesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', __d('admin', 'Add_page'));
-
         $this->set('disabledSelectPageIds', []);
-
         $this->_processForm($page, false);
-
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
@@ -124,7 +121,7 @@ class PagesController extends AdminAppController
                 $actionLogType = 'page_changed';
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Pages.delete_page'))) {
                 $page = $pagesTable->patchEntity($page, ['active' => APP_DEL]);
                 $pagesTable->save($page);

@@ -30,8 +30,6 @@ use Cake\ORM\TableRegistry;
 class SelfServiceControllerTest extends AppCakeTestCase
 {
 
-    public $Cart;
-
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
     use LoginTrait;
@@ -153,8 +151,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', 
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', 
         conditions: [
             'Carts.id_customer' => Configure::read('test.customerId'),
             'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
@@ -184,8 +182,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', 
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', 
         conditions: [
             'Carts.id_customer' => Configure::read('test.customerId'),
             'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
@@ -213,8 +211,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', order: [
             'Carts.id_cart' => 'DESC'
         ])->first();
 
@@ -242,8 +240,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', order: [
             'Carts.id_cart' => 'DESC'
         ])->first();
 
@@ -281,8 +279,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(351, 1, '0,51');
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', order: [
             'Carts.id_cart' => 'DESC'
         ])->first();
 
@@ -328,8 +326,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart('348-12', 1, '250');
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', order: [
             'Carts.id_cart' => 'DESC'
         ])->first();
         $cart = $this->getCartById($cart->id_cart);
@@ -430,7 +428,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cartsTable = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1);
         $this->runAndAssertQueue();
         $this->assertSessionNotHasKey('invoiceRouteForAutoPrint');
@@ -450,12 +448,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cartsTable = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1);
         $this->runAndAssertQueue();
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $cart = $this->Cart->find('all',
+        $cart = $cartsTable->find('all',
             order: [
                 'Carts.id_cart' => 'DESC'
             ],
@@ -503,10 +501,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(349, 1);
         $this->addProductToSelfServiceCart('350-13', 2, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cartsTable = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1);
 
-        $carts = $this->Cart->find('all',
+        $carts = $cartsTable->find('all',
             conditions: [
                 'Carts.id_customer' => Configure::read('test.customerId'),
             ],

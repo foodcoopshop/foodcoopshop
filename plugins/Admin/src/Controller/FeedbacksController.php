@@ -155,7 +155,7 @@ class FeedbacksController extends AdminAppController
             $this->render('form');
         } else {
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $userNameForActionLog = !empty($manufacturer) ? $manufacturer->name : $customer->name;
 
             if (!$isEditMode) {
@@ -175,7 +175,7 @@ class FeedbacksController extends AdminAppController
                         __d('admin', 'deleted'),
                     ]);
                 }
-                $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
+                $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                 $this->Flash->success($message);
                 $this->redirect($this->getPreparedReferer());
                 return;
@@ -201,7 +201,7 @@ class FeedbacksController extends AdminAppController
                             '<b>' . $userNameForActionLog . '</b>',
                             __d('admin', 'approved'),
                         ]);
-                        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
+                        $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                     }
                 }
             }
@@ -232,7 +232,7 @@ class FeedbacksController extends AdminAppController
             $isDirty = $feedback->isDirty('text') || $feedback->isDirty('privacy_type');
             $feedback = $feedbacksTable->save($feedback);
             if (!$isEditMode || $isDirty) {
-                $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
+                $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
             }
 
             $this->Flash->success($message);

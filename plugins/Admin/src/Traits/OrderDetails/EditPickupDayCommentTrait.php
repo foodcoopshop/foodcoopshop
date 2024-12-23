@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
-use App\Model\Table\PickupDaysTable;
 use Cake\Core\Configure;
 
 /**
@@ -23,8 +22,6 @@ use Cake\Core\Configure;
 trait EditPickupDayCommentTrait 
 {
 
-    protected PickupDaysTable $PickupDay;
-
     public function editPickupDayComment()
     {
         $this->request = $this->request->withParam('_ext', 'json');
@@ -41,8 +38,8 @@ trait EditPickupDayCommentTrait
             ]
         )->first();
 
-        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-        $result = $this->PickupDay->insertOrUpdate(
+        $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
+        $result = $pickupDaysTable->insertOrUpdate(
             [
                 'customer_id' => $customerId,
                 'pickup_day' => $pickupDay

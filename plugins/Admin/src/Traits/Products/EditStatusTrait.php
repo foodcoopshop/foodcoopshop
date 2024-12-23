@@ -55,7 +55,8 @@ trait EditStatusTrait
                 $actionLogType = 'product_set_active';
             }
             $this->Flash->success($actionLogMessage);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), 0, 'products', $actionLogMessage . '<br />Ids: ' . join(',', $productIds));
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), 0, 'products', $actionLogMessage . '<br />Ids: ' . join(',', $productIds));
 
             $this->set([
                 'status' => 1,

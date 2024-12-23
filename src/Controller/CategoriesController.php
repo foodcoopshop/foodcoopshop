@@ -28,9 +28,6 @@ class CategoriesController extends FrontendController
 
     use PaginatedProductsTrait;
 
-    protected $BlogPost;
-    protected $Category;
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -46,8 +43,8 @@ class CategoriesController extends FrontendController
         $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
@@ -81,8 +78,8 @@ class CategoriesController extends FrontendController
 
         $this->set('keyword', $keyword);
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
@@ -110,8 +107,8 @@ class CategoriesController extends FrontendController
         $page = (int) $this->getRequest()->getQuery('page', 1);
         $categoryId = (int) $this->getRequest()->getParam('idAndSlug');
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $category = $this->Category->find('all', conditions: [
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $category = $categoriesTable->find('all', conditions: [
             'Categories.id_category' => $categoryId,
             'Categories.active' => APP_ON,
         ])->first();
@@ -126,8 +123,8 @@ class CategoriesController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
         }
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();

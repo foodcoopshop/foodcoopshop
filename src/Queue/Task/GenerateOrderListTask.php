@@ -8,7 +8,6 @@ use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Services\PdfWriter\OrderListByProductPdfWriterService;
 use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
-use Queue\Model\Table\QueuedJobsTable;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -29,7 +28,6 @@ class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
     
-    public QueuedJobsTable $QueuedJobs;
     public ?int $timeout = 30;
     public ?int $retries = 2;
 

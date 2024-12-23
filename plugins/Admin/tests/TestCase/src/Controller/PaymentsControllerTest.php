@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -10,6 +9,7 @@ use Laminas\Diactoros\UploadedFile;
 use Cake\TestSuite\EmailTrait;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Payment;
+use App\Model\Table\ConfigurationsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

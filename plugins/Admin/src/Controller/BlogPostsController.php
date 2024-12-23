@@ -6,7 +6,6 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
-use App\Model\Table\BlogPostsTable;
 use App\Services\SanitizeService;
 use Cake\I18n\Date;
 
@@ -139,7 +138,7 @@ class BlogPostsController extends AdminAppController
                 $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath());
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('BlogPosts.delete_blog_post'))) {
                 $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath());
                 $blogPost = $blogPostsTable->patchEntity($blogPost, ['active' => APP_DEL]);
@@ -148,7 +147,7 @@ class BlogPostsController extends AdminAppController
                 $actionLogType = 'blog_post_deleted';
             }
             $message = __d('admin', 'The_blog_post_{0}_has_been_{1}.', ['<b>' . $blogPost->title . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $blogPost->id_blog_post, 'blog_posts', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $blogPost->id_blog_post);

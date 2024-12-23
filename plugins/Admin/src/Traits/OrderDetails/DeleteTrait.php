@@ -73,7 +73,6 @@ trait DeleteTrait
 
             $orderDetailsTable->deleteOrderDetail($orderDetail);
 
-
             $unitsTable = TableRegistry::getTableLocator()->get('Units');
             $unitObject = $unitsTable->getUnitsObject($orderDetail->product_id, $orderDetail->product_attribute_id);
 
@@ -136,8 +135,8 @@ trait DeleteTrait
                 ]);
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_cancelled', $this->identity->getId(), $orderDetail->product_id, 'products', $message);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('order_detail_cancelled', $this->identity->getId(), $orderDetail->product_id, 'products', $message);
         }
 
         $flashMessage = $message;

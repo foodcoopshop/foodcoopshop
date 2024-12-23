@@ -28,6 +28,8 @@ trait EditCommentTrait
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
         $customersTable = $this->getTableLocator()->get('Customers');
+        $addressCustomersTable = $this->getTableLocator()->get('AddressCustomers');
+        
         $oldCustomer = $customersTable->find('all',
         conditions: [
             'Customers.id_customer' => $customerId,
@@ -36,8 +38,8 @@ trait EditCommentTrait
             'AddressCustomers',
         ])->first();
 
-        $customersTable->AddressCustomers->save(
-            $customersTable->AddressCustomers->patchEntity(
+        $addressCustomersTable->save(
+            $addressCustomersTable->patchEntity(
                 $oldCustomer->address_customer,
                 [
                     'comment' => $customerComment

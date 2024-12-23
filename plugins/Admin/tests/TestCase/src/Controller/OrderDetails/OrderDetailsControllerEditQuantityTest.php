@@ -51,8 +51,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->addProductToSelfServiceCart($productId, 1, '0,51');
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', order: [
             'Carts.id_cart' => 'DESC'
         ])->first();
 

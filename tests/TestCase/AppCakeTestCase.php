@@ -49,11 +49,10 @@ abstract class AppCakeTestCase extends TestCase
     protected $dbConnection;
     protected $testDumpDir;
     protected $appDumpDir;
+
     public $Slug;
     public $Html;
     public $Time;
-    public $Cart;
-    public $Configuration;
     public $Network;
     public $PricePerUnit;
 
@@ -65,8 +64,7 @@ abstract class AppCakeTestCase extends TestCase
 
         $this->dbConnection = ConnectionManager::get('test');
         $this->resetLogs();
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $this->Configuration->loadConfigurations();
+        $this->getTableLocator()->get('Configurations')->loadConfigurations();
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
@@ -182,10 +180,11 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function changeConfiguration(string $configKey, $value)
     {
-        $configurationEntity = $this->Configuration->get($configKey);
-        $configurationEntity->value = $value;
-        $this->Configuration->save($configurationEntity);
-        $this->Configuration->loadConfigurations();
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->get($configKey);
+        $configuration->value = $value;
+        $configurationsTable->save($configuration);
+        $configurationsTable->loadConfigurations();
         $this->logout();
     }
 

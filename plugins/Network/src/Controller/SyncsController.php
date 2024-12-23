@@ -4,13 +4,9 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
-use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
-use Network\Model\Table\SyncDomainsTable;
-use Network\Model\Table\SyncManufacturersTable;
-use Network\Model\Table\SyncProductsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,11 +24,6 @@ use Network\Model\Table\SyncProductsTable;
 class SyncsController extends AppController
 {
 
-    protected ConfigurationsTable $Configuration;
-    protected SyncDomainsTable $SyncDomain;
-    protected SyncManufacturersTable $SyncManufacturer;
-    protected SyncProductsTable $SyncProduct;
-
     public function initialize(): void
     {
         parent::initialize();
@@ -42,18 +33,14 @@ class SyncsController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->viewBuilder()->setLayout('Admin.default');
         $this->viewBuilder()->addHelper('Network.Network');
-
-        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
-        $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');
     }
 
     private function doModifyProductChecks($product)
     {
-        $syncDomain = $this->SyncDomain->find('all', conditions: [
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncDomain = $syncDomainsTable->find('all', conditions: [
             'SyncDomains.domain' => $product['domain']
         ])->first();
 
@@ -87,8 +74,9 @@ class SyncsController extends AppController
         $localProductIds = $productsTable->getProductIdAndAttributeId($product['localProductId']);
         $remoteProductIds = $productsTable->getProductIdAndAttributeId($product['remoteProductId']);
 
-        $status = $this->SyncProduct->save(
-            $this->SyncProduct->newEntity(
+        $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');
+        $status = $syncProductsTable->save(
+            $syncProductsTable->newEntity(
                 [
                     'sync_domain_id' => $syncDomain->id,
                     'local_product_id' =>  $localProductIds['productId'],
@@ -119,8 +107,8 @@ class SyncsController extends AppController
 
     public function products()
     {
-
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncDomains = $syncDomainsTable->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
         $matchedProducts = $this->getLocalSyncProducts();
@@ -176,7 +164,8 @@ class SyncsController extends AppController
             'remote_product_attribute_id' =>  $remoteProductIds['attributeId']
         ];
 
-        $status = $this->SyncProduct->deleteAll($syncProduct) === 0 ? false : true;
+        $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');
+        $status = $syncProductsTable->deleteAll($syncProduct) === 0 ? false : true;
 
         $message = __d('network', 'The_product_{0}_has_been_deleted_successfully.', ['<b>'.$product['productName'].'</b>']);
         if (!$status) {
@@ -195,11 +184,12 @@ class SyncsController extends AppController
     public function productData()
     {
 
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');
+        $syncDomains = $syncDomainsTable->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
-        $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');
-        $syncProducts = $this->SyncProduct->findAllSyncProducts($this->identity->getManufacturerId());
+        $syncProducts = $syncProductsTable->findAllSyncProducts($this->identity->getManufacturerId());
         $preparedSyncProducts = [];
         foreach ($syncProducts as $syncProduct) {
             $preparedSyncProducts[$syncProduct->sync_domain->domain][] = [
@@ -263,7 +253,8 @@ class SyncsController extends AppController
     private function markProductsAsSynced($products)
     {
 
-        $syncProducts = $this->SyncProduct->findAllSyncProducts($this->identity->getManufacturerId());
+        $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');
+        $syncProducts = $syncProductsTable->findAllSyncProducts($this->identity->getManufacturerId());
 
         foreach ($products as $product) {
             $syncCount = 0;

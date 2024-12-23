@@ -7,7 +7,6 @@ use Queue\Queue\Task;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Services\PdfWriter\InvoiceToManufacturerPdfWriterService;
-use Queue\Model\Table\QueuedJobsTable;
 use App\Model\Entity\OrderDetail;
 use Cake\ORM\TableRegistry;
 
@@ -29,8 +28,6 @@ class GenerateInvoiceForManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
 
-    public QueuedJobsTable $QueuedJobs;
-
     public ?int $timeout = 30;
 
     public ?int $retries = 2;
@@ -46,6 +43,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $dateTo = $data['dateTo'];
 
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
         $manufacturer = $manufacturersTable->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $validOrderStates = [
@@ -66,8 +64,8 @@ class GenerateInvoiceForManufacturerTask extends Task {
             'invoice_number' => (int) $invoiceNumber,
             'user_id' => 0,
         ];
-        $manufacturersTable->Invoices->save(
-            $manufacturersTable->Invoices->newEntity($invoice2save)
+        $invoicesTable->save(
+            $invoicesTable->newEntity($invoice2save)
         );
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');

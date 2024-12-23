@@ -156,11 +156,12 @@ class SendInvoicesToManufacturersCommand extends AppCommand
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
 
         foreach ($manufacturers as $manufacturer) {
 
             $sendInvoice = $manufacturersTable->getOptionSendInvoice($manufacturer->send_invoice);
-            $manufacturer->invoiceNumber = $manufacturersTable->Invoices->getNextInvoiceNumberForManufacturer($manufacturer->invoices);
+            $manufacturer->invoiceNumber = $invoicesTable->getNextInvoiceNumberForManufacturer($manufacturer->invoices);
             $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
                 $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );

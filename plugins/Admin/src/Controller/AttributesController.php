@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Model\Table\AttributesTable;
-use App\Model\Table\ProductAttributeCombinationsTable;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 
@@ -96,7 +94,7 @@ class AttributesController extends AdminAppController
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
-                $this->Attribute->delete($attribute);
+                $attributesTable->delete($attribute);
                 $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'attribute_deleted';
             }

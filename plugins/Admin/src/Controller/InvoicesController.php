@@ -384,8 +384,8 @@ class InvoicesController extends AdminAppController
 
         $this->Flash->success($messageString . $linkToInvoice);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -410,19 +410,12 @@ class InvoicesController extends AdminAppController
             $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
-
         $customerId = $this->identity->getId();
-
         $this->set('customerIds', [$customerId]);
-
         $this->processIndex($dateFrom, $dateTo, [$customerId]);
-
         $this->set('isOverviewMode', false);
-
         $this->set('title_for_layout', __d('admin', 'My_invoices'));
-
         $this->render('index');
-
     }
 
     public function index()

@@ -5,7 +5,6 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
-use App\Model\Table\PickupDaysTable;
 use App\Model\Entity\OrderDetail;
 
 /**

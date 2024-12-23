@@ -27,8 +27,6 @@ use Cake\I18n\Number;
 class BackupDatabaseCommand extends AppCommand
 {
 
-    public $ActionLog;
-
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
@@ -84,8 +82,8 @@ class BackupDatabaseCommand extends AppCommand
 
         $this->stopTimeLogging();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('cronjob_backup_database', 0, 0, '', $message . '<br />' . $this->getRuntime());
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('cronjob_backup_database', 0, 0, '', $message . '<br />' . $this->getRuntime());
         $io->out($this->getRuntime());
 
         return static::CODE_SUCCESS;

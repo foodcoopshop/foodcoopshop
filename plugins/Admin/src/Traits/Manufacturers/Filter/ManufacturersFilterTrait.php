@@ -50,6 +50,9 @@ trait ManufacturersFilterTrait
         }
 
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $addressManufacturersTable = TableRegistry::getTableLocator()->get('AddressManufacturers');
+
         $query = $manufacturersTable->find('all',
         conditions: $conditions,
         contain: [
@@ -57,8 +60,8 @@ trait ManufacturersFilterTrait
             'Customers'
         ])
         ->select($manufacturersTable)
-        ->select($manufacturersTable->Customers)
-        ->select($manufacturersTable->AddressManufacturers);
+        ->select($customersTable)
+        ->select($addressManufacturersTable);
 
         $manufacturers = $this->paginate($query, [
             'sortableFields' => [

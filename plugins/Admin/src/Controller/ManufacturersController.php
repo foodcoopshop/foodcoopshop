@@ -9,10 +9,7 @@ use Admin\Traits\Manufacturers\GetOrderListTrait;
 use Admin\Traits\Manufacturers\IndexTrait;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
-use App\Model\Table\FeedbacksTable;
-use App\Model\Table\TaxesTable;
 use Cake\View\JsonView;
-use Network\Model\Table\SyncDomainsTable;
 use Admin\Traits\Manufacturers\AddEditTrait;
 use Admin\Traits\Manufacturers\SetElFinderUploadPathTrait;
 use Admin\Traits\Manufacturers\GetDeliveryNoteTrait;
@@ -34,9 +31,6 @@ use Admin\Traits\Manufacturers\ExportTrait;
 
 class ManufacturersController extends AdminAppController
 {
-    protected FeedbacksTable $Feedback;
-    protected TaxesTable $Tax;
-    protected SyncDomainsTable $SyncDomain;
 
     use GetOrderListTrait;
     use AddEditTrait;

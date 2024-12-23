@@ -45,8 +45,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', conditions: [
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all', conditions: [
             'Invoices.id_customer' => $customerId,
         ])->first();
 
@@ -71,8 +71,8 @@ class InvoicesControllerTest extends AppCakeTestCase
 
         $this->generateInvoice($customerId, $paidInCash);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', conditions: [
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all', conditions: [
             'Invoices.id_customer' => $customerId,
         ])->first();
 
@@ -96,8 +96,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all',
         conditions: [
             'Invoices.id_customer' => $customerId,
         ],
@@ -122,7 +122,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
-        $invoices = $this->Invoice->find('all',
+        $invoices = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
@@ -147,7 +147,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id' => (int) $response->invoiceId,
             ],

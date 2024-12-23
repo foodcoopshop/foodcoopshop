@@ -28,8 +28,6 @@ class ListsControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    protected $Invoice;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -49,8 +47,8 @@ class ListsControllerTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', conditions: [
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all', conditions: [
             'Invoices.id_customer' => $customerId,
         ])->first();
 

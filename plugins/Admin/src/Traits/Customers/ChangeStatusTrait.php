@@ -76,8 +76,8 @@ trait ChangeStatusTrait
 
         $this->Flash->success($message);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $customerId, 'customer', $message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
     }

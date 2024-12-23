@@ -34,7 +34,8 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     protected function changeConfigurationEditForm($configKey, $newValue)
     {
         $this->loginAsSuperadmin();
-        $configuration = $this->Configuration->find('all',
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->find('all',
             conditions: [
                 'Configurations.active' => APP_ON,
                 'Configurations.name' => $configKey
@@ -66,7 +67,8 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $newValue = '<b>HalloHallo</b>';
         $this->changeConfigurationEditForm($configurationName, $newValue);
         $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
-        $configuration = $this->Configuration->find('all',
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->find('all',
             conditions: [
                 'Configurations.name' => $configurationName
             ]
@@ -78,7 +80,8 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
         $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
-        $configuration = $this->Configuration->find('all',
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->find('all',
             conditions: [
                 'Configurations.name' => 'FCS_APP_NAME'
             ]

@@ -13,11 +13,6 @@ use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
 use App\Controller\Component\StringComponent;
-use App\Model\Table\ActionLogsTable;
-use App\Model\Table\AttributesTable;
-use App\Model\Table\CartsTable;
-use App\Model\Table\InvoicesTable;
-use App\Model\Table\PickupDaysTable;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
@@ -44,17 +39,9 @@ class CartService
 
     use CartValidatorTrait;
 
-    protected ActionLogsTable $ActionLog;
-    protected AttributesTable $Attribute;
-    protected CartsTable $Cart;
-    protected InvoicesTable $Invoice;
-    protected PickupDaysTable $PickupDay;
-
     private $identity;
     private $request;
     private $controller;
-
-    public $cart = null;
 
     public function __construct($controller)
     {
@@ -100,7 +87,8 @@ class CartService
         $pickupDayEntities = null;
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $pickupDayEntities = $cart['Cart']->pickup_day_entities;
-            $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
+            $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
+            $pickupDaysTable->saveMany($pickupDayEntities);
         }
 
         $cart = $this->identity->getCart(); // to get attached order details
@@ -111,12 +99,13 @@ class CartService
         $userIdForActionLog = $this->identity->getId();
 
         $orderCustomerService = new OrderCustomerService();
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         switch($cartType) {
             case Cart::TYPE_WEEKLY_RHYTHM;
                 $actionLogType = 'customer_order_finished';
                 $message = __('Your_order_has_been_placed_succesfully.');
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
-                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
+                $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
                 $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                 break;
             case Cart::TYPE_INSTANT_ORDER;
@@ -136,7 +125,7 @@ class CartService
                 }
                 $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                 $messageForActionLog = $message;
-                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
+                $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart);
                 if (!($orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                 }
@@ -144,9 +133,9 @@ class CartService
             case Cart::TYPE_SELF_SERVICE;
 
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
-                    $this->Invoice = TableRegistry::getTableLocator()->get('Invoices');
+                    $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
                     $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-                    $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
+                    $invoiceData = $invoicesTable->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
 
                     if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
                         $paidInCash = 0;
@@ -205,8 +194,8 @@ class CartService
 
         $cart = $this->identity->getCart();
 
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
         $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
@@ -411,7 +400,7 @@ class CartService
             $orderDetail2save = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
-                'product_name' => $this->Cart->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
+                'product_name' => $cartsTable->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
                 'product_amount' => $cartProduct['amount'],
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
@@ -498,7 +487,7 @@ class CartService
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             // save pickup day: primary key needs to be changed!
-            $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
+            $pickupDaysTable->setPrimaryKey(['customer_id', 'pickup_day']);
             $options = [
                 'associated' => [
                     'PickupDayEntities'
@@ -525,7 +514,7 @@ class CartService
             $options['validate'] = 'selfServiceForDifferentCustomer';
         }
 
-        $cart['Cart'] = $this->Cart->patchEntity(
+        $cart['Cart'] = $cartsTable->patchEntity(
             $cart['Cart'],
             $this->request->getData(),
             $options
@@ -682,8 +671,8 @@ class CartService
 
     private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
     {
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all',
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
             ],
@@ -772,12 +761,13 @@ class CartService
 
     private function sendConfirmationEmailToCustomerSelfService($cart)
     {
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
         $email->setTo($this->identity->email)
         ->setSubject(__('Your_purchase'))
         ->setViewVars([
-            'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
+            'cart' => $cartsTable->getCartGroupedByPickupDay($cart),
             'identity' => $this->identity,
         ]);
         $email->addToQueue();

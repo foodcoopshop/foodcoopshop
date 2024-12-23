@@ -6,13 +6,10 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Mailer\AppMailer;
-use App\Model\Table\ConfigurationsTable;
-use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use App\Services\SanitizeService;
-use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,10 +27,6 @@ use Network\Model\Table\SyncDomainsTable;
 
 class ConfigurationsController extends AdminAppController
 {
-
-    protected ConfigurationsTable $Configuration;
-    protected SyncDomainsTable $SyncDomain;
-    protected TaxesTable $Tax;
     
     public function edit($name)
     {
@@ -44,8 +37,8 @@ class ConfigurationsController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $configuration = $this->Configuration->find('all', conditions: [
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->find('all', conditions: [
             'Configurations.name' => $name,
             'Configurations.type NOT IN' => ['hidden', 'readonly'],
         ])->first();
@@ -86,11 +79,11 @@ class ConfigurationsController extends AdminAppController
 
         $validationName = Inflector::camelize(strtolower($configuration->name));
         $validatorExists = false;
-        if (method_exists($this->Configuration, 'validation'.$validationName)) {
+        if (method_exists($configurationsTable, 'validation'.$validationName)) {
             $validatorExists = true;
         }
 
-        $configuration = $this->Configuration->patchEntity(
+        $configuration = $configurationsTable->patchEntity(
             $configuration,
             $this->getRequest()->getData(),
             [
@@ -102,10 +95,10 @@ class ConfigurationsController extends AdminAppController
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('configuration', $configuration);
         } else {
-            $configuration = $this->Configuration->save($configuration);
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $configuration = $configurationsTable->save($configuration);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
-            $this->ActionLog->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
+            $actionLogsTable->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
             $this->redirect($this->getPreparedReferer());
         }
 
@@ -117,8 +110,8 @@ class ConfigurationsController extends AdminAppController
 
         $this->disableAutoRender();
 
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $this->Configuration->getConfigurations();
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configurationsTable->getConfigurations();
         $email = new AppMailer();
         $email
             ->setViewVars([
@@ -160,25 +153,25 @@ class ConfigurationsController extends AdminAppController
     public function index()
     {
         $this->viewBuilder()->addHelper('Configuration');
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $this->set('configurations', $this->Configuration->getConfigurations(['type != "hidden"']));
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-        $defaultTax = $this->Tax->find('all', conditions: [
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $this->set('configurations', $configurationsTable->getConfigurations(['type != "hidden"']));
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $defaultTax = $taxesTable->find('all', conditions: [
             'Taxes.id_tax' => Configure::read('app.defaultTaxId')
         ])->first();
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->viewBuilder()->addHelper('Network.Network');
-            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
-            $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
+            $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+            $syncDomains = $syncDomainsTable->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);
         }
-        $this->set('versionFoodCoopShop', $this->Configuration->getVersion());
+        $this->set('versionFoodCoopShop', $configurationsTable->getVersion());
 
         try {
             $query = 'SELECT migration_name, version FROM phinxlog WHERE start_time IS NOT NULL ORDER by version DESC LIMIT 1;';
-            $lastMigration = $this->Configuration->getConnection()->execute($query)->fetchAll();
+            $lastMigration = $configurationsTable->getConnection()->execute($query)->fetchAll();
             $this->set('lastMigration', $lastMigration);
         } catch (\PDOException  $e) {
         }

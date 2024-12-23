@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
-use App\Model\Table\PaymentsTable;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
@@ -175,8 +174,8 @@ class ReportsController extends AdminAppController
                                 '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($sumAmount) . '</b>',
                             ]);
                             $this->Flash->success($message);
-                            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-                            $this->ActionLog->customSave('payment_product_csv_imported', $this->identity->getId(), 0, 'payments', $message);
+                            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+                            $actionLogsTable->customSave('payment_product_csv_imported', $this->identity->getId(), 0, 'payments', $message);
                             $this->redirect($this->referer());
                         }
 
@@ -226,6 +225,8 @@ class ReportsController extends AdminAppController
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
+        $customersTable = $this->getTableLocator()->get('Customers');
+
         $query = $paymentsTable->find('all',
         conditions: $conditions,
         contain: [
@@ -256,7 +257,7 @@ class ReportsController extends AdminAppController
         ]);
         $this->set('payments', $payments);
 
-        $this->set('customersForDropdown', $paymentsTable->Customers->getForDropdown());
+        $this->set('customersForDropdown', $customersTable->getForDropdown());
         $this->set('title_for_layout', __d('admin', 'Report') . ': ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', $paymentType == Payment::TYPE_DEPOSIT);

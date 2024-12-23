@@ -3,13 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Model\Table\AttributesTable;
-use App\Model\Table\CategoriesTable;
-use App\Model\Table\StorageLocationsTable;
-use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
-use Network\Model\Table\SyncDomainsTable;
-use Network\Model\Table\SyncManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,12 +21,6 @@ use Network\Model\Table\SyncManufacturersTable;
 
 trait IndexTrait
 {
-
-    protected CategoriesTable $Category;
-    protected TaxesTable $Tax;
-    protected StorageLocationsTable $StorageLocation;
-    protected SyncManufacturersTable $SyncManufacturer;
-    protected SyncDomainsTable $SyncDomain;
 
     public function index()
     {
@@ -83,8 +71,8 @@ trait IndexTrait
         $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $taxesTable->getForDropdown());
 
         if (is_int($manufacturerId)) {
             $manufacturer = $manufacturersTable->find('all',
@@ -105,17 +93,17 @@ trait IndexTrait
         $this->set('title_for_layout', __d('admin', 'Products'));
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
-            $this->StorageLocation = $this->getTableLocator()->get('StorageLocations');
-            $storageLocationsForForDropdown = $this->StorageLocation->getForDropdown();
+            $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+            $storageLocationsForForDropdown = $storageLocationsTable->getForDropdown();
             $this->set('storageLocationsForForDropdown', $storageLocationsForForDropdown);
         }
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->identity->isManufacturer()) {
-            $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
-            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+            $syncManufacturersTable = $this->getTableLocator()->get('Network.SyncManufacturers');
+            $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
-            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->identity);
-            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
+            $isAllowedToUseAsMasterFoodcoop = $syncManufacturersTable->isAllowedToUseAsMasterFoodcoop($this->identity);
+            $syncDomains = $syncDomainsTable->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
             $this->set('showSyncProductsButton', $showSyncProductsButton);
         }
