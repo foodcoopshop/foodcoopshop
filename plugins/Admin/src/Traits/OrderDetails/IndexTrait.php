@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Services\DeliveryRhythmService;
 use App\Controller\Component\StringComponent;
-use App\Model\Table\InvoicesTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,8 +24,6 @@ use App\Model\Table\InvoicesTable;
 
 trait IndexTrait 
 {
-
-    public $OrderDetail;
 
     public function index()
     {
@@ -83,12 +80,12 @@ trait IndexTrait
         }
         $this->set('groupBy', $groupBy);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
-            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+            $orderDetailsTable->getAssociation('PickupDayEntities')->setConditions([
                 'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
             ]);
             $contain[] = 'PickupDayEntities';
@@ -120,13 +117,13 @@ trait IndexTrait
                 break;
         }
 
-        $query = $this->OrderDetail->find('all',
+        $query = $orderDetailsTable->find('all',
             conditions:  $odParams['conditions'],
             contain:  $contain,
             group:  $group,
         );
 
-        $this->OrderDetail->getAssociation('CartProducts.Carts')->setJoinType('INNER');
+        $orderDetailsTable->getAssociation('CartProducts.Carts')->setJoinType('INNER');
         $query->contain(['CartProducts.Carts' => function ($q) use ($cartType) {
             if (in_array($cartType, array_keys(Configure::read('app.htmlHelper')->getCartTypes()))) {
                 $q->where([
@@ -161,17 +158,17 @@ trait IndexTrait
             default:
                 $customerTable = $this->getTableLocator()->get('Customers');
                 $query = $customerTable->addCustomersNameForOrderSelect($query);
-                $query->select($this->OrderDetail);
-                $query->select($this->OrderDetail->CartProducts); // need to be called before ->Carts
-                $query->select($this->OrderDetail->CartProducts->Carts);
-                $query->select($this->OrderDetail->OrderDetailUnits);
-                $query->select($this->OrderDetail->OrderDetailFeedbacks);
+                $query->select($orderDetailsTable);
+                $query->select($this->getTableLocator()->get('CartProducts')); // need to be called before ->Carts
+                $query->select($this->getTableLocator()->get('Carts'));
+                $query->select($this->getTableLocator()->get('OrderDetailUnits'));
+                $query->select($this->getTableLocator()->get('OrderDetailFeedbacks'));
                 $query->select($customerTable);
-                $query->select($this->OrderDetail->Products);
-                $query->select($this->OrderDetail->Products->Manufacturers);
-                $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
+                $query->select($this->getTableLocator()->get('Products'));
+                $query->select($this->getTableLocator()->get('Manufacturers'));
+                $query->select($this->getTableLocator()->get('AddressManufacturers'));
                 if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
-                    $query->select($this->OrderDetail->Products->StorageLocations);
+                    $query->select($this->getTableLocator()->get('StorageLocations'));
                 }
                 break;
         }
@@ -250,7 +247,8 @@ trait IndexTrait
             $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
-        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
 
         $this->set('title_for_layout', __d('admin', 'Orders'));
     }
@@ -259,10 +257,11 @@ trait IndexTrait
     {
 
         $preparedOrderDetails = [];
-        
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+
         switch ($groupBy) {
             case 'customer':
-                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
+                $preparedOrderDetails = $orderDetailsTable->prepareOrderDetailsGroupedByCustomer($orderDetails);
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                     $invoicesTable = $this->getTableLocator()->get('Invoices');
                     foreach($preparedOrderDetails as &$orderDetail) {
@@ -273,11 +272,11 @@ trait IndexTrait
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 break;
             case 'manufacturer':
-                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByManufacturer($orderDetails);
+                $preparedOrderDetails = $orderDetailsTable->prepareOrderDetailsGroupedByManufacturer($orderDetails);
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 break;
             case 'product':
-                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByProduct($orderDetails);
+                $preparedOrderDetails = $orderDetailsTable->prepareOrderDetailsGroupedByProduct($orderDetails);
                 $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
                 break;
             default:
