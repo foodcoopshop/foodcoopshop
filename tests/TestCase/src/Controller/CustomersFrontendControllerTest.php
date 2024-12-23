@@ -462,10 +462,6 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
     private function addCustomer($data)
     {
         $this->post($this->Slug->getRegistration(), $data);
