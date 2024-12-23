@@ -131,6 +131,7 @@ class PaymentsController extends AdminAppController
                 -1 => 'payment_product_approval_not_ok',
                  0 => 'payment_product_approval_open',
                  1 => 'payment_product_approval_ok',
+                 default => '',
             };
 
             $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
@@ -362,6 +363,7 @@ class PaymentsController extends AdminAppController
             $message .= match($actionLogType) {
                 'deposit_customer' => __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']),
                 'deposit_manufacturer' => __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']),
+                default => '',
             };
         }
 

@@ -205,7 +205,7 @@ if ($identity->isSuperadmin()) {
     echo '<div class="sc"></div>';
     echo '<h2>'.__d('admin', 'Superadmin_functions').'</h2>';
 
-    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo $this->Form->control('Customers.shopping_price', [
             'type' => 'select',
             'label' => __d('admin', 'Prices'),

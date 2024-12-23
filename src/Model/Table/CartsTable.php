@@ -270,11 +270,7 @@ class CartsTable extends AppTable
         return $productData;
     }
 
-    /**
-     * @param array $productData
-     * @return number
-     */
-    private function getProductsWithUnitCount($productData)
+    private function getProductsWithUnitCount($productData): int
     {
         $count = 0;
         foreach($productData as $product) {

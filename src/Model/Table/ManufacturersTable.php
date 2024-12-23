@@ -329,6 +329,7 @@ class ManufacturersTable extends AppTable
         $orderClause = match($order) {
             'product' => 'od.product_name ASC, od.tax_rate ASC, ' . $customersTable->getCustomerName('c') . ' ASC',
             'customer' => $customersTable->getCustomerName('c') . ' ASC, od.product_name ASC',
+            default => '',
         };
         $params = [
             'manufacturerId' => $manufacturerId

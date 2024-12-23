@@ -29,6 +29,7 @@ class MyTimeHelper extends TimeHelper
             'day' => __('daily'),
             'week' => __('weekly'),
             'month' => __('monthly'),
+            default => '',
         };
     }
 

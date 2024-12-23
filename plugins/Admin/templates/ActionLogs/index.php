@@ -121,7 +121,6 @@ foreach ($actionLogs as $actionLog) {
     echo '<td class="center">';
 
     $showLink = false;
-    $targetBlank = true;
 
     // products
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'products' && ! ($actionLog->type == 'product_set_inactive')) {
@@ -171,7 +170,7 @@ foreach ($actionLogs as $actionLog) {
             [
                 'class' => 'btn btn-outline-light',
                 'title' => $title,
-                'target' => $targetBlank ? '_blank' : '',
+                'target' => '_blank',
                 'escape' => false
             ]
         );

@@ -75,6 +75,7 @@ class CronjobsTable extends AppTable
                             $timeInterval = match($context['data']['time_interval']) {
                                 'day' => __('daily'),
                                 'week' => __('weekly'),
+                                default => '',
                             };
                             return __('No_day_of_month_allowed_for_time_interval_{0}.', [
                                 $timeInterval,
@@ -95,6 +96,7 @@ class CronjobsTable extends AppTable
                             $timeInterval = match($context['data']['time_interval']) {
                                 'day' => __('daily'),
                                 'month' => __('monthly'),
+                                default => '',
                             };
                             return __('No_weekday_allowed_for_time_interval_{0}.', [
                                 $timeInterval,

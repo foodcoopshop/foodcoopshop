@@ -116,6 +116,7 @@ foreach ($payments as $payment) {
             -1 => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
              0 => '',
              1 => '<i class="fas fa-check-circle ok payment-approval"></i>',
+             default => '',
         };
 
         if ($payment->approval_comment != '') {

@@ -109,8 +109,6 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 return $identity !== null;
         }
 
-        return $identity !== null;
-
     }
 
     private function checkOrderDetailIdAccess(int $orderDetailId, $identity): bool

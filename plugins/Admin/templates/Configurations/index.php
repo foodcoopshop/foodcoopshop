@@ -104,6 +104,7 @@ $this->element('addScript', [
                     'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $identity),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no'),
+                    default => '',
                 };
 
                 echo '</td>';

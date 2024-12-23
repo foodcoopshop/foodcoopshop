@@ -77,6 +77,7 @@ if (count($payments) == 0) {
                 APP_DEL => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
                 APP_OFF => '',
                 APP_ON => '<i class="fas fa-check-circle ok payment-approval"></i>',
+                default => '',
             };
             if ($payment['approval_comment'] != '') {
                 echo $this->Html->link(

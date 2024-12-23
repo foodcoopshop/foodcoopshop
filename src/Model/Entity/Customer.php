@@ -371,7 +371,6 @@ class Customer extends AppEntity implements IdentityInterface
         foreach ($this->getProducts() as $product) {
             if ($product['productId'] == $productId) {
                 return $product;
-                break;
             }
         }
         return false;

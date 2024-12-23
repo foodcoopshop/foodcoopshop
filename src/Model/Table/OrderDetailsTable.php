@@ -804,7 +804,7 @@ class OrderDetailsTable extends AppTable
         // override params that manufacturer is not allowed to change
         if ($identity !== null && $identity->isManufacturer()) {
             $conditions['Products.id_manufacturer'] = $identity->getManufacturerId();
-            if ($customerId =! '') {
+            if ($customerId != '') {
                 unset($conditions['OrderDetails.id_customer']);
             }
         }

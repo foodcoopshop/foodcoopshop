@@ -119,10 +119,8 @@ class CustomersTable extends AppTable
         ->add('passwd_old', 'custom', [
             'rule'=>  function ($value, $context) {
                 $user = $this->get($context['data']['id_customer']);
-                if ($user) {
-                    if ((new DefaultPasswordHasher())->check($value, $user->passwd)) {
-                        return true;
-                    }
+                if ((new DefaultPasswordHasher())->check($value, $user->passwd)) {
+                    return true;
                 }
                 return false;
             },
