@@ -19,11 +19,10 @@ parameters:
         - message: '#Access to an undefined property .*#'
         - message: '#Cannot access property .*#'
         - message: '#Variable \$.* might not be defined#'
-          path: templates
-        - message: '#Variable \$.* might not be defined#'
-          path: plugins/Admin/templates
-        - message: '#Variable \$.* might not be defined#'
-          path: plugins/Network/templates
+          paths:
+            - templates
+            - plugins/Admin/templates
+            - plugins/Network/templates
         - message: '#Variable \$purchasePriceTaxRate might not be defined#'
           path: src/Model/Table/ProductsTable.php
         - message: '#Call to an undefined method Authorization\\IdentityInterface::*.#'
