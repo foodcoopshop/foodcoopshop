@@ -14,6 +14,7 @@ use Cake\I18n\DateTime;
 use App\Command\CronCommandFactory;
 use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\CronjobLog;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -267,11 +268,11 @@ class CronjobsTable extends AppTable
             $executeCronjob = true;
             $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->modify('- 1' . $cronjob->time_interval);
 
-            if (!(empty($cronjobLog) || $cronjobLog->success == CronjobLogsTable::FAILURE || $cronjobLog->created->lessThan($timeIntervalObject))) {
+            if (!(empty($cronjobLog) || $cronjobLog->success == CronjobLog::FAILURE || $cronjobLog->created->lessThan($timeIntervalObject))) {
                 $executeCronjob = false;
             }
 
-            if (!empty($cronjobLog) && (in_array($cronjobLog->success, [CronjobLogsTable::SUCCESS, CronjobLogsTable::RUNNING])) && $cronjobLog->created->greaterThan($cronjobNotBeforeTimeWithCronjobRunDay)) {
+            if (!empty($cronjobLog) && (in_array($cronjobLog->success, [CronjobLog::SUCCESS, CronjobLog::RUNNING])) && $cronjobLog->created->greaterThan($cronjobNotBeforeTimeWithCronjobRunDay)) {
                 $executeCronjob = false;
             }
 
@@ -308,7 +309,7 @@ class CronjobsTable extends AppTable
             [
                 'cronjob_id' => $cronjob->id,
                 'created' => $databasePreparedCronjobRunDay,
-                'success' => CronjobLogsTable::RUNNING,
+                'success' => CronjobLog::RUNNING,
             ]
         );
         $cronjobLogsTable->save($entity);
@@ -317,9 +318,9 @@ class CronjobsTable extends AppTable
             $args = new Arguments([], [], []);
             $io = new ConsoleIo();
             $success = $command->execute($args, $io);
-            $success = $success !== $command::CODE_SUCCESS ? CronjobLogsTable::FAILURE : CronjobLogsTable::SUCCESS;
+            $success = $success !== $command::CODE_SUCCESS ? CronjobLog::FAILURE : CronjobLog::SUCCESS;
         } catch (\Exception $e) {
-            $success = CronjobLogsTable::FAILURE;
+            $success = CronjobLog::FAILURE;
         }
 
         $entity->success = $success;

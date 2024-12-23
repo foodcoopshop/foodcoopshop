@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use App\Model\Table\CronjobLogsTable;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Model\Entity\CronjobLog;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -215,7 +215,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC($time),
                     'cronjob_id' => 1,
-                    'success' => CronjobLogsTable::FAILURE,
+                    'success' => CronjobLog::FAILURE,
                 ],
             )
         );
@@ -236,7 +236,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC($time),
                     'cronjob_id' => 1,
-                    'success' => CronjobLogsTable::RUNNING,
+                    'success' => CronjobLog::RUNNING,
                 ],
             )
         );
@@ -256,7 +256,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC('2018-10-22 22:30:00'),
                     'cronjob_id' => 1,
-                    'success' => CronjobLogsTable::SUCCESS,
+                    'success' => CronjobLog::SUCCESS,
                 ],
             )
         );
@@ -275,7 +275,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC('2018-10-22 22:30:01'),
                     'cronjob_id' => 1,
-                    'success' => CronjobLogsTable::SUCCESS,
+                    'success' => CronjobLog::SUCCESS,
                 ],
             )
         );
@@ -311,7 +311,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC('2018-10-25 22:30:01'),
                     'cronjob_id' => 1,
-                    'success' => CronjobLogsTable::SUCCESS,
+                    'success' => CronjobLog::SUCCESS,
                 ]
             )
         );
