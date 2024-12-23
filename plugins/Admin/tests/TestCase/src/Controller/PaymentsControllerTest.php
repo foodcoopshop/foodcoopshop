@@ -9,7 +9,7 @@ use Laminas\Diactoros\UploadedFile;
 use Cake\TestSuite\EmailTrait;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Payment;
-use App\Model\Table\ConfigurationsTable;
+use App\Model\Entity\Configuration;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -284,7 +284,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testCsvUploadCustomerNotFoundError()
     {
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $uploadFile = TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv';
         $this->post(
@@ -311,7 +311,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $newPaymentContent = 'transaction text';
         $newPaymentDate = '2019-03-03 02:51:25.165000';
 
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $this->post(
             Configure::read('app.slugHelper')->getReport('product'),
@@ -341,7 +341,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $newPaymentContent = 'transaction text';
         $newPaymentDate = '2019-03-03 02:51:25.165000';
 
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $this->post(
             Configure::read('app.slugHelper')->getReport('product'),

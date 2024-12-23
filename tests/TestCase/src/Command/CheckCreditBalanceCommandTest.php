@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\I18n\DateTime;
+use App\Model\Entity\Configuration;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -77,7 +77,7 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
         $this->logout();
 
         $this->resetCustomerCreditBalance();
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $paymentsTable->save(

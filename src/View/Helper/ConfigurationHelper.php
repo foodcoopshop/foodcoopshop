@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
-use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
 use App\Services\DeliveryRhythmService;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Configuration;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -68,14 +68,14 @@ class ConfigurationHelper extends Helper
 
     public function isCashlessPaymentTypeManual()
     {
-        return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
+        return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
     }
 
     public function getCashlessPaymentAddTypeOptions()
     {
         return [
-            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
-            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD => __('Payment_is_added_by_uploading_a_list'),
+            Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
+            Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD => __('Payment_is_added_by_uploading_a_list'),
         ];
     }
 

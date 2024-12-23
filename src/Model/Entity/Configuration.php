@@ -19,6 +19,9 @@ namespace App\Model\Entity;
 class Configuration extends AppEntity
 {
 
+    const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
+    const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
+
     protected function _getText()
     {
         return __('Configuration_text_' . $this->name);
