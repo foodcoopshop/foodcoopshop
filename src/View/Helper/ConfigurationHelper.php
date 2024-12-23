@@ -44,10 +44,8 @@ class ConfigurationHelper extends Helper
             case 'FCS_NEWSLETTER_ENABLED':
             case 'FCS_USER_FEEDBACK_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
-                break;
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');
-                break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $values = (new DeliveryRhythmService())->getNextDailyDeliveryDays(365);
@@ -55,14 +53,11 @@ class ConfigurationHelper extends Helper
                     $values = (new DeliveryRhythmService())->getNextWeeklyDeliveryDays();
                 }
                 return $values;
-                break;
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();
-                break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $productsTable = TableRegistry::getTableLocator()->get('Products');
                 return $productsTable->getForDropdown(0);
-                break;
         }
     }
 
@@ -90,7 +85,6 @@ class ConfigurationHelper extends Helper
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 $formattedAndCleanedDeliveryDays = Configure::read('app.htmlHelper')->getFormattedAndCleanedDeliveryDays($value);
                 return join(', ', $formattedAndCleanedDeliveryDays);
-                break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $value = explode(',', $value);
                 $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -100,7 +94,6 @@ class ConfigurationHelper extends Helper
                     ]
                 )->toArray();
                 return join(', ', Hash::extract($products, '{n}.name'));
-                break;
         }
     }
 }

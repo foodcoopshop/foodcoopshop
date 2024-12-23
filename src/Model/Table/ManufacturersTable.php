@@ -106,10 +106,6 @@ class ManufacturersTable extends AppTable
         return $manufacturer;
     }
 
-    /**
-     * @param $boolean $sendOrderedProductDeletedNotification
-     * @return boolean
-     */
     public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification)
     {
         $result = $sendOrderedProductDeletedNotification;
@@ -119,10 +115,6 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    /**
-     * @param $boolean $sendOrderedProductPriceChangedNotification
-     * @return boolean
-     */
     public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification)
     {
         $result = $sendOrderedProductPriceChangedNotification;
@@ -132,10 +124,6 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    /**
-     * @param $boolean $sendOrderedProductAmountChangedNotification
-     * @return boolean
-     */
     public function getOptionSendOrderedProductAmountChangedNotification($sendOrderedProductAmountChangedNotification)
     {
         $result = $sendOrderedProductAmountChangedNotification;
@@ -145,10 +133,6 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    /**
-     * @param $boolean $sendInvoice
-     * @return boolean
-     */
     public function getOptionSendInstantOrderNotification($sendInstantOrderNotification)
     {
         $result = $sendInstantOrderNotification;
@@ -158,10 +142,6 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    /**
-     * @param $boolean $sendInvoice
-     * @return boolean
-     */
     public function getOptionSendInvoice($sendInvoice)
     {
         $result = $sendInvoice;
@@ -171,45 +151,33 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    /**
-     * @param int $defaultTaxId
-     * @return int
-     */
-    public function getOptionDefaultTaxId($defaultTaxId)
+    public function getOptionDefaultTaxId(?int $defaultTaxId): int
     {
         $result = $defaultTaxId;
         if (is_null($defaultTaxId)) {
-            $result = Configure::read('app.defaultTaxId');
+            $result = (int) Configure::read('app.defaultTaxId');
         }
         return $result;
     }
 
-    public function getOptionDefaultTaxIdPurchasePrice($defaultTaxIdPurchasePrice)
+    public function getOptionDefaultTaxIdPurchasePrice(?int $defaultTaxIdPurchasePrice): int
     {
         $result = $defaultTaxIdPurchasePrice;
         if (is_null($defaultTaxIdPurchasePrice)) {
-            $result = Configure::read('app.defaultTaxIdPurchasePrice');
+            $result = (int) Configure::read('app.defaultTaxIdPurchasePrice');
         }
         return $result;
     }
 
-    /**
-     * @param int $variableMemberFee
-     * @return int
-     */
-    public function getOptionVariableMemberFee($variableMemberFee)
+    public function getOptionVariableMemberFee(?int $variableMemberFee): int
     {
         $result = $variableMemberFee;
         if (is_null($variableMemberFee)) {
-            $result = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+            $result = (int) Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;
     }
 
-    /**
-     * @param $boolean $sendOrderList
-     * @return boolean
-     */
     public function getOptionSendOrderList($sendOrderList)
     {
         $result = $sendOrderList;
@@ -219,10 +187,6 @@ class ManufacturersTable extends AppTable
         return $result;
     }
 
-    /**
-     * @param string $sendOrderListCc
-     * @return array
-     */
     public function getOptionSendOrderListCc($sendOrderListCc)
     {
         $ccRecipients = [];
@@ -309,31 +273,16 @@ class ManufacturersTable extends AppTable
         return $manufacturersForMenu;
     }
 
-    /**
-     * @param float $price
-     * @param integer $variableMemberFee
-     * @return float
-     */
     public function increasePriceWithVariableMemberFee($price, $variableMemberFee)
     {
         return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    /**
-     * @param float $price
-     * @param integer $variableMemberFee
-     * @return float
-     */
     public function decreasePriceWithVariableMemberFee($price, $variableMemberFee)
     {
         return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    /**
-     * @param float $price
-     * @param integer $variableMemberFee
-     * @return float
-     */
     public function getVariableMemberFeeAsFloat($price, $variableMemberFee)
     {
         return round($price * $variableMemberFee / 100, 2);

@@ -477,11 +477,6 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    /**
-     * @param int $manufacturerId (false, int)
-     * @param boolean $groupBy (false, 'month', 'year')
-     * @return array
-     */
     public function getDepositSum($manufacturerId, $groupBy)
     {
 

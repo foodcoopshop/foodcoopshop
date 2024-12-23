@@ -149,11 +149,8 @@ abstract class AppCakeTestCase extends TestCase
 
     /**
      * back tick allows using forward slash in $unquotedString
-     * @param string $unquotedString
-     * @param string $response
-     * @param string $msg
      */
-    protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
+    protected function assertRegExpWithUnquotedString(string $unquotedString, $response, string $msg = '')
     {
         if (is_null($response)) return;
         $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
@@ -161,11 +158,8 @@ abstract class AppCakeTestCase extends TestCase
 
     /**
      * back tick ` allows using forward slash in $unquotedString
-     * @param string $unquotedString
-     * @param string $response
-     * @param string $msg
      */
-    protected function assertDoesNotMatchRegularExpressionWithUnquotedString($unquotedString, $response, $msg = '')
+    protected function assertDoesNotMatchRegularExpressionWithUnquotedString(string $unquotedString, $response, string $msg = '')
     {
         $this->assertDoesNotMatchRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }

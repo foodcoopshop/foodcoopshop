@@ -34,7 +34,6 @@ class CartsPolicy implements RequestPolicyInterface
             case 'finish':
             case 'orderSuccessful':
                 return $identity !== null;
-                break;
         }
 
         return true;

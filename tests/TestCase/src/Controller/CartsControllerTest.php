@@ -1063,7 +1063,6 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::PURCHASE_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
-        return;
         $this->finishCart(1,1);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -1071,9 +1070,9 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
 
         $objectA = $cart->cart_products[1]->order_detail;
-        $objectB = $cart->cart_products[0]->order_detail;
-        $objectC = $cart->cart_products[2]->order_detail;
-        $objectD = $cart->cart_products[3]->order_detail;
+        $objectB = $cart->cart_products[2]->order_detail;
+        $objectC = $cart->cart_products[3]->order_detail;
+        $objectD = $cart->cart_products[0]->order_detail;
 
         $this->assertEquals($objectA->total_price_tax_incl, 9.99);
         $this->assertEquals($objectA->total_price_tax_excl, 9.09);

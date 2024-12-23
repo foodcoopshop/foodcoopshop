@@ -62,7 +62,6 @@ class BlogPostsPolicy implements RequestPolicyInterface
                 break;
             default:
                 return $identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer();
-                break;
         }
 
         return false;

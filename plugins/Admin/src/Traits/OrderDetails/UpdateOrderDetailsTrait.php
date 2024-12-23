@@ -66,7 +66,7 @@ trait UpdateOrderDetailsTrait
             if ($stockAvailableObject->always_available) {
                 return false;
             }
-            if (!$stockAvailableObject->always_available && $stockAvailableObject->default_quantity_after_sending_order_lists > 0) {
+            if ($stockAvailableObject->default_quantity_after_sending_order_lists > 0) {
                 return false;
             }
         }
