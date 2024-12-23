@@ -28,8 +28,6 @@ class PurchasePriceProductsTable extends AppTable
     use ProductAndAttributeEntityTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
-    protected $Product;
-
     public function initialize(array $config): void
     {
         $this->setTable('purchase_prices');

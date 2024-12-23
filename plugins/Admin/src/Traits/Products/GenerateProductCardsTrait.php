@@ -32,8 +32,8 @@ trait GenerateProductCardsTrait
 
         $productIds = explode(',', $productIds);
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend(
+        $productsTable = $this->getTableLocator()->get('Products');
+        $products = $productsTable->getProductsForBackend(
             productIds: $productIds,
             manufacturerId: 'all',
             addProductNameToAttributes: true,
@@ -54,11 +54,11 @@ trait GenerateProductCardsTrait
             $price = Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
             if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                 $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
-                if (!$this->Product->isMainProduct($product)) {
+                if (!$productsTable->isMainProduct($product)) {
                     $product->name = $product->nameForBarcodePdf;
                 }
             }
-            if (!$this->Product->isMainProduct($product)) {
+            if (!$productsTable->isMainProduct($product)) {
                 $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;

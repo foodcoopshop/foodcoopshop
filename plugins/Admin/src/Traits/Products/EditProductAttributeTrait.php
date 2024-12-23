@@ -60,7 +60,8 @@ trait EditProductAttributeTrait
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
-            $this->ActionLog->customSave('product_attribute_deleted', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('product_attribute_deleted', $this->identity->getId(), $productId, 'products', $actionLogMessage);
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         } else {
             try {

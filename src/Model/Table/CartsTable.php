@@ -27,8 +27,6 @@ use Cake\ORM\TableRegistry;
 class CartsTable extends AppTable
 {
 
-    protected $Product;
-
     public function initialize(array $config): void
     {
         parent::initialize($config);

@@ -32,7 +32,6 @@ class CartsController extends FrontendController
 
     protected $BlogPost;
     protected $Cart;
-    protected $Product;
 
     protected $cartService;
 
@@ -208,8 +207,8 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($initialProductId);
 
         $cart = $this->identity->getCart();
         $this->identity->setCart($cart);
@@ -342,8 +341,8 @@ class CartsController extends FrontendController
         $initialProductId = $this->getRequest()->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
-        $this->Product = $this->getTableLocator()->get('Products');
-        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->getRequest()->getData('amount');
         $orderedQuantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat(
             (string) $this->getRequest()->getData('orderedQuantityInUnits')

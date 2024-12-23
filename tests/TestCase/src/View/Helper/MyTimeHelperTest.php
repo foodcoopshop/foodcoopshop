@@ -23,7 +23,6 @@ class MyTimeHelperTest extends AppCakeTestCase
 {
 
     protected $MyTimeHelper;
-    protected $Product;
 
     use DeliveryRhythmConfigsTrait;
 

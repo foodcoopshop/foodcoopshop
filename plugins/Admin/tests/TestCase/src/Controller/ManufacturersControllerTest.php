@@ -26,8 +26,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    protected $Product;
-
     public $manufacturerData = [
         'Manufacturers' => [
             'name' => 'Test Manufacturer',
@@ -222,7 +220,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $noDeliveryDayB = date('Y-m-d', strtotime($noDeliveryDays . ' + 11 day'));
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
-        $this->Product = $this->getTableLocator()->get('Products');
+        $productsTable = $this->getTableLocator()->get('Products');
 
         $orderDetailEntityA = $orderDetailsTable->get(1);
         $orderDetailEntityA->pickup_day = $noDeliveryDayA;
@@ -236,7 +234,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $orderDetailEntityC->pickup_day = $noDeliveryDayB;
         $orderDetailsTable->save($orderDetailEntityC);
 
-        $this->Product->updateAll(['id_manufacturer' => $manufacturerId], []);
+        $productsTable->updateAll(['id_manufacturer' => $manufacturerId], []);
 
         $this->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),

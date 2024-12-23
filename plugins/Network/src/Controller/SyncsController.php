@@ -5,7 +5,6 @@ namespace Network\Controller;
 
 use App\Controller\AppController;
 use App\Model\Table\ConfigurationsTable;
-use App\Model\Table\ProductsTable;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
@@ -33,7 +32,6 @@ class SyncsController extends AppController
     protected SyncDomainsTable $SyncDomain;
     protected SyncManufacturersTable $SyncManufacturer;
     protected SyncProductsTable $SyncProduct;
-    protected ProductsTable $Product;
 
     public function initialize(): void
     {
@@ -51,7 +49,6 @@ class SyncsController extends AppController
 
         $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
         $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');
-        $this->Product = $this->getTableLocator()->get('Products');
     }
 
     private function doModifyProductChecks($product)
@@ -60,12 +57,13 @@ class SyncsController extends AppController
             'SyncDomains.domain' => $product['domain']
         ])->first();
 
-        $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $localProductIds = $productsTable->getProductIdAndAttributeId($product['localProductId']);
 
         if (empty($syncDomain)) {
             throw new \Exception('the domain ' . $product['domain'] . ' was not found.');
         }
-        if (!$this->Product->isOwner($localProductIds['productId'], $this->identity->getManufacturerId())) {
+        if (!$productsTable->isOwner($localProductIds['productId'], $this->identity->getManufacturerId())) {
             throw new \Exception('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->identity->getManufacturerId());
         }
 
@@ -85,8 +83,9 @@ class SyncsController extends AppController
             return $this->sendAjaxError($e);
         }
 
-        $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
-        $remoteProductIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $localProductIds = $productsTable->getProductIdAndAttributeId($product['localProductId']);
+        $remoteProductIds = $productsTable->getProductIdAndAttributeId($product['remoteProductId']);
 
         $status = $this->SyncProduct->save(
             $this->SyncProduct->newEntity(
@@ -165,8 +164,9 @@ class SyncsController extends AppController
             return $this->sendAjaxError($e);
         }
 
-        $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
-        $remoteProductIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $localProductIds = $productsTable->getProductIdAndAttributeId($product['localProductId']);
+        $remoteProductIds = $productsTable->getProductIdAndAttributeId($product['remoteProductId']);
 
         $syncProduct = [
             'sync_domain_id' => $syncDomain->id,
@@ -249,8 +249,8 @@ class SyncsController extends AppController
 
     private function getLocalSyncProducts()
     {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend(
+        $productsTable = $this->getTableLocator()->get('Products');
+        $products = $productsTable->getProductsForBackend(
             productIds: '',
             manufacturerId: $this->identity->getManufacturerId(),
             active: 'all',

@@ -25,8 +25,6 @@ use App\Services\CatalogService;
 class ProductsController extends FrontendController
 {
 
-    protected $Product;
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

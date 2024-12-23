@@ -5,8 +5,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Admin\Traits\ManufacturerIdTrait;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PurchasePriceProductsTable;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop

@@ -33,7 +33,8 @@ trait SaveUploadedImageTrait
         $filename = $this->getRequest()->getData('filename');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-        $product = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -44,16 +45,17 @@ trait SaveUploadedImageTrait
         )->first();
 
         if (empty($product->image)) {
+            $imagesTable = $this->getTableLocator()->get('Images');
             // product does not yet have image => create the necessary record
-            $image = $this->Product->Images->save(
-                $this->Product->Images->newEntity(
+            $image = $imagesTable->save(
+                $imagesTable->newEntity(
                     ['id_product' => $productId]
                 )
             );
         } else {
             $image = $product->image;
             // cache needs to be cleared manually because neither image nor product record is changed
-            $this->Product->clearProductCache();
+            $productsTable->clearProductCache();
         }
 
         // not (yet) implemented for attributes, only for productIds!
@@ -85,7 +87,8 @@ trait SaveUploadedImageTrait
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_image_added', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_image_added', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

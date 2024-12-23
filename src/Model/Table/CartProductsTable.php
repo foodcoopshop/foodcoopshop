@@ -250,7 +250,6 @@ class CartProductsTable extends AppTable
 
         $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
             $orderCustomerService,
-            $productsTable,
             $product->manufacturer->active,
             $product->manufacturer->no_delivery_days,
             $product->next_delivery_day,
@@ -282,7 +281,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $productsTable, $product->next_delivery_day, $product->name);
+        $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $product->next_delivery_day, $product->name);
         if ($message !== true) {
             return [
                 'status' => 0,

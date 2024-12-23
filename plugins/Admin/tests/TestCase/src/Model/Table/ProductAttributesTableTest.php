@@ -23,27 +23,19 @@ use App\Test\TestCase\Traits\LoginTrait;
 class ProductAttributesTableTest extends AppCakeTestCase
 {
 
-    protected $Product;
-    protected $ProductAttribute;
-
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
-    }
 
     public function testAddProductAttribute()
     {
         $productId = 346;
         $attributeId = 29;
 
-        $this->ProductAttribute->add($productId, $attributeId);
+        $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
+        $productAttributesTable->add($productId, $attributeId);
 
-        $product = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],
@@ -73,7 +65,8 @@ class ProductAttributesTableTest extends AppCakeTestCase
         ]);
         $this->assertJsonOk();
 
-        $product = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],
@@ -99,7 +92,8 @@ class ProductAttributesTableTest extends AppCakeTestCase
         ]);
         $this->assertJsonOk();
 
-        $product = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],

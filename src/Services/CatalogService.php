@@ -16,11 +16,6 @@ declare(strict_types=1);
  */
 namespace App\Services;
 
-use App\Model\Table\CustomersTable;
-use App\Model\Table\ManufacturersTable;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\ProductAttributesTable;
-use App\Model\Table\ProductsTable;
 use Cake\I18n\I18n;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;

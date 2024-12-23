@@ -41,15 +41,16 @@ trait EditTaxTrait
                 $contain[] = 'PurchasePriceProducts.Taxes';
                 $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
             }
-            $oldProduct = $this->Product->find('all',
+            $productsTable = $this->getTableLocator()->get('Products');
+            $oldProduct = $productsTable->find('all',
                 conditions: [
-                    'Products.id_product' => $productId
+                    'Products.id_product' => $productId,
                 ],
                 contain: $contain,
             )->first();
 
-            $this->Tax = $this->getTableLocator()->get('Taxes');
-            $taxes = $this->Tax->find('all',
+            $taxesTable = $this->getTableLocator()->get('Taxes');
+            $taxes = $taxesTable->find('all',
                 conditions: [
                     'Taxes.deleted' => APP_OFF,
                 ]
@@ -66,7 +67,8 @@ trait EditTaxTrait
                 if (!in_array($purchasePriceTaxId, $validTaxIds)) {
                     throw new \Exception('invalid purchasePriceTaxId: ' . $purchasePriceTaxId);
                 }
-                $changedTaxInfoForMessage = $this->Product->PurchasePriceProducts->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
+                $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+                $changedTaxInfoForMessage = $purchasePriceProductsTable->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
             }
 
             if (empty($oldProduct->tax)) {
@@ -80,8 +82,8 @@ trait EditTaxTrait
                     'id_tax' => $taxId,
                 ];
 
-                $this->Product->save(
-                    $this->Product->patchEntity($oldProduct, $product2update)
+                $productsTable->save(
+                    $productsTable->patchEntity($oldProduct, $product2update)
                 );
 
                 $newTaxRate = 0;
@@ -93,10 +95,11 @@ trait EditTaxTrait
                 }
 
                 if (! empty($oldProduct->product_attributes)) {
+                    $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
                     // update net price of all attributes
                     foreach ($oldProduct->product_attributes as $attribute) {
-                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->price, $oldProduct->tax->rate, $newTaxRate);
-                        $this->Product->ProductAttributes->updateAll([
+                        $newNetPrice = $productsTable->getNetPriceForNewTaxRate($attribute->price, $oldProduct->tax->rate, $newTaxRate);
+                        $productAttributesTable->updateAll([
                             'price' => $newNetPrice
                         ], [
                             'id_product_attribute' => $attribute->id_product_attribute
@@ -104,12 +107,12 @@ trait EditTaxTrait
                     }
                 } else {
                     // update price of product without attributes
-                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->price, $oldProduct->tax->rate, $newTaxRate);
+                    $newNetPrice = $productsTable->getNetPriceForNewTaxRate($oldProduct->price, $oldProduct->tax->rate, $newTaxRate);
                     $product2update = [
                         'price' => $newNetPrice
                     ];
-                    $this->Product->save(
-                        $this->Product->patchEntity($oldProduct, $product2update)
+                    $productsTable->save(
+                        $productsTable->patchEntity($oldProduct, $product2update)
                     );
                 }
 
@@ -141,7 +144,8 @@ trait EditTaxTrait
                         '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
                     ]);
                 }
-                $this->ActionLog->customSave('product_tax_changed', $this->identity->getId(), $productId, 'products', $messageString);
+                $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+                $actionLogsTable->customSave('product_tax_changed', $this->identity->getId(), $productId, 'products', $messageString);
             } else {
                 $messageString = __d('admin', 'Nothing_changed.');
             }

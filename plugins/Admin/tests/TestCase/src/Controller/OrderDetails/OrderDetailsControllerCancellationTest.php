@@ -109,8 +109,8 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationStockAvailableAlwaysAvailableAsSuperadminAttribute()
     {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->changeQuantity([[$this->productIdC => [
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity([[$this->productIdC => [
             'always_available' => 1,
             'quantity' => 10,
         ]]]);
@@ -121,8 +121,8 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationStockAvailableAlwaysAvailableAsSuperadminProduct()
     {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->changeQuantity([[$this->productIdA => [
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity([[$this->productIdA => [
             'always_available' => 1,
             'quantity' => 10,
         ]]]);
@@ -133,8 +133,8 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminProduct()
     {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->changeQuantity([[$this->productIdA => [
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity([[$this->productIdA => [
             'always_available' => 0,
             'quantity' => 10,
             'default_quantity_after_sending_order_lists' => 10,

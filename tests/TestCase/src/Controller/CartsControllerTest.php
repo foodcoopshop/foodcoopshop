@@ -30,12 +30,6 @@ use Cake\ORM\TableRegistry;
 class CartsControllerTest extends AppCakeTestCase
 {
 
-    protected $ActionLog;
-    protected $PickupDay;
-    protected $ProductAttribute;
-    protected $PurchasePriceProduct;
-    protected $Unit;
-
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
@@ -46,22 +40,6 @@ class CartsControllerTest extends AppCakeTestCase
     public $productId2 = '60-10';
     // knoblauch, 0% tax, , manufacturerId 5
     public $productId3 = '344';
-
-    public $Cart;
-
-    public $Product;
-
-    public $Order;
-
-    public $StockAvailable;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
-    }
 
     public function testAddLoggedOut()
     {
@@ -185,9 +163,10 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId2, $originalQuantity);
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $this->Product->getProductIdAndAttributeId($this->productId2)['productId'],
+                'Products.id_product' => $productsTable->getProductIdAndAttributeId($this->productId2)['productId'],
             ],
             contain: [
                 'ProductAttributes.StockAvailables',
@@ -201,7 +180,8 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId1, $originalQuantity);
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $this->productId1,
             ],
@@ -216,9 +196,10 @@ class CartsControllerTest extends AppCakeTestCase
     public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProduct()
     {
         $originalQuantity = 2;
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
-        $this->Product->changeIsStockProduct([[$this->productId1 => true]]);
-        $this->Product->changeQuantity([[$this->productId1 => [
+        $productsTable->changeIsStockProduct([[$this->productId1 => true]]);
+        $productsTable->changeQuantity([[$this->productId1 => [
             'always_available' => 1,
             'quantity' => $originalQuantity,
         ]]]);
@@ -231,9 +212,10 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->changeManufacturer(15, 'stock_management_enabled', 1);
-        $productId = $this->Product->getProductIdAndAttributeId($this->productId2)['productId'];
-        $this->Product->changeIsStockProduct([[$productId => true]]);
-        $this->Product->changeQuantity([[$this->productId2 => [
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productId = $productsTable->getProductIdAndAttributeId($this->productId2)['productId'];
+        $productsTable->changeIsStockProduct([[$productId => true]]);
+        $productsTable->changeQuantity([[$this->productId2 => [
             'always_available' => 1,
             'quantity' => $originalQuantity,
         ]]]);
@@ -245,9 +227,10 @@ class CartsControllerTest extends AppCakeTestCase
     public function testStockManagementEnabledIsStockProductFalseAndQuantityLimitLessThanZero()
     {
         $this->changeManufacturer(15, 'stock_management_enabled', 1);
-        $productId = $this->Product->getProductIdAndAttributeId($this->productId2)['productId'];
-        $this->Product->changeIsStockProduct([[$productId => false]]);
-        $this->Product->changeQuantity([[$this->productId2 => [
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productId = $productsTable->getProductIdAndAttributeId($this->productId2)['productId'];
+        $productsTable->changeIsStockProduct([[$productId => false]]);
+        $productsTable->changeQuantity([[$this->productId2 => [
             'always_available' => 0,
             'quantity' => 0,
             'quantity_limit' => -5,
@@ -263,8 +246,9 @@ class CartsControllerTest extends AppCakeTestCase
     public function testDecreaseQuantityIfProductWithAttributeWasInSameCart()
     {
         $this->changeManufacturer(5, 'stock_management_enabled', 0);
-        $this->Product->changeIsStockProduct([[$this->productId1 => false]]);
-        $this->Product->changeQuantity([[$this->productId1 => [
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->changeIsStockProduct([[$this->productId1 => false]]);
+        $productsTable->changeQuantity([[$this->productId1 => [
             'always_available' => 0,
             'quantity' => 6,
             'quantity_limit' => 0,
@@ -279,7 +263,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function doPrepareAlwaysAvailable($productId, $originalQuantity)
     {
-        $this->Product->changeQuantity([[$productId => [
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->changeQuantity([[$productId => [
             'always_available' => 1,
             'quantity' => $originalQuantity,
         ]]]);
@@ -297,7 +282,8 @@ class CartsControllerTest extends AppCakeTestCase
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
@@ -311,8 +297,9 @@ class CartsControllerTest extends AppCakeTestCase
         $productId = 103;
         $this->addProductToCart($productId, 1);
         $this->assertJsonOk();
-        $this->ProductAttribute= $this->getTableLocator()->get('ProductAttributes');
-        $this->ProductAttribute->add($productId, 35);
+        $productAttributesTable = TableRegistry::getTableLocator()->get('ProductAttributes');
+        $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
+        $productAttributesTable->add($productId, 35);
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExpWithUnquotedString('Dem Produkt wurden in der Zwischenzeit Varianten hinzugef', $this->_response->getBody()->__toString());
@@ -323,16 +310,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId2, 1);
 
-        $productEntity = $this->Product->get(60);
-        $productEntity->active = APP_OFF;
-        $this->Product->save($productEntity);
+        $productsTable = TableRegistry::getTableLocator()->get('Products'); 
+        $product = $productsTable->get(60);
+        $product->active = APP_OFF;
+        $productsTable->save($product);
 
-        $cpEntity = $this->Cart->CartProducts->get(3);
-        $cpEntity->id_product_attribute = 5000;
-        $this->Cart->CartProducts->save($cpEntity);
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $cartProduct = $cartProductsTable->get(3);
+        $cartProduct->id_product_attribute = 5000;
+        $cartProductsTable->save($cartProduct);
 
         $this->removeProduct($this->productId2);
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
     }
@@ -346,7 +336,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // check if product was placed in cart
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId1, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -357,7 +348,8 @@ class CartsControllerTest extends AppCakeTestCase
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -424,9 +416,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId3, 1);
         $this->checkCartStatus();
 
-        $this->Product->save(
-            $this->Product->patchEntity(
-                $this->Product->get($this->productId3),
+        $productsTable = TableRegistry::getTableLocator()->get('Products'); 
+        $productsTable->save(
+            $productsTable->patchEntity(
+                $productsTable->get($this->productId3),
                 [
                     'is_stock_product' => '1',
                 ]
@@ -530,8 +523,8 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
 
-        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-        $pickupDayEntity = $this->PickupDay->find('all')->toArray();
+        $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
+        $pickupDayEntity = $pickupDaysTable->find('all')->toArray();
         $this->assertEquals(1, count($pickupDayEntity));
         $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
@@ -579,9 +572,10 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->addProductToCart('350-14', 1); // add lagerprodukt mit variante
         $this->addProductToCart(340, 1); // add beuschl
-        $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4, 0); // artischocke
-        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
+        $unitsTable = TableRegistry::getTableLocator()->get('Units');
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitsTable->saveUnits(346, 12, false, 1, 'kg', 1, 0.4, 0); // artischocke
+        $unitsTable->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
 
         $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
@@ -620,15 +614,16 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addAllDifferentProductTypesToCart();
 
         $productId = 340;
-        $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
-        $entity = $this->PurchasePriceProduct->newEntity(
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+        $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+        $entity = $purchasePriceProductsTable->newEntity(
             [
                 'product_id' => $productId,
                 'tax_id' => 2,
                 'price' => 1.072727,
             ],
         );
-        $this->PurchasePriceProduct->save($entity);
+        $purchasePriceProductsTable->save($entity);
         $this->addProductToCart($productId, 2);
         $this->addProductToCart(163, 1); //mangold
         $this->finishCart(1,1);
@@ -749,7 +744,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
@@ -1160,8 +1156,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailContainsHtmlAt(0, '1,86');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailMilkManufacturer'));
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all')->toArray();
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertEquals('carts', $actionLogs[0]->object_type);
         $this->assertEquals($cart->id_cart, $actionLogs[0]->object_id);
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
@@ -1176,16 +1172,17 @@ class CartsControllerTest extends AppCakeTestCase
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all')->toArray();
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
     public function testInstantOrderWithExpiredBulkOrder()
     {
-        $this->Product->save(
-            $this->Product->patchEntity(
-                $this->Product->get($this->productId1),
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->save(
+            $productsTable->patchEntity(
+                $productsTable->get($this->productId1),
                 [
                     'delivery_rhythm_type' => 'individual',
                     'delivery_rhythm_count' => '0',
@@ -1201,8 +1198,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all')->toArray();
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
@@ -1300,7 +1297,8 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatus()
     {
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
         $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
     }
@@ -1311,7 +1309,8 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatusAfterFinish()
     {
-        $cart = $this->Cart->find('all',
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => 1,
             ],
@@ -1326,7 +1325,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
         $this->assertJsonError();
-        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($expectedAmount, $cart['CartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
     }
 
@@ -1337,15 +1337,18 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function changeStockAvailable($productId, $amount)
     {
-        $this->Product->changeQuantity([[$productId => ['quantity' => $amount]]]);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->changeQuantity([[$productId => ['quantity' => $amount]]]);
     }
 
     private function checkStockAvailable($productId, $result)
     {
-        $ids = $this->Product->getProductIdAndAttributeId($productId);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($productId);
 
         // get changed product
-        $stockAvailable = $this->StockAvailable->find('all',
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $stockAvailable = $stockAvailablesTable->find('all',
             conditions: [
                 'StockAvailables.id_product' => $ids['productId'],
                 'StockAvailables.id_product_attribute' => $ids['attributeId'],
@@ -1374,7 +1377,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function changeProductStatus($productId, $status): void
     {
-        $this->Product->changeStatus([[$productId => $status]]);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->changeStatus([[$productId => $status]]);
     }
 
     private function changeManufacturerStatus($manufacturerId, $status): void

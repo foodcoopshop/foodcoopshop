@@ -47,7 +47,8 @@ trait DeliveryRhythmConfigsTrait
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
-        $this->Product->updateAll(['delivery_rhythm_send_order_list_weekday' => 6], []);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->updateAll(['delivery_rhythm_send_order_list_weekday' => 6], []);
     }
 
 }

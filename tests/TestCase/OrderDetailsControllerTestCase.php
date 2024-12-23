@@ -39,7 +39,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     public $orderDetailIdC = 3;
 
     protected $mockCart;
-    protected $Product;
     protected $StockAvailable;
 
     protected function simulateSendOrderListsCronjob($orderDetailId)

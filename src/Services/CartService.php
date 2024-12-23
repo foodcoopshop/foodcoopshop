@@ -17,10 +17,7 @@ use App\Model\Table\ActionLogsTable;
 use App\Model\Table\AttributesTable;
 use App\Model\Table\CartsTable;
 use App\Model\Table\InvoicesTable;
-use App\Model\Table\ManufacturersTable;
-use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PickupDaysTable;
-use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
@@ -51,7 +48,6 @@ class CartService
     protected AttributesTable $Attribute;
     protected CartsTable $Cart;
     protected InvoicesTable $Invoice;
-    protected ProductsTable $Product;
     protected PickupDaysTable $PickupDay;
 
     private $identity;
@@ -211,12 +207,12 @@ class CartService
 
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
         foreach ($this->identity->getProducts() as $cartProduct) {
-            $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
+            $ids = $productsTable->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
                 $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
                 $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->identity->getCartId());
@@ -253,8 +249,8 @@ class CartService
 
         foreach ($this->identity->getProducts() as $cartProduct) {
 
-            $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
-            $product = $this->Product->find('all',
+            $ids = $productsTable->getProductIdAndAttributeId($cartProduct['productId']);
+            $product = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $ids['productId']
                 ],
@@ -295,7 +291,8 @@ class CartService
 
             // purchase price check for product
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                if ($ids['attributeId'] == 0 && !$this->Product->PurchasePriceProducts->isPurchasePriceSet($product)) {
+                $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+                if ($ids['attributeId'] == 0 && !$purchasePriceProductsTable->isPurchasePriceSet($product)) {
                     $message = __('The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $product->name . '</b>']);
                     $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                     $cartErrors[$cartProduct['productId']][] = $message;
@@ -340,7 +337,8 @@ class CartService
 
                         // purchase price check for attribute
                         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                            if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                            $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
+                            if (!$purchasePriceProductAttributesTable->isPurchasePriceSet($attribute)) {
                                 $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>']);
                                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -378,7 +376,6 @@ class CartService
 
             $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
                 $orderCustomerService,
-                $this->Product,
                 $product->manufacturer->active,
                 $product->manufacturer->no_delivery_days,
                 $product->next_delivery_day,
@@ -404,7 +401,7 @@ class CartService
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $this->Product, $product->next_delivery_day, $product->name);
+            $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $product->next_delivery_day, $product->name);
             if ($message !== true) {
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -554,6 +551,7 @@ class CartService
     private function prepareOrderDetailPurchasePrices($ids, $product, $cartProduct): array
     {
 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $amount = $cartProduct['amount'];
 
         $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
@@ -569,12 +567,12 @@ class CartService
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                         $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
                         $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
-                        $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                     } else {
                         $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
                         $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
-                        $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxIncl *= $amount;
                         $totalPurchasePriceTaxExcl *= $amount;
                     }
@@ -586,19 +584,19 @@ class CartService
             if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                 $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
                 $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
-                $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
             } else {
                 $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
                 $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
-                $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxIncl *= $amount;
                 $totalPurchasePriceTaxExcl *= $amount;
             }
         }
 
-        $unitPurchasePriceExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl / $amount, $purchasePriceTaxRate);
-        $unitPurchasePriceTaxAmount = $this->Product->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $amount);
+        $unitPurchasePriceExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl / $amount, $purchasePriceTaxRate);
+        $unitPurchasePriceTaxAmount = $productsTable->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $amount);
         $totalPurchasePriceTaxAmount = $unitPurchasePriceTaxAmount * $amount;
 
         $result = [

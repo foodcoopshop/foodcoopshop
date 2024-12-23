@@ -27,7 +27,6 @@ use Admin\Traits\Products\GetProductsForDropdownTrait;
 use Admin\Traits\Products\ImportTrait;
 use Admin\Traits\Products\IndexTrait;
 use Admin\Traits\Products\SaveUploadedImageTrait;
-use App\Model\Table\ProductsTable;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
 
@@ -72,8 +71,6 @@ class ProductsController extends AdminAppController
     use ExportTrait;
     use SaveUploadedImageTrait;
 
-    protected ProductsTable $Product;
-
     public function initialize(): void
     {
         parent::initialize();
@@ -83,9 +80,6 @@ class ProductsController extends AdminAppController
     public function beforeFilter(EventInterface $event)
     {
         
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->Product = $this->getTableLocator()->get('Products');
-
         // needs to be set in beforeFilter and this method can't be overwritten in trait
         if (in_array($this->getRequest()->getParam('action'), [
                 'export', 

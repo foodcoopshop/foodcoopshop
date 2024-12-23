@@ -5,6 +5,7 @@ namespace App\Model\Traits;
 
 use App\Model\Entity\Customer;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
 /**
@@ -60,12 +61,13 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isManufacturerActiveOrManufacturerHasDeliveryBreak($orderCustomerService, $productsTable, $active, $noDeliveryDays, $nextDeliveryDay, $isStockProduct, $stockManagementEnabled, $productName): bool|string
+    public function isManufacturerActiveOrManufacturerHasDeliveryBreak($orderCustomerService, $active, $noDeliveryDays, $nextDeliveryDay, $isStockProduct, $stockManagementEnabled, $productName): bool|string
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $hasEnabledDeliveryBreak = false;
         } else {
+            $productsTable = TableRegistry::getTableLocator()->get('Products');
             $hasEnabledDeliveryBreak = !$orderCustomerService->isOrderForDifferentCustomerMode()
             && !$orderCustomerService->isSelfServiceModeByReferer()
             && $productsTable->deliveryBreakManufacturerEnabled($noDeliveryDays, $nextDeliveryDay, $stockManagementEnabled, $isStockProduct);
@@ -80,13 +82,14 @@ trait CartValidatorTrait
 
     }
 
-    public function isGlobalDeliveryBreakEnabled($orderCustomerService, $productsTable, $nextDeliveryDay, $productName): bool|string
+    public function isGlobalDeliveryBreakEnabled($orderCustomerService, $nextDeliveryDay, $productName): bool|string
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             return true;
         }
 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $result = true;
 
         if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isSelfServiceModeByReferer() &&

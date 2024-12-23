@@ -3,10 +3,6 @@ declare(strict_types=1);
 
 namespace Network\Controller;
 
-use App\Model\Table\ActionLogsTable;
-use App\Model\Table\ManufacturersTable;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\ProductsTable;
 use App\Services\SanitizeService;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;

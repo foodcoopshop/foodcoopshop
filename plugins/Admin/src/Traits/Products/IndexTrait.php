@@ -47,6 +47,8 @@ trait IndexTrait
             }
         }
 
+        $productsTable = $this->getTableLocator()->get('Products');
+
         // always filter by manufacturer id so that no other products than the own are shown
         if ($this->identity->isManufacturer()) {
             $manufacturerId = $this->identity->getManufacturerId();
@@ -60,7 +62,7 @@ trait IndexTrait
         $this->set('categoryId', $categoryId);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $this->Product->getProductsForBackend(
+            $preparedProducts = $productsTable->getProductsForBackend(
                 productIds: $productId,
                 manufacturerId: $manufacturerId,
                 active: $active,
@@ -79,7 +81,7 @@ trait IndexTrait
         $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
         $this->set('categoriesForCheckboxes', $categoriesTable->getForSelect(null, true, true));
         $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
-        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->Tax = $this->getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());

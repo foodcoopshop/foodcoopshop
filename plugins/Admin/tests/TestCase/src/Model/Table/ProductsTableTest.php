@@ -25,14 +25,6 @@ class ProductsTableTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public $Product;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Product = $this->getTableLocator()->get('Products');
-    }
-
     public function testChangeImageValidImageAndDeleteImage()
     {
 
@@ -41,9 +33,10 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [$productId => WWW_ROOT . 'img/tests/test-image.jpg']
         ];
-        $this->Product->changeImage($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeImage($products);
 
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -65,9 +58,9 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [$productId => 'no-image']
         ];
-        $this->Product->changeImage($products);
+        $productsTable->changeImage($products);
 
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -94,7 +87,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
 
         try {
-            $this->Product->changeImage($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeImage($products);
         } catch (Exception $e) {
             $this->assertEquals('file is not an image: ' . $file, $e->getMessage());
         }
@@ -108,7 +102,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
 
         try {
-            $this->Product->changeImage($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeImage($products);
         } catch (Exception $e) {
             $this->assertEquals('invalid host', $e->getMessage());
         }
@@ -123,7 +118,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changeImage($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeImage($products);
         } catch (Exception $e) {
             $exceptionThrown = true;
         }
@@ -157,8 +153,9 @@ class ProductsTableTest extends AppCakeTestCase
             ]
         ];
 
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($tests as $test) {
-            $result = $this->Product->getCompositeProductIdAndAttributeId($test['ids']['productId'], $test['ids']['attributeId']);
+            $result = $productsTable->getCompositeProductIdAndAttributeId($test['ids']['productId'], $test['ids']['attributeId']);
             $this->assertEquals($test['result'], $result);
         }
     }
@@ -189,8 +186,9 @@ class ProductsTableTest extends AppCakeTestCase
             ]
         ];
 
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($tests as $test) {
-            $result = $this->Product->getProductIdAndAttributeId($test['id']);
+            $result = $productsTable->getProductIdAndAttributeId($test['id']);
             $this->assertEquals($test['result'], $result);
         }
     }
@@ -199,6 +197,7 @@ class ProductsTableTest extends AppCakeTestCase
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $productsTable = $this->getTableLocator()->get('Products');
 
         $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $manufacturer = $manufacturersTable->find('all',
@@ -214,9 +213,9 @@ class ProductsTableTest extends AppCakeTestCase
         $isDeclarationOk = 0;
         $idStorageLocation = 1;
         $barcode = '1234567890123';
-        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
+        $newProduct = $productsTable->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
 
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $newProduct->id_product
             ],
@@ -256,7 +255,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changeQuantity($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeQuantity($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -272,7 +272,8 @@ class ProductsTableTest extends AppCakeTestCase
                 'quantity' => -50
             ]]
         ];
-        $this->Product->changeQuantity($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity($products);
         $this->assertProductQuantity($products, -50);
     }
 
@@ -283,7 +284,8 @@ class ProductsTableTest extends AppCakeTestCase
                 'quantity' => '5'
             ]]
         ];
-        $this->Product->changeQuantity($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity($products);
         $this->assertProductQuantity($products);
     }
 
@@ -294,7 +296,8 @@ class ProductsTableTest extends AppCakeTestCase
                 'quantity' => '5'
             ]]
         ];
-        $this->Product->changeQuantity($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity($products);
         $this->assertProductQuantity($products);
     }
 
@@ -311,7 +314,8 @@ class ProductsTableTest extends AppCakeTestCase
                 'quantity' => '90'
             ]]
         ];
-        $this->Product->changeQuantity($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity($products);
         $this->assertProductQuantity($products);
     }
 
@@ -328,7 +332,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changePrice($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changePrice($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -346,7 +351,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changePrice($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changePrice($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -360,7 +366,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => ['gross_price' => '5,22']]
         ];
-        $success = $this->Product->changePrice($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $success = $productsTable->changePrice($products);
         $this->assertTrue($success);
         $this->assertProductPrice($products);
     }
@@ -370,7 +377,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => ['gross_price' => '3,22']]
         ];
-        $success = $this->Product->changePrice($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $success = $productsTable->changePrice($products);
         $this->assertTrue($success);
         $this->assertProductPrice($products);
     }
@@ -382,7 +390,8 @@ class ProductsTableTest extends AppCakeTestCase
             [346 => ['gross_price' => '1,00']],
             ['60-10' => ['gross_price' => '2,98']]
         ];
-        $success = $this->Product->changePrice($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $success = $productsTable->changePrice($products);
         $this->assertTrue($success);
         $this->assertProductPrice($products);
     }
@@ -397,7 +406,8 @@ class ProductsTableTest extends AppCakeTestCase
             [102 => ['gross_price' => $samePrice]],
             [103 => ['gross_price' => $samePrice]]
         ];
-        $success = $this->Product->changePrice($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $success = $productsTable->changePrice($products);
         $this->assertTrue($success);
         $this->assertProductPrice($products);
 
@@ -411,7 +421,7 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changePrice($products);
+            $productsTable->changePrice($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -429,7 +439,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => '1,00']
         ];
-        $this->Product->changeDeposit($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeDeposit($products);
         $this->assertProductDeposit($products);
     }
 
@@ -438,7 +449,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => '1,00']
         ];
-        $this->Product->changeDeposit($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeDeposit($products);
         $this->assertProductDeposit($products);
     }
 
@@ -452,7 +464,8 @@ class ProductsTableTest extends AppCakeTestCase
             [102 => $sameDeposit],
             [103 => $sameDeposit]
         ];
-        $this->Product->changeDeposit($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeDeposit($products);
         $this->assertProductDeposit($products);
 
         // try to change deposits, but include one invalid deposit
@@ -465,7 +478,7 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changeDeposit($products);
+            $productsTable->changeDeposit($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -485,7 +498,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
-        $this->Product->changeStatus($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeStatus($products);
     }
 
     public function testChangeStatusWithInvalidIntegerStatus()
@@ -495,7 +509,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
-        $this->Product->changeStatus($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeStatus($products);
     }
 
     public function testChangeStatusForProductAttribute()
@@ -505,7 +520,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('change status is not allowed for product attributes');
-        $this->Product->changeStatus($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeStatus($products);
     }
 
     public function testChangeStatusDisableWithOneProduct()
@@ -513,7 +529,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 0]
         ];
-        $response = $this->Product->changeStatus($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $response = $productsTable->changeStatus($products);
         $this->assertEquals(true, $response);
         $this->assertProductStatus($products);
     }
@@ -523,7 +540,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 1]
         ];
-        $response = $this->Product->changeStatus($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $response = $productsTable->changeStatus($products);
         $this->assertEquals(true, $response);
         $this->assertProductStatus($products);
     }
@@ -535,7 +553,8 @@ class ProductsTableTest extends AppCakeTestCase
             [340 => 1],
             [346 => 0]
         ];
-        $response = $this->Product->changeStatus($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $response = $productsTable->changeStatus($products);
         $this->assertEquals(true, $response);
         $this->assertProductStatus($products);
     }
@@ -549,7 +568,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changeStatus($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeStatus($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -569,7 +589,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changeStatus($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeStatus($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -592,7 +613,8 @@ class ProductsTableTest extends AppCakeTestCase
         $exceptionThrown = false;
 
         try {
-            $this->Product->changeName($products);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeName($products);
         } catch (\Exception $e) {
             $exceptionThrown = true;
         }
@@ -609,7 +631,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('change name is not allowed for product attributes');
-        $this->Product->changeName($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeName($products);
     }
 
     public function testChangeNameWithMultipleProducts()
@@ -627,7 +650,8 @@ class ProductsTableTest extends AppCakeTestCase
             [102 => $parameters],
             [346 => $parameters]
         ];
-        $this->Product->changeName($products);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeName($products);
 
         $expectedResults = [
             'name' => 'test name',
@@ -642,10 +666,11 @@ class ProductsTableTest extends AppCakeTestCase
 
     private function assertProductName($products, $expectedResults)
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
 
             $productId = key($product);
-            $changedProduct = $this->Product->find('all',
+            $changedProduct = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId,
                 ],
@@ -671,9 +696,10 @@ class ProductsTableTest extends AppCakeTestCase
 
     private function assertProductQuantity($products, $forceUseThisQuantity = null)
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
             $originalProductId = key($product);
-            $productAndAttributeId = $this->Product->getProductIdAndAttributeId($originalProductId);
+            $productAndAttributeId = $productsTable->getProductIdAndAttributeId($originalProductId);
             $productId = $productAndAttributeId['productId'];
             $expectedQuantity = (float) $product[$originalProductId]['quantity'];
             if ($forceUseThisQuantity) {
@@ -682,12 +708,12 @@ class ProductsTableTest extends AppCakeTestCase
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['StockAvailables'];
             } else {
-                $this->Product->getAssociation('ProductAttributes')->setConditions(
+                $productsTable->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
                 $contain = ['ProductAttributes.StockAvailables'];
             }
-            $changedProduct = $this->Product->find('all',
+            $changedProduct = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId
                 ],
@@ -704,9 +730,10 @@ class ProductsTableTest extends AppCakeTestCase
 
     private function assertProductDeposit($products, $forceUseThisDeposit = null)
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
             $originalProductId = key($product);
-            $productAndAttributeId = $this->Product->getProductIdAndAttributeId($originalProductId);
+            $productAndAttributeId = $productsTable->getProductIdAndAttributeId($originalProductId);
             $productId = $productAndAttributeId['productId'];
             $expectedDeposit = $product[$originalProductId];
             if ($forceUseThisDeposit) {
@@ -717,12 +744,12 @@ class ProductsTableTest extends AppCakeTestCase
                 $contain = ['DepositProducts'];
             } else {
                 $contain = ['ProductAttributes', 'ProductAttributes.DepositProductAttributes'];
-                $this->Product->getAssociation('ProductAttributes')->setConditions(
+                $productsTable->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
             }
 
-            $changedProduct = $this->Product->find('all',
+            $changedProduct = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId
                 ],
@@ -741,9 +768,10 @@ class ProductsTableTest extends AppCakeTestCase
 
     private function assertProductPrice($products, $forceUseThisPrice = null)
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
             $originalProductId = key($product);
-            $productAndAttributeId = $this->Product->getProductIdAndAttributeId($originalProductId);
+            $productAndAttributeId = $productsTable->getProductIdAndAttributeId($originalProductId);
             $productId = $productAndAttributeId['productId'];
             $expectedPrice = $product[$originalProductId]['gross_price'];
             if ($forceUseThisPrice) {
@@ -752,12 +780,12 @@ class ProductsTableTest extends AppCakeTestCase
             $contain = ['Taxes'];
             $expectedPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedPrice);
             if ($productAndAttributeId['attributeId'] > 0) {
-                $this->Product->getAssociation('ProductAttributes')->setConditions(
+                $productsTable->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
                 $contain[] = 'ProductAttributes';
             }
-            $changedProduct = $this->Product->find('all',
+            $changedProduct = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId
                 ],
@@ -769,19 +797,20 @@ class ProductsTableTest extends AppCakeTestCase
                 $resultEntity = $changedProduct->product_attributes[0];
             }
             $taxRate = $changedProduct->tax->rate ?? 0;
-            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($resultEntity->price, $taxRate));
+            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice($resultEntity->price, $taxRate));
         }
     }
 
     private function assertProductStatus($products, $forceUseThisStatus = null)
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
             $productId = key($product);
             $expectedStatus = $product[$productId];
             if ($forceUseThisStatus) {
                 $expectedStatus = $forceUseThisStatus;
             }
-            $changedProduct = $this->Product->find('all',
+            $changedProduct = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId,
                 ]

@@ -25,13 +25,10 @@ use App\Services\SanitizeService;
 class AttributesController extends AdminAppController
 {
 
-    protected AttributesTable $Attribute;
-    protected ProductAttributeCombinationsTable $ProductAttributeCombination;
-
     public function add()
     {
-        $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $attribute = $this->Attribute->newEntity(
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $attribute = $attributesTable->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
         );
@@ -49,13 +46,13 @@ class AttributesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $attribute = $this->Attribute->find('all', conditions: [
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $attribute = $attributesTable->find('all', conditions: [
             'Attributes.id_attribute' => $attributeId
         ])->first();
 
-        $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
-        $combinationCounts = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
+        $productAttributeCombinationsTable = $this->getTableLocator()->get('ProductAttributeCombinations');
+        $combinationCounts = $productAttributeCombinationsTable->getCombinationCounts($attributeId);
         $attribute->has_combined_products = count($combinationCounts['online']) + count($combinationCounts['offline']) > 0;
 
         if (empty($attribute)) {
@@ -79,13 +76,14 @@ class AttributesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-        $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $attribute = $attributesTable->patchEntity($attribute, $this->getRequest()->getData());
         if ($attribute->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('attribute', $attribute);
             $this->render('edit');
         } else {
-            $attribute = $this->Attribute->save($attribute);
+            $attribute = $attributesTable->save($attribute);
 
             if (!$isEditMode) {
                 $messageSuffix = __d('admin', 'created');
@@ -95,14 +93,15 @@ class AttributesController extends AdminAppController
                 $actionLogType = 'attribute_changed';
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
                 $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'attribute_deleted';
             }
             $message = __d('admin', 'The_attribute_{0}_has_been_{1}.', ['<b>' . $attribute->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $attribute->id_attribute, 'attributes', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $attribute->id_attribute);
@@ -118,8 +117,8 @@ class AttributesController extends AdminAppController
             'Attributes.active > ' . APP_DEL
         ];
 
-        $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $query = $this->Attribute->find('all', conditions: $conditions);
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $query = $attributesTable->find('all', conditions: $conditions);
         $attributes = $this->paginate($query, [
             'sortableFields' => [
                 'Attributes.name', 'Attributes.modified', 'Attributes.can_be_used_as_unit'
@@ -129,9 +128,9 @@ class AttributesController extends AdminAppController
             ]
         ]);
 
-        $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
+        $productAttributeCombinationsTable = $this->getTableLocator()->get('ProductAttributeCombinations');
         foreach ($attributes as $attribute) {
-            $attribute->combination_product = $this->ProductAttributeCombination->getCombinationCounts($attribute->id_attribute);
+            $attribute->combination_product = $productAttributeCombinationsTable->getCombinationCounts($attribute->id_attribute);
         }
         $this->set('attributes', $attributes);
 

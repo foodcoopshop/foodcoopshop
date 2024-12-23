@@ -30,15 +30,6 @@ class ProductsControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    protected $Product;
-    protected $Image;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Product = $this->getTableLocator()->get('Products');
-    }
-
     public function testExportProducts() {
 
         $unitsTable = $this->getTableLocator()->get('Units');
@@ -63,7 +54,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 60;
         $status = APP_OFF;
         $this->get('/admin/products/editStatus/' . $productId . '/0/' . $status);
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ]
@@ -80,7 +72,8 @@ class ProductsControllerTest extends AppCakeTestCase
             'productIds' => $productIds,
             'status' => APP_OFF,
         ]);
-        $products = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $products = $productsTable->find('all',
             conditions: [
                 'Products.id_product IN' => $productIds,
             ]
@@ -111,7 +104,8 @@ class ProductsControllerTest extends AppCakeTestCase
             'productIds' => $productIds,
             'status' => $status,
         ]);
-        $products = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $products = $productsTable->find('all',
             conditions: [
                 'Products.id_product IN' => $productIds,
             ]
@@ -130,7 +124,8 @@ class ProductsControllerTest extends AppCakeTestCase
             'productId' => $productId,
             'selectedCategories' => $categories,
         ]);
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],
@@ -236,7 +231,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -607,7 +603,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm($productId, '1-month', '03.08.2018');
         $this->assertJsonOk();
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ]
@@ -728,7 +725,8 @@ class ProductsControllerTest extends AppCakeTestCase
             'changeReason' => 'change reason',
         ]);
 
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],
@@ -753,7 +751,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/products/delete', [
             'productIds' => [$productId]
         ]);
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ]
@@ -764,14 +763,15 @@ class ProductsControllerTest extends AppCakeTestCase
     private function doPurchasePriceChange($productId, $price)
     {
 
-        $ids = $this->Product->getProductIdAndAttributeId($productId);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($productId);
 
         $this->ajaxPost('/admin/products/editPurchasePrice', [
             'productId' => $productId,
             'purchasePrice' => $price,
         ]);
 
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $ids['productId'],
             ],
@@ -793,7 +793,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits, $changeOpenOrderDetails);
         $this->assertJsonOk();
-        $netPrice = $this->Product->getNetPrice($price, $taxRate);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $netPrice = $productsTable->getNetPrice($price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 
@@ -809,7 +810,8 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->ajaxPost('/admin/products/editTax', $data);
 
-        $product = $this->Product->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],
@@ -841,7 +843,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 340;
         $filename = 'img/tests/test-image.jpg';
 
-        $this->Image = $this->getTableLocator()->get('Images');
+        $imagesTable = TableRegistry::getTableLocator()->get('Images');
 
         // START upload image
         $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
@@ -863,7 +865,7 @@ class ProductsControllerTest extends AppCakeTestCase
             $i++;
         }
 
-        $image = $this->Image->find('all',
+        $image = $imagesTable->find('all',
             conditions: [
                 'Images.id_image' => $imageId,
             ],
@@ -878,7 +880,7 @@ class ProductsControllerTest extends AppCakeTestCase
             $this->assertFalse(file_exists($thumbsFileName));
         }
 
-        $image = $this->Image->find('all',
+        $image = $imagesTable->find('all',
             conditions: [
                 'Images.id_image' => $imageId,
             ],

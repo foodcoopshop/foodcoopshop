@@ -42,7 +42,8 @@ trait EditStatusTrait
 
         try {
 
-            $this->Product->changeStatus($data);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productsTable->changeStatus($data);
             $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deactivated.', [
                 count($productIds),
             ]);
@@ -71,18 +72,19 @@ trait EditStatusTrait
 
     public function editStatus($productId, $previousProductId, $status)
     {
-        $this->Product->changeStatus(
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeStatus(
             [
                 [$productId => (int) $status]
             ]
         );
 
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ],
             contain: [
-                'Manufacturers'
+                'Manufacturers',
             ]
         )->first();
 
@@ -106,7 +108,8 @@ trait EditStatusTrait
 
         $this->Flash->success($actionLogMessage);
 
-        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }

@@ -15,6 +15,7 @@ use App\Model\Entity\Customer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +32,6 @@ use Cake\ORM\TableRegistry;
  */
 class CustomersTable extends AppTable
 {
-
-    protected $Product;
 
     public function initialize(array $config): void
     {
@@ -207,7 +206,7 @@ class CustomersTable extends AppTable
         return $validator->equals('terms_of_use_accepted_date_checkbox', 1, __('Please_accept_the_terms_of_use.'));
     }
 
-    public function findAuth(\Cake\ORM\Query $query, array $options)
+    public function findAuth(Query $query, array $options)
     {
         $query->where([
             'Customers.active' => APP_ON
