@@ -27,18 +27,9 @@ use App\Model\Entity\Payment;
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
-    protected $ActionLog;
-
     use AppIntegrationTestTrait;
     use LoginTrait;
     use EmailTrait;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->Payment = $this->getTableLocator()->get('Payments');
-    }
 
     public function testAddPaymentLoggedOut()
     {
@@ -145,7 +136,8 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>20,50 €'
         );
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
             order: [
                 'Payments.id' => 'DESC' ,
             ]
@@ -170,7 +162,8 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>20,50 €'
         );
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
             order: [
                 'Payments.id' => 'DESC' ,
             ]
@@ -259,9 +252,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
         $addResponse = $this->getJsonDecodedContent();
 
-        $this->Payment->save(
-            $this->Payment->patchEntity(
-                $this->Payment->get($addResponse->paymentId),
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $paymentsTable->save(
+            $paymentsTable->patchEntity(
+                $paymentsTable->get($addResponse->paymentId),
                 [
                     'approval' => APP_ON,
                 ]
@@ -367,7 +361,8 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
 
         $this->assertFlashMessage('Ein Datensatz wurde erfolgreich importiert. Summe: <b>200,00 €</b>');
-        $payments = $this->Payment->find('all')->toArray();
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->find('all')->toArray();
         $newPayment = $payments[2];
         $this->assertEquals(3, count($payments));
         $this->assertEquals($newPaymentCustomerId, $newPayment->id_customer);
@@ -393,18 +388,19 @@ class PaymentsControllerTest extends AppCakeTestCase
         $amountToAdd = 10;
         $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
 
-        $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
 
         $jsonDecodedContent = $this->addPayment(0, $amountToAdd, Payment::TYPE_DEPOSIT, $manufacturerId, $depositText, $dateAdd);
-        $payment = $this->Payment->find('all',
+        $payment = $paymentsTable->find('all',
             conditions: [
                 'Payments.id' =>  $jsonDecodedContent->paymentId,
             ]
         )->first();
 
         $this->assertEquals(1, $payment->status);
-        $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
@@ -431,7 +427,8 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
     {
-        $lastActionLog = $this->ActionLog->find('all',
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $lastActionLog = $actionLogsTable->find('all',
             conditions: [
                 'ActionLogs.customer_id' => $customerId
             ],
@@ -442,10 +439,6 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text, 'cake action log text not correct');
     }
 
-    /**
-     * @param int $paymentId
-     * @return string
-     */
     private function deletePayment($paymentId)
     {
         $this->ajaxPost('/admin/payments/changeState', [

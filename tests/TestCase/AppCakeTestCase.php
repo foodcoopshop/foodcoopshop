@@ -55,7 +55,6 @@ abstract class AppCakeTestCase extends TestCase
     public $Cart;
     public $Configuration;
     public $Network;
-    public $Payment;
     public $PricePerUnit;
 
     public function setUp(): void

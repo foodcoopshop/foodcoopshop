@@ -399,11 +399,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     public function testDeleteWithNotApprovedPayments()
     {
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
         $paymentId = 1;
-        $this->Payment->save(
-            $this->Payment->patchEntity(
-                $this->Payment->get($paymentId),
+        $paymentsTable->save(
+            $paymentsTable->patchEntity(
+                $paymentsTable->get($paymentId),
                 [
                     'date_add' => new Date(),
                     'approval' => APP_OFF

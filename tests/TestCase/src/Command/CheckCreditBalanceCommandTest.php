@@ -79,10 +79,10 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
         $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->Payment->save(
-            $this->Payment->patchEntity(
-                $this->Payment->get(1),
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $paymentsTable->save(
+            $paymentsTable->patchEntity(
+                $paymentsTable->get(1),
                 [
                     'date_transaction_add' => new DateTime('2020-06-22 10:22:30'),
                 ]

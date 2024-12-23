@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Customers;
 
 use Cake\Core\Configure;
-use App\Services\PdfWriter\MyMemberCardPdfWriterService;
-use App\Services\PdfWriter\MemberCardsPdfWriterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,7 +36,7 @@ trait CreditBalanceSumTrait
         }
         $this->set('dateTo', $dateTo);
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
         $customerTable = $this->getTableLocator()->get('Customers');
 
         $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_ON);
@@ -68,7 +66,7 @@ trait CreditBalanceSumTrait
             'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
         ];
 
-        $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum();
+        $paymentDepositDelta = $paymentsTable->getManufacturerDepositMoneySum();
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,

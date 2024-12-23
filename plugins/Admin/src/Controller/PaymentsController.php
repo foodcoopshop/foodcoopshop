@@ -4,10 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\View\JsonView;

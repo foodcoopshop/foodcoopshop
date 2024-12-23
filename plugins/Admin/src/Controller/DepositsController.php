@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Admin\Traits\ManufacturerIdTrait;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use App\Model\Entity\Payment;
@@ -29,8 +27,6 @@ class DepositsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    protected PaymentsTable $Payment;
-
     public $manufacturerId;
 
     public function overviewDiagram()
@@ -49,22 +45,22 @@ class DepositsController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_EMPTY_GLASSES);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $paymentsTable->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_EMPTY_GLASSES);
         $preparedManufacturerEmptyGlassesData = [];
         foreach($manufacturerDepositSumEmptyGlassesByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
             $preparedManufacturerEmptyGlassesData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $manufacturerDepositSumMoneyByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_MONEY);
+        $manufacturerDepositSumMoneyByCalendarWeek = $paymentsTable->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_MONEY);
         $preparedManufacturerMoneyData = [];
         foreach($manufacturerDepositSumMoneyByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
             $preparedManufacturerMoneyData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $customerDepositSumByCalendarWeek = $this->Payment->getCustomerDepositSumByCalendarWeek();
+        $customerDepositSumByCalendarWeek = $paymentsTable->getCustomerDepositSumByCalendarWeek();
         $preparedCustomerData = [];
         foreach($customerDepositSumByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
@@ -219,13 +215,13 @@ class DepositsController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
 
         $depositsDelivered = $orderDetailsTable->getDepositSum($manufacturerId, 'month');
-        $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
+        $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
@@ -280,9 +276,6 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', $title);
     }
 
-    /**
-     * @param string $monthAndYear
-     */
     public function detail($monthAndYear)
     {
 
@@ -296,8 +289,8 @@ class DepositsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
 
         $this->set('payments', $payments);
 
