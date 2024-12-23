@@ -22,22 +22,22 @@ use App\Model\Table\StockAvailablesTable;
 trait UpdateOrderDetailsTrait 
 {
 
-    protected StockAvailablesTable $StockAvailable;
-
     private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
     {
         $orderDetailUnit2save = [
             'product_quantity_in_units' => $productQuantity,
             'mark_as_saved' => 1,
         ];
-        $patchedEntity = $this->OrderDetail->OrderDetailUnits->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save);
-        $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
+        $orderDetailUnitsTable = $this->getTableLocator()->get('OrderDetailUnits');
+        $patchedEntity = $orderDetailUnitsTable->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save);
+        $orderDetailUnitsTable->save($patchedEntity);
     }
 
     private function changeOrderDetailPurchasePrice($purchasePriceObject, $productPurchasePrice, $productAmount)
     {
-        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
-        $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $unitPriceExcl = $productsTable->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
+        $unitTaxAmount = $productsTable->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
         $totalPriceTaxExcl = $productPurchasePrice - $totalTaxAmount;
         $orderDetailPurchasePrice2save = [
@@ -46,8 +46,9 @@ trait UpdateOrderDetailsTrait
             'tax_unit_amount' => $unitTaxAmount,
             'tax_total_amount' => $totalTaxAmount,
         ];
-        $this->OrderDetail->OrderDetailPurchasePrices->save(
-            $this->OrderDetail->OrderDetailPurchasePrices->patchEntity($purchasePriceObject, $orderDetailPurchasePrice2save)
+        $orderDetailPurchasePricesTable = $this->getTableLocator()->get('OrderDetailPurchasePrices');
+        $orderDetailPurchasePricesTable->save(
+            $orderDetailPurchasePricesTable->patchEntity($purchasePriceObject, $orderDetailPurchasePrice2save)
         );
     }
 
@@ -73,18 +74,18 @@ trait UpdateOrderDetailsTrait
         }
 
         // do the acutal updates for increasing quantity
-        $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
-        $originalPrimaryKey = $this->StockAvailable->getPrimaryKey();
-        $this->StockAvailable->setPrimaryKey('id_stock_available');
+        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $originalPrimaryKey = $stockAvailablesTable->getPrimaryKey();
+        $stockAvailablesTable->setPrimaryKey('id_stock_available');
         $newQuantity = $quantity + $orderDetailAmountBeforeAmountChange - $orderDetail->product_amount;
-        $patchedEntity = $this->StockAvailable->patchEntity(
+        $patchedEntity = $stockAvailablesTable->patchEntity(
             $stockAvailableObject,
             [
                 'quantity' => $newQuantity
             ]
         );
-        $this->StockAvailable->save($patchedEntity);
-        $this->StockAvailable->setPrimaryKey($originalPrimaryKey);
+        $stockAvailablesTable->save($patchedEntity);
+        $stockAvailablesTable->setPrimaryKey($originalPrimaryKey);
 
         return $newQuantity;
     }

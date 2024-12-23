@@ -29,7 +29,6 @@ class FrontendController extends AppController
 
     public $protectEmailAddresses = true;
     protected $Category;
-    protected $OrderDetail;
     protected $Page;
 
     protected function resetOriginalLoggedCustomer()
@@ -170,12 +169,10 @@ class FrontendController extends AppController
             }
 
             $this->set('shoppingPrice', $this->identity->shopping_price);
-
-            $cartsTable = $this->getTableLocator()->get('Carts');
             $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? Cart::SELF_SERVICE_PAYMENT_TYPE_CASH : Cart::SELF_SERVICE_PAYMENT_TYPE_CREDIT);
 
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
+            $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+            $futureOrderDetails = $orderDetailsTable->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
 
             $this->identity->setCart($this->identity->getCart());

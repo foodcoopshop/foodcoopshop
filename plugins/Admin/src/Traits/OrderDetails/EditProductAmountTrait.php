@@ -48,8 +48,8 @@ trait EditProductAmountTrait
             return;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
@@ -129,8 +129,8 @@ trait EditProductAmountTrait
             ]);
         }
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_product_amount_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('order_detail_product_amount_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
 
         $this->Flash->success($message);
 

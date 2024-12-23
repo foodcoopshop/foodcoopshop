@@ -32,7 +32,6 @@ class CartsController extends FrontendController
 
     protected $BlogPost;
     protected $Cart;
-    protected $OrderDetail;
     protected $Product;
 
     protected $cartService;
@@ -81,7 +80,6 @@ class CartsController extends FrontendController
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $cart = $this->identity->getCart();
 
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $cart['Cart']->pickup_day_entities) {
@@ -279,8 +277,8 @@ class CartsController extends FrontendController
         $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getId());
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getId());
 
         $errorMessages = [];
         $loadedProducts = count($orderDetails);
@@ -318,8 +316,8 @@ class CartsController extends FrontendController
 
     public function addLastOrderToCart()
     {
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->identity->getId());
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->getLastOrderDetailsForDropdown($this->identity->getId());
         if (empty($orderDetails)) {
             $message = __('There_are_no_orders_available.');
             $this->Flash->error($message);

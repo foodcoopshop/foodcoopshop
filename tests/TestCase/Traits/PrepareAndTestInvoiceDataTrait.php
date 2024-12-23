@@ -21,8 +21,6 @@ use App\Model\Entity\OrderDetail;
 trait PrepareAndTestInvoiceDataTrait
 {
 
-    protected $OrderDetail;
-
     public function generateInvoice($customerId, $paidInCash)
     {
         $this->get('/admin/invoices/generate.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');
@@ -40,14 +38,14 @@ trait PrepareAndTestInvoiceDataTrait
         $this->addProductToCart($productIdB, 3);
         $this->finishCart(1, 1, '', null, $pickupDay);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetailEntityA = $this->OrderDetail->get(4);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailEntityA = $orderDetailsTable->get(4);
         $orderDetailEntityA->pickup_day = $pickupDay;
-        $this->OrderDetail->save($orderDetailEntityA);
+        $orderDetailsTable->save($orderDetailEntityA);
 
-        $orderDetailEntityB = $this->OrderDetail->get(5);
+        $orderDetailEntityB = $orderDetailsTable->get(5);
         $orderDetailEntityB->pickup_day = $pickupDay;
-        $this->OrderDetail->save($orderDetailEntityB);
+        $orderDetailsTable->save($orderDetailEntityB);
 
         $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
         $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
@@ -65,8 +63,8 @@ trait PrepareAndTestInvoiceDataTrait
     public function getAndAssertOrderDetailsAfterCancellation($orderDetailIds)
     {
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
@@ -87,8 +85,8 @@ trait PrepareAndTestInvoiceDataTrait
     public function getAndAssertPaymentsAfterCancellation($paymentIds)
     {
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->find('all',
             conditions: [
                 'Payments.id IN' => $paymentIds,
             ],
@@ -104,8 +102,8 @@ trait PrepareAndTestInvoiceDataTrait
 
     public function getAndAssertOrderDetailsAfterInvoiceGeneration($invoiceId, $expectedCount)
     {
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_invoice' => $invoiceId,
             ],
@@ -119,8 +117,8 @@ trait PrepareAndTestInvoiceDataTrait
 
     public function getAndAssertPaymentsAfterInvoiceGeneration($customerId)
     {
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->getCustomerDepositNotBilled($customerId);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->getCustomerDepositNotBilled($customerId);
 
         foreach($payments as $payment) {
             $this->assertEquals($payment->id_invoice, 1);

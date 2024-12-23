@@ -21,8 +21,6 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsControllerTestCase
 {
 
-    protected $OrderDetailPurchasePrice;
-
     public function testEditOrderDetailPurchasePricePriceExclValidPurchasePrice()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
@@ -33,8 +31,8 @@ class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsController
         $this->editOrderDetailPurchasePrice($orderDetailId, $newPriceExcl, $newTaxRate);
         $this->assertFlashMessage('Der Einkaufspreis wurde erfolgreich gespeichert.');
 
-        $this->OrderDetailPurchasePrice = $this->getTableLocator()->get('OrderDetailPurchasePrices');
-        $odpp = $this->OrderDetailPurchasePrice->find('all', conditions: [
+        $orderDetailPurchasePricesTable = $this->getTableLocator()->get('OrderDetailPurchasePrices');
+        $odpp = $orderDetailPurchasePricesTable->find('all', conditions: [
             'OrderDetailPurchasePrices.id_order_detail' => $orderDetailId,
         ])->first();
         $this->assertEquals($odpp->tax_rate, $newTaxRate);

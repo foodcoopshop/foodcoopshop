@@ -25,8 +25,6 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     use SelfServiceCartTrait;
 
-    protected $OrderDetail;
-
     public function testEditOrderDetailQuantityNotValid()
     {
         $this->loginAsSuperadmin();
@@ -122,7 +120,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
-        $changedOrderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $changedOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail IN' => [$orderDetailId],
             ],
@@ -207,7 +206,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
     public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity()
     {
         $this->loginAsSuperadmin();
-        $this->OrderDetail->deleteAll([]);
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->deleteAll([]);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
         $productId = '348-11';
         $this->changeProductPrice($productId, 0, true, '25,2', 'g', 1000, 80);

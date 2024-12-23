@@ -27,10 +27,6 @@ use App\Model\Entity\Customer;
 class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 {
 
-    protected $Invoice;
-    protected $OrderDetail;
-    protected $Product;
-
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
@@ -112,10 +108,10 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         $customerId = Configure::read('test.superadminId');
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->updateAll(['id_tax' => 2], ['active' => APP_ON]);
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->OrderDetail->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->updateAll(['id_tax' => 2], ['active' => APP_ON]);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
@@ -143,18 +139,18 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $cronjobRunDay = '2018-02-02 10:20:30';
 
         // move one order detail in future - must be excluded from invoice
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetailEntity = $this->OrderDetail->get(1);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailEntity = $orderDetailsTable->get(1);
         $orderDetailEntity->pickup_day = '2018-02-09';
-        $this->OrderDetail->save($orderDetailEntity);
+        $orderDetailsTable->save($orderDetailEntity);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
 
         // never create invoices for zero price users
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::ZERO_PRICE);
         $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
         $this->runAndAssertQueue();
-        $this->assertEquals(0, count($this->Invoice->find('all')->toArray()));
+        $this->assertEquals(0, count($invoicesTable->find('all')->toArray()));
 
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::SELLING_PRICE);
         $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
@@ -164,7 +160,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $pdfFilenameWithPath = DS . '2018' . DS . '02' . DS . $pdfFilenameWithoutPath;
         $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilenameWithPath);
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
@@ -198,7 +194,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->exec('send_invoices_to_customers ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertEquals(1, count($this->Invoice->find('all')->toArray()));
+        $this->assertEquals(1, count($invoicesTable->find('all')->toArray()));
 
     }
 

@@ -54,8 +54,6 @@ class OrderDetailsController extends AdminAppController
     use ProfitTrait;
     use SetElFinderUploadPathTrait;
 
-    protected OrderDetailsTable $OrderDetail;
-
     public function initialize(): void
     {
         parent::initialize();

@@ -21,7 +21,6 @@ use Cake\Core\Configure;
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
 
-    protected $OrderDetail;
     public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
 
@@ -78,10 +77,10 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
 
     public function testAddFeedbackAsCustomerOk()
     {
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($this->orderDetailId),
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($this->orderDetailId),
                 [
                     'id_customer' => Configure::read('test.customerId')
                 ]

@@ -29,27 +29,19 @@ class InvoicesTableTest extends AppCakeTestCase
     use PrepareAndTestInvoiceDataTrait;
     use GenerateOrderWithDecimalsInTaxRateTrait;
 
-    protected $Invoice;
-    protected $OrderDetail;
-    protected $Product;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-    }
-
     public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExistWithPrefix()
     {
         $invoicePrefix = 'ABC-';
         $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', []);
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
         $this->assertEquals($result, $invoicePrefix . '2020-000001');
     }
 
     public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExist()
     {
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', []);
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
         $this->assertEquals($result, '2020-000001');
     }
 
@@ -57,39 +49,44 @@ class InvoicesTableTest extends AppCakeTestCase
     {
         $invoicePrefix = 'ABC-';
         $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
-        $invoice = $this->Invoice->newEmptyEntity();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->newEmptyEntity();
         $invoice->invoice_number = $invoicePrefix . '2020-000001';
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2021', $invoice);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2021', $invoice);
         $this->assertEquals($result, $invoicePrefix . '2021-000001');
     }
 
     public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExists()
     {
-        $invoice = $this->Invoice->newEmptyEntity();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->newEmptyEntity();
         $invoice->invoice_number = '2020-000001';
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2021', $invoice);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2021', $invoice);
         $this->assertEquals($result, '2021-000001');
     }
 
     public function testGetNextInvoiceNumberForCustomerSameYearAndInvoiceAlreadyExists()
     {
-        $invoice = $this->Invoice->newEmptyEntity();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->newEmptyEntity();
         $invoice->invoice_number = '2020-000001';
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', $invoice);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', $invoice);
         $this->assertEquals($result, '2020-000002');
     }
 
     public function testGetNextInvoiceNumberForManufacturerInvoicesDoNotExist()
     {
-        $result = $this->Invoice->getNextInvoiceNumberForManufacturer([]);
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $result = $invoicesTable->getNextInvoiceNumberForManufacturer([]);
         $this->assertEquals($result, '0001');
     }
 
     public function testGetNextInvoiceNumberForManufacturerInvoicesAlreadyExist()
     {
-        $invoice = $this->Invoice->newEmptyEntity();
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->newEmptyEntity();
         $invoice->invoice_number = '0001';
-        $result = $this->Invoice->getNextInvoiceNumberForManufacturer([$invoice]);
+        $result = $invoicesTable->getNextInvoiceNumberForManufacturer([$invoice]);
         $this->assertEquals($result, '0002');
     }
 
@@ -104,7 +101,8 @@ class InvoicesTableTest extends AppCakeTestCase
         $paidInCash = 1;
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoices = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoices = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
@@ -113,7 +111,7 @@ class InvoicesTableTest extends AppCakeTestCase
             ]
         )->toArray();
 
-        $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
+        $result = $invoicesTable->getPreparedTaxRatesForSumTable($invoices);
 
         $expected = [
             'taxRates' => [
@@ -201,17 +199,18 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->updateAll(['id_tax' => 2], ['active' => APP_ON]);
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->OrderDetail->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->updateAll(['id_tax' => 2], ['active' => APP_ON]);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
 
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $paidInCash = 0;
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoices = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoices = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
@@ -220,7 +219,7 @@ class InvoicesTableTest extends AppCakeTestCase
             ]
         )->toArray();
 
-        $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
+        $result = $invoicesTable->getPreparedTaxRatesForSumTable($invoices);
 
         $expected = [
             'taxRates' => [

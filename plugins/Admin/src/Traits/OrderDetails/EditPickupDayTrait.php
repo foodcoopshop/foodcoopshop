@@ -24,8 +24,6 @@ use App\Model\Entity\OrderDetail;
 
 trait EditPickupDayTrait 
 {
-
-    protected PickupDaysTable $PickupDay;
     
     public function editPickupDay()
     {
@@ -43,10 +41,10 @@ trait EditPickupDayTrait
                 throw new \Exception('error - no order detail id passed');
             }
             $errorMessages = [];
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $orderDetails = $this->OrderDetail->find('all',
+            $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+            $orderDetails = $orderDetailsTable->find('all',
                 conditions: [
-                    'OrderDetails.id_order_detail IN' => $orderDetailIds
+                    'OrderDetails.id_order_detail IN' => $orderDetailIds,
                 ],
                 contain: [
                     'Customers',
@@ -61,7 +59,7 @@ trait EditPickupDayTrait
             $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
 
             // validate only once for the first order detail
-            $entity = $this->OrderDetail->patchEntity(
+            $entity = $orderDetailsTable->patchEntity(
                 $orderDetails->toArray()[0],
                 [
                     'pickup_day' => $pickupDay,
@@ -71,7 +69,7 @@ trait EditPickupDayTrait
                 ]
             );
             if ($entity->hasErrors()) {
-                $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
+                $errorMessages = array_merge($errorMessages, $orderDetailsTable->getAllValidationErrors($entity));
             }
             if (!empty($errorMessages)) {
                 throw new \Exception(join('<br />', $errorMessages));
@@ -88,8 +86,8 @@ trait EditPickupDayTrait
                     $data['order_state'] = OrderDetail::STATE_OPEN;
                 }
 
-                $entity = $this->OrderDetail->patchEntity($orderDetail, $data);
-                $this->OrderDetail->save($entity);
+                $entity = $orderDetailsTable->patchEntity($orderDetail, $data);
+                $orderDetailsTable->save($entity);
                 if (!isset($customers[$orderDetail->id_customer])) {
                     $customers[$orderDetail->id_customer] = [];
                 }
@@ -130,8 +128,8 @@ trait EditPickupDayTrait
 
             $this->Flash->success($message);
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->identity->getId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('order_detail_pickup_day_changed', $this->identity->getId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
 
             $this->set([
                 'result' => [],

@@ -36,8 +36,8 @@ trait GetDeliveryNoteTrait
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo);
 
         $deliverNoteService = new DeliveryNoteService();
         $spreadsheet = $deliverNoteService->getSpreadsheet($orderDetails);

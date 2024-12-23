@@ -31,8 +31,6 @@ class OrderDetailsTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
-    protected $Manufacturer;
-
     public function initialize(array $config): void
     {
         $this->setTable('order_detail');

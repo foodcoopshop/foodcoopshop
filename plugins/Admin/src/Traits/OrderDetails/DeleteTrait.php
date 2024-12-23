@@ -44,12 +44,12 @@ trait DeleteTrait
             return;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $flashMessage = '';
         $message = '';
 
         foreach ($orderDetailIds as $orderDetailId) {
-            $orderDetail = $this->OrderDetail->find('all',
+            $orderDetail = $orderDetailsTable->find('all',
                 conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
@@ -71,7 +71,7 @@ trait DeleteTrait
                 $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
             ]);
 
-            $this->OrderDetail->deleteOrderDetail($orderDetail);
+            $orderDetailsTable->deleteOrderDetail($orderDetail);
 
 
             $unitsTable = TableRegistry::getTableLocator()->get('Units');

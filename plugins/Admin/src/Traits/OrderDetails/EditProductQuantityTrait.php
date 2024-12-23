@@ -49,8 +49,8 @@ trait EditProductQuantityTrait
             return;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],

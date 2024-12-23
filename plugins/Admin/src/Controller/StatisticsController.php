@@ -27,9 +27,6 @@ class StatisticsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    protected OrderDetailsTable $OrderDetail;
-    protected PurchasePriceProductsTable $PurchasePriceProduct;
-
     public function myIndex()
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
@@ -90,9 +87,9 @@ class StatisticsController extends AdminAppController
         }
         $this->set('title_for_layout', $titleForLayout);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $firstOrderYear = $this->OrderDetail->getFirstOrderYear($manufacturerId);
-        $lastOrderYear = $this->OrderDetail->getLastOrderYear($manufacturerId);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $firstOrderYear = $orderDetailsTable->getFirstOrderYear($manufacturerId);
+        $lastOrderYear = $orderDetailsTable->getLastOrderYear($manufacturerId);
 
         $rangesForDropdown = [
             '' => __d('admin', 'Total'),
@@ -115,11 +112,11 @@ class StatisticsController extends AdminAppController
         }
 
         if ($lastMonths !== null) {
-            $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, '');
-            $firstDayOfLastOrderMonth = $this->OrderDetail->getFirstDayOfLastOrderMonth($manufacturerId);
-            $monthlySumProducts = $this->OrderDetail->addLastMonthsCondition($monthlySumProducts, $firstDayOfLastOrderMonth, $lastMonths);
+            $monthlySumProducts = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturerId, '');
+            $firstDayOfLastOrderMonth = $orderDetailsTable->getFirstDayOfLastOrderMonth($manufacturerId);
+            $monthlySumProducts = $orderDetailsTable->addLastMonthsCondition($monthlySumProducts, $firstDayOfLastOrderMonth, $lastMonths);
         } else {
-            $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
+            $monthlySumProducts = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturerId, $year);
         }
 
         if (!empty($excludeMemberFeeCondition)) {
@@ -218,8 +215,8 @@ class StatisticsController extends AdminAppController
         } else {
             $totalNetTurnover = $totalTurnover + $totalNetProfit;
             $this->set('totalNetTurnover', $totalNetTurnover);
-            $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
-            $averageSurcharge = $this->PurchasePriceProduct->calculateSurchargeBySellingPriceNet($totalNetTurnover, $totalTurnover);
+            $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+            $averageSurcharge = $purchasePriceProductsTable->calculateSurchargeBySellingPriceNet($totalNetTurnover, $totalTurnover);
             $this->set('averageSurcharge', $averageSurcharge);
         }
 
@@ -262,11 +259,11 @@ class StatisticsController extends AdminAppController
             foreach($manufacturers as $manufacturer) {
 
                 if ($lastMonths !== null) {
-                    $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                    $monthlySumProductsQuery = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
                     /** @phpstan-ignore-next-line */
-                    $monthlySumProductsQuery = $this->OrderDetail->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, $lastMonths);
+                    $monthlySumProductsQuery = $orderDetailsTable->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, $lastMonths);
                 } else {
-                    $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                    $monthlySumProductsQuery = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
                 }
 
                 if (!empty($excludeMemberFeeCondition)) {

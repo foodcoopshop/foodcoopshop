@@ -51,10 +51,8 @@ class CartService
     protected AttributesTable $Attribute;
     protected CartsTable $Cart;
     protected InvoicesTable $Invoice;
-    protected ManufacturersTable $Manufacturer;
     protected ProductsTable $Product;
     protected PickupDaysTable $PickupDay;
-    protected OrderDetailsTable $OrderDetail;
 
     private $identity;
     private $request;
@@ -198,8 +196,8 @@ class CartService
         }
 
         if (isset($actionLogType) && isset($messageForActionLog) && isset($message)) {
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
+            $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->controller->Flash->success($message);
         }
 
@@ -212,7 +210,6 @@ class CartService
         $cart = $this->identity->getCart();
 
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
 
@@ -308,7 +305,7 @@ class CartService
             $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
-                $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
+                $attributesTable = TableRegistry::getTableLocator()->get('Attributes');
 
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
@@ -320,7 +317,7 @@ class CartService
                             $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         }
 
-                        $attributeEntity = $this->Attribute->find('all',
+                        $attributeEntity = $attributesTable->find('all',
                             conditions: [
                                 'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
                             ]
@@ -618,9 +615,9 @@ class CartService
 
     private function saveOrderDetails($orderDetails2save): void
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->OrderDetail->saveMany(
-            $this->OrderDetail->newEntities($orderDetails2save)
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->saveMany(
+            $orderDetailsTable->newEntities($orderDetails2save)
         );
     }
 
@@ -895,8 +892,8 @@ class CartService
     {
 
         $manufacturers = [];
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all',
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cart['Cart']->id_cart,
             ],

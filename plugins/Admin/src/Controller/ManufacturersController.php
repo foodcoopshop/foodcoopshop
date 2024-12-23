@@ -41,7 +41,6 @@ class ManufacturersController extends AdminAppController
     protected FeedbacksTable $Feedback;
     protected PaymentsTable $Payment;
     protected ProductsTable $Product;
-    protected OrderDetailsTable $OrderDetail;
     protected TaxesTable $Tax;
     protected SyncDomainsTable $SyncDomain;
 

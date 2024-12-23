@@ -30,7 +30,6 @@ class DepositsController extends AdminAppController
     use ManufacturerIdTrait;
 
     protected PaymentsTable $Payment;
-    protected OrderDetailsTable $OrderDetail;
 
     public $manufacturerId;
 
@@ -72,8 +71,8 @@ class DepositsController extends AdminAppController
             $preparedCustomerData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $depositsDeliveredByYear = $this->OrderDetail->getDepositSum(false, 'year');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $depositsDeliveredByYear = $orderDetailsTable->getDepositSum(false, 'year');
 
         if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek) && empty($customerDepositSumByCalendarWeek)) {
             return;
@@ -219,13 +218,13 @@ class DepositsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $this->Payment = $this->getTableLocator()->get('Payments');
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
 
-        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, 'month');
+        $depositsDelivered = $orderDetailsTable->getDepositSum($manufacturerId, 'month');
         $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);

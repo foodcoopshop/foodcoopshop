@@ -36,8 +36,8 @@ trait EditCustomerTrait
         $amount = (int) $this->getRequest()->getData('amount');
         $sendEmailToCustomers = (bool) $this->getRequest()->getData('sendEmailToCustomers');
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
@@ -113,7 +113,7 @@ trait EditCustomerTrait
             $newEntity->setNew(true);
             unset($newEntity->id_order_detail);
             $newEntity->id_customer = $customerId;
-            $savedEntity = $this->OrderDetail->save($newEntity, [
+            $savedEntity = $orderDetailsTable->save($newEntity, [
                 'associated' => false
             ]);
 
@@ -123,7 +123,7 @@ trait EditCustomerTrait
             if (!empty($newEntity->order_detail_unit)) {
                 $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;
                 $newEntity->order_detail_unit->setNew(true);
-                $newOrderDetailUnitEntity = $this->OrderDetail->OrderDetailUnits->save($newEntity->order_detail_unit);
+                $newOrderDetailUnitEntity = $orderDetailsTable->OrderDetailUnits->save($newEntity->order_detail_unit);
                 $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
                 $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
                 $this->changeOrderDetailQuantity($savedEntity->order_detail_unit, $productQuantity);
@@ -132,7 +132,7 @@ trait EditCustomerTrait
             if (!empty($newEntity->order_detail_purchase_price)) {
                 $newEntity->order_detail_purchase_price->id_order_detail = $savedEntity->id_order_detail;
                 $newEntity->order_detail_purchase_price->setNew(true);
-                $newOrderDetailPurchasePriceEntity = $this->OrderDetail->OrderDetailPurchasePrices->save($newEntity->order_detail_purchase_price);
+                $newOrderDetailPurchasePriceEntity = $orderDetailsTable->OrderDetailPurchasePrices->save($newEntity->order_detail_purchase_price);
                 $savedEntity->order_detail_purchase_price = $newOrderDetailPurchasePriceEntity;
                 $productPurchasePrice = $productPurchasePrice / $newAmountForOldOrderDetail * $amount;
                 $this->changeOrderDetailPurchasePrice($savedEntity->order_detail_purchase_price, $productPurchasePrice, $amount);
@@ -141,13 +141,12 @@ trait EditCustomerTrait
         } else {
 
             // order detail does not need to be split up
-
-            $this->OrderDetail->save(
-                $this->OrderDetail->patchEntity(
+            $orderDetailsTable->save(
+                $orderDetailsTable->patchEntity(
                     $oldOrderDetail,
                     [
-                        'id_customer' => $customerId
-                    ]
+                        'id_customer' => $customerId,
+                    ],
                 )
             );
 

@@ -21,8 +21,6 @@ use Cake\Core\Configure;
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
 
-    protected $OrderDetail;
-    protected $Product;
     public $cancellationReason = 'Product was not fresh any more.';
 
     public function testCancellationWithPurchasePrice()
@@ -34,7 +32,8 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $orderDetailId = 4;
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
 
-        $changedOrderDetailPurchasePrices = $this->OrderDetail->OrderDetailPurchasePrices->find('all',
+        $orderDetailsPurchasePricesTable = $this->getTableLocator()->get('OrderDetailPurchasePrices');
+        $changedOrderDetailPurchasePrices = $orderDetailsPurchasePricesTable->find('all',
             conditions: [
                 'OrderDetailPurchasePrices.id_order_detail IN' => [$orderDetailId],
             ],
@@ -147,8 +146,8 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminAttribute()
     {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->changeQuantity([[$this->productIdC => [
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity([[$this->productIdC => [
             'always_available' => 0,
             'quantity' => 10,
             'default_quantity_after_sending_order_lists' => 10,

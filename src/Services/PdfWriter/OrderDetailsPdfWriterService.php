@@ -24,8 +24,6 @@ use Cake\ORM\TableRegistry;
 class OrderDetailsPdfWriterService extends PdfWriterService
 {
 
-    public $OrderDetail;
-
     public function __construct()
     {
         $this->plugin = 'Admin';

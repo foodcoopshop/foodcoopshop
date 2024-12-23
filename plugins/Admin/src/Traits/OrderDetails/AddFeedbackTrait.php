@@ -29,8 +29,10 @@ trait AddFeedbackTrait
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b><i><img>'));
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailFeedbacksTable = $this->getTableLocator()->get('OrderDetailFeedbacks');
+
+        $orderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
@@ -49,7 +51,7 @@ trait AddFeedbackTrait
                 throw new \Exception('orderDetail already has a feedback: ' . $orderDetailId);
             }
 
-            $entity = $this->OrderDetail->OrderDetailFeedbacks->newEntity(
+            $entity = $orderDetailFeedbacksTable->newEntity(
                 [
                     'customer_id' => $this->identity->getId(),
                     'id_order_detail' => $orderDetailId,
@@ -57,14 +59,14 @@ trait AddFeedbackTrait
                 ]
             );
             if ($entity->hasErrors()) {
-                throw new \Exception(join(' ', $this->OrderDetail->OrderDetailFeedbacks->getAllValidationErrors($entity)));
+                throw new \Exception(join(' ', $orderDetailFeedbacksTable->getAllValidationErrors($entity)));
             }
 
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 
-        $result = $this->OrderDetail->OrderDetailFeedbacks->save($entity);
+        $result = $orderDetailFeedbacksTable->save($entity);
 
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_feedback_add');
@@ -85,12 +87,12 @@ trait AddFeedbackTrait
 
         $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogMessage = __d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
             '<b>' . $orderDetail->customer->name . '</b>',
             '<b>' . $orderDetail->product_name . '</b>',
         ]);
-        $this->ActionLog->customSave('order_detail_feedback_added', $this->identity->getId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
+        $actionLogsTable->customSave('order_detail_feedback_added', $this->identity->getId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
 
         $this->set([
             'result' => $result,

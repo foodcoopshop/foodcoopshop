@@ -40,7 +40,6 @@ use Cake\View\JsonView;
 class CustomersController extends AdminAppController
 {
 
-    protected OrderDetailsTable $OrderDetail;
     protected PaymentsTable $Payment;
     protected ProductsTable $Product;
 

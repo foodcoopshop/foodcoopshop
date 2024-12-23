@@ -26,8 +26,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public $Manufacturer;
-    protected $OrderDetail;
     protected $Product;
 
     public $manufacturerData = [
@@ -223,20 +221,20 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $noDeliveryDayA = date('Y-m-d', strtotime($noDeliveryDays . ' + 10 day'));
         $noDeliveryDayB = date('Y-m-d', strtotime($noDeliveryDays . ' + 11 day'));
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $this->Product = $this->getTableLocator()->get('Products');
 
-        $orderDetailEntityA = $this->OrderDetail->get(1);
+        $orderDetailEntityA = $orderDetailsTable->get(1);
         $orderDetailEntityA->pickup_day = $noDeliveryDayA;
-        $this->OrderDetail->save($orderDetailEntityA);
+        $orderDetailsTable->save($orderDetailEntityA);
 
-        $orderDetailEntityB = $this->OrderDetail->get(2);
+        $orderDetailEntityB = $orderDetailsTable->get(2);
         $orderDetailEntityB->pickup_day = $noDeliveryDayB;
-        $this->OrderDetail->save($orderDetailEntityB);
+        $orderDetailsTable->save($orderDetailEntityB);
 
-        $orderDetailEntityC = $this->OrderDetail->get(3);
+        $orderDetailEntityC = $orderDetailsTable->get(3);
         $orderDetailEntityC->pickup_day = $noDeliveryDayB;
-        $this->OrderDetail->save($orderDetailEntityC);
+        $orderDetailsTable->save($orderDetailEntityC);
 
         $this->Product->updateAll(['id_manufacturer' => $manufacturerId], []);
 

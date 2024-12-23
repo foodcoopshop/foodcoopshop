@@ -26,8 +26,6 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
 
     use SetSumTrait;
 
-    public $Manufacturer;
-
     public function __construct()
     {
         $this->plugin = 'Admin';

@@ -26,6 +26,8 @@ use App\Model\Table\InvoicesTable;
 trait IndexTrait 
 {
 
+    public $OrderDetail;
+
     public function index()
     {
 

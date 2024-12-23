@@ -23,17 +23,12 @@ use Cake\Core\Configure;
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
 
-    protected $OrderDetail;
-    protected $Product;
-    protected $Unit;
-
     use AppIntegrationTestTrait;
     use LoginTrait;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->Product = $this->getTableLocator()->get('Products');
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', true);
     }
 
@@ -134,8 +129,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $productId = 340;
-        $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits($productId, 0, true, 1, 'kg', 1, 0.4, 0);
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitsTable->saveUnits($productId, 0, true, 1, 'kg', 1, 0.4, 0);
         $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
         $this->assertResponseCode(404);
     }
@@ -166,8 +161,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $productId = 348;
-        $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits($productId, 12, false, 1, 'kg', 1, 0.4, 0);
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitsTable->saveUnits($productId, 12, false, 1, 'kg', 1, 0.4, 0);
         $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
         $this->assertResponseCode(404);
     }
@@ -177,7 +172,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $productId = 60;
         $this->get($this->Slug->getProductDetail($productId, 'Milch'));
-        $product = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
                 'id_product' => $productId,
             ],
@@ -190,18 +186,18 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailHtmlProductCatalogShowOrderedProductsTotalAmountInCatalog()
     {
         Configure::write('app.showOrderedProductsTotalAmountInCatalog', true);
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
         $productId = 60;
-        $product = $this->Product->find('all',
+        $product = $productsTable->find('all',
             conditions: [
                 'id_product' => $productId,
             ],
         )->first();
         $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
 
-        $this->OrderDetail->updateAll(
+        $orderDetailsTable->updateAll(
             ['pickup_day' => $nextDeliveryDay],
             ['id_order_detail' => 3],
         );
@@ -226,9 +222,10 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     protected function changeProductStatus($productId, $active)
     {
-        $productEntity = $this->Product->get($productId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productEntity = $productsTable->get($productId);
         $productEntity->active = $active;
-        $this->Product->save($productEntity);
+        $productsTable->save($productEntity);
     }
 
 }

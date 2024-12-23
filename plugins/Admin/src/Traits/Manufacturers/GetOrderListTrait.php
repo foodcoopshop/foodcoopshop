@@ -55,8 +55,8 @@ trait GetOrderListTrait
             $isAnonymized = h($this->getRequest()->getQuery('isAnonymized'));
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
         $orderDetailIds = $orderDetails->all()->extract('id_order_detail')->toArray();
 

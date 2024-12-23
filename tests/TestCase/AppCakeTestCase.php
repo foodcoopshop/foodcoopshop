@@ -247,7 +247,8 @@ abstract class AppCakeTestCase extends TestCase
             $contain[] = 'CartProducts.OrderDetails.OrderDetailPurchasePrices';
         }
 
-        $cart = $this->Cart->find('all',
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
             ],
