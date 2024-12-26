@@ -26,7 +26,7 @@ use Cake\ORM\TableRegistry;
 class Customer extends AppEntity implements IdentityInterface
 {
 
-    public $cart = null;
+    public ?array $cart;
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
 
@@ -39,7 +39,7 @@ class Customer extends AppEntity implements IdentityInterface
     const PURCHASE_PRICE = 'PP';
     const ZERO_PRICE = 'ZP';
 
-    private $_manufacturer = 'not-yet-loaded';
+    private Manufacturer|string|null $_manufacturer = 'not-yet-loaded';
 
     public function getIdentifier(): array|string|int|null
     {
@@ -269,12 +269,12 @@ class Customer extends AppEntity implements IdentityInterface
         return $cartType;
     }
 
-    public function setCart($cart)
+    public function setCart(array $cart): void
     {
         $this->cart = $cart;
     }
 
-    public function getCart()
+    public function getCart(): array
     {
         $cartType = $this->getCartType();
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');

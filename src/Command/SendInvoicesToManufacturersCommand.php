@@ -23,11 +23,12 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
+use App\Command\Traits\CronjobCommandTrait;
 
 class SendInvoicesToManufacturersCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -37,11 +38,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);

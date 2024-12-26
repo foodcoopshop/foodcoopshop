@@ -26,7 +26,7 @@ if (!empty($manufacturers)) {
 
         $pdf->infoTextForFooter = __('Order_overview') . ' ' . $details['Manufacturer']->name;
 
-        $pdf->writeHTML('<h3>' . __('Order') . ': '. $identity->name.', ' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
+        $pdf->writeHTML('<h3>' . __('Order') . ': '. $identity->name.', ' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2')).'</h3>', true, false, true, false, '');
         $pdf->Ln(8);
 
         $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');

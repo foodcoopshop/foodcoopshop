@@ -25,9 +25,9 @@ use Cake\ORM\TableRegistry;
 class AppMailer extends Mailer
 {
 
-    public $afterRunParams = [];
+    public array $afterRunParams = [];
 
-    public $customerAnonymizationForManufacturers = true;
+    public bool $customerAnonymizationForManufacturers = true;
 
     public function __construct($addBccBackupAddress = true)
     {

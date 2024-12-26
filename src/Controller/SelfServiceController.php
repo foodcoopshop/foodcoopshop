@@ -26,7 +26,7 @@ use App\Model\Entity\Customer;
 class SelfServiceController extends FrontendController
 {
 
-    protected $cartService;
+    protected CartService $cartService;
 
     public function beforeFilter(EventInterface $event)
     {

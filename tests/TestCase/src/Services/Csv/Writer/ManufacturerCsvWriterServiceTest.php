@@ -21,7 +21,7 @@ use App\Services\Csv\Writer\ManufacturerCsvWriterService;
 class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
 {
 
-    public $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;E-Mail;Status;Pfandkonto;Lagerprodukte;"Nur für Mitglieder";Ansprechperson';
+    public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;E-Mail;Status;Pfandkonto;Lagerprodukte;"Nur für Mitglieder";Ansprechperson';
 
     public function testWriteDefault()
     {

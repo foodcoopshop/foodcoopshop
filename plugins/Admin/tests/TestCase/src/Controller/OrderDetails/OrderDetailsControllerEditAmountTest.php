@@ -21,10 +21,8 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCase
 {
 
-    protected $mockCart;
-    public $newAmount = 1;
-    public $editAmountReason = 'One product was not delivered.';
-
+    public int $newAmount = 1;
+    public string $editAmountReason = 'One product was not delivered.';
 
     public function testEditOrderDetailAmountNotValid()
     {

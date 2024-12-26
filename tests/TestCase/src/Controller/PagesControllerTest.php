@@ -7,6 +7,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use Network\View\Helper\NetworkHelper;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,8 +24,6 @@ use App\Test\TestCase\Traits\LoginTrait;
  */
 class PagesControllerTest extends AppCakeTestCase
 {
-
-    public $Network;
 
     use AssertPagesForErrorsTrait;
     use AppIntegrationTestTrait;

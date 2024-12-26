@@ -50,11 +50,11 @@ abstract class AppCakeTestCase extends TestCase
     protected $testDumpDir;
     protected $appDumpDir;
 
-    public $Slug;
-    public $Html;
-    public $Time;
-    public $Network;
-    public $PricePerUnit;
+    public SlugHelper $Slug;
+    public MyHtmlHelper $Html;
+    public MyTimeHelper $Time;
+    public NetworkHelper $Network;
+    public PricePerUnitHelper $PricePerUnit;
 
     public function setUp(): void
     {

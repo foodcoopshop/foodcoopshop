@@ -20,7 +20,7 @@ use App\Services\Csv\Reader\ProductReaderService;
 class ProductReaderServiceTest extends AppCakeTestCase
 {
 
-    private $reader = null;
+    private ProductReaderService $reader;
 
     public function testReadCsv()
     {

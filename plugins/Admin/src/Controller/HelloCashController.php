@@ -21,7 +21,7 @@ use App\Services\HelloCash\HelloCashService;
 class HelloCashController extends AdminAppController
 {
 
-    protected $helloCashService;
+    protected HelloCashService $helloCashService;
 
     public function initialize(): void
     {

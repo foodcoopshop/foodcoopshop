@@ -30,7 +30,7 @@ use Cake\ORM\TableRegistry;
 class CartsController extends FrontendController
 {
 
-    protected $cartService;
+    protected CartService $cartService;
 
     public function initialize(): void
     {

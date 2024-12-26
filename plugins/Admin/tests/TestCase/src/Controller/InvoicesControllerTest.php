@@ -30,8 +30,6 @@ class InvoicesControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    protected $Invoice;
-
     public function testGeneratePaidInCashSavedCorrectly()
     {
 

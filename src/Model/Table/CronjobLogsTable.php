@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +24,9 @@ class CronjobLogsTable extends AppTable
     public function deleteOldLogs($timestamp)
     {
 
+        if (is_object($timestamp) && get_class($timestamp)  == DateTime::class) {
+            $timestamp = $timestamp->getTimestamp();
+        }
         $timestamp = (int) $timestamp;
         if ($timestamp <= 0) {
             throw new \Exception('invalid timestamp: ' . $timestamp);

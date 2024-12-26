@@ -26,20 +26,17 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
+use App\Command\Traits\CronjobCommandTrait;
 
 class EmailOrderReminderCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         if (! Configure::read('app.emailOrderReminderEnabled')) {
             return static::CODE_SUCCESS;

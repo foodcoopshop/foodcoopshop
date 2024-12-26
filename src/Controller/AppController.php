@@ -26,9 +26,9 @@ use hisorange\BrowserDetect\Parser as Browser;
 class AppController extends Controller
 {
 #
-    public $protectEmailAddresses = false;
-    public $identity = null;
-    public $formProtectionEnabled = true;
+    public bool $protectEmailAddresses = false;
+    public mixed $identity = null;
+    public bool $formProtectionEnabled = true;
 
     public function initialize(): void
     {

@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
 
-    public $cancellationReason = 'Product was not fresh any more.';
+    public string $cancellationReason = 'Product was not fresh any more.';
 
     public function testCancellationWithPurchasePrice()
     {

@@ -29,10 +29,10 @@ use App\Model\Entity\Payment;
 class PaymentsController extends AdminAppController
 {
 
-    protected $allowedPaymentTypes = [];
-    protected $paymentType;
+    protected array $allowedPaymentTypes = [];
+    protected string $paymentType;
 
-    public $customerId;
+    public int|string $customerId;
 
     public function initialize(): void
     {
@@ -457,14 +457,13 @@ class PaymentsController extends AdminAppController
 
     /**
      * $this->customerId needs to be set in calling method
-     * @return int
      */
-    private function getCustomerId()
+    private function getCustomerId(): int|string
     {
         $customerId = '';
         if (!empty($this->getRequest()->getQuery('customerId'))) {
             $customerId = h($this->getRequest()->getQuery('customerId'));
-        } if ($this->customerId > 0) {
+        } if (isset($this->customerId) && $this->customerId > 0) {
             $customerId = $this->customerId;
         }
         return $customerId;

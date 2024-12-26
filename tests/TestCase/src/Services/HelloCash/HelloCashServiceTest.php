@@ -31,7 +31,7 @@ class HelloCashServiceTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    protected $HelloCashService;
+    protected HelloCashService $HelloCashService;
 
     public function setUp(): void
     {

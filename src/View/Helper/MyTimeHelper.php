@@ -68,11 +68,8 @@ class MyTimeHelper extends TimeHelper
         }
         return $monthsAndYear;
     }
-    /**
-     * @param $array
-     * @return array
-     */
-    public function sortArrayByDate($array)
+
+    public function sortArrayByDate(array $array): array
     {
         usort($array, function($a, $b) {
             return strtotime($a) - strtotime($b);
@@ -82,41 +79,39 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = DateTime::createFromTimestamp(strtotime($time), 'UTC');
-        return $timeObject;
+        return DateTime::createFromTimestamp(strtotime($time), 'UTC');
     }
 
-    public function getTimezoneDiffInSeconds($timestamp)
+    public function getTimezoneDiffInSeconds($timestamp): string
     {
-        $timezoneDiff = date('Z', $timestamp);
-        return $timezoneDiff;
+        return date('Z', $timestamp);
     }
 
-    public function getI18Format($formatString)
+    public function getI18Format(string $formatString): string
     {
         return Configure::read('DateFormat.' . $formatString);
     }
 
-    public function getLastDayOfGivenMonth($monthAndYear)
+    public function getLastDayOfGivenMonth($monthAndYear): string
     {
         return date('t', strtotime($monthAndYear));
     }
 
-    public function getYearFromDbDate($dbDate)
+    public function getYearFromDbDate($dbDate): string
     {
         return date('Y', strtotime($dbDate));
     }
 
-    public function getCurrentDateTimeForDatabase()
+    public function getCurrentDateTimeForDatabase(): string
     {
         return date($this->getI18Format('DatabaseWithTimeAlt'));
     }
-    public function getCurrentDateTimeForFilename()
+    public function getCurrentDateTimeForFilename(): string
     {
         return date($this->getI18Format('DateWithTimeForFilename'));
     }
 
-    public function getCurrentDateForDatabase()
+    public function getCurrentDateForDatabase(): string
     {
         return date($this->getI18Format('DatabaseAlt'));
     }

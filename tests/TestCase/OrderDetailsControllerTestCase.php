@@ -22,6 +22,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Cart;
 
 abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 {
@@ -30,16 +31,15 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $productIdA = 346;
-    public $productIdB = 340;
-    public $productIdC = '60-10';
+    public int|string $productIdA = 346;
+    public int|string $productIdB = 340;
+    public int|string $productIdC = '60-10';
 
-    public $orderDetailIdA = 1;
-    public $orderDetailIdB = 2;
-    public $orderDetailIdC = 3;
+    public int $orderDetailIdA = 1;
+    public int $orderDetailIdB = 2;
+    public int $orderDetailIdC = 3;
 
-    protected $mockCart;
-    protected $StockAvailable;
+    protected Cart $mockCart;
 
     protected function simulateSendOrderListsCronjob($orderDetailId)
     {
@@ -98,7 +98,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         return $orderDetails;
     }
 
-    protected function generateAndGetCart($productAAmount = 1, $productBAmount = 1)
+    protected function generateAndGetCart($productAAmount = 1, $productBAmount = 1): Cart
     {
         $this->addProductToCart($this->productIdA, $productAAmount);
         $this->addProductToCart($this->productIdB, $productBAmount);

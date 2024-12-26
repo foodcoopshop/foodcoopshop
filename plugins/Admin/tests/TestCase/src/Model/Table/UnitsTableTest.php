@@ -19,14 +19,14 @@ use App\Test\TestCase\AppCakeTestCase;
 class UnitsTableTest extends AppCakeTestCase
 {
 
-    public $productId = 346;
-    public $productAttributeId = 0;
-    public $pricePerUnitEnabled = true;
-    public $priceInclPerUnit = 12.44;
-    public $name = 'kg';
-    public $amount = 2;
-    public $quantityInUnits = 9.323;
-    public $useWeightAsAmount = false;
+    public int $productId = 346;
+    public int $productAttributeId = 0;
+    public bool $pricePerUnitEnabled = true;
+    public float|string $priceInclPerUnit = 12.44;
+    public string $name = 'kg';
+    public int|string $amount = 2;
+    public float|string $quantityInUnits = 9.323;
+    public bool $useWeightAsAmount = false;
 
     public function testSaveProductWithInvalidPriceString()
     {

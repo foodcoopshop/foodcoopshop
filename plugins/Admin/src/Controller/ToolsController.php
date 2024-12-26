@@ -28,7 +28,7 @@ use Cake\View\JsonView;
 class ToolsController extends AdminAppController
 {
 
-    public $formProtectionEnabled = false;
+    public bool $formProtectionEnabled = false;
 
     public function initialize(): void
     {

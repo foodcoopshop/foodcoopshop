@@ -22,7 +22,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 class MyHtmlHelperTest extends AppCakeTestCase
 {
 
-    protected $MyHtmlHelper;
+    protected MyHtmlHelper $MyHtmlHelper;
 
     public function setUp(): void
     {

@@ -27,7 +27,7 @@ use Cake\I18n\Date;
 class DeliveryRhythmServiceTest extends AppCakeTestCase
 {
 
-    protected $MyTimeHelper;
+    protected MyTimeHelper $MyTimeHelper;
 
     use DeliveryRhythmConfigsTrait;
     use IntegrationTestTrait;

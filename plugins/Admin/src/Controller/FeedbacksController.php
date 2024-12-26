@@ -24,8 +24,8 @@ use Cake\I18n\DateTime;
 class FeedbacksController extends AdminAppController
 {
 
-    public $customerId;
-    public $isOwnForm;
+    public int $customerId;
+    public bool $isOwnForm;
 
     private function getCustomerId()
     {
@@ -62,7 +62,7 @@ class FeedbacksController extends AdminAppController
         }
     }
 
-    public function form($customerId)
+    public function form(int $customerId)
     {
         $this->customerId = $customerId;
         $customer = $this->getCustomer();

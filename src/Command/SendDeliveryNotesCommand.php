@@ -22,11 +22,12 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryNoteService;
+use App\Command\Traits\CronjobCommandTrait;
 
 class SendDeliveryNotesCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -37,11 +38,7 @@ class SendDeliveryNotesCommand extends AppCommand
 
         $this->startTimeLogging();
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);

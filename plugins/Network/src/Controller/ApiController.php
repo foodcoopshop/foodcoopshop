@@ -27,7 +27,7 @@ use Cake\View\JsonView;
 class ApiController extends Controller
 {
 
-    protected $identity;
+    protected mixed $identity = null;
 
     public function initialize(): void
     {

@@ -32,7 +32,7 @@ use App\Model\Entity\CronjobLog;
 class CronjobsTable extends AppTable
 {
 
-    public $cronjobRunDay;
+    public DateTime|string|int $cronjobRunDay;
 
     public function initialize(array $config): void
     {

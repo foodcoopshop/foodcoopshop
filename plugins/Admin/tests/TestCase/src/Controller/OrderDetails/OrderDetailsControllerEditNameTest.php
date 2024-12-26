@@ -20,8 +20,6 @@ use App\Test\TestCase\OrderDetailsControllerTestCase;
 class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
 {
 
-    protected $mockCart;
-
     public function testEditOrderDetailNameNotValid()
     {
         $this->loginAsSuperadmin();

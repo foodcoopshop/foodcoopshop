@@ -27,7 +27,7 @@ use App\Model\Entity\Cart;
 class FrontendController extends AppController
 {
 
-    public $protectEmailAddresses = true;
+    public bool $protectEmailAddresses = true;
 
     protected function resetOriginalLoggedCustomer()
     {

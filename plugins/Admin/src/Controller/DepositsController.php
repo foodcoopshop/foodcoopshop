@@ -27,8 +27,6 @@ class DepositsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    public $manufacturerId;
-
     public function overviewDiagram()
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();

@@ -22,11 +22,12 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\I18n\Date;
+use App\Command\Traits\CronjobCommandTrait;
 
 class SendOrderListsCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -36,11 +37,7 @@ class SendOrderListsCommand extends AppCommand
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
