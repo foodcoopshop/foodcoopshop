@@ -3,13 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Model\Table\AttributesTable;
-use App\Model\Table\CategoriesTable;
-use App\Model\Table\StorageLocationsTable;
-use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
-use Network\Model\Table\SyncDomainsTable;
-use Network\Model\Table\SyncManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,13 +22,6 @@ use Network\Model\Table\SyncManufacturersTable;
 trait IndexTrait
 {
 
-    protected AttributesTable $Attribute;
-    protected CategoriesTable $Category;
-    protected TaxesTable $Tax;
-    protected StorageLocationsTable $StorageLocation;
-    protected SyncManufacturersTable $SyncManufacturer;
-    protected SyncDomainsTable $SyncDomain;
-
     public function index()
     {
         $productId = h($this->getRequest()->getQuery('productId', ''));
@@ -47,6 +34,8 @@ trait IndexTrait
                 $manufacturerId = (int) $manufacturerId;
             }
         }
+
+        $productsTable = $this->getTableLocator()->get('Products');
 
         // always filter by manufacturer id so that no other products than the own are shown
         if ($this->identity->isManufacturer()) {
@@ -61,7 +50,7 @@ trait IndexTrait
         $this->set('categoryId', $categoryId);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $this->Product->getProductsForBackend(
+            $preparedProducts = $productsTable->getProductsForBackend(
                 productIds: $productId,
                 manufacturerId: $manufacturerId,
                 active: $active,
@@ -73,28 +62,28 @@ trait IndexTrait
         }
         $this->set('products', $preparedProducts);
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $this->set('categoriesForDropdown', $this->Category->getForSelect(null, true));
-        $this->set('categoriesForCheckboxes', $this->Category->getForSelect(null, true, true));
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $this->set('attributesForDropdown', $attributesTable->getForDropdown());
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
+        $this->set('categoriesForCheckboxes', $categoriesTable->getForSelect(null, true, true));
         $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
-        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $taxesTable->getForDropdown());
 
         if (is_int($manufacturerId)) {
-            $manufacturer = $this->Manufacturer->find('all',
+            $manufacturer = $manufacturersTable->find('all',
                 conditions: [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ]
             )
-            ->select($this->Product->Manufacturers)
+            ->select($manufacturersTable)
             ->first();
             $this->set('manufacturer', $manufacturer);
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+            $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFee', $variableMemberFee);
         }
 
@@ -104,17 +93,17 @@ trait IndexTrait
         $this->set('title_for_layout', __d('admin', 'Products'));
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
-            $this->StorageLocation = $this->getTableLocator()->get('StorageLocations');
-            $storageLocationsForForDropdown = $this->StorageLocation->getForDropdown();
+            $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+            $storageLocationsForForDropdown = $storageLocationsTable->getForDropdown();
             $this->set('storageLocationsForForDropdown', $storageLocationsForForDropdown);
         }
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->identity->isManufacturer()) {
-            $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
-            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+            $syncManufacturersTable = $this->getTableLocator()->get('Network.SyncManufacturers');
+            $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
-            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->identity);
-            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
+            $isAllowedToUseAsMasterFoodcoop = $syncManufacturersTable->isAllowedToUseAsMasterFoodcoop($this->identity);
+            $syncDomains = $syncDomainsTable->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
             $this->set('showSyncProductsButton', $showSyncProductsButton);
         }

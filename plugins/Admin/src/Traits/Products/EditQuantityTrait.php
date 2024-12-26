@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\ProductQuantityService;
 
 
@@ -31,10 +30,11 @@ trait EditQuantityTrait
 
         $originalProductId = $this->getRequest()->getData('productId');
 
-        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all',
+        $oldProduct = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId
             ],
@@ -77,7 +77,7 @@ trait EditQuantityTrait
                 $object2save['sold_out_limit'] = $this->getRequest()->getData('soldOutLimit');
             }
 
-            $this->Product->changeQuantity(
+            $productsTable->changeQuantity(
                 [
                     [
                         $originalProductId => $object2save,
@@ -90,7 +90,8 @@ trait EditQuantityTrait
 
         $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
 
-        $entity = $this->Product->StockAvailables->patchEntity($oldProduct->stock_available, $object2save);
+        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $entity = $stockAvailablesTable->patchEntity($oldProduct->stock_available, $object2save);
 
         if ($entity->isDirty()) {
 
@@ -148,7 +149,8 @@ trait EditQuantityTrait
                     $dirtyFieldsWithNewValues[] = __d('admin', 'Reason_for_change') . ': <b>' . $changeReason . '</b>';
                 }
 
-                $this->ActionLog->customSave(
+                $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+                $actionLogsTable->customSave(
                     'product_quantity_changed',
                     $this->identity->getId(),
                     $productId,

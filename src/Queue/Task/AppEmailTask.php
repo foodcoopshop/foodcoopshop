@@ -18,10 +18,10 @@ declare(strict_types=1);
 namespace App\Queue\Task;
 
 use Queue\Queue\Task\EmailTask;
-use Cake\Datasource\FactoryLocator;
 use Throwable;
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 class AppEmailTask extends EmailTask
 {
@@ -57,19 +57,19 @@ class AppEmailTask extends EmailTask
         }
 
         if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
-            $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-            $orderDetailTable->updateOrderState(null, null, [OrderDetail::STATE_OPEN], OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
+            $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+            $orderDetailsTable->updateOrderState(null, null, [OrderDetail::STATE_OPEN], OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
         }
 
         if (isset($afterRunParams['invoiceId'])) {
-            $invoiceTable = FactoryLocator::get('Table')->get('Invoices');
+            $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
             $invoiceId = $afterRunParams['invoiceId'];
-            $invoiceEntity = $invoiceTable->patchEntity(
-                $invoiceTable->get($invoiceId), [
+            $invoiceEntity = $invoicesTable->patchEntity(
+                $invoicesTable->get($invoiceId), [
                     'email_status' => DateTime::now(),
                 ]
             );
-            $invoiceTable->save($invoiceEntity);
+            $invoicesTable->save($invoiceEntity);
         }
 
     }

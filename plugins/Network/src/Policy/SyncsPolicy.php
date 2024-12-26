@@ -5,9 +5,9 @@ namespace Network\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,8 +36,8 @@ class SyncsPolicy implements RequestPolicyInterface
             return false;
         }
 
-        $syncDomainTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
-        $syncManufacturerTable = FactoryLocator::get('Table')->get('Network.SyncManufacturers');
+        $syncDomainTable = TableRegistry::getTableLocator()->get('Network.SyncDomains');
+        $syncManufacturerTable = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
         $isAllowedToUseAsMasterFoodcoop = $syncManufacturerTable->isAllowedToUseAsMasterFoodcoop($identity);
         $syncDomains = $syncDomainTable->getActiveManufacturerSyncDomains(
             $identity->getManufacturerEnabledSyncDomains()

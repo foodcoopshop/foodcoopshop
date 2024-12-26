@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,7 +16,7 @@ use Cake\ORM\Entity;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Invoice extends Entity
+class Invoice extends AppEntity
 {
 
     protected array $_virtual = ['sum_price_excl', 'sum_tax', 'sum_price_incl'];

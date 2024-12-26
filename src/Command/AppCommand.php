@@ -22,9 +22,8 @@ use Cake\Command\Command;
 class AppCommand extends Command
 {
 
-    public $timeStart;
-
-    public $timeEnd;
+    public float $timeStart;
+    public float $timeEnd;
 
     public function startTimeLogging()
     {

@@ -6,10 +6,9 @@ namespace App\Queue\Task;
 use Queue\Queue\Task;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
-use Cake\Datasource\FactoryLocator;
 use App\Services\PdfWriter\InvoiceToManufacturerPdfWriterService;
-use Queue\Model\Table\QueuedJobsTable;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,12 +28,6 @@ class GenerateInvoiceForManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
 
-    public $Manufacturer;
-
-    public $OrderDetail;
-
-    public QueuedJobsTable $QueuedJobs;
-
     public ?int $timeout = 30;
 
     public ?int $retries = 2;
@@ -49,8 +42,9 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $dateFrom = $data['dateFrom'];
         $dateTo = $data['dateTo'];
 
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
+        $manufacturer = $manufacturersTable->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $validOrderStates = [
             OrderDetail::STATE_OPEN,
@@ -70,14 +64,14 @@ class GenerateInvoiceForManufacturerTask extends Task {
             'invoice_number' => (int) $invoiceNumber,
             'user_id' => 0,
         ];
-        $this->Manufacturer->Invoices->save(
-            $this->Manufacturer->Invoices->newEntity($invoice2save)
+        $invoicesTable->save(
+            $invoicesTable->newEntity($invoice2save)
         );
 
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
 
-        $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
+        $sendInvoice = $manufacturersTable->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
 
             $email = new AppMailer();

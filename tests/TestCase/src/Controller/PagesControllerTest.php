@@ -7,6 +7,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use Network\View\Helper\NetworkHelper;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,18 +25,9 @@ use App\Test\TestCase\Traits\LoginTrait;
 class PagesControllerTest extends AppCakeTestCase
 {
 
-    protected $Page;
-    public $Network;
-
     use AssertPagesForErrorsTrait;
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Page = $this->getTableLocator()->get('Pages');
-    }
 
     public function testAllPublicUrls()
     {
@@ -257,9 +249,10 @@ class PagesControllerTest extends AppCakeTestCase
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)
     {
-        $pageEntity = $this->Page->get($pageId);
-        $pageEntity->active = $active;
-        $pageEntity->is_private = $isPrivate;
-        $this->Page->save($pageEntity);
+        $pagesTable = $this->getTableLocator()->get('Pages');
+        $page = $pagesTable->get($pageId);
+        $page->active = $active;
+        $page->is_private = $isPrivate;
+        $pagesTable->save($page);
     }
 }

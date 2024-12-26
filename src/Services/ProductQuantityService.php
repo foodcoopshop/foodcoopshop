@@ -5,7 +5,7 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -59,7 +59,7 @@ class ProductQuantityService
 
     public function changeStockAvailable($orderDetail, $increaseQuantity): int|float
     {
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailable = $stockAvailablesTable->find('all',
             conditions: [
                 'id_product' => $orderDetail->product_id,

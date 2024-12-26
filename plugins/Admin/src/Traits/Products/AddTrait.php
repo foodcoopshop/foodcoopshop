@@ -41,10 +41,10 @@ trait AddTrait
             $manufacturerId = $this->identity->getManufacturerId();
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => $manufacturerId,
+                $manufacturersTable->aliasField('id_manufacturer') => $manufacturerId,
             ]
         )->first();
 
@@ -52,7 +52,8 @@ trait AddTrait
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
-            $productEntity = $this->Product->add(
+            $productsTable = $this->getTableLocator()->get('Products');
+            $productEntity =$productsTable->add(
                 $manufacturer,
                 $productName,
                 $descriptionShort,
@@ -63,7 +64,7 @@ trait AddTrait
                 $barcode,
             );
             if ($productEntity->hasErrors()) {
-                throw new \Exception(join(' ', $this->Product->getAllValidationErrors($productEntity)));
+                throw new \Exception(join(' ',$productsTable->getAllValidationErrors($productEntity)));
             }
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
@@ -74,7 +75,8 @@ trait AddTrait
             '<b>' . $manufacturer->name . '</b>',
         ]);
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_added', $this->identity->getId(), $productEntity->id_product, 'products', $messageString);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_added', $this->identity->getId(), $productEntity->id_product, 'products', $messageString);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productEntity->id_product);
 

@@ -7,8 +7,8 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
 use App\Services\ChangeSellingPriceService;
-use Cake\Datasource\FactoryLocator;
 use App\Services\ProductQuantityService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -53,8 +53,8 @@ trait EditProductPriceTrait
             return;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
@@ -68,7 +68,7 @@ trait EditProductPriceTrait
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
 
-        $unitsTable = FactoryLocator::get('Table')->get('Units');
+        $unitsTable = TableRegistry::getTableLocator()->get('Units');
         $unitObject = $unitsTable->getUnitsObject($object->product_id, $object->product_attribute_id);
 
         $productQuantityService = new ProductQuantityService();
@@ -99,8 +99,8 @@ trait EditProductPriceTrait
             $emailRecipients[] = $oldOrderDetail->customer->name;
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $sendOrderedProductPriceChangedNotification = $manufacturersTable->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->identity->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $orderDetailForManufacturerEmail = $oldOrderDetail;
             $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
@@ -131,8 +131,8 @@ trait EditProductPriceTrait
             $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . Text::toList($emailRecipients) . '</b>']);
         }
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_product_price_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('order_detail_product_price_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);

@@ -21,10 +21,9 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestCase
 {
 
-    protected $OrderDetail;
-    public $newCustomerId = 88;
-    public $editCustomerReason = 'The member forgot his product and I took it.';
-    public $editCustomerAmount = 1;
+    public int $newCustomerId = 88;
+    public string $editCustomerReason = 'The member forgot his product and I took it.';
+    public int $editCustomerAmount = 1;
 
     public function testEditOrderDetailCustomerAsManufacturer() {
         $this->loginAsVegetableManufacturer();
@@ -105,7 +104,8 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, 3, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
 
-        $changedOrderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $changedOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail IN' => [$orderDetailId, 5],
             ],

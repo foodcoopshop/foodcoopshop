@@ -31,9 +31,9 @@ trait EditProductsPickedUpTrait
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-        $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
+        $pickupDaysTable->setPrimaryKey(['customer_id', 'pickup_day']);
 
         $errorMessages = [];
         $result = false;
@@ -41,7 +41,7 @@ trait EditProductsPickedUpTrait
 
             if ($state) {
 
-                $orderDetailsWithUnchangedWeight = $this->OrderDetail->find('all',
+                $orderDetailsWithUnchangedWeight = $orderDetailsTable->find('all',
                     conditions: [
                         'OrderDetails.id_customer' => $customerId,
                         'OrderDetails.pickup_day' => $pickupDay,
@@ -61,8 +61,7 @@ trait EditProductsPickedUpTrait
                 }
 
             }
-            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-            $result = $this->PickupDay->changeState($customerId, $pickupDay, $state);
+            $result = $pickupDaysTable->changeState($customerId, $pickupDay, $state);
         }
 
         if (!empty($errorMessages)) {

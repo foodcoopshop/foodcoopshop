@@ -41,7 +41,6 @@ use App\Policy\RequestPolicy;
 use Authorization\Exception\MissingIdentityException;
 use Authorization\Exception\ForbiddenException;
 use Authentication\Identifier\Resolver\OrmResolver;
-use Authentication\Identifier\IdentifierInterface;
 use DateTime;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Utility\Security;
@@ -155,7 +154,7 @@ class Application extends BaseApplication
         // Token check will be skipped when callback returns `true`.
         $apiUrls = $this->getApiUrls();
         $csrf->skipCheckCallback(function ($request) use ($apiUrls) {
-            return in_array($request->getPath(), $apiUrls);
+            return in_array($request->getUri()->getPath(), $apiUrls);
         });
 
         $authorizationMiddlewareConfig = [];
@@ -256,7 +255,7 @@ class Application extends BaseApplication
             ]);
         }
 
-        $isApiRequest = in_array($request->getPath(), $this->getApiUrls());
+        $isApiRequest = in_array($request->getUri()->getPath(), $this->getApiUrls());
         if ($isApiRequest) {
 
             // enables basic authentication with php in cgi mode

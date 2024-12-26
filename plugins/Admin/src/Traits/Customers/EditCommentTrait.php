@@ -27,17 +27,19 @@ trait EditCommentTrait
         $customerId = $this->getRequest()->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $oldCustomer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $addressCustomersTable = $this->getTableLocator()->get('AddressCustomers');
+        
+        $oldCustomer = $customersTable->find('all',
         conditions: [
-            'Customers.id_customer' => $customerId
+            'Customers.id_customer' => $customerId,
         ],
         contain: [
-            'AddressCustomers'
+            'AddressCustomers',
         ])->first();
 
-        $this->Customer->AddressCustomers->save(
-            $this->Customer->AddressCustomers->patchEntity(
+        $addressCustomersTable->save(
+            $addressCustomersTable->patchEntity(
                 $oldCustomer->address_customer,
                 [
                     'comment' => $customerComment
@@ -47,8 +49,8 @@ trait EditCommentTrait
 
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('customer_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
         $this->set([
             'status' => 1,

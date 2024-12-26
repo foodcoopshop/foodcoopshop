@@ -36,7 +36,7 @@ trait UploadTrait
         }
     }
 
-    protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string
+    protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string|bool
     {
 
         $this->deleteUploadedImage($imageId, $thumbsPath);

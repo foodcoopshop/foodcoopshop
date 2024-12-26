@@ -27,8 +27,7 @@ use Cake\I18n\Date;
 class DeliveryRhythmServiceTest extends AppCakeTestCase
 {
 
-    protected $Product;
-    protected $MyTimeHelper;
+    protected MyTimeHelper $MyTimeHelper;
 
     use DeliveryRhythmConfigsTrait;
     use IntegrationTestTrait;
@@ -37,7 +36,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Product = $this->getTableLocator()->get('Products');
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
@@ -324,8 +322,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOff()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -345,8 +344,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -365,8 +365,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1WeekNormalNoFirstDeliveryDayWednesdayFriday()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -385,8 +386,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -405,8 +407,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekDeliveryDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -426,8 +429,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
     {
         $this->prepareSaturdayThursdayConfig();
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -446,8 +450,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1WeekWithSendOrderListDayOneDayBeforeDefault()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -466,8 +471,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1WeekWithSendOrderListDayTwoDaysBeforeDefault()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -487,8 +493,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOff()
     {
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -510,8 +517,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -531,8 +539,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -552,8 +561,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
@@ -572,8 +582,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -594,8 +605,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -615,8 +627,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2WeekWithSendOrderListDayThursday()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -636,8 +649,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1MonthFirstFridayWithSendOrderListDaySunday()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '1',
@@ -657,8 +671,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2WeekNotCurrentWeekAAllowOrderConfigOff()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -678,8 +693,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekNotCurrentWeekAAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -698,8 +714,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2WeekNotCurrentWeekBAllowOrderConfigOff()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -719,8 +736,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekNotCurrentWeekBAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -739,8 +757,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2WeekCurrentWeekAllowOrderConfigOff()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -760,8 +779,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekCurrentWeekAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -782,8 +802,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     public function test2WeekSendOrderListDayMondayCurrentWeekAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -804,8 +825,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2WeekD()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
@@ -824,8 +846,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test4Week()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '4',
@@ -844,8 +867,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test1MonthFirstWeekdayOfMonthA()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '1',
@@ -863,8 +887,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function testFirstWeekdayOfMonthB()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '1',
@@ -882,8 +907,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function testLastMonthLastWeekdayOfMonthA()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '0',
@@ -901,8 +927,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function testLastMonthLastWeekdayOfMonthB()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '0',
@@ -920,8 +947,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function testLastMonthLastWeekdayOfMonthC()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_first_delivery_day' => new Date('2021-02-26'),
                     'delivery_rhythm_type' => 'month',
@@ -940,8 +968,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test2Month()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '2',
@@ -959,8 +988,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test3Month()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '3',
@@ -978,8 +1008,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function test4Month()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '4',
@@ -997,8 +1028,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     public function testIndividual()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
         $data = [
-            'product' => $this->Product->newEntity(
+            'product' => $productsTable->newEntity(
                 [
                     'delivery_rhythm_type' => 'individual',
                     'delivery_rhythm_count' => '0',

@@ -30,8 +30,8 @@ trait OrderForDifferentCustomerTrait
             throw new RecordNotFoundException('customerId not passed');
         }
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $orderCustomer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $orderCustomer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId
             ],

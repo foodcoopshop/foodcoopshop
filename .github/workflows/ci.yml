@@ -65,7 +65,7 @@ jobs:
           SSH_ARGS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
       - name: PHPStan
-        run: docker exec -w /app fcs.php php ./vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
+        run: docker exec -w /app fcs.php php ./vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress -v
 
       - name: ESLint
         run: docker exec -w /app fcs.php bash ./devtools/eslint.sh
@@ -77,6 +77,4 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 

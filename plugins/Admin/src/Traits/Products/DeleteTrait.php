@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Model\Table\OrderDetailsTable;
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
 
@@ -24,16 +23,15 @@ use App\Model\Entity\OrderDetail;
 trait DeleteTrait 
 {
 
-    protected OrderDetailsTable $OrderDetail;
-
     public function delete()
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
+        $productsTable = $this->getTableLocator()->get('Products');
         $productIds = $this->getRequest()->getData('productIds');
-        $products = $this->Product->find('all',
+        $products = $productsTable->find('all',
             conditions: [
-                'Products.id_product IN' => $productIds
+                $productsTable->aliasField('id_product IN') => $productIds,
             ],
             contain: [
                 'Manufacturers'
@@ -48,17 +46,17 @@ trait DeleteTrait
         if ($cronjobsTable->isInvoiceCronjobActive()) {
             try {
                 // check if open order exist
-                $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-                $query = $this->OrderDetail->find('all',
+                $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+                $query = $orderDetailsTable->find('all',
                     conditions: [
-                        'OrderDetails.product_id IN' => $productIds,
-                        'OrderDetails.order_state IN' => [
+                        $orderDetailsTable->aliasField('product_id IN') => $productIds,
+                        $orderDetailsTable->aliasField('order_state IN') => [
                             OrderDetail::STATE_OPEN,
                             OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
                         ],
                     ],
                     contain: [
-                        'Products'
+                        'Products',
                     ]
                 );
                 $query->select(
@@ -91,7 +89,7 @@ trait DeleteTrait
         }
 
         // 1) set field active to -1
-        $this->Product->updateAll([
+        $productsTable->updateAll([
             'active' => APP_DEL,
             'modified' => DateTime::now() // timestamp behavior does not work here...
         ], [
@@ -100,7 +98,7 @@ trait DeleteTrait
 
         // 2) delete image
         foreach($productIds as $productId) {
-            $this->Product->changeImage(
+            $productsTable->changeImage(
                 [
                     [$productId => 'no-image']
                 ]
@@ -111,7 +109,8 @@ trait DeleteTrait
             count($productIds)
         ]);
         $this->Flash->success($message);
-        $this->ActionLog->customSave('product_deleted', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_deleted', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
 
         $this->set([
             'status' => 1,

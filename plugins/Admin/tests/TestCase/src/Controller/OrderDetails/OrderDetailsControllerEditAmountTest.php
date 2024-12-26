@@ -21,11 +21,8 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCase
 {
 
-    protected $mockCart;
-    protected $OrderDetail;
-    public $newAmount = 1;
-    public $editAmountReason = 'One product was not delivered.';
-
+    public int $newAmount = 1;
+    public string $editAmountReason = 'One product was not delivered.';
 
     public function testEditOrderDetailAmountNotValid()
     {
@@ -69,7 +66,8 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->editOrderDetailAmount($cart->cart_products[1]->order_detail->id_order_detail, 1, $this->editAmountReason);
         $this->editOrderDetailAmount($cart->cart_products[0]->order_detail->id_order_detail, 2, $this->editAmountReason);
 
-        $changedOrderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $changedOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail IN' => [
                     $cart->cart_products[0]->order_detail->id_order_detail,
@@ -144,7 +142,8 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_amount_changed_notification', 0);
 
         $this->editOrderDetailAmount($this->mockCart->cart_products[0]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);

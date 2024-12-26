@@ -112,9 +112,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
         $this->assertFlashMessage('Wir haben dir soeben den Aktivierungslink für dein neues Passwort gesendet.');
 
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.email' => Configure::read('test.loginEmailCustomer')
+                $customersTable->aliasField('email') => Configure::read('test.loginEmailCustomer')
             ]
         )->first();
 
@@ -233,9 +234,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->registrationDataEmpty['Customers']['is_company'] = true;
         $email = 'new-foodcoopshop-member-1@mailinator.com';
         $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.email' => $email,
+                $customersTable->aliasField('email') => $email,
             ],
         )->first();
         $this->assertTrue((bool) $customer->is_company);
@@ -291,9 +293,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
         $this->runAndAssertQueue();
 
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.email' => $email,
+                $customersTable->aliasField('email') => $email,
             ],
         )->first();
         $this->assertNull($customer->activate_email_code);
@@ -340,14 +343,17 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $data['Customers']['address_customer']['phone'] = $customerPhone;
 
         $this->addCustomer($data);
-        $customer = $this->Customer->find('all',
+
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.email' => $customerAddressEmail
+                $customersTable->aliasField('email') => $customerAddressEmail,
             ],
             contain: [
                 'AddressCustomers',
             ]
         )->first();
+
 
         // check customer record
         $this->assertEquals(false, (bool) $customer->active);
@@ -381,9 +387,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
         $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => Configure::read('test.customerId')
+                $customersTable->aliasField('id_customer') => Configure::read('test.customerId'),
             ]
         )->first();
         $this->assertNotEmpty($customer);
@@ -392,11 +399,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     public function testDeleteWithNotApprovedPayments()
     {
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
         $paymentId = 1;
-        $this->Payment->save(
-            $this->Payment->patchEntity(
-                $this->Payment->get($paymentId),
+        $paymentsTable->save(
+            $paymentsTable->patchEntity(
+                $paymentsTable->get($paymentId),
                 [
                     'date_add' => new Date(),
                     'approval' => APP_OFF
@@ -410,9 +417,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
         $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten 2 Jahren: 1.</li>', $response->msg);
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => Configure::read('test.customerId')
+                $customersTable->aliasField('id_customer') => Configure::read('test.customerId'),
             ]
         )->first();
         $this->assertNotEmpty($customer);
@@ -425,9 +433,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => Configure::read('test.customerId')
+                $customersTable->aliasField('id_customer') => Configure::read('test.customerId'),
             ]
         )->first();
         $this->assertEmpty($customer);
@@ -453,10 +462,6 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
     private function addCustomer($data)
     {
         $this->post($this->Slug->getRegistration(), $data);

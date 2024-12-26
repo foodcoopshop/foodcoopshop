@@ -12,21 +12,13 @@ use App\Services\PdfWriter\OrderConfirmationPdfWriterService;
 use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
-use App\Model\Table\ActionLogsTable;
-use App\Model\Table\AttributesTable;
-use App\Model\Table\CartsTable;
-use App\Model\Table\InvoicesTable;
-use App\Model\Table\ManufacturersTable;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PickupDaysTable;
-use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -47,20 +39,9 @@ class CartService
 
     use CartValidatorTrait;
 
-    protected ActionLogsTable $ActionLog;
-    protected AttributesTable $Attribute;
-    protected CartsTable $Cart;
-    protected InvoicesTable $Invoice;
-    protected ManufacturersTable $Manufacturer;
-    protected ProductsTable $Product;
-    protected PickupDaysTable $PickupDay;
-    protected OrderDetailsTable $OrderDetail;
-
     private $identity;
     private $request;
     private $controller;
-
-    public $cart = null;
 
     public function __construct($controller)
     {
@@ -97,7 +78,7 @@ class CartService
     {
 
         $this->saveOrderDetails($orderDetails2save);
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
         $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
@@ -106,7 +87,8 @@ class CartService
         $pickupDayEntities = null;
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $pickupDayEntities = $cart['Cart']->pickup_day_entities;
-            $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
+            $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
+            $pickupDaysTable->saveMany($pickupDayEntities);
         }
 
         $cart = $this->identity->getCart(); // to get attached order details
@@ -117,12 +99,13 @@ class CartService
         $userIdForActionLog = $this->identity->getId();
 
         $orderCustomerService = new OrderCustomerService();
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         switch($cartType) {
             case Cart::TYPE_WEEKLY_RHYTHM;
                 $actionLogType = 'customer_order_finished';
                 $message = __('Your_order_has_been_placed_succesfully.');
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
-                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
+                $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
                 $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                 break;
             case Cart::TYPE_INSTANT_ORDER;
@@ -142,7 +125,7 @@ class CartService
                 }
                 $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                 $messageForActionLog = $message;
-                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
+                $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart);
                 if (!($orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                 }
@@ -150,9 +133,9 @@ class CartService
             case Cart::TYPE_SELF_SERVICE;
 
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
-                    $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+                    $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
                     $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-                    $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
+                    $invoiceData = $invoicesTable->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
 
                     if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
                         $paidInCash = 0;
@@ -198,8 +181,8 @@ class CartService
         }
 
         if (isset($actionLogType) && isset($messageForActionLog) && isset($message)) {
-            $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
+            $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->controller->Flash->success($message);
         }
 
@@ -211,17 +194,16 @@ class CartService
 
         $cart = $this->identity->getCart();
 
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $this->PickupDay = FactoryLocator::get('Table')->get('PickupDays');
-        $this->Product = FactoryLocator::get('Table')->get('Products');
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
         foreach ($this->identity->getProducts() as $cartProduct) {
-            $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
+            $ids = $productsTable->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
-                $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+                $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
                 $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->identity->getCartId());
                 $productWithAmount0Found = true;
             }
@@ -256,8 +238,8 @@ class CartService
 
         foreach ($this->identity->getProducts() as $cartProduct) {
 
-            $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
-            $product = $this->Product->find('all',
+            $ids = $productsTable->getProductIdAndAttributeId($cartProduct['productId']);
+            $product = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $ids['productId']
                 ],
@@ -298,7 +280,8 @@ class CartService
 
             // purchase price check for product
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                if ($ids['attributeId'] == 0 && !$this->Product->PurchasePriceProducts->isPurchasePriceSet($product)) {
+                $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+                if ($ids['attributeId'] == 0 && !$purchasePriceProductsTable->isPurchasePriceSet($product)) {
                     $message = __('The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $product->name . '</b>']);
                     $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                     $cartErrors[$cartProduct['productId']][] = $message;
@@ -308,7 +291,7 @@ class CartService
             $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
-                $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
+                $attributesTable = TableRegistry::getTableLocator()->get('Attributes');
 
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
@@ -320,7 +303,7 @@ class CartService
                             $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         }
 
-                        $attributeEntity = $this->Attribute->find('all',
+                        $attributeEntity = $attributesTable->find('all',
                             conditions: [
                                 'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
                             ]
@@ -343,7 +326,8 @@ class CartService
 
                         // purchase price check for attribute
                         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                            if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                            $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
+                            if (!$purchasePriceProductAttributesTable->isPurchasePriceSet($attribute)) {
                                 $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>']);
                                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -381,7 +365,6 @@ class CartService
 
             $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
                 $orderCustomerService,
-                $this->Product,
                 $product->manufacturer->active,
                 $product->manufacturer->no_delivery_days,
                 $product->next_delivery_day,
@@ -407,7 +390,7 @@ class CartService
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $this->Product, $product->next_delivery_day, $product->name);
+            $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $product->next_delivery_day, $product->name);
             if ($message !== true) {
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -417,7 +400,7 @@ class CartService
             $orderDetail2save = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
-                'product_name' => $this->Cart->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
+                'product_name' => $cartsTable->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
                 'product_amount' => $cartProduct['amount'],
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
@@ -504,7 +487,7 @@ class CartService
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             // save pickup day: primary key needs to be changed!
-            $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
+            $pickupDaysTable->setPrimaryKey(['customer_id', 'pickup_day']);
             $options = [
                 'associated' => [
                     'PickupDayEntities'
@@ -531,7 +514,7 @@ class CartService
             $options['validate'] = 'selfServiceForDifferentCustomer';
         }
 
-        $cart['Cart'] = $this->Cart->patchEntity(
+        $cart['Cart'] = $cartsTable->patchEntity(
             $cart['Cart'],
             $this->request->getData(),
             $options
@@ -557,6 +540,7 @@ class CartService
     private function prepareOrderDetailPurchasePrices($ids, $product, $cartProduct): array
     {
 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $amount = $cartProduct['amount'];
 
         $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
@@ -572,12 +556,12 @@ class CartService
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                         $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
                         $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
-                        $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                     } else {
                         $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
                         $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
-                        $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxIncl *= $amount;
                         $totalPurchasePriceTaxExcl *= $amount;
                     }
@@ -589,19 +573,19 @@ class CartService
             if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                 $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
                 $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
-                $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
             } else {
                 $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
                 $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
-                $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxIncl *= $amount;
                 $totalPurchasePriceTaxExcl *= $amount;
             }
         }
 
-        $unitPurchasePriceExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl / $amount, $purchasePriceTaxRate);
-        $unitPurchasePriceTaxAmount = $this->Product->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $amount);
+        $unitPurchasePriceExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl / $amount, $purchasePriceTaxRate);
+        $unitPurchasePriceTaxAmount = $productsTable->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $amount);
         $totalPurchasePriceTaxAmount = $unitPurchasePriceTaxAmount * $amount;
 
         $result = [
@@ -618,9 +602,9 @@ class CartService
 
     private function saveOrderDetails($orderDetails2save): void
     {
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $this->OrderDetail->saveMany(
-            $this->OrderDetail->newEntities($orderDetails2save)
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->saveMany(
+            $orderDetailsTable->newEntities($orderDetails2save)
         );
     }
 
@@ -641,11 +625,11 @@ class CartService
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
 
-            $manufacturer = $this->Manufacturer->find('all',
+            $manufacturer = $manufacturersTable->find('all',
                 conditions: [
                     'Manufacturers.id_manufacturer' => $manufacturerId,
                 ],
@@ -661,7 +645,7 @@ class CartService
                 $productSum += $cartProduct['price'];
             }
 
-            $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
+            $sendInstantOrderNotification = $manufacturersTable->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             if ($sendInstantOrderNotification) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
                 $email = new AppMailer();
@@ -687,8 +671,8 @@ class CartService
 
     private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
     {
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all',
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
             ],
@@ -713,7 +697,7 @@ class CartService
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
 
             $productQuantityService = new ProductQuantityService();
-            $unitsTable = FactoryLocator::get('Table')->get('Units');
+            $unitsTable = TableRegistry::getTableLocator()->get('Units');
             $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
             $unitName = !empty($unitObject) ? $unitObject->name : '';
@@ -777,12 +761,13 @@ class CartService
 
     private function sendConfirmationEmailToCustomerSelfService($cart)
     {
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
         $email->setTo($this->identity->email)
         ->setSubject(__('Your_purchase'))
         ->setViewVars([
-            'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
+            'cart' => $cartsTable->getCartGroupedByPickupDay($cart),
             'identity' => $this->identity,
         ]);
         $email->addToQueue();
@@ -868,12 +853,6 @@ class CartService
         $email->addToQueue();
     }
 
-    /**
-     * called from finish context
-     * saves pdf as file
-     * @param array $cart
-     * @param array $orderDetails
-     */
     private function generateRightOfWithdrawalInformationAndForm($cart, $products)
     {
         $manufacturers = [];
@@ -891,27 +870,18 @@ class CartService
         return $pdfWriter->writeAttachment();
     }
 
-    /**
-     * called from finish context
-     * saves pdf as file
-     */
     private function generateGeneralTermsAndConditions()
     {
         $pdfWriter = new GeneralTermsAndConditionsPdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 
-    /**
-     * called from finish context
-     * saves pdf as file
-     * @param array $cart
-     */
     private function generateOrderConfirmation($cart)
     {
 
         $manufacturers = [];
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all',
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cart['Cart']->id_cart,
             ],

@@ -26,23 +26,17 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
+use App\Command\Traits\CronjobCommandTrait;
 
 class EmailOrderReminderCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
-    public $ActionLog;
-    public $Customer;
-    public $Product;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         if (! Configure::read('app.emailOrderReminderEnabled')) {
             return static::CODE_SUCCESS;
@@ -57,8 +51,8 @@ class EmailOrderReminderCommand extends AppCommand
         $nextDeliveryDay = (new DeliveryRhythmService())->getNextPickupDayForProduct($dummyProduct, $this->cronjobRunDay);
 
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
-            $this->Product = $this->getTableLocator()->get('Products');
-            if ($this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
+            $productsTable = $this->getTableLocator()->get('Products');
+            if ($productsTable->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
                 return static::CODE_SUCCESS;
             }
         }
@@ -69,26 +63,26 @@ class EmailOrderReminderCommand extends AppCommand
             'Customers.email_order_reminder_enabled' => 1,
             'Customers.active' => 1,
         ];
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
-        $this->Customer->dropManufacturersInNextFind();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $conditions[] = $customersTable->getConditionToExcludeHostingUser();
+        $customersTable->dropManufacturersInNextFind();
 
         if (Configure::read('app.applyOpenOrderCheckForOrderReminder')) {
             $diffOrderCreatedAndDeliveryDayInDays = 6;
             $exp = new QueryExpression();
-            $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
+            $customersTable->getAssociation('ActiveOrderDetails')->setConditions([
                 $exp->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
                 $exp->lte('DATEDIFF(ActiveOrderDetails.pickup_day, DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\'))', $diffOrderCreatedAndDeliveryDayInDays),
             ]);
         }
 
-        $customers = $this->Customer->find('all',
+        $customers = $customersTable->find('all',
         conditions: $conditions,
         contain: [
             'ActiveOrderDetails',
             'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
         ]);
-        $customers = $this->Customer->sortByVirtualField($customers, 'name');
+        $customers = $customersTable->sortByVirtualField($customers, 'name');
 
         $i = 0;
         $outString = '';
@@ -132,8 +126,8 @@ class EmailOrderReminderCommand extends AppCommand
 
         $this->stopTimeLogging();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('cronjob_email_order_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('cronjob_email_order_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $io->out($outString);
         $io->out($this->getRuntime());

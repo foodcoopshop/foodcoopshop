@@ -18,14 +18,12 @@ declare(strict_types=1);
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
 
     use SelfServiceCartTrait;
-
-    protected $OrderDetail;
 
     public function testEditOrderDetailQuantityNotValid()
     {
@@ -41,7 +39,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailableTable = TableRegistry::getTableLocator()->get('StockAvailables');
 
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(8);
@@ -53,8 +51,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->addProductToSelfServiceCart($productId, 1, '0,51');
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', order: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', order: [
             'Carts.id_cart' => 'DESC'
         ])->first();
 
@@ -122,7 +120,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
-        $changedOrderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $changedOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail IN' => [$orderDetailId],
             ],
@@ -188,7 +187,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $newPrice = 11.5;
         $cart->cart_products[0]->order_detail->total_price_tax_incl = $newPrice;
         $orderDetailsTable->save($cart->cart_products[0]->order_detail);
@@ -207,7 +206,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
     public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity()
     {
         $this->loginAsSuperadmin();
-        $this->OrderDetail->deleteAll([]);
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->deleteAll([]);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
         $productId = '348-11';
         $this->changeProductPrice($productId, 0, true, '25,2', 'g', 1000, 80);

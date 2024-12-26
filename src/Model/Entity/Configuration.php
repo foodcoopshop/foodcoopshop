@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,8 +16,11 @@ use Cake\ORM\Entity;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Configuration extends Entity
+class Configuration extends AppEntity
 {
+
+    const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
+    const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
 
     protected function _getText()
     {

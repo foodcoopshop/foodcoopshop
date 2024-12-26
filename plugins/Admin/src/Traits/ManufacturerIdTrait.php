@@ -20,19 +20,18 @@ namespace Admin\Traits;
 trait ManufacturerIdTrait
 {
 
-    public $manufacturerId;
+    public int|string $manufacturerId;
 
     /**
      * $this->manufacturerId needs to be set in calling method
-     * @return int
      */
-    private function getManufacturerId()
+    private function getManufacturerId(): int|string
     {
         $manufacturerId = 'all';
         if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
             $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         }
-        if ($this->manufacturerId > 0) {
+        if (isset($this->manufacturerId) && $this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
         }
         return $manufacturerId;

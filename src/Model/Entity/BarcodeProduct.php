@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
 use App\Controller\Component\StringComponent;
 
 /**
@@ -20,7 +19,7 @@ use App\Controller\Component\StringComponent;
  * @link          https://www.foodcoopshop.com
  */
 
- class BarcodeProduct extends Entity {
+ class BarcodeProduct extends AppEntity {
 
     protected function _setBarcode($value)
     {

@@ -6,10 +6,9 @@ namespace App\Queue\Task;
 use Queue\Queue\Task;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
-use Cake\Datasource\FactoryLocator;
 use App\Services\PdfWriter\OrderListByProductPdfWriterService;
 use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
-use Queue\Model\Table\QueuedJobsTable;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,8 +28,6 @@ class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
     
-    public $Manufacturer;
-    public QueuedJobsTable $QueuedJobs;
     public ?int $timeout = 30;
     public ?int $retries = 2;
 
@@ -67,8 +64,8 @@ class GenerateOrderListTask extends Task {
         $orderDetailIds = $data['orderDetailIds'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
 
@@ -84,11 +81,11 @@ class GenerateOrderListTask extends Task {
             ];
         }
 
-        $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
+        $sendEmail = $manufacturersTable->getOptionSendOrderList($manufacturer->send_order_list);
 
         if ($sendEmail) {
 
-            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
+            $ccRecipients = $manufacturersTable->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.send_order_list');

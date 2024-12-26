@@ -30,7 +30,6 @@ class SelfServicePolicy implements RequestPolicyInterface
         switch ($request->getParam('action')) {
             case 'autoLoginAsSelfServiceCustomer':
                 return true;
-                break;
         }
 
         if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $identity !== null)) {

@@ -49,16 +49,12 @@ abstract class AppCakeTestCase extends TestCase
     protected $dbConnection;
     protected $testDumpDir;
     protected $appDumpDir;
-    public $Slug;
-    public $Html;
-    public $Time;
-    public $Cart;
-    public $Configuration;
-    public $Customer;
-    public $Manufacturer;
-    public $Network;
-    public $Payment;
-    public $PricePerUnit;
+
+    public SlugHelper $Slug;
+    public MyHtmlHelper $Html;
+    public MyTimeHelper $Time;
+    public NetworkHelper $Network;
+    public PricePerUnitHelper $PricePerUnit;
 
     public function setUp(): void
     {
@@ -68,8 +64,7 @@ abstract class AppCakeTestCase extends TestCase
 
         $this->dbConnection = ConnectionManager::get('test');
         $this->resetLogs();
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $this->Configuration->loadConfigurations();
+        $this->getTableLocator()->get('Configurations')->loadConfigurations();
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
@@ -77,8 +72,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->Time = new MyTimeHelper($View);
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         // enable tokens only for IntegrationTests
         if (method_exists($this, 'enableSecurityToken')) {
@@ -156,11 +149,8 @@ abstract class AppCakeTestCase extends TestCase
 
     /**
      * back tick allows using forward slash in $unquotedString
-     * @param string $unquotedString
-     * @param string $response
-     * @param string $msg
      */
-    protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
+    protected function assertRegExpWithUnquotedString(string $unquotedString, $response, string $msg = '')
     {
         if (is_null($response)) return;
         $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
@@ -168,11 +158,8 @@ abstract class AppCakeTestCase extends TestCase
 
     /**
      * back tick ` allows using forward slash in $unquotedString
-     * @param string $unquotedString
-     * @param string $response
-     * @param string $msg
      */
-    protected function assertDoesNotMatchRegularExpressionWithUnquotedString($unquotedString, $response, $msg = '')
+    protected function assertDoesNotMatchRegularExpressionWithUnquotedString(string $unquotedString, $response, string $msg = '')
     {
         $this->assertDoesNotMatchRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
@@ -187,10 +174,11 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function changeConfiguration(string $configKey, $value)
     {
-        $configurationEntity = $this->Configuration->get($configKey);
-        $configurationEntity->value = $value;
-        $this->Configuration->save($configurationEntity);
-        $this->Configuration->loadConfigurations();
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->get($configKey);
+        $configuration->value = $value;
+        $configurationsTable->save($configuration);
+        $configurationsTable->loadConfigurations();
         $this->logout();
     }
 
@@ -199,11 +187,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->changeManufacturer($manufacturerId, 'no_delivery_days', $noDeliveryDays);
     }
 
-    /**
-     * @param int $productId
-     * @param int $amount
-     */
-    protected function addProductToCart($productId, $amount)
+    protected function addProductToCart(int|string $productId, int $amount)
     {
         $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
@@ -251,7 +235,8 @@ abstract class AppCakeTestCase extends TestCase
             $contain[] = 'CartProducts.OrderDetails.OrderDetailPurchasePrices';
         }
 
-        $cart = $this->Cart->find('all',
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
             ],
@@ -311,16 +296,18 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function changeManufacturer(int $manufacturerId, string $field, $value)
     {
-        $newManufacturer = $this->Manufacturer->get($manufacturerId);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $newManufacturer = $manufacturersTable->get($manufacturerId);
         $newManufacturer->{$field} = $value;
-        $this->Manufacturer->save($newManufacturer);
+        $manufacturersTable->save($newManufacturer);
     }
 
     protected function changeCustomer(int $customerId, string $field, $value)
     {
-        $newCustomer = $this->Customer->get($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $newCustomer = $customersTable->get($customerId);
         $newCustomer->{$field} = $value;
-        $this->Customer->save($newCustomer);
+        $customersTable->save($newCustomer);
     }
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)
@@ -339,8 +326,8 @@ abstract class AppCakeTestCase extends TestCase
     }
 
     protected function resetCustomerCreditBalance() {
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->Payment->delete($this->Payment->get(2));
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $paymentsTable->delete($paymentsTable->get(2));
     }
 
     private function prepareSendingOrderListsOrInvoices($contentFolder)

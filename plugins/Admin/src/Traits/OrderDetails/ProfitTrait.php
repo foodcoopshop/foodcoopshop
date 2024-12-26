@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
-use App\Model\Table\PurchasePriceProductsTable;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 
@@ -23,8 +22,6 @@ use Cake\Database\Expression\QueryExpression;
 
 trait ProfitTrait 
 {
-
-    protected PurchasePriceProductsTable $PurchasePriceProduct;
 
     public function profit()
     {
@@ -63,8 +60,8 @@ trait ProfitTrait
         }
         $this->set('productId', $productId);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all',
             contain: [
                 'Customers',
                 'OrderDetailPurchasePrices',
@@ -134,18 +131,19 @@ trait ProfitTrait
         }
         $this->set('orderDetails', $orderDetails);
 
-        $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
+        $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $this->set('sums', [
             'amount' => $sumAmount,
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
             'profit' => $sumProfit,
-            'surcharge' => $this->PurchasePriceProduct->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
+            'surcharge' => $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Profit'));
 
-        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
 
     }
 

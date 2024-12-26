@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Customers;
 
 use Cake\Core\Configure;
-use App\Services\PdfWriter\MyMemberCardPdfWriterService;
-use App\Services\PdfWriter\MemberCardsPdfWriterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,7 +36,7 @@ trait CreditBalanceSumTrait
         }
         $this->set('dateTo', $dateTo);
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
         $customerTable = $this->getTableLocator()->get('Customers');
 
         $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_ON);
@@ -47,7 +45,8 @@ trait CreditBalanceSumTrait
             'customer_type' => __d('admin', 'Sum_of_credits_of_activated_members'),
             'count' => count($customerTable->getCustomerIdsWithStatus(APP_ON)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => $paymentDepositDelta * -1
+            'payment_deposit_delta' => $paymentDepositDelta * -1,
+            'payment_product_delta' => 0,
         ];
 
         $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_OFF);
@@ -56,7 +55,8 @@ trait CreditBalanceSumTrait
             'customer_type' => __d('admin', 'Sum_of_credits_of_deactivated_members'),
             'count' => count($customerTable->getCustomerIdsWithStatus(APP_OFF)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => $paymentDepositDelta * -1
+            'payment_deposit_delta' => $paymentDepositDelta * -1,
+            'payment_product_delta' => 0,
         ];
 
         $paymentProductDelta = $customerTable->getProductBalanceForDeletedCustomers();
@@ -66,14 +66,16 @@ trait CreditBalanceSumTrait
             'count' => 0,
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
             'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
+            'payment_product_delta' => 0,
         ];
 
-        $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum();
+        $paymentDepositDelta = $paymentsTable->getManufacturerDepositMoneySum();
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,
             'credit_balance' => 0,
             'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
+            'payment_product_delta' => 0,
         ];
 
         $this->set('customers', $customers);
@@ -84,9 +86,9 @@ trait CreditBalanceSumTrait
             'product_delta' => 0,
         ];
         foreach($customers as $customer) {
-            $sums['credit_balance'] += $customer['credit_balance'] ?? 0;
-            $sums['deposit_delta'] += $customer['payment_deposit_delta'] ?? 0;
-            $sums['product_delta'] += $customer['payment_product_delta'] ?? 0;
+            $sums['credit_balance'] += $customer['credit_balance'];
+            $sums['deposit_delta'] += $customer['payment_deposit_delta'];
+            $sums['product_delta'] += $customer['payment_product_delta'];
         }
 
         $this->set('sums', $sums);

@@ -2,15 +2,15 @@
 declare(strict_types=1);
 
 use Migrations\AbstractMigration;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 class ManufacturerLoginFix extends AbstractMigration
 {
     public function change(): void
     {
 
-        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
         $manufacturers = $manufacturersTable->find('all',
         contain: [

@@ -9,6 +9,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Validation\Validator;
 use App\Model\Traits\NumberRangeValidatorTrait;
 use Cake\I18n\DateTime;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -127,12 +128,7 @@ class PaymentsTable extends AppTable
         return $conditions;
     }
 
-    /**
-     * @param int $manufacturerId
-     * @param string $monthAndYear
-     * @return array
-     */
-    public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear)
+    public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear): SelectQuery
     {
         $paymentSum = $this->find('all',
         conditions: $this->getManufacturerDepositConditions($manufacturerId),

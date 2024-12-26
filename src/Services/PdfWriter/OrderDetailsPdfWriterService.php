@@ -19,12 +19,10 @@ namespace App\Services\PdfWriter;
 use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
 use App\Controller\Component\StringComponent;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 class OrderDetailsPdfWriterService extends PdfWriterService
 {
-
-    public $OrderDetail;
 
     public function __construct()
     {
@@ -39,17 +37,17 @@ class OrderDetailsPdfWriterService extends PdfWriterService
     public function prepareAndSetData($pickupDay, $order)
     {
 
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams('', '', '', $pickupDay, '', '');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $odParams = $orderDetailsTable->getOrderDetailParams('', '', '', $pickupDay, '', '');
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+            $orderDetailsTable->getAssociation('PickupDayEntities')->setConditions([
                 'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
             ]);
             $odParams['contain'][] = 'PickupDayEntities';
         }
 
-        $orderDetails = $this->OrderDetail->find('all',
+        $orderDetails = $orderDetailsTable->find('all',
             conditions: $odParams['conditions'],
             contain: $odParams['contain'],
         )->toArray();

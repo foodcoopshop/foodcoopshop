@@ -7,16 +7,9 @@ use Admin\Traits\Manufacturers\EditOptionsTrait;
 use Admin\Traits\Manufacturers\GetInvoiceTrait;
 use Admin\Traits\Manufacturers\GetOrderListTrait;
 use Admin\Traits\Manufacturers\IndexTrait;
-use Cake\Event\EventInterface;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
-use App\Model\Table\FeedbacksTable;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PaymentsTable;
-use App\Model\Table\ProductsTable;
-use App\Model\Table\TaxesTable;
 use Cake\View\JsonView;
-use Network\Model\Table\SyncDomainsTable;
 use Admin\Traits\Manufacturers\AddEditTrait;
 use Admin\Traits\Manufacturers\SetElFinderUploadPathTrait;
 use Admin\Traits\Manufacturers\GetDeliveryNoteTrait;
@@ -38,12 +31,6 @@ use Admin\Traits\Manufacturers\ExportTrait;
 
 class ManufacturersController extends AdminAppController
 {
-    protected FeedbacksTable $Feedback;
-    protected PaymentsTable $Payment;
-    protected ProductsTable $Product;
-    protected OrderDetailsTable $OrderDetail;
-    protected TaxesTable $Tax;
-    protected SyncDomainsTable $SyncDomain;
 
     use GetOrderListTrait;
     use AddEditTrait;
@@ -60,12 +47,6 @@ class ManufacturersController extends AdminAppController
     {
         parent::initialize();
         $this->addViewClasses([JsonView::class]);
-    }
-
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
 }

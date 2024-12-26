@@ -6,7 +6,6 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
-use App\Model\Table\SlidersTable;
 use App\Services\SanitizeService;
 
 /**
@@ -27,12 +26,10 @@ class SlidersController extends AdminAppController
 
     use UploadTrait;
 
-    protected SlidersTable $Slider;
-    
     public function add()
     {
-        $this->Slider = $this->getTableLocator()->get('Sliders');
-        $slider = $this->Slider->newEntity(
+        $slidersTable = $this->getTableLocator()->get('Sliders');
+        $slider = $slidersTable->newEntity(
             [
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'active' => APP_ON,
@@ -54,8 +51,8 @@ class SlidersController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Slider = $this->getTableLocator()->get('Sliders');
-        $slider = $this->Slider->find('all', conditions: [
+        $slidersTable = $this->getTableLocator()->get('Sliders');
+        $slider = $slidersTable->find('all', conditions: [
             'Sliders.id_slider' => $sliderId
         ])->first();
 
@@ -81,13 +78,14 @@ class SlidersController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-        $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
+        $slidersTable = $this->getTableLocator()->get('Sliders');
+        $slider = $slidersTable->patchEntity($slider, $this->getRequest()->getData());
         if ($slider->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('slider', $slider);
             $this->render('edit');
         } else {
-            $slider = $this->Slider->save($slider);
+            $slider = $slidersTable->save($slider);
 
             if (!$isEditMode) {
                 $messageSuffix = __d('admin', 'created');
@@ -99,20 +97,20 @@ class SlidersController extends AdminAppController
 
             if (!empty($this->getRequest()->getData('Sliders.tmp_image'))) {
                 $filename = $this->saveUploadedImage($slider->id_slider, $this->getRequest()->getData('Sliders.tmp_image'), Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-                $slider = $this->Slider->patchEntity($slider, ['image' => $filename]);
-                $this->Slider->save($slider);
+                $slider = $slidersTable->patchEntity($slider, ['image' => $filename]);
+                $slidersTable->save($slider);
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Sliders.delete_slider'))) {
                 $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath());
-                $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
-                $this->Slider->save($slider);
+                $slider = $slidersTable->patchEntity($slider, ['active' => APP_DEL]);
+                $slidersTable->save($slider);
                 $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'slider_deleted';
             }
             $message = __d('admin', 'The_slider_{0}_has_been_{1}.', ['<b>' . $slider->id_slider . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $slider->id_slider, 'sliders', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $slider->id_slider);
@@ -128,8 +126,8 @@ class SlidersController extends AdminAppController
             'Sliders.active > ' . APP_DEL
         ];
 
-        $this->Slider = $this->getTableLocator()->get('Sliders');
-        $query = $this->Slider->find('all', conditions: $conditions);
+        $slidersTable = $this->getTableLocator()->get('Sliders');
+        $query = $slidersTable->find('all', conditions: $conditions);
         $sliders = $this->paginate($query, [
             'sortableFields' => [
                 'Sliders.position', 'Sliders.active', 'Sliders.link', 'Sliders.is_private'

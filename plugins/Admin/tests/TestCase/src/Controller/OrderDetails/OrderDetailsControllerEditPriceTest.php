@@ -22,9 +22,8 @@ use Cake\TestSuite\TestEmailTransport;
 class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 {
 
-    protected $mockCart;
-    public $newPrice = '3,53';
-    public $editPriceReason = 'Product was smaller than expected.';
+    public string $newPrice = '3,53';
+    public string $editPriceReason = 'Product was smaller than expected.';
 
     public function testEditOrderDetailPriceNotValid()
     {
@@ -57,7 +56,8 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public function testEditOrderDetailPriceAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_price_changed_notification', 0);
 
         $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);

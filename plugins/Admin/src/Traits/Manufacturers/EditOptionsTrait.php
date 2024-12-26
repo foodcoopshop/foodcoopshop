@@ -41,7 +41,8 @@ trait EditOptionsTrait
             throw new NotFoundException;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
@@ -50,8 +51,8 @@ trait EditOptionsTrait
         }
         $this->set('title_for_layout', $manufacturer->name . ': ' . __d('admin', 'Edit_settings'));
 
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $taxesTable->getForDropdown());
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $noDeliveryBreakOptions = (new DeliveryRhythmService())->getNextWeeklyDeliveryDays();
@@ -87,17 +88,13 @@ trait EditOptionsTrait
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
 
-        if (!$this->identity->isManufacturer()) {
-            $this->Customer = $this->getTableLocator()->get('Customers');
-        }
-
         $this->setFormReferer();
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+            $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
-            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
-            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->identity);
+            $this->set('syncDomainsForDropdown', $syncDomainsTable->getForDropdown());
+            $isAllowedEditManufacturerOptionsDropdown = $syncDomainsTable->isAllowedEditManufacturerOptionsDropdown($this->identity);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
 
@@ -116,7 +113,7 @@ trait EditOptionsTrait
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-        $manufacturer = $this->Manufacturer->patchEntity(
+        $manufacturer = $manufacturersTable->patchEntity(
             $manufacturer,
             $this->getRequest()->getData(),
             [
@@ -178,14 +175,14 @@ trait EditOptionsTrait
             }
 
             // sic! patch again!
-            $manufacturer = $this->Manufacturer->patchEntity(
+            $manufacturer = $manufacturersTable->patchEntity(
                 $manufacturer,
                 $this->getRequest()->getData()
             );
-            $manufacturer = $this->Manufacturer->save($manufacturer);
+            $manufacturer = $manufacturersTable->save($manufacturer);
 
             if (!$this->identity->isManufacturer()) {
-                $manufacturer = $this->Manufacturer->find('all',
+                $manufacturer = $manufacturersTable->find('all',
                     conditions: [
                         'Manufacturers.id_manufacturer' => $manufacturer->id_manufacturer,
                     ],
@@ -193,7 +190,7 @@ trait EditOptionsTrait
                         'AddressManufacturers'
                     ])->first();
         
-                $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
+                $customerRecord = $manufacturersTable->getCustomerRecord($manufacturer->address_manufacturer->email);
                 if (!empty($customerRecord)) {
                     $customersTable = $this->getTableLocator()->get('Customers');
                     $customerRecord->active = $manufacturer->active;
@@ -215,8 +212,8 @@ trait EditOptionsTrait
 
             $this->Flash->success($message);
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
             $this->redirect($this->getPreparedReferer());
         }

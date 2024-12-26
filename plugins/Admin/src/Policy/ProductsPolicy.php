@@ -5,10 +5,10 @@ namespace Admin\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,18 +36,14 @@ class ProductsPolicy implements RequestPolicyInterface
         switch ($request->getParam('action')) {
             case 'myImport':
                 return $identity->isManufacturer();
-                break;
             case 'generateProductCards':
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin());
-                break;
             case 'editPurchasePrice':
             case 'calculateSellingPriceWithSurcharge':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin());
-                break;
             case 'import':
             case 'export':
                 return $identity->isSuperadmin() || $identity->isAdmin();
-                break;
             case 'editPrice':
             case 'editDeposit':
             case 'editTax':
@@ -69,12 +65,10 @@ class ProductsPolicy implements RequestPolicyInterface
                     }
                 }
                 return false;
-                break;
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
                 return $identity !== null;
-                break;
             default:
                 if (!empty($request->getData('productId')) && !$this->productExists($request)) {
                     return false;
@@ -86,14 +80,13 @@ class ProductsPolicy implements RequestPolicyInterface
                     return false;
                 }
                 return true;
-                break;
         }
 
     }
 
     protected function productExists($request)
     {
-        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productTable = TableRegistry::getTableLocator()->get('Products');
         $ids = $productTable->getProductIdAndAttributeId($request->getData('productId'));
         $productId = $ids['productId'];
         $product = $productTable->find('all',
@@ -110,7 +103,7 @@ class ProductsPolicy implements RequestPolicyInterface
             return true;
         }
 
-        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productTable = TableRegistry::getTableLocator()->get('Products');
 
         // param productIds is passed via ajaxCall
         if (!empty($request->getData('productIds'))) {

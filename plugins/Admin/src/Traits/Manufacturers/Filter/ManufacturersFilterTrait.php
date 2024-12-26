@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Admin\Traits\Manufacturers\Filter;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use App\Services\CatalogService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -49,7 +49,10 @@ trait ManufacturersFilterTrait
             ];
         }
 
-        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $addressManufacturersTable = TableRegistry::getTableLocator()->get('AddressManufacturers');
+
         $query = $manufacturersTable->find('all',
         conditions: $conditions,
         contain: [
@@ -57,8 +60,8 @@ trait ManufacturersFilterTrait
             'Customers'
         ])
         ->select($manufacturersTable)
-        ->select($manufacturersTable->Customers)
-        ->select($manufacturersTable->AddressManufacturers);
+        ->select($customersTable)
+        ->select($addressManufacturersTable);
 
         $manufacturers = $this->paginate($query, [
             'sortableFields' => [
@@ -69,9 +72,9 @@ trait ManufacturersFilterTrait
             ]
         ]);
 
-        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $feedbacksTable = FactoryLocator::get('Table')->get('Feedbacks');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
 
         foreach ($manufacturers as $manufacturer) {
             $catalogService = new CatalogService();

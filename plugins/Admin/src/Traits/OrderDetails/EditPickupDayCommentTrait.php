@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
-use App\Model\Table\PickupDaysTable;
 use Cake\Core\Configure;
 
 /**
@@ -23,8 +22,6 @@ use Cake\Core\Configure;
 trait EditPickupDayCommentTrait 
 {
 
-    protected PickupDaysTable $PickupDay;
-
     public function editPickupDayComment()
     {
         $this->request = $this->request->withParam('_ext', 'json');
@@ -34,15 +31,15 @@ trait EditPickupDayCommentTrait
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
             conditions: [
-                'id_customer' => $customerId
+                'id_customer' => $customerId,
             ]
         )->first();
 
-        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-        $result = $this->PickupDay->insertOrUpdate(
+        $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
+        $result = $pickupDaysTable->insertOrUpdate(
             [
                 'customer_id' => $customerId,
                 'pickup_day' => $pickupDay
@@ -54,8 +51,8 @@ trait EditPickupDayCommentTrait
 
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('order_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
 
         $this->set([
             'result' => $result,

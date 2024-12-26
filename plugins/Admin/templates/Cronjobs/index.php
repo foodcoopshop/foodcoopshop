@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 $this->element('addScript', [
     'script' =>
@@ -97,8 +97,8 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td style="text-align:center;">';
     if ($cronjob->day_of_month != '') {
-        $cm = FactoryLocator::get('Table')->get('Cronjobs');
-        echo $cm->getDaysOfMonth()[$cronjob->day_of_month];
+        $cronjobsTable = TableRegistry::getTableLocator()->get('Cronjobs');
+        echo $cronjobsTable->getDaysOfMonth()[$cronjob->day_of_month];
     }
     echo '</td>';
 
@@ -126,6 +126,7 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td>';
     if (!empty($cronjob->cronjob_logs[0])) {
+        /** @phpstan-ignore-next-line */
         $name = $cronjob->getOriginalValues()['name'];
         $cronjobFilterString = Inflector::underscore($name);
         if (preg_match('/SendInvoicesToManufacturers/', $name)) {

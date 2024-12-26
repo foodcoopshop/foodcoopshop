@@ -17,7 +17,8 @@ declare(strict_types=1);
 
 use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
+use App\Model\Entity\Configuration;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
@@ -103,6 +104,7 @@ $this->element('addScript', [
                     'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $identity),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no'),
+                    default => '',
                 };
 
                 echo '</td>';
@@ -242,8 +244,7 @@ $this->element('addScript', [
         </tr>
 
         <?php
-        $ct = FactoryLocator::get('Table')->get('Configurations');
-        if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == $ct::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD) { ?>
+        if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD) { ?>
         <tr>
             <td>app.bankNameForCreditSystem</td>
             <td><?php echo Configure::read('app.bankNameForCreditSystem'); ?></td>

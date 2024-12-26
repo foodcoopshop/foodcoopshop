@@ -139,7 +139,7 @@ echo '<div class="add-payment-deposit-wrapper">';
             echo '<td colspan="2" class="right"><b>'.__d('admin', 'Your_deposit_balance').'</td>';
             $depositCreditBalance = $sumDepositsDelivered + $sumDepositsReturned;
             $depositCreditBalanceClasses = ['right'];
-        if ($depositCreditBalance < 0) {
+        if ((float) $depositCreditBalance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
         }
             echo '<td class="'.implode(' ', $depositCreditBalanceClasses).'"><b style="font-size: 16px;">'.$this->Number->formatAsCurrency($depositCreditBalance).'</b></td>';

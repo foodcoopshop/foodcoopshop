@@ -29,6 +29,7 @@ class MyTimeHelper extends TimeHelper
             'day' => __('daily'),
             'week' => __('weekly'),
             'month' => __('monthly'),
+            default => '',
         };
     }
 
@@ -67,11 +68,8 @@ class MyTimeHelper extends TimeHelper
         }
         return $monthsAndYear;
     }
-    /**
-     * @param $array
-     * @return array
-     */
-    public function sortArrayByDate($array)
+
+    public function sortArrayByDate(array $array): array
     {
         usort($array, function($a, $b) {
             return strtotime($a) - strtotime($b);
@@ -81,46 +79,44 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = DateTime::createFromTimestamp(strtotime($time), 'UTC');
-        return $timeObject;
+        return DateTime::createFromTimestamp(strtotime($time), 'UTC');
     }
 
-    public function getTimezoneDiffInSeconds($timestamp)
+    public function getTimezoneDiffInSeconds($timestamp): string
     {
-        $timezoneDiff = date('Z', $timestamp);
-        return $timezoneDiff;
+        return date('Z', $timestamp);
     }
 
-    public function getI18Format($formatString)
+    public function getI18Format(string $formatString): string
     {
         return Configure::read('DateFormat.' . $formatString);
     }
 
-    public function getLastDayOfGivenMonth($monthAndYear)
+    public function getLastDayOfGivenMonth($monthAndYear): string
     {
         return date('t', strtotime($monthAndYear));
     }
 
-    public function getYearFromDbDate($dbDate)
+    public function getYearFromDbDate($dbDate): string
     {
         return date('Y', strtotime($dbDate));
     }
 
-    public function getCurrentDateTimeForDatabase()
+    public function getCurrentDateTimeForDatabase(): string
     {
         return date($this->getI18Format('DatabaseWithTimeAlt'));
     }
-    public function getCurrentDateTimeForFilename()
+    public function getCurrentDateTimeForFilename(): string
     {
         return date($this->getI18Format('DateWithTimeForFilename'));
     }
 
-    public function getCurrentDateForDatabase()
+    public function getCurrentDateForDatabase(): string
     {
         return date($this->getI18Format('DatabaseAlt'));
     }
 
-    public function getNthWeekdayBeforeWeekday($n, $weekday)
+    public function getNthWeekdayBeforeWeekday(int $n, int $weekday): int
     {
         $beforeWeekday = $weekday - $n;
         if ($beforeWeekday < 0) {
@@ -129,10 +125,10 @@ class MyTimeHelper extends TimeHelper
         return $beforeWeekday;
     }
 
-    public function getNthWeekdayAfterWeekday($n, $weekday)
+    public function getNthWeekdayAfterWeekday(int $n, int $weekday): int
     {
         $beforeWeekday = $weekday + $n;
-        if ($beforeWeekday > 6) {
+        if ((int) $beforeWeekday > 6) {
             $beforeWeekday -= 7;
         }
         return $beforeWeekday;
@@ -341,11 +337,7 @@ class MyTimeHelper extends TimeHelper
         return date('t', $timestamp);
     }
 
-    /**
-     * considers windows and unix
-     * @return boolean
-     */
-    public function isDatabaseDateNotSet($date)
+    public function isDatabaseDateNotSet($date): bool
     {
         return $date == '1970-01-01' || $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
     }
@@ -360,10 +352,6 @@ class MyTimeHelper extends TimeHelper
         }
     }
 
-    /**
-     * formats a timestamp to a short date
-     * @param integer $timestamp
-     */
     public function formatToDateShort($dbString)
     {
         $timestamp = strtotime($dbString);
@@ -372,9 +360,7 @@ class MyTimeHelper extends TimeHelper
         }
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
-    /**
-      * @param $dateString
-      */
+
     public function formatToDbFormatDate($dateString)
     {
         $timestamp = strtotime($dateString);

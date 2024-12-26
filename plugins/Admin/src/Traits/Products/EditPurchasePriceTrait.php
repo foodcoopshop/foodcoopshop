@@ -35,10 +35,11 @@ trait EditPurchasePriceTrait
         $purchaseGrossPrice = $this->getRequest()->getData('purchasePrice');
         $purchaseGrossPrice = Configure::read('app.numberHelper')->getStringAsFloat($purchaseGrossPrice);
 
-        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all',
+        $oldProduct = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ],
@@ -68,9 +69,10 @@ trait EditPurchasePriceTrait
                 $taxRate = $oldProduct->purchase_price_product->tax->rate;
             }
 
-            $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
-            $purchaseTable = $this->Product->PurchasePriceProducts;
-            $unitTable = $this->Product->UnitProducts;
+            $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+            $purchasePriceEntity2Save = $purchasePriceProductsTable->getEntityToSaveByProductId($ids['productId']);
+            $purchaseTable = $purchasePriceProductsTable;
+            $unitTable = $this->getTableLocator()->get('UnitProducts');
 
             if ($ids['attributeId'] > 0) {
                 // override values
@@ -85,9 +87,9 @@ trait EditPurchasePriceTrait
                     }
                     $oldProduct->purchase_price_product->price = $oldPrice;
                     $oldProduct->unit_product = $attribute->unit_product_attribute;
-                    $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
-                    $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
-                    $unitTable = $this->Product->ProductAttributes->UnitProductAttributes;
+                    $purchasePriceEntity2Save = $purchasePriceProductsTable->getEntityToSaveByProductAttributeId($ids['attributeId']);
+                    $purchaseTable = $this->getTableLocator()->get('PurchasePriceProductAttributes');
+                    $unitTable = $this->getTableLocator()->get('UnitProductAttributes');
                 }
             }
 
@@ -106,7 +108,7 @@ trait EditPurchasePriceTrait
                 $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit ?? 0, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
                 $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             } else {
-                $purchasePrice2Save = $this->Product->getNetPrice($purchaseGrossPrice, $taxRate);
+                $purchasePrice2Save = $productsTable->getNetPrice($purchaseGrossPrice, $taxRate);
                 $patchedEntity = $purchaseTable->patchEntity(
                     $purchasePriceEntity2Save,
                     [
@@ -114,10 +116,10 @@ trait EditPurchasePriceTrait
                     ],
                 );
                 if ($patchedEntity->hasErrors()) {
-                    throw new \Exception(join(' ', $this->Product->getAllValidationErrors($patchedEntity)));
+                    throw new \Exception(join(' ', $productsTable->getAllValidationErrors($patchedEntity)));
                 }
                 $purchaseTable->save($patchedEntity);
-                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));
+                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($productsTable->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));
                 $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
             }
         } catch (\Exception $e) {
@@ -133,7 +135,8 @@ trait EditPurchasePriceTrait
                 $oldPrice,
                 $newPrice,
             ]);
-            $this->ActionLog->customSave('product_purchase_price_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('product_purchase_price_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         }
         $this->Flash->success($messageString);
 

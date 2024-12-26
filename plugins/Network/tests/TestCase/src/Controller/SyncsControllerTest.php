@@ -26,8 +26,6 @@ use Network\View\Helper\NetworkHelper;
 class SyncsControllerTest extends AppCakeTestCase
 {
 
-    public $Network;
-
     use AppIntegrationTestTrait;
     use LoginTrait;
 
@@ -56,7 +54,8 @@ class SyncsControllerTest extends AppCakeTestCase
 
     public function testDenyAccessIfVariableMemberFeeDisabledAndManufacturerHasNoSyncDomains()
     {
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'enabled_sync_domains', null);
         $this->loginAsVegetableManufacturer();
         $this->get($this->Network->getSyncProducts());
@@ -95,7 +94,8 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         $this->disableVariableMemberFee();
         $this->loginAsVegetableManufacturer();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
 
         $productId = 47; // joghurt, owner: milk manufactuer
         $productName = 'Joghurt';
@@ -173,7 +173,8 @@ class SyncsControllerTest extends AppCakeTestCase
     private function disableVariableMemberFee()
     {
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 0);
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'variable_member_fee', 0);
     }
 }

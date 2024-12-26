@@ -51,8 +51,8 @@ trait EditTrait
         $isOwnProfile = $this->identity->getId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
         conditions: [
             'Customers.id_customer' => $customerId
         ],
@@ -82,7 +82,7 @@ trait EditTrait
         $this->setRequest($this->getRequest()->withoutData('Customers.active'));
         $this->setRequest($this->getRequest()->withoutData('Customers.id_default_group'));
 
-        $customer = $this->Customer->patchEntity(
+        $customer = $customersTable->patchEntity(
             $customer,
             $this->getRequest()->getData(),
             [
@@ -98,7 +98,7 @@ trait EditTrait
             $this->set('customer', $customer);
             $this->render('edit');
         } else {
-            $this->Customer->save(
+            $customersTable->save(
                 $customer,
                 [
                     'associated' => [
@@ -115,13 +115,13 @@ trait EditTrait
                 $this->deleteUploadedImage($customer->id_customer, Configure::read('app.htmlHelper')->getCustomerThumbsPath());
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
                 $message = __d('admin', 'Your_profile_was_changed.');
             } else {
                 $message = __d('admin', 'The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
             }
-            $this->ActionLog->customSave('customer_profile_changed', $this->identity->getId(), $customer->id_customer, 'customers', $message);
+            $actionLogsTable->customSave('customer_profile_changed', $this->identity->getId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $customer->id_customer);

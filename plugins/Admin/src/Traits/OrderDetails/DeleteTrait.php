@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Model\Entity\OrderDetail;
 use App\Services\ProductQuantityService;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -44,12 +44,12 @@ trait DeleteTrait
             return;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $flashMessage = '';
         $message = '';
 
         foreach ($orderDetailIds as $orderDetailId) {
-            $orderDetail = $this->OrderDetail->find('all',
+            $orderDetail = $orderDetailsTable->find('all',
                 conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
@@ -71,10 +71,9 @@ trait DeleteTrait
                 $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
             ]);
 
-            $this->OrderDetail->deleteOrderDetail($orderDetail);
+            $orderDetailsTable->deleteOrderDetail($orderDetail);
 
-
-            $unitsTable = FactoryLocator::get('Table')->get('Units');
+            $unitsTable = TableRegistry::getTableLocator()->get('Units');
             $unitObject = $unitsTable->getUnitsObject($orderDetail->product_id, $orderDetail->product_attribute_id);
 
             $productQuantityService = new ProductQuantityService();
@@ -106,8 +105,8 @@ trait DeleteTrait
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
+            $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+            $sendOrderedProductDeletedNotification = $manufacturersTable->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
             if (! $this->identity->isManufacturer() && $orderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
@@ -136,8 +135,8 @@ trait DeleteTrait
                 ]);
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_cancelled', $this->identity->getId(), $orderDetail->product_id, 'products', $message);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('order_detail_cancelled', $this->identity->getId(), $orderDetail->product_id, 'products', $message);
         }
 
         $flashMessage = $message;

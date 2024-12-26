@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
+use App\Model\Entity\OrderDetail;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
 use Cake\ORM\Query;
 use Cake\I18n\DateTime;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -169,7 +170,7 @@ class InvoicesTable extends AppTable
     public function getDataForCustomerInvoice($customerId, $currentDay)
     {
 
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $customer = $customersTable->find('all',
             conditions: [
                 'Customers.id_customer' => $customerId,
@@ -188,7 +189,7 @@ class InvoicesTable extends AppTable
         )->first();
 
         // fetch returned deposit
-        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
 
         // create empty dummy data for deleted customer
@@ -247,6 +248,7 @@ class InvoicesTable extends AppTable
         foreach($orderDetails as $orderDetail) {
             if (!empty($orderDetail->order_detail_unit)) {
                 // do not add unit a second time if cancellation invoice is rendered ($source == 'OrderDetails')
+                /** @phpstan-ignore-next-line */
                 if ($orderDetail->getSource() == 'ActiveOrderDetails') {
                     $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
                 }
@@ -255,21 +257,21 @@ class InvoicesTable extends AppTable
 
         // prepare delivered deposit
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->deposit != 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $orderedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $orderedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
 
         foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
-            $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1, $depositTaxRate) * -1;
-            $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1, $depositTaxRate) * -1;
+            $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($deposit->amount, 1, $depositTaxRate) * -1;
+            $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($deposit->amount, 1, $depositTaxRate) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }
@@ -285,7 +287,7 @@ class InvoicesTable extends AppTable
                 'sum_tax' => 0,
                 'sum_price_incl' => 0,
             ];
-            $taxRates = $orderDetailTable->getTaxSums($orderDetails);
+            $taxRates = $orderDetailsTable->getTaxSums($orderDetails);
 
             if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
                 if (!isset($taxRates[$depositVatRate])) {

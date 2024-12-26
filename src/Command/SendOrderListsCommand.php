@@ -22,30 +22,22 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\I18n\Date;
+use App\Command\Traits\CronjobCommandTrait;
 
 class SendOrderListsCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
-    public $ActionLog;
-    public $Manufacturer;
-    public $OrderDetail;
-    public $QueuedJobs;
-    public $Product;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
@@ -54,7 +46,7 @@ class SendOrderListsCommand extends AppCommand
         }
 
         // 1) get all manufacturers (not only active ones)
-        $manufacturers = $this->Manufacturer->find('all',
+        $manufacturers = $manufacturersTable->find('all',
         order: [
             'Manufacturers.name' => 'ASC'
         ],
@@ -64,7 +56,7 @@ class SendOrderListsCommand extends AppCommand
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
-        $allOrderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
+        $allOrderDetails = $orderDetailsTable->getOrderDetailsForSendingOrderLists(
             $pickupDay,
             $this->cronjobRunDay,
             Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
@@ -100,7 +92,7 @@ class SendOrderListsCommand extends AppCommand
         }
         $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
 
-        $actionLog = $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString);
+        $actionLog = $actionLogsTable->customSave('cronjob_send_order_lists', 0, 0, '', $outString);
 
         foreach ($manufacturers as $manufacturer) {
 
@@ -129,7 +121,7 @@ class SendOrderListsCommand extends AppCommand
                 );
                 $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
 
-                $this->QueuedJobs->createJob('GenerateOrderList', [
+                $queuedJobsTable->createJob('GenerateOrderList', [
                     'pickupDayDbFormat' => $pickupDayDbFormat,
                     'pickupDayFormatted' => $pickupDayFormatted,
                     'orderDetailIds' => $orderDetailIds,
@@ -157,7 +149,7 @@ class SendOrderListsCommand extends AppCommand
     protected function getActionLogData($orderDetails, $manufacturers, $pickupDay): array
     {
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
 
         $tmpActionLogDatas = [];
         foreach($orderDetails as $orderDetail) {
@@ -177,7 +169,7 @@ class SendOrderListsCommand extends AppCommand
         }
         $actionLogDatas = [];
         foreach ($manufacturers as $manufacturer) {
-            $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
+            $sendOrderList = $manufacturersTable->getOptionSendOrderList($manufacturer->send_order_list);
             if ($sendOrderList) {
                 if (in_array($manufacturer->id_manufacturer, array_keys($tmpActionLogDatas))) {
                     ksort($tmpActionLogDatas[$manufacturer->id_manufacturer]);
@@ -208,11 +200,11 @@ class SendOrderListsCommand extends AppCommand
     protected function resetQuantityToDefaultQuantity($orderDetails)
     {
 
-        $this->Product = $this->getTableLocator()->get('Products');
+        $productsTable = $this->getTableLocator()->get('Products');
 
         $productsToSave = [];
         foreach($orderDetails as $orderDetail) {
-            $compositeProductId = $this->Product->getCompositeProductIdAndAttributeId($orderDetail->product_id, $orderDetail->product_attribute_id);
+            $compositeProductId = $productsTable->getCompositeProductIdAndAttributeId($orderDetail->product_id, $orderDetail->product_attribute_id);
             $stockAvailableObject = $orderDetail->product->stock_available;
             if (!empty($orderDetail->product_attribute)) {
                 $stockAvailableObject = $orderDetail->product_attribute->stock_available;
@@ -226,7 +218,7 @@ class SendOrderListsCommand extends AppCommand
             }
         }
         if (!empty($productsToSave)) {
-            $this->Product->changeQuantity($productsToSave);
+            $productsTable->changeQuantity($productsToSave);
         }
 
     }

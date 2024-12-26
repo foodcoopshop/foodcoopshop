@@ -22,6 +22,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Cart;
 
 abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 {
@@ -30,34 +31,22 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $Manufacturer;
+    public int|string $productIdA = 346;
+    public int|string $productIdB = 340;
+    public int|string $productIdC = '60-10';
 
-    public $productIdA = 346;
-    public $productIdB = 340;
-    public $productIdC = '60-10';
+    public int $orderDetailIdA = 1;
+    public int $orderDetailIdB = 2;
+    public int $orderDetailIdC = 3;
 
-    public $orderDetailIdA = 1;
-    public $orderDetailIdB = 2;
-    public $orderDetailIdC = 3;
-
-    protected $OrderDetail;
-    protected $mockCart;
-    protected $Product;
-    protected $StockAvailable;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-    }
+    protected Cart $mockCart;
 
     protected function simulateSendOrderListsCronjob($orderDetailId)
     {
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailId),
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($orderDetailId),
                 [
                     'order_state' => OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
                 ]
@@ -67,10 +56,8 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     protected function getChangedMockCartFromDatabase()
     {
-        if (!$this->mockCart) {
-            return false;
-        }
-        $cart = $this->Cart->find('all',
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $this->mockCart->id_cart,
             ],
@@ -83,10 +70,11 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     protected function assertChangedStockAvailable($productIds, $expectedAmount)
     {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $ids = $this->Product->getProductIdAndAttributeId($productIds);
-        $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
-        $changedStockAvailable = $this->StockAvailable->find('all', conditions: [
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($productIds);
+        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $changedStockAvailable = $stockAvailablesTable->find('all', conditions: [
             'StockAvailables.id_product' => $ids['productId'],
             'StockAvailables.id_product_attribute' => $ids['attributeId'],
         ])->first();
@@ -95,7 +83,8 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     }
 
     protected function getOrderDetailsFromDatabase($orderDetailIds) {
-        $orderDetails = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
@@ -106,7 +95,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         return $orderDetails;
     }
 
-    protected function generateAndGetCart($productAAmount = 1, $productBAmount = 1)
+    protected function generateAndGetCart($productAAmount = 1, $productBAmount = 1): Cart
     {
         $this->addProductToCart($this->productIdA, $productAAmount);
         $this->addProductToCart($this->productIdB, $productBAmount);

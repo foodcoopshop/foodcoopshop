@@ -31,9 +31,6 @@ class ConfigurationsTable extends AppTable
     use NoDeliveryDaysOrdersExistTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
-    public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
-    public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
-
     public function initialize(array $config): void
     {
         $this->setTable('configuration');

@@ -5,9 +5,9 @@ namespace App\Mailer;
 
 use Cake\Mailer\Mailer;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\OutputFilter\OutputFilterService;
 use Cake\Mailer\Message;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,9 +25,9 @@ use Cake\Mailer\Message;
 class AppMailer extends Mailer
 {
 
-    public $afterRunParams = [];
+    public array $afterRunParams = [];
 
-    public $customerAnonymizationForManufacturers = true;
+    public bool $customerAnonymizationForManufacturers = true;
 
     public function __construct($addBccBackupAddress = true)
     {
@@ -54,8 +54,8 @@ class AppMailer extends Mailer
 
         foreach($this->getTo() as $email) {
             
-            $addressManufacturerTable = FactoryLocator::get('Table')->get('AddressManufacturers');
-            $addressManufacturer = $addressManufacturerTable->find('all',
+            $addressManufacturersTable = TableRegistry::getTableLocator()->get('AddressManufacturers');
+            $addressManufacturer = $addressManufacturersTable->find('all',
                 conditions: [
                     'AddressManufacturers.email' => $email,
                     'AddressManufacturers.id_manufacturer > 0',
@@ -66,7 +66,7 @@ class AppMailer extends Mailer
             )->first();
             
             if (!empty($addressManufacturer) && $addressManufacturer->manufacturer->anonymize_customers) {
-                $customersTable = FactoryLocator::get('Table')->get('Customers');
+                $customersTable = TableRegistry::getTableLocator()->get('Customers');
                 $customersTable->dropManufacturersInNextFind();
                 $customers = $customersTable->find('all',
                     contain: [
@@ -112,8 +112,8 @@ class AppMailer extends Mailer
         }
 
         // due to queue_jobs.text field datatype "mediumtext" the limit of emails is 16MB (including attachments)
-        $queuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
-        $queuedJobs->createJob('AppEmail', [
+        $queuedJobsTable = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $queuedJobsTable->createJob('AppEmail', [
             'class' => Message::class,
             'settings' => $this->getMessage()->__serialize(),
             'serialized' => true,

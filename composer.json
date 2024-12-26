@@ -44,7 +44,8 @@
         "phpstan/phpstan": "^1.0",
         "cakephp/bake": "^3.0.0",
         "ergebnis/phpstan-rules": "^2.0",
-        "friendsofcake/fixturize": "^3.0"
+        "friendsofcake/fixturize": "^3.0",
+        "cakedc/cakephp-phpstan": "^3.2"
     },
     "autoload": {
         "psr-4": {

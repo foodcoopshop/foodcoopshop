@@ -20,21 +20,12 @@ use Cake\Core\Configure;
 class CartProductsTableTest extends AppCakeTestCase
 {
 
-    public $CartProduct;
-    public $Cart;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-        $this->Cart = $this->getTableLocator()->get('Carts');
-    }
-
     public function testRemoveAllWithWrongCartId()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('wrong cartId: 0');
-        $this->CartProduct->removeAll('bla', Configure::read('test.superadminId'));
+        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+        $cartProductsTable->removeAll('bla', Configure::read('test.superadminId'));
     }
 
     public function testRemoveAllWithCorrectCartIdAndWrongCustomerId()
@@ -43,21 +34,24 @@ class CartProductsTableTest extends AppCakeTestCase
         $customerId = Configure::read('test.adminId');
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('no cart found for cartId: 1 and customerId: 88');
-        $this->CartProduct->removeAll($cartId, $customerId);
+        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+        $cartProductsTable->removeAll($cartId, $customerId);
     }
 
     public function testRemoveAllWithCorrectCartIdAndCorrectCustomerId()
     {
         $cartId = 1;
         $customerId = Configure::read('test.superadminId');
-        $this->CartProduct->removeAll($cartId, $customerId);
+        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+        $cartProductsTable->removeAll($cartId, $customerId);
         $cart = $this->getCartWithCartProducts($cartId, $customerId);
         $this->assertEmpty($cart->cart_products, 'cart products not empty');
     }
 
     private function getCartWithCartProducts($cartId, $customerId)
     {
-        $cart = $this->Cart->find('all',
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
                 'Carts.id_customer' => $customerId

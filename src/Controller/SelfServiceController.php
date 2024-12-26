@@ -26,10 +26,7 @@ use App\Model\Entity\Customer;
 class SelfServiceController extends FrontendController
 {
 
-    protected $Category;
-    protected $Invoice;
-
-    protected $cartService;
+    protected CartService $cartService;
 
     public function beforeFilter(EventInterface $event)
     {
@@ -89,8 +86,8 @@ class SelfServiceController extends FrontendController
             $keyword = h(trim($this->getRequest()->getQuery('productWithError')));
         }
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $categoriesForSelect = $this->Category->getForSelect(null, false, false, false);
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $categoriesForSelect = $categoriesTable->getForSelect(null, false, false, false);
 
         $catalogService = new CatalogService();
         $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
@@ -212,8 +209,8 @@ class SelfServiceController extends FrontendController
                     if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                         $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
                     } else {
-                        $this->Invoice = $this->getTableLocator()->get('Invoices');
-                        $invoice = $this->Invoice->find('all', conditions: [
+                        $invoicesTable = $this->getTableLocator()->get('Invoices');
+                        $invoice = $invoicesTable->find('all', conditions: [
                             'Invoices.id' => $invoiceId,
                         ])->first();
                         if (!empty($invoice)) {

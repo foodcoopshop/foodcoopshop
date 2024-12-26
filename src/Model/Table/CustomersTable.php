@@ -6,7 +6,6 @@ namespace App\Model\Table;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
@@ -15,6 +14,8 @@ use Cake\Routing\Router;
 use App\Model\Entity\Customer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
+use Cake\ORM\TableRegistry;
+use Cake\ORM\Query;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +32,6 @@ use App\Model\Entity\Payment;
  */
 class CustomersTable extends AppTable
 {
-
-    protected $Product;
 
     public function initialize(array $config): void
     {
@@ -62,7 +61,6 @@ class CustomersTable extends AppTable
         $this->hasMany('ValidOrderDetails', [
             'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',
-            'limit' => 1
         ]);
         $this->hasMany('Manufacturers', [
             'foreignKey' => 'id_customer'
@@ -121,10 +119,8 @@ class CustomersTable extends AppTable
         ->add('passwd_old', 'custom', [
             'rule'=>  function ($value, $context) {
                 $user = $this->get($context['data']['id_customer']);
-                if ($user) {
-                    if ((new DefaultPasswordHasher())->check($value, $user->passwd)) {
-                        return true;
-                    }
+                if ((new DefaultPasswordHasher())->check($value, $user->passwd)) {
+                    return true;
                 }
                 return false;
             },
@@ -173,8 +169,8 @@ class CustomersTable extends AppTable
         $validator->email('email', true, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {
-                $ct = FactoryLocator::get('Table')->get('Customers');
-                return $ct->exists([
+                $customersTable = TableRegistry::getTableLocator()->get('Customers');
+                return $customersTable->exists([
                     'email' => $value
                 ]);
             },
@@ -182,8 +178,8 @@ class CustomersTable extends AppTable
         ]);
         $validator->add('email', 'account_inactive', [
             'rule' => function ($value, $context) {
-                $ct = FactoryLocator::get('Table')->get('Customers');
-                $record  = $ct->find('all',
+                $customersTable = TableRegistry::getTableLocator()->get('Customers');
+                $record  = $customersTable->find('all',
                     conditions: [
                         'email' => $value,
                     ],
@@ -208,7 +204,7 @@ class CustomersTable extends AppTable
         return $validator->equals('terms_of_use_accepted_date_checkbox', 1, __('Please_accept_the_terms_of_use.'));
     }
 
-    public function findAuth(\Cake\ORM\Query $query, array $options)
+    public function findAuth(Query $query, array $options)
     {
         $query->where([
             'Customers.active' => APP_ON
@@ -285,8 +281,8 @@ class CustomersTable extends AppTable
         }
 
         if ($identity->shopping_price == Customer::PURCHASE_PRICE) {
-            $this->Product = FactoryLocator::get('Table')->get('Products');
-            $purchasePrices = $this->Product->find('all',
+            $productsTable = TableRegistry::getTableLocator()->get('Products');
+            $purchasePrices = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId,
                 ],
@@ -302,8 +298,8 @@ class CustomersTable extends AppTable
 
             if (!empty($purchasePrices->unit_product) && !is_null($purchasePrices->unit_product->purchase_price_incl_per_unit)) {
                 $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
-                $priceInclPerUnitNet = $this->Product->getNetPrice($purchasePrices->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                $priceInclPerUnitNet = $productsTable->getNetPrice($purchasePrices->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                $priceInclPerUnitGrossWithSellingPriceTax = $productsTable->getGrossPrice($priceInclPerUnitNet, $taxRate);
                 $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
             }
         }
@@ -335,8 +331,8 @@ class CustomersTable extends AppTable
 
         if ($identity->shopping_price == Customer::PURCHASE_PRICE) {
 
-            $this->Product = FactoryLocator::get('Table')->get('Products');
-            $purchasePrices = $this->Product->find('all',
+            $productsTable = TableRegistry::getTableLocator()->get('Products');
+            $purchasePrices = $productsTable->find('all',
                 conditions: [
                     'Products.id_product' => $productId,
                 ],
@@ -361,8 +357,8 @@ class CustomersTable extends AppTable
                 }
                 if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && !is_null($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit)) {
                     $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
-                    $priceInclPerUnitNet = $this->Product->getNetPrice($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                    $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                    $priceInclPerUnitNet = $productsTable->getNetPrice($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                    $priceInclPerUnitGrossWithSellingPriceTax = $productsTable->getGrossPrice($priceInclPerUnitNet, $taxRate);
                     $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
                 }
             }
@@ -419,8 +415,8 @@ class CustomersTable extends AppTable
 
     public function getManufacturerRecord($customer)
     {
-        $mm = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $mm->find('all',
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
                 'AddressManufacturers.email' => $customer->email
             ],
@@ -472,9 +468,9 @@ class CustomersTable extends AppTable
     {
 
         $productBalanceSum = 0;
-        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
-        $query = $orderDetailTable->find('all',
+        $query = $orderDetailsTable->find('all',
             conditions: [
                 'Customers.id_customer IS NULL',
             ],
@@ -498,14 +494,14 @@ class CustomersTable extends AppTable
     private function getProductBalanceSumForCustomerIds($customerIds)
     {
 
-        $paymentTable = FactoryLocator::get('Table')->get('Payments');
-        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $productPaymentSum = $paymentTable->getSum($customerId, Payment::TYPE_PRODUCT);
-            $paybackPaymentSum = $paymentTable->getSum($customerId, Payment::TYPE_PAYBACK);
-            $productOrderSum = $orderDetailTable->getSumProduct($customerId);
+            $productPaymentSum = $paymentsTable->getSum($customerId, Payment::TYPE_PRODUCT);
+            $paybackPaymentSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);
+            $productOrderSum = $orderDetailsTable->getSumProduct($customerId);
             $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
             $productBalanceSum += $productBalance;
         }
@@ -517,9 +513,9 @@ class CustomersTable extends AppTable
     public function getDepositBalanceForDeletedCustomers()
     {
 
-        $paymentTable = FactoryLocator::get('Table')->get('Payments');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
 
-        $query = $paymentTable->find('all',
+        $query = $paymentsTable->find('all',
             conditions: [
                 'Customers.id_customer IS NULL'
             ],
@@ -578,13 +574,13 @@ class CustomersTable extends AppTable
     private function getDepositBalanceSumForCustomerIds($customerIds)
     {
 
-        $paymentTable = FactoryLocator::get('Table')->get('Payments');
-        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $depositBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $paymentSumDeposit = $paymentTable->getSum($customerId, 'deposit');
-            $depositSum = $orderDetailTable->getSumDeposit($customerId);
+            $paymentSumDeposit = $paymentsTable->getSum($customerId, 'deposit');
+            $depositSum = $orderDetailsTable->getSumDeposit($customerId);
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;
         }
@@ -593,14 +589,14 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
-        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $payment = FactoryLocator::get('Table')->get('Payments');
-        $paymentProductSum = $payment->getSum($customerId, Payment::TYPE_PRODUCT);
-        $paybackProductSum = $payment->getSum($customerId, Payment::TYPE_PAYBACK);
-        $paymentDepositSum = $payment->getSum($customerId, Payment::TYPE_DEPOSIT);
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $paymentProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PRODUCT);
+        $paybackProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);
+        $paymentDepositSum = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
 
-        $productSum = $orderDetailTable->getSumProduct($customerId);
-        $depositSum = $orderDetailTable->getSumDeposit($customerId);
+        $productSum = $orderDetailsTable->getSumProduct($customerId);
+        $depositSum = $orderDetailsTable->getSumDeposit($customerId);
 
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
         $creditBalance = round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
@@ -625,7 +621,7 @@ class CustomersTable extends AppTable
         contain: $contain);
         $customers = $this->addCustomersNameForOrderSelect($customers);
         $customers->select($this);
-        $addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');
+        $addressCustomersTable = TableRegistry::getTableLocator()->get('AddressCustomers');
         if (! $includeManufacturers) {
             $customers->select($addressCustomersTable);
         }

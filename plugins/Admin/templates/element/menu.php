@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 if ($identity === null || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
     return;
@@ -248,8 +248,8 @@ if ($identity->isManufacturer()) {
         ]
     ];
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
-        $od = FactoryLocator::get('Table')->get('OrderDetails');
-        $sumDepositDelivered = $od->getDepositSum($identity->getManufacturerId(), false);
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $sumDepositDelivered = $orderDetailsTable->getDepositSum($identity->getManufacturerId(), false);
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
@@ -272,7 +272,7 @@ if ($identity->isManufacturer()) {
     $menu[] = $actionLogsMenuElement;
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $firstOrderYear = $orderDetailsTable->getFirstOrderYear((string) $identity->getManufacturerId());
         if ($firstOrderYear !== false) {
             $menu[] = [

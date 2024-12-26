@@ -10,9 +10,9 @@ use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
-use Cake\Datasource\FactoryLocator;
 use App\Services\CartService;
 use Cake\View\JsonView;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,12 +30,7 @@ use Cake\View\JsonView;
 class CartsController extends FrontendController
 {
 
-    protected $BlogPost;
-    protected $Cart;
-    protected $OrderDetail;
-    protected $Product;
-
-    protected $cartService;
+    protected CartService $cartService;
 
     public function initialize(): void
     {
@@ -81,7 +76,6 @@ class CartsController extends FrontendController
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $cart = $this->identity->getCart();
 
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $cart['Cart']->pickup_day_entities) {
@@ -139,8 +133,8 @@ class CartsController extends FrontendController
     {
         $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', conditions: [
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', conditions: [
             'Carts.id_cart' => $cartId,
             'Carts.id_customer' => $this->identity->getId()
         ])->first();
@@ -150,8 +144,8 @@ class CartsController extends FrontendController
         }
         $this->set('cart', $cart);
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
@@ -210,8 +204,8 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($initialProductId);
 
         $cart = $this->identity->getCart();
         $this->identity->setCart($cart);
@@ -255,9 +249,9 @@ class CartsController extends FrontendController
 
     private function doEmptyCart()
     {
-        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
-        $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->removeAll($this->identity->getCartId(), $this->identity->getId());
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+        $cartProductsTable->removeAll($this->identity->getCartId(), $this->identity->getId());
         $this->identity->setCart($this->identity->getCart());
     }
 
@@ -272,21 +266,21 @@ class CartsController extends FrontendController
     {
 
         $this->doEmptyCart();
-        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
         $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getId());
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getId());
 
         $errorMessages = [];
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
+                $result = $cartProductsTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
@@ -296,7 +290,7 @@ class CartsController extends FrontendController
 
         $message = __('Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart.');
         $message .= '<br />';
-        $message .= __('You_can_add_more_products_now.');;
+        $message .= __('You_can_add_more_products_now.');
 
         if (!empty($errorMessages)) {
             $message .= '<div class="error">';
@@ -318,8 +312,8 @@ class CartsController extends FrontendController
 
     public function addLastOrderToCart()
     {
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->identity->getId());
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->getLastOrderDetailsForDropdown($this->identity->getId());
         if (empty($orderDetails)) {
             $message = __('There_are_no_orders_available.');
             $this->Flash->error($message);
@@ -344,14 +338,14 @@ class CartsController extends FrontendController
         $initialProductId = $this->getRequest()->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
-        $this->Product = $this->getTableLocator()->get('Products');
-        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $ids = $productsTable->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->getRequest()->getData('amount');
         $orderedQuantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat(
             (string) $this->getRequest()->getData('orderedQuantityInUnits')
         );
 
-        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
         $result = $cartProductTable->add($ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 

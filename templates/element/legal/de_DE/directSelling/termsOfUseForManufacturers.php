@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 ?>
 <h1>Nutzungsbedingungen für Hersteller</h1>
@@ -48,8 +48,8 @@ use Cake\Datasource\FactoryLocator;
 <p>2.7. Der Betreiber hat das Recht, Produkte, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
 
 <?php
-$manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
-$variableMemberFee = $manufacturerTable->getOptionVariableMemberFee($identity->manufacturer->variable_member_fee);
+$manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+$variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($identity->manufacturer->variable_member_fee);
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) { ?>
     <p>2.8. Für jede über die Plattform verkaufte Ware oder Dienstleistung steht dem Betreiber eine Provision in Höhe von <?php echo $variableMemberFee; ?>% des Umsatzes zuzüglich einer allfälligen Umsatzsteuer zu. Der Betreiber ist berechtigt, diesen Betrag unmittelbar vor der Auszahlung an den Hersteller einzubehalten. Der Hersteller bekommt die Rechnungen der verkauften Produkte (inklusive der einbehaltenen Beträge) automatisch per E-Mail.</p>
 <?php } ?>

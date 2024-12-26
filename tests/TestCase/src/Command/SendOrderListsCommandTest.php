@@ -28,10 +28,6 @@ use App\Model\Entity\OrderDetail;
 class SendOrderListsCommandTest extends AppCakeTestCase
 {
 
-    protected $ActionLog;
-    public $Cart;
-    protected $OrderDetail;
-    protected $Product;
     protected $SendOrderLists;
 
     use AppIntegrationTestTrait;
@@ -44,14 +40,12 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Product = $this->getTableLocator()->get('Products');
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
-        $this->OrderDetail->deleteAll([]);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->deleteAll([]);
         $this->exec('send_order_lists');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
@@ -75,9 +69,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cronjobRunDay = '2019-02-27';
         $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay(strtotime($cronjobRunDay));
 
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailId),
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($orderDetailId),
                 [
                     'pickup_day' => $pickupDay,
                 ]
@@ -187,9 +182,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
 
         // 2) change product send_order_list_weekday and run cronjob again
-        $this->Product->save(
-            $this->Product->patchEntity(
-                $this->Product->get($productId),
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->save(
+            $productsTable->patchEntity(
+                $productsTable->get($productId),
                 [
                         'delivery_rhythm_send_order_list_weekday' => 2
                 ]
@@ -206,8 +202,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailCount(1);
 
         // 3) assert action log
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', conditions: [
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all', conditions: [
             'type' => 'cronjob_send_order_lists'
         ])->toArray();
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 €<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
@@ -226,9 +222,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $deliveryDay = '2019-10-11';
         $cronjobRunDay = '2019-10-02';
 
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailIdIndividualDate),
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($orderDetailIdIndividualDate),
                 [
                     'pickup_day' => $deliveryDay,
                 ]
@@ -243,9 +240,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
 
         $orderDetailIdWeeklyA = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailIdWeeklyA),
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($orderDetailIdWeeklyA),
                 [
                     'pickup_day' => '2019-10-04',
                 ]
@@ -253,9 +250,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         );
 
         $orderDetailIdWeeklyB = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailIdWeeklyB),
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($orderDetailIdWeeklyB),
                 [
                     'pickup_day' => '2019-10-04',
                 ]
@@ -283,8 +280,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // 2) assert action log
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLog = $this->ActionLog->find('all', conditions: [
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLog = $actionLogsTable->find('all', conditions: [
             'type' => 'cronjob_send_order_lists'
         ])->first();
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 2 Produkte / 2,00 €', $actionLog->text);
@@ -327,8 +324,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
             'default_quantity_after_sending_order_lists' => $defaultQuantity,
             'quantity' => 10,
         ];
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Product->changeQuantity([
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeQuantity([
             [$productId1 => $newProductData],
             [$productId2 => $newProductData]
         ]);
@@ -336,7 +333,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $product1 = $this->Product->find('all',
+        $product1 = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId1,
             ],
@@ -347,9 +344,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertEquals($defaultQuantity, $product1->stock_available->default_quantity_after_sending_order_lists);
         $this->assertEquals($defaultQuantity, $product1->stock_available->quantity);
 
-        $product2 = $this->Product->find('all',
+        $product2 = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $this->Product->getProductIdAndAttributeId($productId2)['productId'],
+                'Products.id_product' => $productsTable->getProductIdAndAttributeId($productId2)['productId'],
             ],
             contain: [
                 'ProductAttributes.StockAvailables',
@@ -363,10 +360,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     {
 
         $stockProductId = 346;
-        $this->Product = $this->getTableLocator()->get('Products');
+        $productsTable = $this->getTableLocator()->get('Products');
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
         $this->changeManufacturer(5, 'include_stock_products_in_order_lists', 0);
-        $this->Product->changeIsStockProduct([[$stockProductId => true]]);
+        $productsTable->changeIsStockProduct([[$stockProductId => true]]);
 
         $cronjobRunDay = '2018-01-31';
         $this->exec('send_order_lists ' . $cronjobRunDay);
@@ -431,9 +428,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $orderDetailId = 1;
 
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailId),
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get($orderDetailId),
                 [
                     'pickup_day' => '2020-08-05',
                 ]
@@ -478,13 +476,14 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cartB = $this->getCartById($cartId);
 
         $pickupDay = '2019-02-22';
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
         foreach([$cartA, $cartB] as $cart) {
             foreach($cart->cart_products as $cartProduct) {
                 $orderDetailId = $cartProduct->order_detail->id_order_detail;
-                $this->OrderDetail->save(
-                    $this->OrderDetail->patchEntity(
-                        $this->OrderDetail->get($orderDetailId),
+                $orderDetailsTable->save(
+                    $orderDetailsTable->patchEntity(
+                        $orderDetailsTable->get($orderDetailId),
                         [
                             'pickup_day' => new Date($pickupDay),
                             'created' => new Date('2020-11-05'),
@@ -508,7 +507,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)
     {
-        $newOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $newOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId,
             ],

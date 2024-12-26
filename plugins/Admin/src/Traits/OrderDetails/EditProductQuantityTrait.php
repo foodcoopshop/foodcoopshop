@@ -6,8 +6,8 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Services\ChangeSellingPriceService;
-use Cake\Datasource\FactoryLocator;
 use App\Services\ProductQuantityService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -49,8 +49,8 @@ trait EditProductQuantityTrait
             return;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
@@ -97,7 +97,7 @@ trait EditProductQuantityTrait
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
-        $unitsTable = FactoryLocator::get('Table')->get('Units');
+        $unitsTable = TableRegistry::getTableLocator()->get('Units');
         $unitObject = $unitsTable->getUnitsObject($oldOrderDetail->product_id, $oldOrderDetail->product_attribute_id);
 
         $productQuantityService = new ProductQuantityService();
@@ -130,8 +130,8 @@ trait EditProductQuantityTrait
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+            $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+            $sendOrderedProductPriceChangedNotification = $manufacturersTable->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
 
             if (! $this->identity->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
@@ -152,8 +152,8 @@ trait EditProductQuantityTrait
         }
 
         if ($quantityWasChanged) {
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave('order_detail_product_quantity_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
             $this->Flash->success($message);
         }
 

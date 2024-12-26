@@ -47,14 +47,15 @@ trait EditDeliveryRhythmTrait
             $productId = $productIds[0];
         }
 
+        $productsTable = $this->getTableLocator()->get('Products');
         if ($singleEditMode) {
-            $oldProduct = $this->Product->find('all',
-                conditions: [
-                    'Products.id_product' => $productId
-                ],
-                contain: [
-                    'Manufacturers'
-                ]
+            $oldProduct = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('id_product') => $productId,
+            ],
+            contain: [
+                'Manufacturers',
+            ]
             )->first();
         }
 
@@ -79,7 +80,7 @@ trait EditDeliveryRhythmTrait
         if ($deliveryRhythmSendOrderListWeekday == '') {
             $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, (new DeliveryRhythmService())->getSendOrderListsWeekday());
         }
-        $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $deliveryRhythmSendOrderListWeekday);
+        $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, (int) $deliveryRhythmSendOrderListWeekday);
 
         if (in_array($deliveryRhythmTypeCombined, ['0-individual'])) {
             $product2update['delivery_rhythm_order_possible_until'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmOrderPossibleUntil);
@@ -97,7 +98,7 @@ trait EditDeliveryRhythmTrait
                 ];
             }
 
-            $this->Product->changeDeliveryRhythm($products2update);
+            $productsTable->changeDeliveryRhythm($products2update);
 
             $additionalMessages = [];
             if ($deliveryRhythmFirstDeliveryDay != '') {
@@ -131,6 +132,7 @@ trait EditDeliveryRhythmTrait
                 $additionalMessages[] = $deliveryDayMessage;
             }
 
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if ($singleEditMode && isset($productId)) {
                 $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
                     '<b>' . $oldProduct->name . '</b>',
@@ -144,7 +146,7 @@ trait EditDeliveryRhythmTrait
                 if (!empty($additionalMessages)) {
                     $messageString .= ' ' . join(', ', $additionalMessages);
                 }
-                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->identity->getId(), $productId, 'products', $messageString);
+                $actionLogsTable->customSave('product_delivery_rhythm_changed', $this->identity->getId(), $productId, 'products', $messageString);
                 $this->getRequest()->getSession()->write('highlightedRowId', $productId);
             } else {
                 $messageString = __d('admin', 'Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}.', [
@@ -154,7 +156,7 @@ trait EditDeliveryRhythmTrait
                 if (!empty($additionalMessages)) {
                     $messageString .= ' ' . join(', ', $additionalMessages);
                 }
-                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->identity->getId(), 0, 'products', $messageString . ' Ids: ' . join(', ', $productIds));
+                $actionLogsTable->customSave('product_delivery_rhythm_changed', $this->identity->getId(), 0, 'products', $messageString . ' Ids: ' . join(', ', $productIds));
             }
 
             $this->Flash->success($messageString);

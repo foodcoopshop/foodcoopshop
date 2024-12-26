@@ -40,9 +40,10 @@ trait DeleteImageTrait
             return;
         }
 
-        $product = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
                 'Images',
@@ -50,7 +51,7 @@ trait DeleteImageTrait
             ]
         )->first();
 
-        $this->Product->changeImage(
+        $productsTable->changeImage(
             [
                 [$productId => 'no-image']
             ]
@@ -63,7 +64,8 @@ trait DeleteImageTrait
         ]);
 
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_image_deleted', $this->identity->getId(), $productId, 'products', $actionLogMessage);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_image_deleted', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

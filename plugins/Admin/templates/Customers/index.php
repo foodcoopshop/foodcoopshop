@@ -15,8 +15,8 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\Customer;
+use Cake\ORM\TableRegistry;
 
 $paginator = $this->loadHelper('Paginator', [
     'className' => 'ArraySupportingSortOnlyPaginator',
@@ -294,8 +294,8 @@ foreach ($customers as $customer) {
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
         echo '<td align="center">';
         if (!empty($customer->feedback)) {
-            $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
-            $approved = $feedbackTable->isApproved($customer->feedback);
+            $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
+            $approved = $feedbacksTable->isApproved($customer->feedback);
             $tooltipContent = __d('admin', 'created') . ': ' . $customer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
             $tooltipContent .= __d('admin', 'changed') . ': ' . $customer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
             echo $this->Html->link(

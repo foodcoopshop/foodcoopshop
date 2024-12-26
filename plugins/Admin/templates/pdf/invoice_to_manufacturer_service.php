@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
@@ -74,9 +74,9 @@ $pdf->renderTable();
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
 
-    $m = FactoryLocator::get('Table')->get('Manufacturers');
-    $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
-    $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
+    $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+    $compensatedPrice = $manufacturersTable->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
+    $newSumPriceIncl = $manufacturersTable->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
     $firstColumnWidth = 365;
     $secondColumnWidth = 165;
 

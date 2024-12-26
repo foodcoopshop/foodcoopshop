@@ -16,32 +16,22 @@ declare(strict_types=1);
  */
 namespace App\Services;
 
-use App\Model\Table\CustomersTable;
-use App\Model\Table\ManufacturersTable;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\ProductAttributesTable;
-use App\Model\Table\ProductsTable;
 use Cake\I18n\I18n;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Database\Query;
 use Cake\Utility\Security;
-use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
+use Cake\ORM\TableRegistry;
 
 class CatalogService
 {
 
-    protected CustomersTable $Customer;
-    protected ManufacturersTable $Manufacturer;
-    protected ProductsTable $Product;
-    protected ProductAttributesTable $ProductAttribute;
-    protected OrderDetailsTable $OrderDetail;
     protected $identity;
 
     const MAX_PRODUCTS_PER_PAGE = 100;
@@ -121,9 +111,9 @@ class CatalogService
     protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
     {
 
-        $this->Product = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
-        $query = $this->Product->find('all');
+        $query = $productsTable->find('all');
         $query = $this->addContains($query);
         if ($keyword == '') {
             $query = $this->addOrder($query);
@@ -176,15 +166,22 @@ class CatalogService
 
     protected function addSelectFields($query)
     {
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $depositProductsTable = TableRegistry::getTableLocator()->get('DepositProducts');
+        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $unitProductsTable = TableRegistry::getTableLocator()->get('UnitProducts');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
+
         $query
             ->select('Products.id_product')->distinct()
-            ->select($this->Product)
-            ->select($this->Product->DepositProducts)
+            ->select($productsTable)
+            ->select($depositProductsTable)
             ->select('Images.id_image')
-            ->select($this->Product->Taxes)
-            ->select($this->Product->Manufacturers)
-            ->select($this->Product->UnitProducts)
-            ->select($this->Product->StockAvailables);
+            ->select($taxesTable)
+            ->select($manufacturersTable)
+            ->select($unitProductsTable)
+            ->select($stockAvailablesTable);
 
         return $query;
     }
@@ -319,8 +316,9 @@ class CatalogService
             return $query;
         }
 
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
         $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
-        $query->select($this->Product->PurchasePriceProducts);
+        $query->select($purchasePriceProductsTable);
         $query->contain([
             'PurchasePriceProducts',
             'ProductAttribute',
@@ -367,8 +365,9 @@ class CatalogService
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
             $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
-            $query->select($this->Product->BarcodeProducts);
+            $query->select($barcodeProductsTable);
             $query->contain([
                 'BarcodeProducts',
                 'ProductAttributes.BarcodeProductAttributes',
@@ -428,7 +427,7 @@ class CatalogService
             return $products;
         }
 
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $deliveryRhytmService = new DeliveryRhythmService();
         $i = -1;
@@ -436,10 +435,10 @@ class CatalogService
             $i++;
             $pickupDay = $deliveryRhytmService->getNextDeliveryDayForProduct($product, $orderCustomerService);
             if (empty($product->product_attributes)) {
-                $product->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
+                $product->ordered_total_amount = $orderDetailsTable->getTotalOrderDetails($pickupDay, $product->id_product, 0);
             } else {
                 foreach($product->product_attributes as &$attribute) {
-                    $attribute->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, $attribute->id_product_attribute);
+                    $attribute->ordered_total_amount = $orderDetailsTable->getTotalOrderDetails($pickupDay, $product->id_product, $attribute->id_product_attribute);
                 }
             }
         }
@@ -454,9 +453,9 @@ class CatalogService
             return $products;
         }
 
-        $this->ProductAttribute = FactoryLocator::get('Table')->get('ProductAttributes');
         $productAttributes = Cache::remember('productAttributes', function() {
-            return $this->ProductAttribute->find('all')
+            $productAttributesTable = TableRegistry::getTableLocator()->get('ProductAttributes');
+            return $productAttributesTable->find('all')
                 ->select(['ProductAttributes.id_product'])
                 ->groupBy('ProductAttributes.id_product')
                 ->toArray();
@@ -481,7 +480,7 @@ class CatalogService
             return $products;
         }
 
-        $this->Product = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $deliveryRhythmService = new DeliveryRhythmService();
         $i = -1;
         foreach($products as $product) {
@@ -494,7 +493,7 @@ class CatalogService
             }
 
             // deactivates the product if manufacturer based delivery break is enabled
-            if ($this->Product->deliveryBreakManufacturerEnabled(
+            if ($productsTable->deliveryBreakManufacturerEnabled(
                 $product->manufacturer->no_delivery_days,
                 $deliveryDate,
                 $product->manufacturer->stock_management_enabled,
@@ -503,7 +502,7 @@ class CatalogService
             }
 
             // deactivates the product if global delivery break is enabled
-            if ($this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
+            if ($productsTable->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
                 $products[$i]->delivery_break_enabled = true;
             }
 
@@ -534,10 +533,8 @@ class CatalogService
 
     public function prepareProducts($products)
     {
-        $this->Product = FactoryLocator::get('Table')->get('Products');
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
-        $this->ProductAttribute = FactoryLocator::get('Table')->get('ProductAttributes');
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
         $i = 0;
         foreach ($products as $product) {
@@ -554,7 +551,7 @@ class CatalogService
             ];
 
             // START: override shopping with purchase prices / zero prices
-            $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
+            $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedProductPricesByShoppingPrice(
                 $products[$i]->id_product,
                 $products[$i]->price,
                 $products[$i]->unit_product->price_incl_per_unit,
@@ -563,7 +560,7 @@ class CatalogService
             );
 
             $products[$i]->selling_prices = [
-                'gross_price' => $this->Product->getGrossPrice($products[$i]->price, $taxRate),
+                'gross_price' => $productsTable->getGrossPrice($products[$i]->price, $taxRate),
                 'price_incl_per_unit' => $products[$i]->unit_product->price_incl_per_unit,
             ];
 
@@ -572,7 +569,7 @@ class CatalogService
             $products[$i]->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
             // END: override shopping with purchase prices / zero prices
 
-            $grossPrice = $this->Product->getGrossPrice($products[$i]->price, $taxRate);
+            $grossPrice = $productsTable->getGrossPrice($products[$i]->price, $taxRate);
 
             $products[$i]->gross_price = $grossPrice;
             $products[$i]->calculated_tax = $grossPrice - $products[$i]->price;
@@ -602,10 +599,10 @@ class CatalogService
                 }
 
                 // START: override shopping with purchase prices / zero prices
-                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
+                $modifiedAttributePricesByShoppingPrice = $customersTable->getModifiedAttributePricesByShoppingPrice($attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
 
                 $attribute->selling_prices = [
-                    'gross_price' => $this->Product->getGrossPrice($attribute->price, $taxRate),
+                    'gross_price' => $productsTable->getGrossPrice($attribute->price, $taxRate),
                     'price_incl_per_unit' => $attribute->unit_product_attribute->price_incl_per_unit,
                 ];
 
@@ -614,7 +611,7 @@ class CatalogService
                 $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
                 // END: override shopping with purchase prices / zero prices
 
-                $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
+                $grossPrice = $productsTable->getGrossPrice($attribute->price, $taxRate);
 
                 $attribute->gross_price = $grossPrice;
                 $attribute->calculated_tax = $grossPrice - $attribute->price;

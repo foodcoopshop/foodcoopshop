@@ -18,9 +18,6 @@ use Admin\Traits\Customers\IndexTrait;
 use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PaymentsTable;
-use App\Model\Table\ProductsTable;
 use Cake\View\JsonView;
 
 /**
@@ -39,10 +36,6 @@ use Cake\View\JsonView;
 
 class CustomersController extends AdminAppController
 {
-
-    protected OrderDetailsTable $OrderDetail;
-    protected PaymentsTable $Payment;
-    protected ProductsTable $Product;
 
     use ChangePasswordTrait;
     use ChangeStatusTrait;

@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace App\Services\Csv\Reader;
 
 use League\Csv\Reader;
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class ProductReaderService extends Reader {
 
@@ -77,11 +77,11 @@ class ProductReaderService extends Reader {
     public function import($manufacturerId)
     {
         $records = $this->getPreparedRecords();
-        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         $validatedProductEntities = [];
         foreach($records as $record) {
-            $validatedProductEntities[] = $productTable->getValidatedEntity(
+            $validatedProductEntities[] = $productsTable->getValidatedEntity(
                 $manufacturerId,
                 $record[__('Name')],
                 $record[__('Description_short')],
@@ -101,7 +101,7 @@ class ProductReaderService extends Reader {
         if ($allProductEntitiesValid) {
             $savedProductEntities = [];
             foreach($validatedProductEntities as $validatedProductEntity) {
-                $savedProductEntities[] = $productTable->save($validatedProductEntity);
+                $savedProductEntities[] = $productsTable->save($validatedProductEntity);
             }
             return $savedProductEntities;
         }

@@ -40,8 +40,8 @@ trait EditGroupTrait
             return;
         }
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $oldCustomer = $this->Customer->find('all', conditions: [
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $oldCustomer = $customersTable->find('all', conditions: [
             'Customers.id_customer' => $customerId
         ])->first();
 
@@ -57,8 +57,8 @@ trait EditGroupTrait
             return;
         }
 
-        $this->Customer->save(
-            $this->Customer->patchEntity(
+        $customersTable->save(
+            $customersTable->patchEntity(
                 $oldCustomer,
                 [
                     'id_default_group' => $groupId
@@ -71,8 +71,8 @@ trait EditGroupTrait
             '<b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b>'
         ]);
         $this->Flash->success($messageString);
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_group_changed', $this->identity->getId(), $customerId, 'customers', $messageString);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('customer_group_changed', $this->identity->getId(), $customerId, 'customers', $messageString);
 
         $this->set([
             'status' => 1,

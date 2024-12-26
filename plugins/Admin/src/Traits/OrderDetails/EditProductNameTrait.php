@@ -27,8 +27,8 @@ trait EditProductNameTrait
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productName = strip_tags(html_entity_decode($this->getRequest()->getData('productName')));
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $orderDetailsTable->find('all',
             conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId,
             ],
@@ -36,20 +36,20 @@ trait EditProductNameTrait
         $oldName = $oldOrderDetail->product_name;
 
         try {
-            $entity = $this->OrderDetail->patchEntity(
+            $entity = $orderDetailsTable->patchEntity(
                 $oldOrderDetail,
                 ['product_name' => $productName],
                 ['validate' => 'name'],
             );
             if ($entity->hasErrors()) {
-                $errorMessages = $this->OrderDetail->getAllValidationErrors($entity);
+                $errorMessages = $orderDetailsTable->getAllValidationErrors($entity);
                 throw new \Exception(join('<br />', $errorMessages));
             }
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 
-        $this->OrderDetail->save($entity);
+        $orderDetailsTable->save($entity);
 
         $message = __d('admin', 'The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}.', [
             '<b>' . $oldName . '</b>',

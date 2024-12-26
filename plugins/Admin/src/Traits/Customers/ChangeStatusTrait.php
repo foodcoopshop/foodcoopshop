@@ -33,8 +33,8 @@ trait ChangeStatusTrait
             throw new RecordNotFoundException('status needs to be 0 or 1');
         }
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
         conditions: [
             'Customers.id_customer' => $customerId
         ],
@@ -43,7 +43,7 @@ trait ChangeStatusTrait
         ])->first();
 
         $customer->active = $status;
-        $this->Customer->save($customer);
+        $customersTable->save($customer);
 
         $message = __d('admin', 'The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
         $actionLogType = 'customer_set_inactive';
@@ -53,7 +53,7 @@ trait ChangeStatusTrait
         }
 
         if ($sendEmail) {
-            $newPassword = $this->Customer->setNewPassword($customer->id_customer);
+            $newPassword = $customersTable->setNewPassword($customer->id_customer);
 
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('customer_activated');
@@ -76,8 +76,8 @@ trait ChangeStatusTrait
 
         $this->Flash->success($message);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $customerId, 'customer', $message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
     }

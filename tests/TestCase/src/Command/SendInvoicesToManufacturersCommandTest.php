@@ -25,21 +25,14 @@ use App\Model\Entity\OrderDetail;
 class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 {
 
-    public $Cart;
-    protected $OrderDetail;
-
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-
-    public $Order;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->prepareSendingInvoices();
-        $this->Cart = $this->getTableLocator()->get('Carts');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
     }
 
     public function testContentOfInvoice()
@@ -57,15 +50,17 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
         $this->prepareSendInvoices();
 
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
-        $meatManufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $meatManufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $this->changeManufacturer($meatManufacturerId, 'variable_member_fee', 10);
-        $milkManufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.milkManufacturerId'));
+        $milkManufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.milkManufacturerId'));
         $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
         $this->exec('send_invoices_to_manufacturers "2018-03-11 10:20:30"');
         $this->runAndAssertQueue();
 
-        $orderDetails = $this->OrderDetail->find('all')->toArray();
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
             $expectedOrderState = OrderDetail::STATE_BILLED_CASHLESS;
             if ($orderDetail->id_order_detail == 4) {

@@ -17,18 +17,14 @@ declare(strict_types=1);
 namespace App\Services\PdfWriter;
 
 use App\Services\Pdf\CustomerInvoiceTcpdfService;
-use Cake\Datasource\FactoryLocator;
 
 class InvoiceToCustomerPdfWriterService extends PdfWriterService
 {
-
-    public $Invoice;
 
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new CustomerInvoiceTcpdfService());
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
     }
 
     public function prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $invoiceDate)

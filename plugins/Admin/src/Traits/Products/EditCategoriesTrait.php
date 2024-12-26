@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,28 +36,29 @@ trait EditCategoriesTrait
         $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'all-products'
         $selectedCategories = array_unique($selectedCategories);
 
-        $oldProduct = $this->Product->find('all',
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                $productsTable->aliasField('id_product') => $productId,
             ],
             contain: [
-                'Manufacturers'
+                'Manufacturers',
             ]
         )->first();
 
-        $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProductsTable = TableRegistry::getTableLocator()->get('CategoryProducts');
         $categoryProductsTable->deleteAll([
             'id_product' => $productId,
         ]);
 
-        $this->Category = $this->getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
         $data = [];
+        $categoriesTable = $this->getTableLocator()->get('Categories');
         foreach ($selectedCategories as $selectedCategoryId) {
             // only add if entry of passed id exists in category table
-            $oldCategory = $this->Category->find('all',
+            $oldCategory = $categoriesTable->find('all',
                 conditions: [
-                    'Categories.id_category' => $selectedCategoryId
+                    $categoriesTable->aliasField('id_category') => $selectedCategoryId,
                 ]
             )->first();
             if (! empty($oldCategory)) {
@@ -76,9 +77,10 @@ trait EditCategoriesTrait
             $categoryProductsTable->saveMany($categoryProducts);
         }
 
-        $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
+        $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $product->name . '</b>', '<b>' . $product->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_categories_changed', $this->identity->getId(), $productId, 'products', $messageString);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_categories_changed', $this->identity->getId(), $productId, 'products', $messageString);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

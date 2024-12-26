@@ -26,8 +26,8 @@ trait ChangePasswordTrait
     {
         $this->set('title_for_layout', __d('admin', 'Change_password'));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', conditions: [
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all', conditions: [
             'Customers.id_customer' => $this->identity->getId()
         ])->first();
 
@@ -36,7 +36,7 @@ trait ChangePasswordTrait
             return;
         }
 
-        $customer = $this->Customer->patchEntity(
+        $customer = $customersTable->patchEntity(
             $customer,
             $this->getRequest()->getData(),
             [
@@ -49,8 +49,8 @@ trait ChangePasswordTrait
             $this->set('customer', $customer);
         } else {
             $ph = new DefaultPasswordHasher();
-            $this->Customer->save(
-                $this->Customer->patchEntity(
+            $customersTable->save(
+                $customersTable->patchEntity(
                     $customer,
                     [
                         'passwd' => $ph->hash($this->getRequest()->getData('Customers.passwd_1'))
@@ -70,8 +70,8 @@ trait ChangePasswordTrait
                 $actionLogModel = 'customers';
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $actionLogId, $actionLogModel, $message);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
             $this->redirect($this->referer());
         }

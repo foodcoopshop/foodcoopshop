@@ -16,12 +16,13 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
-$categoryTable = FactoryLocator::get('Table')->get('Categories');
+$categoriesTable = TableRegistry::getTableLocator()->get('Categories');
 
 foreach ($categories as $category) {
-    $level = $categoryTable->getLevel($category);
+    /** @phpstan-ignore-next-line */
+    $level = $categoriesTable->getLevel($category);
 
     $rowClass = [
         'data'

@@ -5,9 +5,9 @@ namespace App\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +31,8 @@ class PagesPolicy implements RequestPolicyInterface
         switch ($request->getParam('action')) {
             case 'detail':
                 $pageId = (int) $request->getParam('idAndSlug');
-                $pageTable = FactoryLocator::get('Table')->get('Pages');
-                $page = $pageTable->find('all',
+                $pagesTable = TableRegistry::getTableLocator()->get('Pages');
+                $page = $pagesTable->find('all',
                     conditions: [
                         'Pages.id_page' => $pageId,
                         'Pages.active' => APP_ON,

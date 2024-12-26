@@ -25,14 +25,6 @@ class BlogPostsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public $BlogPost;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-    }
-
     public function testBlogPostDetailOnlinePublicLoggedOut()
     {
         $this->get($this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'));
@@ -94,8 +86,9 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     public function testAddBlogPostWithEmoji()
     {
-        $this->BlogPost->save(
-            $this->BlogPost->newEntity([
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPostsTable->save(
+            $blogPostsTable->newEntity([
                 'title' => 'test title',
                 'short_description' => 'test title',
                 'content' => 'This is a text with an emoji: 😟'
@@ -105,10 +98,11 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
     {
-        $blogPost = $this->BlogPost->get($blogPostId);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPost = $blogPostsTable->get($blogPostId);
         $blogPost->is_private = $isPrivate;
         $blogPost->id_manufacturer = $manufacturerId;
         $blogPost->active = $active;
-        $this->BlogPost->save($blogPost);
+        $blogPostsTable->save($blogPost);
     }
 }

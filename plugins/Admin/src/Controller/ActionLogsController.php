@@ -5,7 +5,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,13 +21,6 @@ use Cake\Event\EventInterface;
  */
 class ActionLogsController extends AdminAppController
 {
-
-    public function beforeFilter(EventInterface $event)
-    {
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        parent::beforeFilter($event);
-    }
 
     public function index()
     {
@@ -92,7 +84,8 @@ class ActionLogsController extends AdminAppController
               ' OR (ActionLogs.customer_id = ' .$this->identity->getId().') )';
 
             if ($this->identity->getManufacturerAnonymizeCustomers()) {
-                $conditions['ActionLogs.type NOT IN'] = $this->ActionLog->getHiddenTypesForManufacturersWithEnabledAnonymization();
+                $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+                $conditions['ActionLogs.type NOT IN'] = $actionLogsTable->getHiddenTypesForManufacturersWithEnabledAnonymization();
             }
 
         }
@@ -120,7 +113,8 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('types', $types);
 
-        $query = $this->ActionLog->find('all',
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $query = $actionLogsTable->find('all',
         conditions: $conditions,
         contain: [
             'Customers',
@@ -144,17 +138,17 @@ class ActionLogsController extends AdminAppController
                 'ActionLogs.id' => 'DESC',
             ]
         ]);
+        $customersTable = $this->getTableLocator()->get('Customers');
         foreach ($actionLogs as $actionLog) {
             if (!empty($actionLog->customer)) {
-                $manufacturer = $this->Customer->getManufacturerRecord($actionLog->customer);
+                $manufacturer = $customersTable->getManufacturerRecord($actionLog->customer);
                 if (!empty($manufacturer)) {
                     $actionLog->customer->manufacturer = $manufacturer;
                 }
             }
         }
         $this->set('actionLogs', $actionLogs);
-
-        $this->set('actionLogModel', $this->ActionLog);
+        $this->set('actionLogsTable', $actionLogsTable);
 
         $titleForLayout = __d('admin', 'Activities');
         $this->set('title_for_layout', $titleForLayout);

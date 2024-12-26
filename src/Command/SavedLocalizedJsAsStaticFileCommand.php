@@ -26,7 +26,7 @@ class SavedLocalizedJsAsStaticFileCommand extends AppCommand
 
     public const ROUTE = '/js/localized-javascript.js';
 
-    protected $appPluginsToLoad = [];
+    protected array $appPluginsToLoad = [];
 
     use IntegrationTestTrait;
 

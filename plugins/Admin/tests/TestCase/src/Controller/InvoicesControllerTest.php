@@ -30,8 +30,6 @@ class InvoicesControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    protected $Invoice;
-
     public function testGeneratePaidInCashSavedCorrectly()
     {
 
@@ -45,16 +43,16 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', conditions: [
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all', conditions: [
             'Invoices.id_customer' => $customerId,
         ])->first();
 
         $this->assertEquals($invoice->paid_in_cash, $paidInCash);
 
         // assert that payment was automatically added
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $credit = $this->Customer->getCreditBalance($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $credit = $customersTable->getCreditBalance($customerId);
         $this->assertEquals(100, $credit);
 
     }
@@ -71,8 +69,8 @@ class InvoicesControllerTest extends AppCakeTestCase
 
         $this->generateInvoice($customerId, $paidInCash);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', conditions: [
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all', conditions: [
             'Invoices.id_customer' => $customerId,
         ])->first();
 
@@ -96,8 +94,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all',
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all',
         conditions: [
             'Invoices.id_customer' => $customerId,
         ],
@@ -107,8 +105,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         ])->first();
         $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->find('all', conditions: [
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->find('all', conditions: [
             'Payments.invoice_id' => $invoice->id,
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
@@ -122,7 +120,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
-        $invoices = $this->Invoice->find('all',
+        $invoices = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
@@ -147,7 +145,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
             conditions: [
                 'Invoices.id' => (int) $response->invoiceId,
             ],
@@ -155,8 +153,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertNotNull($invoice->email_status);
 
         // assert that automatically added payment was removed
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $credit = $this->Customer->getCreditBalance($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $credit = $customersTable->getCreditBalance($customerId);
         $this->assertEquals(61.97, $credit);
 
     }

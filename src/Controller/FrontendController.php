@@ -27,10 +27,7 @@ use App\Model\Entity\Cart;
 class FrontendController extends AppController
 {
 
-    public $protectEmailAddresses = true;
-    protected $Category;
-    protected $OrderDetail;
-    protected $Page;
+    public bool $protectEmailAddresses = true;
 
     protected function resetOriginalLoggedCustomer()
     {
@@ -76,10 +73,10 @@ class FrontendController extends AppController
         $categoriesForMenu = Cache::read($cacheKey);
         if ($categoriesForMenu === null) {
             if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
-                $this->Category = $this->getTableLocator()->get('Categories');
+                $categoriesTable = $this->getTableLocator()->get('Categories');
                 $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
                 $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
-                $categoriesForMenu = $this->Category->getForMenu();
+                $categoriesForMenu = $categoriesTable->getForMenu();
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                     'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
@@ -111,15 +108,15 @@ class FrontendController extends AppController
             ]);
             $manufacturersForMenu = Cache::read($cacheKey);
             if ($manufacturersForMenu === null) {
-                $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-                $manufacturersForMenu = $this->Manufacturer->getForMenu();
+                $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+                $manufacturersForMenu = $manufacturersTable->getForMenu();
                 Cache::write($cacheKey, $manufacturersForMenu);
             }
             $manufacturersForMenu = $manufacturersForMenu ?? [];
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
-        $this->Page = $this->getTableLocator()->get('Pages');
+        $pagesTable = $this->getTableLocator()->get('Pages');
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
@@ -127,7 +124,7 @@ class FrontendController extends AppController
             $conditions['Pages.is_private'] = APP_OFF;
         }
 
-        $pages = $this->Page->getThreaded($conditions);
+        $pages = $pagesTable->getThreaded($conditions);
         $pagesForHeader = [];
         $pagesForFooter = [];
         foreach ($pages as $page) {
@@ -170,12 +167,10 @@ class FrontendController extends AppController
             }
 
             $this->set('shoppingPrice', $this->identity->shopping_price);
-
-            $cartsTable = $this->getTableLocator()->get('Carts');
             $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? Cart::SELF_SERVICE_PAYMENT_TYPE_CASH : Cart::SELF_SERVICE_PAYMENT_TYPE_CREDIT);
 
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
+            $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+            $futureOrderDetails = $orderDetailsTable->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
 
             $this->identity->setCart($this->identity->getCart());

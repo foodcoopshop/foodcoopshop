@@ -35,12 +35,11 @@ class ManufacturersPolicy implements RequestPolicyInterface
         return match($request->getParam('action')) {
             'profile', 'myOptions' => $identity->isManufacturer(),
             'index', 'export', 'add' => $identity->isSuperadmin() || $identity->isAdmin(),
-            'edit', 'editOptions', 'getOrderListByProduct', 'getOrderListByCustomer', 'getInvoice' => 
-                $identity->isSuperadmin() || $identity->isAdmin(),
+            'edit', 'editOptions', 'getOrderListByProduct', 'getOrderListByCustomer' => $identity->isSuperadmin() || $identity->isAdmin(),
             'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $identity->isSuperadmin(),
             'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($identity->isSuperadmin() || $identity->isAdmin()),
             'setElFinderUploadPath' => $identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer(),
-             default =>  $identity === null
+             default => false,
         };
 
     }

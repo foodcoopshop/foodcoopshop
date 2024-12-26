@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 use Cake\Core\Configure;
 
 ?>
@@ -35,7 +36,7 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($identity->isManufacturer() || $identity->isSuperadmin() || $identity->isAdmin()) { ?>
-                <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($identity), 'data-val' => join(',', $types)]); ?>
+                <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogsTable->getTypesForDropdown($identity), 'data-val' => join(',', $types)]); ?>
             <?php } ?>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_users'), 'options' => []]); ?>
@@ -71,7 +72,7 @@ foreach ($actionLogs as $actionLog) {
     $i ++;
     $name = null;
 
-    $actionType = $actionLogModel->types[$actionLog->type];
+    $actionType = $actionLogsTable->types[$actionLog->type];
     $actionClass = empty($actionType['class']) ? [] : $actionType['class'];
     $actionClass = array_merge(['data'], $actionClass);
 
@@ -120,7 +121,6 @@ foreach ($actionLogs as $actionLog) {
     echo '<td class="center">';
 
     $showLink = false;
-    $targetBlank = true;
 
     // products
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'products' && ! ($actionLog->type == 'product_set_inactive')) {
@@ -170,7 +170,7 @@ foreach ($actionLogs as $actionLog) {
             [
                 'class' => 'btn btn-outline-light',
                 'title' => $title,
-                'target' => $targetBlank ? '_blank' : '',
+                'target' => '_blank',
                 'escape' => false
             ]
         );

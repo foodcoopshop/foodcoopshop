@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Admin\Traits\ManufacturerIdTrait;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use App\Model\Entity\Payment;
@@ -29,11 +27,6 @@ class DepositsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    protected PaymentsTable $Payment;
-    protected OrderDetailsTable $OrderDetail;
-
-    public $manufacturerId;
-
     public function overviewDiagram()
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
@@ -50,30 +43,30 @@ class DepositsController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_EMPTY_GLASSES);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $paymentsTable->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_EMPTY_GLASSES);
         $preparedManufacturerEmptyGlassesData = [];
         foreach($manufacturerDepositSumEmptyGlassesByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
             $preparedManufacturerEmptyGlassesData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $manufacturerDepositSumMoneyByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_MONEY);
+        $manufacturerDepositSumMoneyByCalendarWeek = $paymentsTable->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_MONEY);
         $preparedManufacturerMoneyData = [];
         foreach($manufacturerDepositSumMoneyByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
             $preparedManufacturerMoneyData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $customerDepositSumByCalendarWeek = $this->Payment->getCustomerDepositSumByCalendarWeek();
+        $customerDepositSumByCalendarWeek = $paymentsTable->getCustomerDepositSumByCalendarWeek();
         $preparedCustomerData = [];
         foreach($customerDepositSumByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
             $preparedCustomerData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $depositsDeliveredByYear = $this->OrderDetail->getDepositSum(false, 'year');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $depositsDeliveredByYear = $orderDetailsTable->getDepositSum(false, 'year');
 
         if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek) && empty($customerDepositSumByCalendarWeek)) {
             return;
@@ -172,10 +165,10 @@ class DepositsController extends AdminAppController
 
         $this->set('years', array_unique($years));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
-        $paymentDepositDelta += $this->Customer->getDepositBalanceForCustomers(APP_OFF);
-        $paymentDepositDelta += $this->Customer->getDepositBalanceForDeletedCustomers();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $paymentDepositDelta = $customersTable->getDepositBalanceForCustomers(APP_ON);
+        $paymentDepositDelta += $customersTable->getDepositBalanceForCustomers(APP_OFF);
+        $paymentDepositDelta += $customersTable->getDepositBalanceForDeletedCustomers();
         $paymentDepositDelta = $paymentDepositDelta * -1 - $manufacturerMoneySum;
         $this->set('paymentDepositDelta', $paymentDepositDelta);
 
@@ -205,8 +198,8 @@ class DepositsController extends AdminAppController
             $manufacturerId = '';
         }
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
@@ -214,19 +207,19 @@ class DepositsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
 
-        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, 'month');
-        $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
+        $depositsDelivered = $orderDetailsTable->getDepositSum($manufacturerId, 'month');
+        $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
@@ -281,24 +274,21 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', $title);
     }
 
-    /**
-     * @param string $monthAndYear
-     */
     public function detail($monthAndYear)
     {
 
         $manufacturerId = $this->getManufacturerId();
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
-        $manufacturer = $this->Manufacturer->find('all', conditions: [
+        $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
 
         $this->set('payments', $payments);
 

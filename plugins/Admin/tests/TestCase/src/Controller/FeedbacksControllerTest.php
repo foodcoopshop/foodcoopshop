@@ -25,12 +25,9 @@ class FeedbacksControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public $Feedback;
-
     public function setUp(): void
     {
         parent::setUp();
-        $this->Feedback = $this->getTableLocator()->get('Feedbacks');
         $this->changeConfiguration('FCS_USER_FEEDBACK_ENABLED', 1);
     }
 

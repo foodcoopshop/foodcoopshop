@@ -7,7 +7,6 @@ use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use App\Services\FolderService;
 use Cake\Validation\Validator;
-use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use App\Services\CatalogService;
 use App\Services\RemoteFileService;
@@ -16,6 +15,7 @@ use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,10 +36,6 @@ class ProductsTable extends AppTable
     use AllowOnlyOneWeekdayValidatorTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use ProductImportTrait;
-
-    protected $Configuration;
-    protected $Manufacturer;
-    protected $Unit;
 
     public function initialize(array $config): void
     {
@@ -72,9 +68,6 @@ class ProductsTable extends AppTable
         ]);
         $this->hasOne('Images', [
             'foreignKey' => 'id_product',
-            'order' => [
-                'Images.id_image' => 'DESC'
-            ]
         ]);
         $this->hasOne('ProductAttribute', [
             'foreignKey' => 'id_product'
@@ -92,12 +85,6 @@ class ProductsTable extends AppTable
             'foreignKey' => 'id_storage_location',
         ]);
         $this->addBehavior('Timestamp');
-    }
-
-    public function __construct(array $config = [])
-    {
-        parent::__construct($config);
-        $this->Configuration = FactoryLocator::get('Table')->get('Configurations');
     }
 
     public function validationName(Validator $validator)
@@ -344,7 +331,7 @@ class ProductsTable extends AppTable
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
-            $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
+            $depositProductsTable = TableRegistry::getTableLocator()->get('DepositProducts');
             if ($ids['attributeId'] > 0) {
                 $oldDeposit = $depositProductsTable->find('all',
                     conditions: [
@@ -409,7 +396,7 @@ class ProductsTable extends AppTable
         }
 
         $success = false;
-        $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
+        $productAttributesTable = TableRegistry::getTableLocator()->get('ProductAttributes');
         foreach ($products as $product) {
 
             $productId = key($product);
@@ -461,7 +448,7 @@ class ProductsTable extends AppTable
                     $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
                 }
 
-                $unitsTable = FactoryLocator::get('Table')->get('Units');
+                $unitsTable = TableRegistry::getTableLocator()->get('Units');
                 $unitsTable->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
@@ -483,7 +470,7 @@ class ProductsTable extends AppTable
     public function changeQuantity(array $products): void
     {
 
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
 
         foreach ($products as $product) {
             $productId = key($product);
@@ -615,7 +602,7 @@ class ProductsTable extends AppTable
             }
 
             if (isset($name['barcode'])) {
-                $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+                $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
                 $barcodeProductEntity = $barcodeProductsTable->newEntity(
                     [
                         'barcode' => $name['barcode'],
@@ -739,13 +726,13 @@ class ProductsTable extends AppTable
             });
         }
 
-        $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
-        $purchasePriceProductsTable = FactoryLocator::get('Table')->get('PurchasePriceProducts');
-        $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
-        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
-        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $unitProductsTable = FactoryLocator::get('Table')->get('UnitProducts');
+        $depositProductsTable = TableRegistry::getTableLocator()->get('DepositProducts');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+        $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
+        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $unitProductsTable = TableRegistry::getTableLocator()->get('UnitProducts');
 
         $query
         ->select('Products.id_product')->distinct()
@@ -1021,8 +1008,8 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                        $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
-                        $preparedProduct['purchase_price_is_set'] = $productAttributesTable->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
+                        $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
+                        $preparedProduct['purchase_price_is_set'] = $purchasePriceProductAttributesTable->isPurchasePriceSet($attribute);
                         $preparedProduct['purchase_price_is_zero'] = true;
 
                         $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
@@ -1174,7 +1161,7 @@ class ProductsTable extends AppTable
 
     public function setDefaultAttributeId($productId, $productAttributeId)
     {
-        $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
+        $productAttributesTable = TableRegistry::getTableLocator()->get('ProductAttributes');
         $productAttributes = $productAttributesTable->find('all',
             conditions: [
                 'ProductAttributes.id_product' => $productId,
@@ -1221,7 +1208,7 @@ class ProductsTable extends AppTable
             }
 
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
-                $syncDomainsTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
+                $syncDomainsTable = TableRegistry::getTableLocator()->get('Network.SyncDomains');
                 $syncDomainHosts = $syncDomainsTable->getActiveSyncDomainHosts();
                 if (!RemoteFileService::exists($imageFromRemoteServer, $syncDomainHosts)) {
                     throw new \Exception('remote image not existing: ' . $imageFromRemoteServer);
@@ -1262,7 +1249,7 @@ class ProductsTable extends AppTable
                 'Images'
             ])->first();
 
-            $imagesTable = FactoryLocator::get('Table')->get('Images');
+            $imagesTable = TableRegistry::getTableLocator()->get('Images');
             if (empty($product->image)) {
                 // product does not yet have image => create the necessary record
                 $image = $imagesTable->save(
@@ -1302,12 +1289,12 @@ class ProductsTable extends AppTable
     {
         $defaultQuantity = 0;
 
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturer->id_manufacturer,
-                'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
+                'id_tax' => $manufacturersTable->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => $productName,
                 'delivery_rhythm_send_order_list_weekday' => (new DeliveryRhythmService())->getSendOrderListsWeekday(),
                 'description_short' => $descriptionShort,
@@ -1325,7 +1312,7 @@ class ProductsTable extends AppTable
             return $productEntity;
         }
 
-        $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+        $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
         if ($barcode != '') {
             $barcodeEntity2Save = $barcodeProductsTable->newEntity([
                 'barcode' => $barcode,
@@ -1344,19 +1331,19 @@ class ProductsTable extends AppTable
         }
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $purchasePriceProductsTable = FactoryLocator::get('Table')->get('PurchasePriceProducts');
+            $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
             $entity2Save = $purchasePriceProductsTable->getEntityToSaveByProductId($newProductId);
             $patchedEntity = $purchasePriceProductsTable->patchEntity(
                 $entity2Save,
                 [
-                    'tax_id' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
+                    'tax_id' => $manufacturersTable->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
                 ],
             );
             $purchasePriceProductsTable->save($patchedEntity);
         }
 
         // INSERT CATEGORY_PRODUCTS
-        $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProductsTable = TableRegistry::getTableLocator()->get('CategoryProducts');
         $categoryProductsTable->save(
             $categoryProductsTable->newEntity(
                 [
@@ -1367,7 +1354,7 @@ class ProductsTable extends AppTable
         );
 
         // INSERT STOCK AVAILABLE
-        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->save(
             $stockAvailablesTable->newEntity(
                 [

@@ -33,10 +33,6 @@ use App\Model\Entity\Customer;
 class CustomersController extends FrontendController
 {
 
-    protected $Customer;
-    protected $BlogPost;
-    protected $ActionLog;
-
     use RenewAuthSessionTrait;
 
     public function beforeFilter(EventInterface $event)
@@ -67,8 +63,8 @@ class CustomersController extends FrontendController
         $customerId = $customerId[0];
         $extension = strtolower(pathinfo($this->request->getParam('imageSrc'), PATHINFO_EXTENSION));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', conditions: [
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all', conditions: [
             'Customers.id_customer' => $customerId
         ])->first();
         if (empty($customer)) {
@@ -102,9 +98,9 @@ class CustomersController extends FrontendController
 
         $this->set('title_for_layout', __('Accept_terms_of_use'));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $patchedEntity = $this->Customer->patchEntity(
-            $this->Customer->get($this->identity->getId()),
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $patchedEntity = $customersTable->patchEntity(
+            $customersTable->get($this->identity->getId()),
             [
                 'Customers' => [
                     'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),
@@ -120,7 +116,7 @@ class CustomersController extends FrontendController
         }
 
         if (empty($errors)) {
-            $this->Customer->save($patchedEntity);
+            $customersTable->save($patchedEntity);
             $this->Flash->success(__('Accepting_the_terms_of_use_have_been_saved.'));
             $this->renewAuthSession();
             $this->redirect($this->referer());
@@ -135,8 +131,8 @@ class CustomersController extends FrontendController
             throw new RecordNotFoundException('activation code not passed');
         }
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all',
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all',
         conditions: [
             'Customers.activate_email_code' => $emailActivationCode,
         ],
@@ -149,9 +145,9 @@ class CustomersController extends FrontendController
         } else {
             $customer->activate_email_code = null;
             $customer->active = 1;
-            $this->Customer->save($customer);
+            $customersTable->save($customer);
 
-            $newPassword = $this->Customer->setNewPassword($customer->id_customer);
+            $newPassword = $customersTable->setNewPassword($customer->id_customer);
 
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('email_address_activated');
@@ -181,8 +177,8 @@ class CustomersController extends FrontendController
             'title_for_layout' => __('Request_new_password')
         ]);
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->newEntity([]);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->newEntity([]);
 
         if (!empty($this->getRequest()->getData())) {
 
@@ -190,7 +186,7 @@ class CustomersController extends FrontendController
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-            $customer = $this->Customer->patchEntity(
+            $customer = $customersTable->patchEntity(
                 $customer,
                 $this->getRequest()->getData(),
                 [
@@ -202,17 +198,17 @@ class CustomersController extends FrontendController
                 $this->Flash->error(__('Errors_while_saving!'));
             } else {
 
-                $originalPrimaryKey = $this->Customer->getPrimaryKey();
-                $this->Customer->setPrimaryKey('email');
-                $entity = $this->Customer->get($this->getRequest()->getData('Customers.email'));
-                $this->Customer->setPrimaryKey($originalPrimaryKey);
+                $originalPrimaryKey = $customersTable->getPrimaryKey();
+                $customersTable->setPrimaryKey('email');
+                $entity = $customersTable->get($this->getRequest()->getData('Customers.email'));
+                $customersTable->setPrimaryKey($originalPrimaryKey);
                 $activateNewPasswordCode = $entity->activate_new_password_code;
 
                 if ($activateNewPasswordCode == '') {
                     $activateNewPasswordCode = StringComponent::createRandomString(12);
                 }
                 $entity->activate_new_password_code = $activateNewPasswordCode;
-                $this->Customer->save($entity);
+                $customersTable->save($entity);
 
                 // send email
                 $email = new AppMailer();
@@ -242,8 +238,8 @@ class CustomersController extends FrontendController
             throw new RecordNotFoundException('activate new password code not passed');
         }
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', conditions: [
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all', conditions: [
             'Customers.activate_new_password_code' => $activateNewPasswordCode,
         ])->first();
 
@@ -252,7 +248,7 @@ class CustomersController extends FrontendController
         } else {
 
             $newPassword = StringComponent::createRandomString(12);
-            $patchedEntity = $this->Customer->patchEntity(
+            $patchedEntity = $customersTable->patchEntity(
                 $customer,
                 [
                     'passwd' => (new DefaultPasswordHasher())->hash($newPassword),
@@ -260,7 +256,7 @@ class CustomersController extends FrontendController
                     'activate_new_password_code' => null,
                 ]
             );
-            $this->Customer->save($patchedEntity);
+            $customersTable->save($patchedEntity);
             $this->Flash->success(__('Your_new_password_was_successfully_activated_and_sent_to_you.'));
 
             // send email
@@ -281,7 +277,7 @@ class CustomersController extends FrontendController
 
     public function login()
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customersTable = $this->getTableLocator()->get('Customers');
         $title = __('Sign_in');
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
@@ -342,7 +338,7 @@ class CustomersController extends FrontendController
          */
         $ph = new DefaultPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
-        $customer = $this->Customer->newEntity(
+        $customer = $customersTable->newEntity(
             [
                 'Customers' => [
                     'active' => 0,
@@ -384,7 +380,7 @@ class CustomersController extends FrontendController
                     $this->setRequest($this->getRequest()->withData('Customers.activate_email_code', StringComponent::createRandomString(12)));
                 }
 
-                $customer = $this->Customer->patchEntity(
+                $customer = $customersTable->patchEntity(
                     $customer,
                     $this->getRequest()->getData(),
                     [
@@ -398,7 +394,7 @@ class CustomersController extends FrontendController
                 if ($customer->hasErrors()) {
                     $this->Flash->error(__('Errors_while_saving!'));
                 } else {
-                    $newCustomer = $this->Customer->save(
+                    $newCustomer = $customersTable->save(
                         $customer,
                         [
                             'associated' => [
@@ -407,8 +403,7 @@ class CustomersController extends FrontendController
                         ]
                     );
 
-                    // write action log
-                    $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+                    $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
                     $fullname = $this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname');
                     if (Configure::read('app.customerMainNamePart') == 'lastname') {
                         $fullname = $this->getRequest()->getData('Customers.lastname') . ' ' . $this->getRequest()->getData('Customers.firstname');
@@ -418,7 +413,7 @@ class CustomersController extends FrontendController
                     }
                     $message = __('{0}_created_an_account.', [$fullname]);
 
-                    $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
+                    $actionLogsTable->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
                     // START send confirmation email to customer
                     $email = new AppMailer();
@@ -465,8 +460,8 @@ class CustomersController extends FrontendController
     {
         $this->set('title_for_layout', __('Account_created_successfully'));
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
     }
 

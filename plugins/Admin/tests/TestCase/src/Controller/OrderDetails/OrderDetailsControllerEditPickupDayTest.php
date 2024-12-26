@@ -89,12 +89,12 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->loginAsSuperadmin();
         $reason = '';
         $orderDetailIds = [$this->orderDetailIdA, $this->orderDetailIdB];
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
         foreach($orderDetailIds as $orderDetailId) {
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $this->OrderDetail->save(
-                $this->OrderDetail->patchEntity(
-                    $this->OrderDetail->get($orderDetailId),
+            $orderDetailsTable->save(
+                $orderDetailsTable->patchEntity(
+                    $orderDetailsTable->get($orderDetailId),
                     [
                         'order_state' => OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
                     ]
@@ -137,8 +137,9 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     }
 
     private function assertChangedOrderDetails($orderDetails, $newPickupDay, $orderState) {
-        $orderDetails = $this->OrderDetail->find()->where([ 
-            'OrderDetails.id_order_detail IN' => $orderDetails
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find()->where([ 
+            'OrderDetails.id_order_detail IN' => $orderDetails,
         ]
         )->toArray();
         foreach($orderDetails as $orderDetail) {

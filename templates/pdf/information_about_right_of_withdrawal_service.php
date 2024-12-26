@@ -81,7 +81,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
 
-            $html = '<p>'.__('Ordered_on').' (*): '.$cart['Cart']->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</p>';
+            $html = '<p>'.__('Ordered_on').' (*): '.$cart['Cart']->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2')).'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<p>'.__('Received_on').' (*): </p>';

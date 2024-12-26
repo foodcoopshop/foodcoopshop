@@ -25,10 +25,6 @@ use App\Services\CatalogService;
  */
 class PagesController extends FrontendController
 {
-
-    protected $BlogPost;
-    protected $Page;
-    protected $Slider;
     
     public function beforeFilter(EventInterface $event)
     {
@@ -45,14 +41,14 @@ class PagesController extends FrontendController
     public function home()
     {
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
-        $this->Slider = $this->getTableLocator()->get('Sliders');
-        $sliders = $this->Slider->getForHome();
+        $slidersTable = $this->getTableLocator()->get('Sliders');
+        $sliders = $slidersTable->getForHome();
         $this->set('sliders', $sliders);
 
         $products = [];
@@ -75,8 +71,8 @@ class PagesController extends FrontendController
             'Pages.active' => APP_ON
         ];
 
-        $this->Page = $this->getTableLocator()->get('Pages');
-        $page = $this->Page->find('all',
+        $pagesTable = $this->getTableLocator()->get('Pages');
+        $page = $pagesTable->find('all',
         conditions: $conditions,
         contain: [
             'Customers'
@@ -95,7 +91,7 @@ class PagesController extends FrontendController
         if ($this->identity === null) {
             $conditionsForChildren['Pages.is_private'] = APP_OFF;
         }
-        $page['children'] = $this->Page->find('children',
+        $page['children'] = $pagesTable->find('children',
         for: $pageId,
         direct: true,
         parentField: 'id_parent',

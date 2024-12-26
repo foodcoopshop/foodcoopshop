@@ -26,11 +26,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public $Manufacturer;
-    protected $OrderDetail;
-    protected $Product;
-
-    public $manufacturerData = [
+    public array $manufacturerData = [
         'Manufacturers' => [
             'name' => 'Test Manufacturer',
             'bank_name' => 'Test Bank',
@@ -64,12 +60,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
         'referer' => '/'
     ];
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-    }
-
     public function testAddWithValidationErrors()
     {
         $this->loginAsSuperadmin();
@@ -99,7 +89,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Der Hersteller <b>Test Manufacturer</b> wurde erstellt.');
 
         // get inserted manufacturer from database and check detail page for patterns
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
                 'Manufacturers.name' => $this->manufacturerData['Manufacturers']['name']
             ],
@@ -181,7 +172,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
 
-        $manufacturerNew = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturerNew = $manufacturersTable->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
@@ -190,28 +182,28 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ],
         )->first();
 
-        $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew->send_order_list);
+        $sendOrderList = $manufacturersTable->getOptionSendOrderList($manufacturerNew->send_order_list);
         $this->assertEquals($sendOrderList, $newSendOrderList, 'saving option send_order_list failed');
 
-        $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturerNew->send_invoice);
+        $sendInvoice = $manufacturersTable->getOptionSendInvoice($manufacturerNew->send_invoice);
         $this->assertEquals($sendInvoice, $newSendInvoice, 'saving option invoice failed');
 
-        $sendOrderListCc = $this->Manufacturer->getOptionSendOrderListCc($manufacturerNew->send_order_list_cc);
+        $sendOrderListCc = $manufacturersTable->getOptionSendOrderListCc($manufacturerNew->send_order_list_cc);
         $this->assertEquals($sendOrderListCc, $newSendOrderListCc, 'saving option send_order_list_cc failed');
 
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew->send_ordered_product_price_changed_notification);
+        $sendOrderedProductPriceChangedNotification = $manufacturersTable->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew->send_ordered_product_price_changed_notification);
         $this->assertEquals($sendOrderedProductPriceChangedNotification, $newSendOrderedProductPriceChangedNotification, 'saving option send_ordered_product_price_changed_notification failed');
 
-        $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($manufacturerNew->send_ordered_product_amount_changed_notification);
+        $sendOrderedProductAmountChangedNotification = $manufacturersTable->getOptionSendOrderedProductAmountChangedNotification($manufacturerNew->send_ordered_product_amount_changed_notification);
         $this->assertEquals($sendOrderedProductAmountChangedNotification, $newSendOrderedProductAmountChangedNotification, 'saving option send_ordered_product_amount_changed_notification failed');
 
-        $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturerNew->send_instant_order_notification);
+        $sendInstantOrderNotification = $manufacturersTable->getOptionSendInstantOrderNotification($manufacturerNew->send_instant_order_notification);
         $this->assertEquals($sendInstantOrderNotification, $newSendInstantOrderNotification, 'saving option send_instant_order_notification failed');
 
-        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
+        $defaultTaxId = $manufacturersTable->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
         $this->assertEquals($defaultTaxId, $newDefaultTaxId, 'saving option default_tax_id failed');
 
-        $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturerNew->address_manufacturer->email);
+        $customerRecord = $manufacturersTable->getCustomerRecord($manufacturerNew->address_manufacturer->email);
         $this->assertEquals($newStatus, $customerRecord->active);
         $this->assertEquals($newStatus, $manufacturerNew->active);
 
@@ -227,22 +219,22 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $noDeliveryDayA = date('Y-m-d', strtotime($noDeliveryDays . ' + 10 day'));
         $noDeliveryDayB = date('Y-m-d', strtotime($noDeliveryDays . ' + 11 day'));
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Product = $this->getTableLocator()->get('Products');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $productsTable = $this->getTableLocator()->get('Products');
 
-        $orderDetailEntityA = $this->OrderDetail->get(1);
+        $orderDetailEntityA = $orderDetailsTable->get(1);
         $orderDetailEntityA->pickup_day = $noDeliveryDayA;
-        $this->OrderDetail->save($orderDetailEntityA);
+        $orderDetailsTable->save($orderDetailEntityA);
 
-        $orderDetailEntityB = $this->OrderDetail->get(2);
+        $orderDetailEntityB = $orderDetailsTable->get(2);
         $orderDetailEntityB->pickup_day = $noDeliveryDayB;
-        $this->OrderDetail->save($orderDetailEntityB);
+        $orderDetailsTable->save($orderDetailEntityB);
 
-        $orderDetailEntityC = $this->OrderDetail->get(3);
+        $orderDetailEntityC = $orderDetailsTable->get(3);
         $orderDetailEntityC->pickup_day = $noDeliveryDayB;
-        $this->OrderDetail->save($orderDetailEntityC);
+        $orderDetailsTable->save($orderDetailEntityC);
 
-        $this->Product->updateAll(['id_manufacturer' => $manufacturerId], []);
+        $productsTable->updateAll(['id_manufacturer' => $manufacturerId], []);
 
         $this->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -279,9 +271,10 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->assertFlashMessage('Die Einstellungen des Herstellers <b>Demo Milch-Hersteller</b> wurden erfolgreich gespeichert.');
 
-        $manufacturerNew = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturerNew = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
         )->first();
 
@@ -411,7 +404,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         );
         $this->assertFlashMessage('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.');
 
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
@@ -426,7 +420,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     private function doTestCustomerRecord($manufacturer): void
     {
-        $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $customerRecord = $manufacturersTable->getCustomerRecord($manufacturer->address_manufacturer->email);
         $this->assertEquals($manufacturer->address_manufacturer->firstname, $customerRecord->firstname);
         $this->assertEquals($manufacturer->address_manufacturer->lastname, $customerRecord->lastname);
         $this->assertEquals($manufacturer->address_manufacturer->email, $customerRecord->email);

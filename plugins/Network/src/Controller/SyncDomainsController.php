@@ -4,11 +4,9 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
-use App\Model\Table\ActionLogsTable;
 use App\Services\SanitizeService;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
-use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,20 +24,17 @@ use Network\Model\Table\SyncDomainsTable;
 class SyncDomainsController extends AppController
 {
 
-    protected ActionLogsTable $ActionLog;
-    protected SyncDomainsTable $SyncDomain;
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');
         $this->viewBuilder()->addHelper('Network.Network');
-        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
     }
 
     public function add()
     {
-        $syncDomain = $this->SyncDomain->newEntity(
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncDomain = $syncDomainsTable->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
         );
@@ -57,7 +52,8 @@ class SyncDomainsController extends AppController
             throw new NotFoundException;
         }
 
-        $syncDomain = $this->SyncDomain->find('all', conditions: [
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncDomain = $syncDomainsTable->find('all', conditions: [
             'SyncDomains.id' => $syncDomainId
         ])->first();
 
@@ -82,7 +78,8 @@ class SyncDomainsController extends AppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-        $syncDomain = $this->SyncDomain->patchEntity(
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncDomain = $syncDomainsTable->patchEntity(
             $syncDomain,
             $this->getRequest()->getData()
         );
@@ -92,7 +89,7 @@ class SyncDomainsController extends AppController
             $this->render('edit');
         } else {
             $syncDomain->domain = mb_strtolower($syncDomain->domain);
-            $syncDomain = $this->SyncDomain->save($syncDomain);
+            $syncDomain = $syncDomainsTable->save($syncDomain);
 
             if (!$isEditMode) {
                 $messageSuffix = __d('network', 'created');
@@ -102,14 +99,14 @@ class SyncDomainsController extends AppController
                 $actionLogType = 'remote_foodcoop_changed';
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('SyncDomains.delete_sync_domain'))) {
-                $this->SyncDomain->delete($syncDomain);
+                $syncDomainsTable->delete($syncDomain);
                 $messageSuffix = __d('network', 'deleted');
                 $actionLogType = 'remote_foodcoop_deleted';
             }
             $message = __d('network', 'The_remote_foodcoop_{0}_has_been_{1}.', ['<b>' . $syncDomain->domain. '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $syncDomain->id, 'sync_domains', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $syncDomain->id, 'sync_domains', $message);
             $this->Flash->success($message);
 
             $this->redirect($this->getPreparedReferer());

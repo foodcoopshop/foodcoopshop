@@ -5,7 +5,7 @@ namespace Admin\Traits\Customers\Filter;
 
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,8 +42,10 @@ trait CustomersFilterTrait
     public function getCustomers($active, $year, $newsletter)
     {
 
-        $customersTable = FactoryLocator::get('Table')->get('Customers');
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $addressCustomersTable = TableRegistry::getTableLocator()->get('AddressCustomers');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
 
         $conditions = [];
         if ($active != 'all') {
@@ -71,9 +73,9 @@ trait CustomersFilterTrait
         contain: $contain);
         $query = $customersTable->addCustomersNameForOrderSelect($query);
         $query->select($customersTable);
-        $query->select($customersTable->AddressCustomers);
+        $query->select($addressCustomersTable);
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
-            $query->select($customersTable->Feedbacks);
+            $query->select($feedbacksTable);
         }
 
         $query->select([
@@ -81,7 +83,7 @@ trait CustomersFilterTrait
             'last_pickup_day' => 'Customers.id_customer',
             'member_fee' => 'Customers.id_customer',
         ]);
-        $query->select($customersTable->AddressCustomers);
+        $query->select($addressCustomersTable);
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',

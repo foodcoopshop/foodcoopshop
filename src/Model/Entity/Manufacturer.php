@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,7 +17,7 @@ use Cake\ORM\Entity;
  * @link          https://www.foodcoopshop.com
  */
 
- class Manufacturer extends Entity {
+ class Manufacturer extends AppEntity {
 
     protected function _getDecodedName()
     {

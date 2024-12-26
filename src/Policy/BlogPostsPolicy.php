@@ -5,9 +5,9 @@ namespace App\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,7 +31,7 @@ class BlogPostsPolicy implements RequestPolicyInterface
         switch ($request->getParam('action')) {
             case 'detail':
                 $blogPostId = (int) $request->getParam('idAndSlug');
-                $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
+                $blogPostTable = TableRegistry::getTableLocator()->get('BlogPosts');
                 $blogPost = $blogPostTable->find('all',
                     conditions: [
                         'BlogPosts.id_blog_post' => $blogPostId,

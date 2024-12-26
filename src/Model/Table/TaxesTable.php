@@ -5,7 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -78,7 +78,7 @@ class TaxesTable extends AppTable
             }
         }
 
-        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         return [
             'netPrice' => $productsTable->getNetPrice($grossPrice, $calculatedTaxRate),
             'taxId' => $taxId,

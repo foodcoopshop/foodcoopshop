@@ -6,7 +6,6 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
-use App\Model\Table\CategoriesTable;
 use App\Services\SanitizeService;
 
 /**
@@ -26,14 +25,12 @@ use App\Services\SanitizeService;
 class CategoriesController extends AdminAppController
 {
 
-    protected CategoriesTable $Category;
-    
     use UploadTrait;
     
     public function add()
     {
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $category = $this->Category->newEntity(
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $category = $categoriesTable->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
         );
@@ -54,8 +51,8 @@ class CategoriesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $category = $this->Category->find('all', conditions: [
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $category = $categoriesTable->find('all', conditions: [
             'Categories.id_category' => $categoryId
         ])->first();
 
@@ -64,7 +61,7 @@ class CategoriesController extends AdminAppController
         }
         $this->set('title_for_layout', __d('admin', 'Edit_category'));
 
-        $categoryChildren = $this->Category->find('all')->find('children', for: $categoryId);
+        $categoryChildren = $categoriesTable->find('all')->find('children', for: $categoryId);
 
         $disabledSelectCategoryIds = [(int) $categoryId];
         foreach ($categoryChildren as $categoryChild) {
@@ -79,7 +76,9 @@ class CategoriesController extends AdminAppController
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
-        $categoriesForSelect = $this->Category->getForSelect($category->id);
+
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $categoriesForSelect = $categoriesTable->getForSelect($category->id);
         $this->set('categoriesForSelect', $categoriesForSelect);
 
         if (empty($this->getRequest()->getData())) {
@@ -94,13 +93,14 @@ class CategoriesController extends AdminAppController
         if ($this->getRequest()->getData('Categories.id_parent') == '') {
             $this->request = $this->request->withData('Categories.id_parent', 0);
         }
-        $category = $this->Category->patchEntity($category, $this->getRequest()->getData());
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $category = $categoriesTable->patchEntity($category, $this->getRequest()->getData());
         if ($category->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('category', $category);
             $this->render('edit');
         } else {
-            $category = $this->Category->save($category);
+            $category = $categoriesTable->save($category);
 
             if (!$isEditMode) {
                 $messageSuffix = __d('admin', 'created');
@@ -118,15 +118,15 @@ class CategoriesController extends AdminAppController
                 $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath());
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Categories.delete_category'))) {
                 $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath());
-                $this->Category->delete($category);
+                $categoriesTable->delete($category);
                 $actionLogType = 'category_deleted';
                 $messageSuffix = __d('admin', 'deleted');
             }
             $message = __d('admin', 'The_category_{0}_has_been_{1}.', ['<b>' . $category->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $category->id_category, 'categories', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $category->id_category, 'categories', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $category->id_category);
@@ -139,14 +139,14 @@ class CategoriesController extends AdminAppController
     public function index()
     {
         $conditions = [];
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $conditions[] = $this->Category->getExcludeCondition();
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $conditions[] = $categoriesTable->getExcludeCondition();
         $conditions[] = 'Categories.active > ' . APP_DEL;
 
-        $totalCategoriesCount = $this->Category->find('all', conditions: $conditions)->count();
+        $totalCategoriesCount = $categoriesTable->find('all', conditions: $conditions)->count();
         $this->set('totalCategoriesCount', $totalCategoriesCount);
 
-        $categories = $this->Category->getThreaded($conditions);
+        $categories = $categoriesTable->getThreaded($conditions);
 
         $this->set('categories', $categories);
 

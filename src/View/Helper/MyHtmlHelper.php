@@ -296,13 +296,7 @@ class MyHtmlHelper extends HtmlHelper
         return $anonymizedCustomerName;
     }
 
-    /**
-     * converts eg. months with only one digit with leading zero
-     * @param int $number
-     * @param int $maxDigits
-     * @return int eg. 1 => 01 / 10 => 10
-     */
-    public function addLeadingZero($number, $maxDigits = 2)
+    public function addLeadingZero($number, $maxDigits = 2): string
     {
         return sprintf('%0'.$maxDigits.'d', $number);
     }

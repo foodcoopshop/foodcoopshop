@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
-use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
 use App\Services\DeliveryRhythmService;
+use Cake\ORM\TableRegistry;
+use App\Model\Entity\Configuration;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -44,10 +44,8 @@ class ConfigurationHelper extends Helper
             case 'FCS_NEWSLETTER_ENABLED':
             case 'FCS_USER_FEEDBACK_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
-                break;
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');
-                break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $values = (new DeliveryRhythmService())->getNextDailyDeliveryDays(365);
@@ -55,27 +53,24 @@ class ConfigurationHelper extends Helper
                     $values = (new DeliveryRhythmService())->getNextWeeklyDeliveryDays();
                 }
                 return $values;
-                break;
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();
-                break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
-                $productModel = FactoryLocator::get('Table')->get('Products');
-                return $productModel->getForDropdown(0);
-                break;
+                $productsTable = TableRegistry::getTableLocator()->get('Products');
+                return $productsTable->getForDropdown(0);
         }
     }
 
     public function isCashlessPaymentTypeManual()
     {
-        return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
+        return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
     }
 
     public function getCashlessPaymentAddTypeOptions()
     {
         return [
-            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
-            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD => __('Payment_is_added_by_uploading_a_list'),
+            Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
+            Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD => __('Payment_is_added_by_uploading_a_list'),
         ];
     }
 
@@ -90,17 +85,15 @@ class ConfigurationHelper extends Helper
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 $formattedAndCleanedDeliveryDays = Configure::read('app.htmlHelper')->getFormattedAndCleanedDeliveryDays($value);
                 return join(', ', $formattedAndCleanedDeliveryDays);
-                break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $value = explode(',', $value);
-                $productModel = FactoryLocator::get('Table')->get('Products');
-                $products = $productModel->find('all',
+                $productsTable = TableRegistry::getTableLocator()->get('Products');
+                $products = $productsTable->find('all',
                     conditions: [
                         'Products.id_product IN' => $value,
                     ]
                 )->toArray();
                 return join(', ', Hash::extract($products, '{n}.name'));
-                break;
         }
     }
 }

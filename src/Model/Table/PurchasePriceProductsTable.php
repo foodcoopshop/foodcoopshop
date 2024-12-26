@@ -5,10 +5,9 @@ namespace App\Model\Table;
 
 use App\Model\Traits\ProductAndAttributeEntityTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
-use AssetCompress\Factory;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,8 +27,6 @@ class PurchasePriceProductsTable extends AppTable
 
     use ProductAndAttributeEntityTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
-
-    protected $Product;
 
     public function initialize(array $config): void
     {
@@ -64,9 +61,9 @@ class PurchasePriceProductsTable extends AppTable
 
     public function calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate)
     {
-        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
-        $sellingPriceGross = $productTable->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
+        $sellingPriceGross = $productsTable->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
         return $sellingPriceGross;
     }
 
@@ -79,9 +76,9 @@ class PurchasePriceProductsTable extends AppTable
     public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate)
     {
 
-        $productTable = FactoryLocator::get('Table')->get('Products');
-        $sellingPriceNet = $productTable->getNetPrice($sellingPriceGross, $sellingPriceTaxRate);
-        $purchasePriceNet = $productTable->getNetPrice($purchasePriceGross, $purchasePriceTaxRate);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $sellingPriceNet = $productsTable->getNetPrice($sellingPriceGross, $sellingPriceTaxRate);
+        $purchasePriceNet = $productsTable->getNetPrice($purchasePriceGross, $purchasePriceTaxRate);
 
         if ($purchasePriceNet == 0) {
             return 0;
@@ -95,8 +92,8 @@ class PurchasePriceProductsTable extends AppTable
     public function getSellingPricesWithSurcharge($productIds, $surcharge): array
     {
 
-        $productTable = FactoryLocator::get('Table')->get('Products');
-        $products = $productTable->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $products = $productsTable->find('all',
             conditions: [
                 'Products.id_product IN' => $productIds,
             ],
@@ -138,7 +135,7 @@ class PurchasePriceProductsTable extends AppTable
 
                 $grossPricePerUnit = 0;
                 if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
-                    $purchasePriceNet = $productTable->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                    $purchasePriceNet = $productsTable->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                     $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                 }
 
@@ -168,7 +165,7 @@ class PurchasePriceProductsTable extends AppTable
 
                     $grossPricePerUnit = 0;
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                        $purchasePriceNet = $productTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                        $purchasePriceNet = $productsTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                         $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                     }
 
@@ -223,7 +220,7 @@ class PurchasePriceProductsTable extends AppTable
             $oldPurchasePriceTaxRate = $oldProduct->purchase_price_product->tax->rate;
         }
 
-        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
         $tax = $taxesTable->find('all',
             conditions: [
                 'Taxes.id_tax' => $taxId,
@@ -245,14 +242,13 @@ class PurchasePriceProductsTable extends AppTable
 
         if ($patchedEntity->isDirty('tax_id')) {
 
-            $this->Product = FactoryLocator::get('Table')->get('Products');
-
+            $productsTable = TableRegistry::getTableLocator()->get('Products');
             if (! empty($oldProduct->product_attributes)) {
-                $pppaTable = FactoryLocator::get('Table')->get('PurchasePriceProductAttributes');
+                $pppaTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
                 // update net price of all attributes
                 foreach ($oldProduct->product_attributes as $attribute) {
                     if (!empty($attribute->purchase_price_product_attribute)) {
-                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->purchase_price_product_attribute->price, $oldPurchasePriceTaxRate, $taxRate);
+                        $newNetPrice = $productsTable->getNetPriceForNewTaxRate($attribute->purchase_price_product_attribute->price, $oldPurchasePriceTaxRate, $taxRate);
                         $entity2Save = $this->getEntityToSaveByProductAttributeId($attribute->id_product_attribute);
                         $entity2Save->price = $newNetPrice;
                         $pppaTable->save($entity2Save);
@@ -261,7 +257,7 @@ class PurchasePriceProductsTable extends AppTable
             } else {
                 // update net price of main product
                 if (!empty($oldProduct->purchase_price_product)) {
-                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->purchase_price_product->price, $oldPurchasePriceTaxRate, $taxRate);
+                    $newNetPrice = $productsTable->getNetPriceForNewTaxRate($oldProduct->purchase_price_product->price, $oldPurchasePriceTaxRate, $taxRate);
                     $patchedEntity->price = $newNetPrice;
                 }
             }

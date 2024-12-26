@@ -46,6 +46,7 @@ foreach($products as $product) {
     $pdf->table .= '<td style="width:255px;">';
     $barcodeObject = new TCPDFBarcode($product->system_bar_code, 'C39');
     //https://stackoverflow.com/a/54520065/2100184
+    /** @phpstan-ignore-next-line */
     $imgBase64Encoded = @base64_encode($barcodeObject->getBarcodePngData(1.3, 108));
     // move barcode to bottom
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:6px;"></td></tr></table>';

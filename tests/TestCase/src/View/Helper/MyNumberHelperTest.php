@@ -22,7 +22,7 @@ use Cake\View\View;
 class MyNumberHelperTest extends AppCakeTestCase
 {
 
-    protected $MyNumberHelper;
+    protected MyNumberHelper $MyNumberHelper;
 
     public function setUp(): void
     {

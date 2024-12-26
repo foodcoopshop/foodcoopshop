@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\AppController;
-use App\Model\Table\ActionLogsTable;
 use Cake\Event\EventInterface;
 
 /**
@@ -23,8 +22,6 @@ use Cake\Event\EventInterface;
 
 class AdminAppController extends AppController
 {
-
-    protected ActionLogsTable $ActionLog;
 
     public function beforeFilter(EventInterface $event)
     {

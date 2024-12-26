@@ -28,8 +28,6 @@ class ListsControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    protected $Invoice;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -49,8 +47,8 @@ class ListsControllerTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', conditions: [
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find('all', conditions: [
             'Invoices.id_customer' => $customerId,
         ])->first();
 
@@ -66,9 +64,10 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertContentType('pdf');
 
         // change admin to customer to test access from different customer
-        $customerEntity = $this->Customer->get(Configure::read('test.adminId'));
-        $customerEntity->id_default_group = Customer::GROUP_MEMBER;
-        $this->Customer->save($customerEntity);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->get(Configure::read('test.adminId'));
+        $customer->id_default_group = Customer::GROUP_MEMBER;
+        $customersTable->save($customer);
 
         $this->loginAsAdmin();
         $this->get($downloadUrl);

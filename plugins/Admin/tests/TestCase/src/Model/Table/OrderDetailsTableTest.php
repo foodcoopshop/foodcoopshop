@@ -20,14 +20,6 @@ use App\Test\TestCase\AppCakeTestCase;
 class OrderDetailsTableTest extends AppCakeTestCase
 {
 
-    public $OrderDetail;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-    }
-
     public function testGetDepositTaxA()
     {
         $this->assertGetDepositTax(1, 1, 0.17);
@@ -51,7 +43,8 @@ class OrderDetailsTableTest extends AppCakeTestCase
 
     private function assertGetDepositTax($gross, $amount, $expected)
     {
-        $result = $this->OrderDetail->getDepositTax($gross, $amount, 20);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails'); 
+        $result = $orderDetailsTable->getDepositTax($gross, $amount, 20);
         $result = number_format($result, 2);
         $expected = number_format($expected, 2);
         $this->assertEquals($result, $expected);
@@ -59,7 +52,8 @@ class OrderDetailsTableTest extends AppCakeTestCase
 
     private function assertGetDepositNet($gross, $amount, $expected)
     {
-        $result = $this->OrderDetail->getDepositNet($gross, $amount, 20);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $result = $orderDetailsTable->getDepositNet($gross, $amount, 20);
         $result = number_format($result, 2);
         $expected = number_format($expected, 2);
         $this->assertEquals($result, $expected);

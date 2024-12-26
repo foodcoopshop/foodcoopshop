@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 $this->element('addScript', [
     'script' =>
@@ -48,8 +48,8 @@ echo $this->Form->create($feedback, [
 
 $approvalInfoText = '';
 if (isset($feedback->approved)) {
-    $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
-    $approved = $feedbackTable->isApproved($feedback);
+    $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
+    $approved = $feedbacksTable->isApproved($feedback);
     if (!$approved) {
         $approvalWarning = __d('admin', 'Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published.');
         echo '<h2 class="warning" style="margin-bottom:10px;">'.$approvalWarning.'</h2>';

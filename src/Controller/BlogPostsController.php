@@ -6,8 +6,8 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\Event\EventInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,8 +43,8 @@ class BlogPostsController extends FrontendController
         ];
         $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
-        $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-        $blogPost = $blogPostTable->find('all',
+        $blogPostsTable = TableRegistry::getTableLocator()->get('BlogPosts');
+        $blogPost = $blogPostsTable->find('all',
             conditions: $conditions,
             contain: [
                 'Manufacturers',
@@ -73,13 +73,13 @@ class BlogPostsController extends FrontendController
         $modified = $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'));
         $showOnStartPage = !is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast();
 
-        $prevBlogPost = $blogPostTable->find()->contain('Manufacturers')->where($conditions);
-        $prevBlogPost = $blogPostTable->getConditionShowOnStartPage($prevBlogPost, $showOnStartPage);
-        $prevBlogPost = $prevBlogPost->orderByAsc($blogPostTable->aliasField('modified'))->where([$blogPostTable->aliasField('modified >') => $modified]);
+        $prevBlogPost = $blogPostsTable->find()->contain('Manufacturers')->where($conditions);
+        $prevBlogPost = $blogPostsTable->getConditionShowOnStartPage($prevBlogPost, $showOnStartPage);
+        $prevBlogPost = $prevBlogPost->orderByAsc($blogPostsTable->aliasField('modified'))->where([$blogPostsTable->aliasField('modified >') => $modified]);
 
-        $nextBlogPost = $blogPostTable->find()->contain('Manufacturers')->where($conditions);
-        $nextBlogPost = $blogPostTable->getConditionShowOnStartPage($nextBlogPost, $showOnStartPage);
-        $nextBlogPost = $nextBlogPost->orderByDesc($blogPostTable->aliasField('modified'))->where([$blogPostTable->aliasField('modified <') => $modified]);
+        $nextBlogPost = $blogPostsTable->find()->contain('Manufacturers')->where($conditions);
+        $nextBlogPost = $blogPostsTable->getConditionShowOnStartPage($nextBlogPost, $showOnStartPage);
+        $nextBlogPost = $nextBlogPost->orderByDesc($blogPostsTable->aliasField('modified'))->where([$blogPostsTable->aliasField('modified <') => $modified]);
         
         $neighbors = [
             'prev' => $prevBlogPost->first(),
@@ -92,8 +92,8 @@ class BlogPostsController extends FrontendController
 
     public function index()
     {
-        $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-        $blogPosts = $blogPostTable->findBlogPosts(null, false);
+        $blogPostsTable = TableRegistry::getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, false);
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('Blog_archive'));
     }

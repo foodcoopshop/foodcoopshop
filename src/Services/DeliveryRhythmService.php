@@ -304,6 +304,7 @@ class DeliveryRhythmService
                 3 => 'third',
                 4 => 'fourth',
                 0 => 'last',
+                default => '',
             };
             $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
             $calculatedPickupDay = date($this->Time->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));

@@ -25,7 +25,8 @@ trait GetProductsForDropdownTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $products = $this->Product->getForDropdown($manufacturerId);
+        $productsTable = $this->getTableLocator()->get('Products');
+        $products = $productsTable->getForDropdown($manufacturerId);
         $productsForDropdown = [];
         foreach ($products as $key => $ps) {
             $productsForDropdown[] = '<optgroup label="' . $key . '">';

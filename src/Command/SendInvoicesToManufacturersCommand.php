@@ -23,34 +23,28 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
+use App\Command\Traits\CronjobCommandTrait;
 
 class SendInvoicesToManufacturersCommand extends AppCommand
 {
 
-    public $cronjobRunDay;
-    public $ActionLog;
-    public $OrderDetail;
-    public $Manufacturer;
-    public $QueuedJobs;
+    use CronjobCommandTrait;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        if (!$args->getArgumentAt(0)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-        } else {
-            $this->cronjobRunDay = $args->getArgumentAt(0);
-        }
+        $this->setCronjobRunDay($args);
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
 
         // 1) get all manufacturers (not only active ones)
-        $manufacturers = $this->Manufacturer->find('all',
+        $manufacturers = $manufacturersTable->find('all',
         order: [
             'Manufacturers.name' => 'ASC'
         ],
@@ -60,7 +54,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
-        $orderDetails = $this->OrderDetail->find('all', contain: [
+        $orderDetails = $orderDetailsTable->find('all', contain: [
             'Products.Manufacturers',
             'Products'
         ]);
@@ -112,14 +106,13 @@ class SendInvoicesToManufacturersCommand extends AppCommand
             $outString .= __('Generated_invoices') . ': 0';
         }
         $outString .= $actionLogDatas;
-        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new DateTime($this->cronjobRunDay));
+        $actionLog = $actionLogsTable->customSave('cronjob_send_invoices', 0, 0, '', $outString, new DateTime($this->cronjobRunDay));
         $io->out($outString);
 
         // 6) trigger queue invoice generation
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         foreach ($manufacturers as $manufacturer) {
             if (!empty($manufacturer->current_order_count)) {
-                $this->QueuedJobs->createJob('GenerateInvoiceForManufacturer', [
+                $queuedJobsTable->createJob('GenerateInvoiceForManufacturer', [
                     'invoiceNumber' => $manufacturer->invoiceNumber,
                     'invoicePdfFile' => $manufacturer->invoicePdfFile,
                     'manufacturerId' => $manufacturer->id_manufacturer,
@@ -158,10 +151,14 @@ class SendInvoicesToManufacturersCommand extends AppCommand
         $i = 0;
         $outString = '';
 
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+
         foreach ($manufacturers as $manufacturer) {
 
-            $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            $manufacturer->invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumberForManufacturer($manufacturer->invoices);
+            $sendInvoice = $manufacturersTable->getOptionSendInvoice($manufacturer->send_invoice);
+            $manufacturer->invoiceNumber = $invoicesTable->getNextInvoiceNumberForManufacturer($manufacturer->invoices);
             $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
                 $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );
@@ -174,8 +171,8 @@ class SendInvoicesToManufacturersCommand extends AppCommand
                 $sumPrice += $price;
                 $variableMemberFeeAsString = '';
                 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
-                    $price = $this->OrderDetail->getVariableMemberFeeReducedPrice($manufacturer->order_detail_price_sum, $variableMemberFee);
+                    $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+                    $price = $orderDetailsTable->getVariableMemberFeeReducedPrice($manufacturer->order_detail_price_sum, $variableMemberFee);
                     if ($variableMemberFee > 0) {
                         $variableMemberFeeAsString = ' (' . $variableMemberFee . '%)';
                     }

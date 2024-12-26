@@ -35,13 +35,9 @@ class InvoicesPolicy implements RequestPolicyInterface
         switch ($request->getParam('action')) {
             case 'myInvoices':
                 return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !$identity->isManufacturer();
-                break;
             default:
                 return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin();
-                break;
         }
-
-        return false;
 
     }
 

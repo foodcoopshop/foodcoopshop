@@ -37,7 +37,8 @@ trait AddEditTrait
 
     public function add()
     {
-        $manufacturer = $this->Manufacturer->newEntity(
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->newEntity(
             [
                 'active' => APP_ON,
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
@@ -64,9 +65,10 @@ trait AddEditTrait
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
         conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ],
         contain: [
             'AddressManufacturers'
@@ -103,7 +105,8 @@ trait AddEditTrait
             $unchangedManufacturerAddress = clone $manufacturer->address_manufacturer;
         }
 
-        $manufacturer = $this->Manufacturer->patchEntity(
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->patchEntity(
             $manufacturer,
             $this->getRequest()->getData(),
             [
@@ -117,19 +120,19 @@ trait AddEditTrait
             $this->set('manufacturer', $manufacturer);
             $this->render('edit');
         } else {
-            $manufacturer = $this->Manufacturer->save($manufacturer);
+            $manufacturer = $manufacturersTable->save($manufacturer);
 
             if (!$isEditMode) {
                 $customer = [];
                 $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'manufacturer_added';
             } else {
-                $customer = $this->Manufacturer->getCustomerRecord($unchangedManufacturerAddress->email);
+                $customer = $manufacturersTable->getCustomerRecord($unchangedManufacturerAddress->email);
                 $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'manufacturer_changed';
             }
 
-            $this->Customer = $this->getTableLocator()->get('Customers');
+            $customersTable = $this->getTableLocator()->get('Customers');
             $customerData = [
                 'email' => $this->getRequest()->getData('Manufacturers.address_manufacturer.email'),
                 'firstname' => $this->getRequest()->getData('Manufacturers.address_manufacturer.firstname'),
@@ -137,11 +140,11 @@ trait AddEditTrait
                 'active' => APP_ON
             ];
             if (empty($customer)) {
-                $customerEntity = $this->Customer->newEntity($customerData);
+                $customerEntity = $customersTable->newEntity($customerData);
             } else {
-                $customerEntity = $this->Customer->patchEntity($customer, $customerData);
+                $customerEntity = $customersTable->patchEntity($customer, $customerData);
             }
-            $this->Customer->save($customerEntity);
+            $customersTable->save($customerEntity);
 
             if (!empty($this->getRequest()->getData('Manufacturers.tmp_image'))) {
                 $this->saveUploadedImage($manufacturer->id_manufacturer, $this->getRequest()->getData('Manufacturers.tmp_image'), Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
@@ -159,9 +162,9 @@ trait AddEditTrait
                 $this->deleteUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer);
             }
 
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);

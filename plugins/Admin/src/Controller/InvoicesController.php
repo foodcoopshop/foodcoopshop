@@ -4,10 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Model\Entity\Payment;
-use App\Model\Table\InvoicesTable;
-use App\Model\Table\OrderDetailsTable;
-use App\Model\Table\PaymentsTable;
-use App\Model\Table\PickupDaysTable;
 use App\Services\HelloCash\HelloCashService;
 use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
@@ -34,11 +30,6 @@ use Cake\I18n\DateTime;
 class InvoicesController extends AdminAppController
 {
 
-    protected InvoicesTable $Invoice;
-    protected OrderDetailsTable $OrderDetail;
-    protected PickupDaysTable $PickupDay;
-    protected PaymentsTable $Payment;
-
     public function initialize(): void
     {
         parent::initialize();
@@ -52,8 +43,8 @@ class InvoicesController extends AdminAppController
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
         $customerId = h($this->getRequest()->getQuery('customerId', ''));
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoices = $this->Invoice->find('all');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoices = $invoicesTable->find('all');
         $invoices = $this->setInvoiceConditions($invoices, $dateFrom, $dateTo, $customerId);
 
         if (empty($invoices)) {
@@ -98,14 +89,15 @@ class InvoicesController extends AdminAppController
 
         $customerTable = $this->getTableLocator()->get('Customers');
         $customer = $customerTable->find('all', conditions: [
-            'Customers.id_customer' => $customerId,
+            $customerTable->aliasField('id_customer') => $customerId,
         ])->first();
 
         if (empty($customer)) {
             throw new \Exception('customer not found');
         }
 
-        $invoiceData = $customerTable->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoiceData = $invoicesTable->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         if (!$invoiceData->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
             $this->redirect($this->referer());
@@ -134,8 +126,8 @@ class InvoicesController extends AdminAppController
         if ($paidInCash && $invoiceData->sumPriceIncl != 0) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $this->Payment = $this->getTableLocator()->get('Payments');
-                $paymentEntity = $this->Payment->newEntity(
+                $paymentsTable = $this->getTableLocator()->get('Payments');
+                $paymentEntity = $paymentsTable->newEntity(
                     [
                         'status' => APP_ON,
                         'approval' => APP_ON,
@@ -149,12 +141,12 @@ class InvoicesController extends AdminAppController
                         'created_by' => $this->identity->getId(),
                     ]
                 );
-                $this->Payment->save($paymentEntity);
+                $paymentsTable->save($paymentEntity);
             }
 
             // mark row as picked up
-            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-            $this->PickupDay->changeState(
+            $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
+            $pickupDaysTable->changeState(
                 $customerId,
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_ON,
@@ -181,8 +173,8 @@ class InvoicesController extends AdminAppController
         ]);
         $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_added', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('invoice_added', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 
@@ -201,14 +193,15 @@ class InvoicesController extends AdminAppController
 
         $customerTable = $this->getTableLocator()->get('Customers');
         $customer = $customerTable->find('all', conditions: [
-            'Customers.id_customer' => $customerId,
+            $customerTable->aliasField('id_customer') => $customerId,
         ])->first();
 
         if (empty($customer)) {
             throw new NotFoundException();
         }
 
-        $invoiceData = $customerTable->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoiceData = $invoicesTable->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
             die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
         }
@@ -256,12 +249,12 @@ class InvoicesController extends AdminAppController
 
         $invoiceId = h($this->getRequest()->getData('invoiceId'));
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
 
-        $invoice = $this->Invoice->find('all',
+        $invoice = $invoicesTable->find('all',
         contain: [
             'Payments',
             'Customers',
@@ -276,8 +269,8 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $this->OrderDetail->onInvoiceCancellation($invoice->order_details);
-        $this->Payment->onInvoiceCancellation($invoice->payments);
+        $orderDetailsTable->onInvoiceCancellation($invoice->order_details);
+        $paymentsTable->onInvoiceCancellation($invoice->payments);
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
@@ -305,11 +298,11 @@ class InvoicesController extends AdminAppController
                 $orderDetail->tax_total_amount *= $cancellationFactor;
             }
 
-            $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
+            $invoiceData = $invoicesTable->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
 
-            $customer = $this->Customer->find('all',
+            $customer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => $invoice->id_customer,
+                $customersTable->aliasField('id_customer') => $invoice->id_customer,
             ],
             contain: [
                 'AddressCustomers',
@@ -337,15 +330,15 @@ class InvoicesController extends AdminAppController
         }
 
         $invoice->cancellation_invoice_id = $invoiceId;
-        $this->Invoice->save($invoice);
+        $invoicesTable->save($invoice);
 
         // cancel automatically added payment
         if ($invoice->paid_in_cash) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $this->Payment = $this->getTableLocator()->get('Payments');
+                $paymentsTable = $this->getTableLocator()->get('Payments');
                 $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
-                $this->Payment->updateAll([
+                $paymentsTable->updateAll([
                     'status' => APP_DEL,
                     'date_changed' => DateTime::now(),
                     'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
@@ -357,8 +350,8 @@ class InvoicesController extends AdminAppController
             }
 
             // remove "mark row as picked up"
-            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
-            $this->PickupDay->changeState(
+            $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
+            $pickupDaysTable->changeState(
                 $invoice->customer->id_customer,
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_OFF,
@@ -391,8 +384,8 @@ class InvoicesController extends AdminAppController
 
         $this->Flash->success($messageString . $linkToInvoice);
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -417,19 +410,12 @@ class InvoicesController extends AdminAppController
             $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
-
         $customerId = $this->identity->getId();
-
         $this->set('customerIds', [$customerId]);
-
         $this->processIndex($dateFrom, $dateTo, [$customerId]);
-
         $this->set('isOverviewMode', false);
-
         $this->set('title_for_layout', __d('admin', 'My_invoices'));
-
         $this->render('index');
-
     }
 
     public function index()
@@ -467,10 +453,10 @@ class InvoicesController extends AdminAppController
     protected function processIndex($dateFrom, $dateTo, $customerIds)
     {
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
 
-        $query = $this->Invoice->find('all', contain: [
+        $query = $invoicesTable->find('all', contain: [
             'InvoiceTaxes',
             'Customers',
             'CancellationInvoices',
@@ -510,9 +496,9 @@ class InvoicesController extends AdminAppController
         }
         $this->set('invoiceSums', $invoiceSums);
 
-        $this->set('customersForDropdown', $this->Customer->getForDropdown());
+        $this->set('customersForDropdown', $customersTable->getForDropdown());
 
-        $preparedTaxRates = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
+        $preparedTaxRates = $invoicesTable->getPreparedTaxRatesForSumTable($invoices);
         $this->set('taxRates', $preparedTaxRates['taxRates']);
         $this->set('taxRatesSums', $preparedTaxRates['taxRatesSums']);
 

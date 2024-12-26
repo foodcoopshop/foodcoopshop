@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Model\Table\CronjobsTable;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
 use App\Services\SanitizeService;
@@ -25,12 +24,10 @@ use App\Services\SanitizeService;
 class CronjobsController extends AdminAppController
 {
 
-    protected CronjobsTable $Cronjob;
-
     public function index()
     {
-        $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
-        $cronjobs = $this->Cronjob->find('available');
+        $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
+        $cronjobs = $cronjobsTable->find('available');
 
         $cronjobs->contain([
             'CronjobLogs' => function (Query $q) {
@@ -45,8 +42,8 @@ class CronjobsController extends AdminAppController
 
     public function edit($cronjobId)
     {
-        $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
-        $cronjob = $this->Cronjob->find('available', conditions: [
+        $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
+        $cronjob = $cronjobsTable->find('available', conditions: [
             'Cronjobs.id' => $cronjobId,
         ])->first();
 
@@ -56,9 +53,9 @@ class CronjobsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Edit_cronjob'));
 
         $this->setFormReferer();
-        $this->set('timeIntervals', $this->Cronjob->getTimeIntervals());
-        $this->set('daysOfMonth', $this->Cronjob->getDaysOfMonth());
-        $this->set('weekdays', $this->Cronjob->getWeekdays());
+        $this->set('timeIntervals', $cronjobsTable->getTimeIntervals());
+        $this->set('daysOfMonth', $cronjobsTable->getDaysOfMonth());
+        $this->set('weekdays', $cronjobsTable->getWeekdays());
 
         if (empty($this->getRequest()->getData())) {
             $this->set('cronjob', $cronjob);
@@ -70,11 +67,11 @@ class CronjobsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $validationName = $cronjob->getOriginalValues()['name'];
-        if (!method_exists($this->Cronjob, 'validation'.$validationName)) {
+        if (!method_exists($cronjobsTable, 'validation'.$validationName)) {
             $validationName = 'default';
         }
 
-        $cronjob = $this->Cronjob->patchEntity(
+        $cronjob = $cronjobsTable->patchEntity(
             $cronjob,
             $this->getRequest()->getData(),
             [
@@ -85,10 +82,10 @@ class CronjobsController extends AdminAppController
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('cronjob', $cronjob);
         } else {
-            $cronjob = $this->Cronjob->save($cronjob);
-            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $cronjob = $cronjobsTable->save($cronjob);
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_cronjob_{0}_has_been_changed.', ['<b>' . $cronjob->name . '</b>']);
-            $this->ActionLog->customSave('cronjob_changed', $this->identity->getId(), $cronjob->id, 'cronjobs', $message);
+            $actionLogsTable->customSave('cronjob_changed', $this->identity->getId(), $cronjob->id, 'cronjobs', $message);
             $this->Flash->success($message);
 
             $this->redirect($this->getPreparedReferer());

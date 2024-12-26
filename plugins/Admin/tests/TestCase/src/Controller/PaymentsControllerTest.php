@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -10,6 +9,7 @@ use Laminas\Diactoros\UploadedFile;
 use Cake\TestSuite\EmailTrait;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Payment;
+use App\Model\Entity\Configuration;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,18 +27,9 @@ use App\Model\Entity\Payment;
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
-    protected $ActionLog;
-
     use AppIntegrationTestTrait;
     use LoginTrait;
     use EmailTrait;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->Payment = $this->getTableLocator()->get('Payments');
-    }
 
     public function testAddPaymentLoggedOut()
     {
@@ -145,7 +136,8 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>20,50 €'
         );
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
             order: [
                 'Payments.id' => 'DESC' ,
             ]
@@ -170,7 +162,8 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>20,50 €'
         );
 
-        $payment = $this->Payment->find('all',
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payment = $paymentsTable->find('all',
             order: [
                 'Payments.id' => 'DESC' ,
             ]
@@ -231,7 +224,8 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddDepositToManufacturerEmptyGlassesWithDateFuture()
     {
         $this->loginAsSuperadmin();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $dateAdd = '01.01.2099';
         $jsonDecodedContent = $this->addPayment(0, 30, Payment::TYPE_DEPOSIT, $manufacturerId, Payment::TEXT_EMPTY_GLASSES, $dateAdd);
         $this->assertEquals(0, $jsonDecodedContent->status);
@@ -258,9 +252,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
         $addResponse = $this->getJsonDecodedContent();
 
-        $this->Payment->save(
-            $this->Payment->patchEntity(
-                $this->Payment->get($addResponse->paymentId),
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $paymentsTable->save(
+            $paymentsTable->patchEntity(
+                $paymentsTable->get($addResponse->paymentId),
                 [
                     'approval' => APP_ON,
                 ]
@@ -275,20 +270,21 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testDeletePaymentAsCustomer()
     {
-        $creditBalanceBeforeAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $creditBalanceBeforeAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
 
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), '10,5', 'product');
         $response = $this->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
-        $creditBalanceAfterAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
+        $creditBalanceAfterAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
         $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
     }
 
     public function testCsvUploadCustomerNotFoundError()
     {
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $uploadFile = TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv';
         $this->post(
@@ -315,7 +311,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $newPaymentContent = 'transaction text';
         $newPaymentDate = '2019-03-03 02:51:25.165000';
 
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $this->post(
             Configure::read('app.slugHelper')->getReport('product'),
@@ -345,7 +341,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $newPaymentContent = 'transaction text';
         $newPaymentDate = '2019-03-03 02:51:25.165000';
 
-        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $this->post(
             Configure::read('app.slugHelper')->getReport('product'),
@@ -365,7 +361,8 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
 
         $this->assertFlashMessage('Ein Datensatz wurde erfolgreich importiert. Summe: <b>200,00 €</b>');
-        $payments = $this->Payment->find('all')->toArray();
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $payments = $paymentsTable->find('all')->toArray();
         $newPayment = $payments[2];
         $this->assertEquals(3, count($payments));
         $this->assertEquals($newPaymentCustomerId, $newPayment->id_customer);
@@ -385,24 +382,25 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = null)
     {
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customersTable = $this->getTableLocator()->get('Customers');
 
         $this->loginAsSuperadmin();
         $amountToAdd = 10;
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
 
-        $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
 
         $jsonDecodedContent = $this->addPayment(0, $amountToAdd, Payment::TYPE_DEPOSIT, $manufacturerId, $depositText, $dateAdd);
-        $payment = $this->Payment->find('all',
+        $payment = $paymentsTable->find('all',
             conditions: [
                 'Payments.id' =>  $jsonDecodedContent->paymentId,
             ]
         )->first();
 
         $this->assertEquals(1, $payment->status);
-        $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
@@ -415,9 +413,10 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
     {
-        $creditBalanceBeforeAdd = $this->Customer->getCreditBalance($customerId);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $creditBalanceBeforeAdd = $customersTable->getCreditBalance($customerId);
         $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
-        $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
+        $creditBalanceAfterAdd = $customersTable->getCreditBalance($customerId);
         $amountToAddAsDecimal = Configure::read('app.numberHelper')->getStringAsFloat($amountToAdd);
 
         $result = number_format($creditBalanceAfterAdd - $creditBalanceBeforeAdd, 1);
@@ -428,7 +427,8 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
     {
-        $lastActionLog = $this->ActionLog->find('all',
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $lastActionLog = $actionLogsTable->find('all',
             conditions: [
                 'ActionLogs.customer_id' => $customerId
             ],
@@ -439,10 +439,6 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text, 'cake action log text not correct');
     }
 
-    /**
-     * @param int $paymentId
-     * @return string
-     */
     private function deletePayment($paymentId)
     {
         $this->ajaxPost('/admin/payments/changeState', [

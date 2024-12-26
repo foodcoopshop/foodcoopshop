@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Traits;
 
-use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use Cake\Validation\Validator;
 use App\Model\Entity\Product;
 use App\Model\Traits\NumberRangeValidatorTrait;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,7 +34,7 @@ trait ProductImportTrait
         $validator->inList('active', Product::ALLOWED_STATUSES, __('The_following_values_are_valid:') . ' ' . implode(', ', Product::ALLOWED_STATUSES));
         $validator = $this->getNumberRangeValidator($validator, 'price', 0, 2000);
 
-        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
         $allowedTaxIds = $taxesTable->getValidTaxIds();
         $allowedTaxRates = $taxesTable->getValidTaxRatesWithoutPercentSign();
         $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxRates));
@@ -57,11 +57,11 @@ trait ProductImportTrait
         $storageLocationString,
     ) {
 
-        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
         $netPriceAndTaxId = $taxesTable->getNetPriceAndTaxId($grossPrice, $taxRate);
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
-            $storageLocationsTable = FactoryLocator::get('Table')->get('StorageLocations');
+            $storageLocationsTable = TableRegistry::getTableLocator()->get('StorageLocations');
             $storageLocationEntity = $storageLocationsTable->find('all',
                 conditions: [
                     'StorageLocations.name' => $storageLocationString,
@@ -100,8 +100,8 @@ trait ProductImportTrait
             ]
         );
 
-        $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $manufacturerTable->find('all',
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId,
             ]

@@ -19,26 +19,19 @@ namespace App\Services\Invoice;
 use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
 use App\Services\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Date;
+use Cake\ORM\TableRegistry;
 
 class GenerateInvoiceToCustomerService
 {
 
-    public $Customer;
-    public $Invoice;
-    public $OrderDetail;
-    public $Payment;
-    public $QueuedJobs;
-
     public function run($data, $currentDay, $paidInCash)
     {
 
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $this->Payment = FactoryLocator::get('Table')->get('Payments');
-        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
 
         if (!$data->new_invoice_necessary) {
             throw new \Exception('safety check if data available - should always be checked before triggering this queue');
@@ -47,7 +40,7 @@ class GenerateInvoiceToCustomerService
         $invoiceDate = (new Date($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
 
         $year = Configure::read('app.timeHelper')->getYearFromDbDate($currentDay);
-        $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());
+        $invoiceNumber = $invoicesTable->getNextInvoiceNumberForCustomer($year, $invoicesTable->getLastInvoiceForCustomer());
         $invoicePdfFile =  Configure::read('app.htmlHelper')->getInvoiceLink(
             $data->name, $data->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay), $invoiceNumber
         );
@@ -63,7 +56,7 @@ class GenerateInvoiceToCustomerService
 
         $invoicePdfFileForDatabase = str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
         $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
-        $newInvoice = $this->Invoice->saveInvoice(
+        $newInvoice = $invoicesTable->saveInvoice(
             null,
             $data->id_customer,
             $data->tax_rates,
@@ -75,25 +68,25 @@ class GenerateInvoiceToCustomerService
         );
 
         if (!$data->is_cancellation_invoice) {
-            $this->Payment->linkReturnedDepositWithInvoice($data, $newInvoice->id);
-            $this->OrderDetail->updateOrderDetails($data, $newInvoice->id);
+            $paymentsTable->linkReturnedDepositWithInvoice($data, $newInvoice->id);
+            $orderDetailsTable->updateOrderDetails($data, $newInvoice->id);
         }
 
         if ($data->invoices_per_email_enabled) {
-            $this->Customer = FactoryLocator::get('Table')->get('Customers');
-            $sendInvoiceToCustomerService = new SendInvoiceToCustomerService();
-            $sendInvoiceToCustomerService->isCancellationInvoice = $data->is_cancellation_invoice;
-            $sendInvoiceToCustomerService->customerName = $data->name;
-            $sendInvoiceToCustomerService->customerEmail = $data->email;
-            $sendInvoiceToCustomerService->invoicePdfFile = $invoicePdfFile;
-            $sendInvoiceToCustomerService->invoiceNumber = $invoiceNumber;
-            $sendInvoiceToCustomerService->invoiceSumPriceIncl = $data->sumPriceIncl;
-            $sendInvoiceToCustomerService->invoiceDate = $invoiceDate;
-            $sendInvoiceToCustomerService->invoiceId = $newInvoice->id;
-            $sendInvoiceToCustomerService->originalInvoiceId = null;
-            $sendInvoiceToCustomerService->creditBalance = $this->Customer->getCreditBalance($data->id_customer);
-            $sendInvoiceToCustomerService->paidInCash = $paidInCash;
-            $sendInvoiceToCustomerService->run();
+            $customersTable = TableRegistry::getTableLocator()->get('Customers');
+            $service = new SendInvoiceToCustomerService();
+            $service->isCancellationInvoice = $data->is_cancellation_invoice;
+            $service->customerName = $data->name;
+            $service->customerEmail = $data->email;
+            $service->invoicePdfFile = $invoicePdfFile;
+            $service->invoiceNumber = $invoiceNumber;
+            $service->invoiceSumPriceIncl = $data->sumPriceIncl;
+            $service->invoiceDate = $invoiceDate;
+            $service->invoiceId = $newInvoice->id;
+            $service->originalInvoiceId = null;
+            $service->creditBalance = $customersTable->getCreditBalance($data->id_customer);
+            $service->paidInCash = $paidInCash;
+            $service->run();
         }
 
         return $newInvoice;

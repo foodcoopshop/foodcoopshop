@@ -54,7 +54,7 @@ use App\Services\ProductQuantityService;
         $isStockProduct = $product->is_stock_product && $product->manufacturer->stock_management_enabled;
         $availableQuantity = $stockAvailable->quantity - $stockAvailable->quantity_limit;
         
-        if (($isStockProduct || ((!$isStockProduct && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW'))) && !$stockAvailable->always_available)) {
+        if (($isStockProduct || (($availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW'))) && !$stockAvailable->always_available)) {
             $productQuantityService = new ProductQuantityService();
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject);
             $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitObject->name ?? '');

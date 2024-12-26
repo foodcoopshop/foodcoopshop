@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
-use App\Model\Table\ProductsTable;
-use App\Model\Table\TaxesTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
@@ -24,22 +22,19 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait EditPurchasePriceTrait 
 {
 
-    protected ProductsTable $Product;
-    protected TaxesTable $Tax;
-
     public function editPurchasePrice($orderDetailId)
     {
         $this->set('title_for_layout', __d('admin', 'Edit_purchase_price'));
 
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown(true));
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $taxesTable->getForDropdown(true));
 
         $this->setFormReferer();
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetail = $this->OrderDetail->find('all',
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetail = $orderDetailsTable->find('all',
             conditions: [
-                'OrderDetails.id_order_detail' => $orderDetailId
+                $orderDetailsTable->aliasField('id_order_detail') => $orderDetailId,
             ],
             contain: [
                 'Customers',
@@ -59,7 +54,7 @@ trait EditPurchasePriceTrait
             return;
         }
 
-        $orderDetail = $this->OrderDetail->patchEntity(
+        $orderDetail = $orderDetailsTable->patchEntity(
             $orderDetail,
             $this->getRequest()->getData(),
             [
@@ -75,15 +70,15 @@ trait EditPurchasePriceTrait
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('orderDetail', $orderDetail);
         } else {
-            $this->Product = $this->getTableLocator()->get('Products');
+            $productsTable = $this->getTableLocator()->get('Products');
 
-            $grossPrice = $this->Product->getGrossPrice(
+            $grossPrice = $productsTable->getGrossPrice(
                 round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2),
                 $orderDetail->order_detail_purchase_price->tax_rate,
             );
 
             $unitPriceExcl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2) / $orderDetail->product_amount;
-            $unitTaxAmount = $this->Product->getUnitTax(
+            $unitTaxAmount = $productsTable->getUnitTax(
                 $grossPrice,
                 $unitPriceExcl,
                 $orderDetail->product_amount,
@@ -95,7 +90,7 @@ trait EditPurchasePriceTrait
             $orderDetail->order_detail_purchase_price->tax_total_amount = $totalTaxAmount;
             $orderDetail->order_detail_purchase_price->total_price_tax_incl = $grossPrice;
 
-            $orderDetail = $this->OrderDetail->save(
+            $orderDetail = $orderDetailsTable->save(
                 $orderDetail,
                 [
                     'associated' => [

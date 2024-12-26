@@ -34,8 +34,10 @@ trait CalculateSellingChargeWithSurchargeTrait
         }
 
         try {
-            $result = $this->Product->PurchasePriceProducts->getSellingPricesWithSurcharge($productIds, $surcharge);
-            $this->Product->changePrice($result['pricesToChange']);
+            $productsTable = $this->getTableLocator()->get('Products');
+            $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+            $result = $purchasePriceProductsTable->getSellingPricesWithSurcharge($productIds, $surcharge);
+            $productsTable->changePrice($result['pricesToChange']);
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
@@ -44,7 +46,8 @@ trait CalculateSellingChargeWithSurchargeTrait
             '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
         ]);
         $this->Flash->success($message);
-        $this->ActionLog->customSave('product_price_changed', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $result['preparedProductsForActionLog']));
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_price_changed', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $result['preparedProductsForActionLog']));
 
         $this->set([
             'status' => 1,

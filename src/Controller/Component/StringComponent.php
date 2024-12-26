@@ -75,11 +75,7 @@ class StringComponent extends Component
         return preg_replace('/<br\s*\/?>/i', " ", $string);
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function nl2br2($string)
+    public static function nl2br2(string $string): string
     {
         $string = str_replace([
             "\r\n",
@@ -89,12 +85,7 @@ class StringComponent extends Component
         return $string;
     }
 
-    /**
-     * @param string $string
-     * @param string $separator
-     * @return string
-     */
-    public static function slugify($string)
+    public static function slugify(string $string): string
     {
         $string = html_entity_decode($string);
         $specialCases = [
@@ -111,11 +102,7 @@ class StringComponent extends Component
         return $string;
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function createRandomString($n = 6)
+    public static function createRandomString(int $n = 6): string
     {
         $characters = "abcdefghijkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $randomString = '';
@@ -128,10 +115,8 @@ class StringComponent extends Component
 
     /**
      * http://www.maurits.vdschee.nl/php_hide_email/
-     * @param string $email
-     * @return string
      */
-    public static function hideEmail($email, $innerHtml='d')
+    public static function hideEmail(string $email, string $innerHtml='d'): string
     {
         $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
 

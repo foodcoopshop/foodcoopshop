@@ -18,43 +18,41 @@ namespace App\Services\PdfWriter;
 
 use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 use App\Services\PdfWriter\Traits\SetSumTrait;
+use Cake\ORM\TableRegistry;
 
 class InvoiceToManufacturerPdfWriterService extends PdfWriterService
 {
 
     use SetSumTrait;
 
-    public $Manufacturer;
-
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new ListTcpdfService());
-        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
     }
 
     public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate, $isAnonymized)
     {
 
-        $manufacturer = $this->Manufacturer->find('all',
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => $manufacturerId
+                $manufacturersTable->aliasField('id_manufacturer') => $manufacturerId,
             ],
             contain: [
                 'AddressManufacturers'
             ],
         )->first();
 
-        $productResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        $productResults = $manufacturersTable->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($isAnonymized) {
-            $productResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($productResults);
+            $productResults = $manufacturersTable->anonymizeCustomersInInvoiceOrOrderList($productResults);
         }
 
-        $customerResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        $customerResults = $manufacturersTable->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($isAnonymized) {
-            $customerResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($customerResults);
+            $customerResults = $manufacturersTable->anonymizeCustomersInInvoiceOrOrderList($customerResults);
         }
 
         $this->setSums($productResults);
@@ -68,7 +66,7 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo,
             'manufacturer' => $manufacturer,
-            'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee),
+            'variableMemberFee' => $manufacturersTable->getOptionVariableMemberFee($manufacturer->variable_member_fee),
         ]);
 
     }

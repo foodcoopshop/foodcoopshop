@@ -20,14 +20,6 @@ use App\Test\TestCase\AppCakeTestCase;
 class TaxesTableTest extends AppCakeTestCase
 {
 
-    public $Tax;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Tax = $this->getTableLocator()->get('Taxes');
-    }
-
     public function testGetNetPriceAndTaxId()
     {
         $testCases = [
@@ -45,8 +37,9 @@ class TaxesTableTest extends AppCakeTestCase
             ],
         ];
 
+        $taxesTable = $this->getTableLocator()->get('Taxes');
         foreach($testCases as $testCase) {
-            $result = $this->Tax->getNetPriceAndTaxId($testCase['grossPrice'], $testCase['taxRate']);
+            $result = $taxesTable->getNetPriceAndTaxId($testCase['grossPrice'], $testCase['taxRate']);
             $this->assertEquals($testCase['expectedNetPrice'], $result['netPrice']);
             $this->assertEquals($testCase['expectedTaxId'], $result['taxId']);
         }

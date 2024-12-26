@@ -24,7 +24,6 @@ use Cake\TestSuite\EmailTrait;
 class EmailOrderReminderCommandTest extends AppCakeTestCase
 {
 
-    protected $OrderDetail;
     protected $EmailOrderReminder;
 
     use AppIntegrationTestTrait;
@@ -95,13 +94,13 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
     public function testActiveOrderOrderedSameDay()
     {
         $pickupDay = '2019-11-08';
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
-        $this->OrderDetail->updateAll(['created' => '2019-11-08 00:00:00',], []);
+        $orderDetailsTable->updateAll(['created' => '2019-11-08 00:00:00',], []);
 
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get(1),
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(1),
                 [
                     'pickup_day' => $pickupDay,
                 ]
@@ -118,12 +117,12 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
     public function testActiveOrderOrderedEarly()
     {
         $pickupDay = '2019-11-08';
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->OrderDetail->updateAll(['created' => '2019-11-08 00:00:00',], []);
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateAll(['created' => '2019-11-08 00:00:00',], []);
 
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get(1),
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(1),
                 [
                     'pickup_day' => $pickupDay,
                     'created' => '2019-11-01 00:00:00',
@@ -141,7 +140,8 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
 
     public function testIfServiceNotSubscribed()
     {
-        $this->Customer->updateAll(['email_order_reminder_enabled' => 0], []);
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customersTable->updateAll(['email_order_reminder_enabled' => 0], []);
         $this->exec('email_order_reminder');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
@@ -151,13 +151,13 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
     {
         Configure::write('app.applyOpenOrderCheckForOrderReminder', false);
         $pickupDay = '2019-11-08';
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
-        $this->OrderDetail->updateAll(['created' => '2019-11-08 00:00:00',], []);
+        $orderDetailsTable->updateAll(['created' => '2019-11-08 00:00:00',], []);
 
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get(1),
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(1),
                 [
                     'pickup_day' => $pickupDay,
                 ]

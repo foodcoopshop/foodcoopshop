@@ -5,10 +5,10 @@ namespace Admin\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,7 +37,6 @@ class OrderDetailsPolicy implements RequestPolicyInterface
             case 'profit';
             case 'editPurchasePrice';
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $identity->isSuperadmin();
-                break;
             case 'initInstantOrder':
             case 'initSelfServiceOrder':
             case 'iframeInstantOrder':
@@ -49,10 +48,8 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                     return true;
                 }
                 return false;
-                break;
             case 'editProductName':
                 return $identity->isSuperadmin();
-                break;
             case 'addFeedback';
                 if (!Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
                     return false;
@@ -61,7 +58,7 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                     return true;
                 }
                 if ($identity->isCustomer()) {
-                    $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+                    $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
                     $orderDetail = $orderDetailTable->find('all',
                         conditions:  [
                             'OrderDetails.id_order_detail' => $request->getData('orderDetailId')
@@ -74,7 +71,6 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                     }
                 }
                 return false;
-                break;
             case 'setElFinderUploadPath':
                 return $identity !== null && !$identity->isManufacturer();
             case 'delete':
@@ -111,17 +107,14 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 return true;
             default:
                 return $identity !== null;
-                break;
         }
-
-        return $identity !== null;
 
     }
 
     private function checkOrderDetailIdAccess(int $orderDetailId, $identity): bool
     {
         if ($identity->isCustomer() || $identity->isManufacturer()) {
-            $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+            $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
             $orderDetail = $orderDetailTable->find('all',
                 conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId,

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Traits;
 
-use Cake\Datasource\FactoryLocator;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,13 +21,11 @@ use Cake\Datasource\FactoryLocator;
 trait QueueTrait
 {
 
-    protected $QueuedJobs;
-
     protected function runAndAssertQueue()
     {
         $this->exec('queue run -q');
-        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
-        $queuedJobs = $this->QueuedJobs->find('all');
+        $queuedJobsTable = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $queuedJobs = $queuedJobsTable->find('all');
         foreach($queuedJobs as $queuedJob) {
             if (!empty($queuedJob->failure_message)) {
                 pr($queuedJob->failure_message);

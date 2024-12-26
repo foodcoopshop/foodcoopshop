@@ -6,10 +6,10 @@ namespace Admin\Traits\Products;
 
 use Admin\Traits\ManufacturerIdTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\FactoryLocator;
 use League\Csv\Writer;
 use Cake\Log\Log;
 use App\Services\Csv\Reader\ProductReaderService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +30,7 @@ trait ImportTrait
 
     use ManufacturerIdTrait;
 
-    private $columnsFieldMap = [];
+    private array $columnsFieldMap = [];
 
     public function initializeImportTrait()
     {
@@ -82,7 +82,7 @@ trait ImportTrait
         $this->initializeImportTrait();
 
         $manufacturerId = $this->getManufacturerId();
-        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => (int) $manufacturerId,
@@ -114,7 +114,7 @@ trait ImportTrait
             if ($reader->areAllEntitiesValid($productEntities)) {
                 $messageString = __d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x';
                 $this->Flash->success($messageString);
-                $actionLogsTable = FactoryLocator::get('Table')->get('ActionLogs');
+                $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
                 $actionLogsTable->customSave('product_added', $this->identity->getId(), $manufacturer->id_manufacturer, 'products', $messageString);
                 Log::error($messageString . print_r($productEntities, true));
             } else {
@@ -124,7 +124,7 @@ trait ImportTrait
                     if (empty($error)) {
                         continue;
                     }
-                    $header = '<b style="line-height:40px;">' . (!empty($productEntities[$row]['name']) ? $productEntities[$row]['name'] : __('Product') . ' ' . $row + 1) . '</b><br />';
+                    $header = '<b style="line-height:40px;">' . (!empty($productEntities[$row]['name']) ? $productEntities[$row]['name'] : __('Product') . ' ' . ($row + 1)) . '</b><br />';
                     $errorMessage = '';
                     foreach ($error as $fieldName => $messages) {
                         $mappedFieldName = array_search($fieldName, $this->columnsFieldMap);
