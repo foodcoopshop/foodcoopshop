@@ -187,11 +187,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->changeManufacturer($manufacturerId, 'no_delivery_days', $noDeliveryDays);
     }
 
-    /**
-     * @param int $productId
-     * @param int $amount
-     */
-    protected function addProductToCart($productId, $amount)
+    protected function addProductToCart(int|string $productId, int $amount)
     {
         $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,

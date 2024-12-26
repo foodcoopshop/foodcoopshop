@@ -28,10 +28,8 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
-     * @param string $configKey
-     * @param string $newValue
      */
-    protected function changeConfigurationEditForm($configKey, $newValue)
+    protected function changeConfigurationEditForm(string $configKey, string|array $newValue)
     {
         $this->loginAsSuperadmin();
         $configurationsTable = $this->getTableLocator()->get('Configurations');

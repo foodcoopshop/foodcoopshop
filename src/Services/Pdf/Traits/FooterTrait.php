@@ -5,7 +5,6 @@ namespace App\Services\Pdf\Traits;
 
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
-use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +31,7 @@ trait FooterTrait
         $this->SetY(-19);
         $this->drawLine();
         $this->SetFontSize(10);
-        $this->Cell(0, 10, $this->infoTextForFooter , 0, false, 'L', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, $this->infoTextForFooter , 0, 0, 'L', false, '', 0, false, 'T', 'M');
         $this->Ln(4);
         $now = new DateTime();
         $textForFooterRight =
@@ -43,7 +42,7 @@ trait FooterTrait
         __('Page_{0}_of_{1}', [
             $this->getAliasNumPage(), $this->getAliasNbPages()
         ]);
-        $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, $textForFooterRight, 0, 0, 'R', false, '', 0, false, 'T', 'M');
         $this->SetFontSize(12);
     }
 

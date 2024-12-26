@@ -74,7 +74,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
     {
         $this->SetY(4);
 
-        $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', 0, 0, '', '', true, null, true);
+        $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', false, 0, null, null, true, 0, true);
         $this->setFontSize(10);
 
         $convertedHeaderRight = Configure::read('appDb.FCS_INVOICE_HEADER_TEXT');
@@ -87,7 +87,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
 
         $this->headerRight = $convertedHeaderRight;
 
-        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', 0, 1, '', '', true, null, true);
+        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', false, 1, null, null, true, 0, true);
 
         $this->SetY(36);
         $this->drawLine();

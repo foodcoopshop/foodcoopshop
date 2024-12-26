@@ -30,6 +30,7 @@ class AppTable extends Table
     {
         $this->setTable($this->tablePrefix . $this->getTable());
         if ((PHP_SAPI == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
+            /** @phpstan-ignore-next-line */
             $this->setConnection(ConnectionManager::get('test'));
         }
         parent::initialize($config);
