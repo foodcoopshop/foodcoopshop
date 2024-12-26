@@ -56,9 +56,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     protected function getChangedMockCartFromDatabase()
     {
-        if (!$this->mockCart) {
-            return false;
-        }
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
             conditions: [

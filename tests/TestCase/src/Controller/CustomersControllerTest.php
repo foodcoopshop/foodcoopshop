@@ -141,7 +141,7 @@ class CustomersControllerTest extends AppCakeTestCase
                 'passwd_2' => '123',
             ],
         ];
-        $this->post($this->Slug->getChangePassword(Configure::read('test.superadminId')), $data);
+        $this->post($this->Slug->getChangePassword(), $data);
         $this->assertResponseContains('Dein altes Passwort ist leider falsch.');
         $this->assertResponseContains('Die Passwörter stimmen nicht überein.');
         $this->assertResponseContains('Das Passwort muss aus mindestens 8 Zeichen bestehen.');
@@ -168,7 +168,7 @@ class CustomersControllerTest extends AppCakeTestCase
                 'passwd_2' => $newPassword,
             ],
         ];
-        $this->post($this->Slug->getChangePassword(Configure::read('test.superadminId')), $data);
+        $this->post($this->Slug->getChangePassword(), $data);
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich gespeichert.');
 
         $newCustomer = $customersTable->find('all',
