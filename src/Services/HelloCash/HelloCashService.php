@@ -44,7 +44,7 @@ class HelloCashService
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function cancelInvoice($customerId, $originalInvoiceId, $currentDay): Response
+    public function cancelInvoice($customerId, $originalInvoiceId, $currentDay): object
     {
         $postData = [
             'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
@@ -154,7 +154,7 @@ class HelloCashService
         return $options;
     }
 
-    public function getReceipt($invoiceId, $cancellation): Response
+    public function getReceipt($invoiceId, $cancellation): object
     {
 
         $response = $this->getRestClient()->get(
@@ -177,7 +177,7 @@ class HelloCashService
         return base64_decode($responseObject->pdf_base64_encoded);
     }
 
-    public function generateInvoice($data, $currentDay, $paidInCash, $isPreview): Response
+    public function generateInvoice($data, $currentDay, $paidInCash, $isPreview): object
     {
 
         $userId = $this->createOrUpdateUser($data->id_customer);
@@ -198,7 +198,7 @@ class HelloCashService
 
     }
 
-    protected function afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash): Response
+    protected function afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash): object
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -334,7 +334,7 @@ class HelloCashService
 
     }
 
-    protected function checkRequestForErrors($response): Response
+    protected function checkRequestForErrors($response): object
     {
         if (preg_match('/Seite nicht gefunden/', $response->getStringBody())) {
             throw new HelloCashApiException($response->getStringBody());
