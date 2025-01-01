@@ -35,7 +35,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
         $this->prepareSendingInvoices();
     }
 
-    public function testContentOfInvoice()
+    public function testContentOfInvoice(): void
     {
         $this->loginAsSuperadmin();
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
@@ -44,7 +44,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
-    public function testSendInvoicesWithVariableMemberFee()
+    public function testSendInvoicesWithVariableMemberFee(): void
     {
 
         $this->prepareSendInvoices();
@@ -89,7 +89,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes()
+    public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes(): void
     {
 
         $this->prepareSendInvoices();
@@ -106,7 +106,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
     }
 
-    private function prepareSendInvoices()
+    private function prepareSendInvoices(): void
     {
         $this->loginAsSuperadmin();
         // add new orders

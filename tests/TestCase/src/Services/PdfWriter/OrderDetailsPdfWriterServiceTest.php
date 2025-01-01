@@ -21,7 +21,7 @@ use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
 {
 
-    public function testPdfContent()
+    public function testPdfContent(): void
     {
         $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
         $pickupDay = ['2018-02-02'];

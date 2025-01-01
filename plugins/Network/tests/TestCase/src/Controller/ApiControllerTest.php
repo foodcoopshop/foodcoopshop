@@ -29,13 +29,13 @@ class ApiControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use StringCompareTrait;
 
-    public function testGetProductsLoggedOut()
+    public function testGetProductsLoggedOut(): void
     {
         $this->get('/api/getProducts.json');
         $this->assertResponseCode(401);
     }
 
-    public function testGetProductsAsSuperadmin()
+    public function testGetProductsAsSuperadmin(): void
     {
         $this->configRequest([
             'environment' => [
@@ -50,7 +50,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertRedirectToLoginPage();
     }
 
-    public function testGetProductsAsManufacturer()
+    public function testGetProductsAsManufacturer(): void
     {
         $this->configRequest([
             'environment' => [
@@ -77,7 +77,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $preparedResponse);
     }
 
-    public function testUpdateProductsAsManufacturer()
+    public function testUpdateProductsAsManufacturer(): void
     {
         $this->configRequest([
             'environment' => [
@@ -144,7 +144,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertEquals(5, $product->stock_available->quantity);
     }
 
-    public function testGetOrdersWrongPickupDayFormat()
+    public function testGetOrdersWrongPickupDayFormat(): void
     {
         $this->configRequest([
             'environment' => [
@@ -157,7 +157,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertEquals('wrong pickupDay format', $response->error);
     }
 
-    public function testGetOrdersOk()
+    public function testGetOrdersOk(): void
     {
 
         $this->loginAsSuperadmin();

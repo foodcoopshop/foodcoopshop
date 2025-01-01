@@ -7,14 +7,7 @@ class Initial extends AbstractMigration
 {
     public bool $autoId = false;
 
-    /**
-     * Up Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/phinx/0/en/migrations.html#the-up-method
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
 
         $this->table('fcs_action_logs')

@@ -21,7 +21,7 @@ use App\Services\Csv\Reader\Banking\RaiffeisenBankingReaderService;
 class RaiffeisenBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function testRead()
+    public function testRead(): void
     {
         $reader = RaiffeisenBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');
         $records = $reader->getPreparedRecords();
@@ -37,13 +37,13 @@ class RaiffeisenBankingReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(3, count($records));
     }
 
-    public function testCheckStructureNotOk()
+    public function testCheckStructureNotOk(): void
     {
         $reader = RaiffeisenBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
-    public function testCheckStructureOk()
+    public function testCheckStructureOk(): void
     {
         $reader = RaiffeisenBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');
         $this->assertTrue($reader->checkStructure());

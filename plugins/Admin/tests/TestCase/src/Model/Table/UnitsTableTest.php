@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Model\Entity\Unit;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +29,7 @@ class UnitsTableTest extends AppCakeTestCase
     public float|string $quantityInUnits = 9.323;
     public bool $useWeightAsAmount = false;
 
-    public function testSaveProductWithInvalidPriceString()
+    public function testSaveProductWithInvalidPriceString(): void
     {
         $this->priceInclPerUnit = 'random-string';
         $this->expectException(\Exception::class);
@@ -36,7 +37,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidPriceZero()
+    public function testSaveProductWithInvalidPriceZero(): void
     {
         $this->priceInclPerUnit = 0;
         $this->expectException(\Exception::class);
@@ -44,7 +45,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidNameWrongString()
+    public function testSaveProductWithInvalidNameWrongString(): void
     {
         $this->name = 'p';
         $this->expectException(\Exception::class);
@@ -52,7 +53,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidNameEmpty()
+    public function testSaveProductWithInvalidNameEmpty(): void
     {
         $this->name = '';
         $this->expectException(\Exception::class);
@@ -60,7 +61,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidAmountString()
+    public function testSaveProductWithInvalidAmountString(): void
     {
         $this->amount = 'random-string';
         $this->expectException(\Exception::class);
@@ -68,7 +69,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidAmountZero()
+    public function testSaveProductWithInvalidAmountZero(): void
     {
         $this->amount = 0;
         $this->expectException(\Exception::class);
@@ -76,7 +77,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidQuantityInUnitsString()
+    public function testSaveProductWithInvalidQuantityInUnitsString(): void
     {
         $this->quantityInUnits = 'random-string';
         $this->expectException(\Exception::class);
@@ -84,7 +85,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidQuantityInUnitsNegative()
+    public function testSaveProductWithInvalidQuantityInUnitsNegative(): void
     {
         $this->quantityInUnits = -1;
         $this->expectException(\Exception::class);
@@ -92,7 +93,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductWithInvalidQuantityInUnitsZero()
+    public function testSaveProductWithInvalidQuantityInUnitsZero(): void
     {
         $this->quantityInUnits = 0;
         $this->expectException(\Exception::class);
@@ -100,14 +101,14 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
-    public function testSaveProductNoValidationIfDisabled()
+    public function testSaveProductNoValidationIfDisabled(): void
     {
         $this->pricePerUnitEnabled = false;
         $result = $this->doSave();
         $this->assertNotEmpty($result);
     }
 
-    public function testSaveProductOK()
+    public function testSaveProductOK(): void
     {
         $result = $this->doSave();
         $this->assertNotEmpty($result);
@@ -127,7 +128,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->assertEquals($this->useWeightAsAmount, $unit->use_weight_as_amount);
     }
 
-    private function doSave()
+    private function doSave(): Unit|false
     {
         $unitsTable = $this->getTableLocator()->get('Units');
         return $unitsTable->saveUnits(

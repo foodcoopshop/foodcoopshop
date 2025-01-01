@@ -44,7 +44,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->HelloCashService = new HelloCashService();
     }
 
-    public function testGetUsers() {
+    public function testGetUsers(): void
+    {
         $this->HelloCashService = new HelloCashService();
         $response = $this->HelloCashService->getRestClient()->get(
             '/users?limit=1',
@@ -58,7 +59,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertObjectHasProperty('user_email', $responseObject->users[0]);
     }
 
-    public function testGenerateReceiptForCustomer()
+    public function testGenerateReceiptForCustomer(): void
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
@@ -104,7 +105,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertMailCount(1);
     }
 
-    public function testGenerateReceiptForCompany()
+    public function testGenerateReceiptForCompany(): void
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->changeCustomer(Configure::read('test.superadminId'), 'is_company', 1);
@@ -137,7 +138,7 @@ class HelloCashServiceTest extends AppCakeTestCase
     }
 
 
-    public function testGenerateInvoiceSendPerEmailActivated()
+    public function testGenerateInvoiceSendPerEmailActivated(): void
     {
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
@@ -175,7 +176,7 @@ class HelloCashServiceTest extends AppCakeTestCase
 
     }
 
-    public function testGenerateInvoiceSendPerEmailDeactivated()
+    public function testGenerateInvoiceSendPerEmailDeactivated(): void
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
@@ -202,7 +203,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertEquals($invoice->email_status, 'deaktiviert');
     }
 
-    public function testCancelInvoice()
+    public function testCancelInvoice(): void
     {
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
@@ -257,7 +258,7 @@ class HelloCashServiceTest extends AppCakeTestCase
 
     }
 
-    public function testUpdatingExistingUserOnGeneratingReceipt()
+    public function testUpdatingExistingUserOnGeneratingReceipt(): void
     {
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
@@ -302,7 +303,7 @@ class HelloCashServiceTest extends AppCakeTestCase
 
     }
 
-    public function testCreatingUserThatDoesNotExistOnGeneratingReceipt()
+    public function testCreatingUserThatDoesNotExistOnGeneratingReceipt(): void
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();

@@ -32,13 +32,13 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->today = date('Y-m-d');
     }
 
-       public function testManufacturerDetailOnlinePublicLoggedOut()
+       public function testManufacturerDetailOnlinePublicLoggedOut(): void
     {
         $this->get($this->Slug->getManufacturerDetail(4, 'Demo Fleisch Hersteller'));
         $this->assertResponseCode(200);
     }
 
-    public function testManufacturerDetailOfflinePublicLoggedOut()
+    public function testManufacturerDetailOfflinePublicLoggedOut(): void
     {
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'active', 0);
@@ -46,7 +46,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testManufacturerDetailOnlinePrivateLoggedOut()
+    public function testManufacturerDetailOnlinePrivateLoggedOut(): void
     {
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
@@ -54,7 +54,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testManufacturerDetailOnlinePrivateLoggedIn()
+    public function testManufacturerDetailOnlinePrivateLoggedIn(): void
     {
         $this->loginAsCustomer();
         $manufacturerId = 4;
@@ -63,7 +63,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
-    public function testManufacturerDetailNonExistingLoggedOut()
+    public function testManufacturerDetailNonExistingLoggedOut(): void
     {
         $manufacturerId = 1;
         $this->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));

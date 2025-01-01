@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsControllerTestCase
 {
 
-    public function testEditOrderDetailPurchasePricePriceExclValidPurchasePrice()
+    public function testEditOrderDetailPurchasePricePriceExclValidPurchasePrice(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -42,7 +42,7 @@ class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsController
         $this->assertEquals($odpp->tax_total_amount, 2.6);
     }
 
-    public function testEditOrderDetailPurchasePricePriceExclInvalidPurchasePrice()
+    public function testEditOrderDetailPurchasePricePriceExclInvalidPurchasePrice(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -53,7 +53,7 @@ class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsController
         $this->assertResponseContains('Bitte gib eine korrekte Zahl ein.');
     }
 
-    protected function editOrderDetailPurchasePrice($orderDetailId, $purchasePriceExcl, $taxRate)
+    protected function editOrderDetailPurchasePrice($orderDetailId, $purchasePriceExcl, $taxRate): void
     {
         $this->post(
             Configure::read('app.slugHelper')->getOrderDetailPurchasePriceEdit($orderDetailId),

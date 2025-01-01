@@ -32,7 +32,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', true);
     }
 
-    public function testProductDetailOfflineManufacturerPublicLoggedOut()
+    public function testProductDetailOfflineManufacturerPublicLoggedOut(): void
     {
         $productId = 60;
         $this->changeProductStatus($productId, 0);
@@ -40,7 +40,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailOfflineManufacturerPublicLoggedIn()
+    public function testProductDetailOfflineManufacturerPublicLoggedIn(): void
     {
         $this->loginAsCustomer();
         $productId = 60;
@@ -49,14 +49,14 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailOnlineManufacturerPublicLoggedOut()
+    public function testProductDetailOnlineManufacturerPublicLoggedOut(): void
     {
         $this->get($this->Slug->getProductDetail(60, 'Milch'));
         $this->assertResponseNotContains('0,62 €'); // price must not be shown
         $this->assertResponseCode(200);
     }
 
-    public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled()
+    public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled(): void
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
         $this->get($this->Slug->getProductDetail(60, 'Milch'));
@@ -64,14 +64,14 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
-    public function testProductDetailOnlineManufacturerPublicLoggedIn()
+    public function testProductDetailOnlineManufacturerPublicLoggedIn(): void
     {
         $this->loginAsCustomer();
         $this->get($this->Slug->getProductDetail(60, 'Milch'));
         $this->assertResponseCode(200);
     }
 
-    public function testProductDetailOnlineManufacturerPrivateLoggedOut()
+    public function testProductDetailOnlineManufacturerPrivateLoggedOut(): void
     {
         $productId = 60;
         $manufacturerId = 15;
@@ -80,14 +80,14 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testProductDetailNonExistingLoggedOut()
+    public function testProductDetailNonExistingLoggedOut(): void
     {
         $productId = 3;
         $this->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilOver()
+    public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilOver(): void
     {
         $this->loginAsSuperadmin();
         $productId = 346;
@@ -96,7 +96,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilNotOver()
+    public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilNotOver(): void
     {
         $this->loginAsSuperadmin();
         $productId = 346;
@@ -105,7 +105,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
-    public function testProductDetailDeliveryBreakActive()
+    public function testProductDetailDeliveryBreakActive(): void
     {
         $this->loginAsSuperadmin();
         $productId = 346;
@@ -115,7 +115,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<i class="fas fa-fw fa-lg fa-times"></i> Lieferpause!');
     }
 
-    public function testProductDetailProductNoPurchasePricePerPiece()
+    public function testProductDetailProductNoPurchasePricePerPiece(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -124,7 +124,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailProductNoPurchasePricePerUnit()
+    public function testProductDetailProductNoPurchasePricePerUnit(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -135,7 +135,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailAttributeNoPurchasePricePerPiece()
+    public function testProductDetailAttributeNoPurchasePricePerPiece(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -146,7 +146,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('ca. 0,5 kg');
     }
 
-    public function testProductDetailAttributeNoPurchasePricePerUnit()
+    public function testProductDetailAttributeNoPurchasePricePerUnit(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -156,7 +156,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('ca. 300 g');
     }
 
-    public function testProductDetailProductWithAllAttributesRemovedDueToNoPurchasePrice()
+    public function testProductDetailProductWithAllAttributesRemovedDueToNoPurchasePrice(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -167,7 +167,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testProductDetailHtmlProductCatalogWeekly()
+    public function testProductDetailHtmlProductCatalogWeekly(): void
     {
         $this->loginAsCustomer();
         $productId = 60;
@@ -183,7 +183,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
 
-    public function testProductDetailHtmlProductCatalogShowOrderedProductsTotalAmountInCatalog()
+    public function testProductDetailHtmlProductCatalogShowOrderedProductsTotalAmountInCatalog(): void
     {
         Configure::write('app.showOrderedProductsTotalAmountInCatalog', true);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -208,7 +208,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<div title="<b>1</b>x für Abholtag <b>'.$formattedPickupDay.'</b> bestellt." class="ordered-products-total-amount">1</div>');
     }
 
-    public function testProductDetailHtmlProductCatalogInstantOrder()
+    public function testProductDetailHtmlProductCatalogInstantOrder(): void
     {
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
@@ -220,7 +220,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
 
-    protected function changeProductStatus($productId, $active)
+    protected function changeProductStatus($productId, $active): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productEntity = $productsTable->get($productId);

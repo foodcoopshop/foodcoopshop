@@ -12,7 +12,7 @@ class AlterDataOnQueuedJobsToMediumtext extends AbstractMigration
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
      * @return void
      */
-    public function change()
+    public function change(): void
     {
         $table = $this->table('queued_jobs');
         $table->changeColumn('data', 'text', [

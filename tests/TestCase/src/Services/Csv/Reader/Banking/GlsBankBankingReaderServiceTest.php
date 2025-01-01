@@ -21,7 +21,7 @@ use App\Services\Csv\Reader\Banking\GlsBankBankingReaderService;
 class GlsBankBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function testRead()
+    public function testRead(): void
     {
         $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
         $records = $reader->getPreparedRecords();
@@ -36,13 +36,13 @@ class GlsBankBankingReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(1, count($records));
     }
 
-    public function testCheckStructureNotOk()
+    public function testCheckStructureNotOk(): void
     {
         $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
-    public function testCheckStructureOk()
+    public function testCheckStructureOk(): void
     {
         $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
         $this->assertTrue($reader->checkStructure());

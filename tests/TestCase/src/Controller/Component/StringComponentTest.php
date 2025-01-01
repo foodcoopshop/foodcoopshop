@@ -25,7 +25,7 @@ class StringComponentTest extends AppCakeTestCase
         // do not import database - no database needed for this test
     }
 
-    public function testRemoveEmojis()
+    public function testRemoveEmojis(): void
     {
         $tests = [
             [
@@ -44,7 +44,7 @@ class StringComponentTest extends AppCakeTestCase
         }
     }
 
-    public function testSlugify()
+    public function testSlugify(): void
     {
         $tests = [
             [
@@ -87,7 +87,7 @@ class StringComponentTest extends AppCakeTestCase
         }
     }
 
-    public function testAddHttpToUrl()
+    public function testAddHttpToUrl(): void
     {
         $tests = [
             [
@@ -114,7 +114,7 @@ class StringComponentTest extends AppCakeTestCase
         }
     }
 
-    public function testRemoveIdFromSlug()
+    public function testRemoveIdFromSlug(): void
     {
         $tests = [
             [

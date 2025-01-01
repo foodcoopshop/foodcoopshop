@@ -19,31 +19,31 @@ namespace App\Test\TestCase\Traits;
 trait DeliveryRhythmConfigsTrait
 {
 
-    protected function prepareThursdayFridayConfig()
+    protected function prepareThursdayFridayConfig(): void
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
-    protected function prepareWednesdayFridayConfig()
+    protected function prepareWednesdayFridayConfig(): void
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 2);
     }
 
-    protected function prepareTuesdayFridayConfig()
+    protected function prepareTuesdayFridayConfig(): void
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
     }
 
-    protected function prepareMondayTuesdayConfig()
+    protected function prepareMondayTuesdayConfig(): void
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 2);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
-    protected function prepareSaturdayThursdayConfig()
+    protected function prepareSaturdayThursdayConfig(): void
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);

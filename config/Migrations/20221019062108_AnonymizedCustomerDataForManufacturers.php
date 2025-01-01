@@ -5,7 +5,7 @@ use Migrations\AbstractMigration;
 
 class AnonymizedCustomerDataForManufacturers extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $this->table('fcs_manufacturer')
             ->addColumn('anonymize_customers', 'tinyinteger', [

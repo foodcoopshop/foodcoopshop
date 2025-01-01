@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 class MyMemberCardPdfWriterServiceTest extends AppCakeTestCase
 {
 
-    public function testPdfContent()
+    public function testPdfContent(): void
     {
         $customerIds = [Configure::read('test.customerId')];
         $pdfWriter = new MyMemberCardPdfWriterService();

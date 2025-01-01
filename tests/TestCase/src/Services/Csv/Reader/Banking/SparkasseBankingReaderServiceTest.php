@@ -21,7 +21,7 @@ use App\Services\Csv\Reader\Banking\SparkasseBankingReaderService;
 class SparkasseBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function testRead()
+    public function testRead(): void
     {
         $reader = SparkasseBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse.csv');
         $records = $reader->getPreparedRecords();
@@ -36,13 +36,13 @@ class SparkasseBankingReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(1, count($records));
     }
 
-    public function testCheckStructureNotOk()
+    public function testCheckStructureNotOk(): void
     {
         $reader = SparkasseBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
-    public function testCheckStructureOk()
+    public function testCheckStructureOk(): void
     {
         $reader = SparkasseBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse.csv');
         $this->assertTrue($reader->checkStructure());

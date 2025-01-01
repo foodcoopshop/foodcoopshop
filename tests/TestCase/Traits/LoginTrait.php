@@ -22,7 +22,7 @@ trait LoginTrait
 
     public bool $isSelfServiceModeByUrl = false;
 
-    public function login($userId)
+    public function login($userId): array
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
@@ -40,61 +40,61 @@ trait LoginTrait
         ];
     }
 
-    public function loginAsSelfServiceCustomer()
+    public function loginAsSelfServiceCustomer(): void
     {
         $sessionData =  $this->login(Configure::read('test.selfServiceCustomerId'));
         $this->session($sessionData);
     }
 
-    public function loginAsSuperadmin()
+    public function loginAsSuperadmin(): void
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
         $this->session($sessionData);
     }
 
-    public function loginAsAdmin()
+    public function loginAsAdmin(): void
     {
         $sessionData = $this->login(Configure::read('test.adminId'));
         $this->session($sessionData);
     }
 
-    public function loginAsCustomer()
+    public function loginAsCustomer(): void
     {
         $sessionData = $this->login(Configure::read('test.customerId'));
         $this->session($sessionData);
     }
 
-    public function loginAsMeatManufacturer()
+    public function loginAsMeatManufacturer(): void
     {
         $sessionData = $this->login(Configure::read('test.meatManufacturerId'));
         $this->session($sessionData);
     }
 
-    public function loginAsVegetableManufacturer()
+    public function loginAsVegetableManufacturer(): void
     {
         $sessionData = $this->login(Configure::read('test.vegetableManufacturerId'));
         $this->session($sessionData);
     }
 
-    public function loginAsMilkManufacturer()
+    public function loginAsMilkManufacturer(): void
     {
         $sessionData = $this->login(Configure::read('test.milkManufacturerId'));
         $this->session($sessionData);
     }
 
-    public function logout()
+    public function logout(): void
     {
         $this->get($this->Slug->getLogout());
     }
 
-    public function loginAsSuperadminAddOrderCustomerToSession($session)
+    public function loginAsSuperadminAddOrderCustomerToSession($session): void
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
         $sessionData['OrderIdentity'] = $session['OrderIdentity'];
         $this->session($sessionData);
     }
 
-    public function getId()
+    public function getId(): int|array
     {
         $identity = $this->getUser();
         if (empty($identity)) {
@@ -106,7 +106,7 @@ trait LoginTrait
     /**
      * used in CartsControllerTest::checkCartStatus
      */
-    public function isOrderForDifferentCustomerMode()
+    public function isOrderForDifferentCustomerMode(): ?bool
     {
         return $this->getSession()->read('OrderIdentity');
     }
@@ -115,12 +115,12 @@ trait LoginTrait
      * used in CartsControllerTest::checkCartStatus
      * mocks AppAuthComponent
      */
-    public function isSelfServiceModeByUrl()
+    public function isSelfServiceModeByUrl(): bool
     {
         return $this->isSelfServiceModeByUrl;
     }
 
-    public function getUser()
+    public function getUser(): array
     {
         if (empty($this->_session)) {
             return [];

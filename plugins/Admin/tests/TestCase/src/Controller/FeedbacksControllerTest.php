@@ -31,7 +31,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_USER_FEEDBACK_ENABLED', 1);
     }
 
-    public function testSaveFeedbackNotCorrectText()
+    public function testSaveFeedbackNotCorrectText(): void
     {
         $this->loginAsCustomer();
         $text = 'This';
@@ -40,7 +40,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte gib zwischen 10 und 1.000 Zeichen ein.');
     }
 
-    public function testSaveFeedbackAsCustomerAndApproveBySuperadmin()
+    public function testSaveFeedbackAsCustomerAndApproveBySuperadmin(): void
     {
 
         $this->loginAsCustomer();
@@ -68,7 +68,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSaveFeedbackAsManufacturerAndApproveBySuperadmin()
+    public function testSaveFeedbackAsManufacturerAndApproveBySuperadmin(): void
     {
         $this->loginAsMeatManufacturer();
         $text = 'This is my feedback';
@@ -89,7 +89,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Feedback von Herstellern');
     }
 
-    public function testSaveAndDeleteFeedbackByAdmin()
+    public function testSaveAndDeleteFeedbackByAdmin(): void
     {
 
         $this->loginAsAdmin();
@@ -109,7 +109,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
 
     }
 
-    private function doPostMyFeedbackForm($text, $privacyType, $delete)
+    private function doPostMyFeedbackForm($text, $privacyType, $delete): void
     {
         $this->post(
             $this->Slug->getMyFeedbackForm(),
@@ -124,7 +124,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
         );
     }
 
-    private function doPostFeedbackForm($customerId, $text, $privacyType, $approvedCheckbox)
+    private function doPostFeedbackForm($customerId, $text, $privacyType, $approvedCheckbox): void
     {
         $this->post(
             $this->Slug->getFeedbackForm($customerId),

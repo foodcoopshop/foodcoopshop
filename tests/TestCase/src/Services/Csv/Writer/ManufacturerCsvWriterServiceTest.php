@@ -23,7 +23,7 @@ class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
 
     public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;E-Mail;Status;Pfandkonto;Lagerprodukte;"Nur für Mitglieder";Ansprechperson';
 
-    public function testWriteDefault()
+    public function testWriteDefault(): void
     {
         $this->setDummyRequest();
 

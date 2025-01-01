@@ -23,7 +23,7 @@ use App\Model\Entity\OrderDetail;
 class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTestCase
 {
 
-    public function testEditPickupDayAsSuperadminNoOrderDetailIds()
+    public function testEditPickupDayAsSuperadminNoOrderDetailIds(): void
     {
         $this->loginAsSuperadmin();
         $response = $this->editPickupDayOfOrderDetails([], '2018-01-01', 'asdf', true, true);
@@ -31,7 +31,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonError();
     }
 
-    public function testEditPickupDayAsSuperadminWrongOrderDetailIds()
+    public function testEditPickupDayAsSuperadminWrongOrderDetailIds(): void
     {
         $this->loginAsSuperadmin();
         $response = $this->editPickupDayOfOrderDetails([200,40], '2018-01-01', 'asdf', true, true);
@@ -39,7 +39,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonError();
     }
 
-    public function testEditPickupDayAsSuperadminOk()
+    public function testEditPickupDayAsSuperadminOk(): void
     {
         $this->loginAsSuperadmin();
         $reason = 'this is the reason';
@@ -56,7 +56,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_OPEN);
     }
 
-    public function testEditPickupDayAsSuperadminOkIsSubscribeNewsletterLinkAddedToMail()
+    public function testEditPickupDayAsSuperadminOkIsSubscribeNewsletterLinkAddedToMail(): void
     {
         $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
@@ -71,7 +71,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_OPEN);
     }
 
-    public function testEditPickupDayAsSuperadminWithoutEmailsOk()
+    public function testEditPickupDayAsSuperadminWithoutEmailsOk(): void
     {
         $this->loginAsSuperadmin();
         $reason = 'this is the reason';
@@ -84,7 +84,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_OPEN);
     }
 
-    public function testEditPickupDayAsSuperadminWithoutResetOrderState()
+    public function testEditPickupDayAsSuperadminWithoutResetOrderState(): void
     {
         $this->loginAsSuperadmin();
         $reason = '';
@@ -109,7 +109,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
     }
 
-    public function testEditPickupDayAsSuperadminNoReasonEmailsOk()
+    public function testEditPickupDayAsSuperadminNoReasonEmailsOk(): void
     {
         $this->loginAsSuperadmin();
         $reason = '';
@@ -121,7 +121,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Warum wurde der Abholtag geändert?', $email->getBodyHtml());
     }
 
-    private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason, $sendEmail, $resetOrderState)
+    private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason, $sendEmail, $resetOrderState): ?object
     {
         $this->ajaxPost(
             '/admin/order-details/editPickupDay/',
@@ -136,7 +136,8 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         return $this->getJsonDecodedContent();
     }
 
-    private function assertChangedOrderDetails($orderDetails, $newPickupDay, $orderState) {
+    private function assertChangedOrderDetails($orderDetails, $newPickupDay, $orderState): void
+    {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find()->where([ 
             'OrderDetails.id_order_detail IN' => $orderDetails,

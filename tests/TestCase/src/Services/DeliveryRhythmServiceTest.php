@@ -39,37 +39,37 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
-    public function testGetOrderPeriodFirstDayByDeliveryDaySaturdayThursday()
+    public function testGetOrderPeriodFirstDayByDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetOrderPeriodFirstDayByDeliveryDay(strtotime('12.01.2023'), '31.12.2022');
     }
 
-    public function testGetOrderPeriodLastDayByDeliveryDaySaturdayThursday()
+    public function testGetOrderPeriodLastDayByDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetOrderPeriodLastDayByDeliveryDay(strtotime('12.01.2023'), '06.01.2023');
     }
 
-    public function testGetOrderPeriodFirstDayByDeliveryDayWednesdayFriday()
+    public function testGetOrderPeriodFirstDayByDeliveryDayWednesdayFriday(): void
     {
         $this->prepareWednesdayFridayConfig();
         $this->assertGetOrderPeriodFirstDayByDeliveryDay(strtotime('12.01.2023'), '04.01.2023');
     }
 
-    public function testGetOrderPeriodLastDayByDeliveryDayWednesdayFriday()
+    public function testGetOrderPeriodLastDayByDeliveryDayWednesdayFriday(): void
     {
         $this->prepareWednesdayFridayConfig();
         $this->assertGetOrderPeriodLastDayByDeliveryDay(strtotime('12.01.2023'), '10.01.2023');
     }
 
-    public function testGetDeliveryDayTuesdayFriday()
+    public function testGetDeliveryDayTuesdayFriday(): void
     {
         $this->prepareTuesdayFridayConfig();
         $this->assertGetDeliveryDay('25.07.2018', '03.08.2018');
     }
 
-    public function testGetDeliveryDaySaturdayThursday()
+    public function testGetDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetDeliveryDay('24.08.2022', '01.09.2022'); // wednesday
@@ -82,7 +82,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetDeliveryDay('31.08.2022', '08.09.2022'); // wednesday
     }
 
-    public function testGetOrderPeriodFirstDayThursdayFriday()
+    public function testGetOrderPeriodFirstDayThursdayFriday(): void
     {
         $this->prepareThursdayFridayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '23.11.2017'); // monday
@@ -96,7 +96,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '30.11.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodFirstDayWednesdayFriday()
+    public function testGetOrderPeriodFirstDayWednesdayFriday(): void
     {
         $this->prepareWednesdayFridayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '22.11.2017'); // monday
@@ -110,7 +110,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '29.11.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodFirstDayTuesdayFriday()
+    public function testGetOrderPeriodFirstDayTuesdayFriday(): void
     {
         $this->prepareTuesdayFridayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '21.11.2017'); // monday
@@ -124,7 +124,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '28.11.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodFirstDayMondayTuesday()
+    public function testGetOrderPeriodFirstDayMondayTuesday(): void
     {
         $this->prepareMondayTuesdayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '20.11.2017'); // monday
@@ -138,7 +138,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '27.11.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodFirstDaySaturdayThursday()
+    public function testGetOrderPeriodFirstDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetOrderPeriodFirstDay('22.08.2022', '20.08.2022'); // monday
@@ -152,7 +152,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('30.08.2022', '27.08.2022'); // tuesday
     }
 
-    public function testGetOrderPeriodLastDayThursdayFriday()
+    public function testGetOrderPeriodLastDayThursdayFriday(): void
     {
         $this->prepareThursdayFridayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '29.11.2017'); // monday
@@ -166,7 +166,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('05.12.2017', '06.12.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodLastDayWednesdayFriday()
+    public function testGetOrderPeriodLastDayWednesdayFriday(): void
     {
         $this->prepareWednesdayFridayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '28.11.2017'); // monday
@@ -180,7 +180,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('05.12.2017', '05.12.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodLastDayTuesdayFriday()
+    public function testGetOrderPeriodLastDayTuesdayFriday(): void
     {
         $this->prepareTuesdayFridayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '27.11.2017'); // monday
@@ -194,7 +194,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('05.12.2017', '04.12.2017'); // tuesday
     }
 
-    public function testGetOrderPeriodLastDayMondayTuesday()
+    public function testGetOrderPeriodLastDayMondayTuesday(): void
     {
         $this->prepareMondayTuesdayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '26.11.2017'); // monday
@@ -209,7 +209,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
     }
 
-    public function testGetOrderPeriodLastDaySaturdayThursday()
+    public function testGetOrderPeriodLastDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetOrderPeriodLastDay('29.08.2022', '02.09.2022'); // monday
@@ -223,7 +223,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('06.09.2022', '09.09.2022'); // tuesday
     }
 
-    public function testGetFormattedNextDeliveryDayThursdayFriday()
+    public function testGetFormattedNextDeliveryDayThursdayFriday(): void
     {
         $this->prepareThursdayFridayConfig();
         $this->assertGetFormattedNextDeliveryDay('08.10.2018', '12.10.2018'); // monday
@@ -237,7 +237,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
 
-    public function testGetFormattedNextDeliveryDayWednesdayFriday()
+    public function testGetFormattedNextDeliveryDayWednesdayFriday(): void
     {
         $this->prepareWednesdayFridayConfig();
         $this->assertGetFormattedNextDeliveryDay('08.10.2018', '12.10.2018'); // monday
@@ -251,7 +251,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
 
-    public function testGetFormattedNextDeliveryDaySaturdayThursday()
+    public function testGetFormattedNextDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetFormattedNextDeliveryDay('22.08.2022', '25.08.2022'); // monday
@@ -265,7 +265,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('30.08.2022', '01.09.2022'); // tuesday
     }
 
-    public function testGetLastOrderDayWeeklySendOrderListsDayNormal()
+    public function testGetLastOrderDayWeeklySendOrderListsDayNormal(): void
     {
         $product = [
             'next_delivery_day' => '2020-12-04',
@@ -276,7 +276,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetLastOrderDay($product, '2020-12-01');
     }
 
-    public function testGetLastOrderDayWeeklySendOrderListsDayMonday()
+    public function testGetLastOrderDayWeeklySendOrderListsDayMonday(): void
     {
         $product = [
             'next_delivery_day' => '2020-12-04',
@@ -287,7 +287,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetLastOrderDay($product, '2020-11-30');
     }
 
-    public function testGetLastOrderDayMonthlySendOrderListsDayNormal()
+    public function testGetLastOrderDayMonthlySendOrderListsDayNormal(): void
     {
         $product = [
             'next_delivery_day' => '2020-12-25',
@@ -298,7 +298,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetLastOrderDay($product, '2020-12-22');
     }
 
-    public function testGetLastOrderDayMonthlySendOrderListsDaySunday()
+    public function testGetLastOrderDayMonthlySendOrderListsDaySunday(): void
     {
         $product = [
             'next_delivery_day' => '2020-12-25',
@@ -309,7 +309,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetLastOrderDay($product, '2020-12-20');
     }
 
-    public function testGetLastOrderDayIndividual()
+    public function testGetLastOrderDayIndividual(): void
     {
         $product = [
             'next_delivery_day' => '2020-12-25',
@@ -320,7 +320,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetLastOrderDay($product, '2020-12-12');
     }
 
-    public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOff()
+    public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOff(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -341,7 +341,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOn()
+    public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -363,7 +363,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekNormalNoFirstDeliveryDayWednesdayFriday()
+    public function test1WeekNormalNoFirstDeliveryDayWednesdayFriday(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -383,7 +383,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday()
+    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $productsTable = $this->getTableLocator()->get('Products');
@@ -404,7 +404,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekDeliveryDaySaturdayThursday()
+    public function test2WeekDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $productsTable = $this->getTableLocator()->get('Products');
@@ -426,7 +426,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
+    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault(): void
     {
         $this->prepareSaturdayThursdayConfig();
         $productsTable = $this->getTableLocator()->get('Products');
@@ -448,7 +448,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekWithSendOrderListDayOneDayBeforeDefault()
+    public function test1WeekWithSendOrderListDayOneDayBeforeDefault(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -469,7 +469,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekWithSendOrderListDayTwoDaysBeforeDefault()
+    public function test1WeekWithSendOrderListDayTwoDaysBeforeDefault(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -490,7 +490,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOff()
+    public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOff(): void
     {
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -513,7 +513,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOn()
+    public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOn(): void
     {
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
@@ -537,7 +537,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
+    public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOff(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -558,7 +558,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
+    public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -580,7 +580,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
+    public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOff(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -602,7 +602,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
+    public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -625,7 +625,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekWithSendOrderListDayThursday()
+    public function test2WeekWithSendOrderListDayThursday(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -647,7 +647,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1MonthFirstFridayWithSendOrderListDaySunday()
+    public function test1MonthFirstFridayWithSendOrderListDaySunday(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -669,7 +669,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekNotCurrentWeekAAllowOrderConfigOff()
+    public function test2WeekNotCurrentWeekAAllowOrderConfigOff(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -690,7 +690,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekNotCurrentWeekAAllowOrderConfigOn()
+    public function test2WeekNotCurrentWeekAAllowOrderConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -712,7 +712,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekNotCurrentWeekBAllowOrderConfigOff()
+    public function test2WeekNotCurrentWeekBAllowOrderConfigOff(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -733,7 +733,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekNotCurrentWeekBAllowOrderConfigOn()
+    public function test2WeekNotCurrentWeekBAllowOrderConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -755,7 +755,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekCurrentWeekAllowOrderConfigOff()
+    public function test2WeekCurrentWeekAllowOrderConfigOff(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -776,7 +776,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekCurrentWeekAllowOrderConfigOn()
+    public function test2WeekCurrentWeekAllowOrderConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -799,7 +799,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     }
 
     /*
-    public function test2WeekSendOrderListDayMondayCurrentWeekAllowOrderConfigOn()
+    public function test2WeekSendOrderListDayMondayCurrentWeekAllowOrderConfigOn(): void
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $productsTable = $this->getTableLocator()->get('Products');
@@ -823,7 +823,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     }
     */
 
-    public function test2WeekD()
+    public function test2WeekD(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -844,7 +844,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test4Week()
+    public function test4Week(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -865,7 +865,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1MonthFirstWeekdayOfMonthA()
+    public function test1MonthFirstWeekdayOfMonthA(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -885,7 +885,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testFirstWeekdayOfMonthB()
+    public function testFirstWeekdayOfMonthB(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -905,7 +905,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testLastMonthLastWeekdayOfMonthA()
+    public function testLastMonthLastWeekdayOfMonthA(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -925,7 +925,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testLastMonthLastWeekdayOfMonthB()
+    public function testLastMonthLastWeekdayOfMonthB(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -945,7 +945,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testLastMonthLastWeekdayOfMonthC()
+    public function testLastMonthLastWeekdayOfMonthC(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -966,7 +966,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2Month()
+    public function test2Month(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -986,7 +986,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test3Month()
+    public function test3Month(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -1006,7 +1006,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test4Month()
+    public function test4Month(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -1026,7 +1026,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testIndividual()
+    public function testIndividual(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $data = [
@@ -1047,50 +1047,50 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    private function assertGetNextPickupDayForProduct($product, $currentDay, $expectedResult)
+    private function assertGetNextPickupDayForProduct($product, $currentDay, $expectedResult): void
     {
         $result = (new DeliveryRhythmService())->getNextPickupDayForProduct($product, $currentDay);
         $this->assertEquals($expectedResult, $result);
     }
 
-    private function assertGetOrderPeriodFirstDay($currentDay, $expected)
+    private function assertGetOrderPeriodFirstDay($currentDay, $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodFirstDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetOrderPeriodLastDay($currentDay, $expected)
+    private function assertGetOrderPeriodLastDay($currentDay, $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodLastDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetDeliveryDay($currentDay, $expected)
+    private function assertGetDeliveryDay($currentDay, $expected): void
     {
         $result = (new DeliveryRhythmService())->getDeliveryDay(strtotime($currentDay));
         $result = date($this->MyTimeHelper->getI18Format('DateShortAlt'), $result);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetFormattedNextDeliveryDay($currentDay, $expected)
+    private function assertGetFormattedNextDeliveryDay($currentDay, $expected): void
     {
         $result = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected)
+    private function assertGetOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected)
+    private function assertGetOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetLastOrderDay($product, $expected)
+    private function assertGetLastOrderDay($product, $expected): void
     {
         $result = (new DeliveryRhythmService())->getLastOrderDay(
             $product['next_delivery_day'],

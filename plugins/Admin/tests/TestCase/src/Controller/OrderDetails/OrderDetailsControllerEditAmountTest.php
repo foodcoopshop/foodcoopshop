@@ -24,7 +24,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
     public int $newAmount = 1;
     public string $editAmountReason = 'One product was not delivered.';
 
-    public function testEditOrderDetailAmountNotValid()
+    public function testEditOrderDetailAmountNotValid(): void
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
@@ -32,7 +32,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Die Menge ist nicht gültig.');
     }
 
-    public function testEditOrderDetailAmountAsManufacturer()
+    public function testEditOrderDetailAmountAsManufacturer(): void
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(5, 2);
@@ -52,7 +52,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationPurchasePrice()
+    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationPurchasePrice(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -92,7 +92,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     }
 
-    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotification()
+    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotification(): void
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
@@ -111,7 +111,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
+    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationAfterOrderListsWereSent(): void
     {
         $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
@@ -138,7 +138,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    public function testEditOrderDetailAmountAsSuperadminWithDisabledNotification()
+    public function testEditOrderDetailAmountAsSuperadminWithDisabledNotification(): void
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
@@ -160,7 +160,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail)
+    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail): void
     {
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Menge angepasst: Artischocke : Stück');
@@ -171,7 +171,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertMailSentToAt($emailIndex, $expectedToEmail);
     }
 
-    private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
+    private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductAmount/',

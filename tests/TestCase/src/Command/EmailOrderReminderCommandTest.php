@@ -28,7 +28,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public function testNoActiveOrder()
+    public function testNoActiveOrder(): void
     {
         $this->exec('email_order_reminder 2024-02-12');
         $this->runAndAssertQueue();
@@ -52,28 +52,28 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
 
     }
 
-    public function testNoActiveOrderServiceCalledSameDayAsLastOrderDay()
+    public function testNoActiveOrderServiceCalledSameDayAsLastOrderDay(): void
     {
         $this->exec('email_order_reminder 2024-02-13'); // called on a tuesday
         $this->runAndAssertQueue();
         $this->assertMailContainsHtmlAt(0, 'heute ist der letzte Bestelltag und es kann bis <b>heute Mitternacht</b> bestellt werden.');
     }
 
-    public function testNoActiveOrderServiceCalledOneDayBeforeLastOrderDay()
+    public function testNoActiveOrderServiceCalledOneDayBeforeLastOrderDay(): void
     {
         $this->exec('email_order_reminder 2024-02-12'); // called on a monday
         $this->runAndAssertQueue();
         $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>morgen Mitternacht</b> bestellt werden.');
     }
 
-    public function testNoActiveOrderServiceCalledTwoDaysBeforeLastOrderDay()
+    public function testNoActiveOrderServiceCalledTwoDaysBeforeLastOrderDay(): void
     {
         $this->exec('email_order_reminder 2024-02-11'); // called on a sunday
         $this->runAndAssertQueue();
         $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>Dienstag Mitternacht</b> bestellt werden.');
     }
 
-    public function testDeliveryBreakGlobalEnabledAndNextDeliveryDay()
+    public function testDeliveryBreakGlobalEnabledAndNextDeliveryDay(): void
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');
         $this->exec('email_order_reminder 2019-10-27');
@@ -81,7 +81,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
-    public function testDeliveryBreakGlobalEnabledAndNotNextDeliveryDay()
+    public function testDeliveryBreakGlobalEnabledAndNotNextDeliveryDay(): void
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-08');
         $this->exec('email_order_reminder 2019-10-27');
@@ -89,7 +89,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailCount(3);
     }
 
-    public function testActiveOrderOrderedSameDay()
+    public function testActiveOrderOrderedSameDay(): void
     {
         $pickupDay = '2019-11-08';
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
@@ -112,7 +112,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
     }
 
-    public function testActiveOrderOrderedEarly()
+    public function testActiveOrderOrderedEarly(): void
     {
         $pickupDay = '2019-11-08';
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
@@ -136,7 +136,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
     }
 
-    public function testIfServiceNotSubscribed()
+    public function testIfServiceNotSubscribed(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $customersTable->updateAll(['email_order_reminder_enabled' => 0], []);
@@ -145,7 +145,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
-    public function testApplyOpenOrderCheckForOrderReminderFalse()
+    public function testApplyOpenOrderCheckForOrderReminderFalse(): void
     {
         Configure::write('app.applyOpenOrderCheckForOrderReminder', false);
         $pickupDay = '2019-11-08';

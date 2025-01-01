@@ -20,7 +20,7 @@ use App\Test\TestCase\OrderDetailsControllerTestCase;
 class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
 {
 
-    public function testEditOrderDetailNameNotValid()
+    public function testEditOrderDetailNameNotValid(): void
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
@@ -28,7 +28,7 @@ class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Bitte gib einen Namen ein.');
     }
 
-    public function testEditOrderDetailNameOk()
+    public function testEditOrderDetailNameOk(): void
     {
         $this->loginAsSuperadmin();
         $newName = 'new name';
@@ -38,7 +38,7 @@ class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
         $this->assertEquals($newName, $changedOrder->cart_products[1]->order_detail->product_name);
     }
 
-    private function editOrderDetailName($orderDetailId, $productName)
+    private function editOrderDetailName($orderDetailId, $productName): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductName/',

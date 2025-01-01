@@ -36,38 +36,38 @@ class SyncDomainsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
     }
 
-    public function testAddSyncDomainWithHttp()
+    public function testAddSyncDomainWithHttp(): void
     {
         $this->addSyncDomain('http://www.example.com');
         $this->assertResponseContains('Die Domain muss mit https:// beginnen.');
     }
 
-    public function testAddSyncDomainWithEmptyDomain()
+    public function testAddSyncDomainWithEmptyDomain(): void
     {
         $this->addSyncDomain('');
         $this->assertResponseContains('Bitte gib eine Domain ein, sie muss mit https:// beginnen.');
     }
 
-    public function testAddSyncDomainWithTrailingSlash()
+    public function testAddSyncDomainWithTrailingSlash(): void
     {
         $this->addSyncDomain('https://www.example.com/');
         $this->assertResponseContains('Die Domain darf nur aus https:// und dem Hostnamen bestehen (ohne / am Ende).');
     }
 
-    public function testAddSyncDomainAlreadyExisting()
+    public function testAddSyncDomainAlreadyExisting(): void
     {
         $this->addSyncDomain('https://www.example.com');
         $this->addSyncDomain('https://www.example.com');
         $this->assertResponseContains('Die Domain ist bereits vorhanden.');
     }
 
-    public function testAddSyncDomainWithHttpsAndCapitalLetter()
+    public function testAddSyncDomainWithHttpsAndCapitalLetter(): void
     {
         $this->addSyncDomain('https://www.valid-Domain.com');
         $this->assertFlashMessage('Die Remote-Foodcoop <b>https://www.valid-domain.com</b> wurde erstellt.');
     }
 
-    public function testAddSyncDomainWithHttps()
+    public function testAddSyncDomainWithHttps(): void
     {
         $this->addSyncDomain('https://www.valid-domain.com');
         $this->assertFlashMessage('Die Remote-Foodcoop <b>https://www.valid-domain.com</b> wurde erstellt.');
@@ -76,7 +76,7 @@ class SyncDomainsControllerTest extends AppCakeTestCase
     /**
      * @param string $domain
      */
-    private function addSyncDomain($domain)
+    private function addSyncDomain($domain): void
     {
         $this->post($this->Network->getSyncDomainAdd(), [
             'SyncDomains' =>

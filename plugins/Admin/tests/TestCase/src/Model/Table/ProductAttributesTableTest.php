@@ -26,7 +26,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public function testAddProductAttribute()
+    public function testAddProductAttribute(): void
     {
         $productId = 346;
         $attributeId = 29;
@@ -50,7 +50,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
         $this->assertEquals($product->price, 0);
     }
 
-    public function testEditProductAttribute()
+    public function testEditProductAttribute(): void
     {
         $productId = 350;
         $productAttributeId = 13;
@@ -79,7 +79,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
     }
 
-    public function testDeleteProductAttribute()
+    public function testDeleteProductAttribute(): void
     {
         $productId = 350;
         $productAttributeId = 13;

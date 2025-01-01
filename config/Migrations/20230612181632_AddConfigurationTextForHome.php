@@ -6,7 +6,7 @@ use Migrations\AbstractMigration;
 
 class AddConfigurationTextForHome extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         switch(I18n::getLocale()) {
             case 'de_DE':

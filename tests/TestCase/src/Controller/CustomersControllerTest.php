@@ -27,7 +27,8 @@ class CustomersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public function testExportCustomers() {
+    public function testExportCustomers(): void
+    {
         $this->loginAsSuperadmin();
         $this->get('/admin/customers/export?active=1');
 
@@ -36,7 +37,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertResponseContains('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;');
     }
 
-    public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers()
+    public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers(): void
     {
         $this->loginAsSuperadmin();
         $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
@@ -45,7 +46,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($expectedHtml, $response->dropdownData);
     }
 
-    public function testGetCustomersForDropdownAsCustomerWithAllManufacturers()
+    public function testGetCustomersForDropdownAsCustomerWithAllManufacturers(): void
     {
         $this->loginAsCustomer();
         $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
@@ -54,7 +55,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($expectedHtml, $response->dropdownData);
     }
 
-    public function testEditGroupAsSuperadmin()
+    public function testEditGroupAsSuperadmin(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $this->loginAsSuperadmin();
@@ -71,7 +72,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals(Customer::GROUP_ADMIN, $customer->id_default_group);
     }
 
-    public function testEditGroupAsAdmin()
+    public function testEditGroupAsAdmin(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $this->loginAsAdmin();
@@ -88,7 +89,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals(Customer::GROUP_MEMBER, $customer->id_default_group);
     }
 
-    public function testCustomerEdit()
+    public function testCustomerEdit(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $this->loginAsSuperadmin();
@@ -129,7 +130,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     }
 
-    public function testChangePasswordNotOk()
+    public function testChangePasswordNotOk(): void
     {
 
         $this->loginAsSuperadmin();
@@ -148,7 +149,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     }
 
-    public function testChangePasswordOk()
+    public function testChangePasswordOk(): void
     {
 
         $this->loginAsSuperadmin();

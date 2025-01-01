@@ -42,7 +42,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
     }
 
-    public function testPageSelfService()
+    public function testPageSelfService(): void
     {
         $this->loginAsSuperadmin();
         $testUrls = [
@@ -51,13 +51,13 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertPagesForErrors($testUrls);
     }
 
-    public function testBarCodeLoginAsSuperadminValid()
+    public function testBarCodeLoginAsSuperadminValid(): void
     {
         $this->doBarCodeLogin();
         $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
     }
 
-    public function testSelfServiceAddProductPricePerUnitWrong()
+    public function testSelfServiceAddProductPricePerUnitWrong(): void
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1);
@@ -67,7 +67,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testSelfServiceAddProductPricePerUnitNotAvailable()
+    public function testSelfServiceAddProductPricePerUnitNotAvailable(): void
     {
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntity = $unitsTable->get(8);
@@ -96,7 +96,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testSelfServiceAddAttributePricePerUnitWrong()
+    public function testSelfServiceAddAttributePricePerUnitWrong(): void
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, 'bla bla');
@@ -106,7 +106,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testSelfServiceAddAttributePricePerUnitNotAvailable()
+    public function testSelfServiceAddAttributePricePerUnitNotAvailable(): void
     {
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntity = $unitsTable->get(7);
@@ -136,7 +136,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testSelfServiceOrderWithoutCheckboxes() {
+    public function testSelfServiceOrderWithoutCheckboxes(): void
+    {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
@@ -144,7 +145,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
     }
 
-    public function testSelfServiceWithActiveShowConfirmDialogOnSubmitConfig() {
+    public function testSelfServiceWithActiveShowConfirmDialogOnSubmitConfig(): void
+    {
         Configure::write('app.selfServiceEasyModeEnabled', true);
         $this->loginAsCustomer();
         $this->addProductToSelfServiceCart(344, 1);
@@ -163,7 +165,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $cart->status);
     }
 
-    public function testSelfServiceWithEasyModeAndPaymentTypesConfig() {
+    public function testSelfServiceWithEasyModeAndPaymentTypesConfig(): void
+    {
         Configure::write('app.selfServiceEasyModeEnabled', true);
         Configure::write('app.selfServicePaymentTypes', [
             [
@@ -194,7 +197,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $cart->status);
     }
 
-    public function testSelfServiceRemoveProductWithPricePerUnit()
+    public function testSelfServiceRemoveProductWithPricePerUnit(): void
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1, '0,5');
@@ -205,7 +208,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEmpty($cartProductUnits);
     }
 
-    public function testSelfServiceOrderWithoutPricePerUnit()
+    public function testSelfServiceOrderWithoutPricePerUnit(): void
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(346, 1, 0);
@@ -233,7 +236,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSelfServiceOrderWithPricePerUnit()
+    public function testSelfServiceOrderWithPricePerUnit(): void
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
@@ -265,7 +268,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSelfServiceOrderWithPricePerUnitAndUseWeightAsAmount()
+    public function testSelfServiceOrderWithPricePerUnitAndUseWeightAsAmount(): void
     {
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(7);
@@ -318,7 +321,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSelfServiceOrderWithPricePerUnitPurchasePriceEnabled()
+    public function testSelfServiceOrderWithPricePerUnitPurchasePriceEnabled(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -343,7 +346,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0.81, $cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_total_amount);
     }
 
-    public function testSelfServiceOrderWithDeliveryBreak()
+    public function testSelfServiceOrderWithDeliveryBreak(): void
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
@@ -354,7 +357,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
     }
 
-    public function testSearchByCustomProductBarcode()
+    public function testSearchByCustomProductBarcode(): void
     {
         $this->loginAsSuperadmin();
         $barcodeForProduct = '1234567890123';
@@ -363,7 +366,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
-    public function testSearchByCustomProductAttributeBarcode()
+    public function testSearchByCustomProductAttributeBarcode(): void
     {
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2145678901234';
@@ -372,7 +375,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
-    public function testSearchByCustomProductBarcodeWithWeight()
+    public function testSearchByCustomProductBarcodeWithWeight(): void
     {
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345000235';
@@ -385,7 +388,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0.023, $cartProductUnits->ordered_quantity_in_units);
     }
 
-    public function testSearchByCustomProductAttributeBarcodeWithWeight()
+    public function testSearchByCustomProductAttributeBarcodeWithWeight(): void
     {
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2112345001234';
@@ -398,7 +401,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSearchBySystemProductBarcodeWithMissingWeight()
+    public function testSearchBySystemProductBarcodeWithMissingWeight(): void
     {
         $this->loginAsSuperadmin();
         $barcodeForProduct = 'b5320000';
@@ -407,7 +410,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
     }
 
-    public function testSearchBySystemProductAttributeBarcodeWithMissingWeight()
+    public function testSearchBySystemProductAttributeBarcodeWithMissingWeight(): void
     {
         $this->loginAsSuperadmin();
         $barcodeForProduct = 'e05f0015';
@@ -416,7 +419,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
     }
 
-    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomerWithAutoGenerateInvoiceDisabled()
+    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomerWithAutoGenerateInvoiceDisabled(): void
     {
 
         Configure::write('app.selfServiceModeAutoGenerateInvoice', false);
@@ -438,7 +441,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals($invoices->count(), 0);
     }
 
-    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
+    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
@@ -479,7 +482,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSelfServiceOrderForDifferentCustomer()
+    public function testSelfServiceOrderForDifferentCustomer(): void
     {
         // add a product to the "normal" cart (Cart::TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
@@ -539,7 +542,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
     }
 
-    public function testProductDetailHtmlProductCatalogSelfServiceOrder()
+    public function testProductDetailHtmlProductCatalogSelfServiceOrder(): void
     {
         $this->loginAsSuperadmin();
         $this->isSelfServiceModeByUrl = true;
@@ -550,7 +553,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
 
-    public function testAutoLoginAsSelfServiceCustomerOk()
+    public function testAutoLoginAsSelfServiceCustomerOk(): void
     {
         $selfServiceCustomerId = 93;
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
@@ -566,7 +569,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
-    public function testAutoLoginAsSelfServiceCustomerNotOk()
+    public function testAutoLoginAsSelfServiceCustomerNotOk(): void
     {
         $selfServiceCustomerId = 93;
         Configure::write('app.selfServiceLoginCustomers', [
@@ -581,7 +584,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getHome());
     }
 
-    private function doBarCodeLogin()
+    private function doBarCodeLogin(): void
     {
         $this->post($this->Slug->getLogin(), [
             'barcode' => Configure::read('test.superadminBarCode')

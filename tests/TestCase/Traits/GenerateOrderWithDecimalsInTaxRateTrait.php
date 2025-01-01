@@ -19,7 +19,7 @@ namespace App\Test\TestCase\Traits;
 trait GenerateOrderWithDecimalsInTaxRateTrait
 {
 
-    protected function generateOrderWithDecimalsInTaxRate($customerId)
+    protected function generateOrderWithDecimalsInTaxRate($customerId): void
     {
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $newTax = $taxesTable->save(

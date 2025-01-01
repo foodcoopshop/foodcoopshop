@@ -19,7 +19,7 @@ use App\Test\TestCase\AppCakeTestCase;
 class PurchasePriceProductsTableTest extends AppCakeTestCase
 {
 
-    public function testGetSellingPricesWithSurcharge()
+    public function testGetSellingPricesWithSurcharge(): void
     {
 
         $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');

@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Model\Entity;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,24 +16,6 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-use App\Services\CatalogService;
-use App\Test\TestCase\AppCakeTestCase;
-
-class CatalogServiceTest extends AppCakeTestCase
+class Unit extends AppEntity
 {
-
-    public function testGetBarcodeWeight(): void
-    {
-        $this->setDummyRequest();
-        $catalogService = new CatalogService();
-
-        $barcode = '2712345000235';
-        $this->assertEquals(0.023, $catalogService->getBarcodeWeight($barcode));
-
-        $barcode = '2112345001234';
-        $this->assertEquals(0.123, $catalogService->getBarcodeWeight($barcode));
-
-    }
-
 }
