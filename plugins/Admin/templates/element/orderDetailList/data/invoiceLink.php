@@ -31,7 +31,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
             $invoicesForTitle .= '<ul style="border-bottom:1px solid #ccc;padding-bottom:10px;">';
         }
         foreach($orderDetail['latestInvoices'] as $invoice) {
-            $invoiceRow = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong2'));
+            $invoiceRow = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
             if ($this->Html->paymentIsCashless()) {
                 $invoiceRow .=  ' / <b>' . ($invoice->paid_in_cash ? __d('admin', 'Paid_in_cash') : __d('admin', 'Credit')) . '</b>';
             }
