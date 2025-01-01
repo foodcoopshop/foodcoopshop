@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
-    public $isSelfServiceModeByUrl = false;
+    public bool $isSelfServiceModeByUrl = false;
 
     public function login($userId)
     {
@@ -28,7 +28,7 @@ trait LoginTrait
         $customerTable = $this->getTableLocator()->get('Customers');
         $identity = $customerTable->find('all',
             conditions: [
-                'Customers.id_customer' => $userId
+                'Customers.id_customer' => $userId,
             ],
             contain: [
                 'AddressCustomers',

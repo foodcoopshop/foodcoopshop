@@ -21,15 +21,12 @@ class Invoice extends AppEntity
 
     protected array $_virtual = ['sum_price_excl', 'sum_tax', 'sum_price_incl'];
 
-    protected $sum_price_excl;
-
-    protected $sum_tax;
-
-    protected $sum_price_incl;
-
     protected function _getSumPriceExcl()
     {
         $result = 0;
+        if (empty($this->invoice_taxes)) {
+            return $result;
+        }
         foreach($this->invoice_taxes as $invoiceTax) {
             $result += $invoiceTax->total_price_tax_excl;
         }
@@ -39,6 +36,9 @@ class Invoice extends AppEntity
     protected function _getSumTax()
     {
         $result = 0;
+        if (empty($this->invoice_taxes)) {
+            return $result;
+        }
         foreach($this->invoice_taxes as $invoiceTax) {
             $result += $invoiceTax->total_price_tax;
         }
@@ -48,6 +48,9 @@ class Invoice extends AppEntity
     protected function _getSumPriceIncl()
     {
         $result = 0;
+        if (empty($this->invoice_taxes)) {
+            return $result;
+        }
         foreach($this->invoice_taxes as $invoiceTax) {
             $result += $invoiceTax->total_price_tax_incl;
         }

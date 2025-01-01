@@ -18,6 +18,8 @@ use Cake\I18n\Date;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use Cake\Controller\Controller;
+use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -39,9 +41,9 @@ class CartService
 
     use CartValidatorTrait;
 
-    private $identity;
-    private $request;
-    private $controller;
+    private mixed $identity;
+    private ServerRequest $request;
+    private Controller $controller;
 
     public function __construct($controller)
     {

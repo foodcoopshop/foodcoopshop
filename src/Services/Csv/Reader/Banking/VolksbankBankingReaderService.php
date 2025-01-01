@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
 class VolksbankBankingReaderService extends BankingReaderService {
 
-    public $csvHasIsoFormat = true;
+    public bool $csvHasIsoFormat = true;
 
     public function configureType(): void
     {

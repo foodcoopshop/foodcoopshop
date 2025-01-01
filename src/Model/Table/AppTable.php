@@ -24,7 +24,7 @@ use Cake\ORM\Table;
 class AppTable extends Table
 {
 
-    public $tablePrefix = 'fcs_';
+    public string $tablePrefix = 'fcs_';
 
     public function initialize(array $config): void
     {

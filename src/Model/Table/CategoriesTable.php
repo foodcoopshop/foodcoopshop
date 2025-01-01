@@ -26,6 +26,8 @@ class CategoriesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    private array $flattenedArray = [];
+
     public function initialize(array $config): void
     {
         $this->setTable('category');
@@ -44,8 +46,6 @@ class CategoriesTable extends AppTable
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
         return $validator;
     }
-
-    private $flattenedArray = [];
 
     private function getChildrenIds($item) {
         $childrenIds = [];

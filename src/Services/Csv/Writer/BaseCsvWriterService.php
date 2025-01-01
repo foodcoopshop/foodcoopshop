@@ -25,11 +25,11 @@ use App\Controller\Component\StringComponent;
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
 
-    public $writer;
+    public Writer $writer;
 
-	public $filename = 'export.csv';
+	public string $filename = 'export.csv';
 
-	private $requestQueryParams = [];
+	private array $requestQueryParams = [];
 
 	public function setFilename($filename) {
 		if (Configure::check('app.outputStringReplacements')) {

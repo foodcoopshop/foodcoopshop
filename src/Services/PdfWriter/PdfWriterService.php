@@ -22,11 +22,11 @@ use Cake\View\ViewBuilder;
 abstract class PdfWriterService
 {
 
-    protected $pdfLibrary;
-    protected $data = [];
-    protected $plugin = null;
-    protected $filename = '';
-    public $templateFile = null;
+    protected mixed $pdfLibrary;
+    protected array $data = [];
+    protected ?string $plugin = null;
+    protected string $filename = '';
+    public ?string $templateFile = null;
 
     public function setPdfLibrary($pdfLibrary): PdfWriterService
     {

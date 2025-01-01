@@ -25,7 +25,7 @@ use Cake\ORM\TableRegistry;
 class ProductCsvWriterService extends BaseCsvWriterService
 {
 
-    private $productIds;
+    private array $productIds;
 
     public function setProductIds($productIds)
     {

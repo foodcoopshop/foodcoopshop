@@ -24,8 +24,6 @@ use Cake\TestSuite\EmailTrait;
 class EmailOrderReminderCommandTest extends AppCakeTestCase
 {
 
-    protected $EmailOrderReminder;
-
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
@@ -172,9 +170,4 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
     }
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        unset($this->EmailOrderReminder);
-    }
 }

@@ -26,15 +26,15 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
     use FooterTrait;
     use TaxSumTableTrait;
 
-    public $headerRight;
+    public string $headerRight;
 
-    public $replaceEuroSign = false;
+    public bool $replaceEuroSign = false;
 
-    public $infoTextForFooter = '';
+    public string $infoTextForFooter = '';
 
-    public $headers = [];
+    public array $headers = [];
 
-    public $html;
+    public ?string $html;
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {

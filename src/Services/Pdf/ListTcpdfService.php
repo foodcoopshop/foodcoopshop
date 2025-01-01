@@ -26,11 +26,11 @@ class ListTcpdfService extends AppTcpdfService
     use FooterTrait;
     use TaxSumTableTrait;
 
-    public $headerRight;
+    public string $headerRight;
 
-    public $infoTextForFooter = '';
+    public string $infoTextForFooter = '';
 
-    public $html;
+    public ?string $html;
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {

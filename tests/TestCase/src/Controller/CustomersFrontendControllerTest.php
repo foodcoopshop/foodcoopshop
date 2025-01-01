@@ -154,7 +154,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
     }
 
-    protected $registrationDataEmpty = [
+    protected array $registrationDataEmpty = [
         'Customers' => [
             'firstname' => '',
             'lastname' => '',

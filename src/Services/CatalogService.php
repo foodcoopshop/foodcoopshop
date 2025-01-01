@@ -32,7 +32,7 @@ use Cake\ORM\TableRegistry;
 class CatalogService
 {
 
-    protected $identity;
+    protected mixed $identity;
 
     const MAX_PRODUCTS_PER_PAGE = 100;
     const BARCODE_WITH_WEIGHT_PREFIX = '27';

@@ -20,20 +20,20 @@ use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
 use TCPDF;
 use App\Controller\Component\StringComponent;
-use Cake\I18n\I18n;
+use Cake\View\Helper\TextHelper;
 
 abstract class AppTcpdfService extends TCPDF
 {
 
-    public $table = '';
+    public string $table = '';
 
-    public $replaceEuroSign = true;
+    public bool $replaceEuroSign = true;
 
-    public $logoPath = ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg';
+    public string $logoPath = ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg';
 
-    public $textHelper;
+    public TextHelper $textHelper;
 
-    private $html = '';
+    private ?string $html = '';
 
     public function setTextHelper($textHelper)
     {

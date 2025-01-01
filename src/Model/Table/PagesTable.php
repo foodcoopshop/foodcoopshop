@@ -21,6 +21,8 @@ use Cake\Validation\Validator;
 class PagesTable extends AppTable
 {
 
+    private array $flattenedArray = [];
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -43,8 +45,6 @@ class PagesTable extends AppTable
         $validator->allowEmptyString('extern_url');
         return $validator;
     }
-
-    private $flattenedArray = [];
 
     private function flattenNestedArrayWithChildren($array, $separator = '')
     {

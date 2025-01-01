@@ -25,11 +25,9 @@ use Cake\ORM\TableRegistry;
 class HelloCashService
 {
 
-    protected $QueuedJobs;
+    public string $restEndpoint;
 
-    public $restEndpoint;
-
-    public $locale = 'de_AT';
+    public string $locale = 'de_AT';
 
     public function __construct() {
         $this->restEndpoint = Configure::read('app.helloCashRestEndpoint');

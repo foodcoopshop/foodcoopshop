@@ -28,13 +28,9 @@ use App\Model\Entity\OrderDetail;
 class SendOrderListsCommandTest extends AppCakeTestCase
 {
 
-    protected $SendOrderLists;
-
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-
-    public $Order;
 
     public function setUp(): void
     {

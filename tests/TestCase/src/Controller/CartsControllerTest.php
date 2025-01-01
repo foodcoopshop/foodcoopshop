@@ -35,11 +35,11 @@ class CartsControllerTest extends AppCakeTestCase
     use LoginTrait;
 
     // artischocke, 0,5 deposit, manufacturerId 5
-    public $productId1 = '346';
+    public string $productId1 = '346';
     // milk with attribute 0,5 l, 0,5 deposit, manufacturerId 15
-    public $productId2 = '60-10';
+    public string $productId2 = '60-10';
     // knoblauch, 0% tax, , manufacturerId 5
-    public $productId3 = '344';
+    public string $productId3 = '344';
 
     public function testAddLoggedOut()
     {

@@ -18,12 +18,13 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use App\View\Helper\MyTimeHelper;
 
 class DeliveryRhythmService
 {
 
-    private $Time = null;
-
+    private MyTimeHelper $Time;
+ 
     public function __construct()
     {
         $this->Time = Configure::read('app.timeHelper');

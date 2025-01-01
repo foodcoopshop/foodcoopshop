@@ -30,7 +30,6 @@ parameters:
         - message: '#Method .* has parameter .* with no value type specified in iterable type array.#'
         - message: '#Method .* return type has no value type specified in iterable type array.#'
         - message: '#Method .* has no return type specified.#'
-        - message: '#Property .* has no type specified.#'
         - message: '#Property .* type has no value type specified in iterable type array.#'
         - message: '#Class .* extends generic class .* but does not specify its types: .*#'
         - message: '#Method .* has parameter .* with generic class .* but does not specify its types: .*#'

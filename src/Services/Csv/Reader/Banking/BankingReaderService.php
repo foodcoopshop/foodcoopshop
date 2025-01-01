@@ -30,7 +30,7 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
         'application/vnd.ms-excel', // for firefox
     ];
     
-    public $csvHasIsoFormat = false;
+    public bool $csvHasIsoFormat = false;
 
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {

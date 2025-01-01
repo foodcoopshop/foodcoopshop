@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
 class RaiffeisenBankingReaderService extends BankingReaderService {
 
-    public $dataContainsHeadline = false;
+    public bool $dataContainsHeadline = false;
 
     public function configureType(): void
     {

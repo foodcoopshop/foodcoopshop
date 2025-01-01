@@ -29,7 +29,7 @@ use Cake\Core\Configure;
 
     protected array $_virtual = ['is_new'];
 
-    public $nameSetterMethodEnabled = true;
+    public bool $nameSetterMethodEnabled = true;
 
     protected function _setName($value)
     {

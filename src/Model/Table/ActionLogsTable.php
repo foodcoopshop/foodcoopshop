@@ -23,7 +23,7 @@ use Cake\I18n\DateTime;
 class ActionLogsTable extends AppTable
 {
 
-    public $types;
+    public array $types;
 
     public function initialize(array $config): void
     {

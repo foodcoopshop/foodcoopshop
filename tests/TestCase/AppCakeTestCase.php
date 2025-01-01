@@ -22,6 +22,7 @@ use Network\View\Helper\NetworkHelper;
 use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
 use App\Test\Fixture\AppFixture;
+use Cake\Datasource\ConnectionInterface;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -46,9 +47,9 @@ abstract class AppCakeTestCase extends TestCase
     use LoginTrait;
     use QueueTrait;
 
-    protected $dbConnection;
-    protected $testDumpDir;
-    protected $appDumpDir;
+    protected ConnectionInterface $dbConnection;
+    protected string $testDumpDir;
+    protected string $appDumpDir;
 
     public SlugHelper $Slug;
     public MyHtmlHelper $Html;

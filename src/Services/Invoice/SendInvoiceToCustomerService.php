@@ -23,17 +23,17 @@ use App\Mailer\AppMailer;
 class SendInvoiceToCustomerService
 {
 
-    public $customerName;
-    public $customerEmail;
-    public $creditBalance;
-    public $invoicePdfFile;
-    public $invoiceNumber;
-    public $invoiceDate;
-    public $invoiceId;
-    public $invoiceSumPriceIncl;
-    public $paidInCash;
-    public $isCancellationInvoice;
-    public $originalInvoiceId;
+    public string $customerName;
+    public string $customerEmail;
+    public float $creditBalance;
+    public string $invoicePdfFile;
+    public string $invoiceNumber;
+    public string $invoiceDate;
+    public int $invoiceId;
+    public float $invoiceSumPriceIncl;
+    public mixed $paidInCash;
+    public bool $isCancellationInvoice;
+    public ?int $originalInvoiceId;
 
     public function run()
     {
