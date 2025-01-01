@@ -170,9 +170,7 @@ class MenuHelper extends Helper
                 'slug' => Configure::read('app.slugHelper')->getMyCreditBalance(),
                 'name' => __('Credit'),
                 'options' => [
-                    'fa-icon' => Configure::read('app.htmlHelper')->getFontAwesomeIconForCurrencyName(
-                        Configure::read('app.currencyName'),
-                    ),
+                    'fa-icon' => Configure::read('app.htmlHelper')->getFontAwesomeIconForCurrencyName(),
                 ],
             ];
         }

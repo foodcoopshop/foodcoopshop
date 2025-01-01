@@ -22,7 +22,7 @@ if (!$this->Html->paymentIsCashless() || $identity === null || $identity->isSelf
 }
 ?>
 <a class="not-in-moblie-menu btn btn-success btn-add-deposit" href="javascript:void(0);">
-    <i class="<?php echo $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')); ?>"></i> <?php echo __('Deposit'); ?>
+    <i class="<?php echo $this->Html->getFontAwesomeIconForCurrencyName(); ?>"></i> <?php echo __('Deposit'); ?>
 </a>
 
 <?php

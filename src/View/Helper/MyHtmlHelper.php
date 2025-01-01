@@ -41,7 +41,7 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
-    public function getCartTypes()
+    public function getCartTypes(): array
     {
         $cartTypes = [
             Cart::TYPE_WEEKLY_RHYTHM => __('cart_type_weekly_rhythm'),
@@ -53,7 +53,7 @@ class MyHtmlHelper extends HtmlHelper
         return $cartTypes;
     }
 
-    public function getHostWithoutProtocol($hostnameWithProtocol)
+    public function getHostWithoutProtocol($hostnameWithProtocol): string|false
     {
         $parsedHostnameWithProtocol = (parse_url($hostnameWithProtocol));
         if (!empty($parsedHostnameWithProtocol['host'])) {
@@ -62,7 +62,7 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey($product, $identity)
+    public function buildElementProductCacheKey($product, $identity): string
     {
         $orderCustomerService = new OrderCustomerService();
         $elementCacheKey = join('_', [
@@ -79,7 +79,7 @@ class MyHtmlHelper extends HtmlHelper
         return $elementCacheKey;
     }
 
-    public function getShoppingPricesForDropdown()
+    public function getShoppingPricesForDropdown(): array
     {
         $options = [];
         $options[Customer::SELLING_PRICE] = __('Shopping_with_selling_price');
@@ -90,7 +90,7 @@ class MyHtmlHelper extends HtmlHelper
         return $options;
     }
 
-    public function getLegalTextsSubfolder()
+    public function getLegalTextsSubfolder(): string
     {
         $subfolder = 'directSelling';
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
@@ -99,7 +99,7 @@ class MyHtmlHelper extends HtmlHelper
         return $subfolder;
     }
 
-    public function getPlatformOwnerForLegalTexts()
+    public function getPlatformOwnerForLegalTexts(): string
     {
         $result = '';
         if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
@@ -114,22 +114,23 @@ class MyHtmlHelper extends HtmlHelper
         return $result;
     }
 
-    public function removeTimestampFromFile($file) {
+    public function removeTimestampFromFile($file): string
+    {
         $file = explode('?', $file);
         return $file[0];
     }
 
-    public function privateImage($imageSrc)
+    public function privateImage($imageSrc): string
     {
         return '/photos/' . $imageSrc;
     }
 
-    public function isStockProductOrderPossible($instantOrderMode, $isSelfServiceMode, $includeStockProductsInOrdersWithDeliveryRhythm, $stockManagementEnabled, $isStockProduct)
+    public function isStockProductOrderPossible($instantOrderMode, $isSelfServiceMode, $includeStockProductsInOrdersWithDeliveryRhythm, $stockManagementEnabled, $isStockProduct): bool
     {
         return (!$instantOrderMode && !$includeStockProductsInOrdersWithDeliveryRhythm && $stockManagementEnabled && $isStockProduct) && !$isSelfServiceMode;
     }
 
-    public function getDeliveryRhythmString($isStockProduct, $deliveryRhythmType, $deliveryRhythmCount)
+    public function getDeliveryRhythmString($isStockProduct, $deliveryRhythmType, $deliveryRhythmCount): string
     {
 
         $deliveryRhythmCount = (int) $deliveryRhythmCount;
@@ -170,7 +171,7 @@ class MyHtmlHelper extends HtmlHelper
         return $deliveryRhythmString;
     }
 
-    public function getSendOrderListsWeekdayOptions()
+    public function getSendOrderListsWeekdayOptions(): array
     {
         $defaultSendOrderListsWeekday = (new DeliveryRhythmService())->getSendOrderListsWeekday();
         $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
@@ -183,7 +184,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getDeliveryRhythmTypesForDropdown()
+    public function getDeliveryRhythmTypesForDropdown(): array
     {
         return [
             '1-week' => $this->getDeliveryRhythmString(false, 'week', 1),
@@ -198,7 +199,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getOrderStateFontawesomeIcon($orderState)
+    public function getOrderStateFontawesomeIcon($orderState): string
     {
         return match($orderState) {
             OrderDetail::STATE_OPEN => 'fas fa-cart-arrow-down ok',
@@ -208,7 +209,8 @@ class MyHtmlHelper extends HtmlHelper
         };
     }
 
-    public function wrapJavascriptBlock($content) {
+    public function wrapJavascriptBlock($content): string
+    {
         return "<script>
             //<![CDATA[
                 $(document).ready(function() {
@@ -218,12 +220,12 @@ class MyHtmlHelper extends HtmlHelper
         </script>";
     }
 
-    public function getYesNo($value)
+    public function getYesNo($value): string
     {
         return $this->getYesNoArray()[$value];
     }
 
-    public function getYesNoArray()
+    public function getYesNoArray(): array
     {
         return [
             APP_ON => __('yes'),
@@ -231,7 +233,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getCurrencyName($currencySymbol)
+    public function getCurrencyName($currencySymbol): string
     {
         return match($currencySymbol) {
             '€' => 'Euro',
@@ -240,7 +242,7 @@ class MyHtmlHelper extends HtmlHelper
         };
     }
 
-    public function getCurrencyIsoCode($currencySymbol)
+    public function getCurrencyIsoCode($currencySymbol): string
     {
         return match($currencySymbol) {
             '€' => 'EUR',
@@ -249,7 +251,7 @@ class MyHtmlHelper extends HtmlHelper
         };
     }
 
-    public function getFontAwesomeIconForCurrencyName($currencySymbol)
+    public function getFontAwesomeIconForCurrencyName(): string
     {
         $currencyIcon = 'fas fa-fw ok fa-'.strtolower(Configure::read('app.currencyName')).'-sign';
         if (Configure::read('app.currencyName') == '') {
@@ -267,7 +269,7 @@ class MyHtmlHelper extends HtmlHelper
         return $docsUrl;
     }
 
-    public function getNameRespectingIsDeleted($customer)
+    public function getNameRespectingIsDeleted($customer): string
     {
         if (empty($customer)) {
             return self::getDeletedCustomerName();
@@ -275,12 +277,12 @@ class MyHtmlHelper extends HtmlHelper
         return $customer->name;
     }
 
-    public function getDeletedCustomerName()
+    public function getDeletedCustomerName(): string
     {
         return __('Deleted_Member');
     }
 
-    public function getDeletedCustomerEmail()
+    public function getDeletedCustomerEmail(): string
     {
         return __('Deleted_Email_Address');
     }
@@ -344,7 +346,7 @@ class MyHtmlHelper extends HtmlHelper
 
     }
 
-    public function getGlobalNoDeliveryDaysString()
+    public function getGlobalNoDeliveryDaysString(): string
     {
 
         $result = '';
@@ -365,7 +367,7 @@ class MyHtmlHelper extends HtmlHelper
         return $result;
     }
 
-    public function getFormattedAndCleanedDeliveryDays($deliveryDays)
+    public function getFormattedAndCleanedDeliveryDays($deliveryDays): array
     {
         $explodedNoDeliveryDays = explode(',', $deliveryDays);
         $formattedAndCleanedDeliveryDays = [];
@@ -377,7 +379,7 @@ class MyHtmlHelper extends HtmlHelper
         return $formattedAndCleanedDeliveryDays;
     }
 
-    public function getGlobalNoDeliveryDaysAsArray()
+    public function getGlobalNoDeliveryDaysAsArray(): array
     {
         $result = [];
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
@@ -386,7 +388,7 @@ class MyHtmlHelper extends HtmlHelper
         return $result;
     }
 
-    public function getCustomerAddress($customer)
+    public function getCustomerAddress($customer): string
     {
         if (empty($customer->address_customer)) {
             return '';
@@ -406,12 +408,7 @@ class MyHtmlHelper extends HtmlHelper
         return $details;
     }
 
-    /**
-     * @param $manufacturer
-     * @param string $outputType "pdf" of "html"
-     * @return string
-     */
-    public function getManufacturerImprint($manufacturer, $outputType, $addressOnly)
+    public function getManufacturerImprint($manufacturer, $outputType, $addressOnly): string
     {
         $imprintLines = [];
         $imprintLines[] = '<b>'.$manufacturer->name.'</b>';
@@ -467,15 +464,12 @@ class MyHtmlHelper extends HtmlHelper
         return '<p>'.implode('<br />', $imprintLines).'</p>';
     }
 
-    /**
-     * @return string
-     */
-    public function getAddressFromAddressConfiguration()
+    public function getAddressFromAddressConfiguration(): string
     {
         return Configure::read('appDb.FCS_APP_ADDRESS');
     }
 
-    public function getMenuTypes()
+    public function getMenuTypes(): array
     {
         return [
             'header' => __('Header_(top)'),
@@ -483,7 +477,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getOrderStateBilled()
+    public function getOrderStateBilled(): int
     {
         $billedOrderState = OrderDetail::STATE_BILLED_CASH;
         if ($this->paymentIsCashless()) {
@@ -492,22 +486,22 @@ class MyHtmlHelper extends HtmlHelper
         return $billedOrderState;
     }
 
-    public function paymentIsCashless()
+    public function paymentIsCashless(): bool
     {
         return in_array('cashless', Configure::read('app.paymentMethods'));
     }
 
-    public function br2nl($input)
+    public function br2nl($input): string
     {
         return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n", "", str_replace("\r", "", htmlspecialchars_decode($input))));
     }
 
-    public function getMenuType($menuTypeId)
+    public function getMenuType($menuTypeId): string
     {
         return $this->getMenuTypes()[$menuTypeId];
     }
 
-    public function getAuthDependentGroups($loggedGroupId)
+    public function getAuthDependentGroups($loggedGroupId): array
     {
         $groups = $this->getGroups();
         foreach ($groups as $groupId => $groupName) {
@@ -518,7 +512,7 @@ class MyHtmlHelper extends HtmlHelper
         return $groups;
     }
 
-    public function getGroups()
+    public function getGroups(): array
     {
         $groups = [];
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
@@ -530,18 +524,18 @@ class MyHtmlHelper extends HtmlHelper
         return $groups;
     }
 
-    public function getGroupName($groupId)
+    public function getGroupName($groupId): string
     {
         return $this->getGroups()[$groupId];
     }
 
-    public function getCartIdFromCartFinishedUrl($url)
+    public function getCartIdFromCartFinishedUrl($url): int
     {
         $cartId = explode('/', $url);
         return (int) $cartId[5];
     }
 
-    public function getConfigurationTabs()
+    public function getConfigurationTabs(): array
     {
         $tabs = [];
         $tabs[] = [
@@ -562,7 +556,7 @@ class MyHtmlHelper extends HtmlHelper
         return $tabs;
     }
 
-    public function getReportTabs()
+    public function getReportTabs(): array
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
@@ -604,7 +598,7 @@ class MyHtmlHelper extends HtmlHelper
         return $tabs;
     }
 
-    public function getPaymentTexts()
+    public function getPaymentTexts(): array
     {
         $paymentTexts = [
             Payment::TYPE_PRODUCT => __('Payment_type_credit_upload'),
@@ -614,30 +608,28 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
-    public function getPaymentText($paymentType)
+    public function getPaymentText($paymentType): string
     {
         return $this->getPaymentTexts()[$paymentType];
     }
 
-    public function getSuperadminProductPaymentTexts()
+    public function getSuperadminProductPaymentTexts(): array
     {
-        $paymentTexts = [
+        return [
             Payment::TYPE_PRODUCT => self::getPaymentText(Payment::TYPE_PRODUCT),
             Payment::TYPE_PAYBACK => self::getPaymentText(Payment::TYPE_PAYBACK),
         ];
-        return $paymentTexts;
     }
 
-    public function getManufacturerDepositPaymentTexts()
+    public function getManufacturerDepositPaymentTexts(): array
     {
-        $paymentTexts = [
+        return [
             Payment::TEXT_EMPTY_GLASSES => __('Empty_glasses'),
             Payment::TEXT_MONEY => __('Compensation_payment'),
         ];
-        return $paymentTexts;
     }
 
-    public function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
+    public function getManufacturerDepositPaymentText($manufacturerDepositPaymentText): string
     {
         if (isset($this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText])) {
             return $this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText];
@@ -645,60 +637,55 @@ class MyHtmlHelper extends HtmlHelper
         return $manufacturerDepositPaymentText;
     }
 
-    /**
-     *
-     * @param int $imageId
-     * @return string '4/1/2' for given id 421
-     */
-    public function getProductImageIdAsPath($imageId)
+    public function getProductImageIdAsPath($imageId): string
     {
         preg_match_all('/[0-9]/', (string) $imageId, $imageIdAsArray);
         $imageIdAsPath = implode(DS, $imageIdAsArray[0]);
         return $imageIdAsPath;
     }
 
-    public function getProductThumbsPath($imageIdAsPath)
+    public function getProductThumbsPath($imageIdAsPath): string
     {
         return $this->getUploadImageDir() . DS . 'products' . DS . $imageIdAsPath;
     }
 
-    public function getBlogPostThumbsPath()
+    public function getBlogPostThumbsPath(): string
     {
         return $this->getUploadImageDir() . DS . 'blog_posts';
     }
 
-    public function getManufacturerThumbsPath()
+    public function getManufacturerThumbsPath(): string
     {
         return $this->getUploadImageDir() . DS . 'manufacturers';
     }
 
-    public function getCustomerThumbsPath()
+    public function getCustomerThumbsPath(): string
     {
         return Configure::read('app.customerImagesDir');
     }
 
-    public function getCategoryThumbsPath()
+    public function getCategoryThumbsPath(): string
     {
         return $this->getUploadImageDir() . DS . 'categories';
     }
 
-    public function getSliderThumbsPath()
+    public function getSliderThumbsPath(): string
     {
         return $this->getUploadImageDir() . DS . 'sliders';
     }
 
-    public function getUploadImageDir()
+    public function getUploadImageDir(): string
     {
         return substr(WWW_ROOT, 0, - 1) . Configure::read('app.uploadedImagesDir');
     }
 
-    public function getSliderImageSrc($sliderImage)
+    public function getSliderImageSrc($sliderImage): string
     {
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'sliders' . DS;
         return $this->prepareAsUrl($urlPrefix . $sliderImage);
     }
 
-    public function getImageFile($thumbsPath, $filenameWithoutExtension)
+    public function getImageFile($thumbsPath, $filenameWithoutExtension): string|null
     {
         $imageFilename = null;
         foreach(Configure::read('app.allowedImageMimeTypes') as $allowedImageExtension => $allowedImageMimeType) {
@@ -717,10 +704,8 @@ class MyHtmlHelper extends HtmlHelper
      *
      * @param $blogPost
      * @param string $size
-     * @return string
      */
-
-    public function getBlogPostImageSrc($blogPost, $size)
+    public function getBlogPostImageSrc($blogPost, $size): string
     {
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
@@ -745,12 +730,12 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
-    public function getManufacturerTermsOfUseSrcTemplate($manufacturerId)
+    public function getManufacturerTermsOfUseSrcTemplate($manufacturerId): string
     {
         return Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __('Filename_General-terms-and-conditions') . '.pdf';
     }
 
-    public function getManufacturerTermsOfUseSrc($manufacturerId)
+    public function getManufacturerTermsOfUseSrc($manufacturerId): string|false
     {
         $src = $this->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
         if (file_exists(WWW_ROOT . $src)) {
@@ -759,7 +744,7 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function getManufacturerImageSrc($manufacturerId, $size)
+    public function getManufacturerImageSrc($manufacturerId, $size): string
     {
         $thumbsPath = $this->getManufacturerThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
@@ -774,7 +759,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
-    public function getCustomerImageSrc($customerId, $size)
+    public function getCustomerImageSrc($customerId, $size): string
     {
         $thumbsPath = $this->getCustomerThumbsPath();
         $urlPrefix = 'profile-images/customers/';
@@ -794,7 +779,7 @@ class MyHtmlHelper extends HtmlHelper
         return $imageFilenameAndPath;
     }
 
-    public function getCategoryImageSrc($categoryId)
+    public function getCategoryImageSrc($categoryId): string|false
     {
         $thumbsPath = $this->getCategoryThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
@@ -809,7 +794,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
-    public function getProductImageSrc($imageId, $size)
+    public function getProductImageSrc($imageId, $size): string
     {
         $imageIdAsPath = $this->getProductImageIdAsPath($imageId);
         $thumbsPath = $this->getProductThumbsPath($imageIdAsPath);
@@ -826,7 +811,7 @@ class MyHtmlHelper extends HtmlHelper
     }
 
 
-    public function getProductImageSrcWithManufacturerImageFallback($productImageId, $manufacturerId)
+    public function getProductImageSrcWithManufacturerImageFallback($productImageId, $manufacturerId): array
     {
 
         $productImageLargeSrc = $this->getProductImageSrc($productImageId, 'thickbox');
@@ -855,7 +840,7 @@ class MyHtmlHelper extends HtmlHelper
         return !preg_match('/de-default/', $imgSrc);
     }
 
-    public function prepareAsUrl($string)
+    public function prepareAsUrl($string): string
     {
         $physicalFile = substr(WWW_ROOT, 0, - 1) . $string;
         if (file_exists($physicalFile)) {
@@ -865,7 +850,7 @@ class MyHtmlHelper extends HtmlHelper
         return $string;
     }
 
-    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel, $currentDate, $isAnonymized)
+    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel, $currentDate, $isAnonymized): string
     {
         $url = Configure::read('app.folder_order_lists');
         $url .= DS . date('Y', strtotime($deliveryDay)) . DS . date('m', strtotime($deliveryDay)) . DS;
@@ -879,14 +864,14 @@ class MyHtmlHelper extends HtmlHelper
         return $url;
     }
 
-    public function getInvoiceLink($name, $id, $invoiceDate, $invoiceNumber)
+    public function getInvoiceLink($name, $id, $invoiceDate, $invoiceNumber): string
     {
         $url = Configure::read('app.folder_invoices') . DS . date('Y', strtotime($invoiceDate)) . DS . date('m', strtotime($invoiceDate)) . DS;
         $url .= $invoiceDate . '_' . StringComponent::slugify($name) . '_' . $id . __('_Invoice_filename_') . $invoiceNumber . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
-    public function getApprovalStates()
+    public function getApprovalStates(): array
     {
         return [
             1 => __('approval_state_ok'),
@@ -895,7 +880,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getActiveStatesOnOff()
+    public function getActiveStatesOnOff(): array
     {
         return [
             1 => __('active_state_active'),
@@ -903,7 +888,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getActiveStates()
+    public function getActiveStates(): array
     {
         return [
             1 => __('active_state_active'),
@@ -912,12 +897,12 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getOrderStates()
+    public function getOrderStates(): array
     {
         return Configure::read('app.orderStates');
     }
 
-    public function getOrderStatesCashless()
+    public function getOrderStatesCashless(): array
     {
         return [
             OrderDetail::STATE_OPEN,
@@ -926,7 +911,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getOrderStateIds()
+    public function getOrderStateIds(): array
     {
         return array_keys(self::getOrderStates());
     }

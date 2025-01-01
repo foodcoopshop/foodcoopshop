@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 use App\Model\Entity\Payment;
 
 echo $this->Html->link(
-    '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i> ' . $buttonText,
+    '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName() . '"></i> ' . $buttonText,
     'javascript:void(0);',
     [
         'data-object-id' => $objectId,

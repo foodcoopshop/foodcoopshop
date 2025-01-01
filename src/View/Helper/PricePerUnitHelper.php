@@ -23,7 +23,7 @@ class PricePerUnitHelper extends Helper
 
     public array $helpers = ['MyHtml', 'MyNumber'];
 
-    public function getStringFromUnitSums($unitSum, $separator)
+    public function getStringFromUnitSums($unitSum, $separator): string
     {
         $unitSumString = '';
         if (!empty($unitSum)) {
@@ -38,7 +38,7 @@ class PricePerUnitHelper extends Helper
         return $unitSumString;
     }
 
-    public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount=1)
+    public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount=1): string
     {
         $result = $attributeName;
         $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount);
@@ -54,7 +54,7 @@ class PricePerUnitHelper extends Helper
         return $result;
     }
 
-    public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName)
+    public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName): string
     {
         $quantityInUnitsString = $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName);
         if ($quantityInUnitsString != '') {
@@ -63,7 +63,7 @@ class PricePerUnitHelper extends Helper
         return $quantityInUnitsString;
     }
 
-    public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName, $amount=1)
+    public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName, $amount=1): string
     {
         $result = '';
         if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
@@ -75,24 +75,24 @@ class PricePerUnitHelper extends Helper
         return $result;
     }
 
-    public function getPricePerUnitForFrontend($priceInclPerUnit, $quantityInUnits, $amount, $title)
+    public function getPricePerUnitForFrontend($priceInclPerUnit, $quantityInUnits, $amount, $title): string
     {
         return '<div class="price" title="' . h($title) . '">' . $this->MyNumber->formatAsCurrency(
             $this->getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
         ) . '</div> <div class="price-asterisk">*</div>';
     }
 
-    public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
+    public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount): float
     {
         return $priceInclPerUnit * $quantityInUnits / $amount;
     }
 
-    public function getPrice($priceInclPerUnit, $unitAmount, $productQuantity)
+    public function getPrice($priceInclPerUnit, $unitAmount, $productQuantity): float
     {
         return round((float) $priceInclPerUnit / $unitAmount * $productQuantity, 2);
     }
 
-    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true)
+    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true): string
     {
         $infoText = '<div class="line">';
         $infoText .= '<span class="p-info">';
@@ -105,12 +105,12 @@ class PricePerUnitHelper extends Helper
         return $infoText;
     }
 
-    public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
+    public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount): string
     {
         return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
     }
 
-    public function getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount)
+    public function getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount): string
     {
         // unit-amount must be included non-formatted for locale-based usage in cart.js
         return '<span class="price-incl-per-unit">'.$this->MyNumber->formatAsCurrency($priceInclPerUnit) . '</span> / <span class="unit-amount">'.($unitAmount > 1 ? $unitAmount : '').'</span>' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . '<span class="unit-name">' . $unitName . '</span>';
