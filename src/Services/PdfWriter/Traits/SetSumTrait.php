@@ -19,7 +19,7 @@ namespace App\Services\PdfWriter\Traits;
 trait SetSumTrait
 {
 
-    public function setSums($results)
+    public function setSums($results): void
     {
 
         $sumPriceIncl = 0;

@@ -25,7 +25,7 @@ trait FooterTrait
      * parent class is overriden although it's name is Header() (capital letter)
      * php functions are case insensitive
      */
-    public function footer()
+    public function footer(): void
     {
         $this->SetFont('freesans');
         $this->SetY(-19);

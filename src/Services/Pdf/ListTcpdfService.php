@@ -40,7 +40,7 @@ class ListTcpdfService extends AppTcpdfService
         $this->SetFontSize(10);
     }
 
-    public function prepareTaxSumData($results)
+    public function prepareTaxSumData($results): array|false
     {
 
         $taxRates = [];
@@ -67,7 +67,7 @@ class ListTcpdfService extends AppTcpdfService
 
     }
 
-    public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false)
+    public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false): void
     {
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 
@@ -232,7 +232,7 @@ class ListTcpdfService extends AppTcpdfService
         }
     }
 
-    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $unitSum, $taxRate = '', $showPricePerUnitMessage=false, $showUnitSum=false)
+    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $unitSum, $taxRate = '', $showPricePerUnitMessage=false, $showUnitSum=false): void
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -296,12 +296,12 @@ class ListTcpdfService extends AppTcpdfService
         }
     }
 
-    public function isOrderList($headers)
+    public function isOrderList($headers): bool
     {
         return $this->getCorrectColspan($headers) == 3;
     }
 
-    public function getCorrectColspan($headers)
+    public function getCorrectColspan($headers): int
     {
         $diff = 2;
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -315,7 +315,7 @@ class ListTcpdfService extends AppTcpdfService
         return $colspan;
     }
 
-    public function addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl)
+    public function addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl): void
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -365,7 +365,7 @@ class ListTcpdfService extends AppTcpdfService
      * parent class is overriden although it's name is Header() (capital letter)
      * php functions are case insensitive
      */
-    public function header()
+    public function header(): void
     {
         $this->SetY(4);
 

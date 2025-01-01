@@ -22,7 +22,7 @@ use Cake\View\Helper;
 class MenuHelper extends Helper
 {
 
-    public function render($array, $options)
+    public function render($array, $options): string
     {
         $tmpMenu = '<ul id="'.$options['id'].'" class="'.$options['class'].'">';
         if (!empty($options['header'])) {
@@ -38,7 +38,7 @@ class MenuHelper extends Helper
         return $tmpMenu;
     }
 
-    public function buildPageMenu($pages)
+    public function buildPageMenu($pages): array
     {
 
         $menu = [];
@@ -71,7 +71,7 @@ class MenuHelper extends Helper
         return $menu;
     }
 
-    private function buildMenuItem($item, $index)
+    private function buildMenuItem($item, $index): string
     {
 
         $liClass = [];
@@ -102,7 +102,7 @@ class MenuHelper extends Helper
         return $tmpMenuItem;
     }
 
-    private function renderMenuElement($slug, $name, $style = '', $class = [], $fontAwesomeIconClass = '')
+    private function renderMenuElement($slug, $name, $style = '', $class = [], $fontAwesomeIconClass = ''): string
     {
 
         if ($style != '') {
@@ -142,7 +142,7 @@ class MenuHelper extends Helper
         return $naviElement;
     }
 
-    public function getAuthMenuElement($identity)
+    public function getAuthMenuElement($identity): array
     {
         $menuElement = [];
         if ($identity !== null) {
@@ -163,7 +163,7 @@ class MenuHelper extends Helper
         return $menuElement;
     }
 
-    public function getPaymentProductMenuElement()
+    public function getPaymentProductMenuElement(): array
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
             return [
@@ -177,7 +177,7 @@ class MenuHelper extends Helper
         return [];
     }
 
-    public function getMyFeedbackMenuElement($identity)
+    public function getMyFeedbackMenuElement($identity): array
     {
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null) {
             return [
@@ -191,7 +191,7 @@ class MenuHelper extends Helper
         return [];
     }
 
-    public function getOrderDetailsGroupByCustomerMenuElement()
+    public function getOrderDetailsGroupByCustomerMenuElement(): array
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getOrderDetailsList().'?groupBy=customer',
@@ -202,7 +202,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getChangedOrderedProductsMenuElement()
+    public function getChangedOrderedProductsMenuElement(): array
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&types[]=order_detail_product_quantity_changed&types[]=order_detail_product_amount_changed&types[]=order_detail_customer_changed',
@@ -213,7 +213,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getCustomerProfileMenuElement()
+    public function getCustomerProfileMenuElement(): array
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getCustomerProfile(),
@@ -224,7 +224,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getActionLogsMenuElement()
+    public function getActionLogsMenuElement(): array
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getActionLogsList(),
@@ -235,7 +235,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getChangePasswordMenuElement()
+    public function getChangePasswordMenuElement(): array
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getChangePassword(),
@@ -246,7 +246,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getMyInvoicesMenuElement()
+    public function getMyInvoicesMenuElement(): array
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getMyInvoices(),
@@ -257,7 +257,8 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getCustomerMenuElements($identity) {
+    public function getCustomerMenuElements($identity): array
+    {
 
         $menu = [];
 

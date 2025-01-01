@@ -51,11 +51,12 @@ abstract class PdfWriterService
         return $this;
     }
 
-    public function getData() {
+    public function getData(): array
+    {
         return $this->data;
     }
 
-    private function getContent()
+    private function setContent(): void
     {
         $this->data['pdf'] = $this->pdfLibrary;
         $viewBuilder = new ViewBuilder();
@@ -70,24 +71,19 @@ abstract class PdfWriterService
         $viewBuilder->setLayout('ajax')->setVars($this->getData())->setTemplate($this->templateFile)->build()->render();
     }
 
-    private function setContent()
-    {
-        $this->pdfLibrary->html = $this->getContent();
-    }
-
-    public function writeInline()
+    public function writeInline(): string
     {
         $this->setContent();
         return $this->pdfLibrary->Output($this->getFilename(), 'I');
     }
 
-    public function writeAttachment()
+    public function writeAttachment(): string
     {
         $this->setContent();
         return $this->pdfLibrary->Output('', 'S');
     }
 
-    public function writeFile()
+    public function writeFile(): string
     {
         $this->setContent();
 
@@ -104,7 +100,7 @@ abstract class PdfWriterService
         return $this->pdfLibrary->Output($this->getFilename(), 'F');
     }
 
-    public function writeHtml()
+    public function writeHtml(): string
     {
         $this->setContent();
         return $this->pdfLibrary->getHtml();

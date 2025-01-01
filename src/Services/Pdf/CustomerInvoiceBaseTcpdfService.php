@@ -46,7 +46,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
         $this->setHeaders();
     }
 
-    public function prepareTableHeader()
+    public function prepareTableHeader(): void
     {
 
         $this->table = '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
@@ -57,7 +57,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
         $this->table .= '</tr></thead>';
     }
 
-    protected function renderTableRow($values)
+    protected function renderTableRow($values): void
     {
         $i = 0;
         foreach($values as $value) {
@@ -70,7 +70,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
      * parent class is overriden although it's name is Header() (capital letter)
      * php functions are case insensitive
      */
-    public function header()
+    public function header(): void
     {
         $this->SetY(4);
 

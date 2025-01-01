@@ -48,7 +48,7 @@ class OutputFilterService
 
     }
 
-    protected static function getEmailsFromString($string)
+    protected static function getEmailsFromString($string): array
     {
         preg_match_all(EMAIL_REGEX, $string, $matches);
         return $matches[0];

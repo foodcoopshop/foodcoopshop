@@ -35,7 +35,7 @@ class SendInvoiceToCustomerService
     public bool $isCancellationInvoice;
     public ?int $originalInvoiceId;
 
-    public function run()
+    public function run(): void
     {
 
         $customerName = $this->customerName;

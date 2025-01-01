@@ -16,6 +16,7 @@ use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -241,7 +242,7 @@ class CustomersTable extends AppTable
         ]);
     }
 
-    public function getCustomerName($tableName = 'Customers')
+    public function getCustomerName($tableName = 'Customers'): string
     {
         $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
@@ -251,7 +252,7 @@ class CustomersTable extends AppTable
         return $sql;
     }
 
-    public function addCustomersNameForOrderSelect($query)
+    public function addCustomersNameForOrderSelect($query): SelectQuery
     {
         $sql = $this->getCustomerName();
         return $query->select(['CustomerNameForOrder' => $sql]);

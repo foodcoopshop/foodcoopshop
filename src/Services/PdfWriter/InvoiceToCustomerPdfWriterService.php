@@ -27,7 +27,7 @@ class InvoiceToCustomerPdfWriterService extends PdfWriterService
         $this->setPdfLibrary(new CustomerInvoiceTcpdfService());
     }
 
-    public function prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $invoiceDate)
+    public function prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $invoiceDate): void
     {
         $this->setData([
             'result' => $data,

@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 class CustomerInvoiceTcpdfService extends CustomerInvoiceBaseTcpdfService
 {
 
-    public function setHeaders()
+    public function setHeaders(): void
     {
         $this->headers = [
             [
@@ -67,7 +67,7 @@ class CustomerInvoiceTcpdfService extends CustomerInvoiceBaseTcpdfService
         ];
     }
 
-    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax)
+    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax): void
     {
 
         foreach($result->active_order_details as $orderDetail) {

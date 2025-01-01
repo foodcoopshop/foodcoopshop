@@ -43,7 +43,7 @@ class BarCodeTcpdfService extends AppTcpdfService
         $this->SetFontSize(10);
     }
 
-    public function header()
+    public function header(): void
     {
         // use empty header
     }

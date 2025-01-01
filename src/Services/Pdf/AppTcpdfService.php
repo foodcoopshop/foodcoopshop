@@ -35,12 +35,12 @@ abstract class AppTcpdfService extends TCPDF
 
     private ?string $html = '';
 
-    public function setTextHelper($textHelper)
+    public function setTextHelper($textHelper): void
     {
         $this->textHelper = $textHelper;
     }
 
-    public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
+    public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align=''): void
     {
 
         $html = StringComponent::removeEmojis($html);
@@ -58,12 +58,12 @@ abstract class AppTcpdfService extends TCPDF
         parent::writeHTML($html, $ln, $fill, $reseth, $cell, $align);
     }
 
-    public function getHtml()
+    public function getHtml(): string
     {
         return $this->html;
     }
 
-    public function renderTable()
+    public function renderTable(): void
     {
         $this->table .= '</table>';
 
@@ -86,7 +86,7 @@ abstract class AppTcpdfService extends TCPDF
 
     }
 
-    protected function drawLine()
+    protected function drawLine(): void
     {
         $this->Line(0, $this->y, $this->w, $this->y);
     }

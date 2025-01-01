@@ -212,14 +212,14 @@ class MyTimeHelper extends TimeHelper
         return $result;
     }
 
-    public function getCurrentWeekday(): string
+    public function getCurrentWeekday(): int
     {
         return $this->formatAsWeekday($this->getCurrentDay());
     }
 
-    public function formatAsWeekday($day): string
+    public function formatAsWeekday($day): int
     {
-        return date('N', $day);
+        return (int) date('N', $day);
     }
 
     public function getCurrentDay(): int
