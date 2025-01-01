@@ -24,7 +24,7 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
 
     use ManufacturersFilterTrait;
     
-    public function getHeader()
+    public function getHeader(): array
     {
         $header = [
             __('Id'),
@@ -47,7 +47,7 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
 
     }
 
-    public function getRecords()
+    public function getRecords(): array
     {
 
         $active = h($this->getRequestQuery('active', $this->getDefaultActive()));

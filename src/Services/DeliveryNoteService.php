@@ -25,7 +25,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class DeliveryNoteService
 {
 
-    public function getSpreadsheet($orderDetails)
+    public function getSpreadsheet($orderDetails): Spreadsheet
     {
 
         $headlines = [
@@ -179,7 +179,7 @@ class DeliveryNoteService
 
     }
 
-    public function writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturerName)
+    public function writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturerName): string
     {
         $writer = new Xlsx($spreadsheet);
         $filename = __('Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturerName) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
@@ -187,21 +187,22 @@ class DeliveryNoteService
         return $filename;
     }
 
-    public function deleteTmpFile($filename) {
+    public function deleteTmpFile($filename): void
+    {
         unlink(TMP . $filename);
     }
 
-    protected function setAlignmentForCell($sheet, $column, $row, $alignment)
+    protected function setAlignmentForCell($sheet, $column, $row, $alignment): void
     {
         $sheet->getStyle([$column, $row, $column, $row])->getAlignment()->setHorizontal($alignment);
     }
 
-    protected function setBoldForCell($sheet, $column, $row)
+    protected function setBoldForCell($sheet, $column, $row): void
     {
         $sheet->getStyle([$column, $row, $column, $row])->getFont()->setBold(true);
     }
 
-    protected function setNumberFormatForCell($sheet, $column, $row)
+    protected function setNumberFormatForCell($sheet, $column, $row): void
     {
         $sheet->getStyle([$column, $row, $column, $row])->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
     }
