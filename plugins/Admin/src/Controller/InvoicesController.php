@@ -41,11 +41,11 @@ class InvoicesController extends AdminAppController
 
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
-        $customerId = h($this->getRequest()->getQuery('customerId', ''));
+        $customerIds = h($this->getRequest()->getQuery('customerIds', ''));
 
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoices = $invoicesTable->find('all');
-        $invoices = $this->setInvoiceConditions($invoices, $dateFrom, $dateTo, $customerId);
+        $invoices = $this->setInvoiceConditions($invoices, $dateFrom, $dateTo, $customerIds);
 
         if (empty($invoices)) {
             throw new NotFoundException();
