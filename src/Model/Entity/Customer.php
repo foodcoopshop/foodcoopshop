@@ -46,7 +46,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->id_customer;
     }
 
-    public function getOriginalData(): ArrayAccess|array
+    public function getOriginalData(): static
     {
         return $this;
     }

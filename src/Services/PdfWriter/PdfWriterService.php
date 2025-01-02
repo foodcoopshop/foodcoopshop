@@ -28,13 +28,13 @@ abstract class PdfWriterService
     protected string $filename = '';
     public ?string $templateFile = null;
 
-    public function setPdfLibrary($pdfLibrary): PdfWriterService
+    public function setPdfLibrary($pdfLibrary): static
     {
         $this->pdfLibrary = $pdfLibrary;
         return $this;
     }
 
-    public function setData($data): PdfWriterService
+    public function setData($data): static
     {
         $this->data = array_merge($this->data, $data);
         return $this;
@@ -45,7 +45,7 @@ abstract class PdfWriterService
         return $this->filename;
     }
 
-    public function setFilename($filename): PdfWriterService
+    public function setFilename($filename): static
     {
         $this->filename = $filename;
         return $this;
