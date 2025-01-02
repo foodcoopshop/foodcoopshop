@@ -52,7 +52,7 @@ class CartService
         $this->controller = $controller;
     }
 
-    public function getRequest()
+    public function getRequest(): ServerRequest
     {
         return $this->request;
     }
@@ -76,7 +76,7 @@ class CartService
         return $contain;
     }
 
-    protected function saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products)
+    protected function saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products): array
     {
 
         $this->saveOrderDetails($orderDetails2save);
@@ -191,7 +191,7 @@ class CartService
         return $cart;
     }
 
-    public function finish()
+    public function finish(): array
     {
 
         $cart = $this->identity->getCart();
@@ -671,7 +671,7 @@ class CartService
         return $manufacturersThatReceivedInstantOrderNotification;
     }
 
-    private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
+    private function sendStockAvailableLimitReachedEmailToManufacturer($cartId): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
@@ -761,7 +761,7 @@ class CartService
 
     }
 
-    private function sendConfirmationEmailToCustomerSelfService($cart)
+    private function sendConfirmationEmailToCustomerSelfService($cart): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
@@ -775,10 +775,10 @@ class CartService
         $email->addToQueue();
     }
 
-    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities)
+    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities): null
     {
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
-            return false;
+            return null;
         }
         foreach($pickupDayEntities as $pickupDay) {
             if ($pickupDay['comment'] == '') {
@@ -800,16 +800,17 @@ class CartService
             ]);
             $email->addToQueue();
         }
+        return null;
     }
 
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      */
-    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities)
+    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities): null
     {
 
         if (!$this->identity->active) {
-            return false;
+            return null;
         }
 
         $email = new AppMailer();
@@ -853,9 +854,10 @@ class CartService
         }
 
         $email->addToQueue();
+        return null;
     }
 
-    private function generateRightOfWithdrawalInformationAndForm($cart, $products)
+    private function generateRightOfWithdrawalInformationAndForm($cart, $products): string
     {
         $manufacturers = [];
         foreach ($products as $product) {
@@ -872,13 +874,13 @@ class CartService
         return $pdfWriter->writeAttachment();
     }
 
-    private function generateGeneralTermsAndConditions()
+    private function generateGeneralTermsAndConditions(): string
     {
         $pdfWriter = new GeneralTermsAndConditionsPdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 
-    private function generateOrderConfirmation($cart)
+    private function generateOrderConfirmation($cart): string
     {
 
         $manufacturers = [];

@@ -28,7 +28,7 @@ class BlogPostsController extends AdminAppController
 
     use UploadTrait;
 
-    public function add()
+    public function add(): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $blogPostsTable->newEntity(
@@ -47,7 +47,7 @@ class BlogPostsController extends AdminAppController
         }
     }
 
-    public function edit($blogPostId)
+    public function edit($blogPostId): void
     {
         if ($blogPostId === null) {
             throw new NotFoundException;
@@ -76,7 +76,7 @@ class BlogPostsController extends AdminAppController
         $this->_processForm($blogPost, true);
     }
 
-    private function _processForm($blogPost, $isEditMode)
+    private function _processForm($blogPost, $isEditMode): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $this->setFormReferer();
@@ -157,7 +157,7 @@ class BlogPostsController extends AdminAppController
         $this->set('blogPost', $blogPost);
     }
 
-    public function index()
+    public function index(): void
     {
         $conditions = [];
 

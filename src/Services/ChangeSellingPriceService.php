@@ -19,12 +19,13 @@ namespace App\Services;
 use Cake\Core\Configure;
 use App\Model\Entity\Customer;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\TableRegistry;
 
 class ChangeSellingPriceService
 {
 
-    private function getOpenOrderDetails($productId, $productAttributeId)
+    private function getOpenOrderDetails($productId, $productAttributeId): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $openOrderDetails = $orderDetailsTable->find('all',
@@ -46,7 +47,7 @@ class ChangeSellingPriceService
     {
 
         $openOrderDetails = $this->getOpenOrderDetails($ids['productId'], $ids['attributeId']);
-        if (empty($openOrderDetails)) {
+        if ($openOrderDetails->count() == 0) {
             return [];
         }
 
@@ -97,7 +98,7 @@ class ChangeSellingPriceService
     {
 
         $openOrderDetails = $this->getOpenOrderDetails($ids['productId'], $ids['attributeId']);
-        if (empty($openOrderDetails)) {
+        if ($openOrderDetails->count() == 0) {
             return [];
         }
 
@@ -118,7 +119,7 @@ class ChangeSellingPriceService
 
     }
 
-    public function changeOrderDetailPriceDepositTax($orderDetail, $grossPrice, $productAmount)
+    public function changeOrderDetailPriceDepositTax($orderDetail, $grossPrice, $productAmount): OrderDetail
     {
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');

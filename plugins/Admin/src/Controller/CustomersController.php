@@ -58,7 +58,7 @@ class CustomersController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    private function generateTermsOfUsePdf()
+    private function generateTermsOfUsePdf(): string
     {
         $pdfWriter = new TermsOfUsePdfWriterService();
         return $pdfWriter->writeAttachment();

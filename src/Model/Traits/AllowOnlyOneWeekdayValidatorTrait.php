@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
 trait AllowOnlyOneWeekdayValidatorTrait
 {
 
-    public function getAllowOnlyOneWeekdayValidator(Validator $validator, $field, $fieldName)
+    public function getAllowOnlyOneWeekdayValidator(Validator $validator, $field, $fieldName): Validator
     {
         $validator->add($field, 'allow-only-one-weekday', [
             'rule' => function ($value, $context) {

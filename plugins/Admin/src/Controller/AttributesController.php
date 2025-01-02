@@ -23,7 +23,7 @@ use App\Services\SanitizeService;
 class AttributesController extends AdminAppController
 {
 
-    public function add()
+    public function add(): void
     {
         $attributesTable = $this->getTableLocator()->get('Attributes');
         $attribute = $attributesTable->newEntity(
@@ -38,7 +38,7 @@ class AttributesController extends AdminAppController
         }
     }
 
-    public function edit($attributeId)
+    public function edit($attributeId): void
     {
         if ($attributeId === null) {
             throw new NotFoundException;
@@ -60,7 +60,7 @@ class AttributesController extends AdminAppController
         $this->_processForm($attribute, true);
     }
 
-    private function _processForm($attribute, $isEditMode)
+    private function _processForm($attribute, $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -109,7 +109,7 @@ class AttributesController extends AdminAppController
         $this->set('attribute', $attribute);
     }
 
-    public function index()
+    public function index(): void
     {
         $conditions = [
             'Attributes.active > ' . APP_DEL

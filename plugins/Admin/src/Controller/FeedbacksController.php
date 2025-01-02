@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Services\SanitizeService;
 use Cake\I18n\DateTime;
+use App\Model\Entity\Customer;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -27,18 +28,19 @@ class FeedbacksController extends AdminAppController
     public int $customerId;
     public bool $isOwnForm;
 
-    private function getCustomerId()
+    private function getCustomerId(): int
     {
         $customerId = '';
         if (!empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = h($this->getRequest()->getQuery('customerId'));
-        } if ($this->customerId > 0) {
+            $customerId = (int) h($this->getRequest()->getQuery('customerId'));
+        }
+        if ($this->customerId > 0) {
             $customerId = $this->customerId;
         }
         return $customerId;
     }
 
-    private function getCustomer()
+    private function getCustomer(): ?Customer
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all',
@@ -51,7 +53,7 @@ class FeedbacksController extends AdminAppController
         return $customer;
     }
 
-    public function myFeedback()
+    public function myFeedback(): void
     {
         $this->customerId = $this->identity->getId();
         $this->set('title_for_layout', __d('admin', 'My_feedback'));
@@ -62,7 +64,7 @@ class FeedbacksController extends AdminAppController
         }
     }
 
-    public function form(int $customerId)
+    public function form(int $customerId): void
     {
         $this->customerId = $customerId;
         $customer = $this->getCustomer();
@@ -83,7 +85,7 @@ class FeedbacksController extends AdminAppController
         }
     }
 
-    public function _processForm()
+    public function _processForm(): void
     {
 
         $customerId = $this->getCustomerId();
