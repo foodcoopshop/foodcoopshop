@@ -36,7 +36,7 @@ class OrderCustomerService
     {
         $result = Router::getRequest()->getPath() == '/' . __('route_self_service');
         if (!empty(Router::getRequest()->getQuery('redirect'))) {
-            $result |= preg_match('`' . '/' . __('route_self_service') . '`', Router::getRequest()->getQuery('redirect'));
+            $result = (bool) preg_match('`' . '/' . __('route_self_service') . '`', Router::getRequest()->getQuery('redirect'));
         }
         return $result;
     }
