@@ -94,7 +94,7 @@ foodcoopshop.Admin = {
 
     initDownloadInvoicesAsZipFile : function() {
         $('.btn-download-invoices-as-zip-file').on('click', function() {
-            var url = '/admin/invoices/download-as-zip-file/?dateFrom=' + $('input[name="dateFrom"]').val() + '&dateTo=' + $('input[name="dateTo"]').val() + '&customerId=' + $('#customerid').val();
+            var url = '/admin/invoices/download-as-zip-file/?dateFrom=' + $('input[name="dateFrom"]').val() + '&dateTo=' + $('input[name="dateTo"]').val() + '&customerIds=' + $('#customerids').val();
             window.open(url);
         });
     },
