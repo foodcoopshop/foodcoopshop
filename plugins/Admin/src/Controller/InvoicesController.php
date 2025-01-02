@@ -41,7 +41,12 @@ class InvoicesController extends AdminAppController
 
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
-        $customerIds = h($this->getRequest()->getQuery('customerIds', ''));
+        
+        $customerIds = [];
+        if (! empty($this->getRequest()->getQuery('customerIds'))) {
+            $customerIds = h($this->getRequest()->getQuery('customerIds'));
+            $customerIds = explode(',', $customerIds);
+        }
 
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoices = $invoicesTable->find('all');
