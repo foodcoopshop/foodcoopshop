@@ -59,7 +59,7 @@ class OrderDetailsController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function orderDetailsAsPdf()
+    public function orderDetailsAsPdf(): void
     {
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
         $order = $this->getRequest()->getQuery('order') ?? null;

@@ -26,7 +26,7 @@ class SlidersController extends AdminAppController
 
     use UploadTrait;
 
-    public function add()
+    public function add(): void
     {
         $slidersTable = $this->getTableLocator()->get('Sliders');
         $slider = $slidersTable->newEntity(
@@ -45,7 +45,7 @@ class SlidersController extends AdminAppController
         }
     }
 
-    public function edit($sliderId)
+    public function edit($sliderId): void
     {
         if ($sliderId === null) {
             throw new NotFoundException;
@@ -63,7 +63,7 @@ class SlidersController extends AdminAppController
         $this->_processForm($slider, true);
     }
 
-    private function _processForm($slider, $isEditMode)
+    private function _processForm($slider, $isEditMode): void
     {
 
         $this->setFormReferer();
@@ -120,7 +120,7 @@ class SlidersController extends AdminAppController
         $this->set('slider', $slider);
     }
 
-    public function index()
+    public function index(): void
     {
         $conditions = [
             'Sliders.active > ' . APP_DEL

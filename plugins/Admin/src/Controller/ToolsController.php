@@ -36,7 +36,7 @@ class ToolsController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function doTmpFileUpload()
+    public function doTmpFileUpload(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -68,7 +68,7 @@ class ToolsController extends AdminAppController
         $this->viewBuilder()->setOption('serialize', ['status', 'text', 'filename']);
     }
 
-    public function doTmpImageUpload()
+    public function doTmpImageUpload(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -107,7 +107,7 @@ class ToolsController extends AdminAppController
         $this->viewBuilder()->setOption('serialize', ['status', 'filename']);
     }
 
-    public function rotateImage()
+    public function rotateImage(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -165,7 +165,7 @@ class ToolsController extends AdminAppController
      * On uploading images are resized to fit to the maximum possibly required ...ImageSizes from app.config.php
      * return int
      */
-    protected function getMaxTmpUploadFileSize()
+    protected function getMaxTmpUploadFileSize(): int
     {
 
         $actTmpUploadFileSize = 0;

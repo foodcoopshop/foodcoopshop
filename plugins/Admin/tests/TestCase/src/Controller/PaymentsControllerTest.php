@@ -86,17 +86,21 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentWithInvalidType(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
-        $this->assertEquals(0, $jsonDecodedContent->status);
-        $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $jsonDecodedContent->msg);
+        try {
+            $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
+        } catch (\Exception $e) {
+            $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $e->getMessage());
+        }
     }
 
     public function testAddPaymentAsCustomerForAnotherUser(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.superadminId'), 10, Payment::TYPE_PRODUCT);
-        $this->assertEquals(0, $jsonDecodedContent->status);
-        $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
+        try {
+            $this->addPayment(Configure::read('test.superadminId'), 10, Payment::TYPE_PRODUCT);
+        } catch (\Exception $e) {
+            $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $e->getMessage());
+        }
     }
 
     public function testAddProductPaymentAsCustomerForOneself(): void

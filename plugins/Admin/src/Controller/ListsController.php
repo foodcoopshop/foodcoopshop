@@ -9,6 +9,7 @@ use Cake\Http\Exception\UnauthorizedException;
 use App\Services\DeliveryRhythmService;
 use Cake\Controller\Exception\InvalidParameterException;
 use Cake\Log\Log;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +27,7 @@ use Cake\Log\Log;
 class ListsController extends AdminAppController
 {
 
-    public function invoices()
+    public function invoices(): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $path = realpath(Configure::read('app.folder_invoices'));
@@ -117,7 +118,7 @@ class ListsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Invoices'));
     }
 
-    public function orderLists()
+    public function orderLists(): void
     {
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
@@ -227,7 +228,7 @@ class ListsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
 
-    private function splitOrderDetailStringIntoParts($fileName, $ending)
+    private function splitOrderDetailStringIntoParts($fileName, $ending): array
     {
         $result = [];
         $result['deliveryDate'] = substr($fileName, 0, 10);
@@ -246,12 +247,12 @@ class ListsController extends AdminAppController
         return $result;
     }
 
-    private function isAnonymized($path)
+    private function isAnonymized($path): bool
     {
-        return preg_match('/anonymized/', $path);
+        return (bool) preg_match('/anonymized/', $path);
     }
 
-    public function getOrderList()
+    public function getOrderList(): Response
     {
         $filenameWithPath = Configure::read('app.folder_order_lists') . DS . h($this->getRequest()->getQuery('file'));
 
@@ -275,7 +276,7 @@ class ListsController extends AdminAppController
         return $this->getFile($filenameWithPath);
     }
 
-    public function getInvoice()
+    public function getInvoice(): Response
     {
         $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
 
@@ -306,7 +307,7 @@ class ListsController extends AdminAppController
     /**
      * invoices and order lists are not stored in webroot
      */
-    private function getFile($filenameWithPath)
+    private function getFile($filenameWithPath): Response
     {
 
         $this->disableAutoRender();

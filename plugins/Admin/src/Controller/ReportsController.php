@@ -29,13 +29,13 @@ use App\Services\Csv\Reader\Banking\BankingReaderService;
 class ReportsController extends AdminAppController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->FormProtection->setConfig('unlockedActions', ['payments']);
     }
 
-    private function handleCsvUpload()
+    private function handleCsvUpload(): void
     {
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -188,7 +188,7 @@ class ReportsController extends AdminAppController
         }
     }
 
-    public function payments($paymentType)
+    public function payments($paymentType): void
     {
 
         if ($paymentType == Payment::TYPE_PRODUCT && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
