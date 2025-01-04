@@ -87,14 +87,14 @@ class ProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validationName(Validator $validator)
+    public function validationName(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $validator->minLength('name', 2, __('The_name_of_the_product_needs_to_be_at_least_{0}_characters_long.', [2]));
         return $validator;
     }
 
-    public function validationDeliveryRhythm(Validator $validator)
+    public function validationDeliveryRhythm(Validator $validator): Validator
     {
         $validator->add('delivery_rhythm_type', 'allowed-count-values', [
             'rule' => function ($value, $context) {
@@ -143,7 +143,7 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
-    private function getCorrectDayOfMonthValidator(Validator $validator, $field)
+    private function getCorrectDayOfMonthValidator(Validator $validator, $field): Validator
     {
         $validator->add($field, 'allow-only-correct-weekday-of-month', [
 
@@ -252,7 +252,7 @@ class ProductsTable extends AppTable
         ];
     }
 
-    public function getCompositeProductIdAndAttributeId(int $productId, int $attributeId = 0)
+    public function getCompositeProductIdAndAttributeId(int $productId, int $attributeId = 0): string|int
     {
         $compositeId = $productId;
         if ($attributeId > 0) {
@@ -655,7 +655,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '',  $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '',  $addProductNameToAttributes = false, $controller = null): array
     {
 
         $conditions = [];
@@ -1059,12 +1059,12 @@ class ProductsTable extends AppTable
         return $preparedProducts;
     }
 
-    public function isMainProduct($product)
+    public function isMainProduct($product): bool
     {
-        return preg_match('/main-product/', $product->row_class);
+        return (bool) preg_match('/main-product/', $product->row_class);
     }
 
-    public function getForDropdown($manufacturerId)
+    public function getForDropdown($manufacturerId): array
     {
         $identity = Router::getRequest()->getAttribute('identity');
         $conditions = [];
@@ -1125,13 +1125,7 @@ class ProductsTable extends AppTable
         return $productsForDropdown;
     }
 
-    /**
-     * @param float $grossPrice (for all units)
-     * @param float $netPrice (for one unit)
-     * @param int $quantity
-     * @return float
-     */
-    public function getUnitTax($grossPrice, $netPrice, $quantity)
+    public function getUnitTax($grossPrice, $netPrice, $quantity): float
     {
         if ($quantity == 0) {
             return 0;
@@ -1139,27 +1133,28 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    public function getGrossPrice($netPrice, $taxRate)
+    public function getGrossPrice($netPrice, $taxRate): float
     {
         $grossPrice = $netPrice * (100 + $taxRate) / 100;
         $grossPrice = round($grossPrice, 2);
         return $grossPrice;
     }
 
-    public function getNetPrice($grossPrice, $taxRate)
+    public function getNetPrice($grossPrice, $taxRate): float
     {
         $netPrice = $grossPrice / (100 + $taxRate) * 100;
         $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 
-    public function getNetPriceForNewTaxRate($netPrice, $oldTaxRate, $newTaxRate) {
+    public function getNetPriceForNewTaxRate($netPrice, $oldTaxRate, $newTaxRate): float
+    {
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 
-    public function setDefaultAttributeId($productId, $productAttributeId)
+    public function setDefaultAttributeId(int $productId, int $productAttributeId): void
     {
         $productAttributesTable = TableRegistry::getTableLocator()->get('ProductAttributes');
         $productAttributes = $productAttributesTable->find('all',
@@ -1188,7 +1183,7 @@ class ProductsTable extends AppTable
         $productAttributesTable->save($productAttributeEntity);
     }
 
-    private function checkImageContentType($image)
+    private function checkImageContentType($image): void
     {
         $mimeContentType = mime_content_type($image);
         if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
@@ -1196,7 +1191,7 @@ class ProductsTable extends AppTable
         }
     }
 
-    public function changeImage($products)
+    public function changeImage($products): bool
     {
 
         foreach ($products as $product) {
@@ -1285,7 +1280,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode): object
     {
         $defaultQuantity = 0;
 

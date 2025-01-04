@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Validation\Validator;
 use Cake\Routing\Router;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,7 +39,7 @@ class SlidersTable extends AppTable
         return $validator;
     }
 
-    public function getForHome()
+    public function getForHome(): SelectQuery
     {
 
         $conditions = [

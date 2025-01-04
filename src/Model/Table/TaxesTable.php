@@ -42,14 +42,16 @@ class TaxesTable extends AppTable
         return $validator;
     }
 
-    public function getValidTaxIds() {
+    public function getValidTaxIds(): array
+    {
         $taxes = $this->getForDropdown();
         $taxes = array_keys($taxes);
         sort($taxes);
         return $taxes;
     }
 
-    public function getValidTaxRatesWithoutPercentSign() {
+    public function getValidTaxRatesWithoutPercentSign(): array
+    {
         $taxes = $this->getForDropdown();
         $taxes = array_values($taxes);
         $taxes = array_map(function($tax) {
@@ -59,7 +61,7 @@ class TaxesTable extends AppTable
         return $taxes;
     }
 
-    public function getNetPriceAndTaxId($grossPrice, $taxRate)
+    public function getNetPriceAndTaxId($grossPrice, $taxRate): array
     {
 
         $taxId = false;
@@ -86,7 +88,7 @@ class TaxesTable extends AppTable
 
     }
 
-    public function getForDropdown($useRateAsKey = false)
+    public function getForDropdown($useRateAsKey = false): array
     {
         $taxes = $this->find('all',
         conditions: [

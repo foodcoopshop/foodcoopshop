@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Validation\Validator;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,7 +47,7 @@ class PagesTable extends AppTable
         return $validator;
     }
 
-    private function flattenNestedArrayWithChildren($array, $separator = '')
+    private function flattenNestedArrayWithChildren($array, $separator = ''): array
     {
         foreach ($array as $item) {
             $statusString = '';
@@ -64,7 +65,7 @@ class PagesTable extends AppTable
         return $this->flattenedArray;
     }
 
-    public function getThreaded($conditions = [])
+    public function getThreaded($conditions = []): SelectQuery
     {
         $pages = $this->find('threaded',
         parentField: 'id_parent',
@@ -80,7 +81,7 @@ class PagesTable extends AppTable
         return $pages;
     }
 
-    public function getForSelect($excludePageId = null)
+    public function getForSelect($excludePageId = null): array
     {
         $conditions = [];
         if ($excludePageId) {

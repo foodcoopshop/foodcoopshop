@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Manufacturer;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
@@ -10,6 +11,7 @@ use App\Model\Traits\MultipleEmailsRuleTrait;
 use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -72,7 +74,7 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
 
-    public function validationEditOptions(Validator $validator)
+    public function validationEditOptions(Validator $validator): Validator
     {
         $validator->allowEmptyString('send_order_list_cc');
         $validator->add('send_order_list_cc', 'multipleEmails', [
@@ -90,7 +92,7 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
 
-    public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId)
+    public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId): Manufacturer
     {
         $manufacturer = $this->find('all',
         conditions: [
@@ -106,7 +108,7 @@ class ManufacturersTable extends AppTable
         return $manufacturer;
     }
 
-    public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification)
+    public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification): bool
     {
         $result = $sendOrderedProductDeletedNotification;
         if (is_null($sendOrderedProductDeletedNotification)) {
@@ -115,7 +117,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification)
+    public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification): bool
     {
         $result = $sendOrderedProductPriceChangedNotification;
         if (is_null($sendOrderedProductPriceChangedNotification)) {
@@ -124,7 +126,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    public function getOptionSendOrderedProductAmountChangedNotification($sendOrderedProductAmountChangedNotification)
+    public function getOptionSendOrderedProductAmountChangedNotification($sendOrderedProductAmountChangedNotification): bool
     {
         $result = $sendOrderedProductAmountChangedNotification;
         if (is_null($sendOrderedProductAmountChangedNotification)) {
@@ -133,7 +135,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    public function getOptionSendInstantOrderNotification($sendInstantOrderNotification)
+    public function getOptionSendInstantOrderNotification($sendInstantOrderNotification): bool
     {
         $result = $sendInstantOrderNotification;
         if (is_null($sendInstantOrderNotification)) {
@@ -142,7 +144,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    public function getOptionSendInvoice($sendInvoice)
+    public function getOptionSendInvoice($sendInvoice): bool
     {
         $result = $sendInvoice;
         if (is_null($sendInvoice)) {
@@ -178,16 +180,16 @@ class ManufacturersTable extends AppTable
         return $result;
     }
 
-    public function getOptionSendOrderList($sendOrderList)
+    public function getOptionSendOrderList($sendOrderList): bool
     {
         $result = $sendOrderList;
         if (is_null($sendOrderList)) {
             $result = Configure::read('app.defaultSendOrderList');
         }
-        return $result;
+        return (bool) $result;
     }
 
-    public function getOptionSendOrderListCc($sendOrderListCc)
+    public function getOptionSendOrderListCc($sendOrderListCc): array
     {
         $ccRecipients = [];
         if (is_null($sendOrderListCc) || $sendOrderListCc == '') {
@@ -201,7 +203,7 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
-    public function getCustomerRecord($email)
+    public function getCustomerRecord($email): Customer|array
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
@@ -226,7 +228,7 @@ class ManufacturersTable extends AppTable
         return $customer;
     }
 
-    public function getForMenu()
+    public function getForMenu(): array
     {
 
         $conditions = [
@@ -273,22 +275,22 @@ class ManufacturersTable extends AppTable
         return $manufacturersForMenu;
     }
 
-    public function increasePriceWithVariableMemberFee($price, $variableMemberFee)
+    public function increasePriceWithVariableMemberFee($price, $variableMemberFee): float
     {
         return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    public function decreasePriceWithVariableMemberFee($price, $variableMemberFee)
+    public function decreasePriceWithVariableMemberFee($price, $variableMemberFee): float
     {
         return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    public function getVariableMemberFeeAsFloat($price, $variableMemberFee)
+    public function getVariableMemberFeeAsFloat($price, $variableMemberFee): float
     {
         return round($price * $variableMemberFee / 100, 2);
     }
 
-    public function getForDropdown()
+    public function getForDropdown(): array
     {
         $manufacturers = $this->find('all', order: [
             'Manufacturers.name' => 'ASC'
@@ -315,7 +317,7 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function anonymizeCustomersInInvoiceOrOrderList($results)
+    public function anonymizeCustomersInInvoiceOrOrderList($results): array
     {
         return array_map(function ($data) {
             $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
@@ -323,7 +325,7 @@ class ManufacturersTable extends AppTable
         }, $results);
     }
 
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = []): array
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $orderClause = match($order) {

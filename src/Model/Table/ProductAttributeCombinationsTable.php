@@ -35,7 +35,7 @@ class ProductAttributeCombinationsTable extends AppTable
         ]);
     }
 
-    public function getCombinationCounts($attributeId)
+    public function getCombinationCounts($attributeId): array
     {
         $combinations = $this->find('all',
         conditions: [

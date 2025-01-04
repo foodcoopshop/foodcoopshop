@@ -11,6 +11,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -68,19 +69,19 @@ class OrderDetailsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validationPickupDay(Validator $validator)
+    public function validationPickupDay(Validator $validator): Validator
     {
         $validator->notEquals('pickup_day', '1970-01-01', __('The_pickup_day_is_not_valid.'));
         return $validator;
     }
 
-    public function validationName(Validator $validator)
+    public function validationName(Validator $validator): Validator
     {
         $validator->notEmptyString('product_name', __('Please_enter_a_name.'));
         return $validator;
     }
 
-    public function getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo)
+    public function getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo): SelectQuery
     {
         $query = $this->find('all',
         conditions: [
@@ -117,7 +118,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getLastPickupDay($customerId)
+    public function getLastPickupDay($customerId): ?OrderDetail
     {
         $query = $this->find('all',
         conditions: [
@@ -129,7 +130,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    private function getLastOrFirstOrderYear(string $manufacturerId, string $sort)
+    private function getLastOrFirstOrderYear(string $manufacturerId, string $sort): ?OrderDetail
     {
         $conditions = [];
         if ($manufacturerId != 'all') {
@@ -173,7 +174,7 @@ class OrderDetailsTable extends AppTable
         return $orderDetail->pickup_day->i18nFormat('Y-MM') . '-01';
     }
 
-    public function addLastMonthsCondition($query, $firstDayOfLastOrderMonth, $lastMonths)
+    public function addLastMonthsCondition($query, $firstDayOfLastOrderMonth, $lastMonths): SelectQuery
     {
         $lastMonths--;
         $query->where(function (QueryExpression $exp) use ($firstDayOfLastOrderMonth, $lastMonths) {
@@ -182,7 +183,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId)
+    public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId): ?float
     {
 
         if ($pickupDay == 'delivery-rhythm-triggered-delivery-break') {
@@ -209,7 +210,7 @@ class OrderDetailsTable extends AppTable
         return null;
     }
 
-    public function getOrderDetailsForOrderListPreview($pickupDay)
+    public function getOrderDetailsForOrderListPreview($pickupDay): SelectQuery
     {
         $query = $this->find('all',
         conditions: [
@@ -221,7 +222,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getMemberFee($customerId, $year)
+    public function getMemberFee($customerId, $year): float|int
     {
 
         $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');
@@ -254,7 +255,7 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay, $customerCanSelectPickupDay)
+    public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay, $customerCanSelectPickupDay): SelectQuery
     {
         $query = $this->find('all', contain: [
             'Products.Manufacturers',
@@ -286,7 +287,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getTaxSums($orderDetails)
+    public function getTaxSums($orderDetails): array
     {
         $taxRates = [];
         $defaultArray = [
@@ -308,7 +309,7 @@ class OrderDetailsTable extends AppTable
     }
 
 
-    public function getDepositTax($depositGross, $amount, $taxRate)
+    public function getDepositTax($depositGross, $amount, $taxRate): float
     {
         $depositGrossPerPiece = round($depositGross / $amount, 2);
         $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $taxRate / 100), 2);
@@ -316,14 +317,14 @@ class OrderDetailsTable extends AppTable
         return $depositTax;
     }
 
-    public function getDepositNet($depositGross, $amount, $taxRate)
+    public function getDepositNet($depositGross, $amount, $taxRate): float
     {
         $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount, $taxRate);
         return $depositNet;
     }
 
 
-    public function getLastOrderDetailsForDropdown($customerId)
+    public function getLastOrderDetailsForDropdown($customerId): array
     {
 
         $ordersToLoad = 3;
@@ -359,7 +360,7 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    private function getFutureOrdersConditions($customerId)
+    private function getFutureOrdersConditions($customerId): array
     {
         return [
             'OrderDetails.id_customer' => $customerId,
@@ -367,7 +368,7 @@ class OrderDetailsTable extends AppTable
         ];
     }
 
-    public function getFutureOrdersByCustomerId($customerId)
+    public function getFutureOrdersByCustomerId($customerId): SelectQuery
     {
         $futureOrders = $this->find('all',
         conditions: $this->getFutureOrdersConditions($customerId),
@@ -378,7 +379,7 @@ class OrderDetailsTable extends AppTable
         return $futureOrders;
     }
 
-    public function getGroupedFutureOrdersByCustomerId($customerId)
+    public function getGroupedFutureOrdersByCustomerId($customerId): array
     {
         $query = $this->find('all',
         fields: ['OrderDetails.pickup_day'],
@@ -393,7 +394,7 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
 
-    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId, $orderDetailIds = [])
+    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId, $orderDetailIds = []): void
     {
 
         // update with condition on association does not work with ->update or ->updateAll
@@ -427,7 +428,7 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
+    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId): array
     {
         $cartsAssociation = $this->getAssociation('CartProducts')->getAssociation('Carts');
         $cartsAssociation->setJoinType('INNER');
@@ -461,7 +462,7 @@ class OrderDetailsTable extends AppTable
         return $orderDetails;
     }
 
-    public function deleteOrderDetail($orderDetail)
+    public function deleteOrderDetail($orderDetail): void
     {
         $this->delete($orderDetail);
 
@@ -477,7 +478,7 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    public function getDepositSum($manufacturerId, $groupBy)
+    public function getDepositSum($manufacturerId, $groupBy): array
     {
 
         $params = [
@@ -515,7 +516,7 @@ class OrderDetailsTable extends AppTable
         return $orderDetails;
     }
 
-    public function getOpenOrderDetailSum(int $manufacturerId, $dateFrom)
+    public function getOpenOrderDetailSum(int $manufacturerId, $dateFrom): float|int
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $query = $this->find('all',
@@ -538,7 +539,7 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    private function prepareSumProduct($customerId)
+    private function prepareSumProduct($customerId): SelectQuery
     {
         $query = $this->find('all', conditions: [
             'OrderDetails.id_customer' => $customerId,
@@ -549,7 +550,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getDifferentPickupDayCountByCustomerId($customerId)
+    public function getDifferentPickupDayCountByCustomerId($customerId): int
     {
         $query = $this->find('all', conditions: [
             'OrderDetails.id_customer' => $customerId,
@@ -560,7 +561,7 @@ class OrderDetailsTable extends AppTable
         return $query->toArray()[0]['different_pickup_day_count'];
     }
 
-    public function getCountByCustomerId($customerId)
+    public function getCountByCustomerId($customerId): int
     {
         $query = $this->find('all', conditions: [
             'OrderDetails.id_customer' => $customerId,
@@ -568,7 +569,7 @@ class OrderDetailsTable extends AppTable
         return $query->count();
     }
 
-    public function getMonthlySumProductByCustomer($customerId)
+    public function getMonthlySumProductByCustomer($customerId): array
     {
         $query = $this->prepareSumProduct($customerId);
         $query->groupBy('MonthAndYear');
@@ -580,7 +581,7 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
 
-    public function getMonthlySumProductByManufacturer($manufacturerId, $year)
+    public function getMonthlySumProductByManufacturer($manufacturerId, $year): SelectQuery
     {
         $conditions = [];
         if ($manufacturerId != 'all') {
@@ -610,16 +611,16 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getSumProduct($customerId)
+    public function getSumProduct($customerId): float
     {
         $query = $this->prepareSumProduct($customerId);
         $query->select(
             ['SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl')]
         );
-        return $query->toArray()[0]['SumTotalPaid'];
+        return (float) $query->toArray()[0]['SumTotalPaid'];
     }
 
-    public function getSumDeposit($customerId)
+    public function getSumDeposit($customerId): float
     {
         $query = $this->find('all', conditions: [
             'OrderDetails.id_customer' => $customerId,
@@ -631,10 +632,10 @@ class OrderDetailsTable extends AppTable
         $query->select(
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
         );
-        return $query->toArray()[0]['SumTotalDeposit'];
+        return (float) $query->toArray()[0]['SumTotalDeposit'];
     }
 
-    public function setOrderStateCondition($query, $orderStates)
+    public function setOrderStateCondition($query, $orderStates): SelectQuery
     {
         if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
             return $query;
@@ -648,12 +649,12 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getVariableMemberFeeReducedPrice($price, $variableMemberFee)
+    public function getVariableMemberFeeReducedPrice($price, $variableMemberFee): float
     {
         return $price * (100 - $variableMemberFee) / 100;
     }
 
-    public function prepareOrderDetailsGroupedByProduct($orderDetails)
+    public function prepareOrderDetailsGroupedByProduct($orderDetails): array
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
@@ -675,7 +676,7 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
-    public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
+    public function prepareOrderDetailsGroupedByManufacturer($orderDetails): array
     {
         $preparedOrderDetails = [];
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -736,7 +737,7 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
-    public function onInvoiceCancellation($orderDetails)
+    public function onInvoiceCancellation($orderDetails): void
     {
         foreach($orderDetails as $orderDetail) {
             $orderDetail->order_state = OrderDetail::STATE_OPEN;
@@ -745,7 +746,7 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function updateOrderDetails($data, $invoiceId)
+    public function updateOrderDetails($data, $invoiceId): void
     {
         foreach($data->active_order_details as $orderDetail) {
             // important to get a fresh order detail entity as price fields could be changed for cancellation invoices
@@ -756,7 +757,7 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
+    public function getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit): array
     {
         $conditions = [];
 

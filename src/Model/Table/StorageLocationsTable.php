@@ -19,7 +19,7 @@ namespace App\Model\Table;
 class StorageLocationsTable extends AppTable
 {
 
-    public function getForDropdown()
+    public function getForDropdown(): array
     {
         $storageLocations = $this->find('all', order: [
             'StorageLocations.rank' => 'ASC',
