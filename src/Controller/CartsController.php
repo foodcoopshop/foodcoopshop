@@ -13,6 +13,8 @@ use App\Services\OrderCustomerService;
 use App\Services\CartService;
 use Cake\View\JsonView;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Response;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -41,7 +43,7 @@ class CartsController extends FrontendController
     /**
      * allowing ajaxActions is ok as they are separately checked in ajaxIsAuthorized
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -58,7 +60,7 @@ class CartsController extends FrontendController
     /**
      * ajax methods need to be checked separately due to individual error message handling
      */
-    private function ajaxIsAuthorized()
+    private function ajaxIsAuthorized(): void
     {
         if (!($this->identity !== null)) {
             throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
@@ -70,7 +72,7 @@ class CartsController extends FrontendController
         }
     }
 
-    public function detail()
+    public function detail(): void
     {
         $this->set('title_for_layout', __('Your_cart'));
 
@@ -87,7 +89,7 @@ class CartsController extends FrontendController
         }
     }
 
-    public function generateRightOfWithdrawalInformationPdf()
+    public function generateRightOfWithdrawalInformationPdf(): void
     {
         $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriterService();
         $pdfWriter->setData([
@@ -96,7 +98,7 @@ class CartsController extends FrontendController
         die($pdfWriter->writeInline());
     }
 
-    public function finish()
+    public function finish(): void
     {
 
         if (!$this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
@@ -129,7 +131,7 @@ class CartsController extends FrontendController
         $this->render('detail');
     }
 
-    public function orderSuccessful($cartId)
+    public function orderSuccessful($cartId): void
     {
         $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
@@ -154,7 +156,7 @@ class CartsController extends FrontendController
         $this->destroyOrderCustomer();
     }
 
-    public function ajaxDeleteOrderForDifferentCustomer()
+    public function ajaxDeleteOrderForDifferentCustomer(): ?Response
     {
         try {
             $this->ajaxIsAuthorized();
@@ -173,9 +175,10 @@ class CartsController extends FrontendController
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
     }
 
-    private function doManufacturerCheck($productId)
+    private function doManufacturerCheck($productId): void
     {
         if ($this->identity->isManufacturer()) {
             $message = __('No_access_for_manufacturers.');
@@ -190,7 +193,7 @@ class CartsController extends FrontendController
         }
     }
 
-    public function ajaxRemove()
+    public function ajaxRemove(): ?Response
     {
         try {
             $this->ajaxIsAuthorized();
@@ -219,7 +222,7 @@ class CartsController extends FrontendController
                 'productId' => $initialProductId,
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'productId']);
-            return;
+            return null;
         }
 
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
@@ -237,9 +240,10 @@ class CartsController extends FrontendController
         }
         $this->set($result);
         $this->viewBuilder()->setOption('serialize', array_keys($result));
+        return null;
     }
 
-    public function emptyCart()
+    public function emptyCart(): void
     {
         $this->doEmptyCart();
         $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
@@ -247,7 +251,7 @@ class CartsController extends FrontendController
         $this->redirect($this->referer());
     }
 
-    private function doEmptyCart()
+    private function doEmptyCart(): void
     {
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
         $cartProductsTable = $this->getTableLocator()->get('CartProducts');
@@ -255,14 +259,14 @@ class CartsController extends FrontendController
         $this->identity->setCart($this->identity->getCart());
     }
 
-    public function addOrderToCart()
+    public function addOrderToCart(): void
     {
         $deliveryDate = h($this->getRequest()->getQuery('deliveryDate'));
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
     }
 
-    private function doAddOrderToCart($deliveryDate)
+    private function doAddOrderToCart($deliveryDate): void
     {
 
         $this->doEmptyCart();
@@ -310,7 +314,7 @@ class CartsController extends FrontendController
 
     }
 
-    public function addLastOrderToCart()
+    public function addLastOrderToCart(): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->getLastOrderDetailsForDropdown($this->identity->getId());
@@ -325,7 +329,7 @@ class CartsController extends FrontendController
         $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
     }
 
-    public function ajaxAdd()
+    public function ajaxAdd(): ?Response
     {
         try {
             $this->ajaxIsAuthorized();
@@ -366,5 +370,6 @@ class CartsController extends FrontendController
 
         $this->set($result);
         $this->viewBuilder()->setOption('serialize', array_keys($result));
+        return null;
     }
 }

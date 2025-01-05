@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use Cake\Core\Configure;
 trait CalculateSellingChargeWithSurchargeTrait 
 {
 
-    public function calculateSellingPriceWithSurcharge()
+    public function calculateSellingPriceWithSurcharge(): ?Response
     {
 
         $this->request = $this->request->withParam('_ext', 'json');
@@ -54,6 +55,7 @@ trait CalculateSellingChargeWithSurchargeTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
 
     }
 

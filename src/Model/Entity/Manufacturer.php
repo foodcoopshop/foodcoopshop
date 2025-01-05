@@ -19,7 +19,7 @@ namespace App\Model\Entity;
 
  class Manufacturer extends AppEntity {
 
-    protected function _getDecodedName()
+    protected function _getDecodedName(): string
     {
         return html_entity_decode($this->name);
     }

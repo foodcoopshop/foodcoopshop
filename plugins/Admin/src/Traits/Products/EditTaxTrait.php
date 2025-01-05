@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +24,7 @@ use Cake\Utility\Hash;
 trait EditTaxTrait 
 {
 
-    public function editTax()
+    public function editTax(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -162,6 +163,8 @@ trait EditTaxTrait
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
+
+        return null;
 
     }
 

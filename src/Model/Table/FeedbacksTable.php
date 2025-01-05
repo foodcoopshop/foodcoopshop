@@ -35,7 +35,7 @@ class FeedbacksTable extends AppTable
         ]);
     }
 
-    public function validationEdit(Validator $validator)
+    public function validationEdit(Validator $validator): Validator
     {
         $values = [
             self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY,
@@ -52,14 +52,14 @@ class FeedbacksTable extends AppTable
         return $validator;
     }
 
-    public function getManufacturerPrivacyType($feedback)
+    public function getManufacturerPrivacyType($feedback): int
     {
         $privacyTypes = self::getManufacturerPrivacyTypes($feedback->manufacturer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
         return $privacyType;
     }
 
-    public function getManufacturerPrivacyTypes($manufacturer)
+    public function getManufacturerPrivacyTypes($manufacturer): array
     {
         $values = [
             self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $manufacturer->name . ', ' . $manufacturer->address_manufacturer->city,
@@ -68,14 +68,14 @@ class FeedbacksTable extends AppTable
         return $values;
     }
 
-    public function getCustomerPrivacyType($feedback)
+    public function getCustomerPrivacyType($feedback): int
     {
         $privacyTypes = self::getCustomerPrivacyTypes($feedback->customer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
         return $privacyType;
     }
 
-    public function getCustomerPrivacyTypes($customer)
+    public function getCustomerPrivacyTypes($customer): array
     {
         if ($customer->is_company) {
             $values = [
@@ -91,7 +91,7 @@ class FeedbacksTable extends AppTable
         return $values;
     }
 
-    public function isApproved($feedback)
+    public function isApproved($feedback): bool
     {
         $approvedDate = $feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
         $notApproved = Configure::read('app.timeHelper')->isDatabaseDateNotSet($approvedDate);

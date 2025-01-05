@@ -24,7 +24,7 @@ use Cake\Http\Exception\NotFoundException;
 class SyncDomainsController extends AppController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');

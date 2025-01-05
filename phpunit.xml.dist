@@ -4,7 +4,7 @@
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
   colors="true"
   processIsolation="false"
-  stopOnFailure="false"
+  stopOnFailure="true"
   bootstrap="./tests/bootstrap.php"
   cacheDirectory=".phpunit.cache"
   displayDetailsOnTestsThatTriggerDeprecations="true"

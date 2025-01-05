@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Services\SanitizeService;
-
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +23,7 @@ use App\Services\SanitizeService;
 trait EditStatusTrait 
 {
 
-    public function editStatusBulk()
+    public function editStatusBulk(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -68,10 +68,11 @@ trait EditStatusTrait
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
+        return null;
 
     }
 
-    public function editStatus($productId, $previousProductId, $status)
+    public function editStatus($productId, $previousProductId, $status): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeStatus(

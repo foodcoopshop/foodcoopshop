@@ -7,6 +7,7 @@ use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +31,7 @@ class SyncsController extends AppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');
@@ -57,7 +58,7 @@ class SyncsController extends AppController
         return $syncDomain;
     }
 
-    public function ajaxSaveProductRelation()
+    public function ajaxSaveProductRelation(): ?Response
     {
 
         $this->request = $this->request->withParam('_ext', 'json');
@@ -102,10 +103,11 @@ class SyncsController extends AppController
             'msg' => $message
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'product', 'msg']);
+        return null;
 
     }
 
-    public function products()
+    public function products(): void
     {
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomains = $syncDomainsTable->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
@@ -139,7 +141,7 @@ class SyncsController extends AppController
         $this->set('title_for_layout', __d('network', 'Associate_products'));
     }
 
-    public function ajaxDeleteProductRelation()
+    public function ajaxDeleteProductRelation(): ?Response
     {
 
         $this->request = $this->request->withParam('_ext', 'json');
@@ -178,10 +180,11 @@ class SyncsController extends AppController
             'msg' => $message
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'syncProduct', 'msg']);
+        return null;
 
     }
 
-    public function productData()
+    public function productData(): void
     {
 
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
@@ -223,7 +226,7 @@ class SyncsController extends AppController
         $this->set('title_for_layout', __d('network', 'Synchronize_products'));
     }
 
-    private function getEmptyProductsString($syncDomains)
+    private function getEmptyProductsString($syncDomains): string
     {
         $syncDomainNames = [];
         foreach($syncDomains as $syncDomain) {

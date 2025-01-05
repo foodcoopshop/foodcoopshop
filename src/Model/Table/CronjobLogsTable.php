@@ -21,7 +21,9 @@ use Cake\I18n\DateTime;
 class CronjobLogsTable extends AppTable
 {
 
-    public function deleteOldLogs($timestamp)
+    const DIFF_IN_DAYS_DELETE_LOGS = 60;
+
+    public function deleteOldLogs($timestamp): void
     {
 
         if (is_object($timestamp) && get_class($timestamp)  == DateTime::class) {
@@ -32,9 +34,8 @@ class CronjobLogsTable extends AppTable
             throw new \Exception('invalid timestamp: ' . $timestamp);
         }
 
-        $diffInDays = 60;
         $this->deleteAll([
-            'DATEDIFF(DATE_FORMAT(FROM_UNIXTIME(' . $timestamp . '), \'%Y-%m-%d\'), created) > ' . $diffInDays,
+            'DATEDIFF(DATE_FORMAT(FROM_UNIXTIME(' . $timestamp . '), \'%Y-%m-%d\'), created) > ' . self::DIFF_IN_DAYS_DELETE_LOGS,
         ]);
 
     }

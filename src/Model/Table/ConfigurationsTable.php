@@ -9,6 +9,8 @@ use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
 use App\Model\Traits\NumberRangeValidatorTrait;
+use App\Model\Entity\Configuration;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -49,35 +51,35 @@ class ConfigurationsTable extends AppTable
         return $version;
     }
 
-    public function validationFcsFacebookUrl(Validator $validator)
+    public function validationFcsFacebookUrl(Validator $validator): Validator
     {
         $validator->allowEmptyString('value');
         $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
 
-    public function validationFcsInstagramUrl(Validator $validator)
+    public function validationFcsInstagramUrl(Validator $validator): Validator
     {
         $validator->allowEmptyString('value');
         $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
 
-    public function validationFcsAppEmail(Validator $validator)
+    public function validationFcsAppEmail(Validator $validator): Validator
     {
         $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
         $validator->email('value', true, __('The_email_address_is_not_valid.'));
         return $validator;
     }
 
-    public function validationFcsAccountingEmail(Validator $validator)
+    public function validationFcsAccountingEmail(Validator $validator): Validator
     {
         $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
         $validator->email('value', true, __('The_email_address_is_not_valid.'));
         return $validator;
     }
 
-    public function validationFcsRegistrationNotificationEmails(Validator $validator)
+    public function validationFcsRegistrationNotificationEmails(Validator $validator): Validator
     {
         $validator->allowEmptyString('value');
         $validator->add('value', 'multipleEmails', [
@@ -88,7 +90,7 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsBackupEmailAddressBcc(Validator $validator)
+    public function validationFcsBackupEmailAddressBcc(Validator $validator): Validator
     {
         $validator->allowEmptyString('value');
         $validator->add('value', 'multipleEmails', [
@@ -99,21 +101,21 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsMinimalCreditBalance(Validator $validator)
+    public function validationFcsMinimalCreditBalance(Validator $validator): Validator
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', -1000, 1000);
         return $validator;
     }
 
-    public function validationFcsCheckCreditBalanceLimit(Validator $validator)
+    public function validationFcsCheckCreditBalanceLimit(Validator $validator): Validator
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', -100, 500);
         return $validator;
     }
 
-    public function validationFcsNoDeliveryDaysGlobal(Validator $validator)
+    public function validationFcsNoDeliveryDaysGlobal(Validator $validator): Validator
     {
         $validator->allowEmptyString('value');
         $validator->add('value', 'noDeliveryDaysOrdersExist', [
@@ -123,103 +125,104 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsNewsletterEnabled(Validator $validator)
+    public function validationFcsNewsletterEnabled(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsShowProductsForGuests(Validator $validator)
+    public function validationFcsShowProductsForGuests(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsSaveStorageLocationForProducts(Validator $validator)
+    public function validationFcsSaveStorageLocationForProducts(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsUserFeedbackEnabled(Validator $validator)
+    public function validationFcsUserFeedbackEnabled(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsShowProductPriceForGuests(Validator $validator)
+    public function validationFcsShowProductPriceForGuests(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsDefaultNewMemberActive(Validator $validator)
+    public function validationFcsDefaultNewMemberActive(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsShowFoodcoopshopBacklink(Validator $validator)
+    public function validationFcsShowFoodcoopshopBacklink(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsFeedbackToProductsEnabled(Validator $validator)
+    public function validationFcsFeedbackToProductsEnabled(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsOrderCommentEnabled(Validator $validator)
+    public function validationFcsOrderCommentEnabled(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsAllowOrdersForDeliveryRhythmOneOrTwoWeeksOnlyInWeekBeforeDelivery(Validator $validator)
+    public function validationFcsAllowOrdersForDeliveryRhythmOneOrTwoWeeksOnlyInWeekBeforeDelivery(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsProductAvailabilityLow(Validator $validator)
+    public function validationFcsProductAvailabilityLow(Validator $validator): Validator
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 50);
     }
 
-    public function validationFcsDaysShowProductAsNew(Validator $validator)
+    public function validationFcsDaysShowProductAsNew(Validator $validator): Validator
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 60);
     }
 
-    public function validationFcsCashlessPaymentAddType(Validator $validator)
+    public function validationFcsCashlessPaymentAddType(Validator $validator): Validator
     {
         $values = array_keys(Configure::read('app.configurationHelper')->getCashlessPaymentAddTypeOptions());
         return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
     }
 
-    public function validationFcsAppName(Validator $validator)
+    public function validationFcsAppName(Validator $validator): Validator
     {
         $validator->notEmptyString('value', __('Please_enter_the_name_of_the_foodcoop.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 5, 255);
         return $validator;
     }
 
-    private function getLengthBetweenValidator($validator, $field, $min, $max)
+    private function getLengthBetweenValidator($validator, $field, $min, $max): Validator
     {
         $message = __('The_amount_of_characters_needs_to_be_between_{0}_and_{1}.', [$min, $max]);
         $validator->lengthBetween($field, [$min, $max], $message);
         return $validator;
     }
 
-    public function getConfigurations(array $customConditions = [])
+    public function getConfigurations(array $customConditions = []): SelectQuery
     {
         $conditions = array_merge([
-            'active' => APP_ON
+            $this->aliasField('active') => APP_ON,
         ], $customConditions);
+        
         $configurations = $this->find('all',
-        fields: ['name', 'value', 'type'],
-        conditions: $conditions,
-        order: [
-            'position' => 'ASC'
-        ]);
+            conditions: $conditions,
+            order: [
+                $this->aliasField('position') => 'ASC',
+            ],
+        );
         return $configurations;
     }
 
-    public function loadConfigurations()
+    public function loadConfigurations(): void
     {
         $configurations = $this->getConfigurations();
         foreach ($configurations as $configuration) {

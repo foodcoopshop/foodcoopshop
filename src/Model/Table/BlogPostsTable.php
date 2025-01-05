@@ -7,6 +7,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
 use Cake\Routing\Router;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -49,7 +50,7 @@ class BlogPostsTable extends AppTable
         return $validator;
     }
 
-    public function findBlogPosts($manufacturerId = null, $showOnStartPage = false)
+    public function findBlogPosts($manufacturerId = null, $showOnStartPage = false): SelectQuery|array
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -57,33 +58,33 @@ class BlogPostsTable extends AppTable
         }
 
         $conditions = [
-            'BlogPosts.active' => APP_ON,
+            $this->aliasField('active') => APP_ON,
         ];
 
         $identity = Router::getRequest()->getAttribute('identity');
         
         if ($identity === null) {
-            $conditions['BlogPosts.is_private'] = APP_OFF;
+            $conditions[$this->aliasField('is_private')] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
         if ($manufacturerId) {
-            $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
+            $conditions[$this->aliasField('id_manufacturer')] = $manufacturerId;
         }
 
         $blogPosts = $this->find('all',
-        conditions: $conditions,
-        order: [
-            'BlogPosts.modified' => 'DESC',
-        ],
-        contain: [
-            'Manufacturers',
-        ]);
+            conditions: $conditions,
+            order: [
+                $this->aliasField('modified') => 'DESC',
+            ],
+            contain: [
+                'Manufacturers',
+            ],
+        );
 
-        $blogPosts = $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);
-        return $blogPosts;
+        return $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);
     }
 
-    public function getConditionShowOnStartPage($query, $showOnStartPage)
+    public function getConditionShowOnStartPage($query, $showOnStartPage): SelectQuery
     {
         $query->where(function (QueryExpression $exp, Query $q) use ($showOnStartPage) {
             $key = 'DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")';

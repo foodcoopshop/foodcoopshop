@@ -12,6 +12,7 @@ use App\Services\SanitizeService;
 use Cake\I18n\DateTime;
 use Cake\I18n\Date;
 use App\Model\Entity\Payment;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -165,7 +166,7 @@ class PaymentsController extends AdminAppController
         $this->set('payment', $payment);
     }
 
-    public function add(): mixed
+    public function add(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
         $type = $this->getRequest()->getData('type');

@@ -22,13 +22,15 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait PaginatedProductsTrait 
 {
 
-    public function redirectIfPageIsSetTo1() {
+    public function redirectIfPageIsSetTo1(): void
+    {
         if ($this->getRequest()->getQuery('page') !== null && $this->getRequest()->getQuery('page') == 1) {
             $this->redirect($this->getRequest()->getAttribute('here'));
         }
     }
 
-    public function throw404IfNoProductsOnPaginatedPageFound($products, $page) {
+    public function throw404IfNoProductsOnPaginatedPageFound($products, $page): void
+    {
         if (count($products) == 0 && $page > 1) {
             throw new RecordNotFoundException('page ' . $page . ' does not contain any products');
         }

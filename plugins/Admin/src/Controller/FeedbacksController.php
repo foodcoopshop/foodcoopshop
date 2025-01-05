@@ -74,7 +74,7 @@ class FeedbacksController extends AdminAppController
         $name = $customer->name;
         $customersTable = $this->getTableLocator()->get('Customers');
         $manufacturer = $customersTable->getManufacturerByCustomerId($this->customerId);
-        if (!empty($manufacturer)) {
+        if ($manufacturer !== null) {
             $name = $manufacturer->name;
         }
         $this->set('title_for_layout', __d('admin', 'Feedback_from_{0}', [$name]));
@@ -99,7 +99,7 @@ class FeedbacksController extends AdminAppController
 
         $manufacturer = $customersTable->getManufacturerByCustomerId($this->customerId);
         $isManufacturer = false;
-        if (!empty($manufacturer)) {
+        if ($manufacturer !== null) {
             $isManufacturer = true;
             $privacyTypes = $feedbacksTable->getManufacturerPrivacyTypes($manufacturer);
         } else {

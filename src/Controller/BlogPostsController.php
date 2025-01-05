@@ -25,7 +25,7 @@ use Cake\ORM\TableRegistry;
 class BlogPostsController extends FrontendController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -34,7 +34,7 @@ class BlogPostsController extends FrontendController
         ]);
     }
 
-    public function detail()
+    public function detail(): void
     {
         $blogPostId = (int) $this->getRequest()->getParam('idAndSlug');
 
@@ -90,7 +90,7 @@ class BlogPostsController extends FrontendController
         $this->set('title_for_layout', $blogPost->title);
     }
 
-    public function index()
+    public function index(): void
     {
         $blogPostsTable = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $blogPostsTable->findBlogPosts(null, false);

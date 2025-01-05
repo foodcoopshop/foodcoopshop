@@ -7,6 +7,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use App\Services\CatalogService;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -47,7 +48,8 @@ class CategoriesTable extends AppTable
         return $validator;
     }
 
-    private function getChildrenIds($item) {
+    private function getChildrenIds($item): array
+    {
         $childrenIds = [];
         if (!empty($item->children)) {
             foreach($item->children as $child) {
@@ -61,7 +63,7 @@ class CategoriesTable extends AppTable
 
     }
 
-    private function flattenNestedArrayWithChildren($array, $renderParentIdAndChildrenIdContainers, $separator = '')
+    private function flattenNestedArrayWithChildren($array, $renderParentIdAndChildrenIdContainers, $separator = ''): array
     {
         foreach ($array as $item) {
             $statusString = '';
@@ -91,37 +93,38 @@ class CategoriesTable extends AppTable
         return $this->flattenedArray;
     }
 
-    public function getForMenu()
+    public function getForMenu(): array
     {
         $conditions = [
-            $this->getAlias() . '.active' => APP_ON
+            $this->aliasField('active') => APP_ON,
         ];
         $categories = $this->getThreaded($conditions);
         $categorieForMenu = $this->prepareTreeResultForMenu($categories);
         return $categorieForMenu;
     }
 
-    public function getExcludeCondition()
+    public function getExcludeCondition(): string
     {
-        return $this->getAlias() . '.id_category NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
+        return $this->aliasField('id_category') . ' NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
     }
 
-    public function getThreaded($conditions = [])
+    public function getThreaded($conditions = []): SelectQuery
     {
         $conditions = array_merge($conditions, [
             $this->getExcludeCondition()
         ]);
 
         $categories = $this->find('threaded',
-        parentField: 'id_parent',
-        conditions: $conditions,
-        order: [
-            'Categories.name' => 'ASC'
-        ]);
+            parentField: 'id_parent',
+            conditions: $conditions,
+            order: [
+                $this->aliasField('name') => 'ASC',
+            ],
+        );
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $showProductCount=false)
+    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $showProductCount=false): array
     {
         $conditions = [];
         if ($excludeCategoryId) {
@@ -158,7 +161,7 @@ class CategoriesTable extends AppTable
         return $itemsForMenu;
     }
 
-    private function buildItemForTree($item, $index)
+    private function buildItemForTree($item, $index): array
     {
         $tmpMenuItem = [
             'name' => $item->name,

@@ -6,6 +6,7 @@ namespace Admin\Traits\Products;
 use Cake\Core\Configure;
 use App\Services\DeliveryRhythmService;
 use App\Services\SanitizeService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use App\Services\SanitizeService;
 trait EditDeliveryRhythmTrait 
 {
 
-    public function editDeliveryRhythm()
+    public function editDeliveryRhythm(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -170,6 +171,8 @@ trait EditDeliveryRhythmTrait
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
+
+        return null;
 
     }
 

@@ -20,7 +20,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use App\Services\Invoice\SendInvoiceToCustomerService;
-use Cake\Http\Client\Response;
 use Cake\ORM\TableRegistry;
 
 class HelloCashService

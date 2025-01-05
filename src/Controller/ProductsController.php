@@ -25,7 +25,7 @@ use App\Services\CatalogService;
 class ProductsController extends FrontendController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -33,7 +33,7 @@ class ProductsController extends FrontendController
         ]);
     }
 
-    public function detail()
+    public function detail(): void
     {
         $productId = (int) $this->getRequest()->getParam('idAndSlug');
 

@@ -22,7 +22,7 @@ use Cake\Routing\Router;
 trait RenewAuthSessionTrait 
 {
 
-    protected function renewAuthSession()
+    protected function renewAuthSession(): void
     {
         $customerTable = $this->getTableLocator()->get('Customers');
         $customer = $customerTable->find('all',

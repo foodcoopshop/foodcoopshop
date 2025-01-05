@@ -6,6 +6,7 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Model\Entity\OrderDetail;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use App\Model\Entity\OrderDetail;
 trait EditPickupDayTrait 
 {
     
-    public function editPickupDay()
+    public function editPickupDay(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -140,6 +141,8 @@ trait EditPickupDayTrait
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
+
+        return null;
 
     }
 

@@ -43,10 +43,10 @@ class AttributesTable extends AppTable
         return $validator;
     }
 
-    public function getForDropdown()
+    public function getForDropdown(): array
     {
         $attributes = $this->find('all', order: [
-            'Attributes.name' => 'ASC'
+            $this->aliasField('name') => 'ASC',
         ]);
 
         $attributesForDropdown = [];

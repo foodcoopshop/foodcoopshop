@@ -6,6 +6,7 @@ namespace Admin\Traits\Products;
 use Cake\Core\Configure;
 use App\Services\SanitizeService;
 use App\Services\ChangeSellingPriceService;
+use Cake\Http\Response;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -67,7 +68,7 @@ trait EditPriceTrait
 
     }
 
-    public function editPrice()
+    public function editPrice(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -167,6 +168,7 @@ trait EditPriceTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
 
     }
 

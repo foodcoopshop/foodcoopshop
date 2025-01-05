@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait AddTrait 
 {
 
-    public function add()
+    public function add(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -84,6 +85,7 @@ trait AddTrait
             'status' => 1,
         ]);
         $this->viewBuilder()->setOption('serialize', ['status']);
+        return null;
 
     }
 

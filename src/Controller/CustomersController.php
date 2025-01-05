@@ -16,6 +16,7 @@ use App\Services\OrderCustomerService;
 use App\Controller\Traits\RenewAuthSessionTrait;
 use App\Services\SanitizeService;
 use App\Model\Entity\Customer;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,7 +36,7 @@ class CustomersController extends FrontendController
 
     use RenewAuthSessionTrait;
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 
@@ -52,7 +53,7 @@ class CustomersController extends FrontendController
 
     }
 
-    public function profileImage()
+    public function profileImage(): Response
     {
         if ($this->identity === null || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
             throw new NotFoundException('image not found');
@@ -83,13 +84,13 @@ class CustomersController extends FrontendController
         return $response;
     }
 
-    private function generateTermsOfUsePdf()
+    private function generateTermsOfUsePdf(): string
     {
         $pdfWriter = new TermsOfUsePdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 
-    public function acceptUpdatedTermsOfUse()
+    public function acceptUpdatedTermsOfUse(): void
     {
 
         if (!$this->getRequest()->is('post')) {
@@ -123,7 +124,7 @@ class CustomersController extends FrontendController
         }
     }
 
-    public function activateEmailAddress()
+    public function activateEmailAddress(): void
     {
         $emailActivationCode = h($this->getRequest()->getParam('pass')[0]);
 
@@ -171,7 +172,7 @@ class CustomersController extends FrontendController
 
     }
 
-    public function newPasswordRequest()
+    public function newPasswordRequest(): void
     {
         $this->set([
             'title_for_layout' => __('Request_new_password')
@@ -230,7 +231,7 @@ class CustomersController extends FrontendController
         $this->set('customer', $customer);
     }
 
-    public function activateNewPassword()
+    public function activateNewPassword(): void
     {
         $activateNewPasswordCode = h($this->getRequest()->getParam('pass')[0]);
 
@@ -275,7 +276,7 @@ class CustomersController extends FrontendController
         $this->redirect('/');
     }
 
-    public function login()
+    public function login(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $title = __('Sign_in');
@@ -456,7 +457,7 @@ class CustomersController extends FrontendController
         $this->set('customer', $customer);
     }
 
-    public function registrationSuccessful()
+    public function registrationSuccessful(): void
     {
         $this->set('title_for_layout', __('Account_created_successfully'));
 
@@ -465,7 +466,7 @@ class CustomersController extends FrontendController
         $this->set('blogPosts', $blogPosts);
     }
 
-    public function logout()
+    public function logout(): void
     {
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));

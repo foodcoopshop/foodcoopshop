@@ -21,7 +21,7 @@ use Cake\Event\EventInterface;
 class ErrorController extends AppController
 {
 
-    public function beforeRender(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
         $this->viewBuilder()->setTemplatePath('Error');
         parent::beforeRender($event);

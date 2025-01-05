@@ -9,6 +9,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use hisorange\BrowserDetect\Parser as Browser;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -47,7 +48,7 @@ class AppController extends Controller
         ];
     }
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
 
         $identity = $this->getRequest()->getAttribute('identity');
@@ -71,7 +72,7 @@ class AppController extends Controller
         parent::beforeFilter($event);
     }
 
-    public function afterFilter(EventInterface $event)
+    public function afterFilter(EventInterface $event): void
     {
         parent::afterFilter($event);
 
@@ -86,17 +87,17 @@ class AppController extends Controller
         $this->response = $this->response->withStringBody($newOutput);
     }
 
-    public function getPreparedReferer()
+    public function getPreparedReferer(): string
     {
         return htmlspecialchars_decode($this->getRequest()->getData('referer'));
     }
 
-    public function setCurrentFormAsFormReferer()
+    public function setCurrentFormAsFormReferer(): void
     {
         $this->set('referer', $this->getRequest()->getUri()->getPath());
     }
 
-    public function setFormReferer()
+    public function setFormReferer(): void
     {
         $this->set('referer', !empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }
@@ -108,9 +109,8 @@ class AppController extends Controller
      *  } catch (Exception $e) {
      *      return $this->sendAjaxError($e);
      *  }
-     * @param $error
      */
-    protected function sendAjaxError($error)
+    protected function sendAjaxError($error): Response
     {
         if ($this->getRequest()->is('json')) {
             $this->setResponse($this->getResponse()->withStatus(500));
@@ -121,6 +121,7 @@ class AppController extends Controller
             $this->set(compact('response'));
             $this->render('/Error/errorjson');
         }
+        return $this->response;
     }
 
 }

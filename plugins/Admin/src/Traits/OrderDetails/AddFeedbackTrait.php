@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\OrderDetails;
 
 use App\Mailer\AppMailer;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use App\Mailer\AppMailer;
 trait AddFeedbackTrait 
 {
 
-    public function addFeedback()
+    public function addFeedback(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -100,7 +101,7 @@ trait AddFeedbackTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
-
+        return null;
     }
 
 }

@@ -26,7 +26,7 @@ use App\Services\CatalogService;
 class PagesController extends FrontendController
 {
     
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -38,7 +38,7 @@ class PagesController extends FrontendController
         ]);
     }
 
-    public function home()
+    public function home(): void
     {
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
@@ -61,7 +61,7 @@ class PagesController extends FrontendController
 
     }
 
-    public function detail()
+    public function detail(): void
     {
 
         $pageId = (int) $this->getRequest()->getParam('idAndSlug');
@@ -111,7 +111,7 @@ class PagesController extends FrontendController
         $this->set('title_for_layout', $page->title);
     }
 
-    public function discourseSso()
+    public function discourseSso(): void
     {
         if ($this->identity === null) {
             die('No User');
@@ -147,17 +147,17 @@ class PagesController extends FrontendController
         $this->redirect($return_sso_url . $query);
     }
 
-    public function termsOfUse()
+    public function termsOfUse(): void
     {
         $this->set('title_for_layout', __('Terms_of_use'));
     }
 
-    public function privacyPolicy()
+    public function privacyPolicy(): void
     {
         $this->set('title_for_layout', __('Privacy_policy'));
     }
 
-    public function listOfAllergens()
+    public function listOfAllergens(): void
     {
         $this->set('title_for_layout', __('List_of_allergens'));
     }

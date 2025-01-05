@@ -28,7 +28,7 @@ trait DeleteTrait
 
     use UpdateOrderDetailsTrait;
 
-    public function delete()
+    public function delete(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

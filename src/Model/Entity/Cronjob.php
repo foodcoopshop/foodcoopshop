@@ -28,7 +28,7 @@ class Cronjob extends AppEntity
     const SEND_INVOICES_TO_CUSTOMERS_ID = 7;
     const SEND_DELIVERY_NOTES_ID = 8;
 
-    protected function _getName($name)
+    protected function _getName($name): string
     {
         return match($name) {
             'BackupDatabase' => __('BackupDatabaseCronjob'),
