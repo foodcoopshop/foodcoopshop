@@ -87,7 +87,7 @@ class StringComponentTest extends AppCakeTestCase
         }
     }
 
-    public function testAddHttpToUrl(): void
+    public function testAddProtocolToUrl(): void
     {
         $tests = [
             [
@@ -100,7 +100,7 @@ class StringComponentTest extends AppCakeTestCase
             ],
             [
                 'value' => 'www.orf.at',
-                'expected' => 'http://www.orf.at'
+                'expected' => 'https://www.orf.at'
             ],
             [
                 'value' => 'https://www.orf.at',
@@ -109,7 +109,7 @@ class StringComponentTest extends AppCakeTestCase
         ];
 
         foreach ($tests as $test) {
-            $result = StringComponent::addHttpToUrl($test['value']);
+            $result = StringComponent::addProtocolToUrl($test['value']);
             $this->assertEquals($test['expected'], $result);
         }
     }

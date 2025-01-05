@@ -32,13 +32,13 @@ class StringComponent extends Component
         return $string;
     }
 
-    public static function addHttpToUrl(?string $url): string
+    public static function addProtocolToUrl(?string $url): string
     {
         if ($url === null || $url == '') {
             return '';
         }
         if (!preg_match('/^http(s)?\:\/\//', $url)) {
-            $url = 'http://'.$url;
+            $url = 'https://'.$url;
         }
         return $url;
     }

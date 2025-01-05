@@ -98,7 +98,7 @@ trait AddEditTrait
         $this->setRequest($this->getRequest()->withData('Manufacturers.iban', str_replace(' ', '', $iban)));
         $bic = $this->getRequest()->getData('Manufacturers.bic') ?? '';
         $this->setRequest($this->getRequest()->withData('Manufacturers.bic', str_replace(' ', '', $bic)));
-        $this->setRequest($this->getRequest()->withData('Manufacturers.homepage', StringComponent::addHttpToUrl($this->getRequest()->getData('Manufacturers.homepage'))));
+        $this->setRequest($this->getRequest()->withData('Manufacturers.homepage', StringComponent::addProtocolToUrl($this->getRequest()->getData('Manufacturers.homepage'))));
 
         if ($isEditMode) {
             // keep original data for getCustomerRecord - clone does not work on nested objects

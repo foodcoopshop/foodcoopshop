@@ -69,7 +69,7 @@ class ConfigurationsController extends AdminAppController
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
         if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
-            $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
+            $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addProtocolToUrl($this->getRequest()->getData('Configurations.value'))));
         }
         if (in_array($configuration->type, ['multiple_dropdown'])) {
             if ($this->getRequest()->getData('Configurations.value') != '') {

@@ -98,7 +98,7 @@ class PagesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
-        $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
+        $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addProtocolToUrl($this->getRequest()->getData('Pages.extern_url'))));
         $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->identity->getId()));
 
         if ($this->getRequest()->getData('Pages.id_parent') == '') {
