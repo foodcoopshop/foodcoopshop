@@ -19,7 +19,7 @@ namespace App\Services\Pdf;
 class BarCodeTcpdfService extends AppTcpdfService
 {
 
-    public $barCodeStyle = [
+    public array $barCodeStyle = [
         'position' => '',
         'align' => 'C',
         'stretch' => false,
@@ -35,7 +35,7 @@ class BarCodeTcpdfService extends AppTcpdfService
         'stretchtext' => 4
     ];
 
-    public $html = '';
+    public ?string $html = '';
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {
@@ -43,7 +43,7 @@ class BarCodeTcpdfService extends AppTcpdfService
         $this->SetFontSize(10);
     }
 
-    public function header()
+    public function header(): void
     {
         // use empty header
     }

@@ -28,7 +28,7 @@ class CategoriesController extends FrontendController
 
     use PaginatedProductsTrait;
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -38,7 +38,7 @@ class CategoriesController extends FrontendController
         ]);
     }
 
-    public function newProducts()
+    public function newProducts(): void
     {
         $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
@@ -66,7 +66,7 @@ class CategoriesController extends FrontendController
         $this->render('detail');
     }
 
-    public function search()
+    public function search(): void
     {
         $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
@@ -101,7 +101,7 @@ class CategoriesController extends FrontendController
         $this->render('detail');
     }
 
-    public function detail()
+    public function detail(): void
     {
         $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);

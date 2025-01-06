@@ -25,14 +25,14 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public string $newPrice = '3,53';
     public string $editPriceReason = 'Product was smaller than expected.';
 
-    public function testEditOrderDetailPriceNotValid()
+    public function testEditOrderDetailPriceNotValid(): void
     {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailPrice($this->orderDetailIdA, 'not-valid-price', $this->editPriceReason, true);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
     }
 
-    public function testEditOrderDetaiWithNegativePrice()
+    public function testEditOrderDetaiWithNegativePrice(): void
     {
         $this->loginAsVegetableManufacturer();
         $this->newPrice = '-10,50';
@@ -41,7 +41,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
     }
 
-    public function testEditOrderDetailPriceAsManufacturer()
+    public function testEditOrderDetailPriceAsManufacturer(): void
     {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);
@@ -53,7 +53,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
     }
 
-    public function testEditOrderDetailPriceAsSuperadminWithDisabledNotification()
+    public function testEditOrderDetailPriceAsSuperadminWithDisabledNotification(): void
     {
         $this->loginAsSuperadmin();
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -69,7 +69,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
     }
 
-    public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification()
+    public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification(): void
     {
 
         $this->changeManufacturer(5, 'anonymize_customers', 1);
@@ -89,7 +89,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertMailContainsHtmlAt(1, 'Menge: <b>1</b>');
     }
 
-    public function testEditOrderDetailPriceAsSuperadminWithUseWeightAsAmount()
+    public function testEditOrderDetailPriceAsSuperadminWithUseWeightAsAmount(): void
     {
         $this->loginAsSuperadmin();
 
@@ -122,7 +122,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
     }
 
-    public function testEditOrderDetailPriceIfPriceWasZero()
+    public function testEditOrderDetailPriceIfPriceWasZero(): void
     {
         $this->loginAsSuperadmin();
         $this->changeProductPrice($this->productIdA, 0);
@@ -138,7 +138,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(1, $expectedToEmails);
     }
 
-    public function testEditOrderDetailPriceNoEditPriceReason()
+    public function testEditOrderDetailPriceNoEditPriceReason(): void
     {
         $this->loginAsSuperadmin();
         $this->changeProductPrice($this->productIdA, 0);
@@ -155,7 +155,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Warum wurde der Preis angepasst?', $email->getBodyHtml());
     }
 
-    public function testEditOrderDetailPriceNoEmailToCustomer()
+    public function testEditOrderDetailPriceNoEmailToCustomer(): void
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart();
@@ -169,7 +169,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(1, []);
     }
 
-    private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails)
+    private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails): void
     {
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Preis angepasst: Artischocke : Stück');
@@ -183,7 +183,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         }
     }
 
-    private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason, $sendEmailToCustomer)
+    private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason, $sendEmailToCustomer): void
     {
         $this->post(
             '/admin/order-details/editProductPrice/',

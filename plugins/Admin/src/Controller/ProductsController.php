@@ -77,7 +77,7 @@ class ProductsController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
     
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         
         // needs to be set in beforeFilter and this method can't be overwritten in trait

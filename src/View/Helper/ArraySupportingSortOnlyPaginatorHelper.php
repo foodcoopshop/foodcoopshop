@@ -335,7 +335,7 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
         return $result;
     }
 
-    private function applyFixForChangingDirection($currentUrl, $url, $key)
+    private function applyFixForChangingDirection($currentUrl, $url, $key): string
     {
         if (!preg_match('/' . $key . '/', $currentUrl)) {
             return $url;

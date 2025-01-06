@@ -23,7 +23,7 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
 
     public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;Gruppe;E-Mail;Status;Guthaben;Bestell-Erinnerung;Guthaben-Aufladung-Erinnerung;Reg.-Datum;"Letzter Abholtag";Kommentar';
 
-    public function testWriteDefault()
+    public function testWriteDefault(): void
     {
 
         $writerService = new CustomerCsvWriterService();
@@ -39,7 +39,7 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
 
     }
 
-    public function testWriteConfigsEnabled()
+    public function testWriteConfigsEnabled(): void
     {
 
         $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', true);

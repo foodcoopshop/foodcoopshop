@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait IndexTrait
 {
 
-    public function index()
+    public function index(): void
     {
         $productId = h($this->getRequest()->getQuery('productId', ''));
         $this->set('productId', $productId);

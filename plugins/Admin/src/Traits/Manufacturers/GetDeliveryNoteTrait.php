@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Manufacturers;
 
 use App\Services\DeliveryNoteService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use App\Services\DeliveryNoteService;
 trait GetDeliveryNoteTrait
 {
 
-    public function getDeliveryNote()
+    public function getDeliveryNote(): Response
     {
 
         $this->disableAutoRender();

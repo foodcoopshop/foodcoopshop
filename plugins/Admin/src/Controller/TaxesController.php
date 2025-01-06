@@ -23,7 +23,7 @@ use App\Services\SanitizeService;
 class TaxesController extends AdminAppController
 {
     
-    public function add()
+    public function add(): void
     {
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $tax = $taxesTable->newEntity(
@@ -41,7 +41,7 @@ class TaxesController extends AdminAppController
         }
     }
 
-    public function edit($taxId)
+    public function edit($taxId): void
     {
         if ($taxId === null) {
             throw new NotFoundException;
@@ -59,7 +59,7 @@ class TaxesController extends AdminAppController
         $this->_processForm($tax, true);
     }
 
-    private function _processForm($tax, $isEditMode)
+    private function _processForm($tax, $isEditMode): void
     {
 
         $this->setFormReferer();
@@ -103,7 +103,7 @@ class TaxesController extends AdminAppController
         $this->set('tax', $tax);
     }
 
-    public function index()
+    public function index(): void
     {
         $conditions = [
             'Taxes.active > ' . APP_DEL

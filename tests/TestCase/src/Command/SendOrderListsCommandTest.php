@@ -28,13 +28,9 @@ use App\Model\Entity\OrderDetail;
 class SendOrderListsCommandTest extends AppCakeTestCase
 {
 
-    protected $SendOrderLists;
-
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-
-    public $Order;
 
     public function setUp(): void
     {
@@ -42,7 +38,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->prepareSendingOrderLists();
     }
 
-    public function testSendOrderListsIfNoOrdersAvailable()
+    public function testSendOrderListsIfNoOrdersAvailable(): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailsTable->deleteAll([]);
@@ -51,7 +47,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
-    public function testSendOrderListsIfOneOrderAvailable()
+    public function testSendOrderListsIfOneOrderAvailable(): void
     {
 
         $this->changeManufacturer(5, 'anonymize_customers', 1);
@@ -105,7 +101,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendOrderListsIfMoreOrdersAvailable()
+    public function testSendOrderListsIfMoreOrdersAvailable(): void
     {
         $cronjobRunDay = '2018-01-31';
         $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay(strtotime($cronjobRunDay));
@@ -134,7 +130,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7]);
     }
 
-    public function testSendOrderListsWithSendOrderListFalse()
+    public function testSendOrderListsWithSendOrderListFalse(): void
     {
         $cronjobRunDay = '2018-01-31';
         $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay(strtotime($cronjobRunDay));
@@ -167,7 +163,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendOrderListsWithIndividualSendOrderListWeekday()
+    public function testSendOrderListsWithIndividualSendOrderListWeekday(): void
     {
         $cronjobRunDay = '2018-01-30';
         $productId = 346;
@@ -212,7 +208,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay()
+    public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay(): void
     {
 
         $this->changeManufacturer(5, 'anonymize_customers', 1);
@@ -297,7 +293,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendOrderListsWithEmptyIndividualSendOrderListDay()
+    public function testSendOrderListsWithEmptyIndividualSendOrderListDay(): void
     {
         $this->loginAsSuperadmin();
         $productId = 346;
@@ -314,7 +310,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
-    public function testSendOrderListAndResetQuantity()
+    public function testSendOrderListAndResetQuantity(): void
     {
         $productId1 = 346;
         $productId2 = '60-10';
@@ -356,7 +352,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->quantity);
     }
 
-    public function testSendOrderListWithoutStockProducts()
+    public function testSendOrderListWithoutStockProducts(): void
     {
 
         $stockProductId = 346;
@@ -375,7 +371,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testContentOfOrderListWithoutPricePerUnitAnonymized()
+    public function testContentOfOrderListWithoutPricePerUnitAnonymized(): void
     {
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
@@ -387,7 +383,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertResponseNotContains('Demo Superadmin');
     }
 
-    public function testContentOfOrderListWithoutPricePerUnit()
+    public function testContentOfOrderListWithoutPricePerUnit(): void
     {
         $this->loginAsSuperadmin();
 
@@ -402,7 +398,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
-    public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled()
+    public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -419,7 +415,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendOrderListWithCustomerCanSelectPickupDay()
+    public function testSendOrderListWithCustomerCanSelectPickupDay(): void
     {
 
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
@@ -452,7 +448,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testContentOfOrderListWithPricePerUnit()
+    public function testContentOfOrderListWithPricePerUnit(): void
     {
 
         $productIdA = '351';
@@ -505,7 +501,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    private function assertOrderDetailState($orderDetailId, $expectedOrderState)
+    private function assertOrderDetailState($orderDetailId, $expectedOrderState): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $newOrderDetail = $orderDetailsTable->find('all',
@@ -516,7 +512,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertEquals($expectedOrderState, $newOrderDetail->order_state);
     }
 
-    private function assertGenerationOfOrderLists(string $datePath, array $clearText, array $anonymous)
+    private function assertGenerationOfOrderLists(string $datePath, array $clearText, array $anonymous): void
     {
         $path = realpath(Configure::read('app.folder_order_lists') . DS . $datePath);
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);

@@ -29,7 +29,7 @@ class InvoicesTableTest extends AppCakeTestCase
     use PrepareAndTestInvoiceDataTrait;
     use GenerateOrderWithDecimalsInTaxRateTrait;
 
-    public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExistWithPrefix()
+    public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExistWithPrefix(): void
     {
         $invoicePrefix = 'ABC-';
         $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
@@ -38,14 +38,14 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, $invoicePrefix . '2020-000001');
     }
 
-    public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExist()
+    public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExist(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
         $this->assertEquals($result, '2020-000001');
     }
 
-    public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExistsWithPrefix()
+    public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExistsWithPrefix(): void
     {
         $invoicePrefix = 'ABC-';
         $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
@@ -56,7 +56,7 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, $invoicePrefix . '2021-000001');
     }
 
-    public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExists()
+    public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExists(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoice = $invoicesTable->newEmptyEntity();
@@ -65,7 +65,7 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, '2021-000001');
     }
 
-    public function testGetNextInvoiceNumberForCustomerSameYearAndInvoiceAlreadyExists()
+    public function testGetNextInvoiceNumberForCustomerSameYearAndInvoiceAlreadyExists(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoice = $invoicesTable->newEmptyEntity();
@@ -74,14 +74,14 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, '2020-000002');
     }
 
-    public function testGetNextInvoiceNumberForManufacturerInvoicesDoNotExist()
+    public function testGetNextInvoiceNumberForManufacturerInvoicesDoNotExist(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $result = $invoicesTable->getNextInvoiceNumberForManufacturer([]);
         $this->assertEquals($result, '0001');
     }
 
-    public function testGetNextInvoiceNumberForManufacturerInvoicesAlreadyExist()
+    public function testGetNextInvoiceNumberForManufacturerInvoicesAlreadyExist(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoice = $invoicesTable->newEmptyEntity();
@@ -90,7 +90,7 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, '0002');
     }
 
-    public function testGetPreparedTaxRatesForSumTableWithDecimalsInTaxRate()
+    public function testGetPreparedTaxRatesForSumTableWithDecimalsInTaxRate(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -189,7 +189,7 @@ class InvoicesTableTest extends AppCakeTestCase
 
     }
 
-    public function testGetPreparedTaxRatesForSumTableWithTaxBasedOnNetInvoiceSum()
+    public function testGetPreparedTaxRatesForSumTableWithTaxBasedOnNetInvoiceSum(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);

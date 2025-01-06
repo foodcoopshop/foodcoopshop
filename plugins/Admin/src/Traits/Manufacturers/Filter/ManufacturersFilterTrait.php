@@ -6,7 +6,9 @@ namespace Admin\Traits\Manufacturers\Filter;
 use Cake\Core\Configure;
 use App\Services\DeliveryRhythmService;
 use App\Services\CatalogService;
+use Cake\Datasource\Paging\PaginatedInterface;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +27,8 @@ use Cake\ORM\TableRegistry;
 trait ManufacturersFilterTrait 
 {
 
-    private function getDefaultDate() {
+    private function getDefaultDate(): string
+    {
         $defaultDate = '';
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $defaultDate = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
@@ -35,11 +38,12 @@ trait ManufacturersFilterTrait
         return $defaultDate;
     }
 
-    private function getDefaultActive() {
+    private function getDefaultActive(): int
+    {
         return APP_ON;
     }
 
-    public function getManufacturers($active, $dateFrom)
+    public function getManufacturers($active, $dateFrom): SelectQuery|PaginatedInterface
     {
 
         $conditions = [];
@@ -76,8 +80,8 @@ trait ManufacturersFilterTrait
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
 
+        $catalogService = new CatalogService();
         foreach ($manufacturers as $manufacturer) {
-            $catalogService = new CatalogService();
             $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);

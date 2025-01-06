@@ -59,7 +59,7 @@ class PurchasePriceProductsTable extends AppTable
         return $result;
     }
 
-    public function calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate)
+    public function calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate): float
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
@@ -67,13 +67,13 @@ class PurchasePriceProductsTable extends AppTable
         return $sellingPriceGross;
     }
 
-    public function calculateSurchargeBySellingPriceNet($sellingPriceNet, $purchasePriceNet)
+    public function calculateSurchargeBySellingPriceNet($sellingPriceNet, $purchasePriceNet): float
     {
         $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
         return $surcharge;
     }
 
-    public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate)
+    public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate): float
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -212,7 +212,7 @@ class PurchasePriceProductsTable extends AppTable
 
     }
 
-    public function savePurchasePriceTax($taxId, $productId, $oldProduct): Array
+    public function savePurchasePriceTax($taxId, $productId, $oldProduct): array
     {
         $changedTaxInfoForMessage = [];
         $oldPurchasePriceTaxRate = 0;

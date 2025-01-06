@@ -52,7 +52,7 @@ class ProductAttributesTable extends AppTable
         ]);
     }
 
-    public function deleteProductAttribute($productId, $productAttributeId)
+    public function deleteProductAttribute($productId, $productAttributeId): void
     {
 
         $productAttributeCombinationsTable = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
@@ -99,7 +99,7 @@ class ProductAttributesTable extends AppTable
     }
 
 
-    public function add($productId, $attributeId)
+    public function add($productId, $attributeId): void
     {
         $defaultQuantity = 0;
 

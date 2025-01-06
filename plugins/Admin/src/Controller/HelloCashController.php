@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Services\HelloCash\HelloCashService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +30,7 @@ class HelloCashController extends AdminAppController
         $this->helloCashService = new HelloCashService();
     }
 
-    public function getReceipt($invoiceId, $cancellation)
+    public function getReceipt($invoiceId, $cancellation): void
     {
         $this->viewBuilder()->setLayout('ajax');
         $helloCashInvoice = $this->helloCashService->getReceipt($invoiceId, $cancellation);
@@ -49,7 +50,7 @@ class HelloCashController extends AdminAppController
         $this->set('invoice', $invoice);
     }
 
-    public function getInvoice($invoiceId, $cancellation)
+    public function getInvoice($invoiceId, $cancellation): Response
     {
         $this->disableAutoRender();
         $pdfAsString = $this->helloCashService->getInvoice($invoiceId, $cancellation);

@@ -22,12 +22,12 @@ class Configuration extends AppEntity
     const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
     const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
 
-    protected function _getText()
+    protected function _getText(): string
     {
         return __('Configuration_text_' . $this->name);
     }
 
-    protected function _getSubtext()
+    protected function _getSubtext(): string
     {
 
         $subtextKey = 'Configuration_subtext_' . $this->name;
@@ -40,7 +40,7 @@ class Configuration extends AppEntity
 
     }
 
-    protected function _getFulltext()
+    protected function _getFulltext(): string
     {
         $subtextIncludingWrapper = '';
         if ($this->subtext != '') {

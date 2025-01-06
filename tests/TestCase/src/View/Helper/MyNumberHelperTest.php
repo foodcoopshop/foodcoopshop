@@ -29,7 +29,7 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->MyNumberHelper = new MyNumberHelper(new View());
     }
 
-    public function testFormatAsDecimalThreeDigitsMin2Digits()
+    public function testFormatAsDecimalThreeDigitsMin2Digits(): void
     {
         $result = $this->MyNumberHelper->formatAsDecimal(100.003, 3, true, 2);
         $this->assertEquals($result, '100,003');
@@ -39,55 +39,55 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->assertEquals($result, '100,10');
     }
 
-    public function testFormatAsDecimalThreeDigits()
+    public function testFormatAsDecimalThreeDigits(): void
     {
         $result = $this->MyNumberHelper->formatAsDecimal(100, 3);
         $this->assertEquals($result, '100,000');
     }
 
-    public function testFormatAsDecimalTwoDigitsDefault()
+    public function testFormatAsDecimalTwoDigitsDefault(): void
     {
         $result = $this->MyNumberHelper->formatAsDecimal(88.1);
         $this->assertEquals($result, '88,10');
     }
 
-    public function testFormatAsDecimalRemoveTrailingZeros()
+    public function testFormatAsDecimalRemoveTrailingZeros(): void
     {
         $result = $this->MyNumberHelper->formatAsDecimal(93.800, 2, true);
         $this->assertEquals($result, '93,8');
     }
 
-    public function testFormatAsDecimalThousandSeparatorAndThreeDecimals()
+    public function testFormatAsDecimalThousandSeparatorAndThreeDecimals(): void
     {
         $result = $this->MyNumberHelper->formatAsDecimal(4381.422, 2, true);
         $this->assertEquals($result, '4.381,422');
     }
 
-    public function testFormatAsDecimalRoundToTwoDecimals()
+    public function testFormatAsDecimalRoundToTwoDecimals(): void
     {
         $result = $this->MyNumberHelper->formatAsDecimal(1.228);
         $this->assertEquals($result, '1,23');
     }
 
-    public function testParseFloatRespectingLocaleInvalidString()
+    public function testParseFloatRespectingLocaleInvalidString(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('invalid-price');
         $this->assertFalse($result);
     }
 
-    public function testParseFloatRespectingLocaleValidGermanPrice()
+    public function testParseFloatRespectingLocaleValidGermanPrice(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3,44');
         $this->assertEquals($result, 3.44);
     }
 
-    public function testParseFloatRespectingLocaleValidEnglishPriceWithWrongLocale()
+    public function testParseFloatRespectingLocaleValidEnglishPriceWithWrongLocale(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3.45');
         $this->assertEquals($result, 3.45);
     }
 
-    public function testParseFloatRespectingLocaleValidEnglishPriceWithEnglishLocale()
+    public function testParseFloatRespectingLocaleValidEnglishPriceWithEnglishLocale(): void
     {
         $originalLocale = I18n::getLocale();
         I18n::setLocale('en_US');
@@ -96,25 +96,25 @@ class MyNumberHelperTest extends AppCakeTestCase
         I18n::setLocale($originalLocale);
     }
 
-    public function testParseFloatRespectingLocaleNegativeFloat()
+    public function testParseFloatRespectingLocaleNegativeFloat(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('-3,45');
         $this->assertEquals($result, -3.45);
     }
 
-    public function testParseFloatRespectingLocaleInteger()
+    public function testParseFloatRespectingLocaleInteger(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3');
         $this->assertEquals($result, 3);
     }
 
-    public function testParseFloatRespectingLocaleDecimalBetween0And1()
+    public function testParseFloatRespectingLocaleDecimalBetween0And1(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('0,5');
         $this->assertEquals($result, 0.5);
     }
 
-    public function testParseFloatRespectingLocaleZero()
+    public function testParseFloatRespectingLocaleZero(): void
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('0,00');
         $this->assertEquals($result, 0);

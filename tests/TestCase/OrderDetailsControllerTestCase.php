@@ -41,7 +41,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     protected Cart $mockCart;
 
-    protected function simulateSendOrderListsCronjob($orderDetailId)
+    protected function simulateSendOrderListsCronjob($orderDetailId): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailsTable->save(
@@ -54,7 +54,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         );
     }
 
-    protected function getChangedMockCartFromDatabase()
+    protected function getChangedMockCartFromDatabase(): Cart
     {
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
@@ -68,7 +68,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         return $cart;
     }
 
-    protected function assertChangedStockAvailable($productIds, $expectedAmount)
+    protected function assertChangedStockAvailable($productIds, $expectedAmount): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable = $this->getTableLocator()->get('Products');
@@ -82,7 +82,8 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');
     }
 
-    protected function getOrderDetailsFromDatabase($orderDetailIds) {
+    protected function getOrderDetailsFromDatabase($orderDetailIds): array
+    {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find('all',
             conditions: [

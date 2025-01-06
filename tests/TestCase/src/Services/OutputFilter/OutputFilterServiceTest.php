@@ -23,14 +23,14 @@ class OutputFilterServiceTest extends AppCakeTestCase
 {
 
     #[DataProvider('protectEmailAdressesDataProvider')]
-    public function testProtectEmailAdresses(string $input, int $count)
+    public function testProtectEmailAdresses(string $input, int $count): void
     {
         $result = OutputFilterService::protectEmailAdresses($input);
         preg_match_all('/javascript protected email address/', $result, $matches);
         $this->assertEquals(count($matches[0]), $count);
     }
 
-    public static function protectEmailAdressesDataProvider()
+    public static function protectEmailAdressesDataProvider(): array
     {
         return [
             'two-equal-emails-separated-with-space' => [

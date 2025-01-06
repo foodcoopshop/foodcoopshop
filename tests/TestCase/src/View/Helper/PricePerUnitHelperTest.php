@@ -19,31 +19,31 @@ use App\Test\TestCase\AppCakeTestCase;
 class PricePerUnitHelperTest extends AppCakeTestCase
 {
 
-    public function testGetQuantityInUnitsStringForAttributesA()
+    public function testGetQuantityInUnitsStringForAttributesA(): void
     {
         $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('500 g', true, true, 500, 'g', 2);
         $this->assertEquals($result, 'je ca. 500 g');
     }
 
-    public function testGetQuantityInUnitsStringForAttributesB()
+    public function testGetQuantityInUnitsStringForAttributesB(): void
     {
         $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', false, true, 1, 'kg', 2);
         $this->assertEquals($result, 'Stück, je ca. 1 kg');
     }
 
-    public function testGetQuantityInUnitsStringForAttributesC()
+    public function testGetQuantityInUnitsStringForAttributesC(): void
     {
         $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', true, true, 250, 'g');
         $this->assertEquals($result, 'ca. 250 g');
     }
 
-    public function testGetQuantityInUnitsStringForAttributesD()
+    public function testGetQuantityInUnitsStringForAttributesD(): void
     {
         $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', false, false, 250, 'g');
         $this->assertEquals($result, 'Stück');
     }
 
-    public function testGetQuantityInUnitsStringForAttributesE()
+    public function testGetQuantityInUnitsStringForAttributesE(): void
     {
         $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', false, true, 0.5, 'kg');
         $this->assertEquals($result, 'Stück, ca. 0,5 kg');

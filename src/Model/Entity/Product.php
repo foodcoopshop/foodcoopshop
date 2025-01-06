@@ -29,9 +29,9 @@ use Cake\Core\Configure;
 
     protected array $_virtual = ['is_new'];
 
-    public $nameSetterMethodEnabled = true;
+    public bool $nameSetterMethodEnabled = true;
 
-    protected function _setName($value)
+    protected function _setName($value): string
     {
         if ($this->nameSetterMethodEnabled) {
             return StringComponent::removeSpecialChars(strip_tags(trim($value)));
@@ -39,22 +39,22 @@ use Cake\Core\Configure;
         return $value;
     }
 
-    public function _setDescription($value)
+    public function _setDescription($value): string
     {
         return StringComponent::prepareWysiwygEditorHtml($value, self::ALLOWED_TAGS_DESCRIPTION);
     }
 
-    public function _setDescriptionShort($value)
+    public function _setDescriptionShort($value): string
     {
         return StringComponent::prepareWysiwygEditorHtml($value, self::ALLOWED_TAGS_DESCRIPTION_SHORT);
     }
 
-    public function _setUnity($value)
+    public function _setUnity($value): string
     {
         return StringComponent::removeSpecialChars(strip_tags(trim($value)));
     }
 
-    public function _getIsNew()
+    public function _getIsNew(): bool
     {
         if ($this->new === null) {
             return false;

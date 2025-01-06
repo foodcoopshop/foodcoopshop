@@ -24,7 +24,7 @@ class NetworkHelper extends Helper
 
     public array $helpers = ['MyHtml'];
 
-    public function getTabs()
+    public function getTabs(): array
     {
         return [
             [
@@ -38,37 +38,37 @@ class NetworkHelper extends Helper
         ];
     }
 
-    public function getSyncProducts()
+    public function getSyncProducts(): string
     {
         return '/network/syncs/products';
     }
 
-    public function getSyncProductData()
+    public function getSyncProductData(): string
     {
         return '/network/syncs/productData';
     }
 
-    public function getSaveProductRelation()
+    public function getSaveProductRelation(): string
     {
         return '/network/syncs/ajaxSaveProductRelation';
     }
 
-    public function getDeleteProductRelation()
+    public function getDeleteProductRelation(): string
     {
         return '/network/syncs/ajaxDeleteProductRelation';
     }
 
-    public function getSyncDomainAdd()
+    public function getSyncDomainAdd(): string
     {
         return '/network/sync-domains/add';
     }
 
-    public function getSyncDomainEdit($syncDomainId)
+    public function getSyncDomainEdit($syncDomainId): string
     {
         return '/network/sync-domains/edit/' . $syncDomainId;
     }
 
-    public function getNetworkPluginDocs()
+    public function getNetworkPluginDocs(): string
     {
         return $this->MyHtml->getDocsUrl(__d('network', 'docs_route_network_module'));
     }

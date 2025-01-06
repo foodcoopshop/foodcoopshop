@@ -22,7 +22,7 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
 trait ChangePasswordTrait
 {
 
-    public function changePassword()
+    public function changePassword(): null
     {
         $this->set('title_for_layout', __d('admin', 'Change_password'));
 
@@ -33,7 +33,7 @@ trait ChangePasswordTrait
 
         if (empty($this->getRequest()->getData())) {
             $this->set('customer', $customer);
-            return;
+            return null;
         }
 
         $customer = $customersTable->patchEntity(
@@ -77,6 +77,7 @@ trait ChangePasswordTrait
         }
 
         $this->set('customer', $customer);
+        return null;
     }
 
 }

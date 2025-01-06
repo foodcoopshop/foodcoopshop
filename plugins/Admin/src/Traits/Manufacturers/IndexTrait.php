@@ -27,7 +27,7 @@ trait IndexTrait
 
     use ManufacturersFilterTrait;
 
-    public function index()
+    public function index(): void
     {
 
         $active = h($this->getRequest()->getQuery('active', $this->getDefaultActive()));

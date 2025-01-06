@@ -35,14 +35,14 @@ class ApiController extends Controller
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         $identity = Router::getRequest()->getAttribute('identity');
         $this->identity = $identity;
         $this->set('identity', $identity);
     }
 
-    private function getProductDetailLinks($productsData)
+    private function getProductDetailLinks($productsData): string
     {
         $productDetailLinks = [];
         $productsTable = $this->getTableLocator()->get('Products');
@@ -71,7 +71,7 @@ class ApiController extends Controller
         return join(', ', $productDetailLinks);
     }
 
-    public function updateProducts()
+    public function updateProducts(): void
     {
 
         $productsData = $this->getRequest()->getData('data.data');
@@ -357,13 +357,13 @@ class ApiController extends Controller
 
     }
 
-    private function getInstallationName()
+    private function getInstallationName(): string
     {
 
         return Configure::check('appDb.FCS_APP_NAME') ? Configure::read('appDb.FCS_APP_NAME') : Configure::read('App.fullBaseUrl');
     }
 
-    public function getProducts()
+    public function getProducts(): void
     {
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -391,7 +391,7 @@ class ApiController extends Controller
         $this->viewBuilder()->setOption('serialize', ['app', 'identity', 'products']);
     }
 
-    public function getOrders()
+    public function getOrders(): void
     {
 
         $sanitizeService = new SanitizeService();

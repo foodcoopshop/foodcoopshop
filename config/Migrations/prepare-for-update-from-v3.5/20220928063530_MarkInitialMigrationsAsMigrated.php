@@ -5,7 +5,7 @@ use Migrations\AbstractMigration;
 
 class MarkInitialMigrationsAsMigrated extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
 
         $this->execute("TRUNCATE phinxlog");

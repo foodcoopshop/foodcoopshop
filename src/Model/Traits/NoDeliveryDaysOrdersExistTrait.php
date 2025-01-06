@@ -21,7 +21,8 @@ use Cake\ORM\TableRegistry;
 trait NoDeliveryDaysOrdersExistTrait
 {
 
-    public function noDeliveryDaysOrdersExist($value, $context) {
+    public function noDeliveryDaysOrdersExist($value, $context): bool|string
+    {
 
         $manufacturerId = null;
         if (!empty($context['data']) && !empty($context['data']['id_manufacturer'])) {

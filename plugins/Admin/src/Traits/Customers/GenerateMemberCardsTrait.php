@@ -26,7 +26,7 @@ use App\Services\PdfWriter\MemberCardsPdfWriterService;
 trait GenerateMemberCardsTrait
 {
 
-    public function generateMyMemberCard()
+    public function generateMyMemberCard(): void
     {
         $customerId = $this->identity->getId();
         $pdfWriter = new MyMemberCardPdfWriterService();
@@ -38,7 +38,7 @@ trait GenerateMemberCardsTrait
         die($pdfWriter->writeInline());
     }
 
-    public function generateMemberCards()
+    public function generateMemberCards(): void
     {
         $customerIds = h($this->getRequest()->getQuery('customerIds'));
         $customerIds = explode(',', $customerIds);

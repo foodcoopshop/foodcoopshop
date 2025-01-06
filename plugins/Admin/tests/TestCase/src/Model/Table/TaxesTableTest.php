@@ -20,7 +20,7 @@ use App\Test\TestCase\AppCakeTestCase;
 class TaxesTableTest extends AppCakeTestCase
 {
 
-    public function testGetNetPriceAndTaxId()
+    public function testGetNetPriceAndTaxId(): void
     {
         $testCases = [
             [

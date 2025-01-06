@@ -20,7 +20,7 @@ namespace Admin\Traits\Customers;
 trait EditCommentTrait
 {
 
-    public function editComment()
+    public function editComment(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

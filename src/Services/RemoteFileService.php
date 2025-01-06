@@ -37,7 +37,7 @@ class RemoteFileService
 
     }
 
-    private static function verifyAllowedHosts($allowedHosts, $remoteFile)
+    private static function verifyAllowedHosts($allowedHosts, $remoteFile): void
     {
         if (empty($allowedHosts)) {
             throw new \Exception('allowedHosts must be set');

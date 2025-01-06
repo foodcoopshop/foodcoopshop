@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
-use App\Model\Entity\OrderDetail;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
 use Cake\I18n\DateTime;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Invoice;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -52,7 +53,7 @@ class InvoicesTable extends AppTable
         ]);
     }
 
-    public function getLatestInvoicesForCustomer($customerId)
+    public function getLatestInvoicesForCustomer($customerId): array
     {
 
         $invoices = $this->find('all',
@@ -90,17 +91,17 @@ class InvoicesTable extends AppTable
         return $invoices;
     }
 
-    public function clearZeroArray($array)
+    public function clearZeroArray($data): array
     {
-        foreach($array as $key => $value) {
+        foreach($data as $key => $value) {
             if (array_sum($value) == 0) {
-                unset($array[$key]);
+                unset($data[$key]);
             }
         }
-        return $array;
+        return $data;
     }
 
-    public function getPreparedTaxRatesForSumTable($invoices)
+    public function getPreparedTaxRatesForSumTable($invoices): array
     {
 
         $defaultArray = [
@@ -167,7 +168,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getDataForCustomerInvoice($customerId, $currentDay)
+    public function getDataForCustomerInvoice($customerId, $currentDay): Customer
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -214,7 +215,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice)
+    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice): array
     {
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
@@ -328,7 +329,7 @@ class InvoicesTable extends AppTable
         return $preparedData;
     }
 
-    private function getSumsTaxBasedOnNetInvoiceSum($orderDetails, $orderedDeposit, $returnedDeposit)
+    private function getSumsTaxBasedOnNetInvoiceSum($orderDetails, $orderedDeposit, $returnedDeposit): array
     {
 
         $result = [
@@ -353,7 +354,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    private function getSums($orderDetails, $orderedDeposit, $returnedDeposit)
+    private function getSums($orderDetails, $orderedDeposit, $returnedDeposit): array 
     {
 
         $result = [
@@ -361,6 +362,7 @@ class InvoicesTable extends AppTable
             'priceExcl' => 0,
             'tax' => 0,
         ];
+
         foreach ($orderDetails as $orderDetail) {
             $result['priceIncl'] += $orderDetail->total_price_tax_incl;
             $result['priceExcl'] += $orderDetail->total_price_tax_excl;
@@ -379,7 +381,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getLastInvoiceForCustomer()
+    public function getLastInvoiceForCustomer(): ?Invoice
     {
         $lastInvoice = $this->find('all',
         conditions: [
@@ -391,7 +393,7 @@ class InvoicesTable extends AppTable
         return $lastInvoice;
     }
 
-    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash, $invoicesPerEmailEnabled)
+    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash, $invoicesPerEmailEnabled): Invoice|false
     {
 
         $invoiceData = [
@@ -428,7 +430,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getNextInvoiceNumberForCustomer($currentYear, $lastInvoice)
+    public function getNextInvoiceNumberForCustomer($currentYear, $lastInvoice): string
     {
 
         $increasingNumberOfLastInvoice = 1;
@@ -456,7 +458,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getNextInvoiceNumberForManufacturer($invoices)
+    public function getNextInvoiceNumberForManufacturer($invoices): string
     {
         $invoiceNumber = 1;
         if (! empty($invoices)) {

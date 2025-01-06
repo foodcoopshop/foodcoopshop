@@ -34,7 +34,7 @@ class OrderDetailsPdfWriterService extends PdfWriterService
 
     }
 
-    public function prepareAndSetData($pickupDay, $order)
+    public function prepareAndSetData($pickupDay, $order): void
     {
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');

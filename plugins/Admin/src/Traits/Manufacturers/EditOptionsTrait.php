@@ -25,7 +25,7 @@ use App\Services\DeliveryRhythmService;
 trait EditOptionsTrait
 {
 
-    public function myOptions()
+    public function myOptions(): void
     {
         $this->editOptions($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
@@ -35,7 +35,7 @@ trait EditOptionsTrait
         }
     }
 
-    public function editOptions($manufacturerId)
+    public function editOptions($manufacturerId): void
     {
         if ($manufacturerId === null) {
             throw new NotFoundException;

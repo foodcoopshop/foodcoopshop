@@ -29,8 +29,6 @@ class CartProductsTable extends AppTable
 
     use CartValidatorTrait;
 
-    protected $Cart;
-
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -53,7 +51,7 @@ class CartProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
+    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1): array|true
     {
         $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
@@ -359,7 +357,7 @@ class CartProductsTable extends AppTable
 
     }
 
-    public function setPickupDays($cartProducts, $customerId, $orderCustomerService)
+    public function setPickupDays($cartProducts, $customerId, $orderCustomerService): array
     {
         $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
@@ -371,12 +369,12 @@ class CartProductsTable extends AppTable
         if (!empty($uniquePickupDays)) {
             $pickupDays = $pickupDaysTable->find('all',
                 conditions: [
-                    'PickupDays.customer_id' => $customerId,
-                    'PickupDays.pickup_day IN' => $uniquePickupDays
+                    $pickupDaysTable->aliasField('customer_id') => $customerId,
+                    $pickupDaysTable->aliasField('pickup_day IN') => $uniquePickupDays,
                 ],
                 order: [
-                    'PickupDays.pickup_day' => 'ASC'
-                ]
+                    $pickupDaysTable->aliasField('pickup_day') => 'ASC',
+                ],
             );
 
             $existingPickupDays = [];
@@ -398,7 +396,7 @@ class CartProductsTable extends AppTable
         return $pickupDays;
     }
 
-    public function removeAll($cartId, $customerId)
+    public function removeAll($cartId, $customerId): int
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {
@@ -416,21 +414,21 @@ class CartProductsTable extends AppTable
             throw new \Exception('no cart found for cartId: ' . $cartId . ' and customerId: ' . $customerId);
         }
         $cartProduct2remove = [
-            'CartProducts.id_cart' => $cartId
+            $this->aliasField('id_cart') => $cartId,
         ];
         return $this->deleteAll($cartProduct2remove);
     }
 
-    public function remove($productId, $attributeId, $cartId)
+    public function remove($productId, $attributeId, $cartId): int
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {
             throw new \Exception('wrong cartId: ' . $cartId);
         }
         $cartProduct2remove = [
-            'CartProducts.id_product' => $productId,
-            'CartProducts.id_product_attribute' => $attributeId,
-            'CartProducts.id_cart' => $cartId
+            $this->aliasField('id_product') => $productId,
+            $this->aliasField('id_product_attribute') => $attributeId,
+            $this->aliasField('id_cart') => $cartId,
         ];
 
         // if product attribute was deleted after adding product to cart,
@@ -443,7 +441,7 @@ class CartProductsTable extends AppTable
 
         $result = $this->deleteAll($cartProduct2remove);
         $cartProductUnitsTable = TableRegistry::getTableLocator()->get('CartProductUnits');
-        $result |= $cartProductUnitsTable->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
+        $result += $cartProductUnitsTable->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
 
         return $result;
     }

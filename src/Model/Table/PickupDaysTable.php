@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Validation\Validator;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,7 +38,7 @@ class PickupDaysTable extends AppTable
         return $validator;
     }
 
-    public function changeState($customerId, $pickupDay, $state)
+    public function changeState($customerId, $pickupDay, $state): EntityInterface|false
     {
         $result = $this->insertOrUpdate(
             [
@@ -51,7 +52,7 @@ class PickupDaysTable extends AppTable
         return $result;
     }
 
-    public function getUniquePickupDays($cartProducts)
+    public function getUniquePickupDays($cartProducts): array
     {
         $uniquePickupDays = [];
         foreach($cartProducts as $cartProduct) {
@@ -62,12 +63,7 @@ class PickupDaysTable extends AppTable
         return array_unique($uniquePickupDays);
     }
 
-    /**
-     * @param array $conditions
-     * @param array $data
-     * result $success
-     */
-    public function insertOrUpdate($conditions, $data)
+    public function insertOrUpdate($conditions, $data): EntityInterface|false
     {
         $this->setPrimaryKey(['customer_id', 'pickup_day']);
 

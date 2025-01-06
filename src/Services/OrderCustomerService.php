@@ -22,26 +22,26 @@ use Cake\Routing\Router;
 class OrderCustomerService
 {
 
-    public function isOrderForDifferentCustomerMode()
+    public function isOrderForDifferentCustomerMode(): bool
     {
-        return Router::getRequest()->getSession()->read('OrderIdentity');
+        return Router::getRequest()->getSession()->check('OrderIdentity');
     }
 
-    public function isSelfServiceMode()
+    public function isSelfServiceMode(): bool
     {
         return $this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer();
     }
 
-    public function isSelfServiceModeByUrl()
+    public function isSelfServiceModeByUrl(): bool
     {
         $result = Router::getRequest()->getPath() == '/' . __('route_self_service');
         if (!empty(Router::getRequest()->getQuery('redirect'))) {
-            $result |= preg_match('`' . '/' . __('route_self_service') . '`', Router::getRequest()->getQuery('redirect'));
+            $result = (bool) preg_match('`' . '/' . __('route_self_service') . '`', Router::getRequest()->getQuery('redirect'));
         }
         return $result;
     }
 
-    public function isSelfServiceModeByReferer()
+    public function isSelfServiceModeByReferer(): bool
     {
         $result = false;
         $serverParams = Router::getRequest()->getServerParams();
@@ -54,6 +54,7 @@ class OrderCustomerService
                 '`' . preg_quote(Configure::read('App.fullBaseUrl')) . '/' . __('route_self_service') . '`',
                 $serverParams['HTTP_REFERER'],
             );
+            $result = (bool) $result;
         }
         if (!in_array($serverParams['REQUEST_URI'], $requestUriAllowed)) {
             $result = false;

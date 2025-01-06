@@ -31,27 +31,27 @@ class PaymentsControllerTest extends AppCakeTestCase
     use LoginTrait;
     use EmailTrait;
 
-    public function testAddPaymentLoggedOut()
+    public function testAddPaymentLoggedOut(): void
     {
         $this->addPayment(Configure::read('test.customerId'), 0, Payment::TYPE_PRODUCT);
         $this->assertRedirectToLoginPage();
     }
 
-    public function testAddPaymentParameterAmountOk()
+    public function testAddPaymentParameterAmountOk(): void
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', Payment::TYPE_PRODUCT);
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
 
-    public function testAddPaymentParameterAmountWithWhitespaceOk()
+    public function testAddPaymentParameterAmountWithWhitespaceOk(): void
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), ' 24,88 ', Payment::TYPE_PRODUCT);
         $this->assertEquals(24.88, $jsonDecodedContent->amount);
     }
 
-    public function testAddPaymentParameterAmountNegative()
+    public function testAddPaymentParameterAmountNegative(): void
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', Payment::TYPE_PRODUCT);
@@ -59,7 +59,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterAmountAlmostZero()
+    public function testAddPaymentParameterAmountAlmostZero(): void
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0,003', Payment::TYPE_PRODUCT);
@@ -67,7 +67,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterAmountZero()
+    public function testAddPaymentParameterAmountZero(): void
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0', Payment::TYPE_PRODUCT);
@@ -75,7 +75,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterAmountWrongNumber()
+    public function testAddPaymentParameterAmountWrongNumber(): void
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', Payment::TYPE_PRODUCT);
@@ -83,23 +83,27 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte gib eine korrekte Zahl ein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentWithInvalidType()
+    public function testAddPaymentWithInvalidType(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
-        $this->assertEquals(0, $jsonDecodedContent->status);
-        $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $jsonDecodedContent->msg);
+        try {
+            $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
+        } catch (\Exception $e) {
+            $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $e->getMessage());
+        }
     }
 
-    public function testAddPaymentAsCustomerForAnotherUser()
+    public function testAddPaymentAsCustomerForAnotherUser(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.superadminId'), 10, Payment::TYPE_PRODUCT);
-        $this->assertEquals(0, $jsonDecodedContent->status);
-        $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
+        try {
+            $this->addPayment(Configure::read('test.superadminId'), 10, Payment::TYPE_PRODUCT);
+        } catch (\Exception $e) {
+            $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $e->getMessage());
+        }
     }
 
-    public function testAddProductPaymentAsCustomerForOneself()
+    public function testAddProductPaymentAsCustomerForOneself(): void
     {
         $this->loginAsCustomer();
         $this->addPaymentAndAssertIncreasedCreditBalance(
@@ -117,7 +121,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddProductPaymentAsSuperadminRetailModeEnabled()
+    public function testAddProductPaymentAsSuperadminRetailModeEnabled(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
@@ -145,7 +149,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $payment->approval);
     }
 
-    public function testAddProductPaymentAsSuperadminRetailModeDisabled()
+    public function testAddProductPaymentAsSuperadminRetailModeDisabled(): void
     {
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
@@ -171,7 +175,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_OFF, $payment->approval);
     }
 
-    public function testAddDepositPaymentToCustomer()
+    public function testAddDepositPaymentToCustomer(): void
     {
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
@@ -189,7 +193,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithoutDate()
+    public function testAddDepositToManufacturerEmptyGlassesWithoutDate(): void
     {
         $this->addDepositToManufacturer(
             Payment::TEXT_EMPTY_GLASSES,
@@ -197,7 +201,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithDateToday()
+    public function testAddDepositToManufacturerEmptyGlassesWithDateToday(): void
     {
         $today = date(Configure::read('DateFormat.DateShortAlt'), strtotime(Configure::read('app.timeHelper')->getCurrentDateForDatabase()));
         $payment = $this->addDepositToManufacturer(
@@ -209,7 +213,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($today, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithDatePast()
+    public function testAddDepositToManufacturerEmptyGlassesWithDatePast(): void
     {
         $dateAdd = '12.12.2018';
         $payment = $this->addDepositToManufacturer(
@@ -221,7 +225,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($dateAdd, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithDateFuture()
+    public function testAddDepositToManufacturerEmptyGlassesWithDateFuture(): void
     {
         $this->loginAsSuperadmin();
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -232,7 +236,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals('Das Datum darf nicht in der Zukunft liegen.', $jsonDecodedContent->msg);
     }
 
-    public function testAddDepositToManufacturerMoney()
+    public function testAddDepositToManufacturerMoney(): void
     {
         $this->addDepositToManufacturer(
             Payment::TEXT_MONEY,
@@ -240,13 +244,13 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testDeletePaymentLoggedOut()
+    public function testDeletePaymentLoggedOut(): void
     {
         $this->deletePayment(1);
         $this->assertRedirectToLoginPage();
     }
 
-    public function testDeletePaymentWithApprovalOk()
+    public function testDeletePaymentWithApprovalOk(): void
     {
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
@@ -268,7 +272,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('payment id ('.$addResponse->paymentId.') not correct or already approved (approval: 1)', $deleteResponse->msg);
     }
 
-    public function testDeletePaymentAsCustomer()
+    public function testDeletePaymentAsCustomer(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $creditBalanceBeforeAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
@@ -282,7 +286,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
     }
 
-    public function testCsvUploadCustomerNotFoundError()
+    public function testCsvUploadCustomerNotFoundError(): void
     {
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
@@ -305,7 +309,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte wähle ein Mitglied aus.');
     }
 
-    public function testCsvUploadSaveNotOk()
+    public function testCsvUploadSaveNotOk(): void
     {
         $newPaymentAmount = 200;
         $newPaymentContent = 'transaction text';
@@ -334,7 +338,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte wähle ein Mitglied aus.');
     }
 
-    public function testCsvUploadSaveOk()
+    public function testCsvUploadSaveOk(): void
     {
         $newPaymentCustomerId = Configure::read('test.adminId');
         $newPaymentAmount = 200;
@@ -380,7 +384,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     }
 
-    private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = null)
+    private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = null): Payment
     {
         $customersTable = $this->getTableLocator()->get('Customers');
 
@@ -411,7 +415,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         return $payment;
     }
 
-    private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
+    private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $creditBalanceBeforeAdd = $customersTable->getCreditBalance($customerId);
@@ -425,7 +429,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($amountToAdd, Configure::read('app.numberHelper')->formatAsDecimal($jsonDecodedContent->amount, 1));
     }
 
-    private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
+    private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText): void
     {
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $lastActionLog = $actionLogsTable->find('all',
@@ -439,7 +443,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text, 'cake action log text not correct');
     }
 
-    private function deletePayment($paymentId)
+    private function deletePayment($paymentId): ?object
     {
         $this->ajaxPost('/admin/payments/changeState', [
             'paymentId' => $paymentId

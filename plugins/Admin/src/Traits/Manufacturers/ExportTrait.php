@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Manufacturers;
 
 use App\Services\Csv\Writer\ManufacturerCsvWriterService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,15 +23,13 @@ use App\Services\Csv\Writer\ManufacturerCsvWriterService;
 trait ExportTrait
 {
 
-    public function export()
+    public function export(): Response
     {
-
         $writerService = new ManufacturerCsvWriterService();
         $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
         $writerService->setFilename(__d('admin', 'Manufacturers') . '_' . date('YmdHis') . '.csv');
         $writerService->render();
         return $writerService->forceDownload($this->getResponse());
-
     }
 
 }

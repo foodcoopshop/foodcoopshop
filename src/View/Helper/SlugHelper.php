@@ -24,47 +24,47 @@ use App\Services\OutputFilter\OutputFilterService;
 class SlugHelper extends Helper
 {
 
-    public function getAutoLoginAsSelfServiceCustomer($id)
+    public function getAutoLoginAsSelfServiceCustomer($id): string
     {
         return '/'.__('route_self_service').'/autoLoginAsSelfServiceCustomer/' . $id;
     }
 
-    public function getFeedbackList()
+    public function getFeedbackList(): string
     {
         return '/feedback';
     }
 
-    public function getMyFeedbackForm()
+    public function getMyFeedbackForm(): string
     {
         return '/admin/feedbacks/myFeedback';
     }
 
-    public function getFeedbackForm($customerId)
+    public function getFeedbackForm($customerId): string
     {
         return '/admin/feedbacks/form/' . $customerId;
     }
 
-    public function getInvoiceDownloadRoute($filename)
+    public function getInvoiceDownloadRoute($filename): string
     {
         return '/admin/lists/getInvoice?file=' . $filename;
     }
 
-    public function getOrderListDownloadRoute($filename)
+    public function getOrderListDownloadRoute($filename): string
     {
         return '/admin/lists/getOrderList?file=' . $filename;
     }
 
-    public function getHelloCashInvoice($invoiceId, $cancellation=0)
+    public function getHelloCashInvoice($invoiceId, $cancellation=0): string
     {
         return '/admin/hello-cash/getInvoice/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getHelloCashReceipt($invoiceId, $cancellation=0)
+    public function getHelloCashReceipt($invoiceId, $cancellation=0): string
     {
         return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getSelfService($keyword = '', $productWithError = '')
+    public function getSelfService($keyword = '', $productWithError = ''): string
     {
         $url = '/'.__('route_self_service');
         $queryParams = [];
@@ -80,77 +80,77 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getActivateEmailAddress($activationCode)
+    public function getActivateEmailAddress($activationCode): string
     {
         return '/customers/activateEmailAddress/' . $activationCode;
     }
 
-    public function getActionLogsList()
+    public function getActionLogsList(): string
     {
         return $this->getAdminHome().'/action-logs';
     }
 
-    public function getOrderDetailPurchasePriceEdit($orderDetailId)
+    public function getOrderDetailPurchasePriceEdit($orderDetailId): string
     {
         return $this->getAdminHome().'/order-details/edit-purchase-price/' . $orderDetailId;
     }
 
-    public function getOrderDetailsList()
+    public function getOrderDetailsList(): string
     {
         return $this->getAdminHome().'/order-details';
     }
 
-    public function getOrderLists()
+    public function getOrderLists(): string
     {
         return $this->getAdminHome().'/lists/order-lists';
     }
 
-    public function getManufacturerInvoices()
+    public function getManufacturerInvoices(): string
     {
         return $this->getAdminHome().'/lists/invoices';
     }
 
-    public function getAcceptTermsOfUse()
+    public function getAcceptTermsOfUse(): string
     {
         return '/'.__('route_accept_terms_of_use');
     }
 
-    public function getManufacturerDetail($manufacturerId, $manufacturerName)
+    public function getManufacturerDetail($manufacturerId, $manufacturerName): string
     {
         return '/'.__('route_manufacturer_detail').'/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
     }
 
-    public function getPageDetail($pageId, $name)
+    public function getPageDetail($pageId, $name): string
     {
         return '/'.__('route_content').'/'.$pageId.'-'.StringComponent::slugify($name);
     }
 
-    public function getTermsOfUse()
+    public function getTermsOfUse(): string
     {
         return '/'.__('route_terms_of_use');
     }
 
-    public function getPrivacyPolicy()
+    public function getPrivacyPolicy(): string
     {
         return '/'.__('route_privacy_policy');
     }
 
-    public function getListOfAllergens()
+    public function getListOfAllergens(): string
     {
         return '/'.__('route_list_of_allergens');
     }
 
-    public function getManufacturerList()
+    public function getManufacturerList(): string
     {
         return '/'.__('route_manufacturer_list');
     }
 
-    public function getMyStatistics()
+    public function getMyStatistics(): string
     {
         return $this->getAdminHome().'/statistics/myIndex';
     }
 
-    public function getStatistics($manufacturerId = '')
+    public function getStatistics($manufacturerId = ''): string
     {
         $url = '/admin/statistics';
         if ($manufacturerId != '') {
@@ -159,7 +159,8 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getProductImport($manufacturerId = '') {
+    public function getProductImport($manufacturerId = ''): string
+    {
         $url = '/admin/products/import';
         if ($manufacturerId != '') {
             $url .= '?manufacturerId='.$manufacturerId;
@@ -167,22 +168,22 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getMyProductImport()
+    public function getMyProductImport(): string
     {
         return '/admin/products/myImport';
     }
 
-    public function getMyDepositList()
+    public function getMyDepositList(): string
     {
         return '/admin/deposits/myIndex';
     }
 
-    public function getMyDepositDetail($monthAndYear)
+    public function getMyDepositDetail($monthAndYear): string
     {
         return '/admin/deposits/myDetail/'.$monthAndYear;
     }
 
-    public function getDepositList($manufacturerId = '')
+    public function getDepositList($manufacturerId = ''): string
     {
         $url = '/admin/deposits/index';
         if ($manufacturerId != '') {
@@ -191,12 +192,12 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getDepositOverviewDiagram()
+    public function getDepositOverviewDiagram(): string
     {
         return '/admin/deposits/overview_diagram';
     }
 
-    public function getDepositDetail($manufacturerId, $monthAndYear)
+    public function getDepositDetail($manufacturerId, $monthAndYear): string
     {
         $url = '/admin/deposits/detail/'.$monthAndYear;
         if ($manufacturerId != '') {
@@ -205,52 +206,52 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getCreditBalanceSum()
+    public function getCreditBalanceSum(): string
     {
         return '/admin/customers/credit_balance_sum';
     }
 
-    public function getCartDetail()
+    public function getCartDetail(): string
     {
         return '/'.__('route_cart') . '/' . __('route_cart_show');
     }
 
-    public function getCartFinish()
+    public function getCartFinish(): string
     {
         return '/'.__('route_cart') . '/' . __('route_cart_finish');
     }
 
-    public function getCartFinished($cartId)
+    public function getCartFinished($cartId): string
     {
         return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$cartId;
     }
 
-    public function getAdminHome()
+    public function getAdminHome(): string
     {
         return '/admin';
     }
 
-    public function getHome()
+    public function getHome(): string
     {
         return '/';
     }
 
-    public function getNewProducts()
+    public function getNewProducts(): string
     {
         return '/' . __('route_new_products');
     }
 
-    public function getProductSearch($keyword)
+    public function getProductSearch($keyword): string
     {
         return '/' . __('route_search') . '?keyword=' . $keyword;
     }
 
-    public function getAllProducts()
+    public function getAllProducts(): string
     {
         return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), __('route_all_products'));
     }
 
-    public function getCategoryDetail($categoryId, $name)
+    public function getCategoryDetail($categoryId, $name): string
     {
         // if "Produkte" is globally replaced with a word with an umlaut, this umlaut would not be replaced, so replace it here
         // eg: Produkte => Naturschätze
@@ -260,7 +261,7 @@ class SlugHelper extends Helper
         return '/' . __('route_category') . '/' . $categoryId . '-' . StringComponent::slugify($name);
     }
 
-    public function getLogin($redirect='')
+    public function getLogin($redirect=''): string
     {
         $url = '/'.__('route_sign_in');
         if ($redirect != '') {
@@ -269,7 +270,7 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getLogout($redirect='')
+    public function getLogout($redirect=''): string
     {
         $url = '/'.__('route_sign_out');
         if ($redirect != '') {
@@ -278,67 +279,67 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getRegistrationSuccessful()
+    public function getRegistrationSuccessful(): string
     {
         return '/'.__('route_registration_successful');
     }
 
-    public function getRegistration()
+    public function getRegistration(): string
     {
         return '/'.__('route_registration');
     }
 
-    public function getMyCreditBalance()
+    public function getMyCreditBalance(): string
     {
         return '/admin/payments/overview';
     }
 
-    public function getCreditBalance($customerId)
+    public function getCreditBalance($customerId): string
     {
         return '/admin/payments/product/?customerId='.$customerId;
     }
 
-    public function getChangePassword()
+    public function getChangePassword(): string
     {
         return '/admin/customers/changePassword';
     }
 
-    public function getCustomerProfile()
+    public function getCustomerProfile(): string
     {
         return '/admin/customers/profile';
     }
 
-    public function getCustomerEdit($customerId)
+    public function getCustomerEdit($customerId): string
     {
         return '/admin/customers/edit/' . $customerId;
     }
 
-    public function getCustomerListAdmin()
+    public function getCustomerListAdmin(): string
     {
         return '/admin/customers';
     }
 
-    public function getManufacturerProfile()
+    public function getManufacturerProfile(): string
     {
         return '/admin/manufacturers/profile';
     }
 
-    public function getManufacturerMyOptions()
+    public function getManufacturerMyOptions(): string
     {
         return '/admin/manufacturers/myOptions';
     }
 
-    public function getActivateNewPassword($activateNewPasswordCode)
+    public function getActivateNewPassword($activateNewPasswordCode): string
     {
         return '/'.__('route_activate_new_password') . '/' . $activateNewPasswordCode;
     }
 
-    public function getNewPasswordRequest()
+    public function getNewPasswordRequest(): string
     {
         return '/'.__('route_request_new_password');
     }
 
-    public function getProfit($dateFrom=null, $dateTo=null, $customerIds=null, $manufacturerId=null, $productId=null)
+    public function getProfit($dateFrom=null, $dateTo=null, $customerIds=null, $manufacturerId=null, $productId=null): string
     {
         $url = '/admin/order-details/profit';
         if ($dateFrom !== null) {
@@ -362,134 +363,134 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getInvoices()
+    public function getInvoices(): string
     {
         return '/admin/invoices';
     }
 
-    public function getMyInvoices()
+    public function getMyInvoices(): string
     {
         return '/admin/invoices/myInvoices';
     }
 
-    public function getReport($paymentType)
+    public function getReport($paymentType): string
     {
         return '/admin/reports/payments/'.$paymentType;
     }
 
-    public function getBlogList()
+    public function getBlogList(): string
     {
         return '/'.__('route_news_list');
     }
 
-    public function getBlogPostDetail($blogPostId, $name)
+    public function getBlogPostDetail($blogPostId, $name): string
     {
         return '/'.__('route_news_detail') . '/' . $blogPostId . '-' . StringComponent::slugify($name);
     }
 
-    public function getBlogPostListAdmin()
+    public function getBlogPostListAdmin(): string
     {
         return '/admin/blog-posts';
     }
-    public function getBlogPostEdit($blogPostId)
+    public function getBlogPostEdit($blogPostId): string
     {
         return '/admin/blog-posts/edit/'.$blogPostId;
     }
-    public function getBlogPostAdd()
+    public function getBlogPostAdd(): string
     {
         return '/admin/blog-posts/add';
     }
 
-    public function getPagesListAdmin()
+    public function getPagesListAdmin(): string
     {
         return '/admin/pages';
     }
 
-    public function getPageEdit($pageId)
+    public function getPageEdit($pageId): string
     {
         return '/admin/pages/edit/'.$pageId;
     }
 
-    public function getPageAdd()
+    public function getPageAdd(): string
     {
         return '/admin/pages/add';
     }
 
-    public function getPaymentEdit($paymentId)
+    public function getPaymentEdit($paymentId): string
     {
         return '/admin/payments/edit/'.$paymentId;
     }
 
-    public function getAttributesList()
+    public function getAttributesList(): string
     {
         return '/admin/attributes';
     }
-    public function getAttributeAdd()
+    public function getAttributeAdd(): string
     {
         return '/admin/attributes/add';
     }
-    public function getAttributeEdit($attributeId)
+    public function getAttributeEdit($attributeId): string
     {
         return '/admin/attributes/edit/'.$attributeId;
     }
 
-    public function getCategoriesList()
+    public function getCategoriesList(): string
     {
         return '/admin/categories';
     }
-    public function getCategoryAdd()
+    public function getCategoryAdd(): string
     {
         return '/admin/categories/add';
     }
-    public function getCategoryEdit($categoryId)
+    public function getCategoryEdit($categoryId): string
     {
         return '/admin/categories/edit/'.$categoryId;
     }
 
-    public function getTaxesList()
+    public function getTaxesList(): string
     {
         return '/admin/taxes';
     }
-    public function getTaxAdd()
+    public function getTaxAdd(): string
     {
         return '/admin/taxes/add';
     }
-    public function getTaxEdit($taxId)
+    public function getTaxEdit($taxId): string
     {
         return '/admin/taxes/edit/'.$taxId;
     }
 
-    public function getManufacturerAdmin()
+    public function getManufacturerAdmin(): string
     {
         return '/admin/manufacturers';
     }
-    public function getManufacturerEdit($manufacturerId)
+    public function getManufacturerEdit($manufacturerId): string
     {
         return '/admin/manufacturers/edit/'.$manufacturerId;
     }
-    public function getManufacturerEditOptions($manufacturerId)
+    public function getManufacturerEditOptions($manufacturerId): string
     {
         return '/admin/manufacturers/editOptions/'.$manufacturerId;
     }
-    public function getManufacturerAdd()
+    public function getManufacturerAdd(): string
     {
         return '/admin/manufacturers/add';
     }
 
-    public function getSlidersList()
+    public function getSlidersList(): string
     {
         return '/admin/sliders';
     }
-    public function getSliderEdit($slideId)
+    public function getSliderEdit($slideId): string
     {
         return '/admin/sliders/edit/'.$slideId;
     }
-    public function getSliderAdd()
+    public function getSliderAdd(): string
     {
         return '/admin/sliders/add';
     }
 
-    public function getProductAdmin($manufacturerId = null, $productId = null)
+    public function getProductAdmin($manufacturerId = null, $productId = null): string
     {
         $url = '/admin/products';
 
@@ -505,27 +506,27 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getProductDetail($productId, $name)
+    public function getProductDetail($productId, $name): string
     {
         return '/' . __('routes_product') . '/' . $productId . '-' . StringComponent::slugify($name);
     }
 
-    public function getConfigurationsList()
+    public function getConfigurationsList(): string
     {
         return '/admin/configurations';
     }
 
-    public function getConfigurationEdit($name)
+    public function getConfigurationEdit($name): string
     {
         return '/admin/configurations/edit/'.$name;
     }
 
-    public function getCronjobsList()
+    public function getCronjobsList(): string
     {
         return '/admin/cronjobs';
     }
 
-    public function getCronjobEdit($cronjobId)
+    public function getCronjobEdit($cronjobId): string
     {
         return '/admin/cronjobs/edit/'.$cronjobId;
     }

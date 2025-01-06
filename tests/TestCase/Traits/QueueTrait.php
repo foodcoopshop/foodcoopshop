@@ -21,7 +21,7 @@ use Cake\ORM\TableRegistry;
 trait QueueTrait
 {
 
-    protected function runAndAssertQueue()
+    protected function runAndAssertQueue(): void
     {
         $this->exec('queue run -q');
         $queuedJobsTable = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');

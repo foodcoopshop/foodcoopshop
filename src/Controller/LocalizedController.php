@@ -25,7 +25,7 @@ use Cake\Event\EventInterface;
 class LocalizedController extends Controller
 {
 
-    private function getStrings()
+    private function getStrings(): array
     {
         $strings = [
             'datepicker' => [
@@ -383,13 +383,14 @@ class LocalizedController extends Controller
         return $strings;
     }
 
-    public function renderAsJsFile() {
+    public function renderAsJsFile(): void
+    {
         $this->response = $this->response->withType('application/javascript');
         $this->viewBuilder()->setLayout('ajax');
         $this->set('localizedJs', $this->getStrings());
     }
 
-    public function afterFilter(EventInterface $event)
+    public function afterFilter(EventInterface $event): void
     {
         parent::afterFilter($event);
         if (Configure::check('app.outputStringReplacements')) {

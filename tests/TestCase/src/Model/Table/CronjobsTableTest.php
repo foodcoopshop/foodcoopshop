@@ -20,7 +20,7 @@ use App\Model\Entity\CronjobLog;
 class CronjobsTableTest extends AppCakeTestCase
 {
 
-    public function testEditDailyValidations()
+    public function testEditDailyValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -36,7 +36,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Bitte gib eine gültige Uhrzeit ein.', $errors['not_before_time']['time']);
     }
 
-    public function testEditDailyOk()
+    public function testEditDailyOk(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -49,7 +49,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(false, $result->hasErrors());
     }
 
-    public function testEditWeeklyValidations()
+    public function testEditWeeklyValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -63,7 +63,8 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Beim Interval "wöchentlich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
     }
 
-    public function testEditWeeklyOk() {
+    public function testEditWeeklyOk(): void
+    {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
         $result = $cronjobsTable->patchEntity($entity, [
@@ -74,7 +75,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(false, $result->hasErrors());
     }
 
-    public function testPickupReminderValidation()
+    public function testPickupReminderValidation(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -88,7 +89,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Beim Interval "wöchentlich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
     }
 
-    public function testEditPickupReminderValidations()
+    public function testEditPickupReminderValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -104,7 +105,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Das Intervall muss "wöchentlich" sein.', $errors['time_interval']['equals']);
     }
 
-    public function testEditEmailOrderReminderValidations()
+    public function testEditEmailOrderReminderValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -120,7 +121,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Das Intervall muss "wöchentlich" sein.', $errors['time_interval']['equals']);
     }
 
-    public function testEditSendDeliveryNotesValidations()
+    public function testEditSendDeliveryNotesValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -136,7 +137,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Das Intervall muss "monatlich" sein.', $errors['time_interval']['equals']);
     }
 
-    public function testEditSendInvoicesToManufacturersValidations()
+    public function testEditSendInvoicesToManufacturersValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -152,7 +153,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Das Intervall muss "monatlich" sein.', $errors['time_interval']['equals']);
     }
 
-    public function testEditSendOrderListsValidations()
+    public function testEditSendOrderListsValidations(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -168,7 +169,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Das Intervall muss "täglich" sein.', $errors['time_interval']['equals']);
     }
 
-    public function testEditMonthlyOk()
+    public function testEditMonthlyOk(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $entity = $cronjobsTable->get(1);
@@ -180,7 +181,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(false, $result->hasErrors());
     }
 
-    public function testRunSunday()
+    public function testRunSunday(): void
     {
         $time = '2018-10-21 23:00:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -193,7 +194,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
     }
 
-    public function testRunMonday()
+    public function testRunMonday(): void
     {
         $time = '2018-10-22 23:00:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -205,7 +206,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testPreviousCronjobLogFailure()
+    public function testPreviousCronjobLogFailure(): void
     {
         $time = '2018-10-22 23:00:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -226,7 +227,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testPreviousCronjobLogRunning()
+    public function testPreviousCronjobLogRunning(): void
     {
         $time = '2018-10-22 23:00:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -246,7 +247,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testCronjobNotYetExecutedWithinTimeInterval()
+    public function testCronjobNotYetExecutedWithinTimeInterval(): void
     {
         $time = '2018-10-23 22:30:01';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -266,7 +267,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testCronjobAlreadyExecutedWithinTimeInterval()
+    public function testCronjobAlreadyExecutedWithinTimeInterval(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjobsTable->cronjobRunDay = (int) $this->Time->getTimeObjectUTC('2018-10-23 22:29:59')->toUnixString();
@@ -283,7 +284,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
     }
 
-    public function testCronjobWithException()
+    public function testCronjobWithException(): void
     {
         $time = '2018-10-23 22:31:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -302,7 +303,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testCronjobAlreadyExecutedOnCurrentDay()
+    public function testCronjobAlreadyExecutedOnCurrentDay(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjobsTable->cronjobRunDay = (int) $this->Time->getTimeObjectUTC('2018-10-25 22:30:02')->toUnixString();
@@ -319,7 +320,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
     }
 
-    public function testRunMonthlyBeforeNotBeforeTime()
+    public function testRunMonthlyBeforeNotBeforeTime(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjobsTable->cronjobRunDay = (int) $this->Time->getTimeObjectUTC('2018-10-11 07:29:00')->toUnixString();
@@ -335,7 +336,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
     }
 
-    public function testRunMonthlyAfterNotBeforeTime()
+    public function testRunMonthlyAfterNotBeforeTime(): void
     {
         $time = '2018-10-11 07:31:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -353,7 +354,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testRunMonthlyLastDayOfMonthAfterNotBeforeTime()
+    public function testRunMonthlyLastDayOfMonthAfterNotBeforeTime(): void
     {
         $time = '2018-11-30 07:31:00';
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
@@ -378,7 +379,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testInvalidWeekday()
+    public function testInvalidWeekday(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjobsTable->save(
@@ -396,7 +397,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEmpty(0, $cronjobsTable->CronjobLogs->find('all')->all());
     }
 
-    public function testInvalidDayOfMonth()
+    public function testInvalidDayOfMonth(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjobsTable->save(

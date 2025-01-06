@@ -21,47 +21,56 @@ use App\Services\Csv\Writer\CsvWriterServiceInterface;
 use Cake\Core\Configure;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Controller\Component\StringComponent;
+use Cake\ORM\Query\SelectQuery;
+use Cake\Http\Response;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
 
-    public $writer;
+    public Writer $writer;
 
-	public $filename = 'export.csv';
+	public string $filename = 'export.csv';
 
-	private $requestQueryParams = [];
+	private array $requestQueryParams = [];
 
-	public function setFilename($filename) {
+	public function setFilename($filename): void
+	{
 		if (Configure::check('app.outputStringReplacements')) {
             $filename = OutputFilterService::replace($filename, Configure::read('app.outputStringReplacements'));
         }
 		$this->filename = $filename;
 	}
 
-	public function setRequestQueryParams($requestQueryParams) {
+	public function setRequestQueryParams($requestQueryParams): void
+	{
 		$this->requestQueryParams = $requestQueryParams;
 	}
 
-	public function getRequestQuery($name, $default = null) {
+	public function getRequestQuery($name, $default = null): string|int|null
+	{
 		return $this->requestQueryParams[$name] ?? $default;
 	}
 
-	final public function getRequestQueryParams() {
+	final public function getRequestQueryParams(): array
+	{
 		return $this->requestQueryParams;
 	}
 
-	final public function paginate($query, $params) {
+	final public function paginate($query, $params): SelectQuery
+	{
 		$results = $query->find('all', 
 			order: $params['order'] ?? null,
 		);
 		return $results;
 	}
 
-	final public function decodeHtml($string) {
+	final public function decodeHtml($string): string
+	{
 		return StringComponent::br2space(html_entity_decode($string ?? ''));
 	}
 
-	final public function render() {
+	final public function render(): void
+	{
 
 		$this->writer = Writer::createFromFileObject(new \SplTempFileObject());
 
@@ -80,7 +89,8 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		}
 	}
 
-	final public function toString() {
+	final public function toString(): string
+	{
 		$result = $this->writer->toString();
 		if (Configure::check('app.outputStringReplacements')) {
             $result = OutputFilterService::replace($result, Configure::read('app.outputStringReplacements'));
@@ -88,7 +98,8 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		return $result;
 	}
 
-	public function forceDownload($response) {
+	public function forceDownload($response): Response
+	{
 		$response = $response->withStringBody($this->toString());
 		$response = $response->withDownload($this->filename);
 

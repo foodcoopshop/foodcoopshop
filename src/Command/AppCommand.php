@@ -25,17 +25,17 @@ class AppCommand extends Command
     public float $timeStart;
     public float $timeEnd;
 
-    public function startTimeLogging()
+    public function startTimeLogging(): void
     {
         $this->timeStart = microtime(true);
     }
 
-    public function stopTimeLogging()
+    public function stopTimeLogging(): void
     {
         $this->timeEnd = microtime(true);
     }
 
-    public function getRuntime()
+    public function getRuntime(): string
     {
         $time = $this->timeEnd - $this->timeStart;
         return __('Runtime') . ': ' . Configure::read('app.timeHelper')->convertSecondsInMinutesAndSeconds($time);

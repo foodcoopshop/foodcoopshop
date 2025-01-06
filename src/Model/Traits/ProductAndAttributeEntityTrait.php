@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Traits;
 
+use Cake\Datasource\EntityInterface;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -20,7 +22,7 @@ namespace App\Model\Traits;
 trait ProductAndAttributeEntityTrait
 {
 
-    public function getEntityToSaveByProductAttributeId($productAttributeId)
+    public function getEntityToSaveByProductAttributeId($productAttributeId): EntityInterface
     {
         $entity2Save = $this->find('all',
             conditions: [
@@ -33,7 +35,7 @@ trait ProductAndAttributeEntityTrait
         return $entity2Save;
     }
 
-    public function getEntityToSaveByProductId($productId)
+    public function getEntityToSaveByProductId($productId): EntityInterface
     {
         $entity2Save = $this->find('all',
             conditions: [

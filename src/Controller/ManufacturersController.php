@@ -28,7 +28,7 @@ class ManufacturersController extends FrontendController
 
     use PaginatedProductsTrait;
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -37,7 +37,7 @@ class ManufacturersController extends FrontendController
         ]);
     }
 
-    public function index()
+    public function index(): void
     {
 
         $conditions = [
@@ -73,7 +73,7 @@ class ManufacturersController extends FrontendController
         $this->set('title_for_layout', __('Manufacturer'));
     }
 
-    public function detail()
+    public function detail(): void
     {
         $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');
         $this->redirectIfPageIsSetTo1();

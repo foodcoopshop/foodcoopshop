@@ -24,7 +24,7 @@ use App\Services\SanitizeService;
 class CronjobsController extends AdminAppController
 {
 
-    public function index()
+    public function index(): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjobs = $cronjobsTable->find('available');
@@ -40,7 +40,7 @@ class CronjobsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Cronjobs'));
     }
 
-    public function edit($cronjobId)
+    public function edit($cronjobId): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjob = $cronjobsTable->find('available', conditions: [

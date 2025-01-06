@@ -60,7 +60,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         'referer' => '/'
     ];
 
-    public function testAddWithValidationErrors()
+    public function testAddWithValidationErrors(): void
     {
         $this->loginAsSuperadmin();
 
@@ -74,7 +74,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte gib den Nachnamen an.');
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->loginAsSuperadmin();
 
@@ -110,7 +110,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($manufacturer->is_private, true);
     }
 
-    public function testEditOptionsMain()
+    public function testEditOptionsMain(): void
     {
         $this->loginAsSuperadmin();
 
@@ -210,7 +210,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testEditOptionsNoDeliveryDays()
+    public function testEditOptionsNoDeliveryDays(): void
     {
         $this->loginAsSuperadmin();
 
@@ -283,7 +283,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testUploadAndDeleteProfileImage()
+    public function testUploadAndDeleteProfileImage(): void
     {
         $this->loginAsSuperadmin();
         $manufacturerId = 4;
@@ -350,7 +350,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertFileDoesNotExist($largeFile);
     }
 
-    public function testEditMain()
+    public function testEditMain(): void
     {
         $this->loginAsSuperadmin();
 

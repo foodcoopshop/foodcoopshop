@@ -28,11 +28,12 @@ use Cake\Database\Expression\StringExpression;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 class CatalogService
 {
 
-    protected $identity;
+    protected mixed $identity;
 
     const MAX_PRODUCTS_PER_PAGE = 100;
     const BARCODE_WITH_WEIGHT_PREFIX = '27';
@@ -43,12 +44,12 @@ class CatalogService
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
-    public function getPagesCount($totalProductCount)
+    public function getPagesCount(int $totalProductCount): int
     {
-        return ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
+        return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1)
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1): array|int
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -89,12 +90,12 @@ class CatalogService
 
     }
 
-    public function getProductsByManufacturerId($manufacturerId, $countMode = false, $page = 1)
+    public function getProductsByManufacturerId($manufacturerId, $countMode = false, $page = 1): array|int
     {
         return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId, $page);
     }
 
-    public function getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts)
+    public function getOnlyStockProductsRespectingConfiguration(bool $getOnlyStockProducts): bool
     {
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
@@ -108,7 +109,7 @@ class CatalogService
 
     }
 
-    protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
+    protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId): SelectQuery
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -136,7 +137,7 @@ class CatalogService
 
     }
 
-    protected function addOrderKeyword($query, $keyword)
+    protected function addOrderKeyword(SelectQuery $query, string $keyword): SelectQuery
     {
 
         $query->orderDesc(function (QueryExpression $exp, Query $query) use ($keyword) {
@@ -155,7 +156,7 @@ class CatalogService
 
     }
 
-    protected function addOrder($query)
+    protected function addOrder(SelectQuery $query): SelectQuery
     {
         $query->order([
             'Products.name' => 'ASC',
@@ -164,7 +165,7 @@ class CatalogService
         return $query;
     }
 
-    protected function addSelectFields($query)
+    protected function addSelectFields(SelectQuery $query): SelectQuery
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $depositProductsTable = TableRegistry::getTableLocator()->get('DepositProducts');
@@ -186,7 +187,7 @@ class CatalogService
         return $query;
     }
 
-    protected function addContains($query)
+    protected function addContains(SelectQuery $query): SelectQuery
     {
         $query->contain([
             'Images',
@@ -213,7 +214,7 @@ class CatalogService
         return $query;
     }
 
-    protected function addDefaultConditions($query)
+    protected function addDefaultConditions(SelectQuery $query): SelectQuery
     {
         if ($this->identity === null) {
             $query->where([
@@ -229,7 +230,7 @@ class CatalogService
         return $query;
     }
 
-    protected function addManufacturerIdFilter($query, $manufacturerId)
+    protected function addManufacturerIdFilter(SelectQuery $query, $manufacturerId): SelectQuery
     {
         if ($manufacturerId == 0) {
             return $query;
@@ -243,7 +244,7 @@ class CatalogService
 
     }
 
-    protected function addProductIdFilter($query, $productId)
+    protected function addProductIdFilter(SelectQuery $query, $productId): SelectQuery
     {
         if ($productId == 0) {
             return $query;
@@ -257,7 +258,7 @@ class CatalogService
 
     }
 
-    protected function addCategoryIdFilter($query, $categoryId)
+    protected function addCategoryIdFilter(SelectQuery $query, $categoryId): SelectQuery
     {
         if ($categoryId == '') {
             return $query;
@@ -280,7 +281,7 @@ class CatalogService
 
     }
 
-    protected function addGetOnlyStockProductsFilter($query, $getOnlyStockProducts)
+    protected function addGetOnlyStockProductsFilter(SelectQuery $query, $getOnlyStockProducts): SelectQuery
     {
         if (!$getOnlyStockProducts) {
             return $query;
@@ -297,7 +298,7 @@ class CatalogService
 
     }
 
-    protected function addNewProductsFilter($query, $filterByNewProducts)
+    protected function addNewProductsFilter(SelectQuery $query, $filterByNewProducts): SelectQuery
     {
         if (!$filterByNewProducts) {
             return $query;
@@ -310,7 +311,7 @@ class CatalogService
         return $query;
     }
 
-    protected function addPurchasePriceIsSetFilter($query)
+    protected function addPurchasePriceIsSetFilter(SelectQuery $query): SelectQuery
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             return $query;
@@ -358,7 +359,7 @@ class CatalogService
 
     }
 
-    protected function addKeywordFilter($query, $keyword)
+    protected function addKeywordFilter(SelectQuery $query, string $keyword): SelectQuery
     {
         if ($keyword == '') {
             return $query;
@@ -411,7 +412,7 @@ class CatalogService
 
     }
 
-    protected function addOrderedProductsTotalAmount($products)
+    protected function addOrderedProductsTotalAmount(array $products): array
     {
 
         if (!Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
@@ -447,7 +448,7 @@ class CatalogService
 
     }
 
-    protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products)
+    protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice(array $products): array
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             return $products;
@@ -472,7 +473,7 @@ class CatalogService
         return $products;
     }
 
-    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products)
+    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak(array $products): array
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -521,17 +522,17 @@ class CatalogService
 
     }
 
-    protected function reindexArray($array)
+    protected function reindexArray(array $array): array
     {
         return array_values($array);
     }
 
-    public function getProductIdentifierField()
+    public function getProductIdentifierField(): string
     {
         return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 4)';
     }
 
-    public function prepareProducts($products)
+    public function prepareProducts(array $products): array
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $customersTable = TableRegistry::getTableLocator()->get('Customers');

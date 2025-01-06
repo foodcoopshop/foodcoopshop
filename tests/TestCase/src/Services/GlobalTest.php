@@ -24,22 +24,22 @@ class GlobalTest extends AppCakeTestCase
         // do not import database - no database needed for this test
     }
 
-    public function testBicValid1()
+    public function testBicValid1(): void
     {
         $this->assertBic('RZOOAT2L510', true);
     }
 
-    public function testBicValid2()
+    public function testBicValid2(): void
     {
         $this->assertBic('RZOOAT2L380', true);
     }
 
-    public function testBicValid3()
+    public function testBicValid3(): void
     {
         $this->assertBic('RZOOAT2L', true);
     }
 
-    private function assertBic($iban, $expected)
+    private function assertBic($iban, $expected): void
     {
         $this->assertEquals($expected, (bool) preg_match(BIC_REGEX, $iban));
     }

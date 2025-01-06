@@ -21,7 +21,7 @@ use App\Test\TestCase\AppCakeTestCase;
 class CatalogServiceTest extends AppCakeTestCase
 {
 
-    public function testGetBarcodeWeight()
+    public function testGetBarcodeWeight(): void
     {
         $this->setDummyRequest();
         $catalogService = new CatalogService();

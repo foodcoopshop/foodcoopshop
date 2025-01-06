@@ -30,7 +30,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
 
     use CronjobCommandTrait;
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
@@ -143,7 +143,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
 
     }
 
-    protected function getActionLogData($manufacturers)
+    protected function getActionLogData($manufacturers): string
     {
 
         $tableData = '';

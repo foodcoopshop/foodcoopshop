@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait GetCreditBalanceTrait
 {
 
-    public function getCreditBalance($customerId)
+    public function getCreditBalance($customerId): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
         $customersTable = $this->getTableLocator()->get('Customers');

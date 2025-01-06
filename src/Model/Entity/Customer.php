@@ -9,6 +9,7 @@ use App\Services\OrderCustomerService;
 use App\Model\Entity\Cart;
 use ArrayAccess;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,12 +47,12 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->id_customer;
     }
 
-    public function getOriginalData(): ArrayAccess|array
+    public function getOriginalData(): static
     {
         return $this;
     }
 
-    protected function _getManufacturer()
+    protected function _getManufacturer(): ?Manufacturer
     {
         if ($this->isNew()) {
             return null;
@@ -73,7 +74,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->_manufacturer;
     }
 
-    protected function _getName()
+    protected function _getName(): string
     {
         $name = $this->firstname . ' ' . $this->lastname;
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
@@ -91,7 +92,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $name;
     }
 
-    protected function _getDecodedName()
+    protected function _getDecodedName(): string
     {
         return html_entity_decode($this->name);
     }
@@ -118,7 +119,7 @@ class Customer extends AppEntity implements IdentityInterface
         return isset($this->manufacturer);
     }
 
-    public function getManufacturerId()
+    public function getManufacturerId(): int
     {
         if (!$this->isManufacturer()) {
             throw new \Exception('user is no manufacturer');
@@ -126,7 +127,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->manufacturer->id_manufacturer;
     }
 
-    public function getManufacturerName()
+    public function getManufacturerName(): string
     {
         if (!$this->isManufacturer()) {
             throw new \Exception('user is no manufacturer');
@@ -134,15 +135,15 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->manufacturer->name;
     }
 
-    public function getManufacturerAnonymizeCustomers()
+    public function getManufacturerAnonymizeCustomers(): bool
     {
         if (!$this->isManufacturer()) {
             throw new \Exception('user is no manufacturer');
         }
-        return $this->manufacturer->anonymize_customers;
+        return (bool) $this->manufacturer->anonymize_customers;
     }
 
-    public function getManufacturerVariableMemberFee()
+    public function getManufacturerVariableMemberFee(): ?int
     {
         if (!$this->isManufacturer()) {
             throw new \Exception('user is no manufacturer');
@@ -150,7 +151,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->manufacturer->variable_member_fee;
     }
 
-    public function getManufacturerEnabledSyncDomains()
+    public function getManufacturerEnabledSyncDomains(): ?string
     {
         if (!$this->isManufacturer()) {
             throw new \Exception('user is no manufacturer');
@@ -158,7 +159,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->manufacturer->enabled_sync_domains;
     }
 
-    public function getManufacturerCustomer()
+    public function getManufacturerCustomer(): ?Customer
     {
         if (!$this->isManufacturer()) {
             throw new \Exception('user is no manufacturer');
@@ -166,12 +167,12 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->manufacturer->customer;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id_customer;
     }
 
-    public function getAbbreviatedUserName()
+    public function getAbbreviatedUserName(): string
     {
         $result = $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
         if ($this->is_company) {
@@ -180,37 +181,33 @@ class Customer extends AppEntity implements IdentityInterface
         return $result;
     }
 
-    public function getGroupId()
+    public function getGroupId(): int
     {
         return $this->id_default_group;
     }
 
-    public function getLastOrderDetailsForDropdown()
+    public function getLastOrderDetailsForDropdown(): array
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getId());
         return $dropdownData;
     }
 
-    public function getFutureOrderDetails()
+    public function getFutureOrderDetails(): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
         return $futureOrderDetails;
     }
 
-    public function getCreditBalanceMinusCurrentCartSum()
+    public function getCreditBalanceMinusCurrentCartSum(): float
     {
         return $this->getCreditBalance() - $this->getCart()['CartProductSum'] - $this->getCart()['CartDepositSum'];
     }
 
-    public function hasEnoughCreditForProduct($grossPrice)
+    public function hasEnoughCreditForProduct($grossPrice): bool
     {
-        $hasEnoughCreditForProduct =
-            $this->getCreditBalanceMinusCurrentCartSum() -
-            Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')
-            >= $grossPrice;
-        return $hasEnoughCreditForProduct;
+        return $this->getCreditBalanceMinusCurrentCartSum() - Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') >= $grossPrice;
     }
 
     public function isAdmin(): bool
@@ -250,13 +247,13 @@ class Customer extends AppEntity implements IdentityInterface
         return false;
     }
 
-    public function getCreditBalance()
+    public function getCreditBalance(): float
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
         return $customersTable->getCreditBalance($this->getId());
     }
 
-    public function getCartType()
+    public function getCartType(): int
     {
         $cartType = Cart::TYPE_WEEKLY_RHYTHM;
         $orderCustomerService = new OrderCustomerService();
@@ -281,7 +278,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $cartsTable->getCart($this, $cartType);
     }
 
-    public function getProducts()
+    public function getProducts(): array
     {
         if ($this->cart !== null) {
             return $this->cart['CartProducts'];
@@ -289,7 +286,7 @@ class Customer extends AppEntity implements IdentityInterface
         return [];
     }
 
-    public function getProductsWithUnitCount()
+    public function getProductsWithUnitCount(): int
     {
         if ($this->cart !== null) {
             return $this->cart['ProductsWithUnitCount'];
@@ -297,12 +294,12 @@ class Customer extends AppEntity implements IdentityInterface
         return 0;
     }
 
-    public function getProductAndDepositSum()
+    public function getProductAndDepositSum(): float
     {
         return $this->getProductSum() + $this->getDepositSum();
     }
 
-    public function getTaxSum()
+    public function getTaxSum(): float
     {
         if ($this->cart !== null) {
             return $this->cart['CartTaxSum'];
@@ -310,7 +307,7 @@ class Customer extends AppEntity implements IdentityInterface
         return 0;
     }
 
-    public function getDepositSum()
+    public function getDepositSum(): float
     {
         if ($this->cart !== null) {
             return $this->cart['CartDepositSum'];
@@ -318,7 +315,7 @@ class Customer extends AppEntity implements IdentityInterface
         return 0;
     }
 
-    public function getProductSum()
+    public function getProductSum(): float
     {
         if ($this->cart !== null) {
             return $this->cart['CartProductSum'];
@@ -326,7 +323,7 @@ class Customer extends AppEntity implements IdentityInterface
         return 0;
     }
 
-    public function getProductSumExcl()
+    public function getProductSumExcl(): float
     {
         if ($this->cart !== null) {
             return $this->cart['CartProductSumExcl'];
@@ -334,12 +331,12 @@ class Customer extends AppEntity implements IdentityInterface
         return 0;
     }
 
-    public function getCartId()
+    public function getCartId(): int
     {
         return $this->cart['Cart']->id_cart;
     }
 
-    public function markCartAsSaved()
+    public function markCartAsSaved(): Cart|false
     {
         if ($this->cart === null) {
             return false;
@@ -366,7 +363,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $manufactures;
     }
 
-    public function getProduct($productId)
+    public function getProduct($productId): array|false
     {
         foreach ($this->getProducts() as $product) {
             if ($product['productId'] == $productId) {
@@ -376,13 +373,9 @@ class Customer extends AppEntity implements IdentityInterface
         return false;
     }
 
-    public function isCartEmpty()
+    public function isCartEmpty(): bool
     {
-        $isEmpty = false;
-        if (empty($this->getProducts())) {
-            $isEmpty = true;
-        }
-        return $isEmpty;
+        return empty($this->getProducts());
     }
 
 }

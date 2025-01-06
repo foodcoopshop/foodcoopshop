@@ -18,9 +18,9 @@ namespace App\Services\Pdf;
 
 interface CustomerInvoiceTcpdfServiceInterface {
 
-    public function setHeaders();
+    public function setHeaders(): void;
 
-    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax);
+    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax): void;
 
 }
 

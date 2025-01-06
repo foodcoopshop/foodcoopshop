@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use Cake\Http\Response;
+
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +23,7 @@ namespace Admin\Traits\Products;
 trait EditIsStockProductTrait 
 {
 
-    public function editIsStockProduct()
+    public function editIsStockProduct(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -65,6 +67,7 @@ trait EditIsStockProductTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
     }
 
 }

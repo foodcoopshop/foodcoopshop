@@ -30,14 +30,15 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public function testNoEmailsSent()
+    public function testNoEmailsSent(): void
     {
         $this->exec('check_credit_balance');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 
-    public function testEmailSentWithIsCashlessPaymentTypeManual() {
+    public function testEmailSentWithIsCashlessPaymentTypeManual(): void
+    {
 
         $this->loginAsCustomer();
         $this->addProductToCart(346, 20);
@@ -57,7 +58,8 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
 
     }
 
-    public function testEmailSentWithIsCashlessPaymentTypeManualReminderDisabled() {
+    public function testEmailSentWithIsCashlessPaymentTypeManualReminderDisabled(): void
+    {
         $this->changeCustomer(Configure::read('test.customerId'), 'check_credit_reminder_enabled', 0);
         $this->loginAsCustomer();
         $this->addProductToCart(346, 20);
@@ -69,7 +71,8 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
         $this->assertMailCount(1);
     }
 
-    public function testEmailSentWithIsCashlessPaymentTypeListUpload() {
+    public function testEmailSentWithIsCashlessPaymentTypeListUpload(): void
+    {
 
         $this->loginAsCustomer();
         $this->addProductToCart(346, 20);

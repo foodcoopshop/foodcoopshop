@@ -6,6 +6,7 @@ namespace Admin\Traits\Customers\Filter;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,22 +25,22 @@ use Cake\ORM\TableRegistry;
 trait CustomersFilterTrait 
 {
 
-    public function getDefaultYear()
+    public function getDefaultYear(): string
     {
         return date('Y');
     }
 
-    public function getDefaultActive()
+    public function getDefaultActive(): int
     {
         return APP_ON;
     }
 
-    public function getDefaultNewsletter()
+    public function getDefaultNewsletter(): string
     {
         return '';
     }
 
-    public function getCustomers($active, $year, $newsletter)
+    public function getCustomers($active, $year, $newsletter): array
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -119,6 +120,8 @@ trait CustomersFilterTrait
             $i ++;
         }
 
+        $customers = $customers->toArray();
+
         if (in_array('sort', array_keys($this->getRequestQueryParams())) 
             && in_array($this->getRequestQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
             $path = '{n}.' .$this->getRequestQuery('sort');
@@ -127,7 +130,7 @@ trait CustomersFilterTrait
                 $path .= '_sort';
                 $type = 'locale';
             }
-            $customers = Hash::sort($customers->toArray(), $path, $this->getRequestQuery('direction'), [
+            $customers = Hash::sort($customers, $path, $this->getRequestQuery('direction'), [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);

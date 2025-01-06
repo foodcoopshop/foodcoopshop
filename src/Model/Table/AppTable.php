@@ -24,7 +24,7 @@ use Cake\ORM\Table;
 class AppTable extends Table
 {
 
-    public $tablePrefix = 'fcs_';
+    public string $tablePrefix = 'fcs_';
 
     public function initialize(array $config): void
     {
@@ -36,7 +36,7 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
-    public function getAllValidationErrors($entity)
+    public function getAllValidationErrors($entity): array
     {
         $preparedErrors = [];
         foreach($entity->getErrors() as $field => $message) {
@@ -48,10 +48,6 @@ class AppTable extends Table
         return $preparedErrors;
     }
 
-    /**
-     * {@inheritDoc}
-     * @see \Cake\ORM\Table::marshaller()
-     */
     public function marshaller(): Marshaller
     {
         return new AppMarshaller($this);

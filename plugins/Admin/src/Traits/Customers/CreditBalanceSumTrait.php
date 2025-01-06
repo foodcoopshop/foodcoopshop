@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait CreditBalanceSumTrait
 {
 
-    public function creditBalanceSum()
+    public function creditBalanceSum(): void
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {

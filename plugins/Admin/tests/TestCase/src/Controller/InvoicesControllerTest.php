@@ -30,7 +30,7 @@ class InvoicesControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    public function testGeneratePaidInCashSavedCorrectly()
+    public function testGeneratePaidInCashSavedCorrectly(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -57,7 +57,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testGenerateInvoiceSendPerEmailDeactivated()
+    public function testGenerateInvoiceSendPerEmailDeactivated(): void
     {
 
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
@@ -82,7 +82,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testCancel()
+    public function testCancel(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -159,7 +159,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testCancelInvoiceEmailDisabled()
+    public function testCancelInvoiceEmailDisabled(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -178,8 +178,8 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testDownloadAsZipFile() {
-
+    public function testDownloadAsZipFile(): void
+    {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
 
@@ -198,7 +198,8 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testIndexAndMyIndex() {
+    public function testIndexAndMyIndex(): void
+    {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsSuperadmin();

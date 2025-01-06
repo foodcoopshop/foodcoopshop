@@ -27,7 +27,7 @@ trait EditProductAmountTrait
 
     use UpdateOrderDetailsTrait;
 
-    public function editProductAmount()
+    public function editProductAmount(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

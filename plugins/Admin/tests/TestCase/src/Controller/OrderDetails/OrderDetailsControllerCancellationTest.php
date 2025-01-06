@@ -23,7 +23,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public string $cancellationReason = 'Product was not fresh any more.';
 
-    public function testCancellationWithPurchasePrice()
+    public function testCancellationWithPurchasePrice(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -41,7 +41,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertEmpty($changedOrderDetailPurchasePrices);
     }
 
-    public function testCancellationAsManufacturer()
+    public function testCancellationAsManufacturer(): void
     {
         $this->loginAsVegetableManufacturer();
 
@@ -53,7 +53,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
-    public function testCancellationAsSuperadminWithEnabledNotification()
+    public function testCancellationAsSuperadminWithEnabledNotification(): void
     {
         $this->loginAsSuperadmin();
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
@@ -64,7 +64,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
-    public function testCancellationAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
+    public function testCancellationAsSuperadminWithEnabledNotificationAfterOrderListsWereSent(): void
     {
         $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
@@ -83,7 +83,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
-    public function testCancellationAsSuperadminWithDisabledNotification()
+    public function testCancellationAsSuperadminWithDisabledNotification(): void
     {
         $this->loginAsSuperadmin();
         $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
@@ -100,14 +100,14 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
-    public function testCancellationProductAttributeStockAvailableAsSuperadmin()
+    public function testCancellationProductAttributeStockAvailableAsSuperadmin(): void
     {
         $this->loginAsSuperadmin();
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdC]);
         $this->assertChangedStockAvailable($this->productIdC, 20);
     }
 
-    public function testCancellationStockAvailableAlwaysAvailableAsSuperadminAttribute()
+    public function testCancellationStockAvailableAlwaysAvailableAsSuperadminAttribute(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$this->productIdC => [
@@ -119,7 +119,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdC, 10);
     }
 
-    public function testCancellationStockAvailableAlwaysAvailableAsSuperadminProduct()
+    public function testCancellationStockAvailableAlwaysAvailableAsSuperadminProduct(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$this->productIdA => [
@@ -131,7 +131,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 10);
     }
 
-    public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminProduct()
+    public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminProduct(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$this->productIdA => [
@@ -144,7 +144,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 10);
     }
 
-    public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminAttribute()
+    public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminAttribute(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$this->productIdC => [
@@ -157,7 +157,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdC, 10);
     }
 
-    public function testCancellationStockProductWithPricePerWeightUseWeightAsAmount()
+    public function testCancellationStockProductWithPricePerWeightUseWeightAsAmount(): void
     {
         $productId = 351;
         $unitsTable = $this->getTableLocator()->get('Units');
@@ -182,14 +182,14 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     }
 
-    private function deleteAndAssertRemoveFromDatabase($orderDetailIds)
+    private function deleteAndAssertRemoveFromDatabase($orderDetailIds): void
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
         $orderDetails = $this->getOrderDetailsFromDatabase($orderDetailIds);
         $this->assertEmpty($orderDetails);
     }
 
-    private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails)
+    private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails): void
     {
 
         $this->runAndAssertQueue();
@@ -206,7 +206,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     }
 
-    private function deleteOrderDetail($orderDetailIds, $cancellationReason)
+    private function deleteOrderDetail($orderDetailIds, $cancellationReason): void
     {
         $this->ajaxPost(
             '/admin/order-details/delete/',

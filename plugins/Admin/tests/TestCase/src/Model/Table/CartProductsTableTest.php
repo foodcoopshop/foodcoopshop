@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use App\Model\Entity\Cart;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +21,7 @@ use Cake\Core\Configure;
 class CartProductsTableTest extends AppCakeTestCase
 {
 
-    public function testRemoveAllWithWrongCartId()
+    public function testRemoveAllWithWrongCartId(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('wrong cartId: 0');
@@ -28,7 +29,7 @@ class CartProductsTableTest extends AppCakeTestCase
         $cartProductsTable->removeAll('bla', Configure::read('test.superadminId'));
     }
 
-    public function testRemoveAllWithCorrectCartIdAndWrongCustomerId()
+    public function testRemoveAllWithCorrectCartIdAndWrongCustomerId(): void
     {
         $cartId = 1;
         $customerId = Configure::read('test.adminId');
@@ -38,7 +39,7 @@ class CartProductsTableTest extends AppCakeTestCase
         $cartProductsTable->removeAll($cartId, $customerId);
     }
 
-    public function testRemoveAllWithCorrectCartIdAndCorrectCustomerId()
+    public function testRemoveAllWithCorrectCartIdAndCorrectCustomerId(): void
     {
         $cartId = 1;
         $customerId = Configure::read('test.superadminId');
@@ -48,7 +49,7 @@ class CartProductsTableTest extends AppCakeTestCase
         $this->assertEmpty($cart->cart_products, 'cart products not empty');
     }
 
-    private function getCartWithCartProducts($cartId, $customerId)
+    private function getCartWithCartProducts($cartId, $customerId): Cart
     {
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',

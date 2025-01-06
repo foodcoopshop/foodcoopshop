@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait EditGroupTrait
 {
 
-    public function editGroup()
+    public function editGroup(): void
     {
         $customerId = (int) $this->getRequest()->getData('customerId');
         $groupId = (int) $this->getRequest()->getData('groupId');

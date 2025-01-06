@@ -9,6 +9,7 @@ use App\Services\CatalogService;
 use App\Services\CartService;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +29,7 @@ class SelfServiceController extends FrontendController
 
     protected CartService $cartService;
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -38,7 +39,7 @@ class SelfServiceController extends FrontendController
         $this->cartService = new CartService($this);
     }
 
-    public function autoLoginAsSelfServiceCustomer()
+    public function autoLoginAsSelfServiceCustomer(): ?Response
     {
 
         $this->disableAutoRender();
@@ -72,7 +73,7 @@ class SelfServiceController extends FrontendController
         return $this->redirect(Configure::read('app.slugHelper')->getSelfService());
     }
 
-    public function index()
+    public function index(): void
     {
         $page = (int) $this->getRequest()->getQuery('page', 1);
 

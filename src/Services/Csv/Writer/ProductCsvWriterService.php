@@ -25,9 +25,9 @@ use Cake\ORM\TableRegistry;
 class ProductCsvWriterService extends BaseCsvWriterService
 {
 
-    private $productIds;
+    private array $productIds;
 
-    public function setProductIds($productIds)
+    public function setProductIds($productIds): void
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');
         $stockProductIds = $productsTable->find()
@@ -48,7 +48,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         $this->productIds = $stockProductIds;
     }
 
-    public function getHeader()
+    public function getHeader(): array
     {
         return [
             __('Id'),
@@ -64,7 +64,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         ];
     }
 
-    public function getRecords()
+    public function getRecords(): array
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');
         $products = $productsTable->getProductsForBackend(
@@ -128,7 +128,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $records;
     }
 
-    private function getFromPattern($pattern, $string)
+    private function getFromPattern($pattern, $string): string
     {
         preg_match($pattern, $string, $matches);
         if (isset($matches[1])) {
@@ -137,7 +137,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return '';
     }
 
-    private function getUnit($product, $isMainProduct)
+    private function getUnit($product, $isMainProduct): string
     {
 
         if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $product->unit))
@@ -164,7 +164,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     }
 
-    private function getProductName($product, $isMainProduct)
+    private function getProductName($product, $isMainProduct): string
     {
 
         $productName = $this->getFromPattern('/<span class="product-name">(.*?)<\/span>/', $product->name);
@@ -176,25 +176,25 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $productName;
     }
 
-    private function getSellingPriceGross($product)
+    private function getSellingPriceGross($product): float
     {
         $sellingPriceGross = $product->gross_price;
         if ($product->unit && $product->unit->price_per_unit_enabled) {
             $sellingPriceGross = $product->unit->price_incl_per_unit;
         }
-        return $sellingPriceGross;
+        return (float) $sellingPriceGross;
     }
 
-    private function getPurchasePriceNet($product)
+    private function getPurchasePriceNet($product): float
     {
         $purchasePriceNet = $product->purchase_net_price ?? 0;
         if ($product->unit && $product->unit->price_per_unit_enabled) {
             $purchasePriceNet = $product->unit->purchase_price_incl_per_unit ?? 0;
         }
-        return $purchasePriceNet;
+        return (float) $purchasePriceNet;
     }
 
-    private function getStockValue($product, $price, $availableQuantity, $pricePerUnit)
+    private function getStockValue($product, $price, $availableQuantity, $pricePerUnit): float|int
     {
         if ($availableQuantity <= 0) {
             return 0;
@@ -209,7 +209,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $stockValue;
     }
 
-    private function getUnitForPrice($product) {
+    private function getUnitForPrice($product): string
+    {
         $unitForPrice = '';
         if ($product->unit && $product->unit->price_per_unit_enabled) {
             $unitForPrice = $product->unit->amount . ' ' . $product->unit->name;

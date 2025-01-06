@@ -24,14 +24,14 @@ use Cake\Http\Exception\NotFoundException;
 class SyncDomainsController extends AppController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');
         $this->viewBuilder()->addHelper('Network.Network');
     }
 
-    public function add()
+    public function add(): void
     {
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomain = $syncDomainsTable->newEntity(
@@ -46,7 +46,7 @@ class SyncDomainsController extends AppController
         }
     }
 
-    public function edit($syncDomainId)
+    public function edit($syncDomainId): void
     {
         if ($syncDomainId === null) {
             throw new NotFoundException;
@@ -64,7 +64,7 @@ class SyncDomainsController extends AppController
         $this->_processForm($syncDomain, true);
     }
 
-    private function _processForm($syncDomain, $isEditMode)
+    private function _processForm($syncDomain, $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

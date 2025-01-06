@@ -29,7 +29,7 @@ class PagesControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public function testAllPublicUrls()
+    public function testAllPublicUrls(): void
     {
         $testUrls = [
             $this->Slug->getHome(),
@@ -51,7 +51,7 @@ class PagesControllerTest extends AppCakeTestCase
     /**
      * test urls that are only available for superadmins and / users that are logged in
      */
-    public function testAllSuperadminUrls()
+    public function testAllSuperadminUrls(): void
     {
         $this->loginAsSuperadmin();
 
@@ -124,7 +124,7 @@ class PagesControllerTest extends AppCakeTestCase
     /**
      * test urls that are only available for manufacturers or have different content
      */
-    public function testAllManufacturerUrls()
+    public function testAllManufacturerUrls(): void
     {
         $this->loginAsMeatManufacturer();
 
@@ -142,7 +142,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testAllManufacturerUrlsAnonymized()
+    public function testAllManufacturerUrlsAnonymized(): void
     {
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsMeatManufacturer();
@@ -160,7 +160,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertPagesForErrors($testUrls);
     }
 
-    public function test404PagesLoggedOut()
+    public function test404PagesLoggedOut(): void
     {
         $testUrls = [
             '/xxx',
@@ -174,7 +174,7 @@ class PagesControllerTest extends AppCakeTestCase
      * products and categories are not visible for guests in the test settings
      * to test the correct 404 page, a valid login is required
      */
-    public function test404PagesLoggedIn()
+    public function test404PagesLoggedIn(): void
     {
         $this->loginAsSuperadmin();
         $testUrls = [
@@ -187,7 +187,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testRedirectIfPage1()
+    public function testRedirectIfPage1(): void
     {
         $this->loginAsSuperadmin();
         $urls = [
@@ -201,13 +201,13 @@ class PagesControllerTest extends AppCakeTestCase
         }
     }
 
-    public function testPageDetailOnlinePublicLoggedOut()
+    public function testPageDetailOnlinePublicLoggedOut(): void
     {
         $this->get($this->Slug->getPageDetail(3, 'Page'));
         $this->assertResponseCode(200);
     }
 
-    public function testPageDetailOfflinePublicLoggedOut()
+    public function testPageDetailOfflinePublicLoggedOut(): void
     {
         $pageId = 3;
         $this->changePage($pageId, 0, 0);
@@ -215,7 +215,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testPageDetailOnlinePrivateLoggedOut()
+    public function testPageDetailOnlinePrivateLoggedOut(): void
     {
         $pageId = 3;
         $this->changePage($pageId, 1);
@@ -223,7 +223,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testPageDetailOnlinePrivateLoggedIn()
+    public function testPageDetailOnlinePrivateLoggedIn(): void
     {
         $this->loginAsCustomer();
         $pageId = 3;
@@ -232,14 +232,14 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
-    public function testPageDetailNonExistingLoggedOut()
+    public function testPageDetailNonExistingLoggedOut(): void
     {
         $pageId = 30;
         $this->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
         $this->assertResponseCode(404);
     }
 
-    protected function assertPagesFor404($testPages)
+    protected function assertPagesFor404($testPages): void
     {
         foreach ($testPages as $url) {
             $this->get($url);
@@ -247,7 +247,7 @@ class PagesControllerTest extends AppCakeTestCase
         }
     }
 
-    protected function changePage($pageId, $isPrivate = 0, $active = 1)
+    protected function changePage($pageId, $isPrivate = 0, $active = 1): void
     {
         $pagesTable = $this->getTableLocator()->get('Pages');
         $page = $pagesTable->get($pageId);

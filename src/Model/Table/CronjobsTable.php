@@ -15,6 +15,7 @@ use App\Command\CronCommandFactory;
 use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\CronjobLog;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -146,7 +147,7 @@ class CronjobsTable extends AppTable
         return $validator;
     }
 
-    private function getAllowOnlyOneTimeIntervalValidator($validator, $timeInterval, $timeIntervalString)
+    private function getAllowOnlyOneTimeIntervalValidator($validator, $timeInterval, $timeIntervalString): Validator
     {
         $validator = $validator->equals('time_interval', $timeInterval, __('The_time_interval_needs_to_equal_"{0}"', [
             $timeIntervalString,
@@ -154,7 +155,7 @@ class CronjobsTable extends AppTable
         return $validator;
     }
 
-    public function isInvoiceCronjobActive()
+    public function isInvoiceCronjobActive(): bool
     {
         $invoiceCronjobs = $this->find()->where([
             $this->aliasField('id IN') => [
@@ -166,7 +167,7 @@ class CronjobsTable extends AppTable
         return $invoiceCronjobs->count() > 0;
     }
 
-    public function getTimeIntervals()
+    public function getTimeIntervals(): array
     {
         return [
             'day'   => __('daily'),
@@ -175,7 +176,7 @@ class CronjobsTable extends AppTable
         ];
     }
 
-    public function getDaysOfMonth()
+    public function getDaysOfMonth(): array
     {
         $days = [];
         $i = 1;
@@ -187,7 +188,7 @@ class CronjobsTable extends AppTable
         return $days;
     }
 
-    public function getWeekdays()
+    public function getWeekdays(): array
     {
         $weekdays = [
             'Monday' => __('Monday'),
@@ -202,7 +203,7 @@ class CronjobsTable extends AppTable
 
     }
 
-    public function findAvailable(Query $query)
+    public function findAvailable(SelectQuery $query): SelectQuery
     {
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             $query->where(['name <> "SendInvoicesToManufacturers"']);
@@ -219,7 +220,7 @@ class CronjobsTable extends AppTable
         return $query;
     }
 
-    public function run()
+    public function run(): array
     {
 
         if (empty($this->cronjobRunDay)) {
@@ -230,7 +231,7 @@ class CronjobsTable extends AppTable
         $cronjobLogsTable->deleteOldLogs($this->cronjobRunDay);
 
         $cronjobs = $this->find('all', conditions: [
-            'Cronjobs.active' => APP_ON,
+            $this->aliasField('active') => APP_ON,
         ])->all();
 
         $executedCronjobs = [];
@@ -257,10 +258,10 @@ class CronjobsTable extends AppTable
 
             $cronjobLog = $cronjobLogsTable->find('all',
                 conditions: [
-                    'CronjobLogs.cronjob_id' => $cronjob->id,
+                    $cronjobLogsTable->aliasField('cronjob_id') => $cronjob->id,
                 ],
                 order: [
-                    'CronjobLogs.created' => 'DESC'
+                    $cronjobLogsTable->aliasField('created') => 'DESC'
                 ]
             )
             ->where(function (QueryExpression $exp) use ($cronjobRunDayObject) {
@@ -292,7 +293,7 @@ class CronjobsTable extends AppTable
 
     }
 
-    private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
+    private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject): array
     {
         $commandName = $cronjob->getOriginalValues()['name'];
 
@@ -336,7 +337,7 @@ class CronjobsTable extends AppTable
         ];
     }
 
-    private function executeCronjobRespectingTimeInterval($cronjob)
+    private function executeCronjobRespectingTimeInterval($cronjob): bool
     {
 
         $tmpLocale = I18n::getLocale();

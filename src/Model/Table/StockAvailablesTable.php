@@ -71,27 +71,25 @@ class StockAvailablesTable extends AppTable
         }
     }
 
-    public function updateQuantityForMainProduct($productId)
+    public function updateQuantityForMainProduct($productId): void
     {
         $productId = (int) $productId;
-        if ($productId < 0) {
-            return;
+        if ($productId > 0) {
+            $query = 'UPDATE '.$this->getTable().' AS sa1, (
+                        SELECT SUM(quantity) as quantitySum
+                        FROM '.$this->getTable().'
+                        WHERE id_product = :productId
+                            AND id_product_attribute > 0
+                        GROUP BY id_product
+                        ) sa2
+                    SET sa1.quantity = sa2.quantitySum
+                    WHERE sa1.id_product = ' . $productId . '
+                        AND sa1.id_product_attribute = 0';
+            $params = [
+                'productId' => $productId
+            ];
+            $statement = $this->getConnection()->getDriver()->prepare($query);
+            $statement->execute($params);
         }
-
-        $query = 'UPDATE '.$this->getTable().' AS sa1, (
-                     SELECT SUM(quantity) as quantitySum
-                     FROM '.$this->getTable().'
-                     WHERE id_product = :productId
-                         AND id_product_attribute > 0
-                     GROUP BY id_product
-                     ) sa2
-                 SET sa1.quantity = sa2.quantitySum
-                 WHERE sa1.id_product = ' . $productId . '
-                     AND sa1.id_product_attribute = 0';
-        $params = [
-            'productId' => $productId
-        ];
-        $statement = $this->getConnection()->getDriver()->prepare($query);
-        $statement->execute($params);
     }
 }

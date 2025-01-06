@@ -26,7 +26,7 @@ trait EditCustomerTrait
 
     use UpdateOrderDetailsTrait;
 
-    public function editCustomer()
+    public function editCustomer(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

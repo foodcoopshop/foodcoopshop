@@ -21,7 +21,7 @@ use App\Services\Csv\Reader\Banking\VolksbankBankingReaderService;
 class VolksbankBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function testRead()
+    public function testRead(): void
     {
         $reader = VolksbankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank.csv');
         $records = $reader->getPreparedRecords();
@@ -36,13 +36,13 @@ class VolksbankBankingReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(1, count($records));
     }
 
-    public function testCheckStructureNotOk()
+    public function testCheckStructureNotOk(): void
     {
         $reader = VolksbankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
-    public function testCheckStructureOk()
+    public function testCheckStructureOk(): void
     {
         $reader = VolksbankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank.csv');
         $this->assertTrue($reader->checkStructure());

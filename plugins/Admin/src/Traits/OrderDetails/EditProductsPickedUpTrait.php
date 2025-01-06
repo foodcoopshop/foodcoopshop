@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait EditProductsPickedUpTrait 
 {
 
-    public function editProductsPickedUp()
+    public function editProductsPickedUp(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

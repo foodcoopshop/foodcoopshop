@@ -28,7 +28,7 @@ use App\Services\SanitizeService;
 class ConfigurationsController extends AdminAppController
 {
     
-    public function edit($name)
+    public function edit($name): void
     {
 
         $this->viewBuilder()->addHelper('Configuration');
@@ -69,7 +69,7 @@ class ConfigurationsController extends AdminAppController
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
         if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
-            $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
+            $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addProtocolToUrl($this->getRequest()->getData('Configurations.value'))));
         }
         if (in_array($configuration->type, ['multiple_dropdown'])) {
             if ($this->getRequest()->getData('Configurations.value') != '') {
@@ -105,7 +105,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('configuration', $configuration);
     }
 
-    public function previewEmail($configurationName)
+    public function previewEmail($configurationName): void
     {
 
         $this->disableAutoRender();
@@ -150,7 +150,7 @@ class ConfigurationsController extends AdminAppController
         echo $output;
     }
 
-    public function index()
+    public function index(): void
     {
         $this->viewBuilder()->addHelper('Configuration');
         $configurationsTable = $this->getTableLocator()->get('Configurations');
@@ -179,7 +179,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Settings'));
     }
 
-    public function sendTestEmail()
+    public function sendTestEmail(): void
     {
         $this->set('title_for_layout', __d('admin', 'Send_test_email'));
         $email = new AppMailer(false);

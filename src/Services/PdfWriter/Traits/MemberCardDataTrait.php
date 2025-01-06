@@ -17,11 +17,12 @@ declare(strict_types=1);
 namespace App\Services\PdfWriter\Traits;
 
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 trait MemberCardDataTrait
 {
 
-    public function getMemberCardCustomerData($customerIds)
+    public function getMemberCardCustomerData($customerIds): SelectQuery
     {
 
         if (empty($customerIds)) {

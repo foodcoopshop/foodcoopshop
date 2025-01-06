@@ -24,12 +24,12 @@ use App\Services\SanitizeService;
 class PagesController extends AdminAppController
 {
 
-    public function home()
+    public function home(): void
     {
         $this->set('title_for_layout', __d('admin', 'Home'));
     }
 
-    public function add()
+    public function add(): void
     {
         $pagesTable = $this->getTableLocator()->get('Pages');
         $page = $pagesTable->newEntity(
@@ -48,7 +48,7 @@ class PagesController extends AdminAppController
         }
     }
 
-    public function edit($pageId)
+    public function edit($pageId): void
     {
         if ($pageId === null) {
             throw new NotFoundException;
@@ -78,7 +78,7 @@ class PagesController extends AdminAppController
         $this->_processForm($page, true);
     }
 
-    private function _processForm($page, $isEditMode)
+    private function _processForm($page, $isEditMode): void
     {
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/pages",
@@ -98,7 +98,7 @@ class PagesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
-        $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
+        $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addProtocolToUrl($this->getRequest()->getData('Pages.extern_url'))));
         $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->identity->getId()));
 
         if ($this->getRequest()->getData('Pages.id_parent') == '') {
@@ -140,7 +140,7 @@ class PagesController extends AdminAppController
         $this->set('page', $page);
     }
 
-    public function index()
+    public function index(): void
     {
         $conditions = [];
 

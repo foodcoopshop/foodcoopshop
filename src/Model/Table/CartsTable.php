@@ -89,7 +89,7 @@ class CartsTable extends AppTable
         return $validator;
     }
 
-    public function getAllowOnlyDefinedPickupDaysValidator(Validator $validator, $field)
+    public function getAllowOnlyDefinedPickupDaysValidator(Validator $validator, $field): Validator
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
@@ -104,7 +104,7 @@ class CartsTable extends AppTable
         return $validator;
     }
 
-    public function getProductNameWithUnity($productName, $unity)
+    public function getProductNameWithUnity($productName, $unity): string
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
@@ -224,7 +224,7 @@ class CartsTable extends AppTable
         return $preparedCart;
     }
 
-    public function getCartGroupedByPickupDay($cart, $customerSelectedPickupDay=null)
+    public function getCartGroupedByPickupDay($cart, $customerSelectedPickupDay=null): array
     {
         $manufacturerName = [];
         $productName = [];
@@ -260,7 +260,7 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    private function addPurchasePricePerUnitProductData($productData, $unitProduct)
+    private function addPurchasePricePerUnitProductData($productData, $unitProduct): array
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             if (!empty($unitProduct)) {
@@ -281,7 +281,7 @@ class CartsTable extends AppTable
         return $count;
     }
 
-    public function getPricesRespectingPricePerUnit($netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate)
+    public function getPricesRespectingPricePerUnit($netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate): array
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');

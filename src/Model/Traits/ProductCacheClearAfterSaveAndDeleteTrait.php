@@ -26,17 +26,17 @@ use Cake\Datasource\EntityInterface;
 trait ProductCacheClearAfterSaveAndDeleteTrait
 {
 
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         $this->clearProductCache();
     }
 
-    public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         $this->clearProductCache();
     }
 
-    public function clearProductCache()
+    public function clearProductCache(): void
     {
         $clearCache = true;
         

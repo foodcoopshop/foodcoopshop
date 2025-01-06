@@ -57,7 +57,7 @@ class Application extends BaseApplication
     implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
 
-    public function checkMandatorySettings()
+    public function checkMandatorySettings(): void
     {
         $securityErrors = 0;
         if (Configure::read('app.discourseSsoEnabled') && Configure::read('app.discourseSsoSecret') == '') {
@@ -120,7 +120,7 @@ class Application extends BaseApplication
 
     }
 
-    private function getApiUrls()
+    private function getApiUrls(): array
     {
         return [
             '/api/getProducts.json',

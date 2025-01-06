@@ -84,7 +84,7 @@ class ProductsPolicy implements RequestPolicyInterface
 
     }
 
-    protected function productExists($request)
+    protected function productExists($request): bool
     {
         $productTable = TableRegistry::getTableLocator()->get('Products');
         $ids = $productTable->getProductIdAndAttributeId($request->getData('productId'));
@@ -97,7 +97,7 @@ class ProductsPolicy implements RequestPolicyInterface
         return !empty($product);
     }
 
-    protected function manufacturerIsProductOwner($identity, $request)
+    protected function manufacturerIsProductOwner($identity, $request): bool
     {
         if (!$identity->isManufacturer()) {
             return true;

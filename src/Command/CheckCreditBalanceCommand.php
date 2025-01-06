@@ -27,11 +27,11 @@ use App\Model\Entity\Payment;
 class CheckCreditBalanceCommand extends AppCommand
 {
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            return;
+            return static::CODE_ERROR;
         }
 
         $this->startTimeLogging();

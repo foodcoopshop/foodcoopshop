@@ -25,13 +25,15 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
     public string $editCustomerReason = 'The member forgot his product and I took it.';
     public int $editCustomerAmount = 1;
 
-    public function testEditOrderDetailCustomerAsManufacturer() {
+    public function testEditOrderDetailCustomerAsManufacturer(): void
+    {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, true);
         $this->assertNotPerfectlyImplementedAccessRestricted();
     }
 
-    public function testEditOrderDetailCustomerAsSuperadminNotParted() {
+    public function testEditOrderDetailCustomerAsSuperadminNotParted(): void
+    {
         $this->loginAsSuperadmin();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
@@ -52,7 +54,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         }
     }
 
-    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnits()
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnits(): void
     {
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -200);
         $this->loginAsSuperadmin();
@@ -87,7 +89,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
 
     }
 
-    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnitsAndPurchasePriceEnabled()
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnitsAndPurchasePriceEnabled(): void
     {
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -200);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
@@ -134,7 +136,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->assertEquals(3, $changedOrderDetails[1]->product_amount);
     }
 
-    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5()
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5(): void
     {
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
@@ -173,7 +175,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
 
     }
 
-    public function testEditOrderDetailCustomerAsSuperadminNoEmailsSent()
+    public function testEditOrderDetailCustomerAsSuperadminNoEmailsSent(): void
     {
         $this->loginAsSuperadmin();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, false);
@@ -181,7 +183,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->assertNoMailSent();
     }
 
-    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount, $sendEmailToCustomers)
+    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount, $sendEmailToCustomers): void
     {
         $this->post(
             '/admin/order-details/editCustomer/',

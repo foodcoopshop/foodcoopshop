@@ -20,7 +20,7 @@ namespace Admin\Traits\OrderDetails;
 trait UpdateOrderDetailsTrait 
 {
 
-    private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
+    private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity): void
     {
         $orderDetailUnit2save = [
             'product_quantity_in_units' => $productQuantity,
@@ -31,7 +31,7 @@ trait UpdateOrderDetailsTrait
         $orderDetailUnitsTable->save($patchedEntity);
     }
 
-    private function changeOrderDetailPurchasePrice($purchasePriceObject, $productPurchasePrice, $productAmount)
+    private function changeOrderDetailPurchasePrice($purchasePriceObject, $productPurchasePrice, $productAmount): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $unitPriceExcl = $productsTable->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
@@ -50,7 +50,7 @@ trait UpdateOrderDetailsTrait
         );
     }
 
-    private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange)
+    private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange): float|false
     {
 
         // order detail references a product attribute

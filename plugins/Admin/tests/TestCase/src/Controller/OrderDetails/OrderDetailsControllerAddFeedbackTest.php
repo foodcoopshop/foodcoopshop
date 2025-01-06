@@ -30,7 +30,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->changeConfiguration('FCS_FEEDBACK_TO_PRODUCTS_ENABLED', 1);
     }
 
-    public function testAddFeedbackWithWrongOrderDetailId()
+    public function testAddFeedbackWithWrongOrderDetailId(): void
     {
         $this->loginAsSuperadmin();
         $this->addFeedbackToOrderDetail(0, '');
@@ -39,7 +39,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->assertJsonError();
     }
 
-    public function testAddFeedbackWithEmptyFeedback()
+    public function testAddFeedbackWithEmptyFeedback(): void
     {
         $this->loginAsSuperadmin();
         $response = $this->addFeedbackToOrderDetail($this->orderDetailId, '');
@@ -47,7 +47,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->assertJsonError();
     }
 
-    public function testAddFeedbackAsSuperadmin()
+    public function testAddFeedbackAsSuperadmin(): void
     {
         $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
@@ -61,21 +61,21 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->assertMailSubjectContainsAt($mailIndex, 'Demo Superadmin hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
-    public function testAddFeedbackAsCustomerForbidden()
+    public function testAddFeedbackAsCustomerForbidden(): void
     {
         $this->loginAsCustomer();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testAddFeedbackAsManufacturerForbidden()
+    public function testAddFeedbackAsManufacturerForbidden(): void
     {
         $this->loginAsVegetableManufacturer();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testAddFeedbackAsCustomerOk()
+    public function testAddFeedbackAsCustomerOk(): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailsTable->save(
@@ -99,7 +99,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->assertMailSubjectContainsAt($mailIndex, 'Demo Mitglied hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
-    private function addFeedbackToOrderDetail($orderDetailId, $orderDetailFeedback)
+    private function addFeedbackToOrderDetail($orderDetailId, $orderDetailFeedback): ?object
     {
         $this->ajaxPost(
             '/admin/order-details/addFeedback/',

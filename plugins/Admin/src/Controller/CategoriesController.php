@@ -27,7 +27,7 @@ class CategoriesController extends AdminAppController
 
     use UploadTrait;
     
-    public function add()
+    public function add(): void
     {
         $categoriesTable = $this->getTableLocator()->get('Categories');
         $category = $categoriesTable->newEntity(
@@ -45,7 +45,7 @@ class CategoriesController extends AdminAppController
         }
     }
 
-    public function edit($categoryId)
+    public function edit($categoryId): void
     {
         if ($categoryId === null) {
             throw new NotFoundException;
@@ -72,7 +72,7 @@ class CategoriesController extends AdminAppController
         $this->_processForm($category, true);
     }
 
-    private function _processForm($category, $isEditMode)
+    private function _processForm($category, $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -136,7 +136,7 @@ class CategoriesController extends AdminAppController
         $this->set('category', $category);
     }
 
-    public function index()
+    public function index(): void
     {
         $conditions = [];
         $categoriesTable = $this->getTableLocator()->get('Categories');

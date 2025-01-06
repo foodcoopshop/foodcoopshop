@@ -25,7 +25,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public function testAccessIndexIsCustomerAllowedToViewOwnOrdersTrue()
+    public function testAccessIndexIsCustomerAllowedToViewOwnOrdersTrue(): void
     {
         Configure::write('app.isCustomerAllowedToViewOwnOrders', true);
         $this->loginAsCustomer();
@@ -33,7 +33,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertResponseOk();
     }
 
-    public function testAccessIndexIsCustomerAllowedToViewOwnOrdersFalse()
+    public function testAccessIndexIsCustomerAllowedToViewOwnOrdersFalse(): void
     {
         Configure::write('app.isCustomerAllowedToViewOwnOrders', false);
         $this->loginAsCustomer();
@@ -41,14 +41,14 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testEditProductsPickedUp()
+    public function testEditProductsPickedUp(): void
     {
         $this->loginAsSuperadmin();
         $result = $this->editProductsPickedUp([Configure::read('test.superadminId')], '2018-02-02', APP_ON);
         $this->assertEquals(1, $result->result->products_picked_up);
     }
 
-    private function editProductsPickedUp($customerIds, $pickupDay, $state)
+    private function editProductsPickedUp($customerIds, $pickupDay, $state): ?object
     {
         $this->ajaxPost(
             '/admin/order-details/editProductsPickedUp/',

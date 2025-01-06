@@ -9,6 +9,7 @@ use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +31,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    private function setUpProfileImageTests()
+    private function setUpProfileImageTests(): string
     {
         $profileImageSrcFileAndPath = WWW_ROOT . 'img/tests/test-image.jpg';
         $profileImageTargetFilename = Configure::read('test.customerId') . '-small.jpg';
@@ -38,19 +39,19 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         return $profileImageTargetFilename;
     }
 
-    private function tearDownProfileImageTests($profileImageTargetFilename)
+    private function tearDownProfileImageTests($profileImageTargetFilename): void
     {
         unlink(Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
 
     }
 
-    public function testMaxlengthAttributeExistsInRegistrationPage()
+    public function testMaxlengthAttributeExistsInRegistrationPage(): void
     {
         $this->get($this->Slug->getLogin());
         $this->assertResponseContains('maxlength="32"');
     }
 
-    public function testProfileImagePrivacyForGuests()
+    public function testProfileImagePrivacyForGuests(): void
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
@@ -59,7 +60,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
 
-    public function testProfileImagePrivacyForManufacturers()
+    public function testProfileImagePrivacyForManufacturers(): void
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
@@ -69,7 +70,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
 
-    public function testProfileImagePrivacyForSuperadmins()
+    public function testProfileImagePrivacyForSuperadmins(): void
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
@@ -80,7 +81,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
 
-    public function testProfileImagePrivacyForDeletedMember()
+    public function testProfileImagePrivacyForDeletedMember(): void
     {
         $this->resetCustomerCreditBalance();
         $profileImageTargetFilename = $this->setUpProfileImageTests();
@@ -95,19 +96,19 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testNewPasswordRequestWithWrongEmail()
+    public function testNewPasswordRequestWithWrongEmail(): void
     {
         $this->doPostNewPasswordRequest('this-is-no-email-address');
         $this->assertResponseContains('Die E-Mail-Adresse ist nicht gültig.');
     }
 
-    public function testNewPasswordRequestWithNonExistingEmail()
+    public function testNewPasswordRequestWithNonExistingEmail(): void
     {
         $this->doPostNewPasswordRequest('test@test-fcs-test.at');
         $this->assertResponseContains('Wir haben diese E-Mail-Adresse nicht gefunden.');
     }
 
-    public function testNewPasswordRequestWithValidEmail()
+    public function testNewPasswordRequestWithValidEmail(): void
     {
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
         $this->assertFlashMessage('Wir haben dir soeben den Aktivierungslink für dein neues Passwort gesendet.');
@@ -145,7 +146,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(302); // if password is wrong, response code is 200 (sic!)
     }
 
-    private function doPostNewPasswordRequest($email)
+    private function doPostNewPasswordRequest($email): void
     {
         $this->post($this->Slug->getNewPasswordRequest(), [
             'Customers' => [
@@ -154,7 +155,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
     }
 
-    protected $registrationDataEmpty = [
+    protected array $registrationDataEmpty = [
         'Customers' => [
             'firstname' => '',
             'lastname' => '',
@@ -174,7 +175,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]
     ];
 
-    private function addValidRegistrationData()
+    private function addValidRegistrationData(): void
     {
         $this->registrationDataEmpty['Customers']['address_customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
         $this->registrationDataEmpty['Customers']['address_customer']['postcode'] = 'ABCDEF';
@@ -182,13 +183,13 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->registrationDataEmpty['Customers']['address_customer']['phone'] = '897++asdf+d';
     }
 
-    public function testRegistrationSpamProtection()
+    public function testRegistrationSpamProtection(): void
     {
         $this->addCustomer($this->registrationDataEmpty);
         $this->assertFlashMessage('S-p-a-m-!');
     }
 
-    public function testRegistrationValidationEmptyData()
+    public function testRegistrationValidationEmptyData(): void
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addCustomer($this->registrationDataEmpty);
@@ -200,7 +201,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte gib deine Handynummer an.');
     }
 
-    public function testRegistrationValidationWrongData()
+    public function testRegistrationValidationWrongData(): void
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addValidRegistrationData();
@@ -212,7 +213,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
     }
 
-    public function testRegistrationValidationWithCompanyWrongDataA()
+    public function testRegistrationValidationWithCompanyWrongDataA(): void
     {
         $this->registrationDataEmpty['Customers']['is_company'] = true;
         $this->registrationDataEmpty['antiSpam'] = 4;
@@ -227,7 +228,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
     }
 
-    public function testRegistrationWithCompanyUserActive()
+    public function testRegistrationWithCompanyUserActive(): void
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addValidRegistrationData();
@@ -243,7 +244,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertTrue((bool) $customer->is_company);
     }
 
-    public function testRegistrationUserNotActive()
+    public function testRegistrationUserNotActive(): void
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addValidRegistrationData();
@@ -264,7 +265,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     }
 
-    public function testRegistrationUserActive()
+    public function testRegistrationUserActive(): void
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addValidRegistrationData();
@@ -309,7 +310,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     }
 
-    public function testLoginPageWithOutputStringReplacements()
+    public function testLoginPageWithOutputStringReplacements(): void
     {
         Configure::write('app.outputStringReplacements',
            include(APP . 'Services' . DS . 'OutputFilter' . DS . 'config' . DS . 'de_DE' . DS . 'memberClientConfig.php'),
@@ -318,7 +319,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Kundenkonto erstellen');
     }
 
-    private function saveAndCheckValidCustomer($data, $email)
+    private function saveAndCheckValidCustomer($data, $email): Customer
     {
 
         $customerFirstname = '  John  ';
@@ -378,7 +379,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         return $customer;
     }
 
-    public function testDeleteWithNotYetBilledOrdersAndNotEqualPayments()
+    public function testDeleteWithNotYetBilledOrdersAndNotEqualPayments(): void
     {
 
         $this->loginAsSuperadmin();
@@ -396,7 +397,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertNotEmpty($customer);
     }
 
-    public function testDeleteWithNotApprovedPayments()
+    public function testDeleteWithNotApprovedPayments(): void
     {
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -426,7 +427,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertNotEmpty($customer);
     }
 
-    public function testDeleteOk()
+    public function testDeleteOk(): void
     {
         $this->resetCustomerCreditBalance();
         $this->loginAsSuperadmin();
@@ -442,7 +443,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertEmpty($customer);
     }
 
-    public function testLogin()
+    public function testLogin(): void
     {
         // 1) login
         $userEmail = Configure::read('test.loginEmailSuperadmin');
@@ -462,7 +463,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    private function addCustomer($data)
+    private function addCustomer($data): ResponseInterface
     {
         $this->post($this->Slug->getRegistration(), $data);
         return $this->_response;

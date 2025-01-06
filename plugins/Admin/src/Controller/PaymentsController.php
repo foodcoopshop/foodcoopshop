@@ -12,6 +12,7 @@ use App\Services\SanitizeService;
 use Cake\I18n\DateTime;
 use Cake\I18n\Date;
 use App\Model\Entity\Payment;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -40,7 +41,7 @@ class PaymentsController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function previewEmail($paymentId, $approval)
+    public function previewEmail($paymentId, $approval): void
     {
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -75,7 +76,7 @@ class PaymentsController extends AdminAppController
         exit;
     }
 
-    public function edit($paymentId)
+    public function edit($paymentId): void
     {
 
         $this->set('title_for_layout', __d('admin', 'Check_credit_upload'));
@@ -165,7 +166,7 @@ class PaymentsController extends AdminAppController
         $this->set('payment', $payment);
     }
 
-    public function add()
+    public function add(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
         $type = $this->getRequest()->getData('type');
@@ -173,18 +174,12 @@ class PaymentsController extends AdminAppController
             $type = trim($type);
         }
 
-        if (! in_array($type, [
+        if (!in_array($type, [
             Payment::TYPE_PRODUCT,
             Payment::TYPE_PAYBACK,
             Payment::TYPE_DEPOSIT,
         ])) {
-            $message = 'payment type not correct: ' . $type;
-            $this->set([
-                'status' => 0,
-                'msg' => $message,
-            ]);
-            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-            return;
+            throw new \Exception('payment type not correct: ' . $type);
         }
 
         $sanitizeService = new SanitizeService();
@@ -233,13 +228,7 @@ class PaymentsController extends AdminAppController
                     $customersTable->aliasField('id_customer') => $customerId,
                 ])->first();
                 if (empty($customer)) {
-                    $msg = 'customer id not correct: ' . $customerId;
-                    $this->set([
-                        'status' => 0,
-                        'msg' => $msg,
-                    ]);
-                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                    return;
+                    throw new \Exception('customer id not correct: ' . $customerId);
                 }
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
             }
@@ -254,14 +243,7 @@ class PaymentsController extends AdminAppController
                 ])->first();
 
                 if (empty($manufacturer)) {
-                    $msg = 'manufacturer id not correct: ' . $manufacturerId;
-                    $this->log($msg);
-                    $this->set([
-                        'status' => 0,
-                        'msg' => $msg,
-                    ]);
-                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                    return;
+                    throw new \Exception('manufacturer id not correct: ' . $manufacturerId);
                 }
 
                 $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
@@ -270,14 +252,7 @@ class PaymentsController extends AdminAppController
 
             if ($type == 'deposit') {
                 if (!isset($userType)) {
-                    $msg = 'no userType set - payment cannot be saved';
-                    $this->log($msg);
-                    $this->set([
-                        'status' => 0,
-                        'msg' => $msg,
-                    ]);
-                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                    return;
+                    throw new \Exception('no userType set - payment cannot be saved');
                 }
                 $actionLogType .= '_'.$userType;
             }
@@ -294,23 +269,10 @@ class PaymentsController extends AdminAppController
             }
             // security check
             if (!$this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
-                $msg = 'user without superadmin privileges tried to insert payment for another user: ' . $customerId;
-                $this->set([
-                    'status' => 0,
-                    'msg' => $msg,
-                ]);
-                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                return;
+                throw new \Exception('user without superadmin privileges tried to insert payment for another user: ' . $customerId);
             }
             if (empty($customer)) {
-                $msg = 'customer id not correct: ' . $customerId;
-                $this->log($msg);
-                $this->set([
-                    'status' => 0,
-                    'msg' => $msg,
-                ]);
-                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                return;
+                throw new \Exception('customer id not correct: ' . $customerId);
             }
         }
 
@@ -376,10 +338,11 @@ class PaymentsController extends AdminAppController
             'paymentId' => $newPayment->id,
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'paymentId']);
+        return null;
 
     }
 
-    public function changeState()
+    public function changeState(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -469,7 +432,7 @@ class PaymentsController extends AdminAppController
         return $customerId;
     }
 
-    public function overview()
+    public function overview(): void
     {
         $this->customerId = $this->identity->getId();
         $this->paymentType = Payment::TYPE_PRODUCT;
@@ -484,7 +447,7 @@ class PaymentsController extends AdminAppController
         $this->render('product');
     }
 
-    public function product()
+    public function product(): void
     {
 
         $this->paymentType = Payment::TYPE_PRODUCT;
@@ -513,7 +476,7 @@ class PaymentsController extends AdminAppController
 
     }
 
-    private function preparePayments()
+    private function preparePayments(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $paymentsAssociation = $customersTable->getAssociation('Payments');

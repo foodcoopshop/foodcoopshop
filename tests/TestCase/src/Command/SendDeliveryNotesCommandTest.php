@@ -34,7 +34,7 @@ class SendDeliveryNotesCommandTest extends AppCakeTestCase
         unlink(TMP . 'Lieferschein-01.02.2018-28.02.2018-Demo-Milch-Hersteller-FoodCoop-Test.xlsx');
     }
 
-    public function testSendDeliveryNotes()
+    public function testSendDeliveryNotes(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $cronjobRunDay = '2018-03-01';

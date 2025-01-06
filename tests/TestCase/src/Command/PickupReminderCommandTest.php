@@ -26,20 +26,20 @@ class PickupReminderCommandTest extends AppCakeTestCase
 
     use EmailTrait;
 
-    public function testCustomersDoNotHaveFutureOrders()
+    public function testCustomersDoNotHaveFutureOrders(): void
     {
         $this->exec('pickup_reminder');
         $this->assertMailCount(0);
     }
 
-    public function testOneCustomerHasFutureOrdersLaterThanNextPickupDay()
+    public function testOneCustomerHasFutureOrdersLaterThanNextPickupDay(): void
     {
         $this->prepareOrderDetails();
         $this->exec('pickup_reminder 2018-03-10');
         $this->assertMailCount(0);
     }
 
-    public function testOneCustomerHasFutureOrdersForNextPickupDay()
+    public function testOneCustomerHasFutureOrdersForNextPickupDay(): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
@@ -62,7 +62,7 @@ class PickupReminderCommandTest extends AppCakeTestCase
 
     }
 
-    public function testOneCustomerHasFutureOrdersForNextPickupDayNotificationDisabled()
+    public function testOneCustomerHasFutureOrdersForNextPickupDayNotificationDisabled(): void
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'pickup_day_reminder_enabled', 0);
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
@@ -82,7 +82,7 @@ class PickupReminderCommandTest extends AppCakeTestCase
     }
 
 
-    private function prepareOrderDetails()
+    private function prepareOrderDetails(): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailsTable->save(

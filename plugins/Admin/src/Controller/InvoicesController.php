@@ -13,6 +13,8 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
 use Cake\View\JsonView;
 use Cake\I18n\DateTime;
+use Cake\Http\Response;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,7 +38,7 @@ class InvoicesController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function downloadAsZipFile()
+    public function downloadAsZipFile(): Response
     {
 
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
@@ -52,7 +54,7 @@ class InvoicesController extends AdminAppController
         $invoices = $invoicesTable->find('all');
         $invoices = $this->setInvoiceConditions($invoices, $dateFrom, $dateTo, $customerIds);
 
-        if (empty($invoices)) {
+        if ($invoices->count() == 0) {
             throw new NotFoundException();
         }
 
@@ -86,7 +88,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function generate()
+    public function generate(): void
     {
 
         $customerId = h($this->getRequest()->getQuery('customerId'));
@@ -185,7 +187,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function preview()
+    public function preview(): mixed
     {
 
         $customerId = h($this->getRequest()->getQuery('customerId'));
@@ -217,7 +219,7 @@ class InvoicesController extends AdminAppController
             $responseObject = $helloCashService->generateInvoice($invoiceData, $currentDay, $paidInCash, true);
             $invoiceId = $responseObject->invoice_id;
             $this->redirect(Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId));
-            return;
+            return null;
 
         } else {
 
@@ -247,7 +249,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function cancel()
+    public function cancel(): void
     {
 
         $this->request = $this->request->withParam('_ext', 'json');
@@ -401,7 +403,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function myInvoices()
+    public function myInvoices(): void
     {
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
@@ -423,7 +425,7 @@ class InvoicesController extends AdminAppController
         $this->render('index');
     }
 
-    public function index()
+    public function index(): void
     {
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisMonth();
@@ -455,7 +457,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    protected function processIndex($dateFrom, $dateTo, $customerIds)
+    protected function processIndex($dateFrom, $dateTo, $customerIds): void
     {
 
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -509,7 +511,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerIds)
+    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerIds): SelectQuery
     {
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

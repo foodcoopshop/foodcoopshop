@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Services\Invoice;
 
+use App\Model\Entity\Invoice;
 use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
 use App\Services\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService;
 use Cake\Core\Configure;
@@ -25,7 +26,7 @@ use Cake\ORM\TableRegistry;
 class GenerateInvoiceToCustomerService
 {
 
-    public function run($data, $currentDay, $paidInCash)
+    public function run($data, $currentDay, $paidInCash): Invoice
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');

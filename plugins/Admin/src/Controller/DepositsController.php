@@ -27,7 +27,7 @@ class DepositsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    public function overviewDiagram()
+    public function overviewDiagram(): void
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
@@ -177,21 +177,21 @@ class DepositsController extends AdminAppController
 
     }
 
-    public function myIndex()
+    public function myIndex(): void
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->index();
         $this->render('index');
     }
 
-    public function myDetail($monthAndYear)
+    public function myDetail($monthAndYear): void
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->detail($monthAndYear);
         $this->render('detail');
     }
 
-    public function index()
+    public function index(): void
     {
         $manufacturerId = $this->getManufacturerId();
         if ($manufacturerId == 'all') {
@@ -274,7 +274,7 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', $title);
     }
 
-    public function detail($monthAndYear)
+    public function detail($monthAndYear): void
     {
 
         $manufacturerId = $this->getManufacturerId();

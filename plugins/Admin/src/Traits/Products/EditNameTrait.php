@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +22,7 @@ namespace Admin\Traits\Products;
 trait EditNameTrait 
 {
 
-    public function editName()
+    public function editName(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -97,6 +98,7 @@ trait EditNameTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
     }
 
 }

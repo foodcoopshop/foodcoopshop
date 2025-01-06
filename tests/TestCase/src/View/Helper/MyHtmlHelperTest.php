@@ -30,7 +30,7 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->MyHtmlHelper = new MyHtmlHelper(new View());
     }
 
-    public function testAnonymizeCustomerNameNormal()
+    public function testAnonymizeCustomerNameNormal(): void
     {
         $name = 'Demo Admin';
         $id = 1;
@@ -38,7 +38,7 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->assertEquals($result, $this->MyHtmlHelper->anonymizeCustomerName($name, $id));
     }
 
-    public function testAnonymizeCustomerNameAdvanced()
+    public function testAnonymizeCustomerNameAdvanced(): void
     {
         $name = 'Demo-Marie Test Admin';
         $id = 1;
@@ -52,7 +52,7 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
     }
 
-    public static function removeTimestampFromFileDataProvider()
+    public static function removeTimestampFromFileDataProvider(): array
     {
         return [
             'correct-timestamp' => [

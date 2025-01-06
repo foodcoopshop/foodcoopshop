@@ -24,7 +24,7 @@ use Cake\ORM\TableRegistry;
 class ProductQuantityService
 {
 
-    public function isAmountBasedOnQuantityInUnits($product, $unitObject)
+    public function isAmountBasedOnQuantityInUnits($product, $unitObject): bool
     {
         if (empty($product->manufacturer)) {
             throw new InvalidParameterException('manufacturer must not be empty');
@@ -35,12 +35,12 @@ class ProductQuantityService
                (!empty($unitObject) && $unitObject->price_per_unit_enabled && $unitObject->use_weight_as_amount);
     }
 
-    public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject)
+    public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject): bool
     {
         return (new OrderCustomerService())->isSelfServiceMode() && $this->isAmountBasedOnQuantityInUnits($product, $unitObject);
     }
 
-    public function getCombinedAmount($existingCartProduct, $orderedQuantityInUnits)
+    public function getCombinedAmount($existingCartProduct, $orderedQuantityInUnits): int|float
     {
         $combinedAmount = $orderedQuantityInUnits;
         if ($existingCartProduct) {
@@ -49,7 +49,7 @@ class ProductQuantityService
         return $combinedAmount;
     }
 
-    public function getFormattedAmount($isAmountBasedOnQuantityInUnits, $amount, $unitName)
+    public function getFormattedAmount($isAmountBasedOnQuantityInUnits, $amount, $unitName): string
     {
         if ($isAmountBasedOnQuantityInUnits) {
             return Configure::read('app.numberHelper')->formatUnitAsDecimal($amount) .  ' ' . $unitName;

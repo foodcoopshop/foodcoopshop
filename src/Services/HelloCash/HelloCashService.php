@@ -25,27 +25,25 @@ use Cake\ORM\TableRegistry;
 class HelloCashService
 {
 
-    protected $QueuedJobs;
+    public string $restEndpoint;
 
-    public $restEndpoint;
-
-    public $locale = 'de_AT';
+    public string $locale = 'de_AT';
 
     public function __construct() {
         $this->restEndpoint = Configure::read('app.helloCashRestEndpoint');
     }
 
-    public function getRestClient()
+    public function getRestClient(): Client
     {
         return Client::createFromUrl($this->restEndpoint);
     }
 
-    protected function encodeData($data)
+    protected function encodeData($data): string
     {
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function cancelInvoice($customerId, $originalInvoiceId, $currentDay)
+    public function cancelInvoice($customerId, $originalInvoiceId, $currentDay): object
     {
         $postData = [
             'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
@@ -91,7 +89,7 @@ class HelloCashService
         return $responseObject;
     }
 
-    protected function getInvoicePostData($data, $userId, $paidInCash, $isPreview)
+    protected function getInvoicePostData($data, $userId, $paidInCash, $isPreview): array
     {
 
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(
@@ -141,7 +139,7 @@ class HelloCashService
 
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         $authHeader = [];
         if (Configure::read('app.helloCashAtCredentials')['token'] != '') {
@@ -155,7 +153,7 @@ class HelloCashService
         return $options;
     }
 
-    public function getReceipt($invoiceId, $cancellation)
+    public function getReceipt($invoiceId, $cancellation): object
     {
 
         $response = $this->getRestClient()->get(
@@ -167,7 +165,7 @@ class HelloCashService
         return $responseObject;
     }
 
-    public function getInvoice($invoiceId, $cancellation)
+    public function getInvoice($invoiceId, $cancellation): string
     {
         $response = $this->getRestClient()->get(
             'invoices/' . $invoiceId . '/pdf?locale=' . $this->locale . '&cancellation=' . ($cancellation ? 'true' : 'false'),
@@ -178,7 +176,7 @@ class HelloCashService
         return base64_decode($responseObject->pdf_base64_encoded);
     }
 
-    public function generateInvoice($data, $currentDay, $paidInCash, $isPreview)
+    public function generateInvoice($data, $currentDay, $paidInCash, $isPreview): object
     {
 
         $userId = $this->createOrUpdateUser($data->id_customer);
@@ -199,7 +197,7 @@ class HelloCashService
 
     }
 
-    protected function afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash)
+    protected function afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash): object
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -230,7 +228,7 @@ class HelloCashService
 
     }
 
-    protected function sendInvoiceToCustomer($customer, $invoice, $isCancellationInvoice, $paidInCash)
+    protected function sendInvoiceToCustomer($customer, $invoice, $isCancellationInvoice, $paidInCash): void
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $service = new SendInvoiceToCustomerService();
@@ -248,7 +246,7 @@ class HelloCashService
         $service->run();
     }
 
-    protected function prepareTaxesFromResponse($responseObject, $cancellation)
+    protected function prepareTaxesFromResponse($responseObject, $cancellation): array
     {
 
         $cancellationFactor = 1;
@@ -268,7 +266,7 @@ class HelloCashService
         return $taxRates;
     }
 
-    protected function createOrUpdateUser($customerId)
+    protected function createOrUpdateUser($customerId): int
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -335,7 +333,7 @@ class HelloCashService
 
     }
 
-    protected function checkRequestForErrors($response)
+    protected function checkRequestForErrors($response): object
     {
         if (preg_match('/Seite nicht gefunden/', $response->getStringBody())) {
             throw new HelloCashApiException($response->getStringBody());
@@ -343,7 +341,7 @@ class HelloCashService
         return $response;
     }
 
-    public function decodeApiResponseAndCheckForErrors($response)
+    public function decodeApiResponseAndCheckForErrors($response): mixed
     {
 
         $decodedResponse = json_decode($response->getStringBody());

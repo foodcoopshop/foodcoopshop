@@ -29,14 +29,10 @@ parameters:
         - message: '#Method .* has parameter .* with no type specified.#'
         - message: '#Method .* has parameter .* with no value type specified in iterable type array.#'
         - message: '#Method .* return type has no value type specified in iterable type array.#'
-        - message: '#Method .* has no return type specified.#'
-        - message: '#Property .* has no type specified.#'
         - message: '#Property .* type has no value type specified in iterable type array.#'
         - message: '#Class .* extends generic class .* but does not specify its types: .*#'
-        - message: '#Method .* has parameter .* with generic class .* but does not specify its types: .*#'
-        - message: '#Method .* has parameter .* with generic interface .* but does not specify its types: .*#'
-        - message: '#Method .* return type with generic class .* does not specify its types: .*#'
-        - message: '#Method .* return type with generic interface .* does not specify its types: .*#'
+        - message: '#Method .* has parameter .* with generic (class|interface) .* but does not specify its types: .*#'
+        - message: '#Method .* return type with generic (class|interface) .* does not specify its types: .*#'
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
 includes:

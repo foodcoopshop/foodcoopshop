@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\I18n\DateTime;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +24,7 @@ use Cake\I18n\DateTime;
 class ActionLogsTable extends AppTable
 {
 
-    public $types;
+    public array $types;
 
     public function initialize(array $config): void
     {
@@ -58,7 +59,7 @@ class ActionLogsTable extends AppTable
         $this->initTypes();
     }
 
-    private function initTypes()
+    private function initTypes(): void
     {
         $this->types = [
             'invoice_added' => [
@@ -500,13 +501,15 @@ class ActionLogsTable extends AppTable
         ];
     }
 
-    public function removeCustomerNameFromAllActionLogs($customerName) {
+    public function removeCustomerNameFromAllActionLogs($customerName): bool
+    {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
         $statement = $this->getConnection()->getDriver()->prepare($query);
         return $statement->execute();
     }
 
-    public function removeCustomerEmailFromAllActionLogs($email) {
+    public function removeCustomerEmailFromAllActionLogs($email): bool
+    {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $email . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerEmail().'\')';
         $statement = $this->getConnection()->getDriver()->prepare($query);
         return $statement->execute();
@@ -523,7 +526,7 @@ class ActionLogsTable extends AppTable
         return $types;
     }
 
-    public function customSave($type, $customerId, $objectId, $objectType, $text, $time=null)
+    public function customSave($type, $customerId, $objectId, $objectType, $text, $time=null): EntityInterface|false
     {
         $data2save = [
             'type' => $type,
@@ -536,7 +539,7 @@ class ActionLogsTable extends AppTable
         return $this->save($this->newEntity($data2save));
     }
 
-    public function getTypesForDropdown()
+    public function getTypesForDropdown(): array
     {
         $result = [];
         $identity = Router::getRequest()->getAttribute('identity');

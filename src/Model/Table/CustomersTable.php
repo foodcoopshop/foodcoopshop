@@ -12,10 +12,12 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
+use App\Model\Entity\Manufacturer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -87,7 +89,7 @@ class CustomersTable extends AppTable
         $this->setPrimaryKey('id_customer');
     }
 
-    public function validationEdit(Validator $validator)
+    public function validationEdit(Validator $validator): Validator
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
         $validator
@@ -105,14 +107,14 @@ class CustomersTable extends AppTable
         return $validator;
     }
 
-    public function validationRegistration(Validator $validator)
+    public function validationRegistration(Validator $validator): Validator
     {
         $validator = $this->validationEdit($validator);
         $validator = $this->getValidationTermsOfUse($validator);
         return $validator;
     }
 
-    public function validationChangePassword($validator)
+    public function validationChangePassword($validator): Validator
     {
         $validator
         ->notEmptyString('passwd_old', __('Please_enter_your_old_password.'))
@@ -163,7 +165,7 @@ class CustomersTable extends AppTable
         return $validator;
     }
 
-    public function validationNewPasswordRequest(Validator $validator)
+    public function validationNewPasswordRequest(Validator $validator): Validator
     {
         $validator->notEmptyString('email', __('Please_enter_your_email_address.'));
         $validator->email('email', true, __('The_email_address_is_not_valid.'));
@@ -194,17 +196,17 @@ class CustomersTable extends AppTable
         return $validator;
     }
 
-    public function validationTermsOfUse(Validator $validator)
+    public function validationTermsOfUse(Validator $validator): Validator
     {
         return $this->getValidationTermsOfUse($validator);
     }
 
-    private function getValidationTermsOfUse(Validator $validator)
+    private function getValidationTermsOfUse(Validator $validator): Validator
     {
         return $validator->equals('terms_of_use_accepted_date_checkbox', 1, __('Please_accept_the_terms_of_use.'));
     }
 
-    public function findAuth(Query $query, array $options)
+    public function findAuth(SelectQuery $query, array $options): SelectQuery
     {
         $query->where([
             'Customers.active' => APP_ON
@@ -215,7 +217,7 @@ class CustomersTable extends AppTable
         return $query;
     }
 
-    public function sortByVirtualField($object, $name)
+    public function sortByVirtualField($object, $name): object
     {
         $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC', [
             'type' => 'locale',
@@ -241,7 +243,7 @@ class CustomersTable extends AppTable
         ]);
     }
 
-    public function getCustomerName($tableName = 'Customers')
+    public function getCustomerName($tableName = 'Customers'): string
     {
         $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
@@ -251,13 +253,13 @@ class CustomersTable extends AppTable
         return $sql;
     }
 
-    public function addCustomersNameForOrderSelect($query)
+    public function addCustomersNameForOrderSelect($query): SelectQuery
     {
         $sql = $this->getCustomerName();
         return $query->select(['CustomerNameForOrder' => $sql]);
     }
 
-    public function getCustomerOrderClause($direction)
+    public function getCustomerOrderClause($direction): array
     {
         $result = [
             'CustomerNameForOrder' => $direction,
@@ -265,7 +267,7 @@ class CustomersTable extends AppTable
         return $result;
     }
 
-    public function getModifiedProductPricesByShoppingPrice($productId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedProductPricesByShoppingPrice($productId, $price, $priceInclPerUnit, $deposit, $taxRate): array
     {
 
         $result = [
@@ -314,7 +316,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getModifiedAttributePricesByShoppingPrice($productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedAttributePricesByShoppingPrice($productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate): array
     {
 
         $result = [
@@ -387,12 +389,12 @@ class CustomersTable extends AppTable
         return $customer->personalTransactionCode;
     }
 
-    public function getPersonalTransactionCodeField()
+    public function getPersonalTransactionCodeField(): string
     {
         return 'UPPER(SUBSTRING(SHA1(CONCAT(Customers.id_customer, "' .  Security::getSalt() . '", "personal-transaction-code")), 1, 8))';
     }
 
-    public function getConditionToExcludeHostingUser()
+    public function getConditionToExcludeHostingUser(): array
     {
         $result = [];
         if (Configure::read('app.hostingEmail') != '') {
@@ -403,17 +405,17 @@ class CustomersTable extends AppTable
         return $result;
     }
 
-    public function dropManufacturersInNextFind()
+    public function dropManufacturersInNextFind(): void
     {
         $this->getAssociation('AddressCustomers')->setJoinType('INNER');
     }
 
-    public function getBarcodeFieldString()
+    public function getBarcodeFieldString(): string
     {
         return 'SUBSTRING(SHA1(CONCAT(' . $this->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
     }
 
-    public function getManufacturerRecord($customer)
+    public function getManufacturerRecord($customer): ?Manufacturer
     {
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
@@ -427,7 +429,7 @@ class CustomersTable extends AppTable
         return $manufacturer;
     }
 
-    public function setNewPassword($customerId)
+    public function setNewPassword($customerId): string
     {
         $ph = new DefaultPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
@@ -444,18 +446,18 @@ class CustomersTable extends AppTable
         return $newPassword;
     }
 
-    public function getManufacturerByCustomerId($customerId)
+    public function getManufacturerByCustomerId($customerId): ?Manufacturer
     {
         $customer = $this->find('all', conditions: [
-            'Customers.id_customer' => $customerId
+            $this->aliasField('id_customer') => $customerId,
         ])->first();
         if (!empty($customer)) {
             return $this->getManufacturerRecord($customer);
         }
-        return false;
+        return null;
     }
 
-    public function getManufacturerIdByCustomerId($customerId)
+    public function getManufacturerIdByCustomerId($customerId): int
     {
         $manufacturer = $this->getManufacturerByCustomerId($customerId);
         if (!empty($manufacturer)) {
@@ -464,12 +466,10 @@ class CustomersTable extends AppTable
         return 0;
     }
 
-    public function getProductBalanceForDeletedCustomers()
+    public function getProductBalanceForDeletedCustomers(): float
     {
 
-        $productBalanceSum = 0;
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-
         $query = $orderDetailsTable->find('all',
             conditions: [
                 'Customers.id_customer IS NULL',
@@ -486,12 +486,10 @@ class CustomersTable extends AppTable
             $removedCustomerIds[] = $orderDetail->id_customer;
         }
 
-        $productBalanceSum = $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
-        return $productBalanceSum;
-
+        return $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
     }
 
-    private function getProductBalanceSumForCustomerIds($customerIds)
+    private function getProductBalanceSumForCustomerIds($customerIds): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -510,11 +508,10 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getDepositBalanceForDeletedCustomers()
+    public function getDepositBalanceForDeletedCustomers(): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
-
         $query = $paymentsTable->find('all',
             conditions: [
                 'Customers.id_customer IS NULL'
@@ -531,12 +528,11 @@ class CustomersTable extends AppTable
             $removedCustomerIds[] = $payment->id_customer;
         }
 
-        $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($removedCustomerIds);
-        return $depositBalanceSum;
+        return $this->getDepositBalanceSumForCustomerIds($removedCustomerIds);
 
     }
 
-    public function getProductBalanceForCustomers($status)
+    public function getProductBalanceForCustomers($status): float
     {
         $customerIds = $this->getCustomerIdsWithStatus($status);
         $productBalanceSum = $this->getProductBalanceSumForCustomerIds($customerIds);
@@ -544,34 +540,33 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getDepositBalanceForCustomers($status)
+    public function getDepositBalanceForCustomers($status): float
     {
         $customerIds = $this->getCustomerIdsWithStatus($status);
         $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($customerIds);
         return $depositBalanceSum;
     }
 
-    public function getCustomerIdsWithStatus($status)
+    public function getCustomerIdsWithStatus($status): array
     {
         $conditions = [
-            'Customers.active' => $status
+            $this->aliasField('active') => $status,
         ];
         $conditions[] = $this->getConditionToExcludeHostingUser();
         $this->dropManufacturersInNextFind();
-        $query = $this->find('all',
-        contain: [
-            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-        ],
-        conditions: $conditions);
 
-        $customerIds = [];
-        foreach($query as $customer) {
-            $customerIds[] = $customer->id_customer;
-        }
+        $query = $this->find('all',
+            contain: [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ],
+            conditions: $conditions,
+        );
+
+        $customerIds = Hash::extract($query->toArray(), '{n}.id_customer');
         return $customerIds;
     }
 
-    private function getDepositBalanceSumForCustomerIds($customerIds)
+    private function getDepositBalanceSumForCustomerIds($customerIds): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -587,7 +582,7 @@ class CustomersTable extends AppTable
         return round($depositBalanceSum, 2);
     }
 
-    public function getCreditBalance($customerId)
+    public function getCreditBalance($customerId): float
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -604,7 +599,7 @@ class CustomersTable extends AppTable
         return $creditBalance + 0;
     }
 
-    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = [])
+    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = []): array
     {
 
         $contain = [];

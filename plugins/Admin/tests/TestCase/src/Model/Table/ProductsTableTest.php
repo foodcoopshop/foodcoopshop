@@ -25,7 +25,7 @@ class ProductsTableTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public function testChangeImageValidImageAndDeleteImage()
+    public function testChangeImageValidImageAndDeleteImage(): void
     {
 
         // add image
@@ -78,7 +78,7 @@ class ProductsTableTest extends AppCakeTestCase
 
     }
 
-    public function testChangeImageInvalidImage()
+    public function testChangeImageInvalidImage(): void
     {
         $file = WWW_ROOT . '/css/global.css';
         $productId = 346;
@@ -94,7 +94,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    public function testChangeImageInvalidDomain()
+    public function testChangeImageInvalidDomain(): void
     {
         $productId = 346;
         $products = [
@@ -109,7 +109,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    public function testChangeImageNonExistingFile()
+    public function testChangeImageNonExistingFile(): void
     {
         $productId = 346;
         $products = [
@@ -127,7 +127,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testGetCompositeProductIdAndAttributeId()
+    public function testGetCompositeProductIdAndAttributeId(): void
     {
         $tests = [
             [
@@ -160,7 +160,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    public function testGetProductIdAndAttributeId()
+    public function testGetProductIdAndAttributeId(): void
     {
         $tests = [
             [
@@ -193,7 +193,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    public function testAddProduct()
+    public function testAddProduct(): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
@@ -244,7 +244,7 @@ class ProductsTableTest extends AppCakeTestCase
     /**
      * START tests change quantity
      */
-    public function testChangeQuantityWithOneProductAndInvalidStringQuantity()
+    public function testChangeQuantityWithOneProductAndInvalidStringQuantity(): void
     {
         $products = [
             [346 => [
@@ -265,7 +265,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangeQuantityWithOneProductAndNegativeQuantity()
+    public function testChangeQuantityWithOneProductAndNegativeQuantity(): void
     {
         $products = [
             [346 => [
@@ -277,7 +277,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductQuantity($products, -50);
     }
 
-    public function testChangeQuantityWithOneProduct()
+    public function testChangeQuantityWithOneProduct(): void
     {
         $products = [
             [102 => [
@@ -289,7 +289,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductQuantity($products);
     }
 
-    public function testChangeQuantityWithOneProductAttribute()
+    public function testChangeQuantityWithOneProductAttribute(): void
     {
         $products = [
             ['60-10' => [
@@ -301,7 +301,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductQuantity($products);
     }
 
-    public function testChangeQuantityWithMultipleProductsAndAttributes()
+    public function testChangeQuantityWithMultipleProductsAndAttributes(): void
     {
         $products = [
             [102 => [
@@ -322,7 +322,7 @@ class ProductsTableTest extends AppCakeTestCase
     /**
      * START tests change price
      */
-    public function testChangePriceWithOneProductAndInvalidNegativePrice()
+    public function testChangePriceWithOneProductAndInvalidNegativePrice(): void
     {
 
         $products = [
@@ -342,7 +342,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangePriceOneProductAndInvalidStringPrice()
+    public function testChangePriceOneProductAndInvalidStringPrice(): void
     {
         $products = [
             [346 => ['gross_price' => 'invalid-price']]
@@ -361,7 +361,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangePriceWithOneProduct()
+    public function testChangePriceWithOneProduct(): void
     {
         $products = [
             [102 => ['gross_price' => '5,22']]
@@ -372,7 +372,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductPrice($products);
     }
 
-    public function testChangePriceWithOneProductAttribute()
+    public function testChangePriceWithOneProductAttribute(): void
     {
         $products = [
             ['60-10' => ['gross_price' => '3,22']]
@@ -383,7 +383,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductPrice($products);
     }
 
-    public function testChangePriceWithMultipleProductsAndAttributes()
+    public function testChangePriceWithMultipleProductsAndAttributes(): void
     {
         $products = [
             [102 => ['gross_price' => '5,22']],
@@ -396,7 +396,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductPrice($products);
     }
 
-    public function testChangePriceWithMultipleProductsAndOneWithInvalidNegativePrice()
+    public function testChangePriceWithMultipleProductsAndOneWithInvalidNegativePrice(): void
     {
 
         // 1) change prices to same price to be able to test if the price has not changed
@@ -434,7 +434,7 @@ class ProductsTableTest extends AppCakeTestCase
      * START tests change deposit
      */
 
-    public function testChangeDepositWithOneProduct()
+    public function testChangeDepositWithOneProduct(): void
     {
         $products = [
             [102 => '1,00']
@@ -444,7 +444,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductDeposit($products);
     }
 
-    public function testChangeDepositWithOneProductAttribute()
+    public function testChangeDepositWithOneProductAttribute(): void
     {
         $products = [
             ['60-10' => '1,00']
@@ -454,7 +454,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductDeposit($products);
     }
 
-    public function testChangeDepositWithMultipleProductsAndOneWithInvalidNegativeDeposit()
+    public function testChangeDepositWithMultipleProductsAndOneWithInvalidNegativeDeposit(): void
     {
 
         // 1) change deposits to same deposit to be able to test if the price has not changed
@@ -491,7 +491,7 @@ class ProductsTableTest extends AppCakeTestCase
      * START tests change status
      */
 
-    public function testChangeStatusWithStringStatus()
+    public function testChangeStatusWithStringStatus(): void
     {
         $products = [
             [102 => 'invalid parameter']
@@ -502,7 +502,7 @@ class ProductsTableTest extends AppCakeTestCase
         $productsTable->changeStatus($products);
     }
 
-    public function testChangeStatusWithInvalidIntegerStatus()
+    public function testChangeStatusWithInvalidIntegerStatus(): void
     {
         $products = [
             [102 => 5] // invalid status
@@ -513,7 +513,7 @@ class ProductsTableTest extends AppCakeTestCase
         $productsTable->changeStatus($products);
     }
 
-    public function testChangeStatusForProductAttribute()
+    public function testChangeStatusForProductAttribute(): void
     {
         $products = [
             ['60-10' => 0]
@@ -524,7 +524,7 @@ class ProductsTableTest extends AppCakeTestCase
         $productsTable->changeStatus($products);
     }
 
-    public function testChangeStatusDisableWithOneProduct()
+    public function testChangeStatusDisableWithOneProduct(): void
     {
         $products = [
             [102 => 0]
@@ -535,7 +535,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductStatus($products);
     }
 
-    public function testChangeStatusEnableWithOneProduct()
+    public function testChangeStatusEnableWithOneProduct(): void
     {
         $products = [
             [102 => 1]
@@ -546,7 +546,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductStatus($products);
     }
 
-    public function testChangeStatusWithMultipleProductsAndDifferentStati()
+    public function testChangeStatusWithMultipleProductsAndDifferentStati(): void
     {
         $products = [
             [102 => 1],
@@ -559,7 +559,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductStatus($products);
     }
 
-    public function testChangeStatusWithOneProductAndInvalidStatus()
+    public function testChangeStatusWithOneProductAndInvalidStatus(): void
     {
         $products = [
             [102 => 5] // invalid status
@@ -578,7 +578,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangeStatusWithMultipleProductsAndOneWithInvalidStatus()
+    public function testChangeStatusWithMultipleProductsAndOneWithInvalidStatus(): void
     {
         $products = [
             [346 => 0],  // pass correct but different to current status
@@ -599,7 +599,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangeNameWithOneProductAndInvalidStringName()
+    public function testChangeNameWithOneProductAndInvalidStringName(): void
     {
         $products = [
             [346 => [
@@ -624,7 +624,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangeNameForProductAttribute()
+    public function testChangeNameForProductAttribute(): void
     {
         $products = [
             ['60-10' => 0]
@@ -635,7 +635,7 @@ class ProductsTableTest extends AppCakeTestCase
         $productsTable->changeName($products);
     }
 
-    public function testChangeNameWithMultipleProducts()
+    public function testChangeNameWithMultipleProducts(): void
     {
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
@@ -664,7 +664,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductName($products, $expectedResults);
     }
 
-    private function assertProductName($products, $expectedResults)
+    private function assertProductName($products, $expectedResults): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -694,7 +694,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    private function assertProductQuantity($products, $forceUseThisQuantity = null)
+    private function assertProductQuantity($products, $forceUseThisQuantity = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -728,7 +728,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    private function assertProductDeposit($products, $forceUseThisDeposit = null)
+    private function assertProductDeposit($products, $forceUseThisDeposit = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -766,7 +766,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    private function assertProductPrice($products, $forceUseThisPrice = null)
+    private function assertProductPrice($products, $forceUseThisPrice = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -801,7 +801,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    private function assertProductStatus($products, $forceUseThisStatus = null)
+    private function assertProductStatus($products, $forceUseThisStatus = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {

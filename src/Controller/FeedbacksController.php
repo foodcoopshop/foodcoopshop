@@ -24,7 +24,7 @@ use Cake\ORM\TableRegistry;
 class FeedbacksController extends FrontendController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -32,7 +32,7 @@ class FeedbacksController extends FrontendController
         ]);
     }
     
-    public function index()
+    public function index(): void
     {
 
         if (!Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
@@ -49,7 +49,7 @@ class FeedbacksController extends FrontendController
         $feedbacks = $feedbacksTable->find('all',
             conditions: [
                 'DATE_FORMAT(Feedbacks.approved, \'%Y-%m-%d\') <> \'1970-01-01\'',
-                'Customers.active' => APP_ON,
+                $customersTable->aliasField('active') => APP_ON,
             ],
             contain: [
                 'Customers.AddressCustomers',
@@ -65,7 +65,7 @@ class FeedbacksController extends FrontendController
         ];
         foreach($feedbacks as &$feedback) {
             $manufacturer = $customersTable->getManufacturerByCustomerId($feedback->customer_id);
-            if (!empty($manufacturer)) {
+            if ($manufacturer !== null) {
                 $feedback->manufacturer = $manufacturer;
                 $feedback->privatized_name = $feedbacksTable->getManufacturerPrivacyType($feedback);
                 if ($manufacturer->active == APP_ON) {

@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +24,7 @@ use App\Model\Entity\OrderDetail;
 trait DeleteTrait 
 {
 
-    public function delete()
+    public function delete(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -117,6 +118,7 @@ trait DeleteTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
 
     }
 

@@ -23,7 +23,7 @@ use Cake\Event\EventInterface;
 class AdminAppController extends AppController
 {
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         if (!$this->formProtectionEnabled) {
@@ -32,7 +32,7 @@ class AdminAppController extends AppController
         }
     }
     
-    public function setReferer()
+    public function setReferer(): void
     {
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }

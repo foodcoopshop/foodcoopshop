@@ -22,7 +22,7 @@ use Cake\Database\Expression\QueryExpression;
 class ActionLogsController extends AdminAppController
 {
 
-    public function index()
+    public function index(): void
     {
         $conditions = [];
 

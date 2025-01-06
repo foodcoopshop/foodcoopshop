@@ -28,7 +28,7 @@ trait ProductImportTrait
 
     use NumberRangeValidatorTrait;
 
-    public function validationImport(Validator $validator)
+    public function validationImport(Validator $validator): Validator
     {
         $validator = $this->validationName($validator);
         $validator->inList('active', Product::ALLOWED_STATUSES, __('The_following_values_are_valid:') . ' ' . implode(', ', Product::ALLOWED_STATUSES));
@@ -55,7 +55,8 @@ trait ProductImportTrait
         $status,
         $isDeclarationOk,
         $storageLocationString,
-    ) {
+    ): Product
+    {
 
         $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
         $netPriceAndTaxId = $taxesTable->getNetPriceAndTaxId($grossPrice, $taxRate);

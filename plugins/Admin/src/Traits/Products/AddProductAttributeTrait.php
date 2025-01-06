@@ -20,7 +20,7 @@ namespace Admin\Traits\Products;
 trait AddProductAttributeTrait 
 {
 
-    public function addProductAttribute($productId, $productAttributeId)
+    public function addProductAttribute($productId, $productAttributeId): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $oldProduct = $productsTable->find('all',

@@ -30,7 +30,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $manufacturersTable->updateAll(['stock_management_enabled' => APP_ON], []);
     }
 
-    public function testWriteWithoutPurchasePrices()
+    public function testWriteWithoutPurchasePrices(): void
     {
 
         $unitsTable = $this->getTableLocator()->get('Units');
@@ -60,7 +60,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 
     }
 
-    public function testWriteWithPurchasePrices()
+    public function testWriteWithPurchasePrices(): void
     {
 
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);

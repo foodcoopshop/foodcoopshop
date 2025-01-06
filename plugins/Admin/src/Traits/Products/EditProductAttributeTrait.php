@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Controller\Component\StringComponent;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use App\Controller\Component\StringComponent;
 trait EditProductAttributeTrait 
 {
 
-    public function editProductAttribute()
+    public function editProductAttribute(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -98,6 +99,7 @@ trait EditProductAttributeTrait
             'msg' => 'success',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
     }
 
 }

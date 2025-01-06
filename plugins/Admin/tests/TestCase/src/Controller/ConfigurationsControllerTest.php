@@ -29,7 +29,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     /**
      * needs to login as superadmin and logs user out automatically
      */
-    protected function changeConfigurationEditForm(string $configKey, string|array $newValue)
+    protected function changeConfigurationEditForm(string $configKey, string|array $newValue): void
     {
         $this->loginAsSuperadmin();
         $configurationsTable = $this->getTableLocator()->get('Configurations');
@@ -47,19 +47,19 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ]);
     }
 
-    public function testConfigurationEditFormFcsAppNameEmpty()
+    public function testConfigurationEditFormFcsAppNameEmpty(): void
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '');
         $this->assertResponseContains('Bitte gib den Namen der Foodcoop an.');
     }
 
-    public function testConfigurationEditFormFcsAppNameNotEnoughChars()
+    public function testConfigurationEditFormFcsAppNameNotEnoughChars(): void
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', 'Bla');
         $this->assertResponseContains('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.');
     }
 
-    public function testConfigurationEditFormFcsRegistrationEmailTextStripTags()
+    public function testConfigurationEditFormFcsRegistrationEmailTextStripTags(): void
     {
         $configurationName = 'FCS_REGISTRATION_EMAIL_TEXT';
         $newValue = '<b>HalloHallo</b>';
@@ -74,7 +74,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $this->assertEquals($configuration->value, $newValue, 'html tags stripped');
     }
 
-    public function testConfigurationEditFormFcsAppNameStripTags()
+    public function testConfigurationEditFormFcsAppNameStripTags(): void
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
         $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
@@ -87,25 +87,25 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $this->assertEquals($configuration->value, 'HalloHallo', 'html tags not stripped');
     }
 
-    public function testShowProductsForGuestsEnabledAndLoggedOut()
+    public function testShowProductsForGuestsEnabledAndLoggedOut(): void
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 1);
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), false);
     }
 
-    public function testConfigurationEditFormFcsGlobalDeliveryBreak()
+    public function testConfigurationEditFormFcsGlobalDeliveryBreak(): void
     {
         $this->changeConfigurationEditForm('FCS_NO_DELIVERY_DAYS_GLOBAL', ['2018-02-02','2018-02-09']);
         $this->assertResponseContains('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: 02.02.2018 (3x).');
     }
 
-    public function testShowProductsForGuestsDisabledAndLoggedIn()
+    public function testShowProductsForGuestsDisabledAndLoggedIn(): void
     {
         $this->loginAsSuperadmin();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), true);
     }
 
-    public function testShowProductsForGuestsDisabledAndLoggedOut()
+    public function testShowProductsForGuestsDisabledAndLoggedOut(): void
     {
         $this->logout();
         foreach ($this->getTestUrlsForShowProductForGuests() as $url) {
@@ -114,7 +114,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         }
     }
 
-    private function getTestUrlsForShowProductForGuests()
+    private function getTestUrlsForShowProductForGuests(): array
     {
         return [
             $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
@@ -122,7 +122,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ];
     }
 
-    private function assertShowProductForGuestsEnabledOrLoggedIn($testUrls, $expectPrice)
+    private function assertShowProductForGuestsEnabledOrLoggedIn($testUrls, $expectPrice): void
     {
         $this->assertPagesForErrors($testUrls);
         foreach ($testUrls as $url) {

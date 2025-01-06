@@ -23,7 +23,7 @@ trait DeleteImageTrait
     /**
      * deletes both db entries and physical files (thumbs)
      */
-    public function deleteImage($productId)
+    public function deleteImage($productId): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

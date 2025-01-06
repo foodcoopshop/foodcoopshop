@@ -48,12 +48,12 @@ class PaymentsTable extends AppTable
         ]);
     }
 
-    public function validationEdit(Validator $validator)
+    public function validationEdit(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'approval', -1, 1);
     }
 
-    public function validationAdd(Validator $validator)
+    public function validationAdd(Validator $validator): Validator
     {
         $validator->notEmptyString('amount', __('Please_enter_a_number.'));
         $validator->numeric('amount', __('Please_enter_a_correct_number.'));
@@ -76,7 +76,7 @@ class PaymentsTable extends AppTable
         return $validator;
     }
 
-    public function validationCsvImportUpload(Validator $validator)
+    public function validationCsvImportUpload(Validator $validator): Validator
     {
         $validator = $this->validationAdd($validator);
         $validator->requirePresence('amount', true, __('Please_enter_a_correct_amount.'));
@@ -84,7 +84,7 @@ class PaymentsTable extends AppTable
         return $validator;
     }
 
-    public function validationCsvImportSave(Validator $validator)
+    public function validationCsvImportSave(Validator $validator): Validator
     {
         $validator = $this->validationAdd($validator);
         $validator->requirePresence('id_customer', true, __('Please_select_a_customer.'));
@@ -115,7 +115,7 @@ class PaymentsTable extends AppTable
         return $alreadyImported;
     }
 
-    private function getManufacturerDepositConditions($manufacturerId = null)
+    private function getManufacturerDepositConditions($manufacturerId = null): array
     {
         $conditions = [
             'Payments.status' => APP_ON,
@@ -141,7 +141,7 @@ class PaymentsTable extends AppTable
         return $paymentSum;
     }
 
-    public function getManufacturerDepositSumByCalendarWeekAndType($type)
+    public function getManufacturerDepositSumByCalendarWeekAndType($type): array
     {
         if (!in_array($type, [Payment::TEXT_EMPTY_GLASSES, Payment::TEXT_MONEY])) {
             throw new \Exception('wrong type: was ' . $type);
@@ -162,7 +162,7 @@ class PaymentsTable extends AppTable
         return $result;
     }
 
-    public function getCustomerDepositNotBilled($customerId)
+    public function getCustomerDepositNotBilled($customerId): array
     {
         $payments = $this->find('all', conditions: [
             'Payments.status' => APP_ON,
@@ -174,7 +174,7 @@ class PaymentsTable extends AppTable
         return $payments;
     }
 
-    public function getCustomerDepositSumByCalendarWeek()
+    public function getCustomerDepositSumByCalendarWeek(): array
     {
         $query = $this->find('all', conditions: [
             'Payments.status' => APP_ON,
@@ -192,10 +192,7 @@ class PaymentsTable extends AppTable
         return $result;
     }
 
-    /**
-     * @return float
-     */
-    public function getManufacturerDepositMoneySum()
+    public function getManufacturerDepositMoneySum(): float|int
     {
 
         $conditions = $this->getManufacturerDepositConditions();
@@ -214,12 +211,7 @@ class PaymentsTable extends AppTable
         return 0;
     }
 
-    /**
-     * @param int $manufacturerId
-     * @param boolean $groupByMonth
-     * @return array
-     */
-    public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth)
+    public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth): array
     {
 
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
@@ -241,7 +233,7 @@ class PaymentsTable extends AppTable
         return $query->toArray();
     }
 
-    public function onInvoiceCancellation($payments)
+    public function onInvoiceCancellation($payments): void
     {
         foreach($payments  as $payment) {
             $payment->invoice_id = null;
@@ -249,7 +241,7 @@ class PaymentsTable extends AppTable
         }
     }
 
-    public function linkReturnedDepositWithInvoice($data, $invoiceId)
+    public function linkReturnedDepositWithInvoice($data, $invoiceId): void
     {
         foreach($data->returned_deposit['entities'] as $payment) {
             // important to get a fresh payment entity as amount field could be changed for cancellation invoices
@@ -259,12 +251,7 @@ class PaymentsTable extends AppTable
         }
     }
 
-    /**
-     * @param int $customerId
-     * @param string $type
-     * @return float
-     */
-    public function getSum($customerId, $type)
+    public function getSum($customerId, $type): float
     {
         $conditions = [
             'Payments.id_customer' => $customerId,
@@ -278,6 +265,6 @@ class PaymentsTable extends AppTable
         $query->select(
             ['SumAmount' => $query->func()->sum('Payments.amount')]
         );
-        return $query->toArray()[0]['SumAmount'];
+        return (float) $query->toArray()[0]['SumAmount'];
     }
 }

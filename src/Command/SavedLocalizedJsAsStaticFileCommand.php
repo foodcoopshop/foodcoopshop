@@ -42,7 +42,7 @@ class SavedLocalizedJsAsStaticFileCommand extends AppCommand
      *
      * @see AppCommand::main()
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
         $this->get(SELF::ROUTE);
         $jsFile = fopen(WWW_ROOT . '/cache/localized-javascript-static.js', 'w');

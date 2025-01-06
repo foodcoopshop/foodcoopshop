@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait SetElFinderUploadPathTrait
 {
 
-    public function setElFinderUploadPath($orderDetailId)
+    public function setElFinderUploadPath($orderDetailId): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

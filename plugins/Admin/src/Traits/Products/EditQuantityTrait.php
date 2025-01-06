@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
 use App\Services\ProductQuantityService;
+use Cake\Http\Response;
 
 
 /**
@@ -24,7 +25,7 @@ use App\Services\ProductQuantityService;
 trait EditQuantityTrait
 {
 
-    public function editQuantity()
+    public function editQuantity(): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -170,6 +171,7 @@ trait EditQuantityTrait
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
     }
 
 }

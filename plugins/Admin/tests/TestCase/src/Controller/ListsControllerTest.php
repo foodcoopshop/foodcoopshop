@@ -35,7 +35,7 @@ class ListsControllerTest extends AppCakeTestCase
         $this->prepareSendingInvoices();
     }
 
-    public function testAccessDownloadableInvoice()
+    public function testAccessDownloadableInvoice(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -79,7 +79,7 @@ class ListsControllerTest extends AppCakeTestCase
      * this method is not split up into separated test methods because
      * generating the pdfs for the test needs a lot of time
      */
-    public function testAccessOrderListPageAndDownloadableFile()
+    public function testAccessOrderListPageAndDownloadableFile(): void
     {
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->exec('send_order_lists 2018-01-31');
@@ -152,7 +152,7 @@ class ListsControllerTest extends AppCakeTestCase
      * this method is not split up into separated test methods because
      * generating the pdfs for the test needs a lot of time
      */
-    public function testAccessManufacturerInvoicesPageAndDownloadableFile()
+    public function testAccessManufacturerInvoicesPageAndDownloadableFile(): void
     {
         $this->loginAsSuperadmin();
         $this->addProductToCart(346, 1);

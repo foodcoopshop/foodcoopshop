@@ -25,14 +25,14 @@ class StatisticsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    public function myIndex()
+    public function myIndex(): void
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->index();
         $this->render('index');
     }
 
-    public function index()
+    public function index(): void
     {
         $manufacturerId = (string) $this->getManufacturerId();
 

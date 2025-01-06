@@ -39,7 +39,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareSendingInvoices();
     }
 
-    public function testContentOfInvoiceForPerson()
+    public function testContentOfInvoiceForPerson(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -55,7 +55,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
     }
 
-    public function testContentOfInvoiceForPersonWithZeroTaxDepositRate()
+    public function testContentOfInvoiceForPersonWithZeroTaxDepositRate(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -70,7 +70,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
     }
 
-    public function testContentOfInvoiceForCompany()
+    public function testContentOfInvoiceForCompany(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -89,7 +89,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
     }
 
-    public function testContentOfInvoiceWithDecimalsInTaxRate()
+    public function testContentOfInvoiceWithDecimalsInTaxRate(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->loginAsSuperadmin();
@@ -103,7 +103,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
-    public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum()
+    public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum(): void
     {
 
         $customerId = Configure::read('test.superadminId');
@@ -126,7 +126,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
-    public function testSendInvoicesWithExcludedFutureOrder()
+    public function testSendInvoicesWithExcludedFutureOrder(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);

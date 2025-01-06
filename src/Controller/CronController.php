@@ -29,7 +29,7 @@ class CronController extends AppController
         $this->addViewClasses([JsonView::class]);
     }
     
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
@@ -37,7 +37,7 @@ class CronController extends AppController
         ]);
     }
 
-    public function index()
+    public function index(): void
     {
 
         $this->request = $this->request->withParam('_ext', 'json');

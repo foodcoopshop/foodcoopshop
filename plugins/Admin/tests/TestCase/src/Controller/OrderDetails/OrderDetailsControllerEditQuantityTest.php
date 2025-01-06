@@ -19,13 +19,14 @@ use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Cart;
 
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
 
     use SelfServiceCartTrait;
 
-    public function testEditOrderDetailQuantityNotValid()
+    public function testEditOrderDetailQuantityNotValid(): void
     {
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
@@ -34,7 +35,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminStockProduct()
+    public function testEditOrderDetailQuantityAsSuperadminStockProduct(): void
     {
 
         $this->changeManufacturer(4, 'anonymize_customers', 1);
@@ -76,7 +77,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()
+    public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity(): void
     {
 
         $this->changeManufacturer(4, 'anonymize_customers', 1);
@@ -109,7 +110,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailContainsHtmlAt(2, 'D.S. - ID 92');
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable()
+    public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
@@ -137,7 +138,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(0.90, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminSameQuantity()
+    public function testEditOrderDetailQuantityAsSuperadminSameQuantity(): void
     {
         $this->loginAsSuperadmin();
 
@@ -160,7 +161,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailCount(1);
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminEmailDisabledWithConfig()
+    public function testEditOrderDetailQuantityAsSuperadminEmailDisabledWithConfig(): void
     {
         Configure::write('app.sendEmailWhenOrderDetailQuantityChanged', false);
         $this->loginAsSuperadmin();
@@ -170,7 +171,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailCount(1);
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminUserUsedWrongUnit()
+    public function testEditOrderDetailQuantityAsSuperadminUserUsedWrongUnit(): void
     {
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
@@ -181,7 +182,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminQuantityPriceUnchangedWhenQuantityNotChanged()
+    public function testEditOrderDetailQuantityAsSuperadminQuantityPriceUnchangedWhenQuantityNotChanged(): void
     {
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
@@ -203,7 +204,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
      * fix is not yet implemented
      */
     /*
-    public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity()
+    public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity(): void
     {
         $this->loginAsSuperadmin();
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -230,7 +231,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
     }
     */
 
-    private function preparePricePerUnitOrder()
+    private function preparePricePerUnitOrder(): Cart
     {
         $productIdA = 347; // forelle
         $this->addProductToCart($productIdA, 2);
@@ -240,7 +241,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         return $cart;
     }
 
-    private function editOrderDetailQuantity($orderDetailId, $productQuantity)
+    private function editOrderDetailQuantity($orderDetailId, $productQuantity): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductQuantity/',

@@ -29,7 +29,7 @@ class FrontendController extends AppController
 
     public bool $protectEmailAddresses = true;
 
-    protected function resetOriginalLoggedCustomer()
+    protected function resetOriginalLoggedCustomer(): void
     {
         $OriginalIdentity = $this->getRequest()->getSession()->read('OriginalIdentity');
         if ($OriginalIdentity) {
@@ -38,14 +38,14 @@ class FrontendController extends AppController
         }
     }
 
-    protected function destroyOrderCustomer()
+    protected function destroyOrderCustomer(): void
     {
         $this->getRequest()->getSession()->delete('OrderIdentity');
         $this->getRequest()->getSession()->delete('OriginalIdentity');
     }
 
     // is not called on ajax actions!
-    public function beforeRender(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
 
         parent::beforeRender($event);
@@ -74,8 +74,8 @@ class FrontendController extends AppController
         if ($categoriesForMenu === null) {
             if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
                 $categoriesTable = $this->getTableLocator()->get('Categories');
-                $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
-                $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
+                $allProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
+                $newProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
                 $categoriesForMenu = $categoriesTable->getForMenu();
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
@@ -112,7 +112,6 @@ class FrontendController extends AppController
                 $manufacturersForMenu = $manufacturersTable->getForMenu();
                 Cache::write($cacheKey, $manufacturersForMenu);
             }
-            $manufacturersForMenu = $manufacturersForMenu ?? [];
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
@@ -139,7 +138,7 @@ class FrontendController extends AppController
         $this->set('pagesForFooter', $pagesForFooter);
     }
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 

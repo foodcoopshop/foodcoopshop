@@ -25,7 +25,7 @@ use App\Model\Entity\Configuration;
  */
 class ConfigurationHelper extends Helper
 {
-    public function getConfigurationDropdownOptions($name, $identity)
+    public function getConfigurationDropdownOptions($name): array
     {
         switch ($name) {
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
@@ -59,14 +59,16 @@ class ConfigurationHelper extends Helper
                 $productsTable = TableRegistry::getTableLocator()->get('Products');
                 return $productsTable->getForDropdown(0);
         }
+
+        return [];
     }
 
-    public function isCashlessPaymentTypeManual()
+    public function isCashlessPaymentTypeManual(): bool
     {
         return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
     }
 
-    public function getCashlessPaymentAddTypeOptions()
+    public function getCashlessPaymentAddTypeOptions(): array
     {
         return [
             Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
@@ -74,12 +76,12 @@ class ConfigurationHelper extends Helper
         ];
     }
 
-    public function getConfigurationDropdownOption($name, $value, $identity)
+    public function getConfigurationDropdownOption($name, $value): string
     {
-        return self::getConfigurationDropdownOptions($name, $identity)[$value];
+        return self::getConfigurationDropdownOptions($name)[$value];
     }
 
-    public function getConfigurationMultipleDropdownOptions($name, $value)
+    public function getConfigurationMultipleDropdownOptions($name, $value): string
     {
         switch($name) {
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
@@ -95,5 +97,6 @@ class ConfigurationHelper extends Helper
                 )->toArray();
                 return join(', ', Hash::extract($products, '{n}.name'));
         }
+        return '';
     }
 }

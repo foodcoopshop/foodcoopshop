@@ -22,6 +22,8 @@ use Network\View\Helper\NetworkHelper;
 use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
 use App\Test\Fixture\AppFixture;
+use Cake\Datasource\ConnectionInterface;
+use App\Model\Entity\Cart;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -46,9 +48,9 @@ abstract class AppCakeTestCase extends TestCase
     use LoginTrait;
     use QueueTrait;
 
-    protected $dbConnection;
-    protected $testDumpDir;
-    protected $appDumpDir;
+    protected ConnectionInterface $dbConnection;
+    protected string $testDumpDir;
+    protected string $appDumpDir;
 
     public SlugHelper $Slug;
     public MyHtmlHelper $Html;
@@ -83,7 +85,7 @@ abstract class AppCakeTestCase extends TestCase
         TestEmailTransport::clearMessages();
     }
 
-    protected function setDummyRequest()
+    protected function setDummyRequest(): void
     {
         Router::setRequest(new ServerRequest());
     }
@@ -107,7 +109,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertLogFilesForErrors();
     }
 
-    protected function assertLogFilesForErrors()
+    protected function assertLogFilesForErrors(): void
     {
         $log = file_get_contents($this->getLogFile('debug'));
         $log .= file_get_contents($this->getLogFile('error'));
@@ -116,33 +118,34 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
-    protected function getJsonDecodedContent()
+    protected function getJsonDecodedContent(): ?object
     {
         return json_decode($this->_getBodyAsString());
     }
 
-    protected function assertJsonError()
+    protected function assertJsonError(): void
     {
         $response = $this->getJsonDecodedContent();
         $this->assertEquals(0, $response->status);
     }
 
-    protected function assertAccessDeniedFlashMessage() {
+    protected function assertAccessDeniedFlashMessage(): void
+    {
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
-    protected function assertRedirectToLoginPage()
+    protected function assertRedirectToLoginPage(): void
     {
         $this->assertRegExpWithUnquotedString($this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
     }
 
-    protected function assertJsonOk()
+    protected function assertJsonOk(): void
     {
         $response = $this->getJsonDecodedContent();
         $this->assertEquals(1, $response->status);
     }
 
-    protected function assertNotPerfectlyImplementedAccessRestricted()
+    protected function assertNotPerfectlyImplementedAccessRestricted(): void
     {
         $this->assertEquals($this->Slug->getLogin() , $this->_response->getHeaderLine('Location'));
     }
@@ -150,21 +153,22 @@ abstract class AppCakeTestCase extends TestCase
     /**
      * back tick allows using forward slash in $unquotedString
      */
-    protected function assertRegExpWithUnquotedString(string $unquotedString, $response, string $msg = '')
+    protected function assertRegExpWithUnquotedString(string $unquotedString, $response, string $msg = ''): void
     {
-        if (is_null($response)) return;
-        $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
+        if (!is_null($response)) {
+            $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
+        }
     }
 
     /**
      * back tick ` allows using forward slash in $unquotedString
      */
-    protected function assertDoesNotMatchRegularExpressionWithUnquotedString(string $unquotedString, $response, string $msg = '')
+    protected function assertDoesNotMatchRegularExpressionWithUnquotedString(string $unquotedString, $response, string $msg = ''): void
     {
         $this->assertDoesNotMatchRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
-    protected function assertUrl($url, $expectedUrl, $msg = '')
+    protected function assertUrl($url, $expectedUrl, $msg = ''): void
     {
         $this->assertEquals($url, $expectedUrl, $msg);
     }
@@ -172,7 +176,7 @@ abstract class AppCakeTestCase extends TestCase
     /**
      * automatically logout of user
      */
-    protected function changeConfiguration(string $configKey, $value)
+    protected function changeConfiguration(string $configKey, $value): void
     {
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $configuration = $configurationsTable->get($configKey);
@@ -187,7 +191,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->changeManufacturer($manufacturerId, 'no_delivery_days', $noDeliveryDays);
     }
 
-    protected function addProductToCart(int|string $productId, int $amount)
+    protected function addProductToCart(int|string $productId, int $amount): ?object
     {
         $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
@@ -196,7 +200,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null, $pickupDay = null)
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null, $pickupDay = null): void
     {
         $data = [
             'Carts' => [
@@ -225,7 +229,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->runAndAssertQueue();
     }
 
-    protected function getCartById($cartId)
+    protected function getCartById($cartId): Cart
     {
         $contain = [
             'CartProducts.OrderDetails.OrderDetailUnits',
@@ -246,7 +250,16 @@ abstract class AppCakeTestCase extends TestCase
         return $cart;
     }
 
-    protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0, $changeOpenOrderDetails = false)
+    protected function changeProductPrice(
+        $productId,
+        $price,
+        $pricePerUnitEnabled = false,
+        $priceInclPerUnit = 0,
+        $priceUnitName = '',
+        $priceUnitAmount = 0,
+        $priceQuantityInUnits = 0,
+        $changeOpenOrderDetails = false
+        ): ?object
     {
         $this->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
@@ -268,7 +281,7 @@ abstract class AppCakeTestCase extends TestCase
         string $deliveryRhythmOrderPossibleUntil = '',
         string $deliveryRhythmSendOrderListWeekday = '',
         string $deliveryRhythmSendOrderListDay = ''
-        )
+        ): ?object
     {
         $this->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
@@ -281,7 +294,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0)
+    protected function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0): ?object
     {
         $this->ajaxPost('/admin/payments/add', [
             'customerId' => $customerId,
@@ -294,7 +307,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function changeManufacturer(int $manufacturerId, string $field, $value)
+    protected function changeManufacturer(int $manufacturerId, string $field, $value): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $newManufacturer = $manufacturersTable->get($manufacturerId);
@@ -302,7 +315,7 @@ abstract class AppCakeTestCase extends TestCase
         $manufacturersTable->save($newManufacturer);
     }
 
-    protected function changeCustomer(int $customerId, string $field, $value)
+    protected function changeCustomer(int $customerId, string $field, $value): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $newCustomer = $customersTable->get($customerId);
@@ -310,27 +323,28 @@ abstract class AppCakeTestCase extends TestCase
         $customersTable->save($newCustomer);
     }
 
-    protected function getCorrectedLogoPathInHtmlForPdfs($html)
+    protected function getCorrectedLogoPathInHtmlForPdfs($html): string
     {
         return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
     }
 
-    protected function prepareSendingOrderLists()
+    protected function prepareSendingOrderLists(): void
     {
         $this->prepareSendingOrderListsOrInvoices(Configure::read('app.folder_order_lists'));
     }
 
-    protected function prepareSendingInvoices()
+    protected function prepareSendingInvoices(): void
     {
         $this->prepareSendingOrderListsOrInvoices(Configure::read('app.folder_invoices'));
     }
 
-    protected function resetCustomerCreditBalance() {
+    protected function resetCustomerCreditBalance(): void
+    {
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $paymentsTable->delete($paymentsTable->get(2));
     }
 
-    private function prepareSendingOrderListsOrInvoices($contentFolder)
+    private function prepareSendingOrderListsOrInvoices($contentFolder): void
     {
         FolderService::rrmdir($contentFolder);
         mkdir($contentFolder, 0755, true);

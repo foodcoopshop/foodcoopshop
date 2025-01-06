@@ -7,6 +7,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use App\Model\Entity\Payment;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +26,7 @@ use App\Model\Entity\Payment;
 trait DeleteTrait
 {
 
-    public function delete(int $customerId)
+    public function delete(int $customerId): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -132,7 +133,7 @@ trait DeleteTrait
             'redirectUrl' => $redirectUrl
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'redirectUrl']);
-
+        return null;
     }
 
 }

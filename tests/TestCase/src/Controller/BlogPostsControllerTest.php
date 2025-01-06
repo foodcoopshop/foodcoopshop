@@ -25,13 +25,13 @@ class BlogPostsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    public function testBlogPostDetailOnlinePublicLoggedOut()
+    public function testBlogPostDetailOnlinePublicLoggedOut(): void
     {
         $this->get($this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'));
         $this->assertResponseCode(200);
     }
 
-    public function testBlogPostDetailOfflinePublicLoggedOut()
+    public function testBlogPostDetailOfflinePublicLoggedOut(): void
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 0, 0, 0);
@@ -39,7 +39,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    public function testBlogPostDetailOnlinePrivateLoggedOut()
+    public function testBlogPostDetailOnlinePrivateLoggedOut(): void
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
@@ -49,7 +49,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testBlogPostDetailOnlinePrivateLoggedIn()
+    public function testBlogPostDetailOnlinePrivateLoggedIn(): void
     {
         $this->loginAsCustomer();
         $blogPostId = 2;
@@ -58,14 +58,14 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
-    public function testBlogPostDetaiNonExistingLoggedOut()
+    public function testBlogPostDetaiNonExistingLoggedOut(): void
     {
         $blogPostId = 3;
         $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assertResponseCode(404);
     }
 
-    public function testBlogPostDetailOnlinePublicManufacturerPrivateLoggedOut()
+    public function testBlogPostDetailOnlinePublicManufacturerPrivateLoggedOut(): void
     {
         $blogPostId = 2;
         $manufacturerId = 15;
@@ -77,14 +77,14 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testBlogPostDetailChangeNullManufacturer()
+    public function testBlogPostDetailChangeNullManufacturer(): void
     {
         $blogPostId = 2;
         $manufacturerId = null;
         $this->changeBlogPost($blogPostId, 0, $manufacturerId);
     }
 
-    public function testAddBlogPostWithEmoji()
+    public function testAddBlogPostWithEmoji(): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPostsTable->save(
@@ -96,7 +96,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         );
     }
 
-    protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
+    protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $blogPostsTable->get($blogPostId);

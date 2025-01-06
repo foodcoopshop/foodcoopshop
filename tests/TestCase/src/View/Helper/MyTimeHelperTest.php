@@ -32,43 +32,43 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
-    public function testFormatToDbFormatDateDe()
+    public function testFormatToDbFormatDateDe(): void
     {
         $result = $this->MyTimeHelper->formatToDbFormatDate('12.06.2018');
         $this->assertEquals($result, '2018-06-12');
     }
 
-    public function testFormatToDbFormatDateEn()
+    public function testFormatToDbFormatDateEn(): void
     {
         $result = $this->MyTimeHelper->formatToDbFormatDate('06/12/2018');
         $this->assertEquals($result, '2018-06-12');
     }
 
-    public function testGetLastDayOfLastMonth()
+    public function testGetLastDayOfLastMonth(): void
     {
         $this->assertGetLastDayOfLastMonth('2018-03-11', '28.02.2018');
         $this->assertGetLastDayOfLastMonth('2018-01-11', '31.12.2017');
     }
 
-    public function testGetFirstDayOfLastMonth()
+    public function testGetFirstDayOfLastMonth(): void
     {
         $this->assertGetFirstDayOfLastMonth('2018-03-11', '01.02.2018');
         $this->assertGetFirstDayOfLastMonth('2018-01-11', '01.12.2017');
     }
 
-    private function assertGetLastDayOfLastMonth($currentDay, $expected)
+    private function assertGetLastDayOfLastMonth($currentDay, $expected): void
     {
         $result = $this->MyTimeHelper->getLastDayOfLastMonth($currentDay);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetFirstDayOfLastMonth($currentDay, $expected)
+    private function assertGetFirstDayOfLastMonth($currentDay, $expected): void
     {
         $result = $this->MyTimeHelper->getFirstDayOfLastMonth($currentDay);
         $this->assertEquals($expected, $result);
     }
 
-    public function testConvertSecondsInMinutesAndSeconds()
+    public function testConvertSecondsInMinutesAndSeconds(): void
     {
         $this->assertEquals('1 Sekunde', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(1));
         $this->assertEquals('59 Sekunden', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(59));

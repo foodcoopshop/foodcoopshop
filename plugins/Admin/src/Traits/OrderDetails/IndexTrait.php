@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Services\DeliveryRhythmService;
 use App\Controller\Component\StringComponent;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +26,7 @@ use App\Controller\Component\StringComponent;
 trait IndexTrait 
 {
 
-    public function index()
+    public function index(): void
     {
 
         // for filter from action logs page
@@ -253,7 +254,7 @@ trait IndexTrait
         $this->set('title_for_layout', __d('admin', 'Orders'));
     }
 
-    private function prepareGroupedOrderDetails($orderDetails, $groupBy)
+    private function prepareGroupedOrderDetails($orderDetails, $groupBy): array
     {
 
         $preparedOrderDetails = [];
@@ -330,7 +331,7 @@ trait IndexTrait
 
     }
 
-    private function getSortFieldForGroupedOrderDetails($manufacturerNameField)
+    private function getSortFieldForGroupedOrderDetails($manufacturerNameField): string
     {
         $sortMatches = [
             'Manufacturers.name' => $manufacturerNameField,
@@ -346,7 +347,7 @@ trait IndexTrait
         return $sortField;
     }
 
-    private function getSortDirectionForGroupedOrderDetails()
+    private function getSortDirectionForGroupedOrderDetails(): string
     {
         $sortDirection = 'ASC';
         if (!empty($this->getRequest()->getQuery('direction') && in_array($this->getRequest()->getQuery('direction'), ['asc', 'desc']))) {
@@ -355,7 +356,8 @@ trait IndexTrait
         return $sortDirection;
     }
     
-    private function addSelectGroupFields($query) {
+    private function addSelectGroupFields($query): SelectQuery
+    {
         $query->select([
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),

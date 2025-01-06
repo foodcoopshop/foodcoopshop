@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Validation\Validator;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -41,12 +42,13 @@ class UnitsTable extends AppTable
         return $validator;
     }
 
-    public function isValidName($value, array $context)
+    public function isValidName($value, array $context): bool
     {
         return in_array($value, ['kg', 'g', 'l'], true);
     }
 
-    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits, $useWeightAsAmount) {
+    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits, $useWeightAsAmount): EntityInterface|false
+    {
 
         if ($productAttributeId > 0) {
             $productId = 0;
@@ -87,7 +89,7 @@ class UnitsTable extends AppTable
         return $result;
     }
 
-    public function getUnitsObject($productId, $productAttributeId)
+    public function getUnitsObject($productId, $productAttributeId): ?EntityInterface
     {
         $unitProductConditions = [
             'Units.id_product' => $productId,
