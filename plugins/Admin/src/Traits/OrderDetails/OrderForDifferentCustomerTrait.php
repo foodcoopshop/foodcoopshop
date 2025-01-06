@@ -23,7 +23,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait OrderForDifferentCustomerTrait 
 {
 
-    protected function initOrderForDifferentCustomer($customerId)
+    protected function initOrderForDifferentCustomer($customerId): void
     {
 
         if (! $customerId) {
@@ -47,24 +47,24 @@ trait OrderForDifferentCustomerTrait
         }
     }
 
-    public function initInstantOrder($customerId)
+    public function initInstantOrder($customerId): void
     {
         $this->initOrderForDifferentCustomer($customerId);
         $this->redirect('/');
     }
 
-    public function initSelfServiceOrder($customerId)
+    public function initSelfServiceOrder($customerId): void
     {
         $this->initOrderForDifferentCustomer($customerId);
         $this->redirect(Configure::read('app.slugHelper')->getSelfService());
     }
 
-    public function iframeInstantOrder()
+    public function iframeInstantOrder(): void
     {
         $this->set('title_for_layout', __d('admin', 'Instant_order'));
     }
 
-    public function iframeSelfServiceOrder()
+    public function iframeSelfServiceOrder(): void
     {
         $this->set('title_for_layout', __d('admin', 'Self_service_order'));
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Network\Model\Table;
 
 use App\Model\Table\AppTable;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,7 +34,7 @@ class SyncProductsTable extends AppTable
         ]);
     }
 
-    public function addDashSeparatedProductIds($syncProducts)
+    public function addDashSeparatedProductIds($syncProducts): SelectQuery
     {
         foreach ($syncProducts as $syncProduct) {
             $remoteProductId = $syncProduct->remote_product_id;
@@ -51,7 +52,7 @@ class SyncProductsTable extends AppTable
         return $syncProducts;
     }
 
-    public function findAllSyncProducts($manufacturerId)
+    public function findAllSyncProducts($manufacturerId): SelectQuery
     {
         $syncProducts = $this->find('all',
         conditions: [

@@ -23,7 +23,7 @@ use Cake\Core\Configure;
 trait GenerateProductCardsTrait
 {
 
-    public function generateProductCards()
+    public function generateProductCards(): void
     {
         $productIds = h($this->getRequest()->getData('productIds'));
         if ($productIds == '') {

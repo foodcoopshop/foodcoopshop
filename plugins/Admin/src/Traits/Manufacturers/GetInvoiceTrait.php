@@ -23,6 +23,8 @@ use Cake\Core\Configure;
 trait GetInvoiceTrait
 {
 
+    /* void and Response not possible as return type - needs refactoring */
+    /** @phpstan-ignore-next-line */
     public function getInvoice()
     {
         $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));

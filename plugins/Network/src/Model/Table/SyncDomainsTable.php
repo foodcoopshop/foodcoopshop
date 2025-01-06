@@ -7,6 +7,7 @@ use App\Model\Table\AppTable;
 use Cake\Validation\Validator;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,20 +44,20 @@ class SyncDomainsTable extends AppTable
         return $validator;
     }
 
-    public function getSyncDomains($minStatus = APP_OFF)
+    public function getSyncDomains($minStatus = APP_OFF): SelectQuery
     {
         $syncDomains = $this->find('all', conditions: [
-            'SyncDomains.active >= ' . $minStatus
+            $this->aliasField('active >=') => $minStatus,
         ]);
         return $syncDomains;
     }
 
-    public function getActiveSyncDomains()
+    public function getActiveSyncDomains(): SelectQuery
     {
         return $this->getSyncDomains(APP_ON);
     }
 
-    public function getActiveSyncDomainHosts()
+    public function getActiveSyncDomainHosts(): array
     {
         $syncDomains = $this->getActiveSyncDomains()->toArray();
         if (empty($syncDomains)) {
@@ -69,7 +70,7 @@ class SyncDomainsTable extends AppTable
         return $syncDomainHosts;
     }
 
-    public function isAllowedEditManufacturerOptionsDropdown($identity)
+    public function isAllowedEditManufacturerOptionsDropdown($identity): bool
     {
 
         $isAllowed = false;
@@ -86,13 +87,13 @@ class SyncDomainsTable extends AppTable
 
         if ($isAllowed) {
             $syncDomains = $this->getActiveSyncDomains();
-            $isAllowed &= $syncDomains->count() > 0;
+            $isAllowed = $syncDomains->count() > 0;
         }
 
         return $isAllowed;
     }
 
-    public function getActiveManufacturerSyncDomains($enabledSyncDomains)
+    public function getActiveManufacturerSyncDomains($enabledSyncDomains): array
     {
 
         if (is_null($enabledSyncDomains)) {
@@ -112,7 +113,7 @@ class SyncDomainsTable extends AppTable
 
     }
 
-    public function getForDropdown()
+    public function getForDropdown(): array
     {
         $syncDomains = $this->find('all',
         conditions: [

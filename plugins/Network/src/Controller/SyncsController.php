@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
 use Cake\Http\Response;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,7 +39,7 @@ class SyncsController extends AppController
         $this->viewBuilder()->addHelper('Network.Network');
     }
 
-    private function doModifyProductChecks($product)
+    private function doModifyProductChecks($product): EntityInterface
     {
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomain = $syncDomainsTable->find('all', conditions: [
@@ -240,7 +241,7 @@ class SyncsController extends AppController
         return $emptyProductsString;
     }
 
-    private function getLocalSyncProducts()
+    private function getLocalSyncProducts(): array
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $products = $productsTable->getProductsForBackend(
@@ -253,7 +254,7 @@ class SyncsController extends AppController
         return $matchedProducts;
     }
 
-    private function markProductsAsSynced($products)
+    private function markProductsAsSynced($products): array
     {
 
         $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');

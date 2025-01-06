@@ -23,7 +23,7 @@ use Cake\I18n\I18n;
 class AssetsProvider
 {
 
-    public static function getCssFilesBase()
+    public static function getCssFilesBase(): array
     {
         return [
             'bootstrap/dist/css/bootstrap.css',
@@ -42,7 +42,7 @@ class AssetsProvider
         ];
     }
 
-    public static function getJsFilesBase()
+    public static function getJsFilesBase(): array
     {
 
         $result = [];

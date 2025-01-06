@@ -6,6 +6,7 @@ namespace Admin\Traits\Manufacturers;
 use Cake\Core\Configure;
 use App\Services\PdfWriter\OrderListByProductPdfWriterService;
 use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
+use App\Services\PdfWriter\PdfWriterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,21 +24,25 @@ use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
 
 trait GetOrderListTrait
 {
-
+    /* void and Response not possible as return type - needs refactoring */
+    /** @phpstan-ignore-next-line */
     public function getOrderListByProduct()
     {
-
         $pdfWriter = new OrderListByProductPdfWriterService();
         return $this->getOrderList('product', $pdfWriter);
     }
 
+    /* void and Response not possible as return type - needs refactoring */
+    /** @phpstan-ignore-next-line */
     public function getOrderListByCustomer()
     {
         $pdfWriter = new OrderListByCustomerPdfWriterService();
         return $this->getOrderList('customer', $pdfWriter);
     }
 
-    protected function getOrderList($type, $pdfWriter)
+    /* void and Response not possible as return type - needs refactoring */
+    /** @phpstan-ignore-next-line */
+    protected function getOrderList(string $type, OrderListByProductPdfWriterService|OrderListByCustomerPdfWriterService $pdfWriter)
     {
 
         $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));

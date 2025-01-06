@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait EditPickupDayCommentTrait 
 {
 
-    public function editPickupDayComment()
+    public function editPickupDayComment(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

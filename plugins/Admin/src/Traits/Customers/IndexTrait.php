@@ -27,7 +27,7 @@ trait IndexTrait
     use QueryFilterTrait;
     use CustomersFilterTrait;
 
-    public function index()
+    public function index(): void
     {
         $active = h($this->getRequest()->getQuery('active', $this->getDefaultActive()));
         $this->set('active', $active);

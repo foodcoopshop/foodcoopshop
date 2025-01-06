@@ -25,7 +25,7 @@ use Intervention\Image\Drivers\Imagick\Driver;
 trait SaveUploadedImageTrait 
 {
 
-    public function saveUploadedImageProduct()
+    public function saveUploadedImageProduct(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

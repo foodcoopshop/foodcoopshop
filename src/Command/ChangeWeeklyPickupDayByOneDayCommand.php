@@ -25,7 +25,7 @@ use Cake\Core\Configure;
 class ChangeWeeklyPickupDayByOneDayCommand extends Command
 {
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         if (empty($args->getArguments())) {

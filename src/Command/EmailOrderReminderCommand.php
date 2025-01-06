@@ -33,7 +33,7 @@ class EmailOrderReminderCommand extends AppCommand
 
     use CronjobCommandTrait;
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         $this->setCronjobRunDay($args);

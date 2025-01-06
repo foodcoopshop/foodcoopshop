@@ -23,7 +23,7 @@ use Cake\Console\ConsoleIo;
 class TestCronjobWithExceptionCommand extends AppCommand
 {
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
         throw new \Exception();
     }

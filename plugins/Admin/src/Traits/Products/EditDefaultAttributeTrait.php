@@ -22,7 +22,7 @@ use App\Controller\Component\StringComponent;
 trait EditDefaultAttributeTrait 
 {
 
-    public function editDefaultAttribute($productId, $productAttributeId)
+    public function editDefaultAttribute($productId, $productAttributeId): void
     {
         $productId = (int) $productId;
         $productAttributeId = (int) $productAttributeId;

@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
 trait EditCategoriesTrait 
 {
 
-    public function editCategories()
+    public function editCategories(): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

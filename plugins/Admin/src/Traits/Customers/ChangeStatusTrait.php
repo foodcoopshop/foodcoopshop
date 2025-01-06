@@ -24,7 +24,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait ChangeStatusTrait
 {
 
-    public function changeStatus($customerId, $status, $sendEmail)
+    public function changeStatus($customerId, $status, $sendEmail): void
     {
         if (! in_array($status, [
             APP_OFF,

@@ -24,7 +24,7 @@ use App\Services\SanitizeService;
 trait EditTrait
 {
 
-    public function profile()
+    public function profile(): void
     {
         $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
         $this->_processForm($this->identity->getId());
@@ -33,7 +33,7 @@ trait EditTrait
         }
     }
 
-    public function edit($customerId)
+    public function edit($customerId): void
     {
         if ($customerId === null) {
             throw new NotFoundException;
@@ -45,7 +45,7 @@ trait EditTrait
         }
     }
 
-    private function _processForm($customerId)
+    private function _processForm($customerId): void
     {
 
         $isOwnProfile = $this->identity->getId() == $customerId;

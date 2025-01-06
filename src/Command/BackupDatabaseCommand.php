@@ -27,7 +27,7 @@ use Cake\I18n\Number;
 class BackupDatabaseCommand extends AppCommand
 {
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         ini_set('max_execution_time', 300);

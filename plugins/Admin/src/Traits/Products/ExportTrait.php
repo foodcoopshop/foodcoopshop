@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Services\Csv\Writer\ProductCsvWriterService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +24,7 @@ use App\Services\Csv\Writer\ProductCsvWriterService;
 trait ExportTrait
 {
 
-    public function export()
+    public function export(): Response
     {
 
         $productIds = h($this->getRequest()->getData('productIds', ''));

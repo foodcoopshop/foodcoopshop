@@ -22,7 +22,7 @@ use Cake\Console\ConsoleIo;
 class TestCronjobCommand extends AppCommand
 {
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
         return static::CODE_SUCCESS;
     }

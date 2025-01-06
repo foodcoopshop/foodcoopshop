@@ -25,7 +25,7 @@ use Cake\Core\Configure;
 trait AddEditTrait
 {
 
-    public function profile()
+    public function profile(): void
     {
         $this->edit($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
@@ -35,7 +35,7 @@ trait AddEditTrait
         }
     }
 
-    public function add()
+    public function add(): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->newEntity(
@@ -54,7 +54,7 @@ trait AddEditTrait
         }
     }
 
-    public function edit($manufacturerId)
+    public function edit($manufacturerId): void
     {
         if ($manufacturerId === null) {
             throw new NotFoundException;
@@ -81,7 +81,7 @@ trait AddEditTrait
         $this->_processForm($manufacturer, true);
     }
 
-    private function _processForm($manufacturer, $isEditMode)
+    private function _processForm($manufacturer, $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -188,12 +188,12 @@ trait AddEditTrait
         copy(WWW_ROOT . $filename, WWW_ROOT . $newFilename);
     }
 
-    private function deleteUploadedGeneralTermsAndConditions($manufacturerId)
+    private function deleteUploadedGeneralTermsAndConditions($manufacturerId): void
     {
         $fileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
         if (file_exists(WWW_ROOT . $fileName)) {
             unlink(WWW_ROOT . $fileName);
         }
-    }    
+    }
 
 }

@@ -20,7 +20,7 @@ namespace Admin\Traits\Customers;
 trait GetCustomersForDropdownTrait
 {
 
-    public function getCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
+    public function getCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

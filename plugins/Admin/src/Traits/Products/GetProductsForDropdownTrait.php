@@ -21,7 +21,7 @@ namespace Admin\Traits\Products;
 trait GetProductsForDropdownTrait 
 {
 
-    public function ajaxGetProductsForDropdown($manufacturerId = 0)
+    public function ajaxGetProductsForDropdown($manufacturerId = 0): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 

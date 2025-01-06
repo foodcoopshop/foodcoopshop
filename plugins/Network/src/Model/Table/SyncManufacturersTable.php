@@ -22,7 +22,7 @@ use App\Model\Table\ManufacturersTable;
 class SyncManufacturersTable extends ManufacturersTable
 {
 
-    public function isAllowedToUseAsMasterFoodcoop($identity)
+    public function isAllowedToUseAsMasterFoodcoop($identity): bool
     {
         $isAllowed =
             $identity->isManufacturer() &&

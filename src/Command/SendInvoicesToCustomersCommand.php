@@ -29,7 +29,7 @@ class SendInvoicesToCustomersCommand extends AppCommand
 
     use CronjobCommandTrait;
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {

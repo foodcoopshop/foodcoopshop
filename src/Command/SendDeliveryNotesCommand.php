@@ -29,7 +29,7 @@ class SendDeliveryNotesCommand extends AppCommand
 
     use CronjobCommandTrait;
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {

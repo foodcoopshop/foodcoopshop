@@ -29,7 +29,7 @@ class SendOrderListsCommand extends AppCommand
 
     use CronjobCommandTrait;
 
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
@@ -197,7 +197,7 @@ class SendOrderListsCommand extends AppCommand
     /**
      * reset quantity to default_quantity_after_sending_order_lists
      */
-    protected function resetQuantityToDefaultQuantity($orderDetails)
+    protected function resetQuantityToDefaultQuantity($orderDetails): void
     {
 
         $productsTable = $this->getTableLocator()->get('Products');

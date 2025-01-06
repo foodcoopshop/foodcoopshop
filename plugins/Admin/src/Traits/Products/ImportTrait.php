@@ -10,6 +10,7 @@ use League\Csv\Writer;
 use Cake\Log\Log;
 use App\Services\Csv\Reader\ProductReaderService;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +33,7 @@ trait ImportTrait
 
     private array $columnsFieldMap = [];
 
-    public function initializeImportTrait()
+    public function initializeImportTrait(): void
     {
         $this->columnsFieldMap = [
             __d('admin', 'Name') => 'name',
@@ -49,7 +50,7 @@ trait ImportTrait
         ];
     }
 
-    public function downloadImportTemplate()
+    public function downloadImportTemplate(): Response
     {
 
         $this->initializeImportTrait();
@@ -69,14 +70,14 @@ trait ImportTrait
         return $response;
     }
 
-    public function myImport()
+    public function myImport(): void
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->import();
         $this->render('import');
     }
 
-    public function import()
+    public function import(): void
     {
 
         $this->initializeImportTrait();

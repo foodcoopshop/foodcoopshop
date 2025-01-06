@@ -23,7 +23,7 @@ use Cake\Database\Expression\QueryExpression;
 trait ProfitTrait 
 {
 
-    public function profit()
+    public function profit(): void
     {
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisMonth();
