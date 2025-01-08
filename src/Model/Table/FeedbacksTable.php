@@ -52,7 +52,7 @@ class FeedbacksTable extends AppTable
         return $validator;
     }
 
-    public function getManufacturerPrivacyType($feedback): int
+    public function getManufacturerPrivacyType($feedback): string
     {
         $privacyTypes = self::getManufacturerPrivacyTypes($feedback->manufacturer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
@@ -68,7 +68,7 @@ class FeedbacksTable extends AppTable
         return $values;
     }
 
-    public function getCustomerPrivacyType($feedback): int
+    public function getCustomerPrivacyType($feedback): string
     {
         $privacyTypes = self::getCustomerPrivacyTypes($feedback->customer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
