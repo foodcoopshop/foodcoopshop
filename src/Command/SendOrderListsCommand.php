@@ -38,6 +38,7 @@ class SendOrderListsCommand extends AppCommand
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         $this->setCronjobRunDay($args);
+        $this->cronjobRunDay = Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay);
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
