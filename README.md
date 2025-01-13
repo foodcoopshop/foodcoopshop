@@ -62,7 +62,7 @@
 * Apache with `mod_rewrite`
 * PHP >= 8.2
 * PHP intl extension INTL_ICU_VERSION >= 50.1
-* PHP Imagick extension
+* PHP Imagick and GD extension
 * PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0
 * Node.js and npm >= v9 ([installation](https://www.npmjs.com/get-npm)) developer packages
