@@ -43,7 +43,13 @@ if ($this->getRequest()->is('get')) {
             echo __('You_are_already_signed_in.') . ' ';
             echo __('To_sign_in_as_another_user_sign_out_first.') . '<br /><br />';
             $logoutButton = $this->Menu->getAuthMenuElement($identity);
-            echo $this->Html->link($logoutButton['name'], $logoutButton['slug'], ['class' => $logoutButton['options']['class'][0] . ' btn btn-outline-light']);
+            echo $this->Html->link(
+                '<i class="fa ' . $logoutButton['options']['fa-icon'] . '"></i> ' . $logoutButton['name'],
+                $logoutButton['slug'],
+                [
+                    'class' => $logoutButton['options']['class'][0] . ' btn btn-outline-light',
+                    'escape' => false,
+                ]);
         echo '</p>';
         echo '</div>';
         echo '<div class="sc"></div>';
