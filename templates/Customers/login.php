@@ -34,6 +34,23 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 
     <?php
 
+if ($this->getRequest()->is('get')) {
+    if ($identity !== null) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace').".ModalLogout.init('" . ($this->getRequest()->getQuery('redirect') ?? $this->Slug->getLogin()) . "');"
+        ]);
+        echo '<p>';
+            echo __('You_are_already_signed_in.') . ' ';
+            echo __('To_sign_in_as_another_user_sign_out_first.') . '<br /><br />';
+            $logoutButton = $this->Menu->getAuthMenuElement($identity);
+            echo $this->Html->link($logoutButton['name'], $logoutButton['slug'], ['class' => $logoutButton['options']['class'][0] . ' btn btn-outline-light']);
+        echo '</p>';
+        echo '</div>';
+        echo '<div class="sc"></div>';
+        return;
+    }
+}
+
     if ($enableSelfServiceLoginAsCustomerButton) {
         $selfServiceLoginCustomers = Configure::read('app.selfServiceLoginCustomers');
         if (!empty($selfServiceLoginCustomers)) {

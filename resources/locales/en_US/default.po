@@ -262,6 +262,9 @@ msgstr "Sign in for self-service"
 msgid "You_are_already_signed_in."
 msgstr "You are already signed in."
 
+msgid "To_sign_in_as_another_user_sign_out_first."
+msgstr "To sign in as another user, sign out first."
+
 msgid "Signing_in_failed."
 msgstr "Signing in failed."
 

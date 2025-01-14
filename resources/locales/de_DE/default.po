@@ -262,6 +262,9 @@ msgstr "Anmelden zur Selbstbedienung"
 msgid "You_are_already_signed_in."
 msgstr "Du bist bereits angemeldet."
 
+msgid "To_sign_in_as_another_user_sign_out_first."
+msgstr "Um dich als ein anderes Mitglied anzumelden, melde dich zuerst ab."
+
 msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
