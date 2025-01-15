@@ -310,12 +310,6 @@ class CustomersController extends FrontendController
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
 
-            if ($this->getRequest()->is('get')) {
-                if ($this->identity !== null) {
-                    $this->Flash->error(__('You_are_already_signed_in.'));
-                }
-            }
-
             if ($this->getRequest()->is('post')) {
                 $result = $this->Authentication->getResult();
                 if ($result->isValid()) {
