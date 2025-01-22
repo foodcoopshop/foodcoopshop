@@ -99,7 +99,7 @@ class ProductsTable extends AppTable
         $validator->add('delivery_rhythm_type', 'allowed-count-values', [
             'rule' => function ($value, $context) {
                 if ($value == 'week') {
-                    return in_array($context['data']['delivery_rhythm_count'], [1,2,4]);
+                    return in_array($context['data']['delivery_rhythm_count'], [1,2,3,4]);
                 }
                 if ($value == 'month') {
                     return in_array($context['data']['delivery_rhythm_count'], [0,1,2,3,4]);

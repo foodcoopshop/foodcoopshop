@@ -447,7 +447,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '3-week');
+        $response = $this->changeProductDeliveryRhythm(346, '5-week');
         $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
@@ -480,6 +480,15 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 346;
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm($productId, '2-week');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();
+    }
+
+    public function testEditDeliveryRhythmInvalid3WeekWithoutDate(): void
+    {
+        $productId = 346;
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm($productId, '3-week');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
         $this->assertJsonError();
     }
