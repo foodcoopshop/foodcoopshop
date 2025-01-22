@@ -249,7 +249,6 @@ class InvoicesTable extends AppTable
         foreach($orderDetails as $orderDetail) {
             if (!empty($orderDetail->order_detail_unit)) {
                 // do not add unit a second time if cancellation invoice is rendered ($source == 'OrderDetails')
-                /** @phpstan-ignore-next-line */
                 if ($orderDetail->getSource() == 'ActiveOrderDetails') {
                     $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
                 }

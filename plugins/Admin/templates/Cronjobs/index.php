@@ -126,7 +126,6 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td>';
     if (!empty($cronjob->cronjob_logs[0])) {
-        /** @phpstan-ignore-next-line */
         $name = $cronjob->getOriginalValues()['name'];
         $cronjobFilterString = Inflector::underscore($name);
         if (preg_match('/SendInvoicesToManufacturers/', $name)) {

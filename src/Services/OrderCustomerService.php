@@ -51,7 +51,7 @@ class OrderCustomerService
         ];
         if (isset($serverParams['HTTP_REFERER'])) {
             $result = preg_match(
-                '`' . preg_quote(Configure::read('App.fullBaseUrl')) . '/' . __('route_self_service') . '`',
+                '`' . preg_quote(Configure::read('App.fullBaseUrl'), '`') . '/' . __('route_self_service') . '`',
                 $serverParams['HTTP_REFERER'],
             );
             $result = (bool) $result;

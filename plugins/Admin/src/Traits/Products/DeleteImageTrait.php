@@ -29,7 +29,7 @@ trait DeleteImageTrait
 
         $productId = (int) $productId;
 
-        if ($productId == 0 || $productId == '') {
+        if ($productId == 0) {
             $message = 'Product ID not correct: ' . $productId;
             $this->log($message);
             $this->set([

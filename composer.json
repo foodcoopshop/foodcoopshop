@@ -41,11 +41,11 @@
         "cakephp/debug_kit": "5.*",
         "cakephp/cakephp-codesniffer": "^5.0",
         "phpunit/phpunit": "^11.0",
-        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan": "2.*",
         "cakephp/bake": "^3.0.0",
-        "ergebnis/phpstan-rules": "^2.0",
+        "ergebnis/phpstan-rules": "^2.5",
         "friendsofcake/fixturize": "^3.0",
-        "cakedc/cakephp-phpstan": "^3.2"
+        "cakedc/cakephp-phpstan": "^4.0"
     },
     "autoload": {
         "psr-4": {

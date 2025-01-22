@@ -108,7 +108,7 @@ class MenuHelper extends Helper
         if ($style != '') {
             $style = ' style="'.$style.'"';
         }
-        if ($slug != '/' && preg_match('`' . preg_quote($slug) . '`', $_SERVER['REQUEST_URI'])) {
+        if ($slug != '/' && preg_match('`' . preg_quote($slug, '`') . '`', $_SERVER['REQUEST_URI'])) {
             $applyActiveClass = true;
 
             // START hack: sometimes two menu items are selected, because of same url

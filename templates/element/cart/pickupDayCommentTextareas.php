@@ -37,7 +37,6 @@ foreach($cart->pickup_day_entities as $pickupDay) {
     $formattedPickupDay = $pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
 
     if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || 
-        /** @phpstan-ignore-next-line */
         count($pickupDay->getErrors()) > 0 || 
         !empty($pickupDay->comment)) {
         $this->element('addScript', ['script' =>

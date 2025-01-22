@@ -33,6 +33,8 @@ parameters:
         - message: '#Class .* extends generic class .* but does not specify its types: .*#'
         - message: '#Method .* has parameter .* with generic (class|interface) .* but does not specify its types: .*#'
         - message: '#Method .* return type with generic (class|interface) .* does not specify its types: .*#'
+        - message: '#will always evaluate to true#'
+        - message: '#is not a file or it does not exist#'
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
 includes:
