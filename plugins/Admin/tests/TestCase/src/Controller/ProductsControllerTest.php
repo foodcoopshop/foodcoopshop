@@ -447,7 +447,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '3-week');
+        $response = $this->changeProductDeliveryRhythm(346, '5-week');
         $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
