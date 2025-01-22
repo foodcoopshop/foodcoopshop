@@ -484,6 +484,15 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testEditDeliveryRhythmInvalid3WeekWithoutDate(): void
+    {
+        $productId = 346;
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm($productId, '3-week');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();
+    }
+
     public function testEditDeliveryRhythmOkFirstOfMonth(): void
     {
         $this->loginAsSuperadmin();

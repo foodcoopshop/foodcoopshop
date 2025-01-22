@@ -68,7 +68,7 @@ trait EditDeliveryRhythmTrait
             'delivery_rhythm_type' => $deliveryRhythmType,
         ];
 
-        $isFirstDeliveryDayMandatory = in_array($deliveryRhythmTypeCombined, ['0-individual', '2-week', '4-week']);
+        $isFirstDeliveryDayMandatory = in_array($deliveryRhythmTypeCombined, ['0-individual', '2-week', '3-week', '4-week']);
         if ($deliveryRhythmFirstDeliveryDay != '' || $isFirstDeliveryDayMandatory) {
             $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmFirstDeliveryDay);
         }

@@ -844,6 +844,27 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
+    public function test3Week(): void
+    {
+        $productsTable = $this->getTableLocator()->get('Products');
+        $data = [
+            'product' => $productsTable->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '3',
+                    'is_stock_product' => '0',
+                    'manufacturer' => [
+                        'stock_management_enabled' => '0',
+                    ],
+                    'delivery_rhythm_first_delivery_day' => new Date('2018-08-03'),
+                ]
+            ),
+            'currentDay' => '2018-08-07',
+            'result' => '2018-08-24',
+        ];
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+    }
+    
     public function test4Week(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
