@@ -49,6 +49,36 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains(';;;;;;;;14.985,00');
     }
 
+    public function testEditProductNewStatusOn(): void
+    {
+        $this->loginAsSuperadmin();
+        $productId = 60;
+        $status = APP_ON;
+        $this->get('/admin/products/editNewStatus/' . $productId  . '/' . $status);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
+            conditions: [
+                'Products.id_product' => $productId,
+            ]
+        )->first();
+        $this->assertTrue($product->new->isToday());
+    }
+
+    public function testEditProductNewStatusOff(): void
+    {
+        $this->loginAsSuperadmin();
+        $productId = 60;
+        $status = APP_OFF;
+        $this->get('/admin/products/editNewStatus/' . $productId  . '/' . $status);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
+            conditions: [
+                'Products.id_product' => $productId,
+            ]
+        )->first();
+        $this->assertTrue($product->new->addDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1)->isToday());
+    }
+
     public function testEditProductStatus(): void
     {
         $this->loginAsSuperadmin();
@@ -748,7 +778,6 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
-
         $this->assertEquals('Die Menge des Produktes <b>Artischocke</b> vom Hersteller <b>Demo Gemüse-Hersteller</b> wurde geändert: Verfügbare Menge: Alter Wert: <b>97</b> Neuer Wert: <b>10</b>, Standard-Menge pro Lieferrhythmus: <b>5</b>, Bestellbar bis zu einer Menge von: <b>-5</b>, Änderungsgrund: <b>change reason</b>.', $actionLogs[0]->text);
 
         $this->assertEquals(10, $product->stock_available->quantity);
@@ -757,6 +786,47 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
+    public function testEditNameOk(): void
+    {
+    
+        $this->loginAsSuperadmin();
+        $productId = 346;
+
+        $this->ajaxPost('/admin/products/editName', [
+            'productId' => $productId,
+            'name' => 'new name',
+            'description' => 'new description',
+            'descriptionShort' => 'new description short',
+            'unity' => 'new unity',
+            'idStorageLocation' => 1,
+            'isDeclarationOk' => 1,
+            'barcode' => '1234567890123',
+        ]);
+
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
+            conditions: [
+                'Products.id_product' => $productId,
+            ],
+            contain: [
+                'BarcodeProducts',
+            ],
+        )->first();
+
+        $this->assertEquals('new name', $product->name);
+        $this->assertEquals('new description', $product->description);
+        $this->assertEquals('new description short', $product->description_short);
+        $this->assertEquals('new unity', $product->unity);
+        $this->assertEquals(1, $product->id_storage_location);
+        $this->assertEquals(1, $product->is_declaration_ok);
+        $this->assertEquals('1234567890123', $product->barcode_product->barcode);
+
+        $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all')->toArray();
+        $this->assertEquals('Das Produkt <b>Artischocke</b> vom Hersteller <b>Demo Gemüse-Hersteller</b> wurde umbenannt in <i>"new name"</i>.', $actionLogs[0]->text);
+
+    }
+    
     private function deleteProduct($productId): ?Product
     {
         $this->ajaxPost('/admin/products/delete', [
