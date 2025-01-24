@@ -12,6 +12,7 @@ use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Customer;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -203,7 +204,7 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
-    public function getCustomerRecord($email): Customer|array
+    public function getCustomerRecord($email): Customer|array|null
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
