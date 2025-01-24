@@ -293,18 +293,6 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function getQuantityAsInteger(string|int $quantity): int
-    {
-        $quantity = trim($quantity);
-
-        if (!is_numeric($quantity)) {
-            return -1; // do not return false, because 0 is a valid return value!
-        }
-        $quantity = (int) ($quantity);
-
-        return $quantity;
-    }
-
     public function changeDeposit(array $products): bool
     {
 
