@@ -826,6 +826,16 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals('Das Produkt <b>Artischocke</b> vom Hersteller <b>Demo Gemüse-Hersteller</b> wurde umbenannt in <i>"new name"</i>.', $actionLogs[0]->text);
 
     }
+
+    public function testAjaxGetProductsForDropdown(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->ajaxGet('/admin/products/ajaxGetProductsForDropdown/4');
+        $this->assertJsonOk();
+        $this->assertNotEmpty($this->getJsonDecodedContent());
+        $expectedDropdownData = '<option value="">Alle Produkte</option><optgroup label="online-5"><option value="340">Beuschl - Demo Fleisch-Hersteller</option><option value="103">Bratwürstel - Demo Fleisch-Hersteller</option><option value="347">Forelle - Demo Fleisch-Hersteller</option><option value="102">Frankfurter - Demo Fleisch-Hersteller</option><option value="348">Rindfleisch - Demo Fleisch-Hersteller</option></optgroup>';
+        $this->assertEquals($expectedDropdownData, $this->getJsonDecodedContent()->dropdownData);
+    }
     
     private function deleteProduct($productId): ?Product
     {
