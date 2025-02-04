@@ -80,9 +80,6 @@ class FrontendController extends AppController
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getRandomProducts(),
                     'name' => __('Random_products'),
-                    'options' => [
-                        'fa-icon' => 'fa-dice',
-                    ]
                 ]);
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
