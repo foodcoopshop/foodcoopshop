@@ -146,7 +146,7 @@ class CatalogService
     protected function addOrderKeyword(SelectQuery $query, string $keyword): SelectQuery
     {
 
-        $query->orderDesc(function (QueryExpression $exp, Query $query) use ($keyword) {
+        $query->orderByDesc(function (QueryExpression $exp, Query $query) use ($keyword) {
             return $exp->case()
                 ->when($query->newExpr()->like('Products.name', $keyword.'%'))->then('20') //list product "Birnensaft" before "Apfel-Birnesaft" for keyword "Birnensaft"
                 ->when($query->newExpr()->like('Products.name', '%'.$keyword.'%'))->then('10')
@@ -154,7 +154,7 @@ class CatalogService
             }
         );
 
-        $query->order([
+        $query->orderBy([
             'Products.name' => 'ASC',
         ]);
 
@@ -164,7 +164,7 @@ class CatalogService
 
     protected function addOrder(SelectQuery $query): SelectQuery
     {
-        $query->order([
+        $query->orderBy([
             'Products.name' => 'ASC',
             'Images.id_image' => 'DESC',
         ]);
