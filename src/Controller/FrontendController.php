@@ -78,6 +78,10 @@ class FrontendController extends AppController
                 $newProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
                 $categoriesForMenu = $categoriesTable->getForMenu();
                 array_unshift($categoriesForMenu, [
+                    'slug' => Configure::read('app.slugHelper')->getRandomProducts(),
+                    'name' => __('Random_products'),
+                ]);
+                array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                     'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
                     'options' => [

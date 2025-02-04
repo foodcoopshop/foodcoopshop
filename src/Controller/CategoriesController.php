@@ -33,6 +33,7 @@ class CategoriesController extends FrontendController
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
             'newProducts',
+            'randomProducts',
             'search',
             'detail',
         ]);
@@ -66,6 +67,36 @@ class CategoriesController extends FrontendController
         $this->render('detail');
     }
 
+
+    public function randomProducts(): void
+    {
+        $this->redirectIfPageIsSetTo1();
+        $page = (int) $this->getRequest()->getQuery('page', 1);
+
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
+        $this->set('blogPosts', $blogPosts);
+
+        $catalogService = new CatalogService();
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), filterByNewProducts: false, randomize: true);
+        shuffle($products); // shuffle again due to caching
+        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, countMode: true, page: $page);
+        $pagesCount = $catalogService->getPagesCount($totalProductCount);
+        $products = $catalogService->prepareProducts($products);
+        $this->set('products', $products);
+
+        $this->throw404IfNoProductsOnPaginatedPageFound($products, $page);
+        
+        $this->set('totalProductCount', $totalProductCount);
+        $this->set('products', $products);
+        $this->set('pagesCount', $pagesCount);
+        $this->set('page', $page);
+
+        $this->set('title_for_layout', __('Random_products'));
+
+        $this->render('detail');
+    }
+    
     public function search(): void
     {
         $this->redirectIfPageIsSetTo1();

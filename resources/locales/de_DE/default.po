@@ -46,6 +46,9 @@ msgstr "nutzungsbedingungen-akzeptieren"
 msgid "route_new_products"
 msgstr "neue-produkte"
 
+msgid "route_random_products"
+msgstr "bunt-gemischt"
+
 msgid "route_request_new_password"
 msgstr "neues-passwort-anfordern"
 
@@ -210,6 +213,9 @@ msgstr "Es sind keine Bestellungen vorhanden."
 
 msgid "New_products"
 msgstr "Neue Produkte"
+
+msgid "Random_products"
+msgstr "Bunt gemischt"
 
 msgid "Search"
 msgstr "Suche"

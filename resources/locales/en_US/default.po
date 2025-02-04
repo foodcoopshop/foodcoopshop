@@ -46,6 +46,9 @@ msgstr "accept-terms-of-use"
 msgid "route_new_products"
 msgstr "new-products"
 
+msgid "route_random_products"
+msgstr "selection"
+
 msgid "route_request_new_password"
 msgstr "request-new-password"
 
@@ -210,6 +213,9 @@ msgstr "There are no orders available."
 
 msgid "New_products"
 msgstr "New products"
+
+msgid "Random_products"
+msgstr "Selection"
 
 msgid "Search"
 msgstr "Search"

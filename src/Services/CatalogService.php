@@ -49,7 +49,7 @@ class CatalogService
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1): array|int
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false): array|int
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -59,6 +59,7 @@ class CatalogService
             'isLoggedIn-' . ((int) ($this->identity !== null)),
             'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
+            'randomize-' . $randomize,
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
             'manufacturerId-' . $manufacturerId,
@@ -70,7 +71,7 @@ class CatalogService
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-            $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
+            $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, $randomize);
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
@@ -109,7 +110,7 @@ class CatalogService
 
     }
 
-    protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId): SelectQuery
+    protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, bool $randomize=false): SelectQuery
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -117,8 +118,13 @@ class CatalogService
         $query = $productsTable->find('all');
         $query = $this->addContains($query);
         if ($keyword == '') {
-            $query = $this->addOrder($query);
-        } else {
+            if ($randomize) {
+                $query = $this->addOrderByRand($query);
+            } else {
+                $query = $this->addOrder($query);
+            }
+        }
+        if ($keyword != '') {
             $query = $this->addOrderKeyword($query, $keyword);
         }
         $query = $this->addDefaultConditions($query);
@@ -162,6 +168,12 @@ class CatalogService
             'Products.name' => 'ASC',
             'Images.id_image' => 'DESC',
         ]);
+        return $query;
+    }
+
+    protected function addOrderByRand(SelectQuery $query): SelectQuery
+    {
+        $query->orderBy(['RAND()']);
         return $query;
     }
 
