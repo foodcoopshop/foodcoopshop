@@ -47,7 +47,7 @@ msgid "route_new_products"
 msgstr "neue-produkte"
 
 msgid "route_random_products"
-msgstr "auswahl"
+msgstr "zufallsauswahl"
 
 msgid "route_request_new_password"
 msgstr "neues-passwort-anfordern"
@@ -215,7 +215,7 @@ msgid "New_products"
 msgstr "Neue Produkte"
 
 msgid "Random_products"
-msgstr "Auswahl"
+msgstr "Zufallsauswahl"
 
 msgid "Search"
 msgstr "Suche"
