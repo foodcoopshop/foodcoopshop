@@ -59,6 +59,7 @@ class CatalogService
             'isLoggedIn-' . ((int) ($this->identity !== null)),
             'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
+            'randomize-' . $randomize,
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
             'manufacturerId-' . $manufacturerId,
