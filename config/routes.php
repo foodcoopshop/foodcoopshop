@@ -31,6 +31,7 @@ return function (RouteBuilder $routes) {
 
         $routes->connect('/'.__('route_new_products'), ['controller' => 'Categories', 'action' => 'newProducts']);
         $routes->connect('/'.__('route_random_products'), ['controller' => 'Categories', 'action' => 'randomProducts']);
+        $routes->connect('/'.__('route_this_week'), ['controller' => 'Categories', 'action' => 'thisWeek']);
         $routes->connect('/'.__('route_request_new_password'), ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
         $routes->connect('/'.__('route_activate_new_password').'/*', ['controller' => 'Customers', 'action' => 'activateNewPassword']);
 

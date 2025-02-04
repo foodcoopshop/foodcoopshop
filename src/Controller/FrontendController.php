@@ -76,10 +76,15 @@ class FrontendController extends AppController
                 $categoriesTable = $this->getTableLocator()->get('Categories');
                 $allProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
                 $newProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
+                $thisWeekCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, countMode: true, showOnlyProductsForNextDeliveryDay: true);
                 $categoriesForMenu = $categoriesTable->getForMenu();
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getRandomProducts(),
                     'name' => __('Random_products'),
+                ]);
+                array_unshift($categoriesForMenu, [
+                    'slug' => Configure::read('app.slugHelper')->getThisWeek(),
+                    'name' => __('This_week') . ' <span class="additional-info"> (' . $thisWeekCount . ')</span>',
                 ]);
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),

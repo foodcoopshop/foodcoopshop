@@ -49,6 +49,9 @@ msgstr "neue-produkte"
 msgid "route_random_products"
 msgstr "bunt-gemischt"
 
+msgid "route_this_week"
+msgstr "diese-woche"
+
 msgid "route_request_new_password"
 msgstr "neues-passwort-anfordern"
 
@@ -216,6 +219,9 @@ msgstr "Neue Produkte"
 
 msgid "Random_products"
 msgstr "Bunt gemischt"
+
+msgid "This_week"
+msgstr "Diese Woche"
 
 msgid "Search"
 msgstr "Suche"

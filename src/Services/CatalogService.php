@@ -49,7 +49,7 @@ class CatalogService
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false): array|int
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false, bool $showOnlyProductsForNextDeliveryDay = false): array|int
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -60,6 +60,7 @@ class CatalogService
             'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'randomize-' . $randomize,
+            'showOnlyProductsForNextDeliveryDay-' . $showOnlyProductsForNextDeliveryDay,
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
             'manufacturerId-' . $manufacturerId,
@@ -75,6 +76,9 @@ class CatalogService
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
+            if ($showOnlyProductsForNextDeliveryDay) {
+                $products = $this->removeProductIfShowOnlyProductsForNextDeliveryDayFilterEnabled($products);
+            }
             $products = $this->addOrderedProductsTotalAmount($products);
             if (!$countMode) {
                 $offset = $page * self::MAX_PRODUCTS_PER_PAGE - self::MAX_PRODUCTS_PER_PAGE;
@@ -458,6 +462,21 @@ class CatalogService
 
         return $products;
 
+    }
+
+    protected function removeProductIfShowOnlyProductsForNextDeliveryDayFilterEnabled(array $products): array
+    {
+        $i = -1;
+        foreach($products as $product) {
+            $i++;
+            $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
+            $nextDeliveryDayGlobal = (new DeliveryRhythmService())->getNextDeliveryDay(time()); 
+            if ($nextDeliveryDayOfProduct != $nextDeliveryDayGlobal) {
+                unset($products[$i]);
+            }
+        }
+        $products = $this->reindexArray($products);
+        return $products;
     }
 
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice(array $products): array
