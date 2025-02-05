@@ -16,6 +16,7 @@ use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -1285,6 +1286,7 @@ class ProductsTable extends AppTable
                 'unity' => $unity,
                 'is_declaration_ok' => $isDeclarationOk,
                 'id_storage_location' => $idStorageLocation,
+                'new' => Date::now(),
             ],
             [
                 'validate' => 'name',
