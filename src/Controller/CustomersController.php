@@ -183,6 +183,9 @@ class CustomersController extends FrontendController
 
         if (!empty($this->getRequest()->getData())) {
 
+            // no spam protected email output in input field
+            $this->protectEmailAddresses = false;
+
             $sanitizeService = new SanitizeService();
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
