@@ -44,6 +44,11 @@ class CatalogService
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
+    public function showOnlyProductsForNextDeliveryDayFilterEnabled(): bool
+    {
+        return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
+    }
+
     public function getPagesCount(int $totalProductCount): int
     {
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);

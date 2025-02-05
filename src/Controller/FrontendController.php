@@ -82,10 +82,12 @@ class FrontendController extends AppController
                     'slug' => Configure::read('app.slugHelper')->getRandomProducts(),
                     'name' => __('Random_products'),
                 ]);
-                array_unshift($categoriesForMenu, [
-                    'slug' => Configure::read('app.slugHelper')->getThisWeek(),
-                    'name' => __('This_week') . ' <span class="additional-info"> (' . $thisWeekCount . ')</span>',
-                ]);
+                if ($catalogService->showOnlyProductsForNextDeliveryDayFilterEnabled()) {
+                    array_unshift($categoriesForMenu, [
+                        'slug' => Configure::read('app.slugHelper')->getThisWeek(),
+                        'name' => __('This_week') . ' <span class="additional-info"> (' . $thisWeekCount . ')</span>',
+                    ]);
+                }
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                     'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
