@@ -91,7 +91,7 @@ class CategoriesController extends FrontendController
         $this->set('pagesCount', $pagesCount);
         $this->set('page', $page);
 
-        $this->set('title_for_layout', __('This_week'));
+        $this->set('title_for_layout', __('Not_this_week'));
 
         $this->render('detail');
     }
