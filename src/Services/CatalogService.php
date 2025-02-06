@@ -175,6 +175,7 @@ class CatalogService
     protected function addOrder(SelectQuery $query): SelectQuery
     {
         $query->orderBy([
+            'Manufacturers.name' => 'ASC',
             'Products.name' => 'ASC',
             'Images.id_image' => 'DESC',
         ]);
