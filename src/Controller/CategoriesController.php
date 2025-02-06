@@ -34,7 +34,6 @@ class CategoriesController extends FrontendController
         $this->Authentication->allowUnauthenticated([
             'newProducts',
             'randomProducts',
-            'notThisWeek',
             'search',
             'detail',
         ]);
@@ -64,34 +63,6 @@ class CategoriesController extends FrontendController
         $this->set('page', $page);
 
         $this->set('title_for_layout', __('New_products'));
-
-        $this->render('detail');
-    }
-
-    public function notThisWeek(): void
-    {
-        $this->redirectIfPageIsSetTo1();
-        $page = (int) $this->getRequest()->getQuery('page', 1);
-
-        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $blogPostsTable->findBlogPosts(null, true);
-        $this->set('blogPosts', $blogPosts);
-
-        $catalogService = new CatalogService();
-        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), showOnlyProductsForFutureDeliveryDays: true, page: $page);
-        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), countMode: true, page: $page, showOnlyProductsForFutureDeliveryDays: true);
-        $pagesCount = $catalogService->getPagesCount($totalProductCount);
-        $products = $catalogService->prepareProducts($products);
-        $this->set('products', $products);
-
-        $this->throw404IfNoProductsOnPaginatedPageFound($products, $page);
-        
-        $this->set('totalProductCount', $totalProductCount);
-        $this->set('products', $products);
-        $this->set('pagesCount', $pagesCount);
-        $this->set('page', $page);
-
-        $this->set('title_for_layout', __('Not_this_week'));
 
         $this->render('detail');
     }

@@ -141,7 +141,8 @@ body.categories.detail div.description-wrapper {
     padding: 4px 10px;
     word-break: break-word;
 }
-.vertical.menu a i.fas {
+.vertical.menu a i.fas,
+.vertical.menu a i.far {
     font-size: 13px;
     width: auto;
     left: 10px;

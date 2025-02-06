@@ -44,9 +44,12 @@ class CatalogService
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
-    public function showOnlyProductsForFutureDeliveryDaysFilterEnabled(): bool
+    public function showOnlyProductsForNextWeekFilterEnabled(): bool
     {
-        return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
+        return $this->identity !== null
+            && !(new OrderCustomerService())->isOrderForDifferentCustomerMode()
+            && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')
+            && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
     }
 
     public function getPagesCount(int $totalProductCount): int
@@ -54,7 +57,7 @@ class CatalogService
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false, bool $showOnlyProductsForFutureDeliveryDays = false): array|int
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false): array|int
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -65,7 +68,7 @@ class CatalogService
             'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'fbnp-' . $filterByNewProducts,
             'randomize-' . $randomize,
-            'sopffdd-' . $showOnlyProductsForFutureDeliveryDays,
+            'sopffdd-' . ($this->identity !== null ? $this->identity->show_only_products_for_next_week : 0),
             'keywords-' . substr(md5($keyword), 0, 10),
             'pId-' . $productId,
             'mId-' . $manufacturerId,
@@ -81,9 +84,7 @@ class CatalogService
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
-            if ($showOnlyProductsForFutureDeliveryDays) {
-                $products = $this->removeProductIfshowOnlyProductsForFutureDeliveryDaysFilterEnabled($products);
-            }
+            $products = $this->removeProductIfShowOnlyProductsForNextWeekEnabled($products);
             $products = $this->addOrderedProductsTotalAmount($products);
             if (!$countMode) {
                 $offset = $page * self::MAX_PRODUCTS_PER_PAGE - self::MAX_PRODUCTS_PER_PAGE;
@@ -469,8 +470,12 @@ class CatalogService
 
     }
 
-    protected function removeProductIfshowOnlyProductsForFutureDeliveryDaysFilterEnabled(array $products): array
+    protected function removeProductIfShowOnlyProductsForNextWeekEnabled(array $products): array
     {
+        if ($this->identity === null || (new OrderCustomerService())->isOrderForDifferentCustomerMode() || !$this->identity->show_only_products_for_next_week) {
+            return $products;
+        }
+
         $i = -1;
         foreach($products as $product) {
             $i++;

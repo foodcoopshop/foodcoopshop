@@ -19,6 +19,7 @@ use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
 use Cake\View\JsonView;
+use Admin\Traits\Customers\ChangeShowOnlyProductsForNextWeekTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -51,6 +52,7 @@ class CustomersController extends AdminAppController
     use IndexTrait;
     use UploadTrait;
     use RenewAuthSessionTrait;
+    use ChangeShowOnlyProductsForNextWeekTrait;
     
     public function initialize(): void
     {

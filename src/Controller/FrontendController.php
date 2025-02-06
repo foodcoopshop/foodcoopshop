@@ -76,18 +76,11 @@ class FrontendController extends AppController
                 $categoriesTable = $this->getTableLocator()->get('Categories');
                 $allProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
                 $newProductsCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
-                $notThisWeekCount = (int) $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, countMode: true, showOnlyProductsForFutureDeliveryDays: true);
                 $categoriesForMenu = $categoriesTable->getForMenu();
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getRandomProducts(),
                     'name' => __('Random_products'),
                 ]);
-                if ($catalogService->showOnlyProductsForFutureDeliveryDaysFilterEnabled()) {
-                    array_unshift($categoriesForMenu, [
-                        'slug' => Configure::read('app.slugHelper')->getNotThisWeek(),
-                        'name' => __('Not_this_week') . ' <span class="additional-info"> (' . $notThisWeekCount . ')</span>',
-                    ]);
-                }
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                     'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
@@ -108,6 +101,27 @@ class FrontendController extends AppController
         $categoriesForMenu = $categoriesForMenu ?? [];
         $this->set('categoriesForMenu', $categoriesForMenu);
 
+        $filtersForMenu = [];
+        if ($catalogService->showOnlyProductsForNextWeekFilterEnabled()) {
+            $name = __('Show_all_products');
+            $options = [
+                'fa-icon' => 'far fa-square',
+            ];
+            if ($this->identity !== null) {
+                $name = __('Show_only_products_for_next_week');
+                if ($this->identity->show_only_products_for_next_week) {
+                    $options = [
+                        'fa-icon' => 'fa-square-check',
+                    ];
+                }
+            }
+            $filtersForMenu[] = [
+                'slug' => Configure::read('app.slugHelper')->getChangeShowOnlyProductsForNextWeek(),
+                'name' => $name,
+                'options' => $options,
+            ];
+        }
+        $this->set('filtersForMenu', $filtersForMenu);
 
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $cacheKey = join('_', [

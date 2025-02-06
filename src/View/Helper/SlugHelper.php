@@ -246,9 +246,9 @@ class SlugHelper extends Helper
         return '/' . __('route_random_products');
     }
 
-    public function getNotThisWeek(): string
+    public function getChangeShowOnlyProductsForNextWeek(): string
     {
-        return '/' . __('route_not_this_week');
+        return '/admin/customers/changeShowOnlyProductsForNextWeek';
     }
 
     public function getProductSearch($keyword): string

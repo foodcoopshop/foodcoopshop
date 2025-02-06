@@ -27,6 +27,7 @@
         "pickup_day_reminder_enabled": 1,
         "credit_upload_reminder_enabled": 1,
         "newsletter_enabled": 0,
+        "show_only_products_for_next_week": 0,
         "address_customer": null,
         "name": "Demo Gem\u00fcse-Hersteller",
         "manufacturer": {
@@ -90,6 +91,7 @@
                 "pickup_day_reminder_enabled": 1,
                 "credit_upload_reminder_enabled": 1,
                 "newsletter_enabled": 0,
+                "show_only_products_for_next_week": 0,
                 "address_customer": {
                     "id_address": 154,
                     "id_customer": 88,
