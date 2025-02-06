@@ -44,7 +44,7 @@ class CatalogService
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
-    public function showOnlyProductsForNextDeliveryDayFilterEnabled(): bool
+    public function showOnlyProductsForFutureDeliveryDaysFilterEnabled(): bool
     {
         return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
     }
@@ -54,7 +54,7 @@ class CatalogService
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false, bool $showOnlyProductsForNextDeliveryDay = false): array|int
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false, bool $showOnlyProductsForFutureDeliveryDays = false): array|int
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -65,7 +65,7 @@ class CatalogService
             'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'fbnp-' . $filterByNewProducts,
             'randomize-' . $randomize,
-            'sopfndd-' . $showOnlyProductsForNextDeliveryDay,
+            'sopffdd-' . $showOnlyProductsForFutureDeliveryDays,
             'keywords-' . substr(md5($keyword), 0, 10),
             'pId-' . $productId,
             'mId-' . $manufacturerId,
@@ -81,8 +81,8 @@ class CatalogService
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
-            if ($showOnlyProductsForNextDeliveryDay) {
-                $products = $this->removeProductIfShowOnlyProductsForNextDeliveryDayFilterEnabled($products);
+            if ($showOnlyProductsForFutureDeliveryDays) {
+                $products = $this->removeProductIfshowOnlyProductsForFutureDeliveryDaysFilterEnabled($products);
             }
             $products = $this->addOrderedProductsTotalAmount($products);
             if (!$countMode) {
@@ -469,14 +469,14 @@ class CatalogService
 
     }
 
-    protected function removeProductIfShowOnlyProductsForNextDeliveryDayFilterEnabled(array $products): array
+    protected function removeProductIfshowOnlyProductsForFutureDeliveryDaysFilterEnabled(array $products): array
     {
         $i = -1;
         foreach($products as $product) {
             $i++;
             $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
             $nextDeliveryDayGlobal = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), (new DeliveryRhythmService())->getDeliveryDayByCurrentDay()); 
-            if ($nextDeliveryDayOfProduct != $nextDeliveryDayGlobal) {
+            if ($nextDeliveryDayOfProduct == $nextDeliveryDayGlobal) {
                 unset($products[$i]);
             }
         }

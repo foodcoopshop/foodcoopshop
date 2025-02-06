@@ -34,7 +34,7 @@ class CategoriesController extends FrontendController
         $this->Authentication->allowUnauthenticated([
             'newProducts',
             'randomProducts',
-            'thisWeek',
+            'notThisWeek',
             'search',
             'detail',
         ]);
@@ -68,7 +68,7 @@ class CategoriesController extends FrontendController
         $this->render('detail');
     }
 
-    public function thisWeek(): void
+    public function notThisWeek(): void
     {
         $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
@@ -78,8 +78,8 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), showOnlyProductsForNextDeliveryDay: true, page: $page);
-        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), countMode: true, page: $page, showOnlyProductsForNextDeliveryDay: true);
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), showOnlyProductsForFutureDeliveryDays: true, page: $page);
+        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), countMode: true, page: $page, showOnlyProductsForFutureDeliveryDays: true);
         $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
