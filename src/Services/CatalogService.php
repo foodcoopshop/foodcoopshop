@@ -481,7 +481,7 @@ class CatalogService
             $i++;
             $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
             $nextDeliveryDayGlobal = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), (new DeliveryRhythmService())->getDeliveryDayByCurrentDay()); 
-            if ($nextDeliveryDayOfProduct == $nextDeliveryDayGlobal) {
+            if ($nextDeliveryDayOfProduct != $nextDeliveryDayGlobal) {
                 unset($products[$i]);
             }
         }
