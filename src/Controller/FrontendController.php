@@ -66,8 +66,9 @@ class FrontendController extends AppController
             'categoriesForMenu',
             'date-' . date('Y-m-d'),
             'isLoggedIn-' . ((int) ($this->identity !== null)),
-            'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
-            'getOnlyStockProducts-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
+            'sopffdd-' . ($this->identity !== null ? $this->identity->show_only_products_for_next_week : 0),
+            'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            'gosp-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
         ]);
 
         $categoriesForMenu = Cache::read($cacheKey);
