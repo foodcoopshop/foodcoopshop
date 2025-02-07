@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Services\CatalogService;
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 
 class CatalogServiceTest extends AppCakeTestCase
 {
@@ -32,6 +33,27 @@ class CatalogServiceTest extends AppCakeTestCase
         $barcode = '2112345001234';
         $this->assertEquals(0.123, $catalogService->getBarcodeWeight($barcode));
 
+    }
+
+    public function testGetProductsWithShowOnlyProductsForNextWeekDisabled(): void
+    {
+        $this->setDummyRequest();
+        $catalogService = new CatalogService();
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'));
+        $this->assertCount(14, $products);
+    }
+
+    public function testGetProductsWithShowOnlyProductsForNextWeekEnabled(): void
+    {
+
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(60, '1-week', '2100-01-15');
+
+        $this->setDummyRequest();
+        $this->loginAsCustomer();
+        $catalogService = new CatalogService();
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'));
+        $this->assertCount(13, $products);
     }
 
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Traits;
 
 use Cake\Core\Configure;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ trait LoginTrait
 
     public bool $isSelfServiceModeByUrl = false;
 
-    public function login($userId): array
+    private function login($userId): array
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
@@ -33,10 +34,15 @@ trait LoginTrait
             contain: [
                 'AddressCustomers',
             ]
-        )->first()->toArray();
+        )->first();
+
+        $request = Router::getRequest();
+        if ($request !== null) {
+            Router::setRequest($request->withAttribute('identity', $identity));
+        }
 
         return [
-            'Auth' => $identity,
+            'Auth' => $identity->toArray(),
         ];
     }
 
