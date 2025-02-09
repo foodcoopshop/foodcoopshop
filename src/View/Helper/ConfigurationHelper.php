@@ -43,6 +43,7 @@ class ConfigurationHelper extends Helper
             case 'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY':
             case 'FCS_NEWSLETTER_ENABLED':
             case 'FCS_USER_FEEDBACK_ENABLED':
+            case 'FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');

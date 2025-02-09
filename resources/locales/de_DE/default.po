@@ -217,6 +217,12 @@ msgstr "Neue Produkte"
 msgid "Random_products"
 msgstr "Bunt gemischt"
 
+msgid "Show_only_products_for_next_week"
+msgstr "Nur Produkte für diese Woche anzeigen"
+
+msgid "Filters"
+msgstr "Filter"
+
 msgid "Search"
 msgstr "Suche"
 
@@ -3145,3 +3151,9 @@ msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://fo
 
 msgid "To_download_this_invoice_please_drop_an_email_to_{0}"
 msgstr "Zum Download dieser Rechnung bitte eine E-Mail an {0} schicken."
+
+msgid "Configuration_text_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
+msgstr "Filter \"Nur Produkte für diese Woche anzeigen?\" aktiv?"
+
+msgid "Configuration_subtext_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
+msgstr "Der Filter wird überhalb der Produkt-Kategorien im Produktkatalog (beim Bestellen) angezeigt; empfehlenswert bei vielen Produkten mit mehrwöchigen Lieferrhythmus."

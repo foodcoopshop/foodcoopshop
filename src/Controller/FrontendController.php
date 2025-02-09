@@ -66,8 +66,9 @@ class FrontendController extends AppController
             'categoriesForMenu',
             'date-' . date('Y-m-d'),
             'isLoggedIn-' . ((int) ($this->identity !== null)),
-            'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
-            'getOnlyStockProducts-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
+            'sopffdd-' . ($this->identity !== null ? $this->identity->show_only_products_for_next_week : 0),
+            'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            'gosp-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
         ]);
 
         $categoriesForMenu = Cache::read($cacheKey);
@@ -101,6 +102,27 @@ class FrontendController extends AppController
         $categoriesForMenu = $categoriesForMenu ?? [];
         $this->set('categoriesForMenu', $categoriesForMenu);
 
+        $filtersForMenu = [];
+        if ($catalogService->showOnlyProductsForNextWeekFilterEnabled()) {
+            $name = __('Show_all_products');
+            $options = [
+                'fa-icon' => 'far fa-square',
+            ];
+            if ($this->identity !== null) {
+                $name = __('Show_only_products_for_next_week');
+                if ($this->identity->show_only_products_for_next_week) {
+                    $options = [
+                        'fa-icon' => 'fa-square-check',
+                    ];
+                }
+            }
+            $filtersForMenu[] = [
+                'slug' => Configure::read('app.slugHelper')->getChangeShowOnlyProductsForNextWeek(),
+                'name' => $name,
+                'options' => $options,
+            ];
+        }
+        $this->set('filtersForMenu', $filtersForMenu);
 
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $cacheKey = join('_', [

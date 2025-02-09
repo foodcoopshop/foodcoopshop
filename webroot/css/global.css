@@ -352,7 +352,8 @@ h2.info a:not(.btn) {
 .vertical.menu a.active span.additional-info {
     color: #fff ! important;
 }
-.vertical.menu a i.fas {
+.vertical.menu a i.fas,
+.vertical.menu a i.far {
     font-size: 15px;
     position: absolute;
     left: 5px;

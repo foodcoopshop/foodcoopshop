@@ -217,6 +217,9 @@ msgstr "New products"
 msgid "Random_products"
 msgstr "Selection"
 
+msgid "Show_only_products_for_next_week"
+msgstr "Show only products for next week"
+
 msgid "Search"
 msgstr "Search"
 
@@ -3142,3 +3145,9 @@ msgstr "Members and manufacturers can write feedback."
 
 msgid "To_download_this_invoice_please_drop_an_email_to_{0}"
 msgstr "To download this invoice please drop an email to {0}"
+
+msgid "Configuration_text_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
+msgstr "\"Show only products for next week filter\" enabled?"
+
+msgid "Configuration_subtext_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
+msgstr "The filter is shown above the product categories in the product catalog (when ordering); recommended for many products with multi-week delivery rhythm."

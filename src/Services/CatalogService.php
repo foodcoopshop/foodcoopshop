@@ -44,6 +44,14 @@ class CatalogService
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
+    public function showOnlyProductsForNextWeekFilterEnabled(): bool
+    {
+        return $this->identity !== null
+            && Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED')
+            && !(new OrderCustomerService())->isOrderForDifferentCustomerMode()
+            && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
+    }
+
     public function getPagesCount(int $totalProductCount): int
     {
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
@@ -57,15 +65,16 @@ class CatalogService
             'Catalog_getProducts',
             'categoryId-' . $categoryId,
             'isLoggedIn-' . ((int) ($this->identity !== null)),
-            'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
-            'filterByNewProducts-' . $filterByNewProducts,
+            'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            'fbnp-' . $filterByNewProducts,
             'randomize-' . $randomize,
+            'sopffdd-' . ($this->identity !== null ? $this->identity->show_only_products_for_next_week : 0),
             'keywords-' . substr(md5($keyword), 0, 10),
-            'productId-' . $productId,
-            'manufacturerId-' . $manufacturerId,
-            'getOnlyStockProducts-' . $this->getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts),
+            'pId-' . $productId,
+            'mId-' . $manufacturerId,
+            'gosp-' . $this->getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts),
             'page-' . $page,
-            'countMode-' . $countMode,
+            'cm-' . $countMode,
             'date-' . date('Y-m-d'),
         ]);
         $products = Cache::read($cacheKey);
@@ -75,6 +84,7 @@ class CatalogService
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
+            $products = $this->removeProductIfShowOnlyProductsForNextWeekEnabled($products);
             $products = $this->addOrderedProductsTotalAmount($products);
             if (!$countMode) {
                 $offset = $page * self::MAX_PRODUCTS_PER_PAGE - self::MAX_PRODUCTS_PER_PAGE;
@@ -165,6 +175,7 @@ class CatalogService
     protected function addOrder(SelectQuery $query): SelectQuery
     {
         $query->orderBy([
+            'Manufacturers.name' => 'ASC',
             'Products.name' => 'ASC',
             'Images.id_image' => 'DESC',
         ]);
@@ -458,6 +469,28 @@ class CatalogService
 
         return $products;
 
+    }
+
+    protected function removeProductIfShowOnlyProductsForNextWeekEnabled(array $products): array
+    {
+        if ($this->identity === null ||
+            Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED') == 0 ||
+            (new OrderCustomerService())->isOrderForDifferentCustomerMode() ||
+            !$this->identity->show_only_products_for_next_week) {
+            return $products;
+        }
+
+        $i = -1;
+        foreach($products as $product) {
+            $i++;
+            $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
+            $nextDeliveryDayGlobal = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), (new DeliveryRhythmService())->getDeliveryDayByCurrentDay()); 
+            if ($nextDeliveryDayOfProduct != $nextDeliveryDayGlobal) {
+                unset($products[$i]);
+            }
+        }
+        $products = $this->reindexArray($products);
+        return $products;
     }
 
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice(array $products): array

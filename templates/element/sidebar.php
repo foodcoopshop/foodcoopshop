@@ -23,6 +23,9 @@ if (empty($categoriesForMenu) && empty($manufacturersForMenu)) {
 ?>
 <div class="<?php echo join(' ', $classes); ?>">
     <?php
+    if (!empty($filtersForMenu)) {
+        echo $this->Menu->render($filtersForMenu, ['id' => 'filters-menu', 'class' => 'vertical menu', 'header' => __('Filters')]);
+    }
     if (!empty($categoriesForMenu)) {
         echo $this->Menu->render($categoriesForMenu, ['id' => 'categories-menu', 'class' => 'vertical menu', 'header' => __('Categories')]);
     }

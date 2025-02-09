@@ -67,7 +67,6 @@ class CategoriesController extends FrontendController
         $this->render('detail');
     }
 
-
     public function randomProducts(): void
     {
         $this->redirectIfPageIsSetTo1();
