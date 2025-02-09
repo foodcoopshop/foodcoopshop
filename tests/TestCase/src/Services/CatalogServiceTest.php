@@ -46,6 +46,7 @@ class CatalogServiceTest extends AppCakeTestCase
     public function testGetProductsWithShowOnlyProductsForNextWeekEnabled(): void
     {
 
+        $this->changeConfiguration('FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm(60, '1-week', '2100-01-15');
 

@@ -47,8 +47,8 @@ class CatalogService
     public function showOnlyProductsForNextWeekFilterEnabled(): bool
     {
         return $this->identity !== null
+            && Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED')
             && !(new OrderCustomerService())->isOrderForDifferentCustomerMode()
-            && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')
             && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
     }
 
@@ -473,7 +473,10 @@ class CatalogService
 
     protected function removeProductIfShowOnlyProductsForNextWeekEnabled(array $products): array
     {
-        if ($this->identity === null || (new OrderCustomerService())->isOrderForDifferentCustomerMode() || !$this->identity->show_only_products_for_next_week) {
+        if ($this->identity === null ||
+            Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED') == 0 ||
+            (new OrderCustomerService())->isOrderForDifferentCustomerMode() ||
+            !$this->identity->show_only_products_for_next_week) {
             return $products;
         }
 

@@ -409,6 +409,13 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea_big',
             'position' => 1290,
         ],
+        [
+            'name' => 'FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED',
+            'active' => 1,
+            'value' => 0,
+            'type' => 'boolean',
+            'position' => 3600,
+        ]
     ];
 
 }
