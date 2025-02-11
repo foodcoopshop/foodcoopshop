@@ -267,6 +267,8 @@ h2.info a:not(.btn) {
     -moz-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     word-break: break-word;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 #flashMessage .closer {
     float: right;
