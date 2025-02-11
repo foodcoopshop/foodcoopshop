@@ -41,10 +41,10 @@ class ProductReaderService extends Reader {
 
     private function formatColumnsAndSetDefaultValues($record): array
     {
-        $record[__('Gross_price')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Gross_price')]);
-        $record[__('Tax_rate')] = $record[__('Tax_rate')] ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Tax_rate')]) : 0;
-        $record[__('Deposit')] = $record[__('Deposit')] ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Deposit')]) : 0;
-        $record[__('Product_declaration')] = $record[__('Product_declaration')] != '' ? $record[__('Product_declaration')] : 0;
+        $record[__('Gross_price')] = isset($record[__('Gross_price')]) ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Gross_price')]) : 0;
+        $record[__('Tax_rate')] = (isset($record[__('Tax_rate')]) && $record[__('Tax_rate')]) ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Tax_rate')]) : 0;
+        $record[__('Deposit')] = (isset($record[__('Deposit')]) && $record[__('Deposit')]) ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Deposit')]) : 0;
+        $record[__('Product_declaration')] = (isset($record[__('Product_declaration')]) && $record[__('Product_declaration')]) != '' ? $record[__('Product_declaration')] : 0;
         return $record;
     }
 
