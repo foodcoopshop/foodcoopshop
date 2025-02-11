@@ -84,17 +84,17 @@ class ProductReaderService extends Reader {
         foreach($records as $record) {
             $validatedProductEntities[] = $productsTable->getValidatedEntity(
                 $manufacturerId,
-                $record[__('Name')],
-                $record[__('Description_short')],
-                $record[__('Description')],
-                $record[__('Unit')],
-                $record[__('Gross_price')],
-                $record[__('Tax_rate')],
-                $record[__('Deposit')],
-                $record[__('Amount')],
-                $record[__('Status')],
-                $record[__('Product_declaration')],
-                $record[__('Storage_location')],
+                $record[__('Name')] ?? '',
+                $record[__('Description_short')] ?? '',
+                $record[__('Description')] ?? '',
+                $record[__('Unit')] ?? '',
+                $record[__('Gross_price')] ?? '',
+                $record[__('Tax_rate')] ?? '',
+                $record[__('Deposit')] ?? '',
+                $record[__('Amount')] ?? '',
+                $record[__('Status')] ?? '',
+                $record[__('Product_declaration')] ?? '',
+                $record[__('Storage_location')] ?? '',
             );
         }
 
