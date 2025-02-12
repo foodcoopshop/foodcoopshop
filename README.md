@@ -76,5 +76,5 @@ Before installing don't forget to read the [legal information](https://foodcoops
 [Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.
 
 ## Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=foodcoopshop/foodcoopshop&type=Date)](https://star-history.com/#foodcoopshop/foodcoopshop&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=foodcoopshop/foodcoopshop&Date)](https://star-history.com/#foodcoopshop/foodcoopshop&Date)
 
