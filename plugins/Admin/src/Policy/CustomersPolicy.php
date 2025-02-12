@@ -37,7 +37,7 @@ class CustomersPolicy implements RequestPolicyInterface
             'generateMyMemberCard' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer()),
             'creditBalanceSum', 'delete' => $identity->isSuperadmin(),
             'profile' => $identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer(),
-            'changePassword', 'getCustomersForDropdown' => $identity !== null,
+            'changePassword', 'getCustomersForDropdown', 'changeShowOnlyProductsForNextWeek' => $identity !== null,
             default => $identity->isSuperadmin() || $identity->isAdmin(),
         };
     
