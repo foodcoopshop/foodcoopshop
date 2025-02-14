@@ -26,7 +26,7 @@ class BackupDatabaseCommandTest extends AppCakeTestCase
         $backupDir = ROOT . DS . 'files_private' . DS . 'db-backups';
         $this->purgeFolderWithGitignoreFile($backupDir);
 
-        $this->exec('backup_database');
+        $this->exec('backup_database test');
 
         $files = scandir($backupDir);
         $found = false;

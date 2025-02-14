@@ -35,7 +35,12 @@ class BackupDatabaseCommand extends AppCommand
 
         $this->startTimeLogging();
 
-        $dbConfig = ConnectionManager::getConfig('default');
+        $connection = 'default';
+        if ($args->hasArgumentAt(0) && $args->getArgumentAt(0) == 'test') {
+            $connection = $args->getArgumentAt(0);
+        }
+
+        $dbConfig = ConnectionManager::getConfig($connection);
 
         $backupdir = ROOT . DS . 'files_private' . DS . 'db-backups';
         $preparedHostWithoutProtocol = Configure::read('app.htmlHelper')->getHostWithoutProtocol(Configure::read('App.fullBaseUrl'));
