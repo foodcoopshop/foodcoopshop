@@ -32,7 +32,7 @@
         "dereuromark/cakephp-queue": "8.*",
         "tecnickcom/tcpdf": "^6.4",
         "hisorange/browser-detect": "5.*",
-        "phpoffice/phpspreadsheet": "3.*",
+        "phpoffice/phpspreadsheet": "4.*",
         "druidfi/mysqldump-php": "^1.0",
         "cakephp/authentication": "^3.0",
         "cakephp/authorization": "^3.0"
