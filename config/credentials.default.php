@@ -48,26 +48,26 @@ return [
      * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
      * needs to be configured to run BackupDatabaseShell
      */
-    'EmailTransport' => [
-        'debug' => [
-            'className' => 'Smtp',
-            'host' => 'mail.example.com',
-            'port' => 25,
-            'timeout' => 30,
-            'username' => 'example@example.com',
-            'password' => 'my-password',
-            'client' => null,
-            'tls' => null,
-        ],
-    ],
-    'Email' => [
-        'debug' => [
-            'emailFormat' => 'html',
-            'transport' => 'debug',
-            'from' => ['example@example.com' => 'Example'],
-            'charset' => 'utf-8',
-            'headerCharset' => 'utf-8',
-        ],
-    ],
+//     'EmailTransport' => [
+//         'debug' => [
+//             'className' => 'Smtp',
+//             'host' => 'mail.example.com',
+//             'port' => 25,
+//             'timeout' => 30,
+//             'username' => 'example@example.com',
+//             'password' => 'my-password',
+//             'client' => null,
+//             'tls' => null,
+//         ],
+//     ],
+//     'Email' => [
+//         'debug' => [
+//             'emailFormat' => 'html',
+//             'transport' => 'debug',
+//             'from' => ['example@example.com' => 'Example'],
+//             'charset' => 'utf-8',
+//             'headerCharset' => 'utf-8',
+//         ],
+//     ],
 
 ];
