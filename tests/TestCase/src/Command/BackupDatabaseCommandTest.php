@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\TestSuite\EmailTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -19,6 +20,8 @@ use App\Test\TestCase\AppCakeTestCase;
 
 class BackupDatabaseCommandTest extends AppCakeTestCase
 {
+
+    use EmailTrait;
 
     public function testBackup(): void
     {
@@ -38,6 +41,7 @@ class BackupDatabaseCommandTest extends AppCakeTestCase
             }
         }
         $this->assertTrue($found);
+        $this->assertMailCount(1);
         $this->purgeFolderWithGitignoreFile($backupDir);
 
     }
