@@ -6,7 +6,7 @@
   processIsolation="false"
   stopOnFailure="false"
   bootstrap="./tests/bootstrap.php"
-  cacheDirectory=".phpunit.cache"
+  cacheDirectory="./tmp/.phpunit.cache"
   displayDetailsOnTestsThatTriggerDeprecations="true"
   displayDetailsOnTestsThatTriggerWarnings="true"
   >
