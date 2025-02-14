@@ -39,10 +39,10 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
         $configurationsTable = $this->getTableLocator()->get('Configurations');
 
         if ($args->getArgumentAt(0) == 'increase') {
-            $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
+            $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, (int) Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
         if ($args->getArgumentAt(0) == 'decrease') {
-            $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
+            $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, (int) Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
 
         if (isset($newWeeklyPickupDay)) {
