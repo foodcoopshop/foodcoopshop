@@ -330,12 +330,12 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function prepareSendingOrderLists(): void
     {
-        $this->prepareSendingOrderListsOrInvoices(Configure::read('app.folder_order_lists'));
+        $this->purgeFolderWithGitignoreFile(Configure::read('app.folder_order_lists'));
     }
 
     protected function prepareSendingInvoices(): void
     {
-        $this->prepareSendingOrderListsOrInvoices(Configure::read('app.folder_invoices'));
+        $this->purgeFolderWithGitignoreFile(Configure::read('app.folder_invoices'));
     }
 
     protected function resetCustomerCreditBalance(): void
@@ -344,7 +344,7 @@ abstract class AppCakeTestCase extends TestCase
         $paymentsTable->delete($paymentsTable->get(2));
     }
 
-    private function prepareSendingOrderListsOrInvoices($contentFolder): void
+    protected function purgeFolderWithGitignoreFile($contentFolder): void
     {
         FolderService::rrmdir($contentFolder);
         mkdir($contentFolder, 0755, true);
