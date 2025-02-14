@@ -76,13 +76,15 @@ class BackupDatabaseCommand extends AppCommand
 
         // email zipped file via Mailer (to avoid queue's max 16MB mediumtext limit of AppMailer)
         $email = new Mailer(null);
-        $email->setProfile('debug');
-         $email->setTo(Configure::read('app.hostingEmail'))
-            ->setSubject($message . ': ' . Configure::read('App.fullBaseUrl'))
-            ->setAttachments([
-                $filename
-            ])
+        if ($email->getConfig('debug')) {
+            $email->setProfile('debug');
+            $email->setTo(Configure::read('app.hostingEmail'))
+                ->setSubject($message . ': ' . Configure::read('App.fullBaseUrl'))
+                ->setAttachments([
+                    $filename
+                ])
             ->send();
+        }
         $io->out($message);
 
         $this->stopTimeLogging();

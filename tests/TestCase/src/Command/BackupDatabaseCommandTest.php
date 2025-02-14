@@ -21,8 +21,6 @@ use Cake\TestSuite\EmailTrait;
 class BackupDatabaseCommandTest extends AppCakeTestCase
 {
 
-    use EmailTrait;
-
     public function testBackup(): void
     {
 
@@ -41,7 +39,6 @@ class BackupDatabaseCommandTest extends AppCakeTestCase
             }
         }
         $this->assertTrue($found);
-        $this->assertMailCount(1);
         $this->purgeFolderWithGitignoreFile($backupDir);
 
     }
