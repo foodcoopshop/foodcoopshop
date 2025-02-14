@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\TestSuite\EmailTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
