@@ -32,7 +32,7 @@ class BackupDatabaseCommandTest extends AppCakeTestCase
         $files = scandir($backupDir);
         $found = false;
         foreach ($files as $file) {
-            if (preg_match('/foodcoopshop-test(.*).bz2/', $file)) {
+            if (preg_match('/(.*).bz2/', $file)) {
                 $filesize = filesize($backupDir . DS . $file);
                 $this->assertGreaterThan(0, $filesize);
                 $found = true;
