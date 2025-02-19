@@ -81,6 +81,8 @@ trait ManufacturersFilterTrait
         $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
 
         $catalogService = new CatalogService();
+        $catalogService->showOnlyProductsForNextWeekFilterEnabled = false;
+        
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturer->id_manufacturer, false);

@@ -34,6 +34,7 @@ class CatalogService
 {
 
     protected mixed $identity;
+    public bool $showOnlyProductsForNextWeekFilterEnabled = true;
 
     const MAX_PRODUCTS_PER_PAGE = 100;
     const BARCODE_WITH_WEIGHT_PREFIX = '27';
@@ -474,6 +475,7 @@ class CatalogService
     protected function removeProductIfShowOnlyProductsForNextWeekEnabled(array $products): array
     {
         if ($this->identity === null ||
+            !$this->showOnlyProductsForNextWeekFilterEnabled ||
             Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED') == 0 ||
             (new OrderCustomerService())->isOrderForDifferentCustomerMode() ||
             !$this->identity->show_only_products_for_next_week) {
