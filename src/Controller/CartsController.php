@@ -245,10 +245,17 @@ class CartsController extends FrontendController
 
     public function emptyCart(): void
     {
-        $this->doEmptyCart();
-        $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
-        $this->Flash->success($message);
-        $this->redirect($this->referer());
+        if (!((h($this->getRequest()->getQuery('autologout'))=='1') && !($this->identity->isSelfServiceCustomer()))) {
+            $this->doEmptyCart();
+            $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
+            $this->Flash->success($message);
+        }
+
+        $redirectUrl = $this->referer();
+        if ($this->request->getQuery('redirect')) {
+            $redirectUrl = $this->request->getQuery('redirect');
+        }
+        $this->redirect($redirectUrl);
     }
 
     private function doEmptyCart(): void
@@ -268,7 +275,6 @@ class CartsController extends FrontendController
 
     private function doAddOrderToCart($deliveryDate): void
     {
-
         $this->doEmptyCart();
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
 
