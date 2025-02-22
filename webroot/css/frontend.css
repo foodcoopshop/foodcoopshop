@@ -294,7 +294,7 @@ body.customers.new_password_request #inner-content form {
     width: 100%;
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 60px;
+    margin-bottom: 0px;
 }
 #login-form .self-service-login-button-wrapper a {
     padding: 5px 15px;
@@ -303,6 +303,10 @@ body.customers.new_password_request #inner-content form {
 }
 #login-form .self-service-login-button-wrapper a:first-of-type {
     margin-left: 0;
+}
+#login-form .self-service-click-image {
+    width: 100%;
+    margin-bottom: 50px;
 }
 body.customers.new_password_request .input label {
     width: 70px;
