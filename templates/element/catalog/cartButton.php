@@ -29,8 +29,8 @@ if ($hideButton) {
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
-    if (((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || $deliveryBreakManufacturerEnabled) {
+    if ((((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
+        || $deliveryBreakManufacturerEnabled) && !$orderCustomerService->isSelfServiceMode()) {
 
         $classes[] = 'disabled';
 
