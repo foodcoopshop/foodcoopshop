@@ -113,6 +113,7 @@ return [
             // ],
         ],
         'selfServiceEasyModeEnabled' => false,
+        'selfServiceIgnoreAmountCheck' => false,
         'showOrderedProductsTotalAmountInCatalog' => false,
         'applyOpenOrderCheckForOrderReminder' => true,
         'changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled' => false,
