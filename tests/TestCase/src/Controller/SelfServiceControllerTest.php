@@ -96,6 +96,35 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testSelfServiceAddProductPricePerUnitNotAvailableIgnoreAmountCheck(): void
+    {
+        Configure::write('app.selfServiceIgnoreAmountCheck', true);
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntity = $unitsTable->get(8);
+        $unitEntity->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntity);
+
+        $this->loginAsSuperadmin();
+        $productId = 351;
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $stockAvailableObject = $stockAvailablesTable->find('all')->where([
+            'id_product' => $productId,
+            'id_product_attribute' => 0,
+        ])->first();
+        $patchedEntity = $stockAvailablesTable->patchEntity(
+            $stockAvailableObject,
+            [
+                'quantity' => 1,
+            ],
+        );
+        $stockAvailablesTable->save($patchedEntity);
+
+        $this->addProductToSelfServiceCart($productId, 1, '1,2');
+        $response = $this->getJsonDecodedContent();
+        $expectedErrorMessage = '';
+        $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
+    }
+
     public function testSelfServiceAddAttributePricePerUnitWrong(): void
     {
         $this->loginAsSuperadmin();
