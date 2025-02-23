@@ -11,6 +11,7 @@ use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
 use App\Services\CartService;
+use App\Mailer\AppMailer;
 use Cake\View\JsonView;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
@@ -246,6 +247,9 @@ class CartsController extends FrontendController
     public function emptyCart(): void
     {
         if (!((h($this->getRequest()->getQuery('autologout'))=='1') && !($this->identity->isSelfServiceCustomer()))) {
+            if ((count($this->identity->getCart())>0) && ($this->getRequest()->getQuery('autologout')=='1') && ($this->identity->isSelfServiceCustomer())) {
+                $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($this->identity->getCart());
+            }
             $this->doEmptyCart();
             $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
             $this->Flash->success($message);
@@ -264,6 +268,20 @@ class CartsController extends FrontendController
         $cartProductsTable = $this->getTableLocator()->get('CartProducts');
         $cartProductsTable->removeAll($this->identity->getCartId(), $this->identity->getId());
         $this->identity->setCart($this->identity->getCart());
+    }
+
+    private function sendAutoLogoutEmptyCartEmailToCustomerSelfService($cart): void
+    {
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('order_successful_self_service');
+        $email->setTo($this->identity->email)
+        ->setSubject(__('Empty_purchase_self_service_auto_logout'))
+        ->setViewVars([
+            'cart' => $cartsTable->getCartGroupedByPickupDay($cart),
+            'identity' => $this->identity,
+        ]);
+        $email->addToQueue();
     }
 
     public function addOrderToCart(): void
