@@ -83,7 +83,7 @@ if ($this->getRequest()->is('get')) {
                 }
             echo '</div>';
             echo '<div class="self-service-click-image">';
-            echo '<img id="selfserviceclickimage" src="/files/images/' . Configure::read('app.selfServiceClickImgFileName') . '?' . filemtime(WWW_ROOT.'files'.DS.'images'.DS.Configure::read('app.selfServiceClickImgFileName')) . '" />';
+            if(!$isMobile){echo '<img id="selfserviceclickimage" src="/files/images/' . Configure::read('app.selfServiceClickImgFileName') . '?' . filemtime(WWW_ROOT.'files'.DS.'images'.DS.Configure::read('app.selfServiceClickImgFileName')) . '" />';}
             echo '</div>';
             echo '<h6>' . __('For_self_service_with_account') . '</h6>';
             $this->element('addScript', ['script' =>
