@@ -98,7 +98,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceAddProductPricePerUnitNotAvailableIgnoreAmountCheck(): void
     {
-        Configure::write('app.selfServiceIgnoreAmountCheck', true);
+        Configure::write('app.selfServiceIsAmountValidationEnabled', false);
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntity = $unitsTable->get(8);
         $unitEntity->use_weight_as_amount = 1;
