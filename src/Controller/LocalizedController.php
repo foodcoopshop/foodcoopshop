@@ -115,7 +115,7 @@ class LocalizedController extends Controller
                 'PickupDay' => __('Pickup_day'),
                 'selfServiceConfirmPurchaseDialog' => __('Confirm_self_service_purchase_dialog'),
                 'selfServiceConfirmPurchase' => __('Confirm_self_service_purchase'),
-                'selfServiceConfirmPurchaseButton' => __('Confirm_self_service_purchase_button'),
+                'selfServiceConfirmPurchaseCompletedButton' => __('Confirm_self_service_purchase_completed_button'),
                 'selfServiceDenyPurchaseButton' => __('Deny_self_service_purchase_button'),
                 'selfServiceAmountToBePaid' => __('Amount_to_be_paid'),
             ],
