@@ -7,7 +7,6 @@ namespace Admin\Traits\Products;
 use Admin\Traits\ManufacturerIdTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use League\Csv\Writer;
-use Cake\Log\Log;
 use App\Services\Csv\Reader\ProductReaderService;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
@@ -117,7 +116,6 @@ trait ImportTrait
                 $this->Flash->success($messageString);
                 $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
                 $actionLogsTable->customSave('product_added', $this->identity->getId(), $manufacturer->id_manufacturer, 'products', $messageString);
-                Log::error($messageString . print_r($productEntities, true));
             } else {
                 $errors = $reader->getAllErrors($productEntities);
                 $errorRows = [];

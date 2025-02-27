@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## v4.1
 
 ### Neue Funktionen / Verbesserungen
 - Bei Lagerprodukten mit Preis nach Gewicht kann der Lagerstand jetzt auch über das Gewicht berechnet werden, und nicht mehr ausschließlich über die Anzahl. Das ist vor allem für Lagerprodukte gedacht, die bei jeder Entnahme aus einem Großgebinde abgewogen werden (z.B. Nudeln, Reis, Äpfel usw.). [I#336](https://github.com/foodcoopshop/foodcoopshop/issues/336) / [PR#1036](https://github.com/foodcoopshop/foodcoopshop/pull/1036) / [PR#1029](https://github.com/foodcoopshop/foodcoopshop/pull/1029) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -40,6 +40,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Vereinfachung der Übersetzungen: Configuration Text und Subtext werden nicht mehr in der Datenbank gespeichert. [I#1072](https://github.com/foodcoopshop/foodcoopshop/issues/1072) / [PR#1074](https://github.com/foodcoopshop/foodcoopshop/pull/1074) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Statische Code-Analyse mittels PHPStan: Verbesserung der Code-Qualität auf Level 5 ([Level 6 in progress](https://github.com/foodcoopshop/foodcoopshop/issues/1108)). [PR#1107](https://github.com/foodcoopshop/foodcoopshop/pull/1107) | [PR#1111](https://github.com/foodcoopshop/foodcoopshop/pull/1111) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+Datum: 27.02.2025 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/1) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.0.0...v4.1.0)
 
 ## v4.0
 
