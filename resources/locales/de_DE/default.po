@@ -2054,6 +2054,9 @@ msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen a
 msgid "Your_purchase"
 msgstr "Dein Einkauf"
 
+msgid "Empty_purchase_self_service_auto_logout"
+msgstr "Abgebrochener SB-Einkauf"
+
 msgid "New_order_comment__was_written_by_{0}_for_{1}"
 msgstr "Neuer Bestell-Kommentar von {0} für {1}"
 
