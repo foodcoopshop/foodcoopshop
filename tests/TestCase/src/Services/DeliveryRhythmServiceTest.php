@@ -231,8 +231,8 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('10.10.2018', '12.10.2018'); // wednesday
         $this->assertGetFormattedNextDeliveryDay('11.10.2018', '12.10.2018'); // thursday
         $this->assertGetFormattedNextDeliveryDay('12.10.2018', '12.10.2018'); // friday
-        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '19.10.2018'); // saturday
-        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '19.10.2018'); // sunday
+        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '12.10.2018'); // saturday
+        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '12.10.2018'); // sunday
         $this->assertGetFormattedNextDeliveryDay('15.10.2018', '19.10.2018'); // monday
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
@@ -245,8 +245,8 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('10.10.2018', '12.10.2018'); // wednesday
         $this->assertGetFormattedNextDeliveryDay('11.10.2018', '12.10.2018'); // thursday
         $this->assertGetFormattedNextDeliveryDay('12.10.2018', '12.10.2018'); // friday
-        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '19.10.2018'); // saturday
-        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '19.10.2018'); // sunday
+        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '12.10.2018'); // saturday
+        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '12.10.2018'); // sunday
         $this->assertGetFormattedNextDeliveryDay('15.10.2018', '19.10.2018'); // monday
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
