@@ -7,6 +7,7 @@ use App\Model\Entity\Customer;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +26,10 @@ trait CartValidatorTrait
 
     public function isAmountAvailableAttribute($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $availableQuantity, $amount, $attributeName, $productName, $unitName = ''): bool|string
     {
+        if (!Configure::read('app.selfServiceIsAmountValidationEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
+            return true;
+        }
+        
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $availableQuantity < $amount) {
@@ -35,11 +40,16 @@ trait CartValidatorTrait
                 Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
             ]);
         }
+    
         return $result;
     }
 
     public function isAmountAvailableProduct($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $attributeId, $availableQuantity, $amount, $productName, $unitName = ''): bool|string
     {
+        if (!Configure::read('app.selfServiceIsAmountValidationEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
+            return true;
+        }
+        
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $attributeId == 0 && $availableQuantity < $amount) {
@@ -49,6 +59,7 @@ trait CartValidatorTrait
                 Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
             ]);
         }
+        
         return $result;
     }
 
