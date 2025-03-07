@@ -6,6 +6,12 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## unreleased
+
+### Neue Funktionen / Verbesserungen
+- Bestellungen können auch am Wochenende abgeholt werden. Deswegen bleibt im Admin-Bereich unter "Bestellungen" der vergangene Freitag auch am Samstag und Sonntag als Abholtag ausgewählt. [I#1125](https://github.com/foodcoopshop/foodcoopshop/issues/1125) / [PR#1133](https://github.com/foodcoopshop/foodcoopshop/pull/1133) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v4.1
 
 ### Neue Funktionen / Verbesserungen

@@ -103,6 +103,9 @@ class DeliveryRhythmService
 
     public function getFormattedNextDeliveryDay($day): string
     {
+        if (!$this->hasSaturdayThursdayConfig()) {
+            $day = strtotime('-2 days', $day);
+        }
         return date($this->Time->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
     }
 
