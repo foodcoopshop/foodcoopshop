@@ -176,7 +176,6 @@ class CatalogService
     protected function addOrder(SelectQuery $query): SelectQuery
     {
         $query->orderBy([
-            'Manufacturers.name' => 'ASC',
             'Products.name' => 'ASC',
             'Images.id_image' => 'DESC',
         ]);
@@ -215,7 +214,6 @@ class CatalogService
     {
         $query->contain([
             'Images',
-            'CategoryProducts',
             'DepositProducts',
             'Manufacturers',
             'StockAvailables' => [
@@ -288,17 +286,8 @@ class CatalogService
             return $query;
         }
 
-        $query->contain([
-            'CategoryProducts' => [
-                'Categories' => [
-                    'conditions' => [
-                        'Categories.active' => APP_ON,
-                    ],
-                ],
-            ],
-        ]);
-        $query->matching('CategoryProducts', function ($q) use ($categoryId) {
-            return $q->where(['CategoryProducts.id_category IN' => $categoryId]);
+        $query->innerJoinWith('CategoryProducts', function ($q) use ($categoryId) {
+            return $q->where(['CategoryProducts.id_category' => $categoryId]);
         });
 
         return $query;
