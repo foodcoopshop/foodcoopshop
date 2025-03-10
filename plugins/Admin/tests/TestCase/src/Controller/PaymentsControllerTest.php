@@ -445,7 +445,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function deletePayment($paymentId): ?object
     {
-        $this->ajaxPost('/admin/payments/changeState', [
+        $this->ajaxPost('/admin/payments/changeStatus', [
             'paymentId' => $paymentId
         ]);
         return $this->getJsonDecodedContent();
