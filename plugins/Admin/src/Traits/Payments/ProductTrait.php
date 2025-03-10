@@ -33,11 +33,8 @@ trait ProductTrait
         $this->paymentType = Payment::TYPE_PRODUCT;
         $this->set('title_for_layout', __d('admin', 'Credit'));
 
-        $this->allowedPaymentTypes = [
-            Payment::TYPE_PRODUCT,
-            Payment::TYPE_PAYBACK,
-            Payment::TYPE_DEPOSIT,
-        ];
+        $this->allowedPaymentTypes = Payment::ALLOWED_CUSTOMER_TYPES;
+        
         if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $this->allowedPaymentTypes = [
                 Payment::TYPE_PRODUCT,
