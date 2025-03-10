@@ -35,6 +35,14 @@ trait AddTrait
             throw new \Exception('payment type not valid: ' . $type);
         }
 
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->find('all', conditions: [
+            $customersTable->aliasField('id_customer') => $customerId,
+        ])->first();
+        if (empty($customer)) {
+            throw new \Exception('customer not found: ' . $customerId);
+        }
+
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
@@ -64,13 +72,6 @@ trait AddTrait
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
         if ($type == Payment::TYPE_DEPOSIT) {
-            $customersTable = $this->getTableLocator()->get('Customers');
-            $customer = $customersTable->find('all', conditions: [
-                $customersTable->aliasField('id_customer') => $customerId,
-            ])->first();
-            if (empty($customer)) {
-                throw new \Exception('customer id not correct: ' . $customerId);
-            }
             $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
         }
 
@@ -136,6 +137,15 @@ trait AddTrait
             throw new \Exception('payment type not valid: ' . $type);
         }
 
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all', conditions: [
+            $manufacturersTable->aliasField('id_manufacturer') => $manufacturerId,
+        ])->first();
+
+        if (empty($manufacturer)) {
+            throw new \Exception('manufacturer not found: ' . $manufacturerId);
+        }
+
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
@@ -184,15 +194,6 @@ trait AddTrait
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
 
         if ($type == Payment::TYPE_DEPOSIT) {
-            $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
-            $manufacturer = $manufacturersTable->find('all', conditions: [
-                $manufacturersTable->aliasField('id_manufacturer') => $manufacturerId,
-            ])->first();
-
-            if (empty($manufacturer)) {
-                throw new \Exception('manufacturer id not correct: ' . $manufacturerId);
-            }
-
             $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
             $message .= ' ' . __d('admin', 'for') . ' ' . $manufacturer->name;
         }
