@@ -96,6 +96,15 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testSelfServiceAddProductNotAvailableIgnoreAmountCheck(): void
+    {
+        Configure::write('app.selfServiceIsAmountValidationEnabled', false);
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->addProductToSelfServiceCart($productId, 98);
+        $this->assertJsonOk();
+    }
+
     public function testSelfServiceAddAttributePricePerUnitWrong(): void
     {
         $this->loginAsSuperadmin();
