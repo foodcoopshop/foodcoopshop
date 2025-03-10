@@ -77,19 +77,12 @@ trait AddTrait
 
         // payments paybacks and product can also be placed for other customers
         if (in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
-            $customersTable = $this->getTableLocator()->get('Customers');
-            $customer = $customersTable->find('all', conditions: [
-                $customersTable->aliasField('id_customer') => $customerId,
-            ])->first();
             if ($this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
             }
             // security check
             if (!$this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 throw new \Exception('user without superadmin privileges tried to insert payment for another user: ' . $customerId);
-            }
-            if (empty($customer)) {
-                throw new \Exception('customer id not correct: ' . $customerId);
             }
         }
 
