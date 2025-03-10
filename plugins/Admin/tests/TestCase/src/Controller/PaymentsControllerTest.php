@@ -231,7 +231,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $customersTable = $this->getTableLocator()->get('Customers');
         $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $dateAdd = '01.01.2099';
-        $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, 30, Payment::TYPE_DEPOSIT, $dateAdd, Payment::TEXT_EMPTY_GLASSES, '');
+        $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, 30, Payment::TYPE_DEPOSIT, $dateAdd, Payment::TEXT_EMPTY_GLASSES);
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertEquals('Das Datum darf nicht in der Zukunft liegen.', $jsonDecodedContent->msg);
     }

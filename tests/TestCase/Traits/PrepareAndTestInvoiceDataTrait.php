@@ -48,8 +48,8 @@ trait PrepareAndTestInvoiceDataTrait
         $orderDetailEntityB->pickup_day = $pickupDay;
         $orderDetailsTable->save($orderDetailEntityB);
 
-        $this->addCustomerPayment($customerId, 2.0, Payment::TYPE_DEPOSIT, 0, '', $pickupDay);
-        $this->addCustomerPayment($customerId, 3.2, Payment::TYPE_DEPOSIT, 0, '', $pickupDay);
+        $this->addCustomerPayment($customerId, 2.0, Payment::TYPE_DEPOSIT);
+        $this->addCustomerPayment($customerId, 3.2, Payment::TYPE_DEPOSIT);
 
     }
 
