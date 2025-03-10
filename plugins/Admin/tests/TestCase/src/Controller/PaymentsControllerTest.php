@@ -31,73 +31,73 @@ class PaymentsControllerTest extends AppCakeTestCase
     use LoginTrait;
     use EmailTrait;
 
-    public function testAddPaymentLoggedOut(): void
+    public function testAddCustomerPaymentLoggedOut(): void
     {
-        $this->addPayment(Configure::read('test.customerId'), 0, Payment::TYPE_PRODUCT);
+        $this->addCustomerPayment(Configure::read('test.customerId'), 0, Payment::TYPE_PRODUCT);
         $this->assertRedirectToLoginPage();
     }
 
-    public function testAddPaymentParameterAmountOk(): void
+    public function testAddCustomerPaymentParameterAmountOk(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', Payment::TYPE_PRODUCT);
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '65,03', Payment::TYPE_PRODUCT);
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
 
-    public function testAddPaymentParameterAmountWithWhitespaceOk(): void
+    public function testAddCustomerPaymentParameterAmountWithWhitespaceOk(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), ' 24,88 ', Payment::TYPE_PRODUCT);
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), ' 24,88 ', Payment::TYPE_PRODUCT);
         $this->assertEquals(24.88, $jsonDecodedContent->amount);
     }
 
-    public function testAddPaymentParameterAmountNegative(): void
+    public function testAddCustomerPaymentParameterAmountNegative(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', Payment::TYPE_PRODUCT);
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '-10', Payment::TYPE_PRODUCT);
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterAmountAlmostZero(): void
+    public function testAddCustomerPaymentParameterAmountAlmostZero(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0,003', Payment::TYPE_PRODUCT);
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '0,003', Payment::TYPE_PRODUCT);
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterAmountZero(): void
+    public function testAddCustomerPaymentParameterAmountZero(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0', Payment::TYPE_PRODUCT);
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '0', Payment::TYPE_PRODUCT);
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterAmountWrongNumber(): void
+    public function testAddCustomerPaymentParameterAmountWrongNumber(): void
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', Payment::TYPE_PRODUCT);
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '10,--', Payment::TYPE_PRODUCT);
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Bitte gib eine korrekte Zahl ein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentWithInvalidType(): void
+    public function testAddCustomerPaymentWithInvalidType(): void
     {
         $this->loginAsCustomer();
         try {
-            $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
+            $this->addCustomerPayment(Configure::read('test.customerId'), '10', 'invalid_type');
         } catch (\Exception $e) {
             $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $e->getMessage());
         }
     }
 
-    public function testAddPaymentAsCustomerForAnotherUser(): void
+    public function testAddCustomerPaymentAsCustomerForAnotherUser(): void
     {
         $this->loginAsCustomer();
         try {
-            $this->addPayment(Configure::read('test.superadminId'), 10, Payment::TYPE_PRODUCT);
+            $this->addCustomerPayment(Configure::read('test.superadminId'), 10, Payment::TYPE_PRODUCT);
         } catch (\Exception $e) {
             $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $e->getMessage());
         }
@@ -106,7 +106,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddProductPaymentAsCustomerForOneself(): void
     {
         $this->loginAsCustomer();
-        $this->addPaymentAndAssertIncreasedCreditBalance(
+        $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
             '10,5',
             Payment::TYPE_PRODUCT,
@@ -126,7 +126,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsSuperadmin();
-        $this->addPaymentAndAssertIncreasedCreditBalance(
+        $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
             '20,5',
             Payment::TYPE_PRODUCT,
@@ -149,10 +149,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $payment->approval);
     }
 
-    public function testAddProductPaymentAsSuperadminRetailModeDisabled(): void
+    public function testAddCustomerProductPaymentAsSuperadminRetailModeDisabled(): void
     {
         $this->loginAsSuperadmin();
-        $this->addPaymentAndAssertIncreasedCreditBalance(
+        $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.superadminId'),
             '20,5',
             Payment::TYPE_PRODUCT,
@@ -175,10 +175,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_OFF, $payment->approval);
     }
 
-    public function testAddDepositPaymentToCustomer(): void
+    public function testAddCustomerDepositPayment(): void
     {
         $this->loginAsSuperadmin();
-        $this->addPaymentAndAssertIncreasedCreditBalance(
+        $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
             '10,7',
             Payment::TYPE_DEPOSIT,
@@ -250,10 +250,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRedirectToLoginPage();
     }
 
-    public function testDeletePaymentWithApprovalOk(): void
+    public function testDeleteCustomerPaymentWithApprovalOk(): void
     {
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
+        $this->addCustomerPayment(Configure::read('test.customerId'), '10.5', 'product');
         $addResponse = $this->getJsonDecodedContent();
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -278,7 +278,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceBeforeAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
 
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), '10,5', 'product');
+        $this->addCustomerPayment(Configure::read('test.customerId'), '10,5', 'product');
         $response = $this->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
@@ -415,11 +415,11 @@ class PaymentsControllerTest extends AppCakeTestCase
         return $payment;
     }
 
-    private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType): void
+    private function addCustomerPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $creditBalanceBeforeAdd = $customersTable->getCreditBalance($customerId);
-        $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
+        $jsonDecodedContent = $this->addCustomerPayment($customerId, $amountToAdd, $paymentType);
         $creditBalanceAfterAdd = $customersTable->getCreditBalance($customerId);
         $amountToAddAsDecimal = Configure::read('app.numberHelper')->getStringAsFloat($amountToAdd);
 
@@ -446,7 +446,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     private function deletePayment($paymentId): ?object
     {
         $this->ajaxPost('/admin/payments/changeStatus', [
-            'paymentId' => $paymentId
+            'paymentId' => $paymentId,
         ]);
         return $this->getJsonDecodedContent();
     }

@@ -36,7 +36,9 @@ class PaymentsPolicy implements RequestPolicyInterface
             'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && $identity !== null && !$identity->isManufacturer(),
             'product' => $identity->isSuperadmin(),
             'edit', 'previewEmail' => $identity->isSuperadmin(),
-            'add', 'changeStatus' => $identity !== null,
+            'addCustomerPayment' => $identity !== null && !$identity->isManufacturer(),
+            'addManufacturerPayment' => $identity !== null && $identity->isManufacturer(),
+            'changeStatus', 'add' => $identity !== null,
              default => $identity !== null && !$identity->isManufacturer(),
         };
 

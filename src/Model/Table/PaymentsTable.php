@@ -61,11 +61,13 @@ class PaymentsTable extends AppTable
         $validator->allowEmptyDate('date_add');
         $validator->add('date_add', 'allowed-only-today-or-before', [
             'rule' => function ($value, $context) {
-                if ($value == 0) {
-                    return true;
+                if (is_object($value)) {
+                    $formattedValue = $value->format(Configure::read('DateFormat.DatabaseAlt'));
                 }
-                $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
-                if ($formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                if (is_string($value)) {
+                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                }
+                if (isset($formattedValue) && $formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     return false;
                 }
                 return true;
