@@ -12,7 +12,6 @@ use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Customer;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -324,6 +323,19 @@ class ManufacturersTable extends AppTable
             $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
             return $data;
         }, $results);
+    }
+
+    public function getDepositBalance(int $manufacturerId): float
+    {
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $sumDepositReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturerId, false);
+
+        // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
+        $creditBalance = round($sumDepositReturned[0]['sumDepositReturned'] - $sumDepositDelivered[0]['sumDepositDelivered'], 2);
+        // "+ 0" converts -0,00 to 0,00
+        return $creditBalance + 0;
     }
 
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = []): array

@@ -250,7 +250,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Payment::TEXT_EMPTY_GLASSES,
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>10,00 €',
             null,
-            true,
+            false,
         );
     }
 
@@ -261,7 +261,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Payment::TEXT_EMPTY_GLASSES,
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>10,00 €',
             $today,
-            true,
+            false,
         );
         $this->assertNotEquals('00:00:00', $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('TimeShortWithSeconds')));
         $this->assertEquals($today, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
@@ -274,7 +274,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Payment::TEXT_EMPTY_GLASSES,
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich für den <b>'.$dateAdd.'</b> eingetragen: <b>10,00 €',
             $dateAdd,
-            true,
+            false,
         );
         $this->assertEquals('00:00:00', $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('TimeShortWithSeconds')));
         $this->assertEquals($dateAdd, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
@@ -297,7 +297,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Payment::TEXT_MONEY,
             'Pfand-Rücknahme (Ausgleichszahlung) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>10,00 €',
             null,
-            true,
+            false,
         );
     }
 
@@ -465,6 +465,29 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals('Der maximale Betrag von 200,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (300,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
+    public function testAddManufacturerDepositMoneyDepositBalanceTresholdExceeded(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
+
+        $this->loginAsSuperadmin();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.milkManufacturerId'));
+        $this->addManufacturerPayment(
+            $manufacturerId,
+            200,
+            Payment::TYPE_DEPOSIT,
+            null,
+            Payment::TEXT_MONEY,
+            true,
+        );
+        $addResponse = $this->getJsonDecodedContent();
+        $this->assertEquals(0, $addResponse->status);
+        $this->assertEquals(1, $addResponse->confirmSubmit);
+        $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 5,50 €. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (200,00 €) trotzdem zu speichern.', $addResponse->msg);
+    }
+    
     private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd, $applyAmountTresholdCheck): Payment
     {
         $customersTable = $this->getTableLocator()->get('Customers');
