@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use Admin\Traits\Payments\AddCustomerPaymentTrait;
+use Admin\Traits\Payments\AddManufacturerPaymentTrait;
 use Cake\View\JsonView;
-use Admin\Traits\Payments\AddTrait;
 use Admin\Traits\Payments\EditTrait;
 use Admin\Traits\Payments\ChangeStatusTrait;
 use Admin\Traits\Payments\OverviewTrait;
@@ -26,7 +27,8 @@ use Admin\Traits\Payments\ProductTrait;
  */
 class PaymentsController extends AdminAppController
 {
-    use AddTrait;
+    use AddCustomerPaymentTrait;
+    use AddManufacturerPaymentTrait;
     use EditTrait;
     use ChangeStatusTrait;
     use PreviewEmailTrait;
