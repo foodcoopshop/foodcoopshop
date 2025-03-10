@@ -35,28 +35,33 @@ trait AddCustomerPaymentTrait
             throw new \Exception('payment type not valid: ' . $type);
         }
 
-        $applyAmountTresholdCheck = (bool) $this->getRequest()->getData('applyAmountTresholdCheck');
-        $amount = $this->getRequest()->getData('amount');
-        $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
-
-        if ($applyAmountTresholdCheck && $amount > Payment::MAX_AMOUNTS_CUSTOMER[$type]) {
-            $this->request = $this->request->withParam('_ext', 'json');
-            $this->set([
-                'status' => 0,
-                'msg' => 'payment amount too high: ' . $amount,
-                'amount' => $amount,
-                'confirmSubmit' => 1,
-            ]);
-            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
-            return null;
-        }
-
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all', conditions: [
             $customersTable->aliasField('id_customer') => $customerId,
         ])->first();
         if (empty($customer)) {
             throw new \Exception('customer not found: ' . $customerId);
+        }
+
+        $applyAmountTresholdCheck = (bool) $this->getRequest()->getData('applyAmountTresholdCheck');
+        $amount = $this->getRequest()->getData('amount');
+        $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
+    
+        $maxAmount = Payment::MAX_AMOUNTS_CUSTOMER[$type];
+        if ($applyAmountTresholdCheck && $amount > $maxAmount) {
+            $this->request = $this->request->withParam('_ext', 'json');
+            $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
+                Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
+            ]);
+            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment anyway.');
+            $this->set([
+                'status' => 0,
+                'msg' => $msg,
+                'amount' => $amount,
+                'confirmSubmit' => 1,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
+            return null;
         }
 
         $sanitizeService = new SanitizeService();

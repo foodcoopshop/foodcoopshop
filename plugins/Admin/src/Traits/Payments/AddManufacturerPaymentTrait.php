@@ -30,9 +30,13 @@ trait AddManufacturerPaymentTrait
     public function addManufacturerPayment(int $manufacturerId): ?Response
     {
         $type = $this->getRequest()->getData('type');
-        
         if (!in_array($type, Payment::ALLOWED_MANUFACTURER_TYPES)) {
             throw new \Exception('payment type not valid: ' . $type);
+        }
+
+        $text = strip_tags(html_entity_decode($this->getRequest()->getData('text')));
+        if (empty($text)) {
+            throw new \Exception('payment text not valid: ' . $text);
         }
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
@@ -44,11 +48,29 @@ trait AddManufacturerPaymentTrait
             throw new \Exception('manufacturer not found: ' . $manufacturerId);
         }
 
-        $sanitizeService = new SanitizeService();
-        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-
+        $applyAmountTresholdCheck = (bool) $this->getRequest()->getData('applyAmountTresholdCheck');
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
+    
+        $maxAmount = Payment::MAX_AMOUNTS_MANUFACTURER[$text];
+        if ($applyAmountTresholdCheck && $amount > $maxAmount) {
+            $this->request = $this->request->withParam('_ext', 'json');
+            $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
+                Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
+            ]);
+            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment anyway.');
+            $this->set([
+                'status' => 0,
+                'msg' => $msg,
+                'amount' => $amount,
+                'confirmSubmit' => 1,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
+            return null;
+        }
+
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
 
@@ -74,6 +96,7 @@ trait AddManufacturerPaymentTrait
                     'date_changed' => DateTime::now(),
                     'created_by' => $this->identity->getId(),
                     'date_add' => $dateAddForEntity,
+                    'text' => $text,
                 ],
                 ['validate' => 'add']
             );
@@ -82,11 +105,6 @@ trait AddManufacturerPaymentTrait
             }
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
-        }
-
-        $text = '';
-        if (!empty($this->getRequest()->getData('text'))) {
-            $text = strip_tags(html_entity_decode($this->getRequest()->getData('text')));
         }
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);

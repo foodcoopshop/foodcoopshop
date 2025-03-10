@@ -39,11 +39,12 @@ class Payment extends AppEntity
     const MAX_AMOUNTS_CUSTOMER = [
         self::TYPE_DEPOSIT => 20,
         self::TYPE_PAYBACK => 200,
-        self::TYPE_PRODUCT => 200,
+        self::TYPE_PRODUCT => 500,
     ];
 
     const MAX_AMOUNTS_MANUFACTURER = [
-        self::TYPE_DEPOSIT => 100,
+        self::TEXT_EMPTY_GLASSES => 100,
+        self::TEXT_MONEY => 200,
     ];
 
 }
