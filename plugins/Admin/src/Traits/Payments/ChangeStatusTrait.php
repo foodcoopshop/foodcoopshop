@@ -5,6 +5,7 @@ namespace Admin\Traits\Payments;
 
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,7 +34,7 @@ trait ChangeStatusTrait
         $payment = $paymentsTable->find('all',
         conditions: [
             'Payments.id' => $paymentId,
-            'Payments.approval <> ' . APP_ON
+            'Payments.approval <> ' . APP_ON,
         ],
         contain: [
             'Customers',
@@ -56,13 +57,13 @@ trait ChangeStatusTrait
                 $payment,
                 [
                     'status' => APP_DEL,
-                    'date_changed' => DateTime::now()
+                    'date_changed' => DateTime::now(),
                 ]
             )
         );
 
         $actionLogType = $payment->type;
-        if ($payment->type == 'deposit') {
+        if ($payment->type == Payment::TYPE_DEPOSIT) {
             $userType = 'customer';
             if ($payment->id_manufacturer > 0) {
                 $userType = 'manufacturer';

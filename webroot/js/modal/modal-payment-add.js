@@ -184,6 +184,7 @@ foodcoopshop.ModalPaymentAdd = {
                 document.location.reload();
             },
             onError: function (data) {
+                console.log(data);
                 foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
                 foodcoopshop.Modal.resetButtons(modalSelector);
             }
