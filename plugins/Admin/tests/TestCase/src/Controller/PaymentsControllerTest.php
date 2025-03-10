@@ -103,7 +103,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         }
     }
 
-    public function testAddProductPaymentAsCustomerForOneself(): void
+    public function testAddCustomerProductPaymentForOneself(): void
     {
         $this->loginAsCustomer();
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
@@ -121,7 +121,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddProductPaymentAsSuperadminRetailModeEnabled(): void
+    public function testAddCustomerProductPaymentAsSuperadminRetailModeEnabled(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
@@ -193,7 +193,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithoutDate(): void
+    public function testAddManufacturerDepositEmptyGlassesWithoutDate(): void
     {
         $this->addDepositToManufacturer(
             Payment::TEXT_EMPTY_GLASSES,
@@ -201,7 +201,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithDateToday(): void
+    public function testAddManufacturerDepositEmptyGlassesWithDateToday(): void
     {
         $today = date(Configure::read('DateFormat.DateShortAlt'), strtotime(Configure::read('app.timeHelper')->getCurrentDateForDatabase()));
         $payment = $this->addDepositToManufacturer(
@@ -213,7 +213,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($today, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithDatePast(): void
+    public function testAddManufacturerDepositEmptyGlassesWithDatePast(): void
     {
         $dateAdd = '12.12.2018';
         $payment = $this->addDepositToManufacturer(
@@ -225,18 +225,18 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($dateAdd, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithDateFuture(): void
+    public function testAddManufacturerDepositEmptyGlassesWithDateFuture(): void
     {
         $this->loginAsSuperadmin();
         $customersTable = $this->getTableLocator()->get('Customers');
         $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $dateAdd = '01.01.2099';
-        $jsonDecodedContent = $this->addPayment(0, 30, Payment::TYPE_DEPOSIT, $manufacturerId, Payment::TEXT_EMPTY_GLASSES, $dateAdd);
+        $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, 30, Payment::TYPE_DEPOSIT, $dateAdd, Payment::TEXT_EMPTY_GLASSES, '');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertEquals('Das Datum darf nicht in der Zukunft liegen.', $jsonDecodedContent->msg);
     }
 
-    public function testAddDepositToManufacturerMoney(): void
+    public function testAddManufacturerDepositMoney(): void
     {
         $this->addDepositToManufacturer(
             Payment::TEXT_MONEY,
@@ -396,7 +396,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
 
-        $jsonDecodedContent = $this->addPayment(0, $amountToAdd, Payment::TYPE_DEPOSIT, $manufacturerId, $depositText, $dateAdd);
+        $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, $amountToAdd, Payment::TYPE_DEPOSIT, $dateAdd, $depositText);
         $payment = $paymentsTable->find('all',
             conditions: [
                 'Payments.id' =>  $jsonDecodedContent->paymentId,

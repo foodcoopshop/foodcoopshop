@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Traits;
 
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -47,8 +48,8 @@ trait PrepareAndTestInvoiceDataTrait
         $orderDetailEntityB->pickup_day = $pickupDay;
         $orderDetailsTable->save($orderDetailEntityB);
 
-        $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
-        $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
+        $this->addCustomerPayment($customerId, 2.0, Payment::TYPE_DEPOSIT, 0, '', $pickupDay);
+        $this->addCustomerPayment($customerId, 3.2, Payment::TYPE_DEPOSIT, 0, '', $pickupDay);
 
     }
 

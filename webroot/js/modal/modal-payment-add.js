@@ -162,23 +162,24 @@ foodcoopshop.ModalPaymentAdd = {
         const dateAdd = dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0;
 
         let postUrl = '';
+        let postData = {
+            amount: amount,
+            type: type,
+        };
         if (customerId > 0) {
             postUrl += '/admin/payments/addCustomerPayment/' + customerId;
         }
         if (manufacturerId > 0) {
             postUrl += '/admin/payments/addManufacturerPayment/' + manufacturerId;
+            postData.text = text;
+            postData.dateAdd = dateAdd;
         }
 
         if (postUrl === '') {
             return;
         }
-        
-        foodcoopshop.Helper.ajaxCall(postUrl, {
-            amount: amount,
-            type: type,
-            text: text,
-            dateAdd: dateAdd,
-        }, {
+
+        foodcoopshop.Helper.ajaxCall(postUrl, postData, {
             onOk: function (data) {
                 document.location.reload();
             },

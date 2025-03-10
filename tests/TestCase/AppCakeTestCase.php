@@ -303,22 +303,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-
-    protected function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0): ?object
-    {
-        $this->ajaxPost('/admin/payments/add', [
-            'customerId' => $customerId,
-            'amount' => $amount,
-            'type' => $type,
-            'manufacturerId' => $manufacturerId,
-            'text' => $text,
-            'dateAdd' => $dateAdd,
-        ]);
-        return $this->getJsonDecodedContent();
-    }    
-
-    /*
-    protected function addManufacturerPayment($manufacturerId, $amount, $type, $dateAdd, $text = ''): ?object
+    protected function addManufacturerPayment($manufacturerId, $amount, $type, $dateAdd, $text): ?object
     {
         $this->ajaxPost('/admin/payments/addManufacturerPayment/' . $manufacturerId, [
             'amount' => $amount,
@@ -328,7 +313,6 @@ abstract class AppCakeTestCase extends TestCase
         ]);
         return $this->getJsonDecodedContent();
     }
-    */
 
     protected function changeManufacturer(int $manufacturerId, string $field, $value): void
     {

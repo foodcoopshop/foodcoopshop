@@ -37,8 +37,8 @@ class PaymentsPolicy implements RequestPolicyInterface
             'product' => $identity->isSuperadmin(),
             'edit', 'previewEmail' => $identity->isSuperadmin(),
             'addCustomerPayment' => $identity !== null && !$identity->isManufacturer(),
-            'addManufacturerPayment' => $identity !== null && $identity->isManufacturer(),
-            'changeStatus', 'add' => $identity !== null,
+            'addManufacturerPayment' => $identity !== null && !$identity->isCustomer(),
+            'changeStatus' => $identity !== null,
              default => $identity !== null && !$identity->isManufacturer(),
         };
 
