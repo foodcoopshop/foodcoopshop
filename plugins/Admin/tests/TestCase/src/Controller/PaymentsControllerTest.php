@@ -191,7 +191,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->getJsonDecodedContent();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
-        $this->assertEquals('Der maximale Betrag von 20,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (100,00 €) trotzdem zu speichern.', $addResponse->msg);
+        $this->assertEquals('Der Maximalbetrag von 20,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den angegebenen Betrag (100,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
     public function testAddCustomerDepositPaymentDefinedWithoutDepositTresholdExceeded(): void
@@ -241,7 +241,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->getJsonDecodedContent();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
-        $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 0,50 €. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (10,70 €) trotzdem zu speichern.', $addResponse->msg);
+        $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 0,50 €, das Mitglied hätte nach dem Eintragen mehr Pfand zurückgebracht als gekauft. Klicke erneut auf den Speichern-Button, um den angegebenen Betrag (10,70 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
     public function testAddManufacturerDepositEmptyGlassesWithoutDate(): void
@@ -462,7 +462,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->getJsonDecodedContent();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
-        $this->assertEquals('Der maximale Betrag von 200,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (300,00 €) trotzdem zu speichern.', $addResponse->msg);
+        $this->assertEquals('Der Maximalbetrag von 200,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den angegebenen Betrag (300,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
     public function testAddManufacturerDepositMoneyDepositBalanceTresholdExceeded(): void
@@ -485,7 +485,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->getJsonDecodedContent();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
-        $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 5,50 €. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (200,00 €) trotzdem zu speichern.', $addResponse->msg);
+        $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 5,50 €, der Hersteller hätte nach dem Eintragen mehr Pfand zurückgenommen als verkauft. Klicke erneut auf den Speichern-Button, um den angegebenen Betrag (200,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
     
     private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd, $applyAmountTresholdCheck): Payment

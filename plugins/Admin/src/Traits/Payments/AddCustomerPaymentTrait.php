@@ -86,7 +86,7 @@ trait AddCustomerPaymentTrait
                     $depositBalance = $customersTable->getDepositBalance($customerId);
                     if ($amount + $depositBalance > 0) {
                         $tresholdExceeded = true;
-                        $msg = __d('admin', 'The amount exceeds the deposit balance of {0}.', [
+                        $msg = __d('admin', 'The amount exceeds the deposit balance of {0}, the member would return more deposit than he has bought.', [
                             Configure::read('app.numberHelper')->formatAsCurrency(($depositBalance * -1) + 0),
                         ]);
                     }
