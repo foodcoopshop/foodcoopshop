@@ -175,6 +175,15 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_OFF, $payment->approval);
     }
 
+    public function testAddCustomerDepositPaymentDefinedDepositTresholdExceeded(): void
+    {
+        $this->loginAsCustomer();
+        $this->addCustomerPayment(Configure::read('test.customerId'), '100', 'deposit');
+        $addResponse = $this->getJsonDecodedContent();
+        $this->assertEquals(0, $addResponse->status);
+        $this->assertEquals(1, $addResponse->confirmSubmit);
+    }
+
     public function testAddCustomerDepositPayment(): void
     {
         $this->loginAsSuperadmin();

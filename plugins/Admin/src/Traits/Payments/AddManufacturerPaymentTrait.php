@@ -31,7 +31,7 @@ trait AddManufacturerPaymentTrait
     {
         $type = $this->getRequest()->getData('type');
         
-        if (!in_array($type, Payment::MANUFACTURER_TYPES)) {
+        if (!in_array($type, Payment::ALLOWED_MANUFACTURER_TYPES)) {
             throw new \Exception('payment type not valid: ' . $type);
         }
 

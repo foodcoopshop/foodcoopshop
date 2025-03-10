@@ -179,14 +179,17 @@ foodcoopshop.ModalPaymentAdd = {
             return;
         }
 
+        $(modalSelector).find('.btn-success').removeClass('confirm-submit');
         foodcoopshop.Helper.ajaxCall(postUrl, postData, {
             onOk: function (data) {
                 document.location.reload();
             },
             onError: function (data) {
-                console.log(data);
                 foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
                 foodcoopshop.Modal.resetButtons(modalSelector);
+                if (data.confirmSubmit) {
+                    $(modalSelector).find('.btn-success').addClass('confirm-submit');
+                }
             }
         });
 

@@ -8,7 +8,7 @@ use Cake\Http\Response;
 use App\Model\Entity\Payment;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
-use Cake\I18n\Date;
+use App\Exception\DepositThresholdExceededException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +31,24 @@ trait AddCustomerPaymentTrait
     {
         $type = $this->getRequest()->getData('type');
         
-        if (!in_array($type, Payment::CUSTOMER_TYPES)) {
+        if (!in_array($type, Payment::ALLOWED_CUSTOMER_TYPES)) {
             throw new \Exception('payment type not valid: ' . $type);
+        }
+
+
+        $amount = $this->getRequest()->getData('amount');
+        $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
+
+        if ($amount > Payment::MAX_AMOUNTS_CUSTOMER[$type]) {
+            $this->request = $this->request->withParam('_ext', 'json');
+            $this->set([
+                'status' => 0,
+                'msg' => 'payment amount too high: ' . $amount,
+                'amount' => $amount,
+                'confirmSubmit' => 1,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
+            return null;
         }
 
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -45,9 +61,6 @@ trait AddCustomerPaymentTrait
 
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-
-        $amount = $this->getRequest()->getData('amount');
-        $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         try {
