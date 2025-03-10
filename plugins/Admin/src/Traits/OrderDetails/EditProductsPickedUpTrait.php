@@ -61,7 +61,7 @@ trait EditProductsPickedUpTrait
                 }
 
             }
-            $result = $pickupDaysTable->changeState($customerId, $pickupDay, $state);
+            $result = $pickupDaysTable->changeStatus($customerId, $pickupDay, $state);
         }
 
         if (!empty($errorMessages)) {
