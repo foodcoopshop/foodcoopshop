@@ -9,6 +9,7 @@ use App\Model\Entity\Payment;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
 use Cake\I18n\Date;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -118,6 +119,7 @@ trait AddManufacturerPaymentTrait
                     'amount' => $amount,
                     'confirmSubmit' => 1,
                 ]);
+                Log::error('amount threshold exceeded: ' . $msg);
                 $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
                 return null;
             }

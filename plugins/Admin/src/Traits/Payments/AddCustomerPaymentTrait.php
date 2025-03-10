@@ -9,6 +9,7 @@ use App\Model\Entity\Payment;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
 use App\Exception\DepositThresholdExceededException;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -81,12 +82,14 @@ trait AddCustomerPaymentTrait
                     Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
                 ]);
             } else {
-                $depositBalance = $customersTable->getDepositBalance($customerId);
-                if ($amount + $depositBalance > 0) {
-                    $tresholdExceeded = true;
-                    $msg = __d('admin', 'The amount exceeds the deposit balance of {0}.', [
-                        Configure::read('app.numberHelper')->formatAsCurrency(($depositBalance * -1) + 0),
-                    ]);
+                if ($type == Payment::TYPE_DEPOSIT) {
+                    $depositBalance = $customersTable->getDepositBalance($customerId);
+                    if ($amount + $depositBalance > 0) {
+                        $tresholdExceeded = true;
+                        $msg = __d('admin', 'The amount exceeds the deposit balance of {0}.', [
+                            Configure::read('app.numberHelper')->formatAsCurrency(($depositBalance * -1) + 0),
+                        ]);
+                    }
                 }
             }
             if ($tresholdExceeded) {
@@ -100,6 +103,7 @@ trait AddCustomerPaymentTrait
                     'amount' => $amount,
                     'confirmSubmit' => 1,
                 ]);
+                Log::error('amount threshold exceeded: ' . $msg);
                 $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
                 return null;
             }
