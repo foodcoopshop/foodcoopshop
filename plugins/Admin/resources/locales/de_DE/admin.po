@@ -28,6 +28,9 @@ msgstr "Varianten"
 msgid "The maximum amount of {0} was exceeded."
 msgstr "Der maximale Betrag von {0} wurde überschritten."
 
+msgid "The amount exceeds the deposit balance of {0}."
+msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}."
+
 msgid "Press the submit button again to add the payment of {0} anyway."
 msgstr "Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag ({0}) trotzdem zu speichern."
 

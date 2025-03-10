@@ -256,16 +256,16 @@ class PaymentsTable extends AppTable
     public function getSum($customerId, $type): float
     {
         $conditions = [
-            'Payments.id_customer' => $customerId,
-            'Payments.id_manufacturer' => 0,
-            'Payments.status' => APP_ON,
+            $this->aliasField('id_customer') => $customerId,
+            $this->aliasField('id_manufacturer') => 0,
+            $this->aliasField('status') => APP_ON,
         ];
 
-        $conditions['Payments.type'] = $type;
+        $conditions[$this->aliasField('type')] = $type;
 
         $query = $this->find('all', conditions: $conditions);
         $query->select(
-            ['SumAmount' => $query->func()->sum('Payments.amount')]
+            ['SumAmount' => $query->func()->sum($this->aliasField('amount'))]
         );
         return (float) $query->toArray()[0]['SumAmount'];
     }

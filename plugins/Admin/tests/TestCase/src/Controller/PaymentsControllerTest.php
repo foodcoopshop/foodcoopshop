@@ -106,9 +106,11 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddCustomerProductPaymentForOneself(): void
     {
         $this->loginAsCustomer();
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            '10,5',
+            '2,3',
             Payment::TYPE_PRODUCT,
         );
         $this->logout();
@@ -117,7 +119,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.customerId'),
             'payment_product_added',
             'payments',
-            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>10,50 €'
+            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>2,30 €'
         );
     }
 
@@ -125,10 +127,14 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
+        $this->loginAsCustomer();
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
+
         $this->loginAsSuperadmin();
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            '20,5',
+            '2,5',
             Payment::TYPE_PRODUCT,
         );
         $this->logout();
@@ -137,7 +143,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.superadminId'),
             'payment_product_added',
             'payments',
-            'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>20,50 €'
+            'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>2,50 €'
         );
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -151,10 +157,13 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddCustomerProductPaymentAsSuperadminRetailModeDisabled(): void
     {
+
         $this->loginAsSuperadmin();
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.superadminId'),
-            '20,5',
+            '2,5',
             Payment::TYPE_PRODUCT,
         );
         $this->logout();
@@ -163,7 +172,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.superadminId'),
             'payment_product_added',
             'payments',
-            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>20,50 €'
+            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>2,50 €'
         );
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -195,10 +204,14 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddCustomerDepositPayment(): void
     {
+        $this->loginAsCustomer();
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
+
         $this->loginAsSuperadmin();
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            '10,7',
+            '2,7',
             Payment::TYPE_DEPOSIT,
         );
         $this->logout();
@@ -207,8 +220,28 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.superadminId'),
             'payment_deposit_customer_added',
             'payments',
-            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: <b>10,70 €'
+            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: <b>2,70 €'
         );
+    }
+
+    public function testAddCustomerDepositPaymentWithDepositBalanceTresholdExceeded(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart('60-10', 1);
+        $this->finishCart(1,1);
+
+        $this->loginAsSuperadmin();
+        $this->addCustomerPayment(
+            Configure::read('test.customerId'),
+            '10,7',
+            Payment::TYPE_DEPOSIT,
+            true,
+        );
+
+        $addResponse = $this->getJsonDecodedContent();
+        $this->assertEquals(0, $addResponse->status);
+        $this->assertEquals(1, $addResponse->confirmSubmit);
+        $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 0,50 €. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (10,70 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
     public function testAddManufacturerDepositEmptyGlassesWithoutDate(): void
@@ -277,7 +310,9 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeleteCustomerPaymentWithApprovalOk(): void
     {
         $this->loginAsCustomer();
-        $this->addCustomerPayment(Configure::read('test.customerId'), '10.5', 'product', true);
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
+        $this->addCustomerPayment(Configure::read('test.customerId'), '2,4', 'product', true);
         $addResponse = $this->getJsonDecodedContent();
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -298,11 +333,14 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testDeletePaymentAsCustomer(): void
     {
+        $this->loginAsCustomer();
+        $this->addProductToCart('60-10', 10);
+        $this->finishCart(1,1);
+
         $customersTable = $this->getTableLocator()->get('Customers');
         $creditBalanceBeforeAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
 
-        $this->loginAsCustomer();
-        $this->addCustomerPayment(Configure::read('test.customerId'), '10,5', 'product', true);
+        $this->addCustomerPayment(Configure::read('test.customerId'), '2,5', 'product', true);
         $response = $this->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
@@ -480,7 +518,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             conditions: [
                 'ActionLogs.customer_id' => $customerId
             ],
-            order: ['ActionLogs.date' => 'DESC']
+            order: ['ActionLogs.id' => 'DESC']
         )->toArray();
         $this->assertEquals($expectedType, $lastActionLog[0]->type, 'cake action log type not correct');
         $this->assertEquals($expectedObjectType, $lastActionLog[0]->object_type, 'cake action log object type not correct');

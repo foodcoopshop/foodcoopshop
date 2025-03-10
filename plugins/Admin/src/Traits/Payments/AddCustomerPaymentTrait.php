@@ -47,25 +47,6 @@ trait AddCustomerPaymentTrait
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
     
-        $maxAmount = Payment::MAX_AMOUNTS_CUSTOMER[$type];
-        if ($applyAmountTresholdCheck && $amount > $maxAmount) {
-            $this->request = $this->request->withParam('_ext', 'json');
-            $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
-                Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
-            ]);
-            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment of {0} anyway.', [
-                Configure::read('app.numberHelper')->formatAsCurrency($amount),
-            ]);
-            $this->set([
-                'status' => 0,
-                'msg' => $msg,
-                'amount' => $amount,
-                'confirmSubmit' => 1,
-            ]);
-            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
-            return null;
-        }
-
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
@@ -88,6 +69,40 @@ trait AddCustomerPaymentTrait
             }
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
+        }
+        
+        $maxAmount = Payment::MAX_AMOUNTS_CUSTOMER[$type];
+        if ($applyAmountTresholdCheck) {
+            $msg = '';
+            $tresholdExceeded = false;
+            if ($amount > $maxAmount) {
+                $tresholdExceeded = true;
+                $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
+                    Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
+                ]);
+            } else {
+                $depositBalance = $customersTable->getDepositBalance($customerId);
+                if ($amount + $depositBalance > 0) {
+                    $tresholdExceeded = true;
+                    $msg = __d('admin', 'The amount exceeds the deposit balance of {0}.', [
+                        Configure::read('app.numberHelper')->formatAsCurrency(($depositBalance * -1) + 0),
+                    ]);
+                }
+            }
+            if ($tresholdExceeded) {
+                $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment of {0} anyway.', [
+                    Configure::read('app.numberHelper')->formatAsCurrency($amount),
+                ]);
+                $this->request = $this->request->withParam('_ext', 'json');
+                $this->set([
+                    'status' => 0,
+                    'msg' => $msg,
+                    'amount' => $amount,
+                    'confirmSubmit' => 1,
+                ]);
+                $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
+                return null;
+            }
         }
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);

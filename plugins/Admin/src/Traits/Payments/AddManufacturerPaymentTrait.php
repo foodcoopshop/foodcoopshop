@@ -51,30 +51,9 @@ trait AddManufacturerPaymentTrait
         $applyAmountTresholdCheck = (bool) $this->getRequest()->getData('applyAmountTresholdCheck');
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
-    
-        $maxAmount = Payment::MAX_AMOUNTS_MANUFACTURER[$text];
-        if ($applyAmountTresholdCheck && $amount > $maxAmount) {
-            $this->request = $this->request->withParam('_ext', 'json');
-            $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
-                Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
-            ]);
-            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment of {0} anyway.', [
-                Configure::read('app.numberHelper')->formatAsCurrency($amount),
-            ]);
-            $this->set([
-                'status' => 0,
-                'msg' => $msg,
-                'amount' => $amount,
-                'confirmSubmit' => 1,
-            ]);
-            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
-            return null;
-        }
 
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-
-        $paymentsTable = $this->getTableLocator()->get('Payments');
 
         $dateAdd = $this->getRequest()->getData('dateAdd');
         $dateAddForEntity = DateTime::now();
@@ -88,6 +67,7 @@ trait AddManufacturerPaymentTrait
             $dateAddForEntity = DateTime::now(); // always save time for today, even if it's explicitely passed
         }
 
+        $paymentsTable = $this->getTableLocator()->get('Payments');
         try {
             $newEntity = $paymentsTable->newEntity(
                 [
@@ -108,6 +88,25 @@ trait AddManufacturerPaymentTrait
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
+
+        $maxAmount = Payment::MAX_AMOUNTS_MANUFACTURER[$text];
+        if ($applyAmountTresholdCheck && $amount > $maxAmount) {
+            $this->request = $this->request->withParam('_ext', 'json');
+            $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
+                Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
+            ]);
+            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment of {0} anyway.', [
+                Configure::read('app.numberHelper')->formatAsCurrency($amount),
+            ]);
+            $this->set([
+                'status' => 0,
+                'msg' => $msg,
+                'amount' => $amount,
+                'confirmSubmit' => 1,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
+            return null;
+        }        
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
 
