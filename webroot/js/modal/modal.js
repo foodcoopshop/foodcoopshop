@@ -40,8 +40,13 @@ foodcoopshop.Modal = {
         foodcoopshop.Helper.enableButton(successButton);
     },
 
-    appendFlashMessage : function(selector, message) {
+    appendFlashMessageError : function(selector, message,) {
         foodcoopshop.Helper.showErrorMessage(message);
+        $(selector + ' .modal-header').after($('#flashMessage'));
+    },
+
+    appendFlashMessageWarning : function(selector, message) {
+        foodcoopshop.Helper.showWarningMessage(message);
         $(selector + ' .modal-header').after($('#flashMessage'));
     },
 

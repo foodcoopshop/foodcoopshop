@@ -70,7 +70,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }
@@ -97,7 +97,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
                     foodcoopshop.Editor.initSmallWithUpload('dialogOrderDetailFeedback', true);
                 },
                 onError: function (data) {
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

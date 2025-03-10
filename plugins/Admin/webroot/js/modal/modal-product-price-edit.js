@@ -91,7 +91,7 @@ foodcoopshop.ModalProductPriceEdit = {
         var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
 
         if ($('#dialogPriceProductId').val() == '') {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
+            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -114,7 +114,7 @@ foodcoopshop.ModalProductPriceEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

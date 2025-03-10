@@ -35,11 +35,11 @@ trait AddCustomerPaymentTrait
             throw new \Exception('payment type not valid: ' . $type);
         }
 
-
+        $applyAmountTresholdCheck = (bool) $this->getRequest()->getData('applyAmountTresholdCheck');
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
 
-        if ($amount > Payment::MAX_AMOUNTS_CUSTOMER[$type]) {
+        if ($applyAmountTresholdCheck && $amount > Payment::MAX_AMOUNTS_CUSTOMER[$type]) {
             $this->request = $this->request->withParam('_ext', 'json');
             $this->set([
                 'status' => 0,

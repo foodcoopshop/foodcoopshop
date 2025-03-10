@@ -145,7 +145,7 @@ foodcoopshop.ModalOrderDetailDelete = {
 
         var editorData = $('#dialogCancellationReason').val();
         if (editorData == '') {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.CancellationReasonIsMandatory);
+            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.CancellationReasonIsMandatory);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }

@@ -84,6 +84,9 @@ body.admin h2 span a:hover,
 .btn {
     border-radius: 4px;
 }
+.btn-success.confirm-submit {
+    box-shadow: inset 0 0 0 3px var(--warning-yellow);
+}
 .btn-success:active {
     border-color: transparent;
 }
@@ -284,6 +287,11 @@ h2.info a:not(.btn) {
     color: #fff;
     background: #f3515c;
     border-color: #f3515c;
+}
+#flashMessage.warning {
+    color: #fff;
+    background: var(--warning-yellow);
+    border-color: var(--warning-yellow);
 }
 #flashMessage.success {
     color: #fff;

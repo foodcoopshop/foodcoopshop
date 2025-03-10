@@ -123,7 +123,7 @@ foodcoopshop.ModalPaymentAdd = {
         }
 
         if (customerIdDomElement.length > 0 && customerIdDomElement.val() === null) {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
+            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -144,7 +144,7 @@ foodcoopshop.ModalPaymentAdd = {
             }
 
             if (selectedRadioButton.length == 0) {
-                foodcoopshop.Modal.appendFlashMessage(modalSelector, message);
+                foodcoopshop.appendFlashMessageError(modalSelector, message);
                 foodcoopshop.Modal.resetButtons(modalSelector);
                 return;
             }
@@ -157,6 +157,7 @@ foodcoopshop.ModalPaymentAdd = {
             }
         }
 
+        const submitButton = $(modalSelector).find('.btn-success');
         const customerId = customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0;
         const manufacturerId = manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0;
         const dateAdd = dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0;
@@ -165,6 +166,7 @@ foodcoopshop.ModalPaymentAdd = {
         let postData = {
             amount: amount,
             type: type,
+            applyAmountTresholdCheck: submitButton.hasClass('confirm-submit') ? 0 : 1,
         };
         if (customerId > 0) {
             postUrl += '/admin/payments/addCustomerPayment/' + customerId;
@@ -179,16 +181,18 @@ foodcoopshop.ModalPaymentAdd = {
             return;
         }
 
-        $(modalSelector).find('.btn-success').removeClass('confirm-submit');
+        submitButton.removeClass('confirm-submit');
         foodcoopshop.Helper.ajaxCall(postUrl, postData, {
             onOk: function (data) {
                 document.location.reload();
             },
             onError: function (data) {
-                foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
                 foodcoopshop.Modal.resetButtons(modalSelector);
                 if (data.confirmSubmit) {
+                    foodcoopshop.Modal.appendFlashMessageWarning(modalSelector, data.msg);
                     $(modalSelector).find('.btn-success').addClass('confirm-submit');
+                } else {
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
                 }
             }
         });

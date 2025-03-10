@@ -40,7 +40,7 @@ foodcoopshop.ModalCustomerDelete = {
                 },
                 onError: function (data) {
                     var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, message + data.msg);
+                    foodcoopshop.appendFlashMessageError(modalSelector, message + data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

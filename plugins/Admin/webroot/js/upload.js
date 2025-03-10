@@ -16,7 +16,7 @@ foodcoopshop.Upload = {
     checkForEmptyImage : function(modalSelector) {
         var image = $(modalSelector + ' form .drop img');
         if (image.length == 0) {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.upload.PleaseUploadAnImage);
+            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.upload.PleaseUploadAnImage);
             foodcoopshop.Modal.resetButtons(modalSelector);
         }
         return image;
@@ -191,7 +191,7 @@ foodcoopshop.Upload = {
                     fileUploadForm.find('ul li').remove();
                 } else {
                     fileUploadForm.find('ul li').remove();
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, result.msg);
+                    foodcoopshop.appendFlashMessageError(modalSelector, result.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             },
@@ -327,7 +327,7 @@ foodcoopshop.Upload = {
                     imageUploadForm.find('button.deleteImage').remove();
                 } else {
                     imageUploadForm.find('ul li').remove();
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, result.msg);
+                    foodcoopshop.appendFlashMessageError(modalSelector, result.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             },
