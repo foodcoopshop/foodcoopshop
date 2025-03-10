@@ -82,7 +82,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

@@ -203,7 +203,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
     getSuccessHandler : function(modalSelector, productIds) {
 
         if (productIds.length == 0) {
-            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -225,7 +225,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

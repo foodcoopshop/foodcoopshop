@@ -60,7 +60,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
         var editorData = $('#dialogEditAmountReason').val();
         if (editorData == '') {
-            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.AdaptAmountReasonIsMandatory);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.AdaptAmountReasonIsMandatory);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return false;
         }
@@ -77,7 +77,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

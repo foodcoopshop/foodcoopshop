@@ -83,7 +83,7 @@ foodcoopshop.ModalProductQuantityEdit = {
     getSuccessHandler : function(modalSelector, row) {
 
         if ($('#dialogQuantityProductId').val() == '') {
-            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -109,7 +109,7 @@ foodcoopshop.ModalProductQuantityEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.appendFlashMessageError(modalSelector, data.msg);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

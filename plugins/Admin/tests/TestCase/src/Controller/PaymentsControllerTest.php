@@ -182,7 +182,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->getJsonDecodedContent();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
-        $this->assertEquals('Der maximale Betrag von 20,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den Betrag trotzdem zu speichern.', $addResponse->msg);
+        $this->assertEquals('Der maximale Betrag von 20,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (100,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
     public function testAddCustomerDepositPaymentDefinedWithoutDepositTresholdExceeded(): void
@@ -424,7 +424,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->getJsonDecodedContent();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
-        $this->assertEquals('Der maximale Betrag von 200,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den Betrag trotzdem zu speichern.', $addResponse->msg);
+        $this->assertEquals('Der maximale Betrag von 200,00 € wurde überschritten. Klicke erneut auf den Speichern-Button, um den eingetragenen Betrag (300,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
 
     private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd, $applyAmountTresholdCheck): Payment

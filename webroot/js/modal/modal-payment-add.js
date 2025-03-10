@@ -123,7 +123,7 @@ foodcoopshop.ModalPaymentAdd = {
         }
 
         if (customerIdDomElement.length > 0 && customerIdDomElement.val() === null) {
-            foodcoopshop.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -144,7 +144,7 @@ foodcoopshop.ModalPaymentAdd = {
             }
 
             if (selectedRadioButton.length == 0) {
-                foodcoopshop.appendFlashMessageError(modalSelector, message);
+                foodcoopshop.Modal.appendFlashMessageError(modalSelector, message);
                 foodcoopshop.Modal.resetButtons(modalSelector);
                 return;
             }

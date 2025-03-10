@@ -53,7 +53,9 @@ trait AddCustomerPaymentTrait
             $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
                 Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
             ]);
-            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment anyway.');
+            $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment of {0} anyway.', [
+                Configure::read('app.numberHelper')->formatAsCurrency($amount),
+            ]);
             $this->set([
                 'status' => 0,
                 'msg' => $msg,

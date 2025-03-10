@@ -99,7 +99,7 @@ foodcoopshop.ModalProductStatusEditBulk = {
                     message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductStatusWasChanged;
                     message += ':</p>';
                     message = message + data.msg;
-                    foodcoopshop.appendFlashMessageError(modalSelector, message);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, message);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }
