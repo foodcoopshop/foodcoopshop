@@ -156,8 +156,18 @@ foodcoopshop.ModalPaymentAdd = {
                 type = selectedRadioButtonValue;
             }
         }
-
+        
         const submitButton = $(modalSelector).find('.btn-success');
+
+        $(modalSelector).find('input').on('keydown', function () {
+            foodcoopshop.Helper.removeFlashMessage();;
+            submitButton.removeClass('confirm-submit');
+        });
+        $(modalSelector).find('select').on('change', function () {
+            foodcoopshop.Helper.removeFlashMessage();
+            submitButton.removeClass('confirm-submit');
+        });
+
         const customerId = customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0;
         const manufacturerId = manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0;
         const dateAdd = dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0;
