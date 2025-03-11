@@ -26,16 +26,16 @@ msgid "Attributes"
 msgstr "Varianten"
 
 msgid "The maximum amount of {0} was exceeded."
-msgstr "Der Maximalbetrag von {0} wurde überschritten."
+msgstr "Der Maximalbetrag von {0} pro Eintragung wurde überschritten."
 
 msgid "The amount exceeds the deposit balance of {0}, the member would return more deposit than he has bought."
-msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}, das Mitglied hätte nach dem Eintragen mehr Pfand zurückgebracht als gekauft."
+msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}, das Mitglied hätte nach dem Eintragen insgesamt mehr Pfand zurückgebracht als gekauft."
 
 msgid "The amount exceeds the deposit balance of {0}, the manufacturer would take back more deposit than he sold."
-msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}, der Hersteller hätte nach dem Eintragen mehr Pfand zurückgenommen als verkauft."
+msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}, der Hersteller hätte nach dem Eintragen insgesamt mehr Pfand zurückgenommen als verkauft."
 
 msgid "Press the submit button again to add the payment of {0} anyway."
-msgstr "Klicke erneut auf den Speichern-Button, um den angegebenen Betrag ({0}) trotzdem zu speichern."
+msgstr "Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag ({0}) trotzdem zu speichern."
 
 msgid "Add_blog_post"
 msgstr "Neuen Blog-Artikel erstellen"
