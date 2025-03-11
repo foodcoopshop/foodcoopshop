@@ -15,6 +15,7 @@ use App\Model\Entity\Customer;
 use App\Model\Entity\Manufacturer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
+use App\Services\FormatterService;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query;
 use Cake\ORM\Query\SelectQuery;
@@ -589,10 +590,8 @@ class CustomersTable extends AppTable
         $paymentDepositSum = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
         $depositSum = $orderDetailsTable->getSumDeposit($customerId);
 
-        // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        $creditBalance = round($paymentDepositSum - $depositSum, 2);
-        // "+ 0" converts -0,00 to 0,00
-        return $creditBalance + 0;
+        $creditBalance = $paymentDepositSum - $depositSum;
+        return FormatterService::assureCorrectFloat($creditBalance);
 
     }
 
@@ -607,10 +606,8 @@ class CustomersTable extends AppTable
         $productSum = $orderDetailsTable->getSumProduct($customerId);
         $depositSum = $orderDetailsTable->getSumDeposit($customerId);
 
-        // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        $creditBalance = round($paymentProductSum - $paymentPaybackSum + $paymentDepositSum - $productSum - $depositSum, 2);
-        // "+ 0" converts -0,00 to 0,00
-        return $creditBalance + 0;
+        $creditBalance = $paymentProductSum - $paymentPaybackSum + $paymentDepositSum - $productSum - $depositSum;
+        return FormatterService::assureCorrectFloat($creditBalance);
     }
 
     public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = []): array
