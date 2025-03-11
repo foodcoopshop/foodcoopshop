@@ -480,40 +480,34 @@ class OrderDetailsTable extends AppTable
 
     public function getDepositSum($manufacturerId, $groupBy): array
     {
-
-        $params = [
-            'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate'),
-        ];
-
-        $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
-        $sql .= match($groupBy) {
-            'month' => ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ',
-            'year'  => ', DATE_FORMAT(od.pickup_day, \'%Y\') as Year ',
-            default => '',
-        };
-
-        $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
-        $sql .= 'WHERE 1 ';
-
+        $query = $this->find();
+        $query->select(['sumDepositDelivered' => $query->func()->sum('OrderDetails.deposit')]);
+        $query->leftJoinWith('Products');
+        
         if ($manufacturerId > 0) {
-            $sql .= 'AND p.id_manufacturer = :manufacturerId ';
-            $params['manufacturerId'] = $manufacturerId;
+            $query->where(['Products.id_manufacturer' => $manufacturerId]);
         }
-
-        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
-
-        $sql .= match($groupBy) {
-            'month' => 'GROUP BY monthAndYear ORDER BY monthAndYear DESC;',
-            'year'  => 'GROUP BY Year ORDER BY Year DESC;',
-            default => 'ORDER BY od.pickup_day DESC;',
-        };
-
-        $statement = $this->getConnection()->getDriver()->prepare($sql);
-        $statement->execute($params);
-        $orderDetails = $statement->fetchAll('assoc');
-
-        return $orderDetails;
+        
+        // Date filter condition
+        $depositForManufacturersStartDate = Configure::read('app.depositForManufacturersStartDate');
+        $query->where(function (QueryExpression $exp) use ($depositForManufacturersStartDate) {
+            return $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $depositForManufacturersStartDate);
+        });
+        
+        // Add grouping and ordering based on parameter
+        if ($groupBy == 'month') {
+            $query->select(['monthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'])
+                  ->groupBy('monthAndYear')
+                  ->orderBy(['monthAndYear' => 'DESC']);
+        } elseif ($groupBy == 'year') {
+            $query->select(['Year' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')'])
+                  ->groupBy('Year')
+                  ->orderBy(['Year' => 'DESC']);
+        } else {
+            $query->orderBy(['OrderDetails.pickup_day' => 'DESC']);
+        }
+        
+        return $query->toArray();
     }
 
     public function getOpenOrderDetailSum(int $manufacturerId, $dateFrom): float|int
