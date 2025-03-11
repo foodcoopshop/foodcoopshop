@@ -54,18 +54,6 @@ class CartsController extends FrontendController
         ]);
 
         $this->cartService = new CartService($this);
-
-        /**
-         * tmp prevent BadRequestException on submit cart after errors ocurred
-         */
-        if (in_array($this->getRequest()->getParam('action'), [
-            'finish',
-        ])) {
-            if (!$this->getRequest()->is('json') && !(new OrderCustomerService())->isOrderForDifferentCustomerMode()) {
-                $this->FormProtection->setConfig('validate', false);
-            }
-        }
-
     }
 
     /**

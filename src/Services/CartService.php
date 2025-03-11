@@ -495,14 +495,8 @@ class CartService
                     'PickupDayEntities'
                 ]
             ];
-            $fixedPickupDayRequest = [];
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
-                foreach($pickupEntities as $pickupDay) {
-                    $pickupDay['pickup_day'] = Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
-                    $fixedPickupDayRequest[] = $pickupDay;
-                }
-                $this->controller->setRequest($this->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
                 $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
         }
