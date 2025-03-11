@@ -288,7 +288,18 @@ class PaymentsControllerTest extends AppCakeTestCase
         $dateAdd = '01.01.2099';
         $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, 30, Payment::TYPE_DEPOSIT, $dateAdd, Payment::TEXT_EMPTY_GLASSES, true);
         $this->assertEquals(0, $jsonDecodedContent->status);
-        $this->assertEquals('Das Datum darf nicht in der Zukunft liegen.', $jsonDecodedContent->msg);
+        $this->assertEquals('Das Datum ist ungültig oder liegt in der Zukunft.', $jsonDecodedContent->msg);
+    }
+
+    public function testAddManufacturerDepositEmptyGlassesWithInvalidDate(): void
+    {
+        $this->loginAsSuperadmin();
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $dateAdd = '01x01.2099';
+        $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, 30, Payment::TYPE_DEPOSIT, $dateAdd, Payment::TEXT_EMPTY_GLASSES, true);
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertEquals('Das Datum ist ungültig oder liegt in der Zukunft.', $jsonDecodedContent->msg);
     }
 
     public function testAddManufacturerDepositMoney(): void

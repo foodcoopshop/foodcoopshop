@@ -67,12 +67,15 @@ class PaymentsTable extends AppTable
                 if (is_string($value)) {
                     $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
                 }
+                if ($formattedValue == '1970-01-01') {
+                    return false;
+                }
                 if (isset($formattedValue) && $formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     return false;
                 }
                 return true;
             },
-            'message' => __('The_date_must_not_be_a_future_date.'),
+            'message' => __('The date has a wrong format is in the past.'),
         ]);
 
         return $validator;
