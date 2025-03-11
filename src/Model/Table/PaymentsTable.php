@@ -67,11 +67,13 @@ class PaymentsTable extends AppTable
                 if (is_string($value)) {
                     $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
                 }
-                if ($formattedValue == '1970-01-01') {
-                    return false;
-                }
-                if (isset($formattedValue) && $formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
-                    return false;
+                if (isset($formattedValue)) {
+                    if ($formattedValue == '1970-01-01') {
+                        return false;
+                    }
+                    if ($formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                        return false;
+                    }
                 }
                 return true;
             },
