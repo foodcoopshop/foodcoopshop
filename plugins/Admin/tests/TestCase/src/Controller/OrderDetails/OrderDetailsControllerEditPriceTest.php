@@ -106,7 +106,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
         $this->loginAsSuperadmin();
         $this->addProductToCart($productId, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
 
         $this->editOrderDetailPrice($newExpectedOrderDetailId, $this->newPrice, $this->editPriceReason, true);
 
