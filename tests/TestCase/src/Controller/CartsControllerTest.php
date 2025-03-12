@@ -509,7 +509,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
 
         $pickupDay = $this->Time->getTomorrowForDatabase();
-        $comment = 'this is the comment';
+        $comment = 'this is the <b>comment</b>';
 
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
         $this->loginAsSuperadmin();
@@ -530,7 +530,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
         $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>');
-        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $comment . '</b>"');
+        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>this is the comment</b>"');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }
 
