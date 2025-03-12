@@ -171,7 +171,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
         $this->loginAsSuperadmin();
         $this->addProductToCart($productId, 2);
-        $this->finishCart(1, 1);
+        $this->finishCart();
 
         $this->assertChangedStockAvailable($productId, 988.4);
         $this->deleteAndAssertRemoveFromDatabase([4]);

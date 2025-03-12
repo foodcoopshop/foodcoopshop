@@ -495,10 +495,20 @@ class CartService
                     'PickupDayEntities'
                 ]
             ];
+
+            $preparedPickupDayEntities = [];
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
+                foreach($pickupEntities as $pickupDay) {
+                    $preparedPickupDayEntities[] = $pickupDaysTable->newEntity([
+                        'customer_id' => $this->identity->getId(),
+                        'pickup_day' => Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']),
+                        'comment' => strip_tags($pickupDay['comment']),
+                    ]);
+                }
                 $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
+
         }
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -513,8 +523,11 @@ class CartService
         $cart['Cart'] = $cartsTable->patchEntity(
             $cart['Cart'],
             $this->request->getData(),
-            $options
+            $options,
         );
+
+        // $preparedPickupDayEntities are not merged properly in $cartsTable->patchEntity above, so set the entities manually
+        $cart['Cart']->pickup_day_entities = $preparedPickupDayEntities ?? [];
 
         $formErrors = false;
         if ($cart['Cart']->hasErrors()) {

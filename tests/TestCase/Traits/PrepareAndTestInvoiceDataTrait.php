@@ -37,7 +37,7 @@ trait PrepareAndTestInvoiceDataTrait
         $productIdB = '348-11'; // rindfleisch + attribute
         $this->addProductToCart($productIdA, 1);
         $this->addProductToCart($productIdB, 3);
-        $this->finishCart(1, 1, '', null, $pickupDay);
+        $this->finishCart(1, 1, '', $pickupDay);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailEntityA = $orderDetailsTable->get(4);

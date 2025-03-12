@@ -483,7 +483,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId1, 1);
         $this->assertJsonOk();
-        $this->finishCart(1, 1, '', null, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        $this->finishCart(1, 1, '', Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         $this->assertResponseNotContains('hat die Lieferpause aktiviert');
     }
 
@@ -495,13 +495,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->finishCart(1, 1, '');
+        $this->finishCart();
         $this->assertResponseContains('Bitte wähle einen Abholtag aus.');
-        $this->finishCart(1, 1, '', null, '');
+        $this->finishCart();
         $this->assertResponseContains('Bitte wähle einen Abholtag aus.');
-        $this->finishCart(1, 1, '', null, '2020-01-01'); // do not allow past pickup days
+        $this->finishCart(1, 1, '', '2020-01-01'); // do not allow past pickup days
         $this->assertResponseContains('Der Abholtag ist nicht gültig.');
-        $this->finishCart(1, 1, '', null, $tomorrow); // pickup day has value of FCS_NO_DELIVERY_DAYS_GLOBAL
+        $this->finishCart(1, 1, '', $tomorrow); // pickup day has value of FCS_NO_DELIVERY_DAYS_GLOBAL
         $this->assertResponseContains('Der Abholtag ist nicht gültig.');
     }
 
@@ -509,13 +509,13 @@ class CartsControllerTest extends AppCakeTestCase
     {
 
         $pickupDay = $this->Time->getTomorrowForDatabase();
-        $comment = 'this is the comment';
+        $comment = 'this is the <b>comment</b>';
 
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->finishCart(1, 1, $comment, null, $pickupDay);
+        $this->finishCart(1, 1, $comment, $pickupDay);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -530,7 +530,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
         $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>');
-        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $comment . '</b>"');
+        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>this is the comment</b>"');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }
 
@@ -558,7 +558,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsAdmin();
         $this->fillCart();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
-        $this->finishCart(1,1);
+        $this->finishCart();
         $this->assertResponseContains('Bitte lade neues Guthaben auf.');
         $this->assertResponseContains('-8,64');
         $this->assertMailCount(0);
@@ -578,7 +578,7 @@ class CartsControllerTest extends AppCakeTestCase
         $unitsTable->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
 
         $this->addAllDifferentProductTypesToCart();
-        $this->finishCart(1,1);
+        $this->finishCart();
         // product and missing pp per piece
         $this->assertMatchesRegularExpression('/Das Produkt (.*)Beuschl(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // product and missing pp per unit
@@ -626,7 +626,7 @@ class CartsControllerTest extends AppCakeTestCase
         $purchasePriceProductsTable->save($entity);
         $this->addProductToCart($productId, 2);
         $this->addProductToCart(163, 1); //mangold
-        $this->finishCart(1,1);
+        $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -688,7 +688,7 @@ class CartsControllerTest extends AppCakeTestCase
         $productA = '350-13';
         $this->loginAsSuperadmin();
         $this->addProductToCart($productA, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $this->checkStockAvailable($productA, 4);
         $this->checkStockAvailable('350-14', 999); // must be same as before fnishing order
     }
@@ -699,7 +699,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
         $this->loginAsSuperadmin();
         $this->fillCart();
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('App.fullBaseUrl') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
     }
 
@@ -709,7 +709,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 1);
         $this->loginAsSuperadmin();
         $this->fillCart();
-        $this->finishCart(1, 1);
+        $this->finishCart();
         // assertMailNotContainsAt not available!
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Du kannst unseren Newsletter', TestEmailTransport::getMessages()[0]->getBodyHtml());
     }
@@ -787,7 +787,7 @@ class CartsControllerTest extends AppCakeTestCase
         $stockProductAttributeId = '350-13';
         $this->addProductToCart($stockProductId, 6);
         $this->addProductToCart($stockProductAttributeId, 5);
-        $this->finishCart(1, 1);
+        $this->finishCart();
     }
 
     public function testFinishOrderWithMultiplePickupDays(): void
@@ -801,7 +801,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdA, 3);
         $this->addProductToCart($productIdB, 2);
         $this->addProductToCart($productIdC, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
 
         $this->assertMailCount(1);
     }
@@ -883,7 +883,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdA, 2);
         $this->addProductToCart($productIdB, 3);
 
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
 
         $this->checkCartStatusAfterFinish();
@@ -946,7 +946,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
         $this->addProductToCart($productIdC, 3);
 
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
 
         $this->checkCartStatusAfterFinish();
@@ -1010,7 +1010,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::ZERO_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
-        $this->finishCart(1,1);
+        $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -1063,7 +1063,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::PURCHASE_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
-        $this->finishCart(1,1);
+        $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -1135,7 +1135,7 @@ class CartsControllerTest extends AppCakeTestCase
         )->contain(['CartProducts'])->first();
         $this->assertCount(2, $cart->cart_products);
 
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
@@ -1170,7 +1170,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
@@ -1196,7 +1196,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
