@@ -9,8 +9,11 @@ use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
 use App\Model\Traits\NumberRangeValidatorTrait;
-use App\Model\Entity\Configuration;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Event\EventInterface;
+use ArrayObject;
+use App\Controller\Component\StringComponent;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,6 +41,15 @@ class ConfigurationsTable extends AppTable
         $this->setTable('configuration');
         parent::initialize($config);
         $this->setPrimaryKey('name');
+    }
+
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        $request = Router::getRequest();
+        $configurationName = $request->getParam('pass')[0];
+        if (in_array($configurationName , ['FCS_REGISTRATION_NOTIFICATION_EMAILS'])) {
+            $data['value'] = StringComponent::removeWhitespace($data['value']);
+        }
     }
 
     public function getVersion(): string
@@ -85,7 +97,7 @@ class ConfigurationsTable extends AppTable
         $validator->add('value', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
-            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma.')
         ]);
         return $validator;
     }
@@ -96,7 +108,7 @@ class ConfigurationsTable extends AppTable
         $validator->add('value', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
-            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma.')
         ]);
         return $validator;
     }

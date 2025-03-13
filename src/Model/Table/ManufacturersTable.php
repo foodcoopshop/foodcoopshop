@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use App\Model\Entity\Manufacturer;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
@@ -12,7 +13,8 @@ use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Customer;
-use Cake\Log\Log;
+use Cake\Event\EventInterface;
+use ArrayObject;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -55,6 +57,13 @@ class ManufacturersTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        if (isset($data['send_order_list_cc'])) {
+            $data['send_order_list_cc'] = StringComponent::removeWhitespace($data['send_order_list_cc']);
+        }
+    }
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
@@ -81,7 +90,7 @@ class ManufacturersTable extends AppTable
         $validator->add('send_order_list_cc', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
-            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma.')
         ]);
 
         $validator->allowEmptyString('no_delivery_days');
