@@ -125,7 +125,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newStatus = APP_OFF;
 
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
-        $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
+        $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen.';
 
         $this->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -157,7 +157,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'Manufacturers' => [
                     'send_order_list' => $newSendOrderList,
                     'send_invoice' => $newSendInvoice,
-                    'send_order_list_cc' => implode(',', $newSendOrderListCc), // correct
+                    'send_order_list_cc' => ' office@rothauer-it.com, test@test.com ', // correct: any whitespace is removed in beforeMarshal
                     'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification,
                     'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification,
                     'send_instant_order_notification' => $newSendInstantOrderNotification,

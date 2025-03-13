@@ -1697,8 +1697,8 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Bitte gibt eine gültige Internet-Adresse an."
 
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen)."
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma."
+msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen."
 
 msgid "Decimals_are_not_allowed."
 msgstr "Kommastellen sind nicht zulässig."
@@ -3051,7 +3051,7 @@ msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
 msgstr "Wer soll bei neuen Registrierungen informiert werden?"
 
 msgid "Configuration_subtext_FCS_REGISTRATION_NOTIFICATION_EMAILS"
-msgstr "Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen."
+msgstr "Mehrere E-Mail-Adressen mit Komma trennen."
 
 msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
 msgstr "Selbstbedienungs-Modus für Lagerprodukte aktiv?"

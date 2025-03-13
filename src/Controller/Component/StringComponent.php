@@ -23,6 +23,11 @@ use Cake\Utility\Text;
 class StringComponent extends Component
 {
 
+    public static function removeWhitespace($string): string
+    {
+        return preg_replace('/\s+/', '', $string);
+    }
+
     /**
      * https://stackoverflow.com/a/35961386/2100184
      */

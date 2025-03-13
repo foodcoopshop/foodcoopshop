@@ -41,7 +41,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         )->first();
         $this->post('/admin/configurations/edit/'.$configuration->name, [
            'Configurations' => [
-               'value' => $newValue
+               'value' => $newValue,
            ],
            'referer' => '/'
         ]);
@@ -85,6 +85,19 @@ class ConfigurationsControllerTest extends AppCakeTestCase
             ]
         )->first();
         $this->assertEquals($configuration->value, 'HalloHallo', 'html tags not stripped');
+    }
+
+    public function testConfigurationEditFormRegistrationNotificationEmailsRemoveWhitspace(): void
+    {
+        $this->changeConfigurationEditForm('FCS_REGISTRATION_NOTIFICATION_EMAILS', ' office@rothauer-it.com, test@test.com ');
+        $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->find('all',
+            conditions: [
+                'Configurations.name' => 'FCS_REGISTRATION_NOTIFICATION_EMAILS'
+            ]
+        )->first();
+        $this->assertEquals($configuration->value, 'office@rothauer-it.com,test@test.com');
     }
 
     public function testShowProductsForGuestsEnabledAndLoggedOut(): void
