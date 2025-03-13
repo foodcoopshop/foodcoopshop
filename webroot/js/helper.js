@@ -1042,6 +1042,10 @@ foodcoopshop.Helper = {
         this.showFlashMessage(message, 'error');
     },
 
+    showWarningMessage: function (message) {
+        this.showFlashMessage(message, 'warning');
+    },
+
     ajaxCall: function (url, data, callbacks) {
 
         var csrfToken = $('meta[name="csrfToken"]').attr('content');

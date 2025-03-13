@@ -153,7 +153,7 @@ class InvoicesController extends AdminAppController
 
             // mark row as picked up
             $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
-            $pickupDaysTable->changeState(
+            $pickupDaysTable->changeStatus(
                 $customerId,
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_ON,
@@ -358,7 +358,7 @@ class InvoicesController extends AdminAppController
 
             // remove "mark row as picked up"
             $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
-            $pickupDaysTable->changeState(
+            $pickupDaysTable->changeStatus(
                 $invoice->customer->id_customer,
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_OFF,

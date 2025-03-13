@@ -15,6 +15,7 @@ use Cake\ORM\TableRegistry;
 use App\Model\Entity\Customer;
 use Cake\Event\EventInterface;
 use ArrayObject;
+use App\Services\FormatterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -333,6 +334,17 @@ class ManufacturersTable extends AppTable
             $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
             return $data;
         }, $results);
+    }
+
+    public function getDepositBalance(int $manufacturerId): float
+    {
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $sumDepositReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturerId, false);
+
+        $depositBalance = $sumDepositReturned[0]['sumDepositReturned'] - $sumDepositDelivered[0]['sumDepositDelivered'];
+        return FormatterService::assureCorrectFloat($depositBalance);
     }
 
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = []): array

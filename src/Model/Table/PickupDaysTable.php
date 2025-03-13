@@ -38,7 +38,7 @@ class PickupDaysTable extends AppTable
         return $validator;
     }
 
-    public function changeState($customerId, $pickupDay, $state): EntityInterface|false
+    public function changeStatus($customerId, $pickupDay, $state): EntityInterface|false
     {
         $result = $this->insertOrUpdate(
             [

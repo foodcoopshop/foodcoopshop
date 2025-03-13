@@ -26,5 +26,25 @@ class Payment extends AppEntity
     const TEXT_EMPTY_GLASSES = 'empty_glasses';
     const TEXT_MONEY = 'money';
 
+    const ALLOWED_CUSTOMER_TYPES = [
+        self::TYPE_DEPOSIT,
+        self::TYPE_PAYBACK,
+        self::TYPE_PRODUCT,
+    ];
+
+    const ALLOWED_MANUFACTURER_TYPES = [
+        self::TYPE_DEPOSIT,
+    ];
+
+    const MAX_AMOUNTS_CUSTOMER = [
+        self::TYPE_DEPOSIT => 20,
+        self::TYPE_PAYBACK => 200,
+        self::TYPE_PRODUCT => 500,
+    ];
+
+    const MAX_AMOUNTS_MANUFACTURER = [
+        self::TEXT_EMPTY_GLASSES => 100,
+        self::TEXT_MONEY => 200,
+    ];
 
 }

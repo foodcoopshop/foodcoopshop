@@ -80,7 +80,7 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
                     message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileCalculatingSellingPrice;
                     message += ':</p>';
                     message = message + data.msg;
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, message);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, message);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

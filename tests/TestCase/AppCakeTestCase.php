@@ -294,15 +294,24 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0): ?object
+    protected function addCustomerPayment($customerId, $amount, $type, bool $applyAmountTresholdCheck): ?object
     {
-        $this->ajaxPost('/admin/payments/add', [
-            'customerId' => $customerId,
+        $this->ajaxPost('/admin/payments/addCustomerPayment/' . $customerId, [
             'amount' => $amount,
             'type' => $type,
-            'manufacturerId' => $manufacturerId,
+            'applyAmountTresholdCheck' => $applyAmountTresholdCheck ? 1 : 0,
+        ]);
+        return $this->getJsonDecodedContent();
+    }
+
+    protected function addManufacturerPayment($manufacturerId, $amount, $type, $dateAdd, $text, bool $applyAmountTresholdCheck): ?object
+    {
+        $this->ajaxPost('/admin/payments/addManufacturerPayment/' . $manufacturerId, [
+            'amount' => $amount,
+            'type' => $type,
             'text' => $text,
             'dateAdd' => $dateAdd,
+            'applyAmountTresholdCheck' => $applyAmountTresholdCheck ? 1 : 0,
         ]);
         return $this->getJsonDecodedContent();
     }

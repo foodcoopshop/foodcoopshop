@@ -1826,8 +1826,8 @@ msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
-msgid "The_date_must_not_be_a_future_date."
-msgstr "Das Datum darf nicht in der Zukunft liegen."
+msgid "The date has a wrong format is in the past."
+msgstr "Das Datum ist ungültig oder liegt in der Zukunft."
 
 msgid "Please_enter_a_correct_amount."
 msgstr "Bitte gib einen korrekten Betrag ein."

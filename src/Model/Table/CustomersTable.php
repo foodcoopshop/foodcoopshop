@@ -15,6 +15,7 @@ use App\Model\Entity\Customer;
 use App\Model\Entity\Manufacturer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
+use App\Services\FormatterService;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query;
 use Cake\ORM\Query\SelectQuery;
@@ -582,21 +583,31 @@ class CustomersTable extends AppTable
         return round($depositBalanceSum, 2);
     }
 
+    public function getDepositBalance(int $customerId): float
+    {
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $paymentDepositSum = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
+        $depositSum = $orderDetailsTable->getSumDeposit($customerId);
+
+        $creditBalance = $paymentDepositSum - $depositSum;
+        return FormatterService::assureCorrectFloat($creditBalance);
+
+    }
+
     public function getCreditBalance($customerId): float
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
         $paymentProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PRODUCT);
-        $paybackProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);
+        $paymentPaybackSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);
         $paymentDepositSum = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
 
         $productSum = $orderDetailsTable->getSumProduct($customerId);
         $depositSum = $orderDetailsTable->getSumDeposit($customerId);
 
-        // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        $creditBalance = round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
-        // "+ 0" converts -0,00 to 0,00
-        return $creditBalance + 0;
+        $creditBalance = $paymentProductSum - $paymentPaybackSum + $paymentDepositSum - $productSum - $depositSum;
+        return FormatterService::assureCorrectFloat($creditBalance);
     }
 
     public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = []): array

@@ -61,16 +61,23 @@ class PaymentsTable extends AppTable
         $validator->allowEmptyDate('date_add');
         $validator->add('date_add', 'allowed-only-today-or-before', [
             'rule' => function ($value, $context) {
-                if ($value == 0) {
-                    return true;
+                if (is_object($value)) {
+                    $formattedValue = $value->format(Configure::read('DateFormat.DatabaseAlt'));
                 }
-                $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
-                if ($formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
-                    return false;
+                if (is_string($value)) {
+                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                }
+                if (isset($formattedValue)) {
+                    if ($formattedValue == '1970-01-01') {
+                        return false;
+                    }
+                    if ($formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                        return false;
+                    }
                 }
                 return true;
             },
-            'message' => __('The_date_must_not_be_a_future_date.'),
+            'message' => __('The date has a wrong format is in the past.'),
         ]);
 
         return $validator;
@@ -254,16 +261,16 @@ class PaymentsTable extends AppTable
     public function getSum($customerId, $type): float
     {
         $conditions = [
-            'Payments.id_customer' => $customerId,
-            'Payments.id_manufacturer' => 0,
-            'Payments.status' => APP_ON,
+            $this->aliasField('id_customer') => $customerId,
+            $this->aliasField('id_manufacturer') => 0,
+            $this->aliasField('status') => APP_ON,
         ];
 
-        $conditions['Payments.type'] = $type;
+        $conditions[$this->aliasField('type')] = $type;
 
         $query = $this->find('all', conditions: $conditions);
         $query->select(
-            ['SumAmount' => $query->func()->sum('Payments.amount')]
+            ['SumAmount' => $query->func()->sum($this->aliasField('amount'))]
         );
         return (float) $query->toArray()[0]['SumAmount'];
     }

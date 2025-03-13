@@ -123,7 +123,7 @@ foodcoopshop.ModalPaymentAdd = {
         }
 
         if (customerIdDomElement.length > 0 && customerIdDomElement.val() === null) {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -144,7 +144,7 @@ foodcoopshop.ModalPaymentAdd = {
             }
 
             if (selectedRadioButton.length == 0) {
-                foodcoopshop.Modal.appendFlashMessage(modalSelector, message);
+                foodcoopshop.Modal.appendFlashMessageError(modalSelector, message);
                 foodcoopshop.Modal.resetButtons(modalSelector);
                 return;
             }
@@ -156,21 +156,54 @@ foodcoopshop.ModalPaymentAdd = {
                 type = selectedRadioButtonValue;
             }
         }
+        
+        const submitButton = $(modalSelector).find('.btn-success');
 
-        foodcoopshop.Helper.ajaxCall('/admin/payments/add/', {
+        $(modalSelector).find('input').on('keydown', function () {
+            foodcoopshop.Helper.removeFlashMessage();;
+            submitButton.removeClass('confirm-submit');
+        });
+        $(modalSelector).find('select').on('change', function () {
+            foodcoopshop.Helper.removeFlashMessage();
+            submitButton.removeClass('confirm-submit');
+        });
+
+        const customerId = customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0;
+        const manufacturerId = manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0;
+        const dateAdd = dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0;
+
+        let postUrl = '';
+        let postData = {
             amount: amount,
             type: type,
-            text: text,
-            customerId: customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0,
-            manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0,
-            dateAdd: dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0,
-        }, {
+            applyAmountTresholdCheck: submitButton.hasClass('confirm-submit') ? 0 : 1,
+        };
+        if (customerId > 0) {
+            postUrl += '/admin/payments/addCustomerPayment/' + customerId;
+        }
+        if (manufacturerId > 0) {
+            postUrl += '/admin/payments/addManufacturerPayment/' + manufacturerId;
+            postData.text = text;
+            postData.dateAdd = dateAdd;
+        }
+
+        if (postUrl === '') {
+            return;
+        }
+
+        submitButton.removeClass('confirm-submit');
+        foodcoopshop.Helper.ajaxCall(postUrl, postData, {
             onOk: function (data) {
                 document.location.reload();
             },
             onError: function (data) {
-                foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
                 foodcoopshop.Modal.resetButtons(modalSelector);
+                if (data.confirmSubmit) {
+                    foodcoopshop.Modal.appendFlashMessageWarning(modalSelector, data.msg);
+                    $(modalSelector).find('.btn-success').addClass('confirm-submit');
+                } else {
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
+                }
             }
         });
 
