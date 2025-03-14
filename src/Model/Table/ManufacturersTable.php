@@ -103,7 +103,7 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
 
-    public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId): Manufacturer
+    public function getManufacturerByIdForSendingOrderListsOrInvoice(int $manufacturerId): Manufacturer
     {
         $manufacturer = $this->find('all',
         conditions: [
@@ -119,6 +119,10 @@ class ManufacturersTable extends AppTable
         return $manufacturer;
     }
 
+    /**
+     * TODO add type bool to all getOption methods, in this step remove the fallbacks (and set the values in the database before)
+     */
+    /** @phpstan-ignore-next-line */
     public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification): bool
     {
         $result = $sendOrderedProductDeletedNotification;
@@ -128,6 +132,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification): bool
     {
         $result = $sendOrderedProductPriceChangedNotification;
@@ -137,6 +142,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendOrderedProductAmountChangedNotification($sendOrderedProductAmountChangedNotification): bool
     {
         $result = $sendOrderedProductAmountChangedNotification;
@@ -146,6 +152,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendInstantOrderNotification($sendInstantOrderNotification): bool
     {
         $result = $sendInstantOrderNotification;
@@ -155,6 +162,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendInvoice($sendInvoice): bool
     {
         $result = $sendInvoice;
@@ -191,7 +199,8 @@ class ManufacturersTable extends AppTable
         return $result;
     }
 
-    public function getOptionSendOrderList($sendOrderList): bool
+    /** @phpstan-ignore-next-line */
+    public function getOptionSendOrderList( $sendOrderList): bool
     {
         $result = $sendOrderList;
         if (is_null($sendOrderList)) {
@@ -200,7 +209,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    public function getOptionSendOrderListCc($sendOrderListCc): array
+    public function getOptionSendOrderListCc(?string $sendOrderListCc): array
     {
         $ccRecipients = [];
         if (is_null($sendOrderListCc) || $sendOrderListCc == '') {
@@ -214,7 +223,7 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
-    public function getCustomerRecord($email): Customer|array|null
+    public function getCustomerRecord(string $email): Customer|array|null
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
@@ -286,17 +295,17 @@ class ManufacturersTable extends AppTable
         return $manufacturersForMenu;
     }
 
-    public function increasePriceWithVariableMemberFee($price, $variableMemberFee): float
+    public function increasePriceWithVariableMemberFee(float $price, int $variableMemberFee): float
     {
         return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    public function decreasePriceWithVariableMemberFee($price, $variableMemberFee): float
+    public function decreasePriceWithVariableMemberFee(float $price, int $variableMemberFee): float
     {
         return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    public function getVariableMemberFeeAsFloat($price, $variableMemberFee): float
+    public function getVariableMemberFeeAsFloat(float $price, int $variableMemberFee): float
     {
         return round($price * $variableMemberFee / 100, 2);
     }
@@ -328,7 +337,7 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function anonymizeCustomersInInvoiceOrOrderList($results): array
+    public function anonymizeCustomersInInvoiceOrOrderList(array $results): array
     {
         return array_map(function ($data) {
             $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
@@ -347,7 +356,15 @@ class ManufacturersTable extends AppTable
         return FormatterService::assureCorrectFloat($depositBalance);
     }
 
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = []): array
+    public function getDataForInvoiceOrOrderList(
+        int $manufacturerId,
+        string $order,
+        string $dateFrom,
+        ?string $dateTo,
+        array $orderState,
+        bool $includeStockProducts,
+        array $orderDetailIds = [],
+        ): array
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $orderClause = match($order) {
@@ -356,7 +373,7 @@ class ManufacturersTable extends AppTable
             default => '',
         };
         $params = [
-            'manufacturerId' => $manufacturerId
+            'manufacturerId' => $manufacturerId,
         ];
 
         if (is_null($dateTo)) {

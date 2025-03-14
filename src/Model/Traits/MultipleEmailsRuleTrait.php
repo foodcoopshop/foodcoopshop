@@ -20,7 +20,7 @@ use Cake\Validation\Validation;
 trait MultipleEmailsRuleTrait
 {
 
-    public function ruleMultipleEmails($check): bool
+    public function ruleMultipleEmails(string $check): bool
     {
         $emails = explode(',', $check);
         if (!is_array($emails)) {

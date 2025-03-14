@@ -221,7 +221,7 @@ class DepositsController extends AdminAppController
         $depositsDelivered = $orderDetailsTable->getDepositSum($manufacturerId, 'month');
         $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
-        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
+        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear((int) date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
 
         $deposits = [];
@@ -296,8 +296,8 @@ class DepositsController extends AdminAppController
             throw new RecordNotFoundException('monthAndYear missing');
         }
         $monthAndYearExploded = explode('-', $monthAndYear);
-        $year  = $monthAndYearExploded[0];
-        $month = $monthAndYearExploded[1];
+        $year  = (int) $monthAndYearExploded[0];
+        $month = (int) $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
         $this->set('title_for_layout', __d('admin', 'Deposit_take_back_detail_for') . ' ' . $manufacturer->name);
