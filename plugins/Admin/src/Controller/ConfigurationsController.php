@@ -33,10 +33,6 @@ class ConfigurationsController extends AdminAppController
 
         $this->viewBuilder()->addHelper('Configuration');
 
-        if ($name === null) {
-            throw new NotFoundException;
-        }
-
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $configuration = $configurationsTable->find('all', conditions: [
             'Configurations.name' => $name,
