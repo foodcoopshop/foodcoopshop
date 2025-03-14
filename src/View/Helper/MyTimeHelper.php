@@ -33,7 +33,7 @@ class MyTimeHelper extends TimeHelper
         };
     }
 
-    public function convertSecondsInMinutesAndSeconds($seconds): string
+    public function convertSecondsInMinutesAndSeconds(float $seconds): string
     {
         $secondsAsInteger = (int) $seconds;
         $decimals = round($seconds, 2) - $secondsAsInteger;
@@ -49,7 +49,7 @@ class MyTimeHelper extends TimeHelper
         return join(' ', $result);
     }
 
-    public function getAllYearsUntilThisYear(int $thisYear, int $firstYear, $labelPrefix=''): array
+    public function getAllYearsUntilThisYear(int $thisYear, int $firstYear, string $labelPrefix=''): array
     {
         $years = [];
         while($thisYear >= $firstYear) {
@@ -59,7 +59,7 @@ class MyTimeHelper extends TimeHelper
         return $years;
     }
 
-    public function getAllMonthsUntilThisYear($thisYear, $firstYear): array
+    public function getAllMonthsUntilThisYear(int $thisYear, int $firstYear): array
     {
         $monthsAndYear = $this->getAllMonthsForYear($thisYear);
         while($thisYear >= $firstYear) {
@@ -77,12 +77,12 @@ class MyTimeHelper extends TimeHelper
         return $array;
     }
 
-    public function getTimeObjectUTC($time): DateTime
+    public function getTimeObjectUTC(string $time): DateTime
     {
         return DateTime::createFromTimestamp(strtotime($time), 'UTC');
     }
 
-    public function getTimezoneDiffInSeconds($timestamp): string
+    public function getTimezoneDiffInSeconds(int $timestamp): string
     {
         return date('Z', $timestamp);
     }
@@ -92,12 +92,12 @@ class MyTimeHelper extends TimeHelper
         return Configure::read('DateFormat.' . $formatString);
     }
 
-    public function getLastDayOfGivenMonth($monthAndYear): string
+    public function getLastDayOfGivenMonth(string $monthAndYear): string
     {
         return date('t', strtotime($monthAndYear));
     }
 
-    public function getYearFromDbDate($dbDate): string
+    public function getYearFromDbDate(string $dbDate): string
     {
         return date('Y', strtotime($dbDate));
     }
@@ -134,7 +134,7 @@ class MyTimeHelper extends TimeHelper
         return $beforeWeekday;
     }
 
-    public function getDateFormattedWithWeekday($date): string
+    public function getDateFormattedWithWeekday(int $date): string
     {
         $date = $this->getWeekdayName($this->formatAsWeekday($date)) . ', ' . date($this->getI18Format('DateShortAlt'), $date);
         return $date;
@@ -145,12 +145,12 @@ class MyTimeHelper extends TimeHelper
         return $this->getInXDaysForDatabase(1);
     }
 
-    public function getInXDaysForDatabase($days): string
+    public function getInXDaysForDatabase(int $days): string
     {
         return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +' . $days . ' days'));
     }
 
-    public function getWeekdayFormattedDaysList($day, $maxDays, $factor): array
+    public function getWeekdayFormattedDaysList(string $day, int $maxDays, int $factor): array
     {
         $days = [
             $day => $this->getDateFormattedWithWeekday(strtotime($day))
@@ -168,19 +168,19 @@ class MyTimeHelper extends TimeHelper
      * In ISO-8601 specification, it says that December 28th is always in the last week of its year.
      * https://stackoverflow.com/questions/3319386/php-get-last-week-number-in-year
      */
-    public function getLastCalendarWeekOfYear($year): string
+    public function getLastCalendarWeekOfYear(int $year): int
     {
-        return date('W', strtotime($year . '-12-28'));
+        return (int) date('W', strtotime($year . '-12-28'));
     }
 
-    public function getAllCalendarWeeksUntilNow($timestampStart): array
+    public function getAllCalendarWeeksUntilNow(int $timestampStart): array
     {
 
-        $startCalendarWeek = date('W', $timestampStart);
+        $startCalendarWeek = (int) date('W', $timestampStart);
         $startYear = (int) date('Y', $timestampStart);
         $currentYear = (int) date('Y');
         $allYears = array_reverse($this->getAllYearsUntilThisYear($currentYear, $startYear));
-        $currentCalendarWeek = date('W');
+        $currentCalendarWeek = (int) date('W');
 
         $result = [];
         foreach($allYears as $year)
@@ -195,7 +195,7 @@ class MyTimeHelper extends TimeHelper
         return $result;
     }
 
-    public function getCalendarWeeks($firstWeek, $lastWeek, $year): array
+    public function getCalendarWeeks(int $firstWeek, int $lastWeek, int $year): array
     {
         $firstWeek = (int) $firstWeek;
         $lastWeek = (int) $lastWeek;
@@ -260,7 +260,7 @@ class MyTimeHelper extends TimeHelper
         return $months;
     }
 
-    public function getAllMonthsForYear($year): array
+    public function getAllMonthsForYear(int $year): array
     {
         $months = $this->getMonths();
         $monthsForYear = [];
@@ -270,20 +270,20 @@ class MyTimeHelper extends TimeHelper
         return $monthsForYear;
     }
 
-    public function getWeekdayName($weekday): string
+    public function getWeekdayName(int $weekday): string
     {
         $weekday = $weekday % 7;
         $weekdays = $this->getWeekdays();
         return $weekdays[$weekday];
     }
 
-    public function getMonthName($month): string
+    public function getMonthName(int $month): string
     {
         $months = $this->getMonths();
         return $months[$month];
     }
 
-    public function getLastNDays($n, $startDate): array
+    public function getLastNDays(int $n, string $startDate): array
     {
 
         $startDate = strtotime($startDate);
@@ -291,8 +291,8 @@ class MyTimeHelper extends TimeHelper
         $days = [];
         for ($i=1; $i<=$n; $i++) {
             $deltaString = '-' . $i . ' days';
-            $weekDay = date('w', strtotime($deltaString, $startDate));
-            $days[date(Configure::read('DateFormat.DatabaseWithTimeAlt'), strtotime($deltaString, $startDate))] = $this->getWeekdayName($weekDay) . ', ' . date($this->getI18Format('DateShortAlt'), strtotime($deltaString, $startDate));
+            $weekday = (int) date('w', strtotime($deltaString, $startDate));
+            $days[date(Configure::read('DateFormat.DatabaseWithTimeAlt'), strtotime($deltaString, $startDate))] = $this->getWeekdayName($weekday) . ', ' . date($this->getI18Format('DateShortAlt'), strtotime($deltaString, $startDate));
         }
         return $days;
     }
@@ -310,7 +310,7 @@ class MyTimeHelper extends TimeHelper
     public function getLastMonthNameAndYear(): string
     {
         $previousMonthModifier = strtotime('first day of previous month');
-        $lastMonthAndYearString = $this->getMonthName(date('n', $previousMonthModifier)) . ' ' . date('Y', $previousMonthModifier);
+        $lastMonthAndYearString = $this->getMonthName((int) date('n', $previousMonthModifier)) . ' ' . date('Y', $previousMonthModifier);
         return $lastMonthAndYearString;
     }
 
@@ -324,27 +324,27 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), strtotime('last day of this month'));
     }
 
-    public function getFirstDayOfLastMonth($date): string
+    public function getFirstDayOfLastMonth(string $date): string
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($date . ' first day of previous month'));
     }
 
-    public function getLastDayOfLastMonth($date): string
+    public function getLastDayOfLastMonth(string $date): string
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($date . ' last day of previous month'));
     }
 
-    public function getNumberOfDays($timestamp): string
+    public function getNumberOfDays(int $timestamp): string
     {
         return date('t', $timestamp);
     }
 
-    public function isDatabaseDateNotSet($date): bool
+    public function isDatabaseDateNotSet(string|null $date): bool
     {
         return $date == '1970-01-01' || $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
     }
 
-    public function prepareDbDateForDatepicker($date): string
+    public function prepareDbDateForDatepicker(string $date): string
     {
         $preparedDate = $this->formatToDateShort($date);
         if ($this->isDatabaseDateNotSet($date)) {
@@ -354,7 +354,7 @@ class MyTimeHelper extends TimeHelper
         }
     }
 
-    public function formatToDateShort($dbString): string
+    public function formatToDateShort(string $dbString): string
     {
         $timestamp = strtotime($dbString);
         if ($dbString == '') {
@@ -363,7 +363,7 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
 
-    public function formatToDbFormatDate($dateString): string
+    public function formatToDbFormatDate(string $dateString): string
     {
         $timestamp = strtotime($dateString);
         $result = date(Configure::read('DateFormat.DatabaseAlt'), (int) $timestamp);

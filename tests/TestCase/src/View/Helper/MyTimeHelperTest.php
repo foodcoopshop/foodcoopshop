@@ -56,13 +56,13 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetFirstDayOfLastMonth('2018-01-11', '01.12.2017');
     }
 
-    private function assertGetLastDayOfLastMonth($currentDay, $expected): void
+    private function assertGetLastDayOfLastMonth(string $currentDay, string $expected): void
     {
         $result = $this->MyTimeHelper->getLastDayOfLastMonth($currentDay);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetFirstDayOfLastMonth($currentDay, $expected): void
+    private function assertGetFirstDayOfLastMonth(string $currentDay, string $expected): void
     {
         $result = $this->MyTimeHelper->getFirstDayOfLastMonth($currentDay);
         $this->assertEquals($expected, $result);
