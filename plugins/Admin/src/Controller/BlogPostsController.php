@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
 use App\Services\SanitizeService;
+use Cake\Datasource\EntityInterface;
 use Cake\I18n\Date;
 
 /**
@@ -47,11 +48,8 @@ class BlogPostsController extends AdminAppController
         }
     }
 
-    public function edit($blogPostId): void
+    public function edit(int $blogPostId): void
     {
-        if ($blogPostId === null) {
-            throw new NotFoundException;
-        }
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $blogPostsTable->find('all', conditions: [
@@ -76,7 +74,7 @@ class BlogPostsController extends AdminAppController
         $this->_processForm($blogPost, true);
     }
 
-    private function _processForm($blogPost, $isEditMode): void
+    private function _processForm(EntityInterface $blogPost, bool $isEditMode): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $this->setFormReferer();

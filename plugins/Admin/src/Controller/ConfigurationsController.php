@@ -28,7 +28,7 @@ use App\Services\SanitizeService;
 class ConfigurationsController extends AdminAppController
 {
     
-    public function edit($name): void
+    public function edit(string $name): void
     {
 
         $this->viewBuilder()->addHelper('Configuration');
@@ -105,7 +105,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('configuration', $configuration);
     }
 
-    public function previewEmail($configurationName): void
+    public function previewEmail(string $configurationName): void
     {
 
         $this->disableAutoRender();

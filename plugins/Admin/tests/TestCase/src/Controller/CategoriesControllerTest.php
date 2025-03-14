@@ -18,7 +18,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 
-class AttributesControllerTest extends AppCakeTestCase
+class CategoriesControllerTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
@@ -28,26 +28,27 @@ class AttributesControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->post(
-            $this->Slug->getAttributeEdit(33),
+            $this->Slug->getCategoryEdit(16),
             [
-                'Attributes' => [
-                    'name' => '0,4l',
-                    'can_be_used_as_unit' => 1,
+                'Categories' => [
+                    'id_parent' => 20,
+                    'name' => 'new category name',
+                    'description' => 'asd',
                     'active' => 0,
                 ],
             ]
         );
 
-        $attributesTable = $this->getTableLocator()->get('Attributes');
-        $attribute = $attributesTable->find('all',
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $category = $categoriesTable->find('all',
             conditions: [
-                'Attributes.id_attribute' => 33,
+                'Categories.id_category' => 16,
             ],
         )->first();
 
-        $this->assertEquals('0,4l', $attribute->name);
-        $this->assertEquals(1, $attribute->can_be_used_as_unit);
-        $this->assertEquals(0, $attribute->active);
+        $this->assertEquals(20, $category->id_parent);
+        $this->assertEquals('new category name', $category->name);
+        $this->assertEquals('asd', $category->description);
 
     }
 

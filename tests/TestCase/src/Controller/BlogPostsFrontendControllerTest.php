@@ -19,7 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\LoginTrait;
 
-class BlogPostsControllerTest extends AppCakeTestCase
+class BlogPostsFrontendControllerTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
