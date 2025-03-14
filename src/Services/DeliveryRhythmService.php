@@ -19,6 +19,9 @@ namespace App\Services;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use App\View\Helper\MyTimeHelper;
+use App\Model\Entity\Product;
+use Cake\I18n\Date;
+use ProductsFrontendControllerTest;
 
 class DeliveryRhythmService
 {
@@ -46,13 +49,13 @@ class DeliveryRhythmService
         return $deliveryDate;
     }
 
-    public function getNextWeeklyDeliveryDays($maxDays=52): array
+    public function getNextWeeklyDeliveryDays(int $maxDays=52): array
     {
         $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
         return $this->Time->getWeekdayFormattedDaysList($nextDeliveryDay, $maxDays, 7);
     }
 
-    public function getNextDailyDeliveryDays($maxDays): array
+    public function getNextDailyDeliveryDays(int $maxDays): array
     {
         $nextDeliveryDay = $this->Time->getTomorrowForDatabase();
         return $this->Time->getWeekdayFormattedDaysList($nextDeliveryDay, $maxDays, 1);
@@ -68,7 +71,7 @@ class DeliveryRhythmService
         return (int) Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY');
     }
 
-    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil): string
+    public function getLastOrderDay(string $nextDeliveryDay, string $deliveryRhythmType, int $deliveryRhythmSendOrderListWeekday, ?Date $deliveryRhythmOrderPossibleUntil): string
     {
 
         if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
@@ -91,7 +94,7 @@ class DeliveryRhythmService
 
     }
 
-    public function getDbFormattedPickupDayByDbFormattedDate($date, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null): string
+    public function getDbFormattedPickupDayByDbFormattedDate(string $date, ?int $sendOrderListsWeekday = null, ?string $deliveryRhythmType = null, ?int $deliveryRhythmCount = null): string
     {
         if (is_null($sendOrderListsWeekday)) {
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
@@ -101,7 +104,7 @@ class DeliveryRhythmService
         return $pickupDay;
     }
 
-    public function getFormattedNextDeliveryDay($day): string
+    public function getFormattedNextDeliveryDay(int $day): string
     {
         if (!$this->hasSaturdayThursdayConfig()) {
             $day = strtotime('-2 days', $day);
@@ -125,7 +128,7 @@ class DeliveryRhythmService
         return $this->getOrderPeriodLastDay($deliveryDay);
     }
 
-    public function getNextDeliveryDay($day): string
+    public function getNextDeliveryDay(int $day): string
     {
         $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
         $deliveryDay = date($this->Time->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
@@ -138,7 +141,7 @@ class DeliveryRhythmService
         return $deliveryDay;
     }
 
-    public function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null): int
+    public function getDeliveryDay(int $orderDay, ?int $sendOrderListsWeekday = null, ?string $deliveryRhythmType = null, ?int $deliveryRhythmCount = null): int
     {
         if (is_null($deliveryRhythmType)) {
             $deliveryRhythmType = 'week';
@@ -177,7 +180,7 @@ class DeliveryRhythmService
         return $deliveryDate;
     }
 
-    public function getOrderPeriodFirstDay($day): string
+    public function getOrderPeriodFirstDay(int $day): string
     {
 
         $currentWeekday = $this->Time->formatAsWeekday($day);
@@ -199,7 +202,7 @@ class DeliveryRhythmService
         return $date;
     }
 
-    public function getOrderPeriodLastDay($day): string
+    public function getOrderPeriodLastDay(int $day): string
     {
 
         $currentWeekday = $this->Time->formatAsWeekday($day);
@@ -244,7 +247,7 @@ class DeliveryRhythmService
         return $date;
     }
 
-    public function getNextDeliveryDayForProduct($product, $orderCustomerService): string
+    public function getNextDeliveryDayForProduct(Product $product, OrderCustomerService|ProductsFrontendControllerTest $orderCustomerService): string
     {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $nextDeliveryDay = '1970-01-01';
@@ -256,7 +259,7 @@ class DeliveryRhythmService
         return $nextDeliveryDay;
     }
 
-    public function getNextPickupDayForProduct($product, $currentDay=null): string
+    public function getNextPickupDayForProduct(Product $product, ?string $currentDay=null): string
     {
 
         if (is_null($currentDay)) {
@@ -341,7 +344,7 @@ class DeliveryRhythmService
         return $this->compareConfig(4, 5);
     }
 
-    private static function compareConfig($weeklyPickupDay, $defaultSendOrderListsDayDelta): bool
+    private static function compareConfig(int $weeklyPickupDay, int $defaultSendOrderListsDayDelta): bool
     {
         return Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') == $weeklyPickupDay &&
             Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') == $defaultSendOrderListsDayDelta;

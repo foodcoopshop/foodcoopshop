@@ -23,13 +23,13 @@ trait LoginTrait
 
     public bool $isSelfServiceModeByUrl = false;
 
-    private function login($userId): array
+    private function login(int $customerId): array
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
         $identity = $customerTable->find('all',
             conditions: [
-                'Customers.id_customer' => $userId,
+                'Customers.id_customer' => $customerId,
             ],
             contain: [
                 'AddressCustomers',
@@ -93,7 +93,7 @@ trait LoginTrait
         $this->get($this->Slug->getLogout());
     }
 
-    public function loginAsSuperadminAddOrderCustomerToSession($session): void
+    public function loginAsSuperadminAddOrderCustomerToSession(array $session): void
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
         $sessionData['OrderIdentity'] = $session['OrderIdentity'];

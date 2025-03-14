@@ -23,7 +23,7 @@ use Cake\I18n\DateTime;
 class MyTimeHelper extends TimeHelper
 {
 
-    public function getTranslatedTimeInterval($timeInterval): string
+    public function getTranslatedTimeInterval(string $timeInterval): string
     {
         return match($timeInterval) {
             'day' => __('daily'),
@@ -217,7 +217,7 @@ class MyTimeHelper extends TimeHelper
         return $this->formatAsWeekday($this->getCurrentDay());
     }
 
-    public function formatAsWeekday($day): int
+    public function formatAsWeekday(int $day): int
     {
         return (int) date('N', $day);
     }
