@@ -21,7 +21,7 @@ use Cake\ORM\TableRegistry;
 trait NoDeliveryDaysOrdersExistTrait
 {
 
-    public function noDeliveryDaysOrdersExist($value, $context): bool|string
+    public function noDeliveryDaysOrdersExist(array|string $value, array $context): bool|string
     {
 
         $manufacturerId = null;
@@ -45,18 +45,18 @@ trait NoDeliveryDaysOrdersExistTrait
 
         $query = $orderDetailsTable->find('all',
             conditions: [
-                'pickup_day IN' => $value
+                'pickup_day IN' => $value,
             ],
             group: 'pickup_day',
             contain: [
-                'Products'
+                'Products',
             ]
         );
         $query->select(
             [
                 'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),
-                'pickup_day'
-            ]
+                'pickup_day',
+            ],
         );
 
         $result = true;

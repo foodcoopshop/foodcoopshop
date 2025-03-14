@@ -55,7 +55,16 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $pdfWriter = new InvoiceToManufacturerPdfWriterService();
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriodMonthAndYear, $invoiceDate, $manufacturer->anonymize_customers);
+        $pdfWriter->prepareAndSetData(
+            (int) $manufacturer->id_manufacturer,
+            $dateFrom,
+            $dateTo,
+            $invoiceNumber,
+            $validOrderStates,
+            $invoicePeriodMonthAndYear,
+            $invoiceDate,
+            (bool) $manufacturer->anonymize_customers
+        );
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
