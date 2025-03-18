@@ -31,6 +31,7 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
     ];
     
     public bool $csvHasIsoFormat = false;
+    public bool $csvHasUTF16Format = false;
 
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {

@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
 class SparkasseBankingReaderService extends BankingReaderService {
 
-    public bool $csvHasIsoFormat = true;
+    public bool $csvHasUTF16Format = true;
 
     public function configureType(): void
     {

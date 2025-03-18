@@ -58,6 +58,9 @@ class ReportsController extends AdminAppController
             if ($reader->csvHasIsoFormat) {
                 $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
             }
+            if ($reader->csvHasUTF16Format) {
+                $reader->addStreamFilter('convert.iconv.UTF-16/UTF-8');
+            }
 
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
