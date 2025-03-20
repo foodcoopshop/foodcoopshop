@@ -41,7 +41,7 @@ class CustomersController extends FrontendController
 
         // when login page is opened in two tabs, sometimes form protection is triggered (sessionId changes after login)
         // therefore simply disable it (on post). attention, registration is processed on same action, but not same url
-        if ($this->request->isPost() && $this->request->getParam('_matchedRoute') == Configure::read('app.slugHelper')->getLogin()) {
+        if ($this->request->is('post') && $this->request->getParam('_matchedRoute') == Configure::read('app.slugHelper')->getLogin()) {
             $this->formProtectionEnabled = false;
         }
 
