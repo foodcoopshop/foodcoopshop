@@ -4,9 +4,13 @@ declare(strict_types=1);
 namespace App\Model\Traits;
 
 use App\Model\Entity\Customer;
+use App\Services\OrderCustomerService;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\I18n\Date;
+use App\Model\Entity\Product;
+use App\Model\Entity\ProductAttribute;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +27,7 @@ use Cake\Routing\Router;
 trait CartValidatorTrait
 {
 
-    public function isAmountAvailableAttribute($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $availableQuantity, $amount, $attributeName, $productName, $unitName = ''): bool|string
+    public function isAmountAvailableAttribute(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, string|float $availableQuantity, string|float $amount, string $attributeName, string $productName, string $unitName = ''): bool|string
     {
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
@@ -38,7 +42,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isAmountAvailableProduct($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $attributeId, $availableQuantity, $amount, $productName, $unitName = ''): bool|string
+    public function isAmountAvailableProduct(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, int $attributeId, string|float $availableQuantity, string|float $amount, string $productName, string $unitName = ''): bool|string
     {
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
@@ -52,7 +56,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isProductActive($active, $productName): bool|string
+    public function isProductActive(int $active, string $productName): bool|string
     {
         $result = true;
         if ($active != APP_ON) {
@@ -61,7 +65,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isManufacturerActiveOrManufacturerHasDeliveryBreak($orderCustomerService, $active, $noDeliveryDays, $nextDeliveryDay, $isStockProduct, $stockManagementEnabled, $productName): bool|string
+    public function isManufacturerActiveOrManufacturerHasDeliveryBreak(OrderCustomerService $orderCustomerService, bool $active, string|null $noDeliveryDays, string $nextDeliveryDay, bool $isStockProduct, bool $stockManagementEnabled, string $productName): bool|string
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -82,7 +86,7 @@ trait CartValidatorTrait
 
     }
 
-    public function isGlobalDeliveryBreakEnabled($orderCustomerService, $nextDeliveryDay, $productName): bool|string
+    public function isGlobalDeliveryBreakEnabled(OrderCustomerService $orderCustomerService, string $nextDeliveryDay, string $productName): bool|string
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -105,7 +109,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isProductBulkOrderStillPossible($orderCustomerService, $isStockProduct, $stockManagementEnabled, $deliveryRhythmType, $deliveryRhythmPossibleUntil, $productName): bool|string
+    public function isProductBulkOrderStillPossible(OrderCustomerService $orderCustomerService, bool $isStockProduct, bool $stockManagementEnabled, string $deliveryRhythmType, Date|null $deliveryRhythmPossibleUntil, string $productName): bool|string
     {
         $result = true;
         if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
@@ -118,7 +122,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function hasProductDeliveryRhythmTriggeredDeliveryBreak($orderCustomerService, $nextDeliveryDay, $productName): bool|string
+    public function hasProductDeliveryRhythmTriggeredDeliveryBreak(OrderCustomerService $orderCustomerService, string $nextDeliveryDay, string $productName): bool|string
     {
         $result = true;
         if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isSelfServiceModeByReferer() && $nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
@@ -132,7 +136,7 @@ trait CartValidatorTrait
 
     }
 
-    public function validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $object, $unitObject, $orderedQuantityInUnits): bool|string
+    public function validateQuantityInUnitsForSelfServiceMode(OrderCustomerService $orderCustomerService, Product|ProductAttribute $object, string $unitObject, float $orderedQuantityInUnits): bool|string
     {
         $result = true;
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($orderCustomerService->isSelfServiceModeByReferer() || $orderCustomerService->isSelfServiceModeByUrl())) {
@@ -143,7 +147,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function validateMinimalCreditBalance($grossPrice, $orderCustomerService): bool|string
+    public function validateMinimalCreditBalance(float $grossPrice, OrderCustomerService $orderCustomerService): bool|string
     {
 
         $identity = Router::getRequest()->getAttribute('identity');

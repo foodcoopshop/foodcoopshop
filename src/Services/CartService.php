@@ -266,9 +266,9 @@ class CartService
             }
 
             $message = $this->isAmountAvailableProduct(
-                $product->is_stock_product,
-                $product->manufacturer->stock_management_enabled,
-                $product->stock_available->always_available,
+                (bool) $product->is_stock_product,
+                (bool) $product->manufacturer->stock_management_enabled,
+                (bool) $product->stock_available->always_available,
                 $ids['attributeId'],
                 $stockAvailableAvailableQuantity,
                 $isAmountBasedOnQuantityInUnits ? $orderedQuantityInUnits : $cartProduct['amount'],
@@ -312,9 +312,9 @@ class CartService
                         )->first();
 
                         $errorMessage = $this->isAmountAvailableAttribute(
-                            $product->is_stock_product,
-                            $product->manufacturer->stock_management_enabled,
-                            $attribute->stock_available->always_available,
+                            (bool) $product->is_stock_product,
+                            (bool) $product->manufacturer->stock_management_enabled,
+                            (bool) $attribute->stock_available->always_available,
                             $stockAvailableAvailableQuantity,
                             $cartProduct['amount'],
                             $attributeEntity->name,
@@ -370,8 +370,8 @@ class CartService
                 $product->manufacturer->active,
                 $product->manufacturer->no_delivery_days,
                 $product->next_delivery_day,
-                $product->manufacturer->stock_management_enabled,
-                $product->is_stock_product,
+                (bool) $product->manufacturer->stock_management_enabled,
+                (bool) $product->is_stock_product,
                 $product->name,
             );
             if ($message !== true) {
@@ -381,8 +381,8 @@ class CartService
 
             $message = $this->isProductBulkOrderStillPossible(
                 $orderCustomerService,
-                $product->manufacturer->stock_management_enabled,
-                $product->is_stock_product,
+                (bool) $product->manufacturer->stock_management_enabled,
+                (bool) $product->is_stock_product,
                 $product->delivery_rhythm_type,
                 $product->delivery_rhythm_order_possible_until,
                 $product->name,

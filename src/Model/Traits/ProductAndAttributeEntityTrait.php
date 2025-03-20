@@ -22,30 +22,30 @@ use Cake\Datasource\EntityInterface;
 trait ProductAndAttributeEntityTrait
 {
 
-    public function getEntityToSaveByProductAttributeId($productAttributeId): EntityInterface
+    public function getEntityToSaveByProductAttributeId(string|int $productAttributeId): EntityInterface
     {
-        $entity2Save = $this->find('all',
+        $entity = $this->find('all',
             conditions: [
                 'product_attribute_id' => $productAttributeId,
             ],
         )->first();
-        if (empty($entity2Save)) {
-            $entity2Save = $this->newEntity(['product_attribute_id' => $productAttributeId]);
+        if (empty($entity)) {
+            $entity = $this->newEntity(['product_attribute_id' => $productAttributeId]);
         }
-        return $entity2Save;
+        return $entity;
     }
 
-    public function getEntityToSaveByProductId($productId): EntityInterface
+    public function getEntityToSaveByProductId(string|int $productId): EntityInterface
     {
-        $entity2Save = $this->find('all',
+        $entity = $this->find('all',
             conditions: [
                 'product_id' => $productId,
             ],
         )->first();
-        if (empty($entity2Save)) {
-            $entity2Save = $this->newEntity(['product_id' => $productId]);
+        if (empty($entity)) {
+            $entity = $this->newEntity(['product_id' => $productId]);
         }
-        return $entity2Save;
+        return $entity;
     }
 
 }

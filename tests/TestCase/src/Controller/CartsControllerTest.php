@@ -1317,7 +1317,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($cart->status, 0, 'cake cart status wrong');
     }
 
-    private function addTooManyProducts($productId, $amount, $expectedAmount, $expectedErrorMessage, $productIndex): void
+    private function addTooManyProducts(string|int $productId, int $amount, int $expectedAmount, string $expectedErrorMessage, int $productIndex): void
     {
         $this->addProductToCart($productId, $amount);
         $response = $this->getJsonDecodedContent();
@@ -1334,13 +1334,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMatchesRegularExpression('/initCartErrors()/', $this->_response->getBody()->__toString());
     }
 
-    private function changeStockAvailable($productId, $amount): void
+    private function changeStockAvailable(string|int $productId, int $amount): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$productId => ['quantity' => $amount]]]);
     }
 
-    private function checkStockAvailable($productId, $result): void
+    private function checkStockAvailable(string|int $productId, int $result): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $ids = $productsTable->getProductIdAndAttributeId($productId);

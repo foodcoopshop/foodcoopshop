@@ -75,7 +75,7 @@ class ProductReaderService extends Reader {
         return $allEntitiesValid;
     }
 
-    public function import($manufacturerId): array
+    public function import(int $manufacturerId): array
     {
         $records = $this->getPreparedRecords();
         $productsTable = TableRegistry::getTableLocator()->get('Products');

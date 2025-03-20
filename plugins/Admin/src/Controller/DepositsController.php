@@ -184,7 +184,7 @@ class DepositsController extends AdminAppController
         $this->render('index');
     }
 
-    public function myDetail($monthAndYear): void
+    public function myDetail(string $monthAndYear): void
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->detail($monthAndYear);
@@ -274,7 +274,7 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', $title);
     }
 
-    public function detail($monthAndYear): void
+    public function detail(string $monthAndYear): void
     {
 
         $manufacturerId = $this->getManufacturerId();

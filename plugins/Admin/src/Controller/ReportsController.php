@@ -191,7 +191,7 @@ class ReportsController extends AdminAppController
         }
     }
 
-    public function payments($paymentType): void
+    public function payments(string $paymentType): void
     {
 
         if ($paymentType == Payment::TYPE_PRODUCT && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {

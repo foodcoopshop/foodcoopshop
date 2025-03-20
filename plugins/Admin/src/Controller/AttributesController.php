@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Entity\Attribute;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
-use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,7 +58,7 @@ class AttributesController extends AdminAppController
         $this->_processForm($attribute, true);
     }
 
-    private function _processForm(EntityInterface $attribute, bool $isEditMode): void
+    private function _processForm(Attribute $attribute, bool $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

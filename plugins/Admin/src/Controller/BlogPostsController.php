@@ -7,8 +7,8 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
 use App\Services\SanitizeService;
-use Cake\Datasource\EntityInterface;
 use Cake\I18n\Date;
+use App\Model\Entity\BlogPost;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -74,7 +74,7 @@ class BlogPostsController extends AdminAppController
         $this->_processForm($blogPost, true);
     }
 
-    private function _processForm(EntityInterface $blogPost, bool $isEditMode): void
+    private function _processForm(BlogPost $blogPost, bool $isEditMode): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $this->setFormReferer();

@@ -39,7 +39,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         return $profileImageTargetFilename;
     }
 
-    private function tearDownProfileImageTests($profileImageTargetFilename): void
+    private function tearDownProfileImageTests(string $profileImageTargetFilename): void
     {
         unlink(Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
 
@@ -146,11 +146,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(302); // if password is wrong, response code is 200 (sic!)
     }
 
-    private function doPostNewPasswordRequest($email): void
+    private function doPostNewPasswordRequest(string $email): void
     {
         $this->post($this->Slug->getNewPasswordRequest(), [
             'Customers' => [
-                'email' => $email
+                'email' => $email,
             ]
         ]);
     }
@@ -319,7 +319,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Kundenkonto erstellen');
     }
 
-    private function saveAndCheckValidCustomer($data, $email): Customer
+    private function saveAndCheckValidCustomer(array $data, string $email): Customer
     {
 
         $customerFirstname = '  John  ';
@@ -463,7 +463,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    private function addCustomer($data): ResponseInterface
+    private function addCustomer(array $data): ResponseInterface
     {
         $this->post($this->Slug->getRegistration(), $data);
         return $this->_response;

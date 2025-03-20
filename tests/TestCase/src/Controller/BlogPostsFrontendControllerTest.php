@@ -96,7 +96,7 @@ class BlogPostsFrontendControllerTest extends AppCakeTestCase
         );
     }
 
-    protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1): void
+    protected function changeBlogPost(int $blogPostId, int $isPrivate = 0, ?int $manufacturerId = 0, int $active = 1): void
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $blogPostsTable->get($blogPostId);

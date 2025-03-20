@@ -457,7 +457,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    protected function processIndex($dateFrom, $dateTo, $customerIds): void
+    protected function processIndex(string $dateFrom, string $dateTo, array $customerIds): void
     {
 
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -511,7 +511,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerIds): SelectQuery
+    protected function setInvoiceConditions(SelectQuery $query, string $dateFrom, string $dateTo, array $customerIds): SelectQuery
     {
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

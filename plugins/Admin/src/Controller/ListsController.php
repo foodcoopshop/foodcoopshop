@@ -228,7 +228,7 @@ class ListsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
 
-    private function splitOrderDetailStringIntoParts($fileName, $ending): array
+    private function splitOrderDetailStringIntoParts(string $fileName, string $ending): array
     {
         $result = [];
         $result['deliveryDate'] = substr($fileName, 0, 10);
@@ -247,7 +247,7 @@ class ListsController extends AdminAppController
         return $result;
     }
 
-    private function isAnonymized($path): bool
+    private function isAnonymized(string $path): bool
     {
         return (bool) preg_match('/anonymized/', $path);
     }
@@ -307,7 +307,7 @@ class ListsController extends AdminAppController
     /**
      * invoices and order lists are not stored in webroot
      */
-    private function getFile($filenameWithPath): Response
+    private function getFile(string $filenameWithPath): Response
     {
 
         $this->disableAutoRender();

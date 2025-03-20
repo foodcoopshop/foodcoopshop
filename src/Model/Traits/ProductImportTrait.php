@@ -43,18 +43,18 @@ trait ProductImportTrait
     }
 
     public function getValidatedEntity(
-        $manufacturerId,
-        $productName,
-        $descriptionShort,
-        $description,
-        $unity,
-        $grossPrice,
-        $taxRate,
-        $deposit,
-        $quantity,
-        $status,
-        $isDeclarationOk,
-        $storageLocationString,
+        int $manufacturerId,
+        string $productName,
+        string $descriptionShort,
+        string $description,
+        string $unity,
+        float|false $grossPrice,
+        float $taxRate,
+        float|false $deposit,
+        string $quantity,
+        string $status,
+        string $isDeclarationOk,
+        string $storageLocationString,
     ): Product
     {
 

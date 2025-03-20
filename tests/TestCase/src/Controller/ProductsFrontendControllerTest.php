@@ -220,7 +220,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
 
-    protected function changeProductStatus($productId, $active): void
+    protected function changeProductStatus(int $productId, int $active): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productEntity = $productsTable->get($productId);

@@ -6,8 +6,8 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Entity\Category;
 use App\Services\SanitizeService;
-use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -70,7 +70,7 @@ class CategoriesController extends AdminAppController
         $this->_processForm($category, true);
     }
 
-    private function _processForm(EntityInterface $category, bool $isEditMode): void
+    private function _processForm(Category $category, bool $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
