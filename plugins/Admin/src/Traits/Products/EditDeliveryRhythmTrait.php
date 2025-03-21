@@ -37,7 +37,7 @@ trait EditDeliveryRhythmTrait
         $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');
         $deliveryRhythmFirstDeliveryDay = $this->getRequest()->getData('deliveryRhythmFirstDeliveryDay');
         $deliveryRhythmOrderPossibleUntil = $this->getRequest()->getData('deliveryRhythmOrderPossibleUntil');
-        $deliveryRhythmSendOrderListWeekday = (int) $this->getRequest()->getData('deliveryRhythmSendOrderListWeekday');
+        $deliveryRhythmSendOrderListWeekday = $this->getRequest()->getData('deliveryRhythmSendOrderListWeekday');
         $deliveryRhythmSendOrderListDay = $this->getRequest()->getData('deliveryRhythmSendOrderListDay');
 
         $splittedDeliveryRhythmType = explode('-', $deliveryRhythmTypeCombined);
@@ -85,7 +85,7 @@ trait EditDeliveryRhythmTrait
 
         if (in_array($deliveryRhythmTypeCombined, ['0-individual'])) {
             $product2update['delivery_rhythm_order_possible_until'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmOrderPossibleUntil);
-            if ($deliveryRhythmSendOrderListDay > 0) {
+            if ($deliveryRhythmSendOrderListDay != '') {
                 $product2update['delivery_rhythm_send_order_list_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmSendOrderListDay);
             }
         }
