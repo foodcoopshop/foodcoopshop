@@ -8,8 +8,6 @@ use Cake\Http\Response;
 use App\Model\Entity\Payment;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
-use App\Exception\DepositThresholdExceededException;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -103,7 +101,6 @@ trait AddCustomerPaymentTrait
                     'amount' => $amount,
                     'confirmSubmit' => 1,
                 ]);
-                Log::error('amount threshold exceeded: ' . $msg);
                 $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'confirmSubmit']);
                 return null;
             }
