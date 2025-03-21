@@ -60,7 +60,7 @@ trait EditDeliveryRhythmTrait
             )->first();
         }
 
-        $deliveryRhythmCount = $splittedDeliveryRhythmType[0];
+        $deliveryRhythmCount = (int) $splittedDeliveryRhythmType[0];
         $deliveryRhythmType = $splittedDeliveryRhythmType[1];
 
         $product2update = [
@@ -141,7 +141,7 @@ trait EditDeliveryRhythmTrait
                     '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                         $oldProduct->is_stock_product && $oldProduct->manufacturer->stock_management_enabled,
                         $deliveryRhythmType,
-                        $deliveryRhythmCount
+                        $deliveryRhythmCount,
                     ) . '</b>'
                 ]);
                 if (!empty($additionalMessages)) {

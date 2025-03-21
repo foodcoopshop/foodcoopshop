@@ -22,9 +22,9 @@ $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Co
 $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $orderCustomerService->isOrderForDifferentCustomerMode(),
     $orderCustomerService->isSelfServiceModeByUrl(),
-    Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
-    $product->manufacturer->stock_management_enabled,
-    $product->is_stock_product,
+    (bool) Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
+    (bool) $product->manufacturer->stock_management_enabled,
+    (bool) $product->is_stock_product,
 );
 
 if (!empty($product->product_attributes)) {

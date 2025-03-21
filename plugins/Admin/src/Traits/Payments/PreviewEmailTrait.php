@@ -25,7 +25,7 @@ use App\Mailer\AppMailer;
 trait PreviewEmailTrait
 {
 
-    public function previewEmail($paymentId, $approval): void
+    public function previewEmail(int $paymentId, int $approval): void
     {
 
         $paymentsTable = $this->getTableLocator()->get('Payments');

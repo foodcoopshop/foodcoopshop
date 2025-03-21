@@ -75,7 +75,7 @@ trait IndexTrait
         $filterByCartTypeEnabled = h($this->getRequest()->getQuery('filterByCartTypeEnabled', !is_null($cartType)));
         $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
 
-        $groupBy = h($this->getRequest()->getQuery('groupBy', null));
+        $groupBy = h($this->getRequest()->getQuery('groupBy', ''));
         if ($this->identity->isManufacturer() && $groupBy != 'product') {
             $groupBy = '';
         }
@@ -254,7 +254,7 @@ trait IndexTrait
         $this->set('title_for_layout', __d('admin', 'Orders'));
     }
 
-    private function prepareGroupedOrderDetails($orderDetails, $groupBy): array
+    private function prepareGroupedOrderDetails(array $orderDetails, string $groupBy): array
     {
 
         $preparedOrderDetails = [];
@@ -331,7 +331,7 @@ trait IndexTrait
 
     }
 
-    private function getSortFieldForGroupedOrderDetails($manufacturerNameField): string
+    private function getSortFieldForGroupedOrderDetails(string $manufacturerNameField): string
     {
         $sortMatches = [
             'Manufacturers.name' => $manufacturerNameField,
@@ -356,7 +356,7 @@ trait IndexTrait
         return $sortDirection;
     }
     
-    private function addSelectGroupFields($query): SelectQuery
+    private function addSelectGroupFields(SelectQuery $query): SelectQuery
     {
         $query->select([
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),

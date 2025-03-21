@@ -32,10 +32,10 @@ trait EditProductAmountTrait
         $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
-        $productAmount = trim($this->getRequest()->getData('productAmount'));
+        $productAmount = (int) trim($this->getRequest()->getData('productAmount'));
         $editAmountReason = strip_tags(html_entity_decode($this->getRequest()->getData('editAmountReason')));
 
-        if (! is_numeric($orderDetailId) || ! is_numeric($productAmount) || $productAmount < 1) {
+        if ($productAmount < 1) {
             $message = __d('admin', 'The_amount_is_not_valid.');
             if (! is_numeric($orderDetailId)) {
                 $message = 'input format wrong';

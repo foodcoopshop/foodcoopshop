@@ -25,9 +25,9 @@ use Cake\ORM\Query\SelectQuery;
 trait CustomersFilterTrait 
 {
 
-    public function getDefaultYear(): string
+    public function getDefaultYear(): int
     {
-        return date('Y');
+        return (int) date('Y');
     }
 
     public function getDefaultActive(): int
@@ -35,12 +35,12 @@ trait CustomersFilterTrait
         return APP_ON;
     }
 
-    public function getDefaultNewsletter(): string
+    public function getDefaultNewsletter(): int
     {
-        return '';
+        return 0;
     }
 
-    public function getCustomers($active, $year, $newsletter): array
+    public function getCustomers(int $active, int $year, int $newsletter): array
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');

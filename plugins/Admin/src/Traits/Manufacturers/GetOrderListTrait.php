@@ -88,7 +88,7 @@ trait GetOrderListTrait
 
     }
 
-    private function getOrderListFilenameForWriteInline($manufacturerId, $manufacturerName, $pickupDay, $type): string
+    private function getOrderListFilenameForWriteInline(int $manufacturerId, string $manufacturerName, string $pickupDay, string $type): string
     {
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
         $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists, false);

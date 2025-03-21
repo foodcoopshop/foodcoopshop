@@ -26,7 +26,7 @@ use App\Mailer\AppMailer;
 trait EditTrait
 {
 
-    public function edit($paymentId): void
+    public function edit(int $paymentId): void
     {
 
         $this->set('title_for_layout', __d('admin', 'Check_credit_upload'));

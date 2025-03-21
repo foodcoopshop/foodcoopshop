@@ -222,7 +222,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getMemberFee($customerId, $year): float|int
+    public function getMemberFee(int $customerId, int $year): float|int
     {
 
         $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');

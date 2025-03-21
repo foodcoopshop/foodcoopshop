@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Entity\OrderDetail;
+use App\Model\Entity\OrderDetailUnit;
+use Cake\ORM\Entity;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -20,7 +24,7 @@ namespace Admin\Traits\OrderDetails;
 trait UpdateOrderDetailsTrait 
 {
 
-    private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity): void
+    private function changeOrderDetailQuantity(OrderDetailUnit $oldOrderDetailUnit, float $productQuantity): void
     {
         $orderDetailUnit2save = [
             'product_quantity_in_units' => $productQuantity,
@@ -31,7 +35,7 @@ trait UpdateOrderDetailsTrait
         $orderDetailUnitsTable->save($patchedEntity);
     }
 
-    private function changeOrderDetailPurchasePrice($purchasePriceObject, $productPurchasePrice, $productAmount): void
+    private function changeOrderDetailPurchasePrice(Entity $purchasePriceObject, float $productPurchasePrice, int $productAmount): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $unitPriceExcl = $productsTable->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
@@ -50,7 +54,7 @@ trait UpdateOrderDetailsTrait
         );
     }
 
-    private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange): float|false
+    private function increaseQuantityForProduct(OrderDetail $orderDetail, float $orderDetailAmountBeforeAmountChange): float|false
     {
 
         // order detail references a product attribute

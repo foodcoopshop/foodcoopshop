@@ -778,7 +778,7 @@ class ProductsTable extends AppTable
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                 $product->is_stock_product && $product->manufacturer->stock_management_enabled,
                 $product->delivery_rhythm_type,
-                $product->delivery_rhythm_count
+                $product->delivery_rhythm_count,
             );
             $product->last_order_weekday = Configure::read('app.timeHelper')->getWeekdayName(
                 Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday)

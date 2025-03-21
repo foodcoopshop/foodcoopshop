@@ -82,7 +82,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $product->is_stock_product && $product->manufacturer->stock_management_enabled,
             $product->delivery_rhythm_type,
             $product->delivery_rhythm_count,
-            );
+        );
     }
     if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));

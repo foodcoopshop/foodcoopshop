@@ -208,7 +208,7 @@ if ($identity->isManufacturer()) {
         'escape' => false,
         ]);
 
-        $fileUploadSrc = $this->Html->getManufacturerTermsOfUseSrc($manufacturer->id_manufacturer);
+        $fileUploadSrc = $this->Html->getManufacturerTermsOfUseSrc($idForUpload);
         if (!empty($manufacturer->tmp_general_terms_and_conditions) && $manufacturer->tmp_general_terms_and_conditions != '') {
             $fileUploadSrc = str_replace('\\', '/', $manufacturer->tmp_general_terms_and_conditions);
         }
