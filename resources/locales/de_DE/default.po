@@ -217,6 +217,9 @@ msgstr "Neue Produkte"
 msgid "Random_products"
 msgstr "Bunt gemischt"
 
+msgid "Here you can find randomly selected products."
+msgstr "Hier werden zufällig ausgewählte Produkte angezeigt."
+
 msgid "Show_only_products_for_next_week"
 msgstr "Nur Produkte für diese Woche anzeigen"
 
