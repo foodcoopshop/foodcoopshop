@@ -81,20 +81,23 @@ class FrontendController extends AppController
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getRandomProducts(),
                     'name' => __('Random_products'),
+                    'options' => [
+                        'fa-icon' => 'fa-dice',
+                    ],
                 ]);
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                     'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
                     'options' => [
                         'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
-                    ]
+                    ],
                 ]);
                 array_unshift($categoriesForMenu, [
                     'slug' => Configure::read('app.slugHelper')->getAllProducts(),
                     'name' => __('All_products') . ' <span class="additional-info"> (' . $allProductsCount . ')</span>',
                     'options' => [
                         'fa-icon' => 'fa-tags'
-                    ]
+                    ],
                 ]);
             }
             Cache::write($cacheKey, $categoriesForMenu);
