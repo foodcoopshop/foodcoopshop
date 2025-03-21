@@ -117,7 +117,7 @@ trait EditDeliveryRhythmTrait
             } else {
                 if ($product2update['delivery_rhythm_send_order_list_weekday'] != (new DeliveryRhythmService())->getSendOrderListsWeekday()) {
                     $additionalMessages[] =  __d('admin', 'Last_order_weekday') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
-                        $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
+                        (int) $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
                         . '</b>';
                 }
             }
