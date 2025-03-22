@@ -132,7 +132,7 @@ class MenuHelper extends Helper
             $class[] = 'has-icon';
         }
 
-        $fontAwesomeIconString = '<i class="fas ' . ($fontAwesomeIconClass ?? '') . '"></i>';
+        $fontAwesomeIconString = '<i class="fas ' . $fontAwesomeIconClass . '"></i>';
 
         if (preg_match('/far /', $fontAwesomeIconClass)) {
             $fontAwesomeIconString = str_replace('fas ', 'far ', $fontAwesomeIconString);
