@@ -24,9 +24,6 @@ trait GetCustomersForDropdownTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $includeManufacturers = (bool) $includeManufacturers;
-        $includeOfflineCustomers = (bool) $includeOfflineCustomers;
-
         $conditions = [];
         if ($this->identity->isCustomer()) {
             $conditions = ['Customers.id_customer' => $this->identity->getId()];
