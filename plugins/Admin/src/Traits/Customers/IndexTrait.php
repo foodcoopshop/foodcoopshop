@@ -29,13 +29,13 @@ trait IndexTrait
 
     public function index(): void
     {
-        $active = h($this->getRequest()->getQuery('active', $this->getDefaultActive()));
+        $active = (int) h($this->getRequest()->getQuery('active', $this->getDefaultActive()));
         $this->set('active', $active);
 
-        $year = h($this->getRequest()->getQuery('year', $this->getDefaultYear()));
+        $year = (int) h($this->getRequest()->getQuery('year', $this->getDefaultYear()));
         $this->set('year', $year);
 
-        $newsletter = h($this->getRequest()->getQuery('newsletter', $this->getDefaultNewsletter()));
+        $newsletter = (int) h($this->getRequest()->getQuery('newsletter', $this->getDefaultNewsletter()));
         $this->set('newsletter', $newsletter);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
