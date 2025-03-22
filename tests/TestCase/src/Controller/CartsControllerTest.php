@@ -261,7 +261,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId1, 5);
     }
 
-    private function doPrepareAlwaysAvailable($productId, $originalQuantity): void
+    private function doPrepareAlwaysAvailable(string|int $productId, float $originalQuantity): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$productId => [
@@ -1358,7 +1358,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');
     }
 
-    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxRate, $pickupDay): void
+    private function checkOrderDetails(OrderDetail $orderDetail, string $name, int $amount, int $productAttributeId, float $deposit, float $totalPriceTaxExcl, float $totalPriceTaxIncl, float $taxUnitAmount, float $taxTotalAmount, float $taxRate, string $pickupDay): void
     {
         $this->assertEquals($orderDetail->product_name, $name);
         $this->assertEquals($orderDetail->product_amount, $amount);
@@ -1374,21 +1374,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->tax_rate, $taxRate);
     }
 
-    private function changeProductStatus($productId, $status): void
+    private function changeProductStatus(string|int $productId, int $status): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->changeStatus([[$productId => $status]]);
     }
 
-    private function changeManufacturerStatus($manufacturerId, $status): void
+    private function changeManufacturerStatus(int $manufacturerId, int $status): void
     {
         $this->changeManufacturer($manufacturerId, 'active', $status);
     }
 
-    private function removeProduct($productId): ?object
+    private function removeProduct(string|int $productId): ?object
     {
         $this->ajaxPost('/warenkorb/ajaxRemove', [
-            'productId' => $productId
+            'productId' => $productId,
         ]);
         return $this->getJsonDecodedContent();
     }

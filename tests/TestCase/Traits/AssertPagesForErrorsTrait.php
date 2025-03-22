@@ -19,7 +19,7 @@ namespace App\Test\TestCase\Traits;
 trait AssertPagesForErrorsTrait
 {
 
-    protected function assertPagesForErrors($testPages): void
+    protected function assertPagesForErrors(array $testPages): void
     {
         foreach ($testPages as $url) {
             $this->get($url);

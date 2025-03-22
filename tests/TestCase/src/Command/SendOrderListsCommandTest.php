@@ -501,7 +501,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    private function assertOrderDetailState($orderDetailId, $expectedOrderState): void
+    private function assertOrderDetailState(int $orderDetailId, int $expectedOrderState): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $newOrderDetail = $orderDetailsTable->find('all',

@@ -39,7 +39,7 @@ class MyNumberHelper extends NumberHelper
         return $float;
     }
 
-    public function formatAsCurrency($amount): string
+    public function formatAsCurrency(string|float|int $amount): string
     {
         $amount = round((float) $amount, 2); // 3.325 was rounded to 3.32 without this line
         $currency = self::currency($amount, 'USD');
@@ -49,7 +49,7 @@ class MyNumberHelper extends NumberHelper
         return $currency;
     }
 
-    public function formatAsPercent($amount, $decimals = 2): string
+    public function formatAsPercent(string|float|int $amount, int $decimals = 2): string
     {
         return self::formatAsDecimal($amount, $decimals) . '%';
     }
@@ -57,17 +57,17 @@ class MyNumberHelper extends NumberHelper
     /**
      * shows decimals only if necessary
      */
-    public function formatTaxRate($rate): string
+    public function formatTaxRate(string|float|int $rate): string
     {
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
 
-    public function formatUnitAsDecimal($amount): string
+    public function formatUnitAsDecimal(string|float|int $amount): string
     {
         return self::formatAsDecimal($amount, 3, true);
     }
 
-    public function formatAsDecimal(string|float|int $amount, $decimals = 2, $removeTrailingZeros = false, $minDecimals = null): string
+    public function formatAsDecimal(string|float|int $amount, int $decimals = 2, bool $removeTrailingZeros = false, ?int $minDecimals = null): string
     {
         $options = [
             'locale' => I18n::getLocale()
@@ -75,7 +75,7 @@ class MyNumberHelper extends NumberHelper
         if (!$removeTrailingZeros) {
             $options = array_merge($options, [
                 'places' => $decimals,
-                'precision' => $decimals
+                'precision' => $decimals,
             ]);
         }
         if (!is_null($minDecimals)) {
@@ -90,7 +90,7 @@ class MyNumberHelper extends NumberHelper
     /**
      * Number::parseFloat($float, ['locale' => I18n::getLocale()]); did not work with travis!
      */
-    public function parseFloatRespectingLocale($float): bool|float
+    public function parseFloatRespectingLocale(string|float|int $float): bool|float
     {
         if (I18n::getLocale() == 'de_DE') {
             $float = str_replace(',', '.', (string) $float); // replace decimal places
