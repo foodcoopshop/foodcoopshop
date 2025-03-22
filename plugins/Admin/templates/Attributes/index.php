@@ -92,7 +92,7 @@ foreach ($attributes as $attribute) {
     echo '</td>';
 
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
-        if ($attribute->can_be_used_as_unit == 1) {
+        if ($attribute->can_be_used_as_unit) {
             echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';

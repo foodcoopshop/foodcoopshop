@@ -38,7 +38,7 @@ class PricePerUnitHelper extends Helper
         return $result;
     }
 
-    public function getQuantityInUnitsStringForAttributes(string $attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, string $unitName, $amount=1): string
+    public function getQuantityInUnitsStringForAttributes(string $attributeName, bool $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, string $unitName, $amount=1): string
     {
         $result = $attributeName;
         $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount);

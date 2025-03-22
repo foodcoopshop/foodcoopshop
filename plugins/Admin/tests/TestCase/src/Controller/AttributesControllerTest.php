@@ -32,7 +32,7 @@ class AttributesControllerTest extends AppCakeTestCase
             [
                 'Attributes' => [
                     'name' => '0,4l',
-                    'can_be_used_as_unit' => 1,
+                    'can_be_used_as_unit' => true,
                     'active' => 0,
                 ],
             ]
@@ -46,7 +46,7 @@ class AttributesControllerTest extends AppCakeTestCase
         )->first();
 
         $this->assertEquals('0,4l', $attribute->name);
-        $this->assertEquals(1, $attribute->can_be_used_as_unit);
+        $this->assertEquals(true, $attribute->can_be_used_as_unit);
         $this->assertEquals(0, $attribute->active);
 
     }
