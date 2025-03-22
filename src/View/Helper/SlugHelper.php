@@ -54,12 +54,12 @@ class SlugHelper extends Helper
         return '/admin/lists/getOrderList?file=' . $filename;
     }
 
-    public function getHelloCashInvoice(int $invoiceId, int $cancellation=0): string
+    public function getHelloCashInvoice(string|int $invoiceId, int $cancellation=0): string
     {
         return '/admin/hello-cash/getInvoice/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getHelloCashReceipt(int $invoiceId, int $cancellation=0): string
+    public function getHelloCashReceipt(string|int $invoiceId, int $cancellation=0): string
     {
         return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
     }

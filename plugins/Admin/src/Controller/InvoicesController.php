@@ -288,7 +288,7 @@ class InvoicesController extends AdminAppController
             $cancelledInvoiceNumber = $responseObject->invoice_number;
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
             $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
-            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
+            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, 1);
 
         } else {
 
