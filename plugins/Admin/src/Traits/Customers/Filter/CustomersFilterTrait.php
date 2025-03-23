@@ -35,12 +35,12 @@ trait CustomersFilterTrait
         return APP_ON;
     }
 
-    public function getDefaultNewsletter(): int
+    public function getDefaultNewsletter(): null
     {
-        return 0;
+        return null;
     }
 
-    public function getCustomers(int $active, int $year, int $newsletter): array
+    public function getCustomers(int $active, int $year, ?bool $newsletter): array
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -53,7 +53,7 @@ trait CustomersFilterTrait
             $conditions['Customers.active'] = $active;
         }
 
-        if ($newsletter != '') {
+        if ($newsletter !== null) {
             $conditions['Customers.newsletter_enabled'] = $newsletter;
         }
 

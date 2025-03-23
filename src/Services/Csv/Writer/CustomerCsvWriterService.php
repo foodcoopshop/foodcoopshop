@@ -62,7 +62,13 @@ class CustomerCsvWriterService extends BaseCsvWriterService
 
         $active = (int) h($this->getRequestQuery('active', $this->getDefaultActive()));
         $year = (int) h($this->getRequestQuery('year', $this->getDefaultYear()));
-        $newsletter = (int) h($this->getRequestQuery('newsletter', $this->getDefaultNewsletter()));
+        $newsletter = h($this->getRequestQuery('newsletter', $this->getDefaultNewsletter()));
+        if ($newsletter == '') {
+            $newsletter = null;
+        }
+        if ($newsletter !== null) {
+            $newsletter = (bool) $newsletter;
+        }
 
         $customers = $this->getCustomers($active, $year, $newsletter);
         $records = [];

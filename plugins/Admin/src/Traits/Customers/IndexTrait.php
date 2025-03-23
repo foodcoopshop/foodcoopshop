@@ -35,7 +35,13 @@ trait IndexTrait
         $year = (int) h($this->getRequest()->getQuery('year', $this->getDefaultYear()));
         $this->set('year', $year);
 
-        $newsletter = (int) h($this->getRequest()->getQuery('newsletter', $this->getDefaultNewsletter()));
+        $newsletter = h($this->getRequest()->getQuery('newsletter', $this->getDefaultNewsletter()));
+        if ($newsletter == '') {
+            $newsletter = null;
+        }
+        if ($newsletter !== null) {
+            $newsletter = (bool) $newsletter;
+        }
         $this->set('newsletter', $newsletter);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
