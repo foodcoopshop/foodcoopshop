@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('i.fa-envelope');" .
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");" .
-            Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1);
+            Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1, 1);
         "
         ]);
     ?>
