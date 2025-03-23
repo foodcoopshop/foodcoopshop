@@ -349,7 +349,7 @@ class SlugHelper extends Helper
         return '/'.__('route_request_new_password');
     }
 
-    public function getProfit(?string $dateFrom=null, ?string $dateTo=null, ?string $customerIds=null, ?int $manufacturerId=null, ?int $productId=null): string
+    public function getProfit(?string $dateFrom=null, ?string $dateTo=null, string|int|null $customerIds=null, string|int|null $manufacturerId=null, string|int|null $productId=null): string
     {
         $url = '/admin/order-details/profit';
         if ($dateFrom !== null) {

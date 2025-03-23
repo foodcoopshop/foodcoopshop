@@ -179,11 +179,11 @@ class MyTimeHelper extends TimeHelper
         $startCalendarWeek = (int) date('W', $timestampStart);
         $startYear = (int) date('Y', $timestampStart);
         $currentYear = (int) date('Y');
-        $allYears = array_reverse($this->getAllYearsUntilThisYear($currentYear, $startYear));
+        $allYears = array_reverse($this->getAllYearsUntilThisYear($currentYear, $startYear), true);
         $currentCalendarWeek = (int) date('W');
 
         $result = [];
-        foreach($allYears as $year)
+        foreach($allYears as $year => $yearLabel)
         {
             $result = match($year) {
                 $startYear => array_merge($result, $this->getCalendarWeeks($startCalendarWeek, $this->getLastCalendarWeekOfYear($startYear), $year)),
