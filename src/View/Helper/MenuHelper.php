@@ -6,6 +6,7 @@ namespace App\View\Helper;
 use Authorization\IdentityInterface;
 use Cake\Core\Configure;
 use Cake\View\Helper;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -148,7 +149,7 @@ class MenuHelper extends Helper
         return $naviElement;
     }
 
-    public function getAuthMenuElement(?IdentityInterface $identity): array
+    public function getAuthMenuElement(IdentityInterface|Customer|null $identity): array
     {
         $menuElement = [];
         if ($identity !== null) {
@@ -183,7 +184,7 @@ class MenuHelper extends Helper
         return [];
     }
 
-    public function getMyFeedbackMenuElement(?IdentityInterface $identity): array
+    public function getMyFeedbackMenuElement(IdentityInterface|Customer|null $identity): array
     {
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null) {
             return [
@@ -263,7 +264,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getCustomerMenuElements(?IdentityInterface $identity): array
+    public function getCustomerMenuElements(IdentityInterface|Customer|null $identity): array
     {
 
         $menu = [];
