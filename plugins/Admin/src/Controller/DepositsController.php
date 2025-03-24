@@ -256,8 +256,8 @@ class DepositsController extends AdminAppController
             } else {
                 $deposits[$monthAndYear]['monthAndYearAsString'] = $monthAndYearAsString;
                 $monthAndYearExploded = explode('-', $monthAndYear);
-                $year  = $monthAndYearExploded[0];
-                $month = $monthAndYearExploded[1];
+                $year  = (int) $monthAndYearExploded[0];
+                $month = (int) $monthAndYearExploded[1];
                 $deposits[$monthAndYear]['dateFrom'] = '01.' . Configure::read('app.htmlHelper')->addLeadingZero($month) . '.' . $year;
                 $deposits[$monthAndYear]['dateTo'] = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($monthAndYear) . '.' . Configure::read('app.htmlHelper')->addLeadingZero($month) . '.' . $year;
             }
