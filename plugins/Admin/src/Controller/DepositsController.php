@@ -193,7 +193,7 @@ class DepositsController extends AdminAppController
 
     public function index(): void
     {
-        $manufacturerId = (int) $this->getManufacturerId();
+        $manufacturerId = $this->getManufacturerId();
         if ($manufacturerId == 'all') {
             $manufacturerId = '';
         }
@@ -219,7 +219,7 @@ class DepositsController extends AdminAppController
         $this->set('orderStates', $orderStates);
 
         $depositsDelivered = $orderDetailsTable->getDepositSum($manufacturerId, 'month');
-        $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, true);
+        $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer((int) $manufacturerId, true);
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear((int) date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
