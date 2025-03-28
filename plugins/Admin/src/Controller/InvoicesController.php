@@ -190,7 +190,7 @@ class InvoicesController extends AdminAppController
     public function preview(): mixed
     {
 
-        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $customerId = (int) h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();

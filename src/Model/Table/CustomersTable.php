@@ -595,7 +595,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getCreditBalance($customerId): float
+    public function getCreditBalance(int $customerId): float
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');

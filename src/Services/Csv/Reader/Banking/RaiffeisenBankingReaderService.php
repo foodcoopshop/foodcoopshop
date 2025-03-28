@@ -27,7 +27,7 @@ class RaiffeisenBankingReaderService extends BankingReaderService {
         $this->setDelimiter(';');
     }
 
-    public function checkStructureForRecord($record): bool
+    public function checkStructureForRecord(array $record): bool
     {
 
         $result = false;
@@ -38,7 +38,7 @@ class RaiffeisenBankingReaderService extends BankingReaderService {
             is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record[3])) &&
             $record[4] == 'EUR' &&
             strlen($record[5]) == 23 &&
-            (empty($record[6]) || !isset($record[6]))
+            empty($record[6])
             ) {
             $result = true;
         }

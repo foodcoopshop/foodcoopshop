@@ -193,7 +193,7 @@ class DepositsController extends AdminAppController
 
     public function index(): void
     {
-        $manufacturerId = $this->getManufacturerId();
+        $manufacturerId = (int) $this->getManufacturerId();
         if ($manufacturerId == 'all') {
             $manufacturerId = '';
         }
@@ -208,7 +208,7 @@ class DepositsController extends AdminAppController
         }
 
         $manufacturer = $manufacturersTable->find('all', conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
@@ -277,13 +277,13 @@ class DepositsController extends AdminAppController
     public function detail(string $monthAndYear): void
     {
 
-        $manufacturerId = $this->getManufacturerId();
+        $manufacturerId = (int) $this->getManufacturerId();
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
         $manufacturer = $manufacturersTable->find('all', conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ])->first();
         $this->set('manufacturer', $manufacturer);
 

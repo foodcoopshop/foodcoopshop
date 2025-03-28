@@ -147,7 +147,7 @@ class CronjobsTable extends AppTable
         return $validator;
     }
 
-    private function getAllowOnlyOneTimeIntervalValidator($validator, $timeInterval, $timeIntervalString): Validator
+    private function getAllowOnlyOneTimeIntervalValidator(Validator $validator, string $timeInterval, string $timeIntervalString): Validator
     {
         $validator = $validator->equals('time_interval', $timeInterval, __('The_time_interval_needs_to_equal_"{0}"', [
             $timeIntervalString,
@@ -293,7 +293,7 @@ class CronjobsTable extends AppTable
 
     }
 
-    private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject): array
+    private function executeCronjobAndSaveLog(Cronjob $cronjob, DateTime $cronjobRunDayObject): array
     {
         $commandName = $cronjob->getOriginalValues()['name'];
 
@@ -337,7 +337,7 @@ class CronjobsTable extends AppTable
         ];
     }
 
-    private function executeCronjobRespectingTimeInterval($cronjob): bool
+    private function executeCronjobRespectingTimeInterval(Cronjob $cronjob): bool
     {
 
         $tmpLocale = I18n::getLocale();

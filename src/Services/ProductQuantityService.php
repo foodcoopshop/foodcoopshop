@@ -74,8 +74,8 @@ class ProductQuantityService
         ];
         $stockAvailable2saveConditions = [
             [
-                'id_product' => $orderDetail->product_id,
-                'id_product_attribute' => $orderDetail->product_attribute_id,
+                'id_product' => (int) $orderDetail->product_id,
+                'id_product_attribute' => (int) $orderDetail->product_attribute_id,
             ]
         ];
         $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);

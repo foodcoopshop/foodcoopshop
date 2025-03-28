@@ -201,7 +201,7 @@ class HelloCashService
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
-        $paymentsTable->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
+        $paymentsTable->linkReturnedDepositWithInvoice($data, (int) $responseObject->invoice_id);
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->updateOrderDetails($data, $responseObject->invoice_id);

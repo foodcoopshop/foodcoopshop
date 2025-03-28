@@ -5,6 +5,9 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
+use App\Model\Entity\Feedback;
+use App\Model\Entity\Manufacturer;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -52,14 +55,14 @@ class FeedbacksTable extends AppTable
         return $validator;
     }
 
-    public function getManufacturerPrivacyType($feedback): string
+    public function getManufacturerPrivacyType(Feedback $feedback): string
     {
         $privacyTypes = self::getManufacturerPrivacyTypes($feedback->manufacturer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
         return $privacyType;
     }
 
-    public function getManufacturerPrivacyTypes($manufacturer): array
+    public function getManufacturerPrivacyTypes(Manufacturer $manufacturer): array
     {
         $values = [
             self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $manufacturer->name . ', ' . $manufacturer->address_manufacturer->city,
@@ -68,14 +71,14 @@ class FeedbacksTable extends AppTable
         return $values;
     }
 
-    public function getCustomerPrivacyType($feedback): string
+    public function getCustomerPrivacyType(Feedback $feedback): string
     {
         $privacyTypes = self::getCustomerPrivacyTypes($feedback->customer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
         return $privacyType;
     }
 
-    public function getCustomerPrivacyTypes($customer): array
+    public function getCustomerPrivacyTypes(Customer $customer): array
     {
         if ($customer->is_company) {
             $values = [
@@ -91,7 +94,7 @@ class FeedbacksTable extends AppTable
         return $values;
     }
 
-    public function isApproved($feedback): bool
+    public function isApproved(Feedback $feedback): bool
     {
         $approvedDate = $feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
         $notApproved = Configure::read('app.timeHelper')->isDatabaseDateNotSet($approvedDate);

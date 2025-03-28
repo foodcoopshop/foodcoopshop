@@ -28,7 +28,7 @@ class SparkasseBankingReaderService extends BankingReaderService {
         $this->setHeaderOffset(0);
     }
 
-    public function checkStructureForRecord($record): bool
+    public function checkStructureForRecord(array $record): bool
     {
 
         $result = false;

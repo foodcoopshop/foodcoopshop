@@ -44,7 +44,7 @@ trait ProductTrait
 
         $this->preparePayments();
         $customersTable = $this->getTableLocator()->get('Customers');
-        $this->set('creditBalance', $customersTable->getCreditBalance($this->getCustomerId()));
+        $this->set('creditBalance', $customersTable->getCreditBalance((int) $this->getCustomerId()));
 
         if ($this->identity->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
             $personalTransactionCode = $customersTable->getPersonalTransactionCode($this->getCustomerId());
