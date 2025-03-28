@@ -205,7 +205,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->getCreditBalance() - $this->getCart()['CartProductSum'] - $this->getCart()['CartDepositSum'];
     }
 
-    public function hasEnoughCreditForProduct($grossPrice): bool
+    public function hasEnoughCreditForProduct(float $grossPrice): bool
     {
         return $this->getCreditBalanceMinusCurrentCartSum() - Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') >= $grossPrice;
     }
@@ -363,7 +363,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $manufactures;
     }
 
-    public function getProduct($productId): array|false
+    public function getProduct(int|string $productId): array|false
     {
         foreach ($this->getProducts() as $product) {
             if ($product['productId'] == $productId) {

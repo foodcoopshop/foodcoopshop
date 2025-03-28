@@ -9,6 +9,7 @@ use Cake\Mailer\Mailer;
 use Cake\Network\Exception\SocketException;
 use Cake\Utility\Text;
 use Cake\Routing\Router;
+use Stringable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +27,7 @@ use Cake\Routing\Router;
 class FileAndEmailLog extends FileLog
 {
 
-    public function log($level, $message, array $context = []): void
+    public function log($level, Stringable|string $message, array $context = []): void
     {
         parent::log($level, $message, $context);
         if (Configure::read('app.emailErrorLoggingEnabled')) {
@@ -34,7 +35,7 @@ class FileAndEmailLog extends FileLog
         }
     }
 
-    private function sendEmailWithErrorInformation($message): bool
+    private function sendEmailWithErrorInformation(string $message): bool
     {
 
         $ignoredPatterns = [

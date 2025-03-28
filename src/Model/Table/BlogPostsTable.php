@@ -50,7 +50,7 @@ class BlogPostsTable extends AppTable
         return $validator;
     }
 
-    public function findBlogPosts($manufacturerId = null, $showOnStartPage = false): SelectQuery|array
+    public function findBlogPosts(?int $manufacturerId = null, bool $showOnStartPage = false): SelectQuery|array
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -84,7 +84,7 @@ class BlogPostsTable extends AppTable
         return $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);
     }
 
-    public function getConditionShowOnStartPage($query, $showOnStartPage): SelectQuery
+    public function getConditionShowOnStartPage(SelectQuery $query, bool $showOnStartPage): SelectQuery
     {
         $query->where(function (QueryExpression $exp, Query $q) use ($showOnStartPage) {
             $key = 'DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")';

@@ -51,7 +51,7 @@ class CartProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1): array|true
+    public function add(int $productId, int $attributeId, int $amount, float $orderedQuantityInUnits = -1): array|true
     {
         $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
@@ -71,7 +71,7 @@ class CartProductsTable extends AppTable
         // get product data from database
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => (int) $productId
+                'Products.id_product' => $productId,
             ],
             contain: [
                 'DepositProducts',
@@ -357,7 +357,7 @@ class CartProductsTable extends AppTable
 
     }
 
-    public function setPickupDays($cartProducts, $customerId, $orderCustomerService): array
+    public function setPickupDays(array $cartProducts, int $customerId, OrderCustomerService $orderCustomerService): array
     {
         $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
@@ -396,9 +396,8 @@ class CartProductsTable extends AppTable
         return $pickupDays;
     }
 
-    public function removeAll($cartId, $customerId): int
+    public function removeAll(int $cartId, int $customerId): int
     {
-        $cartId = (int) $cartId;
         if (!$cartId > 0) {
             throw new \Exception('wrong cartId: ' . $cartId);
         }
@@ -419,7 +418,7 @@ class CartProductsTable extends AppTable
         return $this->deleteAll($cartProduct2remove);
     }
 
-    public function remove($productId, $attributeId, $cartId): int
+    public function remove(int $productId, int $attributeId, int $cartId): int
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {

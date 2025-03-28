@@ -21,6 +21,7 @@ use App\Model\Entity\OrderDetail;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Product;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,7 +46,7 @@ class CartService
     private ServerRequest $request;
     private Controller $controller;
 
-    public function __construct($controller)
+    public function __construct(Controller $controller)
     {
         $this->identity = Router::getRequest()->getAttribute('identity');
         $this->request  = Router::getRequest();
@@ -76,7 +77,14 @@ class CartService
         return $contain;
     }
 
-    protected function saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products): array
+    protected function saveCart(
+        array $cart,
+        array $orderDetails2save,
+        array $stockAvailable2saveData,
+        array $stockAvailable2saveConditions,
+        ?string $customerSelectedPickupDay,
+        array $products,
+        ): array
     {
 
         $this->saveOrderDetails($orderDetails2save);
@@ -546,7 +554,7 @@ class CartService
 
     }
 
-    private function prepareOrderDetailPurchasePrices($ids, $product, $cartProduct): array
+    private function prepareOrderDetailPurchasePrices(array $ids, Product $product, array $cartProduct): array
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -609,15 +617,15 @@ class CartService
 
     }
 
-    private function saveOrderDetails($orderDetails2save): void
+    private function saveOrderDetails(array $orderDetails2save): void
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->saveMany(
-            $orderDetailsTable->newEntities($orderDetails2save)
+            $orderDetailsTable->newEntities($orderDetails2save),
         );
     }
 
-    private function sendInstantOrderNotificationToManufacturers($cartProducts): array
+    private function sendInstantOrderNotificationToManufacturers(array $cartProducts): array
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -678,7 +686,7 @@ class CartService
         return $manufacturersThatReceivedInstantOrderNotification;
     }
 
-    private function sendStockAvailableLimitReachedEmailToManufacturer($cartId): void
+    private function sendStockAvailableLimitReachedEmailToManufacturer(int $cartId): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
@@ -768,7 +776,7 @@ class CartService
 
     }
 
-    private function sendConfirmationEmailToCustomerSelfService($cart): void
+    private function sendConfirmationEmailToCustomerSelfService(array $cart): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
@@ -782,7 +790,7 @@ class CartService
         $email->addToQueue();
     }
 
-    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities): null
+    private function sendOrderCommentNotificationToPlatformOwner(array $pickupDayEntities): null
     {
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
             return null;
@@ -813,7 +821,7 @@ class CartService
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      */
-    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities): null
+    private function sendConfirmationEmailToCustomer(array $cart, array $cartGroupedByPickupDay, array $products, array $pickupDayEntities): null
     {
 
         if (!$this->identity->active) {
@@ -864,7 +872,7 @@ class CartService
         return null;
     }
 
-    private function generateRightOfWithdrawalInformationAndForm($cart, $products): string
+    private function generateRightOfWithdrawalInformationAndForm(array $cart, array $products): string
     {
         $manufacturers = [];
         foreach ($products as $product) {
@@ -887,7 +895,7 @@ class CartService
         return $pdfWriter->writeAttachment();
     }
 
-    private function generateOrderConfirmation($cart): string
+    private function generateOrderConfirmation(array $cart): string
     {
 
         $manufacturers = [];

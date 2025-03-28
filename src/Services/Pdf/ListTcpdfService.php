@@ -32,7 +32,7 @@ class ListTcpdfService extends AppTcpdfService
 
     public ?string $html;
 
-    public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
+    public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, int|false $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
         $this->SetTopMargin(43);
@@ -40,7 +40,7 @@ class ListTcpdfService extends AppTcpdfService
         $this->SetFontSize(10);
     }
 
-    public function prepareTaxSumData($results): array|false
+    public function prepareTaxSumData(array $results): array|false
     {
 
         $taxRates = [];
@@ -67,7 +67,7 @@ class ListTcpdfService extends AppTcpdfService
 
     }
 
-    public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false): void
+    public function renderDetailedOrderList(array $results, array $widths, array $headers, string $groupType, bool $onlyShowSums = false): void
     {
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 

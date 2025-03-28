@@ -18,6 +18,7 @@ namespace App\Services\PdfWriter;
 
 use Cake\Utility\Inflector;
 use Cake\View\ViewBuilder;
+use TCPDF;
 
 abstract class PdfWriterService
 {
@@ -28,13 +29,13 @@ abstract class PdfWriterService
     protected string $filename = '';
     public ?string $templateFile = null;
 
-    public function setPdfLibrary($pdfLibrary): static
+    public function setPdfLibrary(TCPDF $pdfLibrary): static
     {
         $this->pdfLibrary = $pdfLibrary;
         return $this;
     }
 
-    public function setData($data): static
+    public function setData(array $data): static
     {
         $this->data = array_merge($this->data, $data);
         return $this;
@@ -45,7 +46,7 @@ abstract class PdfWriterService
         return $this->filename;
     }
 
-    public function setFilename($filename): static
+    public function setFilename(string $filename): static
     {
         $this->filename = $filename;
         return $this;

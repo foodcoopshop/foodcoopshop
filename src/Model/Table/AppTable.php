@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\ORM\AppMarshaller;
 use Cake\Datasource\ConnectionManager;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Marshaller;
 use Cake\ORM\Table;
 
@@ -36,7 +37,7 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
-    public function getAllValidationErrors($entity): array
+    public function getAllValidationErrors(EntityInterface $entity): array
     {
         $preparedErrors = [];
         foreach($entity->getErrors() as $field => $message) {
