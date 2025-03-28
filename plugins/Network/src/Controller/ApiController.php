@@ -42,7 +42,7 @@ class ApiController extends Controller
         $this->set('identity', $identity);
     }
 
-    private function getProductDetailLinks($productsData): string
+    private function getProductDetailLinks(array $productsData): string
     {
         $productDetailLinks = [];
         $productsTable = $this->getTableLocator()->get('Products');

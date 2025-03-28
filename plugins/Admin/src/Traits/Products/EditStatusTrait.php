@@ -72,12 +72,12 @@ trait EditStatusTrait
 
     }
 
-    public function editStatus($productId, $previousProductId, $status): void
+    public function editStatus(int $productId, int $previousProductId, int $status): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeStatus(
             [
-                [$productId => (int) $status]
+                [$productId => $status]
             ]
         );
 

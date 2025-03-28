@@ -49,16 +49,16 @@ class CartProductsTableTest extends AppCakeTestCase
         $this->assertEmpty($cart->cart_products, 'cart products not empty');
     }
 
-    private function getCartWithCartProducts($cartId, $customerId): Cart
+    private function getCartWithCartProducts(int $cartId, int $customerId): Cart
     {
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
-                'Carts.id_customer' => $customerId
+                'Carts.id_customer' => $customerId,
             ],
             contain: [
-                'CartProducts'
+                'CartProducts',
             ]
         )->first();
         return $cart;

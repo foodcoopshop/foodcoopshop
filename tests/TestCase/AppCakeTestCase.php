@@ -153,22 +153,20 @@ abstract class AppCakeTestCase extends TestCase
     /**
      * back tick allows using forward slash in $unquotedString
      */
-    protected function assertRegExpWithUnquotedString(string $unquotedString, $response, string $msg = ''): void
+    protected function assertRegExpWithUnquotedString(string $unquotedString, string $response, string $msg = ''): void
     {
-        if (!is_null($response)) {
-            $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
-        }
+        $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
     /**
      * back tick ` allows using forward slash in $unquotedString
      */
-    protected function assertDoesNotMatchRegularExpressionWithUnquotedString(string $unquotedString, $response, string $msg = ''): void
+    protected function assertDoesNotMatchRegularExpressionWithUnquotedString(string $unquotedString, string $response, string $msg = ''): void
     {
         $this->assertDoesNotMatchRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
-    protected function assertUrl($url, $expectedUrl, $msg = ''): void
+    protected function assertUrl(string $url, string $expectedUrl, string $msg = ''): void
     {
         $this->assertEquals($url, $expectedUrl, $msg);
     }
@@ -176,7 +174,7 @@ abstract class AppCakeTestCase extends TestCase
     /**
      * automatically logout of user
      */
-    protected function changeConfiguration(string $configKey, $value): void
+    protected function changeConfiguration(string $configKey, string|int|bool $value): void
     {
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $configuration = $configurationsTable->get($configKey);
@@ -200,7 +198,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $pickupDay = null): void
+    protected function finishCart(int $general_terms_and_conditions_accepted = 1, int $cancellation_terms_accepted = 1, string $comment = '', ?string $pickupDay = null): void
     {
         $data = [
             'Carts' => [
@@ -221,15 +219,11 @@ abstract class AppCakeTestCase extends TestCase
             $data['Carts']['pickup_day'] = $pickupDay;
         }
 
-        $this->post(
-            $this->Slug->getCartFinish(),
-            $data,
-        );
-
+        $this->post($this->Slug->getCartFinish(), $data);
         $this->runAndAssertQueue();
     }
 
-    protected function getCartById($cartId): Cart
+    protected function getCartById(int $cartId): Cart
     {
         $contain = [
             'CartProducts.OrderDetails.OrderDetailUnits',
@@ -251,14 +245,14 @@ abstract class AppCakeTestCase extends TestCase
     }
 
     protected function changeProductPrice(
-        $productId,
-        $price,
-        $pricePerUnitEnabled = false,
-        $priceInclPerUnit = 0,
-        $priceUnitName = '',
-        $priceUnitAmount = 0,
-        $priceQuantityInUnits = 0,
-        $changeOpenOrderDetails = false
+        int|string $productId,
+        string|float $price,
+        bool $pricePerUnitEnabled = false,
+        float $priceInclPerUnit = 0,
+        string $priceUnitName = '',
+        float $priceUnitAmount = 0,
+        float $priceQuantityInUnits = 0,
+        bool $changeOpenOrderDetails = false
         ): ?object
     {
         $this->ajaxPost('/admin/products/editPrice', [
@@ -294,7 +288,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function addCustomerPayment($customerId, $amount, $type, bool $applyAmountTresholdCheck): ?object
+    protected function addCustomerPayment(int $customerId, float|string $amount, string $type, bool $applyAmountTresholdCheck): ?object
     {
         $this->ajaxPost('/admin/payments/addCustomerPayment/' . $customerId, [
             'amount' => $amount,
@@ -304,7 +298,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function addManufacturerPayment($manufacturerId, $amount, $type, $dateAdd, $text, bool $applyAmountTresholdCheck): ?object
+    protected function addManufacturerPayment(int $manufacturerId, float|string $amount, string $type, ?string $dateAdd, string $text, bool $applyAmountTresholdCheck): ?object
     {
         $this->ajaxPost('/admin/payments/addManufacturerPayment/' . $manufacturerId, [
             'amount' => $amount,
@@ -316,7 +310,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function changeManufacturer(int $manufacturerId, string $field, $value): void
+    protected function changeManufacturer(int $manufacturerId, string $field, string|int|null $value): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $newManufacturer = $manufacturersTable->get($manufacturerId);
@@ -324,7 +318,7 @@ abstract class AppCakeTestCase extends TestCase
         $manufacturersTable->save($newManufacturer);
     }
 
-    protected function changeCustomer(int $customerId, string $field, $value): void
+    protected function changeCustomer(int $customerId, string $field, string|int $value): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $newCustomer = $customersTable->get($customerId);
@@ -332,7 +326,7 @@ abstract class AppCakeTestCase extends TestCase
         $customersTable->save($newCustomer);
     }
 
-    protected function getCorrectedLogoPathInHtmlForPdfs($html): string
+    protected function getCorrectedLogoPathInHtmlForPdfs(string $html): string
     {
         return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
     }
@@ -353,7 +347,7 @@ abstract class AppCakeTestCase extends TestCase
         $paymentsTable->delete($paymentsTable->get(2));
     }
 
-    protected function purgeFolderWithGitignoreFile($contentFolder): void
+    protected function purgeFolderWithGitignoreFile(string $contentFolder): void
     {
         FolderService::rrmdir($contentFolder);
         mkdir($contentFolder, 0755, true);

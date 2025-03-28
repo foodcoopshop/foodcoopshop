@@ -41,7 +41,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     protected Cart $mockCart;
 
-    protected function simulateSendOrderListsCronjob($orderDetailId): void
+    protected function simulateSendOrderListsCronjob(int $orderDetailId): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailsTable->save(
@@ -68,11 +68,11 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         return $cart;
     }
 
-    protected function assertChangedStockAvailable($productIds, $expectedAmount): void
+    protected function assertChangedStockAvailable(string|int $productId, int|float $expectedAmount): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable = $this->getTableLocator()->get('Products');
-        $ids = $productsTable->getProductIdAndAttributeId($productIds);
+        $ids = $productsTable->getProductIdAndAttributeId($productId);
         $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
         $changedStockAvailable = $stockAvailablesTable->find('all', conditions: [
             'StockAvailables.id_product' => $ids['productId'],
@@ -82,7 +82,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');
     }
 
-    protected function getOrderDetailsFromDatabase($orderDetailIds): array
+    protected function getOrderDetailsFromDatabase(array $orderDetailIds): array
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find('all',
@@ -96,7 +96,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         return $orderDetails;
     }
 
-    protected function generateAndGetCart($productAAmount = 1, $productBAmount = 1): Cart
+    protected function generateAndGetCart(int $productAAmount = 1, int $productBAmount = 1): Cart
     {
         $this->addProductToCart($this->productIdA, $productAAmount);
         $this->addProductToCart($this->productIdB, $productBAmount);

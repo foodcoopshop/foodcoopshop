@@ -109,7 +109,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
 
     }
 
-    private function doPostMyFeedbackForm($text, $privacyType, $delete): void
+    private function doPostMyFeedbackForm(string $text, int $privacyType, bool $delete): void
     {
         $this->post(
             $this->Slug->getMyFeedbackForm(),
@@ -124,7 +124,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
         );
     }
 
-    private function doPostFeedbackForm($customerId, $text, $privacyType, $approvedCheckbox): void
+    private function doPostFeedbackForm(int $customerId, string $text, int $privacyType, bool $approvedCheckbox): void
     {
         $this->post(
             $this->Slug->getFeedbackForm($customerId),

@@ -309,7 +309,7 @@ class OrderDetailsTable extends AppTable
     }
 
 
-    public function getDepositTax($depositGross, $amount, $taxRate): float
+    public function getDepositTax(string|float $depositGross, string|float $amount, string|float $taxRate): float
     {
         $depositGrossPerPiece = round($depositGross / $amount, 2);
         $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $taxRate / 100), 2);
@@ -317,14 +317,14 @@ class OrderDetailsTable extends AppTable
         return $depositTax;
     }
 
-    public function getDepositNet($depositGross, $amount, $taxRate): float
+    public function getDepositNet(string|float $depositGross, string|float $amount, string|float $taxRate): float
     {
         $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount, $taxRate);
         return $depositNet;
     }
 
 
-    public function getLastOrderDetailsForDropdown($customerId): array
+    public function getLastOrderDetailsForDropdown(int $customerId): array
     {
 
         $ordersToLoad = 3;
@@ -360,7 +360,7 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    private function getFutureOrdersConditions($customerId): array
+    private function getFutureOrdersConditions(int $customerId): array
     {
         return [
             'OrderDetails.id_customer' => $customerId,
@@ -368,7 +368,7 @@ class OrderDetailsTable extends AppTable
         ];
     }
 
-    public function getFutureOrdersByCustomerId($customerId): SelectQuery
+    public function getFutureOrdersByCustomerId(int $customerId): SelectQuery
     {
         $futureOrders = $this->find('all',
         conditions: $this->getFutureOrdersConditions($customerId),
@@ -379,7 +379,7 @@ class OrderDetailsTable extends AppTable
         return $futureOrders;
     }
 
-    public function getGroupedFutureOrdersByCustomerId($customerId): array
+    public function getGroupedFutureOrdersByCustomerId(int $customerId): array
     {
         $query = $this->find('all',
         fields: ['OrderDetails.pickup_day'],
@@ -428,7 +428,7 @@ class OrderDetailsTable extends AppTable
 
     }
 
-    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId): array
+    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, int $customerId): array
     {
         $cartsAssociation = $this->getAssociation('CartProducts')->getAssociation('Carts');
         $cartsAssociation->setJoinType('INNER');

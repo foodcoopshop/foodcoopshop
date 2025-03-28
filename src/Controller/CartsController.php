@@ -130,9 +130,8 @@ class CartsController extends FrontendController
         $this->render('detail');
     }
 
-    public function orderSuccessful($cartId): void
+    public function orderSuccessful(int $cartId): void
     {
-        $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all', conditions: [
@@ -177,7 +176,7 @@ class CartsController extends FrontendController
         return null;
     }
 
-    private function doManufacturerCheck($productId): void
+    private function doManufacturerCheck(): void
     {
         if ($this->identity->isManufacturer()) {
             $message = __('No_access_for_manufacturers.');
@@ -185,9 +184,8 @@ class CartsController extends FrontendController
             $this->set([
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $productId
             ]);
-            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'productId']);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
             return;
         }
     }
@@ -204,7 +202,7 @@ class CartsController extends FrontendController
 
         $initialProductId = $this->getRequest()->getData('productId');
 
-        $this->doManufacturerCheck($initialProductId);
+        $this->doManufacturerCheck();
 
         $productsTable = $this->getTableLocator()->get('Products');
         $ids = $productsTable->getProductIdAndAttributeId($initialProductId);
@@ -265,7 +263,7 @@ class CartsController extends FrontendController
         $this->redirect($this->referer());
     }
 
-    private function doAddOrderToCart($deliveryDate): void
+    private function doAddOrderToCart(string $deliveryDate): void
     {
 
         $this->doEmptyCart();
@@ -340,7 +338,7 @@ class CartsController extends FrontendController
 
         $initialProductId = $this->getRequest()->getData('productId');
 
-        $this->doManufacturerCheck($initialProductId);
+        $this->doManufacturerCheck();
         $productsTable = $this->getTableLocator()->get('Products');
         $ids = $productsTable->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->getRequest()->getData('amount');

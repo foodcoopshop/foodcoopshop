@@ -241,7 +241,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         return $cart;
     }
 
-    private function editOrderDetailQuantity($orderDetailId, $productQuantity): void
+    private function editOrderDetailQuantity(int $orderDetailId, float $productQuantity): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductQuantity/',

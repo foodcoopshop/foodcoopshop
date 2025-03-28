@@ -499,7 +499,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 5,50 €, der Hersteller hätte nach dem Eintragen insgesamt mehr Pfand zurückgenommen als verkauft. Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag (200,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
     
-    private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd, $applyAmountTresholdCheck): Payment
+    private function addDepositToManufacturer(string $depositText, string $actionLogText, ?string $dateAdd, bool $applyAmountTresholdCheck): Payment
     {
         $customersTable = $this->getTableLocator()->get('Customers');
 
@@ -531,7 +531,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         return $payment;
     }
 
-    private function addCustomerPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType): void
+    private function addCustomerPaymentAndAssertIncreasedCreditBalance(int $customerId, string $amountToAdd, string $paymentType): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $creditBalanceBeforeAdd = $customersTable->getCreditBalance($customerId);
@@ -545,7 +545,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($amountToAdd, Configure::read('app.numberHelper')->formatAsDecimal($jsonDecodedContent->amount, 1));
     }
 
-    private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText): void
+    private function assertActionLogRecord(int $customerId, string $expectedType, string $expectedObjectType, string $expectedText): void
     {
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $lastActionLog = $actionLogsTable->find('all',
@@ -554,12 +554,12 @@ class PaymentsControllerTest extends AppCakeTestCase
             ],
             order: ['ActionLogs.id' => 'DESC']
         )->toArray();
-        $this->assertEquals($expectedType, $lastActionLog[0]->type, 'cake action log type not correct');
-        $this->assertEquals($expectedObjectType, $lastActionLog[0]->object_type, 'cake action log object type not correct');
-        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text, 'cake action log text not correct');
+        $this->assertEquals($expectedType, $lastActionLog[0]->type);
+        $this->assertEquals($expectedObjectType, $lastActionLog[0]->object_type);
+        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text);
     }
 
-    private function deletePayment($paymentId): ?object
+    private function deletePayment(int $paymentId): ?object
     {
         $this->ajaxPost('/admin/payments/changeStatus', [
             'paymentId' => $paymentId,

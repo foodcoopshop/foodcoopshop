@@ -23,6 +23,7 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\I18n\Date;
 use App\Command\Traits\CronjobCommandTrait;
+use Cake\ORM\Query\SelectQuery;
 
 class SendOrderListsCommand extends AppCommand
 {
@@ -147,7 +148,7 @@ class SendOrderListsCommand extends AppCommand
      * prepare action log string is complicated because of
      * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
      */
-    protected function getActionLogData($orderDetails, $manufacturers, $pickupDay): array
+    protected function getActionLogData(SelectQuery $orderDetails, array $manufacturers, string $pickupDay): array
     {
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
@@ -198,7 +199,7 @@ class SendOrderListsCommand extends AppCommand
     /**
      * reset quantity to default_quantity_after_sending_order_lists
      */
-    protected function resetQuantityToDefaultQuantity($orderDetails): void
+    protected function resetQuantityToDefaultQuantity(SelectQuery $orderDetails): void
     {
 
         $productsTable = $this->getTableLocator()->get('Products');

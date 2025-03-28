@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Laminas\Diactoros\UploadedFile;
+use App\Model\Entity\Manufacturer;
 
 class ManufacturersControllerTest extends AppCakeTestCase
 {
@@ -418,7 +419,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    private function doTestCustomerRecord($manufacturer): void
+    private function doTestCustomerRecord(Manufacturer $manufacturer): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $customerRecord = $manufacturersTable->getCustomerRecord($manufacturer->address_manufacturer->email);
@@ -428,7 +429,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $customerRecord->active);
     }
 
-    private function add($data): void
+    private function add(array $data): void
     {
         $this->post($this->Slug->getManufacturerAdd(), $data);
     }

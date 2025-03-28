@@ -110,7 +110,7 @@ class AppController extends Controller
      *      return $this->sendAjaxError($e);
      *  }
      */
-    protected function sendAjaxError($error): Response
+    protected function sendAjaxError(\Exception $error): Response
     {
         if ($this->getRequest()->is('json')) {
             $this->setResponse($this->getResponse()->withStatus(500));

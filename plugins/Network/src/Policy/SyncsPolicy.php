@@ -40,7 +40,7 @@ class SyncsPolicy implements RequestPolicyInterface
         $syncManufacturerTable = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
         $isAllowedToUseAsMasterFoodcoop = $syncManufacturerTable->isAllowedToUseAsMasterFoodcoop($identity);
         $syncDomains = $syncDomainTable->getActiveManufacturerSyncDomains(
-            $identity->getManufacturerEnabledSyncDomains()
+            $identity->getManufacturerEnabledSyncDomains(),
         );
 
         return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;

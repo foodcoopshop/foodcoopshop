@@ -41,12 +41,12 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->filename = $filename;
 	}
 
-	public function setRequestQueryParams($requestQueryParams): void
+	public function setRequestQueryParams(array $requestQueryParams): void
 	{
 		$this->requestQueryParams = $requestQueryParams;
 	}
 
-	public function getRequestQuery($name, $default = null): string|int|null
+	public function getRequestQuery(string $name, string|int|null $default = null): string|int|null
 	{
 		return $this->requestQueryParams[$name] ?? $default;
 	}
@@ -56,7 +56,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		return $this->requestQueryParams;
 	}
 
-	final public function paginate($query, $params): SelectQuery
+	final public function paginate(SelectQuery $query, array $params): SelectQuery
 	{
 		$results = $query->find('all', 
 			order: $params['order'] ?? null,
@@ -64,7 +64,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		return $results;
 	}
 
-	final public function decodeHtml($string): string
+	final public function decodeHtml(?string $string): string
 	{
 		return StringComponent::br2space(html_entity_decode($string ?? ''));
 	}

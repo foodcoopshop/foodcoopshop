@@ -169,7 +169,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(1, []);
     }
 
-    private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails): void
+    private function assertOrderDetailProductPriceChangedEmails(int $emailIndex, array $expectedToEmails): void
     {
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Preis angepasst: Artischocke : Stück');
@@ -183,7 +183,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         }
     }
 
-    private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason, $sendEmailToCustomer): void
+    private function editOrderDetailPrice(int $orderDetailId, string $productPrice, string $editPriceReason, bool $sendEmailToCustomer): void
     {
         $this->post(
             '/admin/order-details/editProductPrice/',

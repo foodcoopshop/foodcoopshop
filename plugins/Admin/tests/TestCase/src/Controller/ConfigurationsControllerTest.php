@@ -135,7 +135,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ];
     }
 
-    private function assertShowProductForGuestsEnabledOrLoggedIn($testUrls, $expectPrice): void
+    private function assertShowProductForGuestsEnabledOrLoggedIn(array $testUrls, bool $expectPrice): void
     {
         $this->assertPagesForErrors($testUrls);
         foreach ($testUrls as $url) {

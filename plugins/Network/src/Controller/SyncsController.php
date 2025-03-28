@@ -39,7 +39,7 @@ class SyncsController extends AppController
         $this->viewBuilder()->addHelper('Network.Network');
     }
 
-    private function doModifyProductChecks($product): EntityInterface
+    private function doModifyProductChecks(array $product): EntityInterface
     {
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomain = $syncDomainsTable->find('all', conditions: [
@@ -227,7 +227,7 @@ class SyncsController extends AppController
         $this->set('title_for_layout', __d('network', 'Synchronize_products'));
     }
 
-    private function getEmptyProductsString($syncDomains): string
+    private function getEmptyProductsString(array $syncDomains): string
     {
         $syncDomainNames = [];
         foreach($syncDomains as $syncDomain) {
@@ -254,7 +254,7 @@ class SyncsController extends AppController
         return $matchedProducts;
     }
 
-    private function markProductsAsSynced($products): array
+    private function markProductsAsSynced(array $products): array
     {
 
         $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');
