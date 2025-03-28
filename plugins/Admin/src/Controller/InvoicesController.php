@@ -181,7 +181,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogsTable->customSave('invoice_added', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable->customSave('invoice_added', $this->identity->getId(), (int) $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 
@@ -392,7 +392,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . $linkToInvoice);
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogsTable->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable->customSave('invoice_cancelled', $this->identity->getId(), (int) $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
