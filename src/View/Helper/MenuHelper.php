@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
-use Authentication\IdentityInterface;
 use Cake\Core\Configure;
 use Cake\View\Helper;
+use App\Model\Entity\Customer;
+use Authentication\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -263,7 +264,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getCustomerMenuElements(?IdentityInterface $identity): array
+    public function getCustomerMenuElements(Customer|IdentityInterface|null $identity): array
     {
 
         $menu = [];
