@@ -16,7 +16,7 @@ use App\Model\Entity\Cart;
 use App\Model\Entity\Manufacturer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
-use Authorization\IdentityInterface;
+use Authentication\IdentityInterface;
 use Cake\I18n\I18n;
 use App\Model\Entity\BlogPost;
 use App\Model\Entity\Product;
@@ -66,7 +66,7 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey(Product $product, IdentityInterface|Customer|null $identity): string
+    public function buildElementProductCacheKey(Product $product, IdentityInterface|null $identity): string
     {
         $orderCustomerService = new OrderCustomerService();
         $elementCacheKey = join('_', [
