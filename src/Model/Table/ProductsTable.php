@@ -126,7 +126,6 @@ class ProductsTable extends AppTable
             'message' => __('The_order_possible_until_field_needs_to_be_smaller_than_the_delivery_date.')
         ]);
         $validator = $this->getCorrectDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day');
-        $validator = $this->getCorrectDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day');
         $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'delivery_rhythm_first_delivery_day', __('The_first_delivery_day'));
         $validator->range('delivery_rhythm_send_order_list_weekday', [0, 6], __('Please_enter_a_number_between_{0}_and_{1}.', [0, 6]));
         $validator->allowEmptyString('delivery_rhythm_send_order_list_day');
