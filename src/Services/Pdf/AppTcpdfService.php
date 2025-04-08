@@ -35,7 +35,7 @@ abstract class AppTcpdfService extends TCPDF
 
     private string $html = '';
 
-    public function setTextHelper($textHelper): void
+    public function setTextHelper(TextHelper $textHelper): void
     {
         $this->textHelper = $textHelper;
     }

@@ -17,6 +17,9 @@ use App\Model\Entity\Product;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Date;
+use Cake\Controller\Controller;
+use stdClass;
+use App\Model\Entity\Manufacturer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -143,7 +146,7 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
-    private function getCorrectDayOfMonthValidator(Validator $validator, $field): Validator
+    private function getCorrectDayOfMonthValidator(Validator $validator, string $field): Validator
     {
         $validator->add($field, 'allow-only-correct-weekday-of-month', [
 
@@ -643,7 +646,14 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '',  $addProductNameToAttributes = false, $controller = null): array
+    public function getProductsForBackend(
+        array|string $productIds,
+        int|string $manufacturerId,
+        string $active,
+        string $categoryId = '',
+        bool $addProductNameToAttributes = false,
+        ?Controller $controller = null,
+        ): array
     {
 
         $conditions = [];
@@ -1047,12 +1057,12 @@ class ProductsTable extends AppTable
         return $preparedProducts;
     }
 
-    public function isMainProduct($product): bool
+    public function isMainProduct(stdClass $product): bool
     {
         return (bool) preg_match('/main-product/', $product->row_class);
     }
 
-    public function getForDropdown($manufacturerId): array
+    public function getForDropdown(int $manufacturerId): array
     {
         $identity = Router::getRequest()->getAttribute('identity');
         $conditions = [];
@@ -1113,7 +1123,7 @@ class ProductsTable extends AppTable
         return $productsForDropdown;
     }
 
-    public function getUnitTax($grossPrice, $netPrice, $quantity): float
+    public function getUnitTax(string|float $grossPrice, string|float $netPrice, float $quantity): float
     {
         if ($quantity == 0) {
             return 0;
@@ -1121,21 +1131,21 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    public function getGrossPrice($netPrice, $taxRate): float
+    public function getGrossPrice(string|float|null $netPrice, string|float $taxRate): float
     {
         $grossPrice = $netPrice * (100 + $taxRate) / 100;
         $grossPrice = round($grossPrice, 2);
         return $grossPrice;
     }
 
-    public function getNetPrice($grossPrice, $taxRate): float
+    public function getNetPrice(string|float|null|false $grossPrice, string|float $taxRate): float
     {
         $netPrice = $grossPrice / (100 + $taxRate) * 100;
         $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 
-    public function getNetPriceForNewTaxRate($netPrice, $oldTaxRate, $newTaxRate): float
+    public function getNetPriceForNewTaxRate(string|float $netPrice, string|float $oldTaxRate, string|float $newTaxRate): float
     {
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);
@@ -1158,7 +1168,7 @@ class ProductsTable extends AppTable
 
         // first set all associated attributes to 0
         $productAttributesTable->updateAll([
-            'default_on' => 0
+            'default_on' => 0,
         ], [
             'id_product_attribute IN (' . join(', ', $productAttributeIds) . ')',
         ]);
@@ -1179,7 +1189,7 @@ class ProductsTable extends AppTable
         }
     }
 
-    public function changeImage($products): bool
+    public function changeImage(array $products): bool
     {
 
         foreach ($products as $product) {
@@ -1268,7 +1278,16 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode): object
+    public function add(
+        Manufacturer $manufacturer,
+        string $productName,
+        string $descriptionShort,
+        string  $description,
+        string $unity,
+        int|string $isDeclarationOk,
+        int $idStorageLocation,
+        string $barcode,
+        ): object
     {
         $defaultQuantity = 0;
 

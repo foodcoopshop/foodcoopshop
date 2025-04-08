@@ -115,7 +115,7 @@ class CustomersTable extends AppTable
         return $validator;
     }
 
-    public function validationChangePassword($validator): Validator
+    public function validationChangePassword(Validator $validator): Validator
     {
         $validator
         ->notEmptyString('passwd_old', __('Please_enter_your_old_password.'))
@@ -218,9 +218,9 @@ class CustomersTable extends AppTable
         return $query;
     }
 
-    public function sortByVirtualField($object, $name): object
+    public function sortByVirtualField(SelectQuery $query, string $name): object
     {
-        $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC', [
+        $sortedObject = (object) Hash::sort($query->toArray(), '{n}.' . $name, 'ASC', [
             'type' => 'locale',
             'ignoreCase' => true,
         ]);
@@ -244,7 +244,7 @@ class CustomersTable extends AppTable
         ]);
     }
 
-    public function getCustomerName($tableName = 'Customers'): string
+    public function getCustomerName(string $tableName = 'Customers'): string
     {
         $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
@@ -254,13 +254,13 @@ class CustomersTable extends AppTable
         return $sql;
     }
 
-    public function addCustomersNameForOrderSelect($query): SelectQuery
+    public function addCustomersNameForOrderSelect(SelectQuery $query): SelectQuery
     {
         $sql = $this->getCustomerName();
         return $query->select(['CustomerNameForOrder' => $sql]);
     }
 
-    public function getCustomerOrderClause($direction): array
+    public function getCustomerOrderClause(string $direction): array
     {
         $result = [
             'CustomerNameForOrder' => $direction,
@@ -378,7 +378,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getPersonalTransactionCode($customerId): string
+    public function getPersonalTransactionCode(int $customerId): string
     {
         $customer = $this->find('all',
         conditions: [
@@ -416,21 +416,21 @@ class CustomersTable extends AppTable
         return 'SUBSTRING(SHA1(CONCAT(' . $this->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
     }
 
-    public function getManufacturerRecord($customer): ?Manufacturer
+    public function getManufacturerRecord(Customer $customer): ?Manufacturer
     {
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'AddressManufacturers.email' => $customer->email
+                'AddressManufacturers.email' => $customer->email,
             ],
             contain: [
-                'AddressManufacturers'
+                'AddressManufacturers',
             ]
         )->first();
         return $manufacturer;
     }
 
-    public function setNewPassword($customerId): string
+    public function setNewPassword(int $customerId): string
     {
         $ph = new DefaultPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
@@ -447,7 +447,7 @@ class CustomersTable extends AppTable
         return $newPassword;
     }
 
-    public function getManufacturerByCustomerId($customerId): ?Manufacturer
+    public function getManufacturerByCustomerId(int $customerId): ?Manufacturer
     {
         $customer = $this->find('all', conditions: [
             $this->aliasField('id_customer') => $customerId,
@@ -458,7 +458,7 @@ class CustomersTable extends AppTable
         return null;
     }
 
-    public function getManufacturerIdByCustomerId($customerId): int
+    public function getManufacturerIdByCustomerId(int $customerId): int
     {
         $manufacturer = $this->getManufacturerByCustomerId($customerId);
         if (!empty($manufacturer)) {
@@ -490,7 +490,7 @@ class CustomersTable extends AppTable
         return $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
     }
 
-    private function getProductBalanceSumForCustomerIds($customerIds): float
+    private function getProductBalanceSumForCustomerIds(array $customerIds): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -567,7 +567,7 @@ class CustomersTable extends AppTable
         return $customerIds;
     }
 
-    private function getDepositBalanceSumForCustomerIds($customerIds): float
+    private function getDepositBalanceSumForCustomerIds(array $customerIds): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');

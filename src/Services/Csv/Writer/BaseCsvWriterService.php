@@ -33,7 +33,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 
 	private array $requestQueryParams = [];
 
-	public function setFilename($filename): void
+	public function setFilename(string $filename): void
 	{
 		if (Configure::check('app.outputStringReplacements')) {
             $filename = OutputFilterService::replace($filename, Configure::read('app.outputStringReplacements'));
@@ -58,7 +58,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 
 	final public function paginate(SelectQuery $query, array $params): SelectQuery
 	{
-		$results = $query->find('all', 
+		$results = $query->find('all',
 			order: $params['order'] ?? null,
 		);
 		return $results;
@@ -98,7 +98,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		return $result;
 	}
 
-	public function forceDownload($response): Response
+	public function forceDownload(Response $response): Response
 	{
 		$response = $response->withStringBody($this->toString());
 		$response = $response->withDownload($this->filename);

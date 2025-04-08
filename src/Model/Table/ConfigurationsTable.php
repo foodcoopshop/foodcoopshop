@@ -212,7 +212,7 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    private function getLengthBetweenValidator($validator, $field, $min, $max): Validator
+    private function getLengthBetweenValidator(Validator $validator, string $field, int $min, int $max): Validator
     {
         $message = __('The_amount_of_characters_needs_to_be_between_{0}_and_{1}.', [$min, $max]);
         $validator->lengthBetween($field, [$min, $max], $message);
@@ -224,7 +224,7 @@ class ConfigurationsTable extends AppTable
         $conditions = array_merge([
             $this->aliasField('active') => APP_ON,
         ], $customConditions);
-        
+
         $configurations = $this->find('all',
             conditions: $conditions,
             order: [

@@ -300,7 +300,7 @@ class CatalogService
 
     protected function addCategoryIdFilter(SelectQuery $query, int $categoryId): SelectQuery
     {
-        if ($categoryId == '') {
+        if ($categoryId == 0) {
             return $query;
         }
 
