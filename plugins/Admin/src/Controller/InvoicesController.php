@@ -43,7 +43,7 @@ class InvoicesController extends AdminAppController
 
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
-        
+
         $customerIds = [];
         if (! empty($this->getRequest()->getQuery('customerIds'))) {
             $customerIds = h($this->getRequest()->getQuery('customerIds'));
@@ -91,7 +91,7 @@ class InvoicesController extends AdminAppController
     public function generate(): void
     {
 
-        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $customerId = (int) h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
         $customerTable = $this->getTableLocator()->get('Customers');

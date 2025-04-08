@@ -58,7 +58,17 @@ class CatalogService
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1, bool $randomize = false): array|int
+    public function getProducts(
+        int $categoryId,
+        bool $filterByNewProducts = false,
+        string $keyword = '',
+        int $productId = 0,
+        bool $countMode = false,
+        bool $getOnlyStockProducts = false,
+        int $manufacturerId = 0,
+        int $page = 1,
+        bool $randomize = false,
+        ): array|int
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -102,9 +112,9 @@ class CatalogService
 
     }
 
-    public function getProductsByManufacturerId($manufacturerId, $countMode = false, $page = 1): array|int
+    public function getProductsByManufacturerId(int $manufacturerId, bool $countMode = false, int $page = 1): array|int
     {
-        return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId, $page);
+        return $this->getProducts(0, false, '', 0, $countMode, false, $manufacturerId, $page);
     }
 
     public function getOnlyStockProductsRespectingConfiguration(bool $getOnlyStockProducts): bool
@@ -121,7 +131,15 @@ class CatalogService
 
     }
 
-    protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, bool $randomize=false): SelectQuery
+    protected function getQuery(
+        int $categoryId,
+        bool $filterByNewProducts,
+        string $keyword,
+        int $productId,
+        bool $getOnlyStockProducts,
+        int $manufacturerId,
+        bool $randomize=false,
+        ): SelectQuery
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -252,7 +270,7 @@ class CatalogService
         return $query;
     }
 
-    protected function addManufacturerIdFilter(SelectQuery $query, $manufacturerId): SelectQuery
+    protected function addManufacturerIdFilter(SelectQuery $query, int $manufacturerId): SelectQuery
     {
         if ($manufacturerId == 0) {
             return $query;
@@ -266,7 +284,7 @@ class CatalogService
 
     }
 
-    protected function addProductIdFilter(SelectQuery $query, $productId): SelectQuery
+    protected function addProductIdFilter(SelectQuery $query, int $productId): SelectQuery
     {
         if ($productId == 0) {
             return $query;
@@ -280,7 +298,7 @@ class CatalogService
 
     }
 
-    protected function addCategoryIdFilter(SelectQuery $query, $categoryId): SelectQuery
+    protected function addCategoryIdFilter(SelectQuery $query, int $categoryId): SelectQuery
     {
         if ($categoryId == '') {
             return $query;
@@ -294,7 +312,7 @@ class CatalogService
 
     }
 
-    protected function addGetOnlyStockProductsFilter(SelectQuery $query, $getOnlyStockProducts): SelectQuery
+    protected function addGetOnlyStockProductsFilter(SelectQuery $query, bool $getOnlyStockProducts): SelectQuery
     {
         if (!$getOnlyStockProducts) {
             return $query;
@@ -311,7 +329,7 @@ class CatalogService
 
     }
 
-    protected function addNewProductsFilter(SelectQuery $query, $filterByNewProducts): SelectQuery
+    protected function addNewProductsFilter(SelectQuery $query, bool $filterByNewProducts): SelectQuery
     {
         if (!$filterByNewProducts) {
             return $query;
@@ -475,12 +493,12 @@ class CatalogService
         foreach($products as $product) {
             $i++;
             $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
-            $nextDeliveryDayGlobal = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), (new DeliveryRhythmService())->getDeliveryDayByCurrentDay()); 
+            $nextDeliveryDayGlobal = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), (new DeliveryRhythmService())->getDeliveryDayByCurrentDay());
             if ($nextDeliveryDayOfProduct != $nextDeliveryDayGlobal) {
                 unset($products[$i]);
             }
         }
-        $products = $this->reindexArray($products);
+        $products = array_values($products);
         return $products;
     }
 
@@ -505,7 +523,7 @@ class CatalogService
                 unset($products[$i]);
             }
         }
-        $products = $this->reindexArray($products);
+        $products = array_values($products);
         return $products;
     }
 
@@ -553,14 +571,9 @@ class CatalogService
 
         }
 
-        $products = $this->reindexArray($products);
+        $products = array_values($products);
         return $products;
 
-    }
-
-    protected function reindexArray(array $array): array
-    {
-        return array_values($array);
     }
 
     public function getProductIdentifierField(): string
