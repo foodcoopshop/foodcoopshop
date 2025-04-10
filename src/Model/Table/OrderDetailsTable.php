@@ -548,7 +548,7 @@ class OrderDetailsTable extends AppTable
             'OrderDetails.id_customer' => $customerId,
         ])
         ->where(function (QueryExpression $exp) {
-            return $exp->in('OrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless());
+            return $exp->in('OrderDetails.order_state', OrderDetail::ORDER_STATES_CASHLESS);
         });
         return $query;
     }
@@ -628,7 +628,7 @@ class OrderDetailsTable extends AppTable
         $query = $this->find('all', conditions: [
             'OrderDetails.id_customer' => $customerId,
         ]);
-        $query = $this->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStatesCashless());
+        $query->where(['OrderDetails.order_state IN' => OrderDetail::ORDER_STATES_CASHLESS]);
         $query->where(function (QueryExpression $exp) {
             return $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.depositPaymentCashlessStartDate'));
         });
@@ -636,20 +636,6 @@ class OrderDetailsTable extends AppTable
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
         );
         return (float) $query->toArray()[0]['SumTotalDeposit'];
-    }
-
-    public function setOrderStateCondition(SelectQuery $query, array|int $orderStates): SelectQuery
-    {
-        if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
-            return $query;
-        }
-        if (!is_array($orderStates)) {
-            $orderStates = [$orderStates];
-        }
-        $query->where(function (QueryExpression $exp) use ($orderStates) {
-            return $exp->in('OrderDetails.order_state', $orderStates);
-        });
-        return $query;
     }
 
     public function getVariableMemberFeeReducedPrice(float $price, int $variableMemberFee): float

@@ -107,6 +107,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSlidersList(),
             $this->Slug->getSliderAdd(),
             $this->Slug->getSliderEdit(6),
+            $this->Slug->getStatistics(),
             $this->Slug->getStatistics(4),
             $this->Network->getSyncDomainAdd(),
             $this->Network->getSyncDomainEdit(1),

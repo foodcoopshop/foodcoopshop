@@ -240,7 +240,7 @@ class CustomersTable extends AppTable
             ]),
         ]);
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
-            (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
+            (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', OrderDetail::ORDER_STATES_CASHLESS),
         ]);
     }
 

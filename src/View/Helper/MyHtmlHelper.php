@@ -903,15 +903,6 @@ class MyHtmlHelper extends HtmlHelper
         return Configure::read('app.orderStates');
     }
 
-    public function getOrderStatesCashless(): array
-    {
-        return [
-            OrderDetail::STATE_OPEN,
-            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
-            OrderDetail::STATE_BILLED_CASHLESS,
-        ];
-    }
-
     public function getOrderStateIds(): array
     {
         return array_keys(self::getOrderStates());
