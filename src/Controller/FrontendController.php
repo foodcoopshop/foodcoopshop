@@ -60,14 +60,13 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $catalogService = new CatalogService();
-        $orderCustomerService = new OrderCustomerService();
 
         $cacheKey = join('_', [
             'categoriesForMenu',
             'date-' . date('Y-m-d'),
             'isLoggedIn-' . ((int) ($this->identity !== null)),
             'sopffdd-' . ($this->identity !== null ? $this->identity->show_only_products_for_next_week : 0),
-            'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            'fdc-' . (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()),
             'gosp-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
         ]);
 
@@ -132,7 +131,7 @@ class FrontendController extends AppController
                 'manufacturersForMenu',
                 'date-' . date('Y-m-d'),
                 'isLoggedIn-' . ((int) ($this->identity !== null)),
-                'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+                'forDifferentCustomer-' . (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()),
                 'getOnlyStockProducts-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
             ]);
             $manufacturersForMenu = Cache::read($cacheKey);
@@ -177,8 +176,7 @@ class FrontendController extends AppController
          * beforeRender() sets the customer back to the original one
          * this means, in views $identity ALWAYS returns the original customer, in controllers ALWAYS the desired orderCustomer
          */
-        $orderCustomerService = new OrderCustomerService();
-        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $this->getRequest()->getSession()->write('OriginalIdentity', $this->identity);
             $newIdentity = $this->getRequest()->getSession()->read('OrderIdentity');
             $this->Authentication->setIdentity($newIdentity);

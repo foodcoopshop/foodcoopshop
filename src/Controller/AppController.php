@@ -55,10 +55,7 @@ class AppController extends Controller
         $this->identity = $identity;
         $this->set('identity', $identity);
 
-        $orderCustomerService = new OrderCustomerService();
-        $this->set('orderCustomerService', $orderCustomerService);
-
-        if ($this->formProtectionEnabled && !$this->getRequest()->is('json') && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if ($this->formProtectionEnabled && !$this->getRequest()->is('json') && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
 

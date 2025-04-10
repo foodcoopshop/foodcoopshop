@@ -68,15 +68,14 @@ class MyHtmlHelper extends HtmlHelper
 
     public function buildElementProductCacheKey(Product $product, Customer|IdentityInterface|null $identity): string
     {
-        $orderCustomerService = new OrderCustomerService();
         $elementCacheKey = join('_', [
             'product',
             'productId' => $product->id_product,
             'isLoggedIn-' . ($identity !== null ? 0 : 1),
             'isManufacturer-' . ($identity !== null && $identity->isManufacturer() ? 1 : 0),
             'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0),
-            'isSelfServiceModeByUrl-' . ($orderCustomerService->isSelfServiceModeByUrl() ? 1 : 0),
-            'isOrderForDifferentCustomerMode-' . ($orderCustomerService->isOrderForDifferentCustomerMode() ? 1 : 0),
+            'isSelfServiceModeByUrl-' . (OrderCustomerService::isSelfServiceModeByUrl() ? 1 : 0),
+            'isOrderForDifferentCustomerMode-' . (OrderCustomerService::isOrderForDifferentCustomerMode() ? 1 : 0),
             ($identity != null ? $identity->shopping_price : Customer::SELLING_PRICE),
             'date-' . date('Y-m-d'),
         ]);

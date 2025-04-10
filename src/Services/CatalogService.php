@@ -49,7 +49,7 @@ class CatalogService
     {
         return $this->identity !== null
             && Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED')
-            && !(new OrderCustomerService())->isOrderForDifferentCustomerMode()
+            && !OrderCustomerService::isOrderForDifferentCustomerMode()
             && !Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY');
     }
 
@@ -71,12 +71,11 @@ class CatalogService
         ): array|int
     {
 
-        $orderCustomerService = new OrderCustomerService();
         $cacheKey = join('_', [
             'Catalog_getProducts',
             'categoryId-' . $categoryId,
             'isLoggedIn-' . ((int) ($this->identity !== null)),
-            'fdc-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            'fdc-' . (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()),
             'fbnp-' . $filterByNewProducts,
             'randomize-' . $randomize,
             'sopffdd-' . ($this->identity !== null ? $this->identity->show_only_products_for_next_week : 0),
@@ -121,8 +120,7 @@ class CatalogService
     {
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            $orderCustomerService = new OrderCustomerService();
-            if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+            if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
                 $getOnlyStockProducts = true;
             }
         }
@@ -454,8 +452,7 @@ class CatalogService
             return $products;
         }
 
-        $orderCustomerService = new OrderCustomerService();
-        if ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
+        if (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()) {
             return $products;
         }
 
@@ -465,7 +462,7 @@ class CatalogService
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $pickupDay = $deliveryRhytmService->getNextDeliveryDayForProduct($product, $orderCustomerService);
+            $pickupDay = $deliveryRhytmService->getNextDeliveryDayForProduct($product);
             if (empty($product->product_attributes)) {
                 $product->ordered_total_amount = $orderDetailsTable->getTotalOrderDetails($pickupDay, $product->id_product, 0);
             } else {
@@ -484,7 +481,7 @@ class CatalogService
         if ($this->identity === null ||
             !$this->showOnlyProductsForNextWeekFilterEnabled ||
             Configure::read('appDb.FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED') == 0 ||
-            (new OrderCustomerService())->isOrderForDifferentCustomerMode() ||
+            OrderCustomerService::isOrderForDifferentCustomerMode() ||
             !$this->identity->show_only_products_for_next_week) {
             return $products;
         }
@@ -492,7 +489,7 @@ class CatalogService
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
+            $nextDeliveryDayOfProduct = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product);
             $nextDeliveryDayGlobal = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), (new DeliveryRhythmService())->getDeliveryDayByCurrentDay());
             if ($nextDeliveryDayOfProduct != $nextDeliveryDayGlobal) {
                 unset($products[$i]);
@@ -530,8 +527,7 @@ class CatalogService
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak(array $products): array
     {
 
-        $orderCustomerService = new OrderCustomerService();
-        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()) {
             return $products;
         }
 
@@ -629,7 +625,7 @@ class CatalogService
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            $products[$i]->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
+            $products[$i]->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product);
 
             foreach ($product->product_attributes as &$attribute) {
 

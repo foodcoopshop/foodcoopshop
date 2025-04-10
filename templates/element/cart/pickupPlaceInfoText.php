@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -15,7 +16,9 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+use App\Services\OrderCustomerService;
+
+if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
     return false;
 }
 

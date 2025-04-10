@@ -21,7 +21,6 @@ use Cake\I18n\I18n;
 use App\View\Helper\MyTimeHelper;
 use App\Model\Entity\Product;
 use Cake\I18n\Date;
-use ProductsFrontendControllerTest;
 
 class DeliveryRhythmService
 {
@@ -247,11 +246,11 @@ class DeliveryRhythmService
         return $date;
     }
 
-    public function getNextDeliveryDayForProduct(Product $product, OrderCustomerService|ProductsFrontendControllerTest $orderCustomerService): string
+    public function getNextDeliveryDayForProduct(Product $product): string
     {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $nextDeliveryDay = '1970-01-01';
-        } elseif ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
+        } elseif (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()) {
             $nextDeliveryDay = $this->Time->getCurrentDateForDatabase();
         } else {
             $nextDeliveryDay = $this->getNextPickupDayForProduct($product);

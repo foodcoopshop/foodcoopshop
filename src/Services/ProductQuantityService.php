@@ -43,7 +43,7 @@ class ProductQuantityService
 
     public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck(Product|stdClass $product, Unit|UnitProduct|UnitProductAttribute|stdClass|array|null $unit): bool
     {
-        return (new OrderCustomerService())->isSelfServiceMode() && $this->isAmountBasedOnQuantityInUnits($product, $unit);
+        return OrderCustomerService::isSelfServiceMode() && $this->isAmountBasedOnQuantityInUnits($product, $unit);
     }
 
     public function getCombinedAmount(array|false $existingCartProduct, float $orderedQuantityInUnits): int|float

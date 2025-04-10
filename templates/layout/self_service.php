@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
 echo $this->element('layout/header');
 ?>
@@ -31,7 +32,7 @@ echo $this->element('layout/header');
     ?>
     <?php echo $this->fetch('content'); ?>
 
-    <?php if (!$orderCustomerService->isOrderForDifferentCustomerMode()) { ?>
+    <?php if (!OrderCustomerService::isOrderForDifferentCustomerMode()) { ?>
         <div class="footer">
             <div class="left-wrapper">
                 <?php

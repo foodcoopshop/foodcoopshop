@@ -232,7 +232,7 @@ class CartsController extends FrontendController
             'status' => 1,
             'msg' => 'ok'
         ];
-        if ((new OrderCustomerService())->isSelfServiceModeByReferer()) {
+        if (OrderCustomerService::isSelfServiceModeByReferer()) {
             $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
         }
         $this->set($result);
@@ -361,7 +361,7 @@ class CartsController extends FrontendController
             ];
         }
 
-        if ((new OrderCustomerService())->isSelfServiceModeByReferer()) {
+        if (OrderCustomerService::isSelfServiceModeByReferer()) {
             $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
         }
 

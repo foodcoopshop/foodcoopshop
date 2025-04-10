@@ -65,15 +65,15 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isManufacturerActiveOrManufacturerHasDeliveryBreak(OrderCustomerService $orderCustomerService, bool $active, string|null $noDeliveryDays, string $nextDeliveryDay, bool $isStockProduct, bool $stockManagementEnabled, string $productName): bool|string
+    public function isManufacturerActiveOrManufacturerHasDeliveryBreak(bool $active, string|null $noDeliveryDays, string $nextDeliveryDay, bool $isStockProduct, bool $stockManagementEnabled, string $productName): bool|string
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $hasEnabledDeliveryBreak = false;
         } else {
             $productsTable = TableRegistry::getTableLocator()->get('Products');
-            $hasEnabledDeliveryBreak = !$orderCustomerService->isOrderForDifferentCustomerMode()
-            && !$orderCustomerService->isSelfServiceModeByReferer()
+            $hasEnabledDeliveryBreak = !OrderCustomerService::isOrderForDifferentCustomerMode()
+            && !OrderCustomerService::isSelfServiceModeByReferer()
             && $productsTable->deliveryBreakManufacturerEnabled($noDeliveryDays, $nextDeliveryDay, $stockManagementEnabled, $isStockProduct);
         }
 
@@ -86,7 +86,7 @@ trait CartValidatorTrait
 
     }
 
-    public function isGlobalDeliveryBreakEnabled(OrderCustomerService $orderCustomerService, string $nextDeliveryDay, string $productName): bool|string
+    public function isGlobalDeliveryBreakEnabled(string $nextDeliveryDay, string $productName): bool|string
     {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -96,7 +96,7 @@ trait CartValidatorTrait
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $result = true;
 
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isSelfServiceModeByReferer() &&
+        if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl() && !OrderCustomerService::isSelfServiceModeByReferer() &&
             $productsTable->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
             $result = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                 [
@@ -109,10 +109,10 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function isProductBulkOrderStillPossible(OrderCustomerService $orderCustomerService, bool $isStockProduct, bool $stockManagementEnabled, string $deliveryRhythmType, Date|null $deliveryRhythmPossibleUntil, string $productName): bool|string
+    public function isProductBulkOrderStillPossible(bool $isStockProduct, bool $stockManagementEnabled, string $deliveryRhythmType, Date|null $deliveryRhythmPossibleUntil, string $productName): bool|string
     {
         $result = true;
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
             if (!($isStockProduct && $stockManagementEnabled) && $deliveryRhythmType == 'individual') {
                 if ($deliveryRhythmPossibleUntil->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     $result = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $productName . '</b>']);
@@ -122,10 +122,10 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function hasProductDeliveryRhythmTriggeredDeliveryBreak(OrderCustomerService $orderCustomerService, string $nextDeliveryDay, string $productName): bool|string
+    public function hasProductDeliveryRhythmTriggeredDeliveryBreak(string $nextDeliveryDay, string $productName): bool|string
     {
         $result = true;
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isSelfServiceModeByReferer() && $nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
+        if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl() && !OrderCustomerService::isSelfServiceModeByReferer() && $nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
             $result = __('{0}_can_be_ordered_next_week.',
                 [
                     '<b>' . $productName . '</b>'
@@ -136,10 +136,10 @@ trait CartValidatorTrait
 
     }
 
-    public function validateQuantityInUnitsForSelfServiceMode(OrderCustomerService $orderCustomerService, Product|ProductAttribute $object, string $unitObject, float $orderedQuantityInUnits): bool|string
+    public function validateQuantityInUnitsForSelfServiceMode(Product|ProductAttribute $object, string $unitObject, float $orderedQuantityInUnits): bool|string
     {
         $result = true;
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($orderCustomerService->isSelfServiceModeByReferer() || $orderCustomerService->isSelfServiceModeByUrl())) {
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && (OrderCustomerService::isSelfServiceModeByReferer() || OrderCustomerService::isSelfServiceModeByUrl())) {
             if ($object->{$unitObject} && $object->{$unitObject}->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
                 $result = __('Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button.');
             }
@@ -147,7 +147,7 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function validateMinimalCreditBalance(float $grossPrice, OrderCustomerService $orderCustomerService): bool|string
+    public function validateMinimalCreditBalance(float $grossPrice): bool|string
     {
 
         $identity = Router::getRequest()->getAttribute('identity');
@@ -158,7 +158,7 @@ trait CartValidatorTrait
         }
 
         $result = true;
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             if (!$identity->hasEnoughCreditForProduct($grossPrice)) {
                 $result = __('The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($grossPrice).'</b>',

@@ -256,11 +256,10 @@ class Customer extends AppEntity implements IdentityInterface
     public function getCartType(): int
     {
         $cartType = Cart::TYPE_WEEKLY_RHYTHM;
-        $orderCustomerService = new OrderCustomerService();
-        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $cartType = Cart::TYPE_INSTANT_ORDER;
         }
-        if ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer()) {
+        if (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer()) {
             $cartType = Cart::TYPE_SELF_SERVICE;
         }
         return $cartType;

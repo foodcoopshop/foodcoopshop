@@ -21,8 +21,6 @@ use Cake\Routing\Router;
 trait LoginTrait
 {
 
-    public bool $isSelfServiceModeByUrl = false;
-
     private function login(int $customerId): array
     {
 
@@ -107,23 +105,6 @@ trait LoginTrait
             return [];
         }
         return $identity['id_customer'];
-    }
-
-    /**
-     * used in CartsControllerTest::checkCartStatus
-     */
-    public function isOrderForDifferentCustomerMode(): ?bool
-    {
-        return $this->getSession()->read('OrderIdentity');
-    }
-
-    /**
-     * used in CartsControllerTest::checkCartStatus
-     * mocks AppAuthComponent
-     */
-    public function isSelfServiceModeByUrl(): bool
-    {
-        return $this->isSelfServiceModeByUrl;
     }
 
     public function getUser(): array
