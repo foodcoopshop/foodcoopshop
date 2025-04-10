@@ -268,7 +268,7 @@ class CustomersTable extends AppTable
         return $result;
     }
 
-    public function getModifiedProductPricesByShoppingPrice($productId, $price, $priceInclPerUnit, $deposit, $taxRate): array
+    public function getModifiedProductPricesByShoppingPrice(int $productId, string $price, float|string|null $priceInclPerUnit, float $deposit, string|float $taxRate): array
     {
 
         $result = [
@@ -317,7 +317,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getModifiedAttributePricesByShoppingPrice($productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate): array
+    public function getModifiedAttributePricesByShoppingPrice(int $productId, int $productAttributeId, string $price, string|float|null $priceInclPerUnit, float $deposit, string|float $taxRate): array
     {
 
         $result = [
@@ -533,7 +533,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getProductBalanceForCustomers($status): float
+    public function getProductBalanceForCustomers(int $status): float
     {
         $customerIds = $this->getCustomerIdsWithStatus($status);
         $productBalanceSum = $this->getProductBalanceSumForCustomerIds($customerIds);
@@ -541,14 +541,14 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getDepositBalanceForCustomers($status): float
+    public function getDepositBalanceForCustomers(int $status): float
     {
         $customerIds = $this->getCustomerIdsWithStatus($status);
         $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($customerIds);
         return $depositBalanceSum;
     }
 
-    public function getCustomerIdsWithStatus($status): array
+    public function getCustomerIdsWithStatus(int $status): array
     {
         $conditions = [
             $this->aliasField('active') => $status,
@@ -610,7 +610,7 @@ class CustomersTable extends AppTable
         return FormatterService::assureCorrectFloat($creditBalance);
     }
 
-    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = []): array
+    public function getForDropdown(bool $includeManufacturers = false, bool $includeOfflineCustomers = true, array $conditions = []): array
     {
 
         $contain = [];

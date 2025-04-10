@@ -6,6 +6,12 @@ namespace App\Services;
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Product;
+use App\Model\Entity\UnitProduct;
+use App\Model\Entity\UnitProductAttribute;
+use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Unit;
+use stdClass;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +30,7 @@ use Cake\ORM\TableRegistry;
 class ProductQuantityService
 {
 
-    public function isAmountBasedOnQuantityInUnits($product, $unitObject): bool
+    public function isAmountBasedOnQuantityInUnits(Product|stdClass $product, Unit|UnitProduct|UnitProductAttribute|stdClass|array|null $unit): bool
     {
         if (empty($product->manufacturer)) {
             throw new InvalidParameterException('manufacturer must not be empty');
@@ -32,15 +38,15 @@ class ProductQuantityService
 
         return $product->is_stock_product &&
                $product->manufacturer->stock_management_enabled  &&
-               (!empty($unitObject) && $unitObject->price_per_unit_enabled && $unitObject->use_weight_as_amount);
+               (!empty($unit) && $unit->price_per_unit_enabled && $unit->use_weight_as_amount);
     }
 
-    public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject): bool
+    public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck(Product|stdClass $product, Unit|UnitProduct|UnitProductAttribute|stdClass|array|null $unit): bool
     {
-        return (new OrderCustomerService())->isSelfServiceMode() && $this->isAmountBasedOnQuantityInUnits($product, $unitObject);
+        return (new OrderCustomerService())->isSelfServiceMode() && $this->isAmountBasedOnQuantityInUnits($product, $unit);
     }
 
-    public function getCombinedAmount($existingCartProduct, $orderedQuantityInUnits): int|float
+    public function getCombinedAmount(array|false $existingCartProduct, float $orderedQuantityInUnits): int|float
     {
         $combinedAmount = $orderedQuantityInUnits;
         if ($existingCartProduct) {
@@ -49,7 +55,7 @@ class ProductQuantityService
         return $combinedAmount;
     }
 
-    public function getFormattedAmount($isAmountBasedOnQuantityInUnits, $amount, $unitName): string
+    public function getFormattedAmount(bool $isAmountBasedOnQuantityInUnits, float|string $amount, string $unitName): string
     {
         if ($isAmountBasedOnQuantityInUnits) {
             return Configure::read('app.numberHelper')->formatUnitAsDecimal($amount) .  ' ' . $unitName;
@@ -57,7 +63,7 @@ class ProductQuantityService
         return  Configure::read('app.numberHelper')->formatAsDecimal($amount, 0);
     }
 
-    public function changeStockAvailable($orderDetail, $increaseQuantity): int|float
+    public function changeStockAvailable(OrderDetail $orderDetail, float|string $increaseQuantity): int|float
     {
         $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailable = $stockAvailablesTable->find('all',

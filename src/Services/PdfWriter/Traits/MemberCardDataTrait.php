@@ -22,7 +22,7 @@ use Cake\ORM\Query\SelectQuery;
 trait MemberCardDataTrait
 {
 
-    public function getMemberCardCustomerData($customerIds): SelectQuery
+    public function getMemberCardCustomerData(array $customerIds): SelectQuery
     {
 
         if (empty($customerIds)) {

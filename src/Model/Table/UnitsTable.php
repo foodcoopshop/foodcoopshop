@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use Cake\Validation\Validator;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Datasource\EntityInterface;
+use App\Model\Entity\Unit;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -89,7 +90,7 @@ class UnitsTable extends AppTable
         return $result;
     }
 
-    public function getUnitsObject($productId, $productAttributeId): ?EntityInterface
+    public function getUnitsObject($productId, $productAttributeId): ?Unit
     {
         $unitProductConditions = [
             'Units.id_product' => $productId,
