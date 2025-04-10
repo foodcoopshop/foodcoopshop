@@ -178,7 +178,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         )->first();
-        $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
+        $nextDeliveryDay = (new DeliveryRhythmService())->getNextPickupDayForProduct($product);
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
@@ -195,7 +195,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         )->first();
-        $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
+        $nextDeliveryDay = (new DeliveryRhythmService())->getNextPickupDayForProduct($product);
 
         $orderDetailsTable->updateAll(
             ['pickup_day' => $nextDeliveryDay],

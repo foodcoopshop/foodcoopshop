@@ -108,7 +108,6 @@ class CartService
         $cartType = $this->identity->getCartType();
         $userIdForActionLog = $this->identity->getId();
 
-        $orderCustomerService = new OrderCustomerService();
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         switch($cartType) {
             case Cart::TYPE_WEEKLY_RHYTHM;
@@ -136,7 +135,7 @@ class CartService
                 $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                 $messageForActionLog = $message;
                 $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart);
-                if (!($orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
+                if (!(OrderCustomerService::isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                 }
                 break;
@@ -147,7 +146,7 @@ class CartService
                     $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
                     $invoiceData = $invoicesTable->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
 
-                    if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+                    if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
                         $paidInCash = 0;
                         if ($this->identity->isSelfServiceCustomer()) {
                             $paidInCash = 1;
@@ -177,7 +176,7 @@ class CartService
                 }
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
 
-                if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+                if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
                     $userIdForActionLog = $this->request->getSession()->read('OriginalIdentity')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
                         $this->request->getSession()->read('OriginalIdentity')['name'],
@@ -227,8 +226,7 @@ class CartService
 
         $cartErrors = [];
 
-        $orderCustomerService = new OrderCustomerService();
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             if ($this->identity->getCreditBalanceMinusCurrentCartSum() < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) {
                 $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getCreditBalanceMinusCurrentCartSum()).'</b>',
@@ -256,7 +254,7 @@ class CartService
                 contain: $contain,
             )->first();
 
-            $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
+            $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;
@@ -268,7 +266,7 @@ class CartService
             $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'] ?? -1;
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
             if ($isAmountBasedOnQuantityInUnits) {
-                if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+                if ($orderedQuantityInUnits == -1 && !OrderCustomerService::isSelfServiceMode()) {
                     $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $cartProduct['amount'];
                 }
             }
@@ -368,13 +366,12 @@ class CartService
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($orderCustomerService, $product->next_delivery_day, $product->name);
+            $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($product->next_delivery_day, $product->name);
             if ($message !== true) {
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
-                $orderCustomerService,
                 $product->manufacturer->active,
                 $product->manufacturer->no_delivery_days,
                 $product->next_delivery_day,
@@ -388,7 +385,6 @@ class CartService
             }
 
             $message = $this->isProductBulkOrderStillPossible(
-                $orderCustomerService,
                 (bool) $product->manufacturer->stock_management_enabled,
                 (bool) $product->is_stock_product,
                 $product->delivery_rhythm_type,
@@ -400,7 +396,7 @@ class CartService
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $product->next_delivery_day, $product->name);
+            $message = $this->isGlobalDeliveryBreakEnabled($product->next_delivery_day, $product->name);
             if ($message !== true) {
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -524,7 +520,7 @@ class CartService
         }
 
         if ($this->identity->getCartType() == Cart::TYPE_SELF_SERVICE
-            && $orderCustomerService->isOrderForDifferentCustomerMode()) {
+            && OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $options['validate'] = 'selfServiceForDifferentCustomer';
         }
 
@@ -628,9 +624,7 @@ class CartService
     private function sendInstantOrderNotificationToManufacturers(array $cartProducts): array
     {
 
-        $orderCustomerService = new OrderCustomerService();
-
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        if (!OrderCustomerService::isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             return [];
         }
 

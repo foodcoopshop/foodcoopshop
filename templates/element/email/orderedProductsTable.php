@@ -87,8 +87,7 @@ if ($depositSum > 0) {
                 <?php
                 echo $product['productName'];
                 $unity = '';
-                $orderCustomerService = new OrderCustomerService();
-                if (isset($product['orderedQuantityInUnits']) &&  $product['orderedQuantityInUnits'] > 0 && $orderCustomerService->isSelfServiceMode()) {
+                if (isset($product['orderedQuantityInUnits']) &&  $product['orderedQuantityInUnits'] > 0 && OrderCustomerService::isSelfServiceMode()) {
                     $unity = $this->MyNumber->formatUnitAsDecimal($product['orderedQuantityInUnits']) . ' ' . $product['unitName'];
                 } else {
                     $unity = $product['unity_with_unit'];

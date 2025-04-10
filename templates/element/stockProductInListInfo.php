@@ -16,8 +16,9 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
-if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
     return;
 }
 

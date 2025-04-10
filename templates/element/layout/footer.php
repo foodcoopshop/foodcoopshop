@@ -15,12 +15,13 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
     echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
 
 
-    if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+    if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".Helper.initShowLoaderOnContentChange();"
         ]);

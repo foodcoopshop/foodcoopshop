@@ -60,7 +60,7 @@ class CartsTable extends AppTable
     {
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
 
-        if (Configure::read('app.selfServiceEasyModeEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
+        if (Configure::read('app.selfServiceEasyModeEnabled') && OrderCustomerService::isSelfServiceMode()) {
             return $validator;
         }
 
@@ -156,9 +156,8 @@ class CartsTable extends AppTable
             ]
         )->toArray();
 
-        $orderCustomerService = new OrderCustomerService();
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId, $orderCustomerService);
+            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId);
         }
 
         $preparedCart = [
@@ -190,7 +189,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
+            $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product);
             if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
                 $dateFormattedWithWeekday = __('Delivery_break');
             } else {
@@ -432,8 +431,8 @@ class CartsTable extends AppTable
             $productData['quantityInUnits'] = $unitProduct->quantity_in_units ?? 0;
             $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
-            $orderCustomerService = new OrderCustomerService();
-            if (!is_null($orderedQuantityInUnits) && $orderCustomerService->isSelfServiceMode())  {
+
+            if (!is_null($orderedQuantityInUnits) && OrderCustomerService::isSelfServiceMode())  {
                 $productQuantityInUnits = $orderedQuantityInUnits;
                 $markAsSaved = APP_ON;
             }
@@ -536,8 +535,8 @@ class CartsTable extends AppTable
             $productData['quantityInUnits'] = isset($unitProductAttribute->quantity_in_units) ? $unitProductAttribute->quantity_in_units : 0;
             $productQuantityInUnits = $unitProductAttribute->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
-            $orderCustomerService = new OrderCustomerService();
-            if (!is_null($orderedQuantityInUnits) &&  $orderCustomerService->isSelfServiceMode()) {
+
+            if (!is_null($orderedQuantityInUnits) &&  OrderCustomerService::isSelfServiceMode()) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
                 $markAsSaved = APP_ON;
             }
