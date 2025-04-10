@@ -61,7 +61,7 @@ class SendOrderListsCommand extends AppCommand
         $allOrderDetails = $orderDetailsTable->getOrderDetailsForSendingOrderLists(
             $pickupDay,
             $this->cronjobRunDay,
-            Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
+            (bool) Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
         );
 
         // 3) add up the order detail by manufacturer
@@ -214,7 +214,7 @@ class SendOrderListsCommand extends AppCommand
             if (!is_null($stockAvailableObject->default_quantity_after_sending_order_lists) && $stockAvailableObject->quantity != $stockAvailableObject->default_quantity_after_sending_order_lists) {
                 $productsToSave[] = [
                     $compositeProductId => [
-                        'quantity' => $stockAvailableObject->default_quantity_after_sending_order_lists
+                        'quantity' => $stockAvailableObject->default_quantity_after_sending_order_lists,
                     ]
                 ];
             }
