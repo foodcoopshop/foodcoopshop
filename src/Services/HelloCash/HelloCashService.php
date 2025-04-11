@@ -266,7 +266,7 @@ class HelloCashService
         return $taxRates;
     }
 
-    protected function createOrUpdateUser($customerId): int
+    protected function createOrUpdateUser($customerId): ?int
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
