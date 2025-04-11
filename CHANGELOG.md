@@ -11,6 +11,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen / Verbesserungen
 - Bestellungen können ja auch erst am Wochenende abgeholt werden, deswegen bleibt im Admin-Bereich unter "Bestellungen" der vergangene Freitag auch am Samstag und Sonntag als Abholtag ausgewählt. [I#1125](https://github.com/foodcoopshop/foodcoopshop/issues/1125) / [PR#1133](https://github.com/foodcoopshop/foodcoopshop/pull/1133) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Beim Eintragen von Pfand gibt es jetzt eine Obergrenze pro Eintragung. Ein Überschreiten ist möglich, muss aber extra bestätigt werden. Außerdem wird überprüft, ob ein Mitglied mehr Pfand zurückgeben möchte als es insgesamt gekauft hat. Weitere Obergrenzen gelten jetzt auch für Guthaben-Aufladungen, Pfand-Ausgleichszahlungen und Guthaben-Rückzahlungen. [I#1126](https://github.com/foodcoopshop/foodcoopshop/issues/1126) / [PR#1135](https://github.com/foodcoopshop/foodcoopshop/pull/1135) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bei den Hersteller-Einstellungen kann jetzt ein Mindestbestellwert eingetragen werden. Wird dieser nicht erreicht, werden die Produkte automatisch storniert und keine Bestellliste versendet. [I#1004](https://github.com/foodcoopshop/foodcoopshop/issues/1004) / [PR#xxx](https://github.com/foodcoopshop/foodcoopshop/pull/xxx) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v4.1
