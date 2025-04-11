@@ -63,6 +63,9 @@ class ManufacturersTable extends AppTable
         if (isset($data['send_order_list_cc'])) {
             $data['send_order_list_cc'] = StringComponent::removeWhitespace($data['send_order_list_cc']);
         }
+        if (isset($data['min_order_value'] ) && $data['min_order_value'] == '') {
+            $data['min_order_value'] = 0;
+        }
     }
 
     public function validationDefault(Validator $validator): Validator
@@ -99,7 +102,8 @@ class ManufacturersTable extends AppTable
             'provider' => 'table',
             'rule' => 'noDeliveryDaysOrdersExist'
         ]);
-
+        $validator->allowEmptyString('min_order_value');
+        $validator->range('min_order_value', [-1, 501], __('Please_enter_a_number_between_{0}_and_{1}.', [0,500]));
         return $validator;
     }
 

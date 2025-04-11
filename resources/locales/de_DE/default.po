@@ -3160,3 +3160,12 @@ msgstr "Filter \"Nur Produkte für diese Woche anzeigen?\" aktiv?"
 
 msgid "Configuration_subtext_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
 msgstr "Der Filter wird überhalb der Produkt-Kategorien im Produktkatalog (beim Bestellen) angezeigt; empfehlenswert bei vielen Produkten mit mehrwöchigen Lieferrhythmus."
+
+msgid "Minimum order value not reached"
+msgstr "Mindestbestellwert nicht erreicht"
+
+msgid "Minimal order value"
+msgstr "Mindestbestellwert"
+
+msgid "If this sum of all orders for a given period is less, products are automatically cancelled and no order list is sent."
+msgstr "Wenn der Mindestbestellwert nicht erreicht wird, werden die Produkte automatisch storniert und keine Bestellliste versendet."

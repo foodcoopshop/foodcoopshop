@@ -249,6 +249,11 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         'escape' => false
         ]);
     }
+
+    echo $this->Form->control('Manufacturers.min_order_value', [
+        'label' => __d('admin', 'Minimal order value').' <span class="after small">'.__d('admin', 'If this sum of all orders for a given period is less, products are automatically cancelled and no order list is sent.').'</a></span>',
+        'escape' => false
+        ]);
     
     echo $this->Form->end();
 

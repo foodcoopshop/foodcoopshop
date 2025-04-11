@@ -6,6 +6,7 @@ namespace Admin\Traits\OrderDetails;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\OrderDetailUnit;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,14 +31,14 @@ trait UpdateOrderDetailsTrait
             'product_quantity_in_units' => $productQuantity,
             'mark_as_saved' => 1,
         ];
-        $orderDetailUnitsTable = $this->getTableLocator()->get('OrderDetailUnits');
+        $orderDetailUnitsTable = TableRegistry::getTableLocator()->get('OrderDetailUnits');
         $patchedEntity = $orderDetailUnitsTable->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save);
         $orderDetailUnitsTable->save($patchedEntity);
     }
 
     private function changeOrderDetailPurchasePrice(Entity $purchasePriceObject, float $productPurchasePrice, int $productAmount): void
     {
-        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $unitPriceExcl = $productsTable->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
         $unitTaxAmount = $productsTable->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
@@ -48,7 +49,7 @@ trait UpdateOrderDetailsTrait
             'tax_unit_amount' => $unitTaxAmount,
             'tax_total_amount' => $totalTaxAmount,
         ];
-        $orderDetailPurchasePricesTable = $this->getTableLocator()->get('OrderDetailPurchasePrices');
+        $orderDetailPurchasePricesTable = TableRegistry::getTableLocator()->get('OrderDetailPurchasePrices');
         $orderDetailPurchasePricesTable->save(
             $orderDetailPurchasePricesTable->patchEntity($purchasePriceObject, $orderDetailPurchasePrice2save)
         );
@@ -76,7 +77,7 @@ trait UpdateOrderDetailsTrait
         }
 
         // do the acutal updates for increasing quantity
-        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $originalPrimaryKey = $stockAvailablesTable->getPrimaryKey();
         $stockAvailablesTable->setPrimaryKey('id_stock_available');
         $newQuantity = $quantity + $orderDetailAmountBeforeAmountChange - $orderDetail->product_amount;
