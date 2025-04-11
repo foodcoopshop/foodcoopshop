@@ -30,7 +30,10 @@ class OrderDetailCancellationService
     
     public function delete(array $orderDetailIds, string $cancellationReason): string
     {
-        $identity = Router::getRequest()->getAttribute('identity');
+        $identity = null;
+        if (Router::getRequest() !== null) {
+            $identity = Router::getRequest()->getAttribute('identity');
+        }
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $flashMessage = '';
         $message = '';
@@ -95,7 +98,7 @@ class OrderDetailCancellationService
             $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
             $sendOrderedProductDeletedNotification = $manufacturersTable->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
-            if (! $identity->isManufacturer() && $orderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
+            if (($identity !== null && !$identity->isManufacturer()) && $orderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                     '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'
@@ -123,7 +126,7 @@ class OrderDetailCancellationService
             }
 
             $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
-            $actionLogsTable->customSave('order_detail_cancelled', $identity->getId(), $orderDetail->product_id, 'products', $message);
+            $actionLogsTable->customSave('order_detail_cancelled', $identity?->getId(), $orderDetail->product_id, 'products', $message);
         }
 
         $flashMessage = $message;
