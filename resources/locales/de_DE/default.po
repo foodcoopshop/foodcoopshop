@@ -3168,4 +3168,4 @@ msgid "Minimal order value"
 msgstr "Mindestbestellwert"
 
 msgid "If this sum of all orders for a given period is less, products are automatically cancelled and no order list is sent."
-msgstr "Wenn der Mindestbestellwert nicht erreicht wird, werden die Produkte automatisch storniert und keine Bestellliste versendet."
+msgstr "Wenn dieser Wert nicht erreicht wird, werden die Produkte automatisch storniert und keine Bestellliste versendet."

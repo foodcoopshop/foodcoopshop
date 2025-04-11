@@ -62,6 +62,7 @@ body.dark .vertical.menu a {
 body.dark .ui-widget-header > a,
 body.dark .modal-content {
     border: 1px solid var(--dark-mode-main-border-color);
+    color: var(--dark-mode-main-font-color);
 }
 body.dark .btn-outline-light:not(.btn-danger),
 body.dark select,
