@@ -168,6 +168,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
                     'send_ordered_product_deleted_notification' => 1,
                     'active' => $newStatus,
+                    'min_order_value' => 10.3
                 ],
                 'referer' => '/'
             ]
@@ -207,6 +208,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $customerRecord = $manufacturersTable->getCustomerRecord($manufacturerNew->address_manufacturer->email);
         $this->assertEquals($newStatus, $customerRecord->active);
         $this->assertEquals($newStatus, $manufacturerNew->active);
+        $this->assertEquals(10.3, $manufacturerNew->min_order_value);
 
         $this->logout();
     }
