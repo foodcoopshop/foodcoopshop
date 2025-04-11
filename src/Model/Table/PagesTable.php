@@ -47,7 +47,7 @@ class PagesTable extends AppTable
         return $validator;
     }
 
-    private function flattenNestedArrayWithChildren(SelectQuery $items, string $separator = ''): array
+    private function flattenNestedArrayWithChildren(SelectQuery|array $items, string $separator = ''): array
     {
         foreach ($items as $item) {
             $statusString = '';
