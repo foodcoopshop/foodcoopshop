@@ -43,12 +43,21 @@ class UnitsTable extends AppTable
         return $validator;
     }
 
-    public function isValidName($value, array $context): bool
+    public function isValidName(string $value, array $context): bool
     {
         return in_array($value, ['kg', 'g', 'l'], true);
     }
 
-    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits, $useWeightAsAmount): EntityInterface|false
+    public function saveUnits(
+        int $productId,
+        int $productAttributeId,
+        bool|int|string $pricePerUnitEnabled,
+        string|float $priceInclPerUnit,
+        string $name,
+        string|int $amount,
+        string|float $quantityInUnits,
+        bool|int|string $useWeightAsAmount,
+        ): EntityInterface|false
     {
 
         if ($productAttributeId > 0) {
@@ -57,10 +66,12 @@ class UnitsTable extends AppTable
 
         $idCondition = [
             'id_product' => $productId,
-            'id_product_attribute' => $productAttributeId
+            'id_product_attribute' => $productAttributeId,
         ];
 
-        $entity = $this->find('all', conditions: $idCondition)->first();
+        $entity = $this->find('all',
+            conditions: $idCondition,
+        )->first();
 
         if (empty($entity)) {
             $entity = $this->newEntity($idCondition);
@@ -90,7 +101,7 @@ class UnitsTable extends AppTable
         return $result;
     }
 
-    public function getUnitsObject($productId, $productAttributeId): ?Unit
+    public function getUnitsObject(int $productId, int $productAttributeId): ?Unit
     {
         $unitProductConditions = [
             'Units.id_product' => $productId,

@@ -31,7 +31,7 @@ class SendInvoiceToCustomerService
     public string $invoiceDate;
     public int $invoiceId;
     public float $invoiceSumPriceIncl;
-    public mixed $paidInCash;
+    public bool|int|string $paidInCash;
     public bool $isCancellationInvoice;
     public ?int $originalInvoiceId;
 
