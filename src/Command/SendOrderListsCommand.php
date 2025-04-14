@@ -112,6 +112,7 @@ class SendOrderListsCommand extends AppCommand
                 $groupedOrderDetails[$formattedPickupDay][] = $orderDetail;
             }
 
+            // cancel order details if minimum order value is not reached
             foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
                 $orderDetailPriceSum = array_sum(Hash::extract($orderDetails, '{n}.total_price_tax_incl'));
                 if ($orderDetailPriceSum < $manufacturer->min_order_value) {
