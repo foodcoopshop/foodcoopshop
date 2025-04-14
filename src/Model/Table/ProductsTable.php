@@ -1181,7 +1181,7 @@ class ProductsTable extends AppTable
         $productAttributesTable->save($productAttributeEntity);
     }
 
-    private function checkImageContentType($image): void
+    private function checkImageContentType(string $image): void
     {
         $mimeContentType = mime_content_type($image);
         if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
