@@ -650,7 +650,7 @@ class ProductsTable extends AppTable
         array|string $productIds,
         int|string $manufacturerId,
         string $active,
-        string $categoryId = '',
+        string|array $categoryId = '',
         bool $addProductNameToAttributes = false,
         ?Controller $controller = null,
         ): array
@@ -1285,7 +1285,7 @@ class ProductsTable extends AppTable
         string  $description,
         string $unity,
         int|string $isDeclarationOk,
-        int $idStorageLocation,
+        int|string $idStorageLocation,
         string $barcode,
         ): object
     {
