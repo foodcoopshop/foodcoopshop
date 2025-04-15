@@ -378,7 +378,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getPersonalTransactionCode(int $customerId): string
+    public function getPersonalTransactionCode(int|string $customerId): string
     {
         $customer = $this->find('all',
         conditions: [

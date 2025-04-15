@@ -59,7 +59,7 @@ class CatalogService
     }
 
     public function getProducts(
-        int $categoryId,
+        int|string $categoryId,
         bool $filterByNewProducts = false,
         string $keyword = '',
         int $productId = 0,
