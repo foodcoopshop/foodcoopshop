@@ -288,7 +288,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function addCustomerPayment(int $customerId, float|string $amount, string $type, bool $applyAmountTresholdCheck): ?object
+    protected function addCustomerPayment(int $customerId, float|string $amount, string|int $type, bool $applyAmountTresholdCheck): ?object
     {
         $this->ajaxPost('/admin/payments/addCustomerPayment/' . $customerId, [
             'amount' => $amount,
@@ -298,7 +298,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function addManufacturerPayment(int $manufacturerId, float|string $amount, string $type, ?string $dateAdd, string $text, bool $applyAmountTresholdCheck): ?object
+    protected function addManufacturerPayment(int $manufacturerId, float|string $amount, string|int $type, ?string $dateAdd, string $text, bool $applyAmountTresholdCheck): ?object
     {
         $this->ajaxPost('/admin/payments/addManufacturerPayment/' . $manufacturerId, [
             'amount' => $amount,
