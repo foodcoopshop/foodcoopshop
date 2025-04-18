@@ -770,8 +770,12 @@ class CartService
 
     }
 
-    private function sendConfirmationEmailToCustomerSelfService(array $cart): void
+    private function sendConfirmationEmailToCustomerSelfService(?array $cart): void
     {
+        if (is_null($cart)) {
+            return;
+        }
+        
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');

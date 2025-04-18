@@ -130,7 +130,7 @@ class CatalogService
     }
 
     protected function getQuery(
-        int $categoryId,
+        int|string $categoryId,
         bool $filterByNewProducts,
         string $keyword,
         int $productId,
