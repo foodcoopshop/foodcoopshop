@@ -136,7 +136,7 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td style="text-align:center;">';
-        $deletablePaymentTypes = ['product'];
+        $deletablePaymentTypes = [Payment::TYPE_PRODUCT];
         if ((!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) && Configure::read('app.isDepositEnabled')) {
             $deletablePaymentTypes[] = Payment::TYPE_DEPOSIT;
         }

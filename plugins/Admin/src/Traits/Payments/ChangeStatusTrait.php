@@ -62,7 +62,7 @@ trait ChangeStatusTrait
             )
         );
 
-        $actionLogType = $payment->type;
+        $actionLogType = Payment::TYPES_AS_STRING[$payment->type];
         if ($payment->type == Payment::TYPE_DEPOSIT) {
             $userType = 'customer';
             if ($payment->id_manufacturer > 0) {
