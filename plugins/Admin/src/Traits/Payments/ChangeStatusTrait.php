@@ -28,7 +28,7 @@ trait ChangeStatusTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $paymentId = $this->getRequest()->getData('paymentId');
+        $paymentId = (int) $this->getRequest()->getData('paymentId');
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $payment = $paymentsTable->find('all',
