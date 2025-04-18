@@ -26,7 +26,7 @@ trait EditPickupDayCommentTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $customerId = $this->getRequest()->getData('customerId');
+        $customerId = (int) $this->getRequest()->getData('customerId');
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
