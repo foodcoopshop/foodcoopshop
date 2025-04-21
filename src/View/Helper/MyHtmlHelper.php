@@ -564,7 +564,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
-            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !$this->paymentIsCashless())) {
+            if ($key == Payment::TYPE_DEPOSIT && (!Configure::read('app.isDepositEnabled') || !$this->paymentIsCashless())) {
                 continue;
             }
             $tabs[] = [
@@ -612,7 +612,7 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
-    public function getPaymentText(string $paymentType): string
+    public function getPaymentText(int $paymentType): string
     {
         return $this->getPaymentTexts()[$paymentType];
     }

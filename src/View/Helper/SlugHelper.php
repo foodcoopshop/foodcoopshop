@@ -383,7 +383,7 @@ class SlugHelper extends Helper
         return '/admin/invoices/myInvoices';
     }
 
-    public function getReport(string $paymentType): string
+    public function getReport(int $paymentType): string
     {
         return '/admin/reports/payments/'.$paymentType;
     }

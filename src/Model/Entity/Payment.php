@@ -19,9 +19,9 @@ namespace App\Model\Entity;
 class Payment extends AppEntity
 {
 
-    const TYPE_DEPOSIT = 'deposit';
-    const TYPE_PAYBACK = 'payback';
-    const TYPE_PRODUCT = 'product';
+    const TYPE_PRODUCT = 1;
+    const TYPE_PAYBACK = 2;
+    const TYPE_DEPOSIT = 3;
 
     const TEXT_EMPTY_GLASSES = 'empty_glasses';
     const TEXT_MONEY = 'money';
@@ -45,6 +45,12 @@ class Payment extends AppEntity
     const MAX_AMOUNTS_MANUFACTURER = [
         self::TEXT_EMPTY_GLASSES => 100,
         self::TEXT_MONEY => 200,
+    ];
+
+    const TYPES_AS_STRING = [
+        self::TYPE_PRODUCT => 'product',
+        self::TYPE_PAYBACK => 'payback',
+        self::TYPE_DEPOSIT => 'deposit',
     ];
 
 }

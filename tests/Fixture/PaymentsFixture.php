@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
+use App\Model\Entity\Payment;
+
 class PaymentsFixture extends AppFixture
 {
     public string $table = 'fcs_payments';
@@ -26,7 +28,7 @@ class PaymentsFixture extends AppFixture
             'id_payment' => 1,
             'id_customer' => 92,
             'id_manufacturer' => 0,
-            'type' => 'product',
+            'type' => Payment::TYPE_PRODUCT,
             'amount' => 100.00,
             'text' => '',
             'date_add' => '2018-07-03 20:00:20',
@@ -44,7 +46,7 @@ class PaymentsFixture extends AppFixture
             'id_payment' => 2,
             'id_customer' => 87,
             'id_manufacturer' => 0,
-            'type' => 'product',
+            'type' => Payment::TYPE_PRODUCT,
             'amount' => 100000.00,
             'text' => '',
             'date_add' => '2020-12-09 20:00:20',

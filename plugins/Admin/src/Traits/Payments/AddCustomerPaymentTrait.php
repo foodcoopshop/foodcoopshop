@@ -28,7 +28,7 @@ trait AddCustomerPaymentTrait
 
     public function addCustomerPayment(int $customerId): ?Response
     {
-        $type = $this->getRequest()->getData('type');
+        $type = (int) $this->getRequest()->getData('type');
         
         if (!in_array($type, Payment::ALLOWED_CUSTOMER_TYPES)) {
             throw new \Exception('payment type not valid: ' . $type);
@@ -132,7 +132,7 @@ trait AddCustomerPaymentTrait
             '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
         ]);
 
-        $actionLogType = 'payment_' . $type . '_added';
+        $actionLogType = 'payment_' . Payment::TYPES_AS_STRING[$type] . '_added';
         if ($type == Payment::TYPE_DEPOSIT) {
             $actionLogType = 'payment_deposit_customer_added';
         }

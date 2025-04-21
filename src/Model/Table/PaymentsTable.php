@@ -133,7 +133,7 @@ class PaymentsTable extends AppTable
         if (!is_null($manufacturerId)) {
             $conditions['Payments.id_manufacturer'] = $manufacturerId;
         }
-        $conditions['Payments.type'] = 'deposit';
+        $conditions['Payments.type'] = Payment::TYPE_DEPOSIT;
         return $conditions;
     }
 
@@ -176,7 +176,7 @@ class PaymentsTable extends AppTable
         $payments = $this->find('all', conditions: [
             'Payments.status' => APP_ON,
             '(Payments.invoice_id IS NULL OR Payments.invoice_id = 0)',
-            'Payments.type' => 'deposit',
+            'Payments.type' => Payment::TYPE_DEPOSIT,
             'Payments.id_manufacturer' => 0,
             'Payments.id_customer' => $customerId,
         ])->toArray();
@@ -187,7 +187,7 @@ class PaymentsTable extends AppTable
     {
         $query = $this->find('all', conditions: [
             'Payments.status' => APP_ON,
-            'Payments.type' => 'deposit',
+            'Payments.type' => Payment::TYPE_DEPOSIT,
             'Payments.id_manufacturer' => 0,
         ]);
         $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
@@ -260,7 +260,7 @@ class PaymentsTable extends AppTable
         }
     }
 
-    public function getSum(int $customerId, string $type): float
+    public function getSum(int $customerId, int $type): float
     {
         $conditions = [
             $this->aliasField('id_customer') => $customerId,

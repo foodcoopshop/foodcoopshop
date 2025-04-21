@@ -29,7 +29,7 @@ trait AddManufacturerPaymentTrait
 
     public function addManufacturerPayment(int $manufacturerId): ?Response
     {
-        $type = $this->getRequest()->getData('type');
+        $type = (int) $this->getRequest()->getData('type');
         if (!in_array($type, Payment::ALLOWED_MANUFACTURER_TYPES)) {
             throw new \Exception('payment type not valid: ' . $type);
         }

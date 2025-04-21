@@ -575,7 +575,7 @@ class CustomersTable extends AppTable
 
         $depositBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $paymentSumDeposit = $paymentsTable->getSum($customerId, 'deposit');
+            $paymentSumDeposit = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
             $depositSum = $orderDetailsTable->getSumDeposit($customerId);
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;

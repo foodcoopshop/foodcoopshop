@@ -35,7 +35,7 @@ class PaymentsController extends AdminAppController
     use ProductTrait;
     use OverviewTrait;
 
-    protected string $paymentType;
+    protected int $paymentType;
     public int|string $customerId;
 
     public function initialize(): void
