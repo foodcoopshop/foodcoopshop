@@ -83,7 +83,7 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
 
-    public function getOrderDetailsForDeliveryNotes(int $manufacturerId, string $dateFrom, string $dateTo): SelectQuery
+    public function getOrderDetailsForDeliveryNotes(int|string $manufacturerId, string $dateFrom, string $dateTo): SelectQuery
     {
         $query = $this->find('all',
         conditions: [

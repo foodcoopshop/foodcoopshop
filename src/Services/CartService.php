@@ -819,7 +819,7 @@ class CartService
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      */
-    private function sendConfirmationEmailToCustomer(array $cart, array $cartGroupedByPickupDay, array $products, array $pickupDayEntities): null
+    private function sendConfirmationEmailToCustomer(array $cart, array $cartGroupedByPickupDay, array $products, ?array $pickupDayEntities): null
     {
 
         if (!$this->identity->active) {
