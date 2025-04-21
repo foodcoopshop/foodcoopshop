@@ -43,7 +43,7 @@ trait ManufacturersFilterTrait
         return APP_ON;
     }
 
-    public function getManufacturers(int $active, string $dateFrom): SelectQuery|PaginatedInterface
+    public function getManufacturers(int|string $active, string $dateFrom): SelectQuery|PaginatedInterface
     {
 
         $conditions = [];

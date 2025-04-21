@@ -40,7 +40,7 @@ trait CustomersFilterTrait
         return null;
     }
 
-    public function getCustomers(int $active, int $year, ?bool $newsletter): array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): array
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');

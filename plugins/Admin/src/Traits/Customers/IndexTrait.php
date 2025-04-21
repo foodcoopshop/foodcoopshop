@@ -29,7 +29,7 @@ trait IndexTrait
 
     public function index(): void
     {
-        $active = (int) h($this->getRequest()->getQuery('active', $this->getDefaultActive()));
+        $active = h($this->getRequest()->getQuery('active', $this->getDefaultActive()));
         $this->set('active', $active);
 
         $year = (int) h($this->getRequest()->getQuery('year', $this->getDefaultYear()));
