@@ -824,7 +824,7 @@ class ProductsTable extends AppTable
             if (empty($product->product_attributes) && $product->gross_price == 0) {
                 $product->price_is_zero = true;
             }
-            $product->unit = null;
+            $product->unit = [];
             if (empty($product->product_attributes) && !empty($product->unit_product)) {
 
                 $product->unit = $product->unit_product;
