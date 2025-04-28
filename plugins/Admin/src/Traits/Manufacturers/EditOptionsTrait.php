@@ -35,12 +35,8 @@ trait EditOptionsTrait
         }
     }
 
-    public function editOptions($manufacturerId): void
+    public function editOptions(int $manufacturerId): void
     {
-        if ($manufacturerId === null) {
-            throw new NotFoundException;
-        }
-
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all', conditions: [
             'Manufacturers.id_manufacturer' => $manufacturerId

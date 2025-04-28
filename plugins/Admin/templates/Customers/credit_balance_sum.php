@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Services\FormatterService;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
@@ -60,10 +61,10 @@ foreach($customers as $customer) {
 echo '<tr>';
     echo '<td><b>Summe gesamt:</b></td>';
     echo '<td class="' . ($sums['credit_balance'] < 0 ? 'negative' : '') . '">';
-        echo '<b>' . $this->Number->formatAsCurrency($sums['credit_balance']) . '</b>';
+        echo '<b>' . $this->Number->formatAsCurrency(FormatterService::assureCorrectFloat($sums['credit_balance'])) . '</b>';
     echo '</td>';
     echo '<td class="' . ($sums['deposit_delta'] < 0 ? 'negative' : '') . '">';
-        echo '<b>' . $this->Number->formatAsCurrency($sums['deposit_delta']) . '</b>';
+        echo '<b>' . $this->Number->formatAsCurrency(FormatterService::assureCorrectFloat($sums['deposit_delta'])) . '</b>';
     echo '</td>';
 echo '</tr>';
 

@@ -107,6 +107,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSlidersList(),
             $this->Slug->getSliderAdd(),
             $this->Slug->getSliderEdit(6),
+            $this->Slug->getStatistics(),
             $this->Slug->getStatistics(4),
             $this->Network->getSyncDomainAdd(),
             $this->Network->getSyncDomainEdit(1),
@@ -240,7 +241,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    protected function assertPagesFor404($testPages): void
+    protected function assertPagesFor404(array $testPages): void
     {
         foreach ($testPages as $url) {
             $this->get($url);
@@ -248,7 +249,7 @@ class PagesControllerTest extends AppCakeTestCase
         }
     }
 
-    protected function changePage($pageId, $isPrivate = 0, $active = 1): void
+    protected function changePage(int $pageId, int $isPrivate = 0, int $active = 1): void
     {
         $pagesTable = $this->getTableLocator()->get('Pages');
         $page = $pagesTable->get($pageId);

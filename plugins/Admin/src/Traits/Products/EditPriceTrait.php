@@ -24,7 +24,7 @@ use Cake\Http\Response;
 trait EditPriceTrait
 {
 
-    private function applyPriceChangeToOpenOrders($ids, $price): string
+    private function applyPriceChangeToOpenOrders(array $ids, float $price): string
     {
         $changeOpenOrderDetailPrice = (bool) $this->getRequest()->getData('priceChangeOpenOrderDetails');
         if (!$changeOpenOrderDetailPrice) {

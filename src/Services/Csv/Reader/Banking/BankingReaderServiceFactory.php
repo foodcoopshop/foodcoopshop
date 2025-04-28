@@ -27,7 +27,7 @@ class BankingReaderServiceFactory {
 		'BankBurgenland'  => BankBurgenlandBankingReaderService::class,
 	];
 
-	public static function get($alias): string
+	public static function get(string $alias): string
 	{
 		return self::MAP[$alias];
 	}

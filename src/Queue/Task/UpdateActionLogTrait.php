@@ -22,7 +22,7 @@ use Cake\ORM\TableRegistry;
 trait UpdateActionLogTrait
 {
 
-    public function updateActionLogFailure($actionLogId, $identifier, $jobId, $errorMessage): void
+    public function updateActionLogFailure(int $actionLogId, string $identifier, int $jobId, string $errorMessage): void
     {
 
         $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
@@ -42,7 +42,7 @@ trait UpdateActionLogTrait
 
     }
 
-    public function updateActionLogSuccess($actionLogId, $identifier, $jobId): void
+    public function updateActionLogSuccess(int $actionLogId, string $identifier, int $jobId): void
     {
 
         $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');

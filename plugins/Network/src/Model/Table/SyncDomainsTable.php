@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Network\Model\Table;
 
 use App\Model\Table\AppTable;
+use Authorization\IdentityInterface;
 use Cake\Validation\Validator;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
@@ -44,7 +45,7 @@ class SyncDomainsTable extends AppTable
         return $validator;
     }
 
-    public function getSyncDomains($minStatus = APP_OFF): SelectQuery
+    public function getSyncDomains(int $minStatus = APP_OFF): SelectQuery
     {
         $syncDomains = $this->find('all', conditions: [
             $this->aliasField('active >=') => $minStatus,
@@ -70,7 +71,7 @@ class SyncDomainsTable extends AppTable
         return $syncDomainHosts;
     }
 
-    public function isAllowedEditManufacturerOptionsDropdown($identity): bool
+    public function isAllowedEditManufacturerOptionsDropdown(?IdentityInterface $identity): bool
     {
 
         $isAllowed = false;
@@ -93,7 +94,7 @@ class SyncDomainsTable extends AppTable
         return $isAllowed;
     }
 
-    public function getActiveManufacturerSyncDomains($enabledSyncDomains): array
+    public function getActiveManufacturerSyncDomains(?string $enabledSyncDomains): array
     {
 
         if (is_null($enabledSyncDomains)) {

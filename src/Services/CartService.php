@@ -21,6 +21,7 @@ use App\Model\Entity\OrderDetail;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Product;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,7 +46,7 @@ class CartService
     private ServerRequest $request;
     private Controller $controller;
 
-    public function __construct($controller)
+    public function __construct(Controller $controller)
     {
         $this->identity = Router::getRequest()->getAttribute('identity');
         $this->request  = Router::getRequest();
@@ -76,7 +77,14 @@ class CartService
         return $contain;
     }
 
-    protected function saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products): array
+    protected function saveCart(
+        array $cart,
+        array $orderDetails2save,
+        array $stockAvailable2saveData,
+        array $stockAvailable2saveConditions,
+        ?string $customerSelectedPickupDay,
+        array $products,
+        ): array
     {
 
         $this->saveOrderDetails($orderDetails2save);
@@ -100,7 +108,6 @@ class CartService
         $cartType = $this->identity->getCartType();
         $userIdForActionLog = $this->identity->getId();
 
-        $orderCustomerService = new OrderCustomerService();
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         switch($cartType) {
             case Cart::TYPE_WEEKLY_RHYTHM;
@@ -128,7 +135,7 @@ class CartService
                 $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                 $messageForActionLog = $message;
                 $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart);
-                if (!($orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
+                if (!(OrderCustomerService::isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                 }
                 break;
@@ -139,7 +146,7 @@ class CartService
                     $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
                     $invoiceData = $invoicesTable->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
 
-                    if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+                    if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
                         $paidInCash = 0;
                         if ($this->identity->isSelfServiceCustomer()) {
                             $paidInCash = 1;
@@ -169,7 +176,7 @@ class CartService
                 }
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
 
-                if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+                if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
                     $userIdForActionLog = $this->request->getSession()->read('OriginalIdentity')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
                         $this->request->getSession()->read('OriginalIdentity')['name'],
@@ -219,8 +226,7 @@ class CartService
 
         $cartErrors = [];
 
-        $orderCustomerService = new OrderCustomerService();
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             if ($this->identity->getCreditBalanceMinusCurrentCartSum() < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) {
                 $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getCreditBalanceMinusCurrentCartSum()).'</b>',
@@ -248,7 +254,7 @@ class CartService
                 contain: $contain,
             )->first();
 
-            $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
+            $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;
@@ -260,15 +266,15 @@ class CartService
             $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'] ?? -1;
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
             if ($isAmountBasedOnQuantityInUnits) {
-                if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+                if ($orderedQuantityInUnits == -1 && !OrderCustomerService::isSelfServiceMode()) {
                     $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $cartProduct['amount'];
                 }
             }
 
             $message = $this->isAmountAvailableProduct(
-                $product->is_stock_product,
-                $product->manufacturer->stock_management_enabled,
-                $product->stock_available->always_available,
+                (bool) $product->is_stock_product,
+                (bool) $product->manufacturer->stock_management_enabled,
+                (bool) $product->stock_available->always_available,
                 $ids['attributeId'],
                 $stockAvailableAvailableQuantity,
                 $isAmountBasedOnQuantityInUnits ? $orderedQuantityInUnits : $cartProduct['amount'],
@@ -312,9 +318,9 @@ class CartService
                         )->first();
 
                         $errorMessage = $this->isAmountAvailableAttribute(
-                            $product->is_stock_product,
-                            $product->manufacturer->stock_management_enabled,
-                            $attribute->stock_available->always_available,
+                            (bool) $product->is_stock_product,
+                            (bool) $product->manufacturer->stock_management_enabled,
+                            (bool) $attribute->stock_available->always_available,
                             $stockAvailableAvailableQuantity,
                             $cartProduct['amount'],
                             $attributeEntity->name,
@@ -360,18 +366,17 @@ class CartService
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($orderCustomerService, $product->next_delivery_day, $product->name);
+            $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($product->next_delivery_day, $product->name);
             if ($message !== true) {
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
-                $orderCustomerService,
                 $product->manufacturer->active,
                 $product->manufacturer->no_delivery_days,
                 $product->next_delivery_day,
-                $product->manufacturer->stock_management_enabled,
-                $product->is_stock_product,
+                (bool) $product->manufacturer->stock_management_enabled,
+                (bool) $product->is_stock_product,
                 $product->name,
             );
             if ($message !== true) {
@@ -380,9 +385,8 @@ class CartService
             }
 
             $message = $this->isProductBulkOrderStillPossible(
-                $orderCustomerService,
-                $product->manufacturer->stock_management_enabled,
-                $product->is_stock_product,
+                (bool) $product->manufacturer->stock_management_enabled,
+                (bool) $product->is_stock_product,
                 $product->delivery_rhythm_type,
                 $product->delivery_rhythm_order_possible_until,
                 $product->name,
@@ -392,7 +396,7 @@ class CartService
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $product->next_delivery_day, $product->name);
+            $message = $this->isGlobalDeliveryBreakEnabled($product->next_delivery_day, $product->name);
             if ($message !== true) {
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -495,16 +499,20 @@ class CartService
                     'PickupDayEntities'
                 ]
             ];
-            $fixedPickupDayRequest = [];
+
+            $preparedPickupDayEntities = [];
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
-                    $pickupDay['pickup_day'] = Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
-                    $fixedPickupDayRequest[] = $pickupDay;
+                    $preparedPickupDayEntities[] = $pickupDaysTable->newEntity([
+                        'customer_id' => $this->identity->getId(),
+                        'pickup_day' => Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']),
+                        'comment' => strip_tags($pickupDay['comment']),
+                    ]);
                 }
-                $this->controller->setRequest($this->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
                 $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
+
         }
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -512,15 +520,18 @@ class CartService
         }
 
         if ($this->identity->getCartType() == Cart::TYPE_SELF_SERVICE
-            && $orderCustomerService->isOrderForDifferentCustomerMode()) {
+            && OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $options['validate'] = 'selfServiceForDifferentCustomer';
         }
 
         $cart['Cart'] = $cartsTable->patchEntity(
             $cart['Cart'],
             $this->request->getData(),
-            $options
+            $options,
         );
+
+        // $preparedPickupDayEntities are not merged properly in $cartsTable->patchEntity above, so set the entities manually
+        $cart['Cart']->pickup_day_entities = $preparedPickupDayEntities ?? [];
 
         $formErrors = false;
         if ($cart['Cart']->hasErrors()) {
@@ -539,7 +550,7 @@ class CartService
 
     }
 
-    private function prepareOrderDetailPurchasePrices($ids, $product, $cartProduct): array
+    private function prepareOrderDetailPurchasePrices(array $ids, Product $product, array $cartProduct): array
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -602,20 +613,18 @@ class CartService
 
     }
 
-    private function saveOrderDetails($orderDetails2save): void
+    private function saveOrderDetails(array $orderDetails2save): void
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->saveMany(
-            $orderDetailsTable->newEntities($orderDetails2save)
+            $orderDetailsTable->newEntities($orderDetails2save),
         );
     }
 
-    private function sendInstantOrderNotificationToManufacturers($cartProducts): array
+    private function sendInstantOrderNotificationToManufacturers(array $cartProducts): array
     {
 
-        $orderCustomerService = new OrderCustomerService();
-
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        if (!OrderCustomerService::isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             return [];
         }
 
@@ -671,7 +680,7 @@ class CartService
         return $manufacturersThatReceivedInstantOrderNotification;
     }
 
-    private function sendStockAvailableLimitReachedEmailToManufacturer($cartId): void
+    private function sendStockAvailableLimitReachedEmailToManufacturer(int $cartId): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
@@ -761,8 +770,12 @@ class CartService
 
     }
 
-    private function sendConfirmationEmailToCustomerSelfService($cart): void
+    private function sendConfirmationEmailToCustomerSelfService(?array $cart): void
     {
+        if (is_null($cart)) {
+            return;
+        }
+        
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
@@ -775,7 +788,7 @@ class CartService
         $email->addToQueue();
     }
 
-    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities): null
+    private function sendOrderCommentNotificationToPlatformOwner(array $pickupDayEntities): null
     {
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
             return null;
@@ -806,7 +819,7 @@ class CartService
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      */
-    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities): null
+    private function sendConfirmationEmailToCustomer(array $cart, array $cartGroupedByPickupDay, array $products, ?array $pickupDayEntities): null
     {
 
         if (!$this->identity->active) {
@@ -857,7 +870,7 @@ class CartService
         return null;
     }
 
-    private function generateRightOfWithdrawalInformationAndForm($cart, $products): string
+    private function generateRightOfWithdrawalInformationAndForm(array $cart, array $products): string
     {
         $manufacturers = [];
         foreach ($products as $product) {
@@ -880,7 +893,7 @@ class CartService
         return $pdfWriter->writeAttachment();
     }
 
-    private function generateOrderConfirmation($cart): string
+    private function generateOrderConfirmation(array $cart): string
     {
 
         $manufacturers = [];

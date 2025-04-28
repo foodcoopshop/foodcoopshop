@@ -22,10 +22,8 @@ use App\Controller\Component\StringComponent;
 trait EditDefaultAttributeTrait 
 {
 
-    public function editDefaultAttribute($productId, $productAttributeId): void
+    public function editDefaultAttribute(int $productId, int $productAttributeId): void
     {
-        $productId = (int) $productId;
-        $productAttributeId = (int) $productAttributeId;
 
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->setDefaultAttributeId($productId, $productAttributeId);

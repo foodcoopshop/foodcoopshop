@@ -23,11 +23,9 @@ trait DeleteImageTrait
     /**
      * deletes both db entries and physical files (thumbs)
      */
-    public function deleteImage($productId): void
+    public function deleteImage(int $productId): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
-
-        $productId = (int) $productId;
 
         if ($productId == 0) {
             $message = 'Product ID not correct: ' . $productId;
@@ -47,20 +45,20 @@ trait DeleteImageTrait
             ],
             contain: [
                 'Images',
-                'Manufacturers'
+                'Manufacturers',
             ]
         )->first();
 
         $productsTable->changeImage(
             [
-                [$productId => 'no-image']
+                [$productId => 'no-image'],
             ]
         );
 
         $actionLogMessage = __d('admin', 'Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
             $product->image->id_image,
             '<b>' . $product->name . '</b>',
-            '<b>' . $product->manufacturer->name . '</b>'
+            '<b>' . $product->manufacturer->name . '</b>',
         ]);
 
         $this->Flash->success($actionLogMessage);

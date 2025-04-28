@@ -38,7 +38,7 @@ class PickupDaysTable extends AppTable
         return $validator;
     }
 
-    public function changeState($customerId, $pickupDay, $state): EntityInterface|false
+    public function changeStatus(int $customerId, string $pickupDay, int $state): EntityInterface|false
     {
         $result = $this->insertOrUpdate(
             [
@@ -52,7 +52,7 @@ class PickupDaysTable extends AppTable
         return $result;
     }
 
-    public function getUniquePickupDays($cartProducts): array
+    public function getUniquePickupDays(array $cartProducts): array
     {
         $uniquePickupDays = [];
         foreach($cartProducts as $cartProduct) {
@@ -63,12 +63,12 @@ class PickupDaysTable extends AppTable
         return array_unique($uniquePickupDays);
     }
 
-    public function insertOrUpdate($conditions, $data): EntityInterface|false
+    public function insertOrUpdate(array $conditions, array $data): EntityInterface|false
     {
         $this->setPrimaryKey(['customer_id', 'pickup_day']);
 
         $pickupDayEntity = $this->find('all', conditions: [
-            $conditions
+            $conditions,
         ])->first();
 
         if (empty($pickupDayEntity)) {
@@ -77,7 +77,7 @@ class PickupDaysTable extends AppTable
 
         $patchedEntity = $this->patchEntity(
             $pickupDayEntity,
-            $data
+            $data,
         );
 
         $result = $this->save($patchedEntity);

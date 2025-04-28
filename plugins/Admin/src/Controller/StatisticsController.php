@@ -112,7 +112,7 @@ class StatisticsController extends AdminAppController
         if ($lastMonths !== null) {
             $monthlySumProducts = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturerId, '');
             $firstDayOfLastOrderMonth = $orderDetailsTable->getFirstDayOfLastOrderMonth($manufacturerId);
-            $monthlySumProducts = $orderDetailsTable->addLastMonthsCondition($monthlySumProducts, $firstDayOfLastOrderMonth, $lastMonths);
+            $monthlySumProducts = $orderDetailsTable->addLastMonthsCondition($monthlySumProducts, $firstDayOfLastOrderMonth, (int) $lastMonths);
         } else {
             $monthlySumProducts = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturerId, $year);
         }
@@ -259,7 +259,7 @@ class StatisticsController extends AdminAppController
                 if ($lastMonths !== null) {
                     $monthlySumProductsQuery = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
                     /** @phpstan-ignore-next-line */
-                    $monthlySumProductsQuery = $orderDetailsTable->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, $lastMonths);
+                    $monthlySumProductsQuery = $orderDetailsTable->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, (int) $lastMonths);
                 } else {
                     $monthlySumProductsQuery = $orderDetailsTable->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
                 }

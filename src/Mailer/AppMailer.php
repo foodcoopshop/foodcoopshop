@@ -29,7 +29,7 @@ class AppMailer extends Mailer
 
     public bool $customerAnonymizationForManufacturers = true;
 
-    public function __construct($addBccBackupAddress = true)
+    public function __construct(bool $addBccBackupAddress = true)
     {
         parent::__construct(null);
 

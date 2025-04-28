@@ -91,6 +91,11 @@ class CategoriesController extends FrontendController
         $this->set('pagesCount', $pagesCount);
         $this->set('page', $page);
 
+        $category = $this->getTableLocator()->get('Categories')->newEmptyEntity();
+        $category->id_category = 0; // fake id
+        $category->description = __('Here you can find randomly selected products.');
+        $this->set('category', $category);
+
         $this->set('title_for_layout', __('Random_products'));
 
         $this->render('detail');

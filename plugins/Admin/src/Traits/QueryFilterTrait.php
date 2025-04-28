@@ -25,7 +25,7 @@ trait QueryFilterTrait
         return $this->getRequest()->getQueryParams();
     }
 
-    public function getRequestQuery($name, $default = null): mixed
+    public function getRequestQuery(string $name, ?string $default = null): mixed
     {
         return $this->getRequest()->getQuery($name, $default);
     }

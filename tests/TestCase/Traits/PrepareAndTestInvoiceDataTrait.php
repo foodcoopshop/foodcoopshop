@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Traits;
 
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,12 +22,12 @@ use App\Model\Entity\OrderDetail;
 trait PrepareAndTestInvoiceDataTrait
 {
 
-    public function generateInvoice($customerId, $paidInCash): void
+    public function generateInvoice(int $customerId, int $paidInCash): void
     {
         $this->get('/admin/invoices/generate.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');
     }
 
-    public function prepareOrdersAndPaymentsForInvoice($customerId): void
+    public function prepareOrdersAndPaymentsForInvoice(int $customerId): void
     {
 
         $pickupDay = '2018-02-02';
@@ -36,7 +37,7 @@ trait PrepareAndTestInvoiceDataTrait
         $productIdB = '348-11'; // rindfleisch + attribute
         $this->addProductToCart($productIdA, 1);
         $this->addProductToCart($productIdB, 3);
-        $this->finishCart(1, 1, '', null, $pickupDay);
+        $this->finishCart(1, 1, '', $pickupDay);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailEntityA = $orderDetailsTable->get(4);
@@ -47,12 +48,12 @@ trait PrepareAndTestInvoiceDataTrait
         $orderDetailEntityB->pickup_day = $pickupDay;
         $orderDetailsTable->save($orderDetailEntityB);
 
-        $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
-        $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
+        $this->addCustomerPayment($customerId, 2.0, Payment::TYPE_DEPOSIT, false);
+        $this->addCustomerPayment($customerId, 3.2, Payment::TYPE_DEPOSIT, false);
 
     }
 
-    public function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl): void
+    public function doAssertInvoiceTaxes(object $data, float $taxRate, float $excl, float $tax, float $incl): void
     {
         $this->assertEquals($data->tax_rate, $taxRate);
         $this->assertEquals(round($data->total_price_tax_excl, 2), $excl);
@@ -60,7 +61,7 @@ trait PrepareAndTestInvoiceDataTrait
         $this->assertEquals(round($data->total_price_tax_incl, 2), $incl);
     }
 
-    public function getAndAssertOrderDetailsAfterCancellation($orderDetailIds): void
+    public function getAndAssertOrderDetailsAfterCancellation(array $orderDetailIds): void
     {
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
@@ -82,7 +83,7 @@ trait PrepareAndTestInvoiceDataTrait
 
     }
 
-    public function getAndAssertPaymentsAfterCancellation($paymentIds): void
+    public function getAndAssertPaymentsAfterCancellation(array $paymentIds): void
     {
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -100,7 +101,7 @@ trait PrepareAndTestInvoiceDataTrait
 
     }
 
-    public function getAndAssertOrderDetailsAfterInvoiceGeneration($invoiceId, $expectedCount): void
+    public function getAndAssertOrderDetailsAfterInvoiceGeneration(int $invoiceId, int $expectedCount): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find('all',
@@ -115,7 +116,7 @@ trait PrepareAndTestInvoiceDataTrait
         }
     }
 
-    public function getAndAssertPaymentsAfterInvoiceGeneration($customerId): void
+    public function getAndAssertPaymentsAfterInvoiceGeneration(int $customerId): void
     {
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $payments = $paymentsTable->getCustomerDepositNotBilled($customerId);

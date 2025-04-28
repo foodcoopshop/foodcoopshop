@@ -40,7 +40,7 @@ class CronjobsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Cronjobs'));
     }
 
-    public function edit($cronjobId): void
+    public function edit(int $cronjobId): void
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjob = $cronjobsTable->find('available', conditions: [

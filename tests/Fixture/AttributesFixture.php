@@ -25,19 +25,19 @@ class AttributesFixture extends AppFixture
         [
             'id_attribute' => 33,
             'name' => '0,5l',
-            'can_be_used_as_unit' => 0,
+            'can_be_used_as_unit' => false,
             'active' => 1,
         ],
         [
             'id_attribute' => 35,
             'name' => '1 kg',
-            'can_be_used_as_unit' => 1,
+            'can_be_used_as_unit' => true,
             'active' => 1,
         ],
         [
             'id_attribute' => 36,
             'name' => '0,5 kg',
-            'can_be_used_as_unit' => 1,
+            'can_be_used_as_unit' => true,
             'active' => 1,
         ],
     ];

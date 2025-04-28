@@ -63,7 +63,7 @@ class NetworkHelper extends Helper
         return '/network/sync-domains/add';
     }
 
-    public function getSyncDomainEdit($syncDomainId): string
+    public function getSyncDomainEdit(int $syncDomainId): string
     {
         return '/network/sync-domains/edit/' . $syncDomainId;
     }

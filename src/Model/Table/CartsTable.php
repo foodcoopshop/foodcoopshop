@@ -3,13 +3,20 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use CartsControllerTest;
 use App\Controller\Component\StringComponent;
+use App\Model\Entity\UnitProductAttribute;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
+use Authentication\IdentityInterface;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\UnitProduct;
+use App\Model\Entity\CartProduct;
+use App\Model\Entity\DepositProduct;
+use App\Model\Entity\DepositProductAttribute;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +39,7 @@ class CartsTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_cart');
         $this->belongsTo('Customers', [
-            'foreignKey' => 'id_customer'
+            'foreignKey' => 'id_customer',
         ]);
         $this->hasMany('CartProducts', [
             'foreignKey' => 'id_cart',
@@ -43,7 +50,7 @@ class CartsTable extends AppTable
         $this->hasMany('PickupDayEntities', [
             'className' => 'PickupDays', // field has same name and would clash
             'foreignKey' => [
-                'id_customer'
+                'id_customer',
             ]
         ]);
         $this->addBehavior('Timestamp');
@@ -53,7 +60,7 @@ class CartsTable extends AppTable
     {
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
 
-        if (Configure::read('app.selfServiceEasyModeEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
+        if (Configure::read('app.selfServiceEasyModeEnabled') && OrderCustomerService::isSelfServiceMode()) {
             return $validator;
         }
 
@@ -89,7 +96,7 @@ class CartsTable extends AppTable
         return $validator;
     }
 
-    public function getAllowOnlyDefinedPickupDaysValidator(Validator $validator, $field): Validator
+    public function getAllowOnlyDefinedPickupDaysValidator(Validator $validator, string $field): Validator
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
@@ -104,12 +111,12 @@ class CartsTable extends AppTable
         return $validator;
     }
 
-    public function getProductNameWithUnity($productName, $unity): string
+    public function getProductNameWithUnity(string $productName, string $unity): string
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
 
-    public function getCart($identity, $cartType): array
+    public function getCart(IdentityInterface|CartsControllerTest $identity, int $cartType): array
     {
 
         $identity = Router::getRequest()->getAttribute('identity');
@@ -149,9 +156,8 @@ class CartsTable extends AppTable
             ]
         )->toArray();
 
-        $orderCustomerService = new OrderCustomerService();
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId, $orderCustomerService);
+            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId);
         }
 
         $preparedCart = [
@@ -183,7 +189,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
+            $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product);
             if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
                 $dateFormattedWithWeekday = __('Delivery_break');
             } else {
@@ -224,7 +230,7 @@ class CartsTable extends AppTable
         return $preparedCart;
     }
 
-    public function getCartGroupedByPickupDay($cart, $customerSelectedPickupDay=null): array
+    public function getCartGroupedByPickupDay(array $cart, ?string $customerSelectedPickupDay=null): array
     {
         $manufacturerName = [];
         $productName = [];
@@ -260,17 +266,15 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    private function addPurchasePricePerUnitProductData($productData, $unitProduct): array
+    private function addPurchasePricePerUnitProductData(array $productData, UnitProduct|UnitProductAttribute $unitProduct): array
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            if (!empty($unitProduct)) {
-                $productData['purchasePriceInclPerUnit'] = $unitProduct->purchase_price_incl_per_unit;
-            }
+            $productData['purchasePriceInclPerUnit'] = $unitProduct->purchase_price_incl_per_unit;
         }
         return $productData;
     }
 
-    private function getProductsWithUnitCount($productData): int
+    private function getProductsWithUnitCount(array $productData): int
     {
         $count = 0;
         foreach($productData as $product) {
@@ -281,12 +285,19 @@ class CartsTable extends AppTable
         return $count;
     }
 
-    public function getPricesRespectingPricePerUnit($netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate): array
+    public function getPricesRespectingPricePerUnit(
+        string|float|null $netPricePerPiece,
+        UnitProduct|UnitProductAttribute|null $unitProduct,
+        string|float $amount,
+        string|float|null $orderedQuantityInUnits,
+        DepositProduct|DepositProductAttribute|null $deposit,
+        string|float $taxRate,
+        ): array
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
 
-        if ((!empty($unitProduct) && !$unitProduct->price_per_unit_enabled ) || is_null($unitProduct)) {
+        if (is_null($unitProduct) || !$unitProduct->price_per_unit_enabled) {
 
             $grossPricePerPiece = $productsTable->getGrossPrice($netPricePerPiece, $taxRate);
             $grossPrice = $grossPricePerPiece * $amount;
@@ -336,7 +347,7 @@ class CartsTable extends AppTable
         return $prices;
     }
 
-    private function prepareMainProduct($cartProduct): array
+    private function prepareMainProduct(CartProduct $cartProduct): array
     {
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
@@ -420,8 +431,8 @@ class CartsTable extends AppTable
             $productData['quantityInUnits'] = $unitProduct->quantity_in_units ?? 0;
             $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
-            $orderCustomerService = new OrderCustomerService();
-            if (!is_null($orderedQuantityInUnits) && $orderCustomerService->isSelfServiceMode())  {
+
+            if (!is_null($orderedQuantityInUnits) && OrderCustomerService::isSelfServiceMode())  {
                 $productQuantityInUnits = $orderedQuantityInUnits;
                 $markAsSaved = APP_ON;
             }
@@ -439,7 +450,7 @@ class CartsTable extends AppTable
 
     }
 
-    private function prepareProductAttribute($cartProduct): array
+    private function prepareProductAttribute(CartProduct $cartProduct): array
     {
 
         $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
@@ -524,8 +535,8 @@ class CartsTable extends AppTable
             $productData['quantityInUnits'] = isset($unitProductAttribute->quantity_in_units) ? $unitProductAttribute->quantity_in_units : 0;
             $productQuantityInUnits = $unitProductAttribute->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
-            $orderCustomerService = new OrderCustomerService();
-            if (!is_null($orderedQuantityInUnits) &&  $orderCustomerService->isSelfServiceMode()) {
+
+            if (!is_null($orderedQuantityInUnits) &&  OrderCustomerService::isSelfServiceMode()) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
                 $markAsSaved = APP_ON;
             }

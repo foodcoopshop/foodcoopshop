@@ -10,6 +10,7 @@ use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use Cake\I18n\Date;
 use App\Model\Entity\OrderDetail;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -501,7 +502,65 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    private function assertOrderDetailState($orderDetailId, $expectedOrderState): void
+    public function testSendOrderListsIfMinOrderValueIsNotReached(): void
+    {
+        $this->changeManufacturer(5, 'min_order_value', 50);
+        $this->loginAsSuperadmin();
+
+        $this->addProductToCart(346, 10); // artischocke
+        $this->addProductToCart(163, 10); // mangold
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $cart = $this->getCartById($cartId);
+
+        $cronjobRunDay = '2019-02-27';
+        $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay(strtotime($cronjobRunDay));
+
+        $orderDetailIds = Hash::extract($cart->cart_products, '{n}.order_detail.id_order_detail');
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        foreach($orderDetailIds as $orderDetailId) {
+            $orderDetailsTable->save(
+                $orderDetailsTable->patchEntity(
+                    $orderDetailsTable->get($orderDetailId),
+                    [
+                        'pickup_day' => $pickupDay,
+                    ]
+                )
+            );
+        }
+
+        $this->exec('send_order_lists ' . $cronjobRunDay);
+        $this->runAndAssertQueue();
+
+        // assert that order details do not exist any more (cancelled)
+        $orderDetails = $orderDetailsTable->find('all', conditions: [
+            'OrderDetails.id_order_detail IN' => $orderDetailIds,
+        ])->toArray();
+        $this->assertEmpty($orderDetails);
+        $this->assertMailCount(3);
+
+        $this->assertMailSubjectContainsAt(1, 'Produkt storniert: Mangold');
+        $this->assertMailContainsAt(1, 'Mindestbestellwert nicht erreicht');
+
+        $this->assertMailSubjectContainsAt(2, 'Produkt storniert: Artischocke');
+        $this->assertMailContainsAt(2, 'Mindestbestellwert nicht erreicht');
+
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all', conditions: [
+            'type' => 'cronjob_send_order_lists'
+        ])->first();
+        $this->assertRegExpWithUnquotedString('Verschickte Bestelllisten: 0', $actionLogs->text);
+
+        $actionLogs = $actionLogsTable->find('all', conditions: [
+            'type' => 'order_detail_cancelled',
+        ])->toArray();
+        foreach($actionLogs as $actionLog) {
+            $this->assertRegExpWithUnquotedString('Mindestbestellwert nicht erreicht', $actionLog->text);
+        }
+
+    }
+
+    private function assertOrderDetailState(int $orderDetailId, int $expectedOrderState): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $newOrderDetail = $orderDetailsTable->find('all',

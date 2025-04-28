@@ -23,20 +23,15 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait OrderForDifferentCustomerTrait 
 {
 
-    protected function initOrderForDifferentCustomer($customerId): void
+    protected function initOrderForDifferentCustomer(int $customerId): void
     {
-
-        if (! $customerId) {
-            throw new RecordNotFoundException('customerId not passed');
-        }
-
         $customersTable = $this->getTableLocator()->get('Customers');
         $orderCustomer = $customersTable->find('all',
             conditions: [
-                'Customers.id_customer' => $customerId
+                'Customers.id_customer' => $customerId,
             ],
             contain: [
-                'AddressCustomers'
+                'AddressCustomers',
             ]
         )->first();
 
@@ -47,13 +42,13 @@ trait OrderForDifferentCustomerTrait
         }
     }
 
-    public function initInstantOrder($customerId): void
+    public function initInstantOrder(int $customerId): void
     {
         $this->initOrderForDifferentCustomer($customerId);
         $this->redirect('/');
     }
 
-    public function initSelfServiceOrder($customerId): void
+    public function initSelfServiceOrder(int $customerId): void
     {
         $this->initOrderForDifferentCustomer($customerId);
         $this->redirect(Configure::read('app.slugHelper')->getSelfService());

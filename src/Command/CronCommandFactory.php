@@ -32,7 +32,7 @@ class CronCommandFactory {
 		'TestCronjobWithException'    => TestCronjobWithExceptionCommand::class,
 	];
 
-	public static function get($alias): string
+	public static function get(string $alias): string
 	{
 		return self::MAP[$alias];
 	}

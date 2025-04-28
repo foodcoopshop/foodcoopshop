@@ -52,7 +52,7 @@ class StockAvailablesTable extends AppTable
         return $validator;
     }
 
-    public function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions): void
+    public function saveStockAvailable(array $stockAvailable2saveData, array $stockAvailable2saveConditions): void
     {
         $i = 0;
         foreach($stockAvailable2saveConditions as $condition) {
@@ -71,9 +71,8 @@ class StockAvailablesTable extends AppTable
         }
     }
 
-    public function updateQuantityForMainProduct($productId): void
+    public function updateQuantityForMainProduct(int $productId): void
     {
-        $productId = (int) $productId;
         if ($productId > 0) {
             $query = 'UPDATE '.$this->getTable().' AS sa1, (
                         SELECT SUM(quantity) as quantitySum
@@ -83,10 +82,10 @@ class StockAvailablesTable extends AppTable
                         GROUP BY id_product
                         ) sa2
                     SET sa1.quantity = sa2.quantitySum
-                    WHERE sa1.id_product = ' . $productId . '
+                    WHERE sa1.id_product = :productId
                         AND sa1.id_product_attribute = 0';
             $params = [
-                'productId' => $productId
+                'productId' => $productId,
             ];
             $statement = $this->getConnection()->getDriver()->prepare($query);
             $statement->execute($params);

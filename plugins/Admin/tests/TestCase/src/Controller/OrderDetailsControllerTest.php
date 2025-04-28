@@ -48,7 +48,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, $result->result->products_picked_up);
     }
 
-    private function editProductsPickedUp($customerIds, $pickupDay, $state): ?object
+    private function editProductsPickedUp(array $customerIds, string $pickupDay, int $state): ?object
     {
         $this->ajaxPost(
             '/admin/order-details/editProductsPickedUp/',

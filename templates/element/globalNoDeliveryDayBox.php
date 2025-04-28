@@ -22,8 +22,7 @@ if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     return;
 }
 
-$orderCustomerService = new OrderCustomerService();
-if ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
+if (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerService::isSelfServiceModeByUrl()) {
     return;
 }
 

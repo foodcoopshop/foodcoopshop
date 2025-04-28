@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use App\Model\Entity\Customer;
+use App\Services\OrderCustomerService;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
@@ -54,7 +55,7 @@ if ($identity->getProducts() !== null) {
         <i class="fas <?php echo $icon; ?>"></i>
         <?php echo $name; ?>
         <?php
-        if (!(Configure::read('app.selfServiceEasyModeEnabled') && $orderCustomerService->isSelfServiceMode())){
+        if (!(Configure::read('app.selfServiceEasyModeEnabled') && OrderCustomerService::isSelfServiceMode())){
         ?>
             <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
         <?php } ?>
@@ -62,7 +63,7 @@ if ($identity->getProducts() !== null) {
     <div class="inner">
 
         <?php
-        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace').".ModalOrderForDifferentCustomerCancel.init();"
             ]);
@@ -81,7 +82,7 @@ if ($identity->getProducts() !== null) {
             echo '</p>';
         }
 
-        if ($showLoadLastOrderDetailsDropdown && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if ($showLoadLastOrderDetailsDropdown && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $lastOrderDetails = $identity->getLastOrderDetailsForDropdown();
             if (!empty($lastOrderDetails)) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';

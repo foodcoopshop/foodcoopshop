@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Model\Entity\Customer;
 use App\Services\ProductQuantityService;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,7 +38,7 @@ if ($showProductPrice) {
             $product->unit_product->price_incl_per_unit,
             $product->unit_product->name,
             $product->unit_product->amount,
-            !$orderCustomerService->isSelfServiceModeByUrl()
+            !OrderCustomerService::isSelfServiceModeByUrl()
         );
     }
     echo $priceHtml;
@@ -60,7 +61,7 @@ echo $this->element('catalog/amountWrapper', [
     'stockAvailable' => $product->stock_available,
     'unitObject' => $product->unit_product,
     'hideAmountSelector' => $isStockProductOrderPossible || $isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck,
-    'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
+    'hideIsStockProductIcon' => OrderCustomerService::isSelfServiceModeByUrl(),
 ]);
 echo $this->element('catalog/cartButton', [
     'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
@@ -70,8 +71,8 @@ echo $this->element('catalog/cartButton', [
     'stockAvailableQuantityLimit' => $product->stock_available->quantity_limit,
     'stockAvailableAlwaysAvailable' => $product->stock_available->always_available,
     'hideButton' => $isStockProductOrderPossible,
-    'cartButtonLabel' => $orderCustomerService->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-    'cartButtonIcon' => $orderCustomerService->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
+    'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+    'cartButtonIcon' => OrderCustomerService::isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
 ]);
 echo $this->element('catalog/notAvailableInfo', [
     'product' => $product,
@@ -79,7 +80,7 @@ echo $this->element('catalog/notAvailableInfo', [
 ]);
 echo $this->element('catalog/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
     'showInfoText' => $isStockProductOrderPossible,
-    'keyword' => $orderCustomerService->isSelfServiceModeByUrl() ? $product->ProductIdentifier : null
+    'keyword' => OrderCustomerService::isSelfServiceModeByUrl() ? $product->ProductIdentifier : null
 ]);
 
 if ($showProductPrice) {

@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Payment;
 
 if ($identity === null || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
     return;
@@ -184,7 +185,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
         $reportSlug = null;
 
         if ($this->Html->paymentIsCashless()) {
-            $reportSlug = $this->Slug->getReport('product');
+            $reportSlug = $this->Slug->getReport(Payment::TYPE_PRODUCT);
         } else {
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                 $reportSlug = $this->Slug->getProfit();

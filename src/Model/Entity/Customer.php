@@ -205,7 +205,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->getCreditBalance() - $this->getCart()['CartProductSum'] - $this->getCart()['CartDepositSum'];
     }
 
-    public function hasEnoughCreditForProduct($grossPrice): bool
+    public function hasEnoughCreditForProduct(float $grossPrice): bool
     {
         return $this->getCreditBalanceMinusCurrentCartSum() - Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') >= $grossPrice;
     }
@@ -256,11 +256,10 @@ class Customer extends AppEntity implements IdentityInterface
     public function getCartType(): int
     {
         $cartType = Cart::TYPE_WEEKLY_RHYTHM;
-        $orderCustomerService = new OrderCustomerService();
-        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $cartType = Cart::TYPE_INSTANT_ORDER;
         }
-        if ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer()) {
+        if (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer()) {
             $cartType = Cart::TYPE_SELF_SERVICE;
         }
         return $cartType;
@@ -363,7 +362,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $manufactures;
     }
 
-    public function getProduct($productId): array|false
+    public function getProduct(int|string $productId): array|false
     {
         foreach ($this->getProducts() as $product) {
             if ($product['productId'] == $productId) {

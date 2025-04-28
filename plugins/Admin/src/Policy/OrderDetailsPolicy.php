@@ -111,7 +111,7 @@ class OrderDetailsPolicy implements RequestPolicyInterface
 
     }
 
-    private function checkOrderDetailIdAccess(int $orderDetailId, $identity): bool
+    private function checkOrderDetailIdAccess(int $orderDetailId, IdentityInterface $identity): bool
     {
         if ($identity->isCustomer() || $identity->isManufacturer()) {
             $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');

@@ -32,7 +32,7 @@ class ListTcpdfService extends AppTcpdfService
 
     public ?string $html;
 
-    public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
+    public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, int|false $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
         $this->SetTopMargin(43);
@@ -40,7 +40,7 @@ class ListTcpdfService extends AppTcpdfService
         $this->SetFontSize(10);
     }
 
-    public function prepareTaxSumData($results): array|false
+    public function prepareTaxSumData(array $results): array|false
     {
 
         $taxRates = [];
@@ -67,7 +67,7 @@ class ListTcpdfService extends AppTcpdfService
 
     }
 
-    public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false): void
+    public function renderDetailedOrderList(array $results, array $widths, array $headers, string $groupType, bool $onlyShowSums = false): void
     {
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 
@@ -232,7 +232,19 @@ class ListTcpdfService extends AppTcpdfService
         }
     }
 
-    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $unitSum, $taxRate = '', $showPricePerUnitMessage=false, $showUnitSum=false): void
+    private function getInvoiceGenerateSum(
+        string|float $amountSum,
+        string|float $priceExclSum,
+        string|float $taxSum,
+        string|float $priceInclSum,
+        array $headers,
+        array $widths,
+        string $lastObjectName,
+        array $unitSums,
+        string|float $taxRate = '',
+        bool|int $showPricePerUnitMessage=false,
+        bool|int $showUnitSum=false,
+        ): void
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -256,7 +268,7 @@ class ListTcpdfService extends AppTcpdfService
 
         $unitSumString = '';
         if ($showUnitSum) {
-            $unitSumString = Configure::read('app.pricePerUnitHelper')->getStringFromUnitSums($unitSum, ', ');
+            $unitSumString = Configure::read('app.pricePerUnitHelper')->getStringFromUnitSums($unitSums, ', ');
             if ($unitSumString != '') {
                 $unitSumString = ', ' . $unitSumString;
             }
@@ -296,12 +308,12 @@ class ListTcpdfService extends AppTcpdfService
         }
     }
 
-    public function isOrderList($headers): bool
+    public function isOrderList(array $headers): bool
     {
         return $this->getCorrectColspan($headers) == 3;
     }
 
-    public function getCorrectColspan($headers): int
+    public function getCorrectColspan(array $headers): int
     {
         $diff = 2;
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -315,7 +327,13 @@ class ListTcpdfService extends AppTcpdfService
         return $colspan;
     }
 
-    public function addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl): void
+    public function addLastSumRow(
+        array $headers,
+        string|float $sumAmount,
+        string|float|null $sumPriceExcl,
+        string|float|null $sumTax,
+        string|float|null $sumPriceIncl,
+        ): void
     {
         $colspan = $this->getCorrectColspan($headers);
 

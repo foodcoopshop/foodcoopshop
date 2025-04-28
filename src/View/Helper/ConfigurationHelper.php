@@ -25,7 +25,7 @@ use App\Model\Entity\Configuration;
  */
 class ConfigurationHelper extends Helper
 {
-    public function getConfigurationDropdownOptions($name): array
+    public function getConfigurationDropdownOptions(string $name): array
     {
         switch ($name) {
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
@@ -77,12 +77,12 @@ class ConfigurationHelper extends Helper
         ];
     }
 
-    public function getConfigurationDropdownOption($name, $value): string
+    public function getConfigurationDropdownOption(string $name, string $value): string
     {
         return self::getConfigurationDropdownOptions($name)[$value];
     }
 
-    public function getConfigurationMultipleDropdownOptions($name, $value): string
+    public function getConfigurationMultipleDropdownOptions(string $name, string $value): string
     {
         switch($name) {
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':

@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use App\Services\CatalogService;
 use Cake\ORM\Query\SelectQuery;
+use App\Model\Entity\Category;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -48,11 +49,11 @@ class CategoriesTable extends AppTable
         return $validator;
     }
 
-    private function getChildrenIds($item): array
+    private function getChildrenIds(Category $category): array
     {
         $childrenIds = [];
-        if (!empty($item->children)) {
-            foreach($item->children as $child) {
+        if (!empty($category->children)) {
+            foreach($category->children as $child) {
                 $childrenIds[] = $child->id_category;
                 if (!empty($child->children)) {
                     $childrenIds = array_merge($childrenIds, $this->getChildrenIds($child));
@@ -63,9 +64,9 @@ class CategoriesTable extends AppTable
 
     }
 
-    private function flattenNestedArrayWithChildren($array, $renderParentIdAndChildrenIdContainers, $separator = ''): array
+    private function flattenNestedArrayWithChildren(array $items, bool $renderParentIdAndChildrenIdContainers, string $separator = ''): array
     {
-        foreach ($array as $item) {
+        foreach ($items as $item) {
             $statusString = '';
             if (! $item->active) {
                 $statusString = ' ('.__('offline').')';
@@ -108,7 +109,7 @@ class CategoriesTable extends AppTable
         return $this->aliasField('id_category') . ' NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
     }
 
-    public function getThreaded($conditions = []): SelectQuery
+    public function getThreaded(array $conditions = []): SelectQuery
     {
         $conditions = array_merge($conditions, [
             $this->getExcludeCondition()
@@ -124,7 +125,12 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $showProductCount=false): array
+    public function getForSelect(
+        ?int $excludeCategoryId=null,
+        bool $showOfflineCategories=true,
+        bool $renderParentIdAndChildrenIdContainers=false,
+        bool $showProductCount=false,
+        ): array
     {
         $conditions = [];
         if ($excludeCategoryId) {
@@ -152,7 +158,7 @@ class CategoriesTable extends AppTable
         return $flattenedCategories;
     }
 
-    public function prepareTreeResultForMenu($items): array
+    public function prepareTreeResultForMenu(SelectQuery $items): array
     {
         $itemsForMenu = [];
         foreach ($items as $index => $item) {
@@ -161,15 +167,15 @@ class CategoriesTable extends AppTable
         return $itemsForMenu;
     }
 
-    private function buildItemForTree($item, $index): array
+    private function buildItemForTree(Category $category, int $index): array
     {
         $tmpMenuItem = [
-            'name' => $item->name,
-            'slug' => Configure::read('app.slugHelper')->getCategoryDetail($item->id_category, $item->name),
+            'name' => $category->name,
+            'slug' => Configure::read('app.slugHelper')->getCategoryDetail($category->id_category, $category->name),
             'children' => []
         ];
-        if (! empty($item->children)) {
-            foreach ($item->children as $index => $child) {
+        if (! empty($category->children)) {
+            foreach ($category->children as $index => $child) {
                 $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);
             }
         }

@@ -168,7 +168,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getDataForCustomerInvoice($customerId, $currentDay): Customer
+    public function getDataForCustomerInvoice(int $customerId, $currentDay): Customer
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');

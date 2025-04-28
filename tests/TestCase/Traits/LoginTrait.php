@@ -21,15 +21,13 @@ use Cake\Routing\Router;
 trait LoginTrait
 {
 
-    public bool $isSelfServiceModeByUrl = false;
-
-    private function login($userId): array
+    private function login(int $customerId): array
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
         $identity = $customerTable->find('all',
             conditions: [
-                'Customers.id_customer' => $userId,
+                'Customers.id_customer' => $customerId,
             ],
             contain: [
                 'AddressCustomers',
@@ -93,7 +91,7 @@ trait LoginTrait
         $this->get($this->Slug->getLogout());
     }
 
-    public function loginAsSuperadminAddOrderCustomerToSession($session): void
+    public function loginAsSuperadminAddOrderCustomerToSession(array $session): void
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
         $sessionData['OrderIdentity'] = $session['OrderIdentity'];
@@ -107,23 +105,6 @@ trait LoginTrait
             return [];
         }
         return $identity['id_customer'];
-    }
-
-    /**
-     * used in CartsControllerTest::checkCartStatus
-     */
-    public function isOrderForDifferentCustomerMode(): ?bool
-    {
-        return $this->getSession()->read('OrderIdentity');
-    }
-
-    /**
-     * used in CartsControllerTest::checkCartStatus
-     * mocks AppAuthComponent
-     */
-    public function isSelfServiceModeByUrl(): bool
-    {
-        return $this->isSelfServiceModeByUrl;
     }
 
     public function getUser(): array

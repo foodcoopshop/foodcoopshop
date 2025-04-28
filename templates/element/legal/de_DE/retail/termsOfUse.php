@@ -33,7 +33,7 @@ use Cake\Core\Configure;
 
 <p>2.1. Der Betreiber stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Herstellers an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller. <b>Ein Vertrag zwischen dem Nutzer und dem Hersteller kommt dann zustande, wenn der Hersteller mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
 
-<p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande (Direktverkauf).</p>
+<p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt zwischen dem Nutzer und dem Betreiber der Plattform zustande.</p>
 
 <p>2.3. Das Angebot des Betreibers ist aufgrund des teilweise schwankenden Angebotes (saisonal bedingt/unbeständige Mengen aufgrund Lieferanten-Kleinbetriebe) unverbindlich. Sollten einzelne Artikel nicht lieferbar sein, kommt der Vertrag nur über die lieferbaren Artikel zustande. Der Betreiber wird dem Nutzer ehestmöglich über nicht lieferbare Artikel informieren, im Falle nicht gelieferter Waren behält sich der Betreiber aufgrund der kurzen Zeitspanne zwischen Lieferung und Ausgabe der Ware vor, den Nutzer erst bei Abholung über die nicht lieferbaren Artikel zu informieren. Im Falle von Nicht- oder nur teilweiser Verfügbarkeit von Waren einer Bestellung behält sich der Betreiber vor, die Bestellung abzulehnen und nicht zu leisten.</p>
 

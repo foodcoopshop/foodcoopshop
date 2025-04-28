@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
+use App\Model\Entity\Tax;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -41,12 +42,8 @@ class TaxesController extends AdminAppController
         }
     }
 
-    public function edit($taxId): void
+    public function edit(int $taxId): void
     {
-        if ($taxId === null) {
-            throw new NotFoundException;
-        }
-
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $tax = $taxesTable->find('all', conditions: [
             'Taxes.id_tax' => $taxId
@@ -59,7 +56,7 @@ class TaxesController extends AdminAppController
         $this->_processForm($tax, true);
     }
 
-    private function _processForm($tax, $isEditMode): void
+    private function _processForm(Tax $tax, bool $isEditMode): void
     {
 
         $this->setFormReferer();

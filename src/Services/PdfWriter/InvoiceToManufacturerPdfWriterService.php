@@ -32,7 +32,16 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
         $this->setPdfLibrary(new ListTcpdfService());
     }
 
-    public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate, $isAnonymized): void
+    public function prepareAndSetData(
+        int $manufacturerId,
+        string $dateFrom,
+        string $dateTo,
+        string $newInvoiceNumber,
+        array $validOrderStates,
+        string $period,
+        string $invoiceDate,
+        bool $isAnonymized,
+        ): void
     {
 
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -45,12 +54,12 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
             ],
         )->first();
 
-        $productResults = $manufacturersTable->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        $productResults = $manufacturersTable->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, (bool) Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($isAnonymized) {
             $productResults = $manufacturersTable->anonymizeCustomersInInvoiceOrOrderList($productResults);
         }
 
-        $customerResults = $manufacturersTable->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        $customerResults = $manufacturersTable->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, (bool) Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($isAnonymized) {
             $customerResults = $manufacturersTable->anonymizeCustomersInInvoiceOrOrderList($customerResults);
         }

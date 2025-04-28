@@ -142,7 +142,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $this->assertResponseOk();
     }
 
-    private function deleteProductRelation($localProductId, $remoteProductId, $productName): ?object
+    private function deleteProductRelation(int $localProductId, int $remoteProductId, string $productName): ?object
     {
         $this->ajaxPost($this->Network->getDeleteProductRelation(), [
             'product' =>
@@ -156,7 +156,7 @@ class SyncsControllerTest extends AppCakeTestCase
         return $this->getJsonDecodedContent();
     }
 
-    private function saveProductRelation($localProductId, $remoteProductId, $productName, $domain): ?object
+    private function saveProductRelation(int $localProductId, int $remoteProductId, string $productName, string $domain): ?object
     {
         $this->ajaxPost($this->Network->getSaveProductRelation(), [
             'product' =>

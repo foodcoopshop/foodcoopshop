@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 trait TaxSumTableTrait
 {
 
-    public function renderTaxSumTable($taxRates): void
+    public function renderTaxSumTable(array|false $taxRates): void
     {
 
         if ($taxRates) {

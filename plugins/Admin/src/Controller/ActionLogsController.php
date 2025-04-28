@@ -40,7 +40,7 @@ class ActionLogsController extends AdminAppController
 
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = h($this->getRequest()->getQuery('customerId'));
+            $customerId = (int) h($this->getRequest()->getQuery('customerId'));
         }
         $this->set('customerId', $customerId);
 
@@ -50,7 +50,7 @@ class ActionLogsController extends AdminAppController
 
         $productId = '';
         if (! empty($this->getRequest()->getQuery('productId'))) {
-            $productId = h($this->getRequest()->getQuery('productId'));
+            $productId = (int) h($this->getRequest()->getQuery('productId'));
         }
         $this->set('productId', $productId);
 

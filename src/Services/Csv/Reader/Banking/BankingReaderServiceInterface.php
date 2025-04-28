@@ -18,7 +18,7 @@ namespace App\Services\Csv\Reader\Banking;
 
 interface BankingReaderServiceInterface {
 
-    public function checkStructureForRecord($record): bool;
+    public function checkStructureForRecord(array $record): bool;
 
     public function configureType(): void;
 

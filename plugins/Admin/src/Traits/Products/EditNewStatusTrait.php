@@ -24,9 +24,8 @@ use Cake\I18n\Date;
 trait EditNewStatusTrait
 {
 
-    public function editNewStatus($productId, $status): void
+    public function editNewStatus(int $productId, int $status): void
     {
-        $status = (int) $status;
 
         if (! in_array($status, [
             APP_OFF,

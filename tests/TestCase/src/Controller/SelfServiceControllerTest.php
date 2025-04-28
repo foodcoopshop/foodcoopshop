@@ -554,7 +554,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testProductDetailHtmlProductCatalogSelfServiceOrder(): void
     {
         $this->loginAsSuperadmin();
-        $this->isSelfServiceModeByUrl = true;
         $productId = 349;
         $this->get($this->Slug->getSelfService($productId));
         $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();

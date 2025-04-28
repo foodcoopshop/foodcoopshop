@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Customers;
 
 use Cake\Core\Configure;
+use App\Services\FormatterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -44,8 +45,8 @@ trait CreditBalanceSumTrait
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_credits_of_activated_members'),
             'count' => count($customerTable->getCustomerIdsWithStatus(APP_ON)),
-            'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => $paymentDepositDelta * -1,
+            'credit_balance' => FormatterService::assureCorrectFloat($paymentProductDelta + $paymentDepositDelta),
+            'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
             'payment_product_delta' => 0,
         ];
 
@@ -54,8 +55,8 @@ trait CreditBalanceSumTrait
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_credits_of_deactivated_members'),
             'count' => count($customerTable->getCustomerIdsWithStatus(APP_OFF)),
-            'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => $paymentDepositDelta * -1,
+            'credit_balance' => FormatterService::assureCorrectFloat($paymentProductDelta + $paymentDepositDelta),
+            'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
             'payment_product_delta' => 0,
         ];
 
@@ -64,8 +65,8 @@ trait CreditBalanceSumTrait
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_credits_of_deleted_members'),
             'count' => 0,
-            'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
+            'credit_balance' => FormatterService::assureCorrectFloat($paymentProductDelta + $paymentDepositDelta),
+            'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
             'payment_product_delta' => 0,
         ];
 
@@ -74,7 +75,7 @@ trait CreditBalanceSumTrait
             'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,
             'credit_balance' => 0,
-            'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
+            'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
             'payment_product_delta' => 0,
         ];
 

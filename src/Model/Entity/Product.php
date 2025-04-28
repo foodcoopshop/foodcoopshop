@@ -31,7 +31,7 @@ use Cake\Core\Configure;
 
     public bool $nameSetterMethodEnabled = true;
 
-    protected function _setName($value): string
+    protected function _setName(string $value): string
     {
         if ($this->nameSetterMethodEnabled) {
             return StringComponent::removeSpecialChars(strip_tags(trim($value)));
@@ -39,17 +39,17 @@ use Cake\Core\Configure;
         return $value;
     }
 
-    public function _setDescription($value): string
+    public function _setDescription(string $value): string
     {
         return StringComponent::prepareWysiwygEditorHtml($value, self::ALLOWED_TAGS_DESCRIPTION);
     }
 
-    public function _setDescriptionShort($value): string
+    public function _setDescriptionShort(string $value): string
     {
         return StringComponent::prepareWysiwygEditorHtml($value, self::ALLOWED_TAGS_DESCRIPTION_SHORT);
     }
 
-    public function _setUnity($value): string
+    public function _setUnity(string $value): string
     {
         return StringComponent::removeSpecialChars(strip_tags(trim($value)));
     }
