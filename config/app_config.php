@@ -126,8 +126,6 @@ return [
         'logoWidth' => 220, //int
         'logoMaxHeight' => 120,  // int or string 'auto'
 
-        'selfServiceClickImgFileName' => 'selfServiceClickImg.gif',
-
         /**
          * image upload sizes and suffixes
          */
