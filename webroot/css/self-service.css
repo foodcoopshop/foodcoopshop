@@ -146,6 +146,11 @@ body.self_services #content {
     background: #fff;
     padding:0 10px;
 }
+.self-service #login-form i.fa-solid.fa-hand-point-up.fa-beat {
+    font-size: 120px;
+    font-weight: 200;
+    padding: 20px 20px;
+}
 .self-service h7 {
     font-size: 16px;
     font-weight: 500;
