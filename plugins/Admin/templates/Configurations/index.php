@@ -350,6 +350,16 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.selfServiceIsAmountValidationEnabled</td>
+            <td><?php echo Configure::read('app.selfServiceIsAmountValidationEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.selfServiceEasyModeEnabled</td>
+            <td><?php echo Configure::read('app.selfServiceEasyModeEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.selfServiceModeAutoGenerateInvoice</td>
             <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>

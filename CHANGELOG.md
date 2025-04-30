@@ -14,6 +14,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Bei den Hersteller-Einstellungen kann jetzt ein Mindestbestellwert eingetragen werden. Wird dieser nicht erreicht, werden die Produkte automatisch storniert und keine Bestellliste versendet. [I#1004](https://github.com/foodcoopshop/foodcoopshop/issues/1004) / [PR#1145](https://github.com/foodcoopshop/foodcoopshop/pull/1145) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 ### Wartung / Optimierungen
 - Optimierung der Tabelle fcs_payments, führt unter anderem zu schnelleren Ladezeit der Mitglieder-Liste im Admin-Bereich. [I#1148](https://github.com/foodcoopshop/foodcoopshop/issues/1148) / [PR#1149](https://github.com/foodcoopshop/foodcoopshop/pull/1149) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+### Neue Funktionen für den Selbstbedienungs-Modus
+- Die Validerung des Lagerstandes kann jetzt deaktiviert werden. (`app.selfServiceIsAmountValidationEnabled`) [I#1129](https://github.com/foodcoopshop/foodcoopshop/issues/1129) / [PR#1132](https://github.com/foodcoopshop/foodcoopshop/pull/1132) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 
 ## v4.1
 

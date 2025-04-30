@@ -29,6 +29,10 @@ trait CartValidatorTrait
 
     public function isAmountAvailableAttribute(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, string|float $availableQuantity, string|float $amount, string $attributeName, string $productName, string $unitName = ''): bool|string
     {
+        if (!Configure::read('app.selfServiceIsAmountValidationEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
+            return true;
+        }
+        
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $availableQuantity < $amount) {
@@ -39,11 +43,16 @@ trait CartValidatorTrait
                 Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
             ]);
         }
+    
         return $result;
     }
 
     public function isAmountAvailableProduct(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, int $attributeId, string|float $availableQuantity, string|float $amount, string $productName, string $unitName = ''): bool|string
     {
+        if (!Configure::read('app.selfServiceIsAmountValidationEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
+            return true;
+        }
+        
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $attributeId == 0 && $availableQuantity < $amount) {
@@ -53,6 +62,7 @@ trait CartValidatorTrait
                 Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
             ]);
         }
+        
         return $result;
     }
 
