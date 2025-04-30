@@ -89,7 +89,7 @@ trait ProductTrait
         $payments = [];
         if (!empty($customer->payments)) {
             foreach ($customer->payments as $payment) {
-                $text = Configure::read('app.htmlHelper')->getPaymentText($payment->type);
+                $text = Configure::read('app.htmlHelper')->getPaymentText((int) $payment->type);
                 $text .= (! empty($payment->text) ? ': "' . $payment->text . '"' : '');
 
                 $payments[] = [
