@@ -1145,7 +1145,7 @@ class ProductsTable extends AppTable
         return $netPrice;
     }
 
-    public function getNetPriceForNewTaxRate(string|float $netPrice, string|float $oldTaxRate, string|float $newTaxRate): float
+    public function getNetPriceForNewTaxRate(string|float|null $netPrice, string|float $oldTaxRate, string|float $newTaxRate): float
     {
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);
