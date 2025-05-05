@@ -127,7 +127,12 @@ trait GetProductsForBackendTrait
                 ];
             }
 
-            $product = $this->addPurchasePriceRelatedInfoToProduct($product, (float) $taxRate);
+            $purchasePriceTaxRate = 0;
+            if (!empty($product->purchase_price_product)) {
+                $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
+            }
+
+            $product = $this->addPurchasePriceRelatedInfoToProduct($product, (float) $taxRate, (float) $purchasePriceTaxRate);
 
             $rowClass[] = 'main-product';
             $rowIsOdd = false;
@@ -138,95 +143,96 @@ trait GetProductsForBackendTrait
             $product->row_class = join(' ', $rowClass);
 
             $preparedProducts[] = $product;
-            $i ++;
+            $i++;
 
-            if (! empty($product->product_attributes)) {
+            if (empty($product->product_attributes)) {
+                continue;
+            }
 
-                foreach ($product->product_attributes as $attribute) {
+            foreach ($product->product_attributes as $attribute) {
 
-                    $grossPrice = 0;
-                    if (! empty($attribute->price)) {
-                        $grossPrice = $this->getGrossPrice($attribute->price, $taxRate);
-                    }
-
-                    $rowClass = [
-                        'sub-row'
-                    ];
-                    if (! $product->active) {
-                        $rowClass[] = 'deactivated';
-                    }
-
-                    if ($rowIsOdd) {
-                        $rowClass[] = 'custom-odd';
-                    }
-
-                    $priceIsZero = false;
-                    if ($grossPrice == 0) {
-                        $priceIsZero = true;
-                    }
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                        $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
-                            $attribute->product_attribute_combination->attribute->name,
-                            $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
-                            $attribute->unit_product_attribute->price_per_unit_enabled,
-                            $attribute->unit_product_attribute->quantity_in_units,
-                            $attribute->unit_product_attribute->name
-                        );
-                        $priceIsZero = false;
-                    } else {
-                        $productName = $attribute->product_attribute_combination->attribute->name;
-                        if ($addProductNameToAttributes) {
-                            $productName = $product->name . ': ' . $productName;
-                        }
-                    }
-
-                    $preparedProduct = [
-                        'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
-                        'gross_price' => $grossPrice,
-                        'active' => $product->active,
-                        'is_stock_product' => $product->is_stock_product,
-                        'price_is_zero' => $priceIsZero,
-                        'row_class' => join(' ', $rowClass),
-                        'unchanged_name' => $product->unchanged_name,
-                        'name' => $productName,
-                        'description_short' => '',
-                        'description' => '',
-                        'unity' => '',
-                        'manufacturer' => [
-                            'name' => (!empty($product->manufacturer) ? $product->manufacturer->name : ''),
-                            'stock_management_enabled' => (!empty($product->manufacturer) ? $product->manufacturer->stock_management_enabled : false),
-                        ],
-                        'default_on' => $attribute->default_on,
-                        'stock_available' => [
-                            'quantity' => $attribute->stock_available->quantity,
-                            'quantity_limit' => $attribute->stock_available->quantity_limit,
-                            'sold_out_limit' => $attribute->stock_available->sold_out_limit,
-                            'always_available' => $attribute->stock_available->always_available,
-                            'default_quantity_after_sending_order_lists' => $attribute->stock_available->default_quantity_after_sending_order_lists,
-                        ],
-                        'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
-                        'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
-                        'category' => [
-                            'names' => [],
-                            'all_products_found' => true
-                        ],
-                        'image' => null,
-                        'barcode_product' => $attribute->barcode_product_attribute,
-                    ];
-
-                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                        $attributeId = $attribute->id_product_attribute ?? 0;
-                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber((string) $attributeId, 4);
-                        $preparedProduct['image'] = $product->image;
-                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                            $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
-                        }
-                    }
-
-                    $preparedProduct = $this->addPurchasePriceRelatedInfoToAttribute($preparedProduct, $attribute, (float) $taxRate, (float) $grossPrice);
-
-                    $preparedProducts[] = $preparedProduct;
+                $grossPrice = 0;
+                if (! empty($attribute->price)) {
+                    $grossPrice = $this->getGrossPrice($attribute->price, $taxRate);
                 }
+
+                $rowClass = [
+                    'sub-row'
+                ];
+                if (! $product->active) {
+                    $rowClass[] = 'deactivated';
+                }
+
+                if ($rowIsOdd) {
+                    $rowClass[] = 'custom-odd';
+                }
+
+                $priceIsZero = false;
+                if ($grossPrice == 0) {
+                    $priceIsZero = true;
+                }
+                if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
+                        $attribute->product_attribute_combination->attribute->name,
+                        $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                        $attribute->unit_product_attribute->price_per_unit_enabled,
+                        $attribute->unit_product_attribute->quantity_in_units,
+                        $attribute->unit_product_attribute->name
+                    );
+                    $priceIsZero = false;
+                } else {
+                    $productName = $attribute->product_attribute_combination->attribute->name;
+                    if ($addProductNameToAttributes) {
+                        $productName = $product->name . ': ' . $productName;
+                    }
+                }
+
+                $preparedProduct = [
+                    'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
+                    'gross_price' => $grossPrice,
+                    'active' => $product->active,
+                    'is_stock_product' => $product->is_stock_product,
+                    'price_is_zero' => $priceIsZero,
+                    'row_class' => join(' ', $rowClass),
+                    'unchanged_name' => $product->unchanged_name,
+                    'name' => $productName,
+                    'description_short' => '',
+                    'description' => '',
+                    'unity' => '',
+                    'manufacturer' => [
+                        'name' => (!empty($product->manufacturer) ? $product->manufacturer->name : ''),
+                        'stock_management_enabled' => (!empty($product->manufacturer) ? $product->manufacturer->stock_management_enabled : false),
+                    ],
+                    'default_on' => $attribute->default_on,
+                    'stock_available' => [
+                        'quantity' => $attribute->stock_available->quantity,
+                        'quantity_limit' => $attribute->stock_available->quantity_limit,
+                        'sold_out_limit' => $attribute->stock_available->sold_out_limit,
+                        'always_available' => $attribute->stock_available->always_available,
+                        'default_quantity_after_sending_order_lists' => $attribute->stock_available->default_quantity_after_sending_order_lists,
+                    ],
+                    'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
+                    'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
+                    'category' => [
+                        'names' => [],
+                        'all_products_found' => true
+                    ],
+                    'image' => null,
+                    'barcode_product' => $attribute->barcode_product_attribute,
+                ];
+
+                if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                    $attributeId = $attribute->id_product_attribute ?? 0;
+                    $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber((string) $attributeId, 4);
+                    $preparedProduct['image'] = $product->image;
+                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
+                    }
+                }
+
+                $preparedProduct = $this->addPurchasePriceRelatedInfoToAttribute($preparedProduct, $attribute, (float) $taxRate, (float) $grossPrice, (float) $purchasePriceTaxRate);
+
+                $preparedProducts[] = $preparedProduct;
             }
         }
 
@@ -339,7 +345,7 @@ trait GetProductsForBackendTrait
         return $query;
     }
 
-    private function addPurchasePriceRelatedInfoToAttribute(array $preparedProduct, ProductAttribute $attribute, float $taxRate, float $grossPrice): array {
+    private function addPurchasePriceRelatedInfoToAttribute(array $preparedProduct, ProductAttribute $attribute, float $taxRate, float $grossPrice, float $purchasePriceTaxRate): array {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             return $preparedProduct;
         }
@@ -347,7 +353,6 @@ trait GetProductsForBackendTrait
         $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
         $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
 
-        $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
         $preparedProduct['purchase_price_is_set'] = $purchasePriceProductAttributesTable->isPurchasePriceSet($attribute);
         $preparedProduct['purchase_price_is_zero'] = true;
 
@@ -390,7 +395,7 @@ trait GetProductsForBackendTrait
         return $preparedProduct;
     }
 
-    private function addPurchasePriceRelatedInfoToProduct(Product $product, float $taxRate): Product
+    private function addPurchasePriceRelatedInfoToProduct(Product $product, float $taxRate, float $purchasePriceTaxRate): Product
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             return $product;
@@ -412,7 +417,6 @@ trait GetProductsForBackendTrait
         }
         if (!empty($product->purchase_price_product)) {
 
-            $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
             $purchasePrice = $product->purchase_price_product->price ?? null;
             if ($purchasePrice === null) {
                 $product->purchase_gross_price = $purchasePrice;
