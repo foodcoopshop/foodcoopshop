@@ -6,6 +6,7 @@ namespace Admin\Traits\Payments;
 use App\Services\SanitizeService;
 use Cake\Http\Response;
 use App\Model\Entity\Payment;
+use App\Services\FormatterService;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
 
@@ -82,10 +83,12 @@ trait AddCustomerPaymentTrait
             } else {
                 if ($type == Payment::TYPE_DEPOSIT) {
                     $depositBalance = $customersTable->getDepositBalance($customerId);
-                    if ($amount + $depositBalance > 0) {
+                    if ($amount + $depositBalance > 0 && $depositBalance < 0) {
                         $tresholdExceeded = true;
                         $msg = __d('admin', 'The amount exceeds the deposit balance of {0}, the member would return more deposit than he has bought.', [
-                            Configure::read('app.numberHelper')->formatAsCurrency(($depositBalance * -1) + 0),
+                            Configure::read('app.numberHelper')->formatAsCurrency(
+                                FormatterService::assureCorrectFloat($depositBalance) * -1
+                            ),
                         ]);
                     }
                 }
