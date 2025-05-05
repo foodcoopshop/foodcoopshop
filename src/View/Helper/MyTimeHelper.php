@@ -23,6 +23,15 @@ use Cake\I18n\DateTime;
 class MyTimeHelper extends TimeHelper
 {
 
+    public function isDifferenceGreaterThanTwoYears(string $startDate, string $endDate): bool
+    {
+        $startDateTimestamp = strtotime($startDate);
+        $endDateTimestamp = strtotime($endDate);
+        $differenceInSeconds = $endDateTimestamp - $startDateTimestamp;
+        $differenceInDays = $differenceInSeconds / (60 * 60 * 24);
+        return $differenceInDays > 731;
+    }
+
     public function getTranslatedTimeInterval(string $timeInterval): string
     {
         return match($timeInterval) {

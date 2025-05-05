@@ -81,6 +81,40 @@ trait IndexTrait
         }
         $this->set('groupBy', $groupBy);
 
+        $groupByForDropdown = [
+            'product' => __d('admin', 'Group_by_product')
+        ];
+        if (!$this->identity->isManufacturer()) {
+            $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
+            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
+        }
+        $this->set('groupByForDropdown', $groupByForDropdown);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
+
+        $this->set('title_for_layout', __d('admin', 'Orders'));
+
+        $sums = [
+            'records_count' => 0,
+            'amount' => 0,
+            'price' => 0,
+            'deposit' => 0,
+            'units' => [
+                'g' => 0,
+                'kg' => 0,
+                'l' => 0,
+            ],
+            'reduced_price' => 0
+        ];
+
+        if (count($pickupDay) > 1) {
+            if (Configure::read('app.timeHelper')->isDifferenceGreaterThanTwoYears($pickupDay[0], $pickupDay[1])) {
+                $this->Flash->error(__d('admin', 'The date range must not be greater than two years.'));
+                $this->set('sums', $sums);
+                return;
+            }
+        }
+
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
 
@@ -196,19 +230,6 @@ trait IndexTrait
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy);
         $this->set('orderDetails', $orderDetails);
 
-        $sums = [
-            'records_count' => 0,
-            'amount' => 0,
-            'price' => 0,
-            'deposit' => 0,
-            'units' => [
-                'g' => 0,
-                'kg' => 0,
-                'l' => 0,
-            ],
-            'reduced_price' => 0
-        ];
-
         foreach($orderDetails as $orderDetail) {
             $sums['records_count']++;
             if ($groupBy == '') {
@@ -240,18 +261,6 @@ trait IndexTrait
         $emailAddresses = array_unique($emailAddresses);
         $this->set('emailAddresses', $emailAddresses);
 
-        $groupByForDropdown = [
-            'product' => __d('admin', 'Group_by_product')
-        ];
-        if (!$this->identity->isManufacturer()) {
-            $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
-            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
-        }
-        $this->set('groupByForDropdown', $groupByForDropdown);
-        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
-        $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
-
-        $this->set('title_for_layout', __d('admin', 'Orders'));
     }
 
     private function prepareGroupedOrderDetails(array $orderDetails, string $groupBy): array

@@ -22,6 +22,9 @@ msgstr "gelöscht"
 msgid "The_attribute_{0}_has_been_{1}."
 msgstr "Die Variante {0} wurde {1}."
 
+msgid "The date range must not be greater than two years."
+msgstr "Der Zeitraum darf nicht größer als zwei Jahre sein."
+
 msgid "Attributes"
 msgstr "Varianten"
 
