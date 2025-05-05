@@ -172,13 +172,7 @@ trait GetProductsForBackendTrait
                         'stock_management_enabled' => (!empty($product->manufacturer) ? $product->manufacturer->stock_management_enabled : false),
                     ],
                     'default_on' => $attribute->default_on,
-                    'stock_available' => [
-                        'quantity' => $attribute->stock_available->quantity,
-                        'quantity_limit' => $attribute->stock_available->quantity_limit,
-                        'sold_out_limit' => $attribute->stock_available->sold_out_limit,
-                        'always_available' => $attribute->stock_available->always_available,
-                        'default_quantity_after_sending_order_lists' => $attribute->stock_available->default_quantity_after_sending_order_lists,
-                    ],
+                    'stock_available' => $attribute->stock_available,
                     'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                     'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
                     'category' => [

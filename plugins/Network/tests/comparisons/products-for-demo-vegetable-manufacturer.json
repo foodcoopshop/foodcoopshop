@@ -1145,6 +1145,9 @@
             },
             "default_on": 1,
             "stock_available": {
+                "id_stock_available": 710,
+                "id_product": 350,
+                "id_product_attribute": 13,
                 "quantity": "5.000",
                 "quantity_limit": "-5.000",
                 "sold_out_limit": "0.000",
@@ -1188,6 +1191,9 @@
             },
             "default_on": 0,
             "stock_available": {
+                "id_stock_available": 711,
+                "id_product": 350,
+                "id_product_attribute": 14,
                 "quantity": "999.000",
                 "quantity_limit": "0.000",
                 "sold_out_limit": null,
@@ -1231,6 +1237,9 @@
             },
             "default_on": 0,
             "stock_available": {
+                "id_stock_available": 712,
+                "id_product": 350,
+                "id_product_attribute": 15,
                 "quantity": "999.000",
                 "quantity_limit": "0.000",
                 "sold_out_limit": null,
