@@ -9,6 +9,7 @@ use App\Model\Entity\Payment;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
 use Cake\I18n\Date;
+use App\Services\FormatterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -103,8 +104,10 @@ trait AddManufacturerPaymentTrait
                 if ($amount + $depositBalance > 0) {
                     $tresholdExceeded = true;
                     $msg = __d('admin', 'The amount exceeds the deposit balance of {0}, the manufacturer would take back more deposit than he sold.', [
-                        Configure::read('app.numberHelper')->formatAsCurrency(($depositBalance * -1) + 0),
-                    ]);
+                        Configure::read('app.numberHelper')->formatAsCurrency(
+                            FormatterService::assureCorrectFloat($depositBalance) * -1
+                        ),
+                ]);
                 }
             }
             if ($tresholdExceeded) {
