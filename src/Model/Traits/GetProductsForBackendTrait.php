@@ -36,21 +36,7 @@ trait GetProductsForBackendTrait
         $i = 0;
         $preparedProducts = [];
         foreach ($query as $product) {
-            $product->category = (object) [
-                'names' => [],
-                'all_products_found' => false
-            ];
-            foreach ($product->category_products as $category) {
-                // assignment to "all products" has to be checked... otherwise show error message
-                if ($category->id_category == Configure::read('app.categoryAllProducts')) {
-                    $product->category->all_products_found = true;
-                } else {
-                    // sometimes associated category does not exist any more...
-                    if (!empty($category->category)) {
-                        $product->category->names[] = $category->category->name;
-                    }
-                }
-            }
+            $product->category = $this->setCategory($product);
             $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
 
             $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;
@@ -197,7 +183,6 @@ trait GetProductsForBackendTrait
                     'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
                     'category' => [
                         'names' => [],
-                        'all_products_found' => true
                     ],
                     'image' => null,
                     'barcode_product' => $attribute->barcode_product_attribute,
@@ -464,5 +449,21 @@ trait GetProductsForBackendTrait
         }
         return $rowClasses;
     }
+
+    private function setCategory(Product $product): object
+    {
+        $result = (object) [
+            'names' => [],
+        ];
+        foreach ($product->category_products as $category) {
+            if ($category->id_category != Configure::read('app.categoryAllProducts')) {
+                if (!empty($category->category)) {
+                    $result->names[] = $category->category->name;
+                }
+            }
+        }
+        return $result;
+    }
+
 
 }

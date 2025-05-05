@@ -2230,9 +2230,6 @@ msgstr "Als neue Standard-Variante festlegen"
 msgid "change_category"
 msgstr "Kategorie ändern"
 
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Kategorie \"Alle Produkte\" fehlt!"
-
 msgid "product_preview"
 msgstr "Produkt-Vorschau"
 
