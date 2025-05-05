@@ -65,11 +65,6 @@ trait GetProductsForBackendTrait
                 Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday)
             );
 
-            $rowClass = [];
-            if (! $product->active) {
-                $rowClass[] = 'deactivated';
-            }
-
             if (!empty($product->deposit_product)) {
                 $product->deposit = $product->deposit_product->deposit;
             } else {
@@ -134,13 +129,11 @@ trait GetProductsForBackendTrait
 
             $product = $this->addPurchasePriceRelatedInfoToProduct($product, (float) $taxRate, (float) $purchasePriceTaxRate);
 
-            $rowClass[] = 'main-product';
             $rowIsOdd = false;
             if ($i % 2 == 0) {
                 $rowIsOdd = true;
-                $rowClass[] = 'custom-odd';
             }
-            $product->row_class = join(' ', $rowClass);
+            $product->row_class = join(' ', $this->getRowClassesForProduct($product, $rowIsOdd));
 
             $preparedProducts[] = $product;
             $i++;
@@ -154,17 +147,6 @@ trait GetProductsForBackendTrait
                 $grossPrice = 0;
                 if (! empty($attribute->price)) {
                     $grossPrice = $this->getGrossPrice($attribute->price, $taxRate);
-                }
-
-                $rowClass = [
-                    'sub-row'
-                ];
-                if (! $product->active) {
-                    $rowClass[] = 'deactivated';
-                }
-
-                if ($rowIsOdd) {
-                    $rowClass[] = 'custom-odd';
                 }
 
                 $priceIsZero = false;
@@ -193,7 +175,7 @@ trait GetProductsForBackendTrait
                     'active' => $product->active,
                     'is_stock_product' => $product->is_stock_product,
                     'price_is_zero' => $priceIsZero,
-                    'row_class' => join(' ', $rowClass),
+                    'row_class' => join(' ', $this->getRowClassesForAttribute($product, $rowIsOdd)),
                     'unchanged_name' => $product->unchanged_name,
                     'name' => $productName,
                     'description_short' => '',
@@ -457,6 +439,30 @@ trait GetProductsForBackendTrait
         
         return $product;
 
+    }
+
+    private function getRowClassesForAttribute(Product $product, bool $rowIsOdd): array
+    {
+        $rowClasses = [...['sub-row'], ...$this->getDefaultRowClasses($product, $rowIsOdd)];
+        return $rowClasses;
+    }
+
+    private function getRowClassesForProduct(Product $product, bool $rowIsOdd): array
+    {
+        $rowClasses = [...['main-product'], ...$this->getDefaultRowClasses($product, $rowIsOdd)];
+        return $rowClasses;
+    }
+
+    private function getDefaultRowClasses(Product $product, bool $rowIsOdd): array
+    {
+        $rowClasses = [];
+        if (! $product->active) {
+            $rowClasses[] = 'deactivated';
+        }
+        if ($rowIsOdd) {
+            $rowClasses[] = 'custom-odd';
+        }
+        return $rowClasses;
     }
 
 }
