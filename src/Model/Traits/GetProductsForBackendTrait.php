@@ -10,6 +10,7 @@ use Cake\Utility\Hash;
 use App\Services\CatalogService;
 use Cake\ORM\Query\SelectQuery;
 use Cake\Datasource\Paging\PaginatedInterface;
+use App\Model\Entity\ProductAttribute;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -126,63 +127,7 @@ trait GetProductsForBackendTrait
                 ];
             }
 
-            $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
-
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-
-                $product->purchase_price_is_zero = true;
-                $product->purchase_price_is_set = $purchasePriceProductsTable->isPurchasePriceSet($product);
-
-                if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
-                    $product->purchase_price_product = (object) [
-                        'tax_id' => null,
-                        'price' => null,
-                        'tax' => [
-                            'rate' => null,
-                        ],
-                    ];
-                }
-                if (!empty($product->purchase_price_product)) {
-
-                    $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
-                    $purchasePrice = $product->purchase_price_product->price ?? null;
-                    if ($purchasePrice === null) {
-                        $product->purchase_gross_price = $purchasePrice;
-                    } else {
-                        $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
-                        if ($product->purchase_gross_price > 0) {
-                            $product->purchase_price_is_zero = false;
-                        }
-                        $product->purchase_net_price = $purchasePrice;
-                    }
-
-                    if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
-                        if (!is_null($product->unit->purchase_price_incl_per_unit)) {
-                            $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
-                                Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
-                                $taxRate,
-                                Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
-                                $purchasePriceTaxRate,
-                            );
-                            $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $taxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
-                            $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
-                            $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
-                            if ($purchasePriceInclPerUnitAndAmount > 0) {
-                                $product->purchase_price_is_zero = false;
-                            }
-                        }
-                    } else {
-                        $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
-                            $product->gross_price,
-                            $taxRate,
-                            $product->purchase_gross_price,
-                            $purchasePriceTaxRate,
-                        );
-                        $product->surcharge_price = $product->price - $purchasePrice;
-                    }
-
-                }
-            }
+            $product = $this->addPurchasePriceRelatedInfoToProduct($product, (float) $taxRate);
 
             $rowClass[] = 'main-product';
             $rowIsOdd = false;
@@ -278,49 +223,8 @@ trait GetProductsForBackendTrait
                         }
                     }
 
-                    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                        $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
-                        $preparedProduct['purchase_price_is_set'] = $purchasePriceProductAttributesTable->isPurchasePriceSet($attribute);
-                        $preparedProduct['purchase_price_is_zero'] = true;
+                    $preparedProduct = $this->addPurchasePriceRelatedInfoToAttribute($preparedProduct, $attribute, (float) $taxRate, (float) $grossPrice);
 
-                        $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
-                        if ($purchasePrice === null) {
-                            $preparedProduct['purchase_gross_price'] = $purchasePrice;
-                        } else {
-                            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
-                            if ($preparedProduct['purchase_gross_price'] > 0) {
-                                $preparedProduct['purchase_price_is_zero'] = false;
-                            }
-                            $preparedProduct['purchase_net_price'] = $purchasePrice;
-                        }
-
-                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                            if (!is_null($attribute->unit_product_attribute->purchase_price_incl_per_unit)) {
-                                $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
-                                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
-                                    $taxRate,
-                                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->purchase_price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
-                                    $purchasePriceTaxRate,
-                                );
-                                $priceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
-                                $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
-                                $preparedProduct['surcharge_price'] = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
-                                if ($purchasePriceInclPerUnitAndAmount > 0) {
-                                    $preparedProduct['purchase_price_is_zero'] = false;
-                                }
-                            }
-                        } else {
-                            $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
-                                $grossPrice,
-                                $taxRate,
-                                $preparedProduct['purchase_gross_price'],
-                                $purchasePriceTaxRate,
-                            );
-                            $preparedProduct['surcharge_price'] = $attribute->price - $purchasePrice;
-                        }
-
-
-                    }
                     $preparedProducts[] = $preparedProduct;
                 }
             }
@@ -433,6 +337,122 @@ trait GetProductsForBackendTrait
         }
 
         return $query;
+    }
+
+    private function addPurchasePriceRelatedInfoToAttribute(array $preparedProduct, ProductAttribute $attribute, float $taxRate, float $grossPrice): array {
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            return $preparedProduct;
+        }
+
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+        $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
+
+        $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
+        $preparedProduct['purchase_price_is_set'] = $purchasePriceProductAttributesTable->isPurchasePriceSet($attribute);
+        $preparedProduct['purchase_price_is_zero'] = true;
+
+        $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
+        if ($purchasePrice === null) {
+            $preparedProduct['purchase_gross_price'] = $purchasePrice;
+        } else {
+            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+            if ($preparedProduct['purchase_gross_price'] > 0) {
+                $preparedProduct['purchase_price_is_zero'] = false;
+            }
+            $preparedProduct['purchase_net_price'] = $purchasePrice;
+        }
+
+        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+            if (!is_null($attribute->unit_product_attribute->purchase_price_incl_per_unit)) {
+                $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
+                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
+                    $taxRate,
+                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->purchase_price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
+                    $purchasePriceTaxRate,
+                );
+                $priceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                $preparedProduct['surcharge_price'] = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                if ($purchasePriceInclPerUnitAndAmount > 0) {
+                    $preparedProduct['purchase_price_is_zero'] = false;
+                }
+            }
+        } else {
+            $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
+                $grossPrice,
+                $taxRate,
+                $preparedProduct['purchase_gross_price'],
+                $purchasePriceTaxRate,
+            );
+            $preparedProduct['surcharge_price'] = $attribute->price - $purchasePrice;
+        }
+
+        return $preparedProduct;
+    }
+
+    private function addPurchasePriceRelatedInfoToProduct(Product $product, float $taxRate): Product
+    {
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            return $product;
+        }
+
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+
+        $product->purchase_price_is_zero = true;
+        $product->purchase_price_is_set = $purchasePriceProductsTable->isPurchasePriceSet($product);
+
+        if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
+            $product->purchase_price_product = (object) [
+                'tax_id' => null,
+                'price' => null,
+                'tax' => [
+                    'rate' => null,
+                ],
+            ];
+        }
+        if (!empty($product->purchase_price_product)) {
+
+            $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
+            $purchasePrice = $product->purchase_price_product->price ?? null;
+            if ($purchasePrice === null) {
+                $product->purchase_gross_price = $purchasePrice;
+            } else {
+                $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                if ($product->purchase_gross_price > 0) {
+                    $product->purchase_price_is_zero = false;
+                }
+                $product->purchase_net_price = $purchasePrice;
+            }
+
+            if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
+                if (!is_null($product->unit->purchase_price_incl_per_unit)) {
+                    $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
+                        Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
+                        $taxRate,
+                        Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
+                        $purchasePriceTaxRate,
+                    );
+                    $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $taxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                    $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                    $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                    if ($purchasePriceInclPerUnitAndAmount > 0) {
+                        $product->purchase_price_is_zero = false;
+                    }
+                }
+            } else {
+                $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
+                    $product->gross_price,
+                    $taxRate,
+                    $product->purchase_gross_price,
+                    $purchasePriceTaxRate,
+                );
+                $product->surcharge_price = $product->price - $purchasePrice;
+            }
+
+        }
+        
+        return $product;
+
     }
 
 }
