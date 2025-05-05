@@ -68,10 +68,13 @@ class ProductCsvWriterService extends BaseCsvWriterService
     public function getRecords(): array
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackend(
+        $query = $productsTable->getProductsForBackendQuery(
             productIds: $this->productIds,
             manufacturerId: 'all',
             active: 'all',
+        );
+        $products = $productsTable->getProductsForBackendPrepared(
+            query: $query,
             addProductNameToAttributes: true,
         );
 

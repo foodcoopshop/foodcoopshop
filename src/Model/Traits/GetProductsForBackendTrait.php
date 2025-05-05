@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Model\Traits;
 
 use Cake\Core\Configure;
-use Cake\Controller\Controller;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Product;
 use Cake\Utility\Hash;
 use App\Services\CatalogService;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Datasource\Paging\PaginatedInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,17 +26,11 @@ use Cake\ORM\Query\SelectQuery;
 trait GetProductsForBackendTrait
 {
 
-    public function getProductsForBackend(
-        array|string $productIds,
-        int|string $manufacturerId,
-        string $active,
-        string|array $categoryId = '',
+    public function getProductsForBackendPrepared(
+        SelectQuery|PaginatedInterface $query,
         bool $addProductNameToAttributes = false,
-        ?Controller $controller = null,
         ): array
     {
-
-        $query = $this->getProductsForBackendQuery($productIds, $manufacturerId, $active, $categoryId, $controller);
 
         $i = 0;
         $preparedProducts = [];
@@ -336,12 +330,11 @@ trait GetProductsForBackendTrait
         return $preparedProducts;
     }
 
-    private function getProductsForBackendQuery(
+    public function getProductsForBackendQuery(
         array|string $productIds,
         int|string $manufacturerId,
         string $active,
         string|array $categoryId = '',
-        ?Controller $controller = null,
     ): SelectQuery {
 
         $conditions = [];
@@ -396,15 +389,14 @@ trait GetProductsForBackendTrait
             $contain[] = 'ProductAttributes.BarcodeProductAttributes';
         }
 
-        $order = [
-            'Products.active' => 'DESC',
-            'Products.name' => 'ASC'
-        ];
-
         $query = $this->find('all',
-        conditions: $conditions,
-        contain: $contain,
-        order: $controller === null ? $order : null);
+            conditions: $conditions,
+            contain: $contain,
+            order: [
+                'Products.active' => 'DESC',
+                'Products.name' => 'ASC'
+            ],
+        );
 
         if ($categoryId != '') {
             $query->matching('CategoryProducts', function ($q) use ($categoryId) {
@@ -438,15 +430,6 @@ trait GetProductsForBackendTrait
             $catalogService = new CatalogService();
             $query->select(['system_bar_code' => $catalogService->getProductIdentifierField()]);
             $query->select($barcodeProductsTable);
-        }
-
-        if ($controller) {
-            $query = $controller->paginate($query, [
-                'sortableFields' => [
-                    'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name', 'Products.is_stock_product'
-                ],
-                'order' => $order
-            ]);
         }
 
         return $query;

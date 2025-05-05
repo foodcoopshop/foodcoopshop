@@ -244,10 +244,13 @@ class SyncsController extends AppController
     private function getLocalSyncProducts(): array
     {
         $productsTable = $this->getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackend(
+        $query = $productsTable->getProductsForBackendQuery(
             productIds: '',
             manufacturerId: $this->identity->getManufacturerId(),
             active: 'all',
+        );
+        $products = $productsTable->getProductsForBackendPrepared(
+            query: $query,
             addProductNameToAttributes: true,
         );
         $matchedProducts = $this->markProductsAsSynced($products);

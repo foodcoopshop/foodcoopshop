@@ -33,11 +33,14 @@ trait GenerateProductCardsTrait
         $productIds = explode(',', $productIds);
 
         $productsTable = $this->getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackend(
+        $products = $productsTable->getProductsForBackendQuery(
             productIds: $productIds,
             manufacturerId: 'all',
-            addProductNameToAttributes: true,
             active: 'all',
+        );
+        $products = $productsTable->getProductsForBackendPrepared(
+            query: $products,
+            addProductNameToAttributes: true,
         );
 
         $preparedProducts = [];

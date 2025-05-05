@@ -50,12 +50,19 @@ trait IndexTrait
         $this->set('categoryId', $categoryId);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $productsTable->getProductsForBackend(
+            $query = $productsTable->getProductsForBackendQuery(
                 productIds: $productId,
                 manufacturerId: $manufacturerId,
                 active: $active,
                 categoryId: $categoryId,
-                controller: $this,
+            );
+            $preparedProducts = $this->paginate($query, [
+                'sortableFields' => [
+                    'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name', 'Products.is_stock_product'
+                ],
+            ]);
+            $preparedProducts = $productsTable->getProductsForBackendPrepared(
+                query: $preparedProducts,
             );
         } else {
             $preparedProducts = [];
