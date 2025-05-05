@@ -73,7 +73,7 @@ trait ChangeStatusTrait
 
         $message = __d('admin', 'The_payment_({0}_{1})_was_removed_successfully.', [
             Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
-            Configure::read('app.htmlHelper')->getPaymentText($payment->type)]
+            Configure::read('app.htmlHelper')->getPaymentText((int) $payment->type)]
         );
         if ($this->identity->isSuperadmin() && $this->identity->getId() != $payment->id_customer) {
             if (isset($payment->customer->name)) {
@@ -83,7 +83,7 @@ trait ChangeStatusTrait
             }
             $message = __d('admin', 'The_payment_({0}_{1})_of_{2}_was_removed_successfully.', [
                 Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
-                Configure::read('app.htmlHelper')->getPaymentText($payment->type),
+                Configure::read('app.htmlHelper')->getPaymentText((int) $payment->type),
                 $username
             ]);
         }
