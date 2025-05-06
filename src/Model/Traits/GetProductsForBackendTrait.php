@@ -119,7 +119,7 @@ trait GetProductsForBackendTrait
             if ($i % 2 == 0) {
                 $rowIsOdd = true;
             }
-            $product->row_class = join(' ', $this->getRowClassesForProduct($product, $rowIsOdd));
+            $product->row_class = $this->getRowClassesForProduct($product, $rowIsOdd);
 
             $preparedProducts[] = $product;
             $i++;
@@ -161,7 +161,7 @@ trait GetProductsForBackendTrait
                     'active' => $product->active,
                     'is_stock_product' => $product->is_stock_product,
                     'price_is_zero' => $priceIsZero,
-                    'row_class' => join(' ', $this->getRowClassesForAttribute($product, $rowIsOdd)),
+                    'row_class' => $this->getRowClassesForAttribute($product, $rowIsOdd),
                     'unchanged_name' => $product->unchanged_name,
                     'name' => $productName,
                     'description_short' => '',
@@ -420,16 +420,16 @@ trait GetProductsForBackendTrait
 
     }
 
-    private function getRowClassesForAttribute(Product $product, bool $rowIsOdd): array
+    private function getRowClassesForAttribute(Product $product, bool $rowIsOdd): string
     {
-        $rowClasses = [...['sub-row'], ...$this->getDefaultRowClasses($product, $rowIsOdd)];
-        return $rowClasses;
+        $rowClasses = array_merge(['sub-row'], $this->getDefaultRowClasses($product, $rowIsOdd));
+        return join(' ', $rowClasses);
     }
 
-    private function getRowClassesForProduct(Product $product, bool $rowIsOdd): array
+    private function getRowClassesForProduct(Product $product, bool $rowIsOdd): string
     {
-        $rowClasses = [...['main-product'], ...$this->getDefaultRowClasses($product, $rowIsOdd)];
-        return $rowClasses;
+        $rowClasses = array_merge(['main-product'], $this->getDefaultRowClasses($product, $rowIsOdd));
+        return join(' ', $rowClasses);
     }
 
     private function getDefaultRowClasses(Product $product, bool $rowIsOdd): array
