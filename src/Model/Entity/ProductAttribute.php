@@ -18,4 +18,10 @@ namespace App\Model\Entity;
  */
 class ProductAttribute extends AppEntity
 {
+
+    protected function _getPricePerUnitEnabled(): bool
+    {
+        return !empty($this->unit_product_attribute) && $this->unit_product_attribute->price_per_unit_enabled;
+    }
+
 }

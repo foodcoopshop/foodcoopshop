@@ -27,10 +27,7 @@ use App\Model\Entity\ProductAttribute;
 trait GetProductsForBackendTrait
 {
 
-    public function getProductsForBackendPrepared(
-        SelectQuery|PaginatedInterface $query,
-        bool $addProductNameToAttributes = false,
-        ): array
+    public function getProductsForBackendPrepared(SelectQuery|PaginatedInterface $query, bool $addProductNameToAttributes = false): array
     {
 
         $i = 0;
@@ -139,7 +136,7 @@ trait GetProductsForBackendTrait
                 if ($grossPrice == 0) {
                     $priceIsZero = true;
                 }
-                if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                if ($attribute->price_per_unit_enabled) {
                     $priceIsZero = false;
                 }
                 
@@ -176,7 +173,7 @@ trait GetProductsForBackendTrait
                     $attributeId = $attribute->id_product_attribute ?? 0;
                     $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber((string) $attributeId, 4);
                     $preparedProduct['image'] = $product->image;
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
                     }
                 }
@@ -298,7 +295,7 @@ trait GetProductsForBackendTrait
 
     private function getProductName($originalProductName, $attribute, $addProductNameToAttributes): string
     {
-        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+        if ($attribute->price_per_unit_enabled) {
             $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                 $attribute->product_attribute_combination->attribute->name,
                 $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
@@ -337,7 +334,7 @@ trait GetProductsForBackendTrait
             $preparedProduct['purchase_net_price'] = $purchasePrice;
         }
 
-        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+        if ($attribute->price_per_unit_enabled) {
             if (!is_null($attribute->unit_product_attribute->purchase_price_incl_per_unit)) {
                 $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                     Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
