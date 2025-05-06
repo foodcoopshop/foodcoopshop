@@ -412,7 +412,7 @@ class CartService
                 'total_price_tax_incl' => $cartProduct['price'],
                 'tax_unit_amount' => $cartProduct['taxPerPiece'],
                 'tax_total_amount' => $cartProduct['tax'],
-                'tax_rate' => $product->tax->rate ?? 0,
+                'tax_rate' => $product->tax_rate,
                 'order_state' => OrderDetail::STATE_OPEN,
                 'id_customer' => $this->identity->getId(),
                 'id_cart_product' => $cartProduct['cartProductId'],

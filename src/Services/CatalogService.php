@@ -585,7 +585,7 @@ class CatalogService
         $i = 0;
         foreach ($products as $product) {
 
-            $taxRate = $products[$i]->tax->rate ?? 0;
+            $taxRate = $products[$i]->tax_rate;
 
             $products[$i]->deposit_product = $products[$i]->deposit_product ?? (object) ['deposit' => 0];
             $products[$i]->tax = $products[$i]->tax ?? (object) ['rate' => 0];

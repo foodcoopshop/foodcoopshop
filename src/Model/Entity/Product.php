@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use App\Services\CalculationService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +28,7 @@ use Cake\Core\Configure;
     const ALLOWED_STATUSES = [APP_OFF, APP_ON];
     const NAME_SEPARATOR = ': ';
 
-    protected array $_virtual = ['is_new'];
+    protected array $_virtual = ['is_new', 'gross_price'];
 
     public bool $nameSetterMethodEnabled = true;
 
@@ -59,9 +60,20 @@ use Cake\Core\Configure;
         if ($this->new === null) {
             return false;
         }
-
         return $this->new->addDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW'))->isFuture();
+    }
 
+    public function _getGrossPrice(): float
+    {
+        return CalculationService::getGrossPrice((float) $this->price, $this->tax_rate);
+    }
+
+    public function _getTaxRate(): float
+    {
+        if (empty($this->tax)) {
+            return 0;
+        }
+        return (float) $this->tax->rate;
     }
 
 }

@@ -163,7 +163,7 @@ class CartProductsTable extends AppTable
             $amount,
             $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
             $depositObject,
-            $product->tax->rate ?? 0,
+            $product->tax_rate,
         );
 
         $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit']);

@@ -18,6 +18,7 @@ use Cake\I18n\Date;
 use stdClass;
 use App\Model\Entity\Manufacturer;
 use App\Model\Traits\GetProductsForBackendTrait;
+use App\Services\CalculationService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -403,9 +404,8 @@ class ProductsTable extends AppTable
             contain: [
                 'Taxes',
             ])->first();
-            $taxRate = $productEntity->tax->rate ?? 0;
 
-            $netPrice = $this->getNetPrice($price, $taxRate);
+            $netPrice = $this->getNetPrice($price, $productEntity->tax_rate);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -721,9 +721,7 @@ class ProductsTable extends AppTable
 
     public function getGrossPrice(string|float|null $netPrice, string|float $taxRate): float
     {
-        $grossPrice = $netPrice * (100 + $taxRate) / 100;
-        $grossPrice = round($grossPrice, 2);
-        return $grossPrice;
+        return CalculationService::getGrossPrice((float) $netPrice, (float) $taxRate);
     }
 
     public function getNetPrice(string|float|null|false $grossPrice, string|float $taxRate): float

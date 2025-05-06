@@ -351,7 +351,6 @@ class CartsTable extends AppTable
     {
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
-        $taxRate = $cartProduct->product->tax->rate ?? 0;
         $unitProduct = $cartProduct->product->unit_product;
         $deposit = !empty($cartProduct->product->deposit_product) ? $cartProduct->product->deposit_product->deposit : 0;
 
@@ -361,7 +360,7 @@ class CartsTable extends AppTable
         if (!empty($unitProduct)) {
             $priceInclPerUnit = $unitProduct->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedProductPricesByShoppingPrice($cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedProductPricesByShoppingPrice($cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $cartProduct->product->tax_rate);
         $cartProduct->product->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProduct)) {
             $unitProduct->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
@@ -377,7 +376,7 @@ class CartsTable extends AppTable
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product->deposit_product,
-            $taxRate,
+            $cartProduct->product->tax_rate,
         );
 
         $productData = [
@@ -454,7 +453,6 @@ class CartsTable extends AppTable
     {
 
         $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
-        $taxRate = $cartProduct->product->tax->rate ?? 0;
         $deposit = !empty($cartProduct->product_attribute->deposit_product_attribute) ? $cartProduct->product_attribute->deposit_product_attribute->deposit : 0;
 
         // START: override shopping with purchase prices / zero prices
@@ -463,7 +461,7 @@ class CartsTable extends AppTable
         if (!empty($unitProductAttribute)) {
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedAttributePricesByShoppingPrice($cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $customersTable->getModifiedAttributePricesByShoppingPrice($cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $cartProduct->product->tax_rate);
         $cartProduct->product_attribute->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProductAttribute)) {
             $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
@@ -480,7 +478,7 @@ class CartsTable extends AppTable
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product_attribute->deposit_product_attribute,
-            $taxRate,
+            $cartProduct->product->tax_rate,
         );
 
         $productData = [

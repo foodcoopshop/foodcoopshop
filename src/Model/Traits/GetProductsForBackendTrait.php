@@ -36,9 +36,6 @@ trait GetProductsForBackendTrait
             $product->category = $this->setCategory($product);
             $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
 
-            $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;
-            $product->gross_price = $this->getGrossPrice($product->price, $taxRate);
-
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                 $product->is_stock_product && $product->manufacturer->stock_management_enabled,
                 $product->delivery_rhythm_type,
@@ -110,7 +107,7 @@ trait GetProductsForBackendTrait
                 $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
             }
 
-            $product = $this->addPurchasePriceRelatedInfoToProduct($product, (float) $taxRate, (float) $purchasePriceTaxRate);
+            $product = $this->addPurchasePriceRelatedInfoToProduct($product, (float) $purchasePriceTaxRate);
 
             $rowIsOdd = false;
             if ($i % 2 == 0) {
@@ -129,7 +126,7 @@ trait GetProductsForBackendTrait
 
                 $grossPrice = 0;
                 if (! empty($attribute->price)) {
-                    $grossPrice = $this->getGrossPrice($attribute->price, $taxRate);
+                    $grossPrice = $this->getGrossPrice($attribute->price, $product->tax_rate);
                 }
 
                 $priceIsZero = false;
@@ -143,7 +140,7 @@ trait GetProductsForBackendTrait
                 $productName = $this->getProductName($product->name, $attribute, $addProductNameToAttributes);
 
                 $preparedProduct = [
-                    'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
+                    'id_product' => $this->getCompositeProductIdAndAttributeId($product->id_product, $attribute->id_product_attribute),
                     'gross_price' => $grossPrice,
                     'active' => $product->active,
                     'is_stock_product' => $product->is_stock_product,
@@ -178,7 +175,7 @@ trait GetProductsForBackendTrait
                     }
                 }
 
-                $preparedProduct = $this->addPurchasePriceRelatedInfoToAttribute($preparedProduct, $attribute, (float) $taxRate, (float) $grossPrice, (float) $purchasePriceTaxRate);
+                $preparedProduct = $this->addPurchasePriceRelatedInfoToAttribute($preparedProduct, $attribute, $product->tax_rate, (float) $grossPrice, (float) $purchasePriceTaxRate);
 
                 $preparedProducts[] = $preparedProduct;
             }
@@ -362,7 +359,7 @@ trait GetProductsForBackendTrait
         return $preparedProduct;
     }
 
-    private function addPurchasePriceRelatedInfoToProduct(Product $product, float $taxRate, float $purchasePriceTaxRate): Product
+    private function addPurchasePriceRelatedInfoToProduct(Product $product, float $purchasePriceTaxRate): Product
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             return $product;
@@ -399,11 +396,11 @@ trait GetProductsForBackendTrait
                 if (!is_null($product->unit->purchase_price_incl_per_unit)) {
                     $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                         Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
-                        $taxRate,
+                        $product->tax_rate,
                         Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
                         $purchasePriceTaxRate,
                     );
-                    $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $taxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                    $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $product->tax_rate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
                     $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
                     $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
                     if ($purchasePriceInclPerUnitAndAmount > 0) {
@@ -413,7 +410,7 @@ trait GetProductsForBackendTrait
             } else {
                 $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                     $product->gross_price,
-                    $taxRate,
+                    $product->tax_rate,
                     $product->purchase_gross_price,
                     $purchasePriceTaxRate,
                 );
