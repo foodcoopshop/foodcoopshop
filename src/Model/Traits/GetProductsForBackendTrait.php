@@ -140,20 +140,10 @@ trait GetProductsForBackendTrait
                     $priceIsZero = true;
                 }
                 if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                    $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
-                        $attribute->product_attribute_combination->attribute->name,
-                        $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
-                        $attribute->unit_product_attribute->price_per_unit_enabled,
-                        $attribute->unit_product_attribute->quantity_in_units,
-                        $attribute->unit_product_attribute->name
-                    );
                     $priceIsZero = false;
-                } else {
-                    $productName = $attribute->product_attribute_combination->attribute->name;
-                    if ($addProductNameToAttributes) {
-                        $productName = $product->name . ': ' . $productName;
-                    }
                 }
+                
+                $productName = $this->getProductName($product->name, $attribute, $addProductNameToAttributes);
 
                 $preparedProduct = [
                     'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
@@ -304,6 +294,25 @@ trait GetProductsForBackendTrait
         }
 
         return $query;
+    }
+
+    private function getProductName($originalProductName, $attribute, $addProductNameToAttributes): string
+    {
+        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+            $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
+                $attribute->product_attribute_combination->attribute->name,
+                $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                $attribute->unit_product_attribute->price_per_unit_enabled,
+                $attribute->unit_product_attribute->quantity_in_units,
+                $attribute->unit_product_attribute->name
+            );
+        } else {
+            $productName = $attribute->product_attribute_combination->attribute->name;
+            if ($addProductNameToAttributes) {
+                $productName = $originalProductName . ': ' . $productName;
+            }
+        }
+        return $productName;
     }
 
     private function addPurchasePriceRelatedInfoToAttribute(array $preparedProduct, ProductAttribute $attribute, float $taxRate, float $grossPrice, float $purchasePriceTaxRate): array {
