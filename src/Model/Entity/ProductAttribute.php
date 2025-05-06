@@ -19,9 +19,19 @@ namespace App\Model\Entity;
 class ProductAttribute extends AppEntity
 {
 
+    protected array $_virtual = ['deposit'];
+
     protected function _getPricePerUnitEnabled(): bool
     {
         return !empty($this->unit_product_attribute) && $this->unit_product_attribute->price_per_unit_enabled;
+    }
+
+    public function _getDeposit(): float
+    {
+        if (empty($this->deposit_product_attribute)) {
+            return 0;
+        }
+        return (float) $this->deposit_product_attribute->deposit;
     }
 
 }

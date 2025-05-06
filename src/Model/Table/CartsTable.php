@@ -290,7 +290,7 @@ class CartsTable extends AppTable
         UnitProduct|UnitProductAttribute|null $unitProduct,
         string|float $amount,
         string|float|null $orderedQuantityInUnits,
-        DepositProduct|DepositProductAttribute|null $deposit,
+        string|float $deposit,
         string|float $taxRate,
         ): array
     {
@@ -310,7 +310,7 @@ class CartsTable extends AppTable
                 'net' => $grossPrice - $tax,
                 'tax' => $tax,
                 'tax_per_piece' => $tax / $amount,
-                'gross_with_deposit' => $grossPrice + ($deposit->deposit ?? 0),
+                'gross_with_deposit' => $grossPrice + $deposit,
             ];
 
         } else {
@@ -375,7 +375,7 @@ class CartsTable extends AppTable
             $unitProduct,
             $cartProduct->amount,
             $orderedQuantityInUnits,
-            $cartProduct->product->deposit_product,
+            $cartProduct->product->deposit,
             $cartProduct->product->tax_rate,
         );
 
@@ -453,7 +453,7 @@ class CartsTable extends AppTable
     {
 
         $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
-        $deposit = !empty($cartProduct->product_attribute->deposit_product_attribute) ? $cartProduct->product_attribute->deposit_product_attribute->deposit : 0;
+        $deposit = $cartProduct->product_attribute->deposit;
 
         // START: override shopping with purchase prices / zero prices
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -466,7 +466,7 @@ class CartsTable extends AppTable
         if (!empty($unitProductAttribute)) {
             $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
         }
-        if (!empty(!empty($cartProduct->product_attribute->deposit_product_attribute))) {
+        if (!empty($cartProduct->product_attribute->deposit_product_attribute)) {
             $cartProduct->product_attribute->deposit_product_attribute->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
         }
         // END: override shopping with purchase prices / zero prices
@@ -477,7 +477,7 @@ class CartsTable extends AppTable
             $unitProductAttribute,
             $cartProduct->amount,
             $orderedQuantityInUnits,
-            $cartProduct->product_attribute->deposit_product_attribute,
+            $cartProduct->product_attribute->deposit,
             $cartProduct->product->tax_rate,
         );
 
@@ -497,8 +497,8 @@ class CartsTable extends AppTable
         ];
 
         $deposit = 0;
-        if (Configure::read('app.isDepositEnabled') && !empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
-            $deposit = $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount;
+        if (Configure::read('app.isDepositEnabled')) {
+            $deposit = $cartProduct->product_attribute->deposit * $cartProduct->amount;
         }
         $productData['deposit'] = $deposit;
 

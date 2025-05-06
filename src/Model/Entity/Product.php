@@ -28,7 +28,7 @@ use App\Services\CalculationService;
     const ALLOWED_STATUSES = [APP_OFF, APP_ON];
     const NAME_SEPARATOR = ': ';
 
-    protected array $_virtual = ['is_new', 'gross_price'];
+    protected array $_virtual = ['is_new', 'gross_price', 'deposit'];
 
     public bool $nameSetterMethodEnabled = true;
 
@@ -74,6 +74,14 @@ use App\Services\CalculationService;
             return 0;
         }
         return (float) $this->tax->rate;
+    }
+
+    public function _getDeposit(): float
+    {
+        if (empty($this->deposit_product)) {
+            return 0;
+        }
+        return (float) $this->deposit_product->deposit;
     }
 
 }

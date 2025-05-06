@@ -245,13 +245,13 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0.5,
             "price_is_zero": false,
             "unit": [],
             "unchanged_name": "Artischocke",
             "row_class": "main-product custom-odd",
             "is_new": false,
-            "gross_price": 1.82
+            "gross_price": 1.82,
+            "deposit": 0.5
         },
         {
             "id_product": 339,
@@ -357,13 +357,13 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": true,
             "unit": [],
             "unchanged_name": "Kartoffel",
             "row_class": "main-product",
             "is_new": false,
-            "gross_price": 0
+            "gross_price": 0,
+            "deposit": 0
         },
         {
             "id_product": 344,
@@ -469,13 +469,13 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": [],
             "unchanged_name": "Knoblauch",
             "row_class": "main-product custom-odd",
             "is_new": false,
-            "gross_price": 0.64
+            "gross_price": 0.64,
+            "deposit": 0
         },
         {
             "id_product": 349,
@@ -595,7 +595,6 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": {
                 "id": 4,
@@ -612,7 +611,8 @@
             "unchanged_name": "Lagerprodukt",
             "row_class": "main-product",
             "is_new": false,
-            "gross_price": 5
+            "gross_price": 5,
+            "deposit": 0
         },
         {
             "id_product": 351,
@@ -732,7 +732,6 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": {
                 "id": 8,
@@ -749,7 +748,8 @@
             "unchanged_name": "Lagerprodukt 2",
             "row_class": "main-product custom-odd",
             "is_new": false,
-            "gross_price": 0
+            "gross_price": 0,
+            "deposit": 0
         },
         {
             "id_product": 352,
@@ -869,7 +869,6 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": {
                 "id": 9,
@@ -886,7 +885,8 @@
             "unchanged_name": "Lagerprodukt mit Gewichtsbarcode",
             "row_class": "main-product",
             "is_new": false,
-            "gross_price": 1.44
+            "gross_price": 1.44,
+            "deposit": 0
         },
         {
             "id_product": 350,
@@ -950,7 +950,8 @@
                         "sold_out_limit": "0.000",
                         "always_available": 0,
                         "default_quantity_after_sending_order_lists": null
-                    }
+                    },
+                    "deposit": 0
                 },
                 {
                     "id_product_attribute": 14,
@@ -991,7 +992,8 @@
                         "sold_out_limit": null,
                         "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
-                    }
+                    },
+                    "deposit": 0
                 },
                 {
                     "id_product_attribute": 15,
@@ -1032,7 +1034,8 @@
                         "sold_out_limit": null,
                         "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
-                    }
+                    },
+                    "deposit": 0
                 }
             ],
             "stock_available": {
@@ -1119,13 +1122,13 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": [],
             "unchanged_name": "Lagerprodukt mit Varianten",
             "row_class": "main-product custom-odd",
             "is_new": false,
-            "gross_price": 0
+            "gross_price": 0,
+            "deposit": 0
         },
         {
             "id_product": "350-13",
@@ -1369,13 +1372,13 @@
             ],
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": [],
             "unchanged_name": "Mangold",
             "row_class": "main-product",
             "is_new": false,
-            "gross_price": 1.36
+            "gross_price": 1.36,
+            "deposit": 0
         }
     ]
 }

@@ -45,12 +45,6 @@ trait GetProductsForBackendTrait
                 Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday)
             );
 
-            if (!empty($product->deposit_product)) {
-                $product->deposit = $product->deposit_product->deposit;
-            } else {
-                $product->deposit = 0;
-            }
-
             $product = $this->setProductImageSrcAndHash($product);
 
             // show unity only for main products
@@ -149,7 +143,7 @@ trait GetProductsForBackendTrait
                     ],
                     'default_on' => $attribute->default_on,
                     'stock_available' => $attribute->stock_available,
-                    'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
+                    'deposit' => $attribute->deposit,
                     'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
                     'category' => [
                         'names' => [],
