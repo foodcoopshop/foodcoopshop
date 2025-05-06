@@ -51,15 +51,7 @@ trait GetProductsForBackendTrait
                 $product->deposit = 0;
             }
 
-            if (!empty($product->image)) {
-                $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'home');
-                $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
-                $imageFile = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFile);
-                if ($imageFile != '' && !preg_match('/de-default-home/', $imageFile) && file_exists($imageFile)) {
-                    $product->image->hash = sha1_file($imageFile);
-                    $product->image->src = Configure::read('App.fullBaseUrl') . $imageSrc;
-                }
-            }
+            $product = $this->setProductImageSrcAndHash($product);
 
             // show unity only for main products
             $additionalProductNameInfos = [];
@@ -445,6 +437,22 @@ trait GetProductsForBackendTrait
             $rowClasses[] = 'custom-odd';
         }
         return $rowClasses;
+    }
+
+    private function setProductImageSrcAndHash(Product $product): Product
+    {
+        if (empty($product->image)) {
+            return $product;
+        }
+
+        $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'home');
+        $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
+        $imageFile = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFile);
+        if ($imageFile != '' && !preg_match('/de-default-home/', $imageFile) && file_exists($imageFile)) {
+            $product->image->hash = sha1_file($imageFile);
+            $product->image->src = Configure::read('App.fullBaseUrl') . $imageSrc;
+        }
+        return $product;
     }
 
     private function setCategory(Product $product): object
