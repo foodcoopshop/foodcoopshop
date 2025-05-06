@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Services\ProductsForBackendService;
 use App\Services\PdfWriter\ProductCardsPdfWriterService;
 use Cake\Core\Configure;
 
@@ -33,15 +34,13 @@ trait GenerateProductCardsTrait
         $productIds = explode(',', $productIds);
 
         $productsTable = $this->getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackendQuery(
+        $productsForBackendService = new ProductsForBackendService();
+        $query = $productsForBackendService->getQuery(
             productIds: $productIds,
             manufacturerId: 'all',
             active: 'all',
         );
-        $products = $productsTable->getProductsForBackendPrepared(
-            query: $products,
-            addProductNameToAttributes: true,
-        );
+        $products = $productsForBackendService->getPreparedProducts($query, true);
 
         $preparedProducts = [];
         foreach($products as &$product) {

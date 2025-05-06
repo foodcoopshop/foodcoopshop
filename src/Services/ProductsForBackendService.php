@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Traits;
+namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -24,10 +24,10 @@ use App\Model\Entity\ProductAttribute;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-trait GetProductsForBackendTrait
+class ProductsForBackendService
 {
 
-    public function getProductsForBackendPrepared(SelectQuery|PaginatedInterface $query, bool $addProductNameToAttributes = false): array
+    public function getPreparedProducts(SelectQuery|PaginatedInterface $query, bool $addProductNameToAttributes = false): array
     {
 
         $i = 0;
@@ -108,11 +108,13 @@ trait GetProductsForBackendTrait
                 continue;
             }
 
+            $productsTable = TableRegistry::getTableLocator()->get('Products');
+
             foreach ($product->product_attributes as $attribute) {
 
                 $grossPrice = 0;
                 if (! empty($attribute->price)) {
-                    $grossPrice = $this->getGrossPrice($attribute->price, $product->tax_rate);
+                    $grossPrice = $productsTable->getGrossPrice($attribute->price, $product->tax_rate);
                 }
 
                 $priceIsZero = false;
@@ -126,7 +128,7 @@ trait GetProductsForBackendTrait
                 $productName = $this->getProductName($product->name, $attribute, $addProductNameToAttributes);
 
                 $preparedProduct = [
-                    'id_product' => $this->getCompositeProductIdAndAttributeId($product->id_product, $attribute->id_product_attribute),
+                    'id_product' => $productsTable->getCompositeProductIdAndAttributeId($product->id_product, $attribute->id_product_attribute),
                     'gross_price' => $grossPrice,
                     'active' => $product->active,
                     'is_stock_product' => $product->is_stock_product,
@@ -171,7 +173,7 @@ trait GetProductsForBackendTrait
         return $preparedProducts;
     }
 
-    public function getProductsForBackendQuery(
+    public function getQuery(
         array|string $productIds,
         int|string $manufacturerId,
         string $active,
@@ -230,7 +232,16 @@ trait GetProductsForBackendTrait
             $contain[] = 'ProductAttributes.BarcodeProductAttributes';
         }
 
-        $query = $this->find('all',
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $depositProductsTable = TableRegistry::getTableLocator()->get('DepositProducts');
+        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+        $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
+        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $unitProductsTable = TableRegistry::getTableLocator()->get('UnitProducts');
+
+        $query = $productsTable->find('all',
             conditions: $conditions,
             contain: $contain,
             order: [
@@ -245,17 +256,9 @@ trait GetProductsForBackendTrait
             });
         }
 
-        $depositProductsTable = TableRegistry::getTableLocator()->get('DepositProducts');
-        $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
-        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
-        $barcodeProductsTable = TableRegistry::getTableLocator()->get('BarcodeProducts');
-        $taxesTable = TableRegistry::getTableLocator()->get('Taxes');
-        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
-        $unitProductsTable = TableRegistry::getTableLocator()->get('UnitProducts');
-
         $query
         ->select('Products.id_product')->distinct()
-        ->select($this) // Products
+        ->select($productsTable)
         ->select($depositProductsTable)
         ->select('Images.id_image')
         ->select($taxesTable)
@@ -300,6 +303,7 @@ trait GetProductsForBackendTrait
             return $preparedProduct;
         }
 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
         $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
 
@@ -310,7 +314,7 @@ trait GetProductsForBackendTrait
         if ($purchasePrice === null) {
             $preparedProduct['purchase_gross_price'] = $purchasePrice;
         } else {
-            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+            $preparedProduct['purchase_gross_price'] = $productsTable->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
             if ($preparedProduct['purchase_gross_price'] > 0) {
                 $preparedProduct['purchase_price_is_zero'] = false;
             }
@@ -325,8 +329,8 @@ trait GetProductsForBackendTrait
                     Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->purchase_price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
                     $purchasePriceTaxRate,
                 );
-                $priceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
-                $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                $priceInclPerUnitAndAmount = $productsTable->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                $purchasePriceInclPerUnitAndAmount = $productsTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
                 $preparedProduct['surcharge_price'] = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
                 if ($purchasePriceInclPerUnitAndAmount > 0) {
                     $preparedProduct['purchase_price_is_zero'] = false;
@@ -351,6 +355,7 @@ trait GetProductsForBackendTrait
             return $product;
         }
 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
 
         $product->purchase_price_is_zero = true;
@@ -371,7 +376,7 @@ trait GetProductsForBackendTrait
             if ($purchasePrice === null) {
                 $product->purchase_gross_price = $purchasePrice;
             } else {
-                $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                $product->purchase_gross_price = $productsTable->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                 if ($product->purchase_gross_price > 0) {
                     $product->purchase_price_is_zero = false;
                 }
@@ -386,8 +391,8 @@ trait GetProductsForBackendTrait
                         Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
                         $purchasePriceTaxRate,
                     );
-                    $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $product->tax_rate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
-                    $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                    $priceInclPerUnitAndAmount = $productsTable->getNetPrice($product->unit->price_incl_per_unit, $product->tax_rate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                    $purchasePriceInclPerUnitAndAmount = $productsTable->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
                     $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
                     if ($purchasePriceInclPerUnitAndAmount > 0) {
                         $product->purchase_price_is_zero = false;

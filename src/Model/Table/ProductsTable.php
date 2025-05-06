@@ -17,7 +17,6 @@ use Cake\ORM\TableRegistry;
 use Cake\I18n\Date;
 use stdClass;
 use App\Model\Entity\Manufacturer;
-use App\Model\Traits\GetProductsForBackendTrait;
 use App\Services\CalculationService;
 
 /**
@@ -37,7 +36,6 @@ class ProductsTable extends AppTable
 {
 
     use AllowOnlyOneWeekdayValidatorTrait;
-    use GetProductsForBackendTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use ProductImportTrait;
 

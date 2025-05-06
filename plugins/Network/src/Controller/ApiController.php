@@ -10,6 +10,7 @@ use Cake\Controller\Controller;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
 use Cake\View\JsonView;
+use App\Services\ProductsForBackendService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -366,22 +367,17 @@ class ApiController extends Controller
     public function getProducts(): void
     {
 
-        $productsTable = $this->getTableLocator()->get('Products');
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
-
         $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee(
             $this->identity->getManufacturerVariableMemberFee()
         );
-        $query = $productsTable->getProductsForBackendQuery(
+        $productsForBackendService = new ProductsForBackendService();
+        $query = $productsForBackendService->getQuery(
             productIds: '',
             manufacturerId: $this->identity->getManufacturerId(),
             active: 'all',
         );
-        $preparedProducts = $productsTable->getProductsForBackendPrepared(
-            query: $query,
-            addProductNameToAttributes: true,
-        );
-
+        $preparedProducts = $productsForBackendService->getPreparedProducts($query, true);
         $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),

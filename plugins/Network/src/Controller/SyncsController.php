@@ -9,6 +9,7 @@ use Cake\Event\EventInterface;
 use Cake\View\JsonView;
 use Cake\Http\Response;
 use Cake\Datasource\EntityInterface;
+use App\Services\ProductsForBackendService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -243,16 +244,13 @@ class SyncsController extends AppController
 
     private function getLocalSyncProducts(): array
     {
-        $productsTable = $this->getTableLocator()->get('Products');
-        $query = $productsTable->getProductsForBackendQuery(
+        $productsForBackendService = new ProductsForBackendService();
+        $query = $productsForBackendService->getQuery(
             productIds: '',
             manufacturerId: $this->identity->getManufacturerId(),
             active: 'all',
         );
-        $products = $productsTable->getProductsForBackendPrepared(
-            query: $query,
-            addProductNameToAttributes: true,
-        );
+        $products = $productsForBackendService->getPreparedProducts($query, true);
         $matchedProducts = $this->markProductsAsSynced($products);
         return $matchedProducts;
     }
