@@ -41,7 +41,7 @@ class PurchasePriceProductAttributesTable extends AppTable
     public function isPurchasePriceSet(EntityInterface $entity): bool
     {
         $result = true;
-        if (!empty($entity->unit_product_attribute) && $entity->unit_product_attribute->price_per_unit_enabled) {
+        if ($entity->price_per_unit_enabled) {
             if (is_null($entity->unit_product_attribute->purchase_price_incl_per_unit)) {
                 $result = false;
             }

@@ -148,7 +148,7 @@ class CartProductsTable extends AppTable
                     $unitObject = null;
                     $depositObject = $attribute->deposit_product_attribute;
                     $price = $attribute->price;
-                    if (isset($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $unitObject =  $attribute->unit_product_attribute;
                     }
                     continue;

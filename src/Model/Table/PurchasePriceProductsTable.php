@@ -164,7 +164,7 @@ class PurchasePriceProductsTable extends AppTable
                     }
 
                     $grossPricePerUnit = 0;
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $purchasePriceNet = $productsTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                         $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                     }
