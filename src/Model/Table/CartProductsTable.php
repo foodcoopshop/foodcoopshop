@@ -139,16 +139,16 @@ class CartProductsTable extends AppTable
         }
 
         $unitObject = $product->unit_product;
-        $depositObject = $product->deposit_product;
+        $deposit = $product->deposit;
         $price = $product->price;
 
         if ($attributeId > 0) {
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
                     $unitObject = null;
-                    $depositObject = $attribute->deposit_product_attribute;
+                    $deposit = $attribute->deposit;
                     $price = $attribute->price;
-                    if (isset($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $unitObject =  $attribute->unit_product_attribute;
                     }
                     continue;
@@ -162,8 +162,8 @@ class CartProductsTable extends AppTable
             $unitObject,
             $amount,
             $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
-            $depositObject,
-            $product->tax->rate ?? 0,
+            $deposit,
+            $product->tax_rate,
         );
 
         $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit']);

@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Entity;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -16,22 +14,16 @@ namespace App\Model\Entity;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ProductAttribute extends AppEntity
+namespace App\Services;
+
+class CalculationService
 {
 
-    protected array $_virtual = ['deposit'];
-
-    protected function _getPricePerUnitEnabled(): bool
+    public static function getGrossPrice(float $netPrice, float $taxRate): float
     {
-        return !empty($this->unit_product_attribute) && $this->unit_product_attribute->price_per_unit_enabled;
-    }
-
-    public function _getDeposit(): float
-    {
-        if (empty($this->deposit_product_attribute)) {
-            return 0;
-        }
-        return (float) $this->deposit_product_attribute->deposit;
+        $grossPrice = $netPrice * (100 + $taxRate) / 100;
+        $grossPrice = round($grossPrice, 2);
+        return $grossPrice;
     }
 
 }

@@ -113,8 +113,6 @@ class PurchasePriceProductsTable extends AppTable
 
         foreach($products as $product) {
 
-            $sellingPriceTaxRate = $product->tax->rate ?? 0;
-
             if (empty($product->purchase_price_product) || is_null($product->purchase_price_product->tax_id)) {
                 continue;
             }
@@ -130,13 +128,13 @@ class PurchasePriceProductsTable extends AppTable
 
                 $grossPrice = 0;
                 if (!empty($product->purchase_price_product)) {
-                    $grossPrice = $this->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
+                    $grossPrice = $this->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $product->tax_rate);
                 }
 
                 $grossPricePerUnit = 0;
                 if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                     $purchasePriceNet = $productsTable->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                    $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                    $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $product->tax_rate);
                 }
 
                 if ($grossPrice == 0 && $grossPricePerUnit == 0) {
@@ -160,13 +158,13 @@ class PurchasePriceProductsTable extends AppTable
 
                     $grossPrice = 0;
                     if (!empty($attribute->purchase_price_product_attribute)) {
-                        $grossPrice = $this->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+                        $grossPrice = $this->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $product->tax_rate);
                     }
 
                     $grossPricePerUnit = 0;
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $purchasePriceNet = $productsTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                        $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                        $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $product->tax_rate);
                     }
 
                     if ($grossPrice == 0 && $grossPricePerUnit == 0) {

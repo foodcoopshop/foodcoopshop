@@ -412,7 +412,7 @@ class CartService
                 'total_price_tax_incl' => $cartProduct['price'],
                 'tax_unit_amount' => $cartProduct['taxPerPiece'],
                 'tax_total_amount' => $cartProduct['tax'],
-                'tax_rate' => $product->tax->rate ?? 0,
+                'tax_rate' => $product->tax_rate,
                 'order_state' => OrderDetail::STATE_OPEN,
                 'id_customer' => $this->identity->getId(),
                 'id_cart_product' => $cartProduct['cartProductId'],
@@ -566,7 +566,7 @@ class CartService
             // attribute
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $ids['attributeId']) {
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
                         $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
                         $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);

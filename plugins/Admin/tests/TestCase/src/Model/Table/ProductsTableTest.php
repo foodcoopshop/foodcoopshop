@@ -796,8 +796,7 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0];
             }
-            $taxRate = $changedProduct->tax->rate ?? 0;
-            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice($resultEntity->price, $taxRate));
+            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice($resultEntity->price, $changedProduct->tax_rate));
         }
     }
 

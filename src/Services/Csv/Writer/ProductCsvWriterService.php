@@ -22,6 +22,7 @@ use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
 use Cake\ORM\TableRegistry;
 use stdClass;
+use App\Services\ProductsForBackendService;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -67,14 +68,15 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     public function getRecords(): array
     {
-        $productsTable =TableRegistry::getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackend(
+        $productsForBackendService = new ProductsForBackendService();
+        $query = $productsForBackendService->getQuery(
             productIds: $this->productIds,
             manufacturerId: 'all',
             active: 'all',
-            addProductNameToAttributes: true,
         );
+        $products = $productsForBackendService->getPreparedProducts($query, true);
 
+        $productsTable =TableRegistry::getTableLocator()->get('Products');
         $records = [];
         $stockValueSum = 0;
         foreach ($products as $product) {
