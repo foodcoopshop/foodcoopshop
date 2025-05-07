@@ -57,7 +57,7 @@ foreach ($manufacturers as $manufacturer) {
             echo $manufacturer->short_description;
 
             if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl()) {
-                $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
+                $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, false, 5);
                 if ($manufacturerNoDeliveryDaysString != '') {
                     echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
                 }

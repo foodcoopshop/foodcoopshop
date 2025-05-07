@@ -256,40 +256,36 @@ class ManufacturersTable extends AppTable
     {
 
         $conditions = [
-            'Manufacturers.active' => APP_ON
+            $this->aliasField('active') => APP_ON
         ];
         $identity = Router::getRequest()->getAttribute('identity');
         if ($identity === null) {
-            $conditions['Manufacturers.is_private'] = APP_OFF;
+            $conditions[$this->aliasField('is_private')] = APP_OFF;
         }
 
         $manufacturers = $this->find('all',
-        fields: [
-            'Manufacturers.id_manufacturer',
-            'Manufacturers.name',
-            'Manufacturers.no_delivery_days'
-        ],
-        order: [
-            'Manufacturers.name' => 'ASC'
-        ],
-        conditions: $conditions);
+            fields: [
+                $this->aliasField('id_manufacturer'),
+                $this->aliasField('name'),
+                $this->aliasField('no_delivery_days'),
+            ],
+            order: [
+                $this->aliasField('name') => 'ASC'
+            ],
+            conditions: $conditions,
+        );
 
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
-            if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);
             if ($noDeliveryDaysString != '') {
                 $noDeliveryDaysString = __('Delivery_break') . ': ' . $noDeliveryDaysString;
-                if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                    $additionalInfo .= ' - ';
-                }
                 $additionalInfo .= $noDeliveryDaysString;
             }
             if ($additionalInfo != '') {
-                $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
+                $manufacturerName .= ' <span class="additional-info">- ('.$additionalInfo.')</span>';
             }
             $manufacturersForMenu[] = [
                 'name' => $manufacturerName,

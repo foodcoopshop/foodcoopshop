@@ -2252,6 +2252,9 @@ msgstr "Gelöschte E-Mail-Adresse"
 msgid "{0}_further_delivery_breaks"
 msgstr "{0} weitere Lieferpausen"
 
+msgid "{0} further days"
+msgstr "{0} weiteren Tagen"
+
 msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr "Der Hersteller {0} hat am {1} Lieferpause."
 

@@ -107,7 +107,7 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
 }
 
 if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl()) {
-    $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+    $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true, 2);
     if ($manufacturerNoDeliveryDaysString != '') {
         echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
     }
