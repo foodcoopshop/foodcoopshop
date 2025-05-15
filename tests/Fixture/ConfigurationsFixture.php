@@ -224,7 +224,6 @@ class ConfigurationsFixture extends AppFixture
         ],
         [
             'active' => 1,
-            'text' => '',
             'name' => 'FCS_CURRENCY_SYMBOL',
             'text' => 'Währungssymbol',
             'value' => '€',
