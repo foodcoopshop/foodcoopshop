@@ -38,7 +38,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
                     'id_manufacturer' => 5,
                     'is_private' => 1,
                     'active' => 0,
-                    'show_on_start_page_until' => '30.03.2025',
+                    'show_on_start_page_until' => '30.03.2040',
                 ],
             ]
         );
@@ -56,7 +56,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assertEquals(5, $blogPost->id_manufacturer);
         $this->assertEquals(1, $blogPost->is_private);
         $this->assertEquals(0, $blogPost->active);
-        $this->assertEquals('2025-03-30', $blogPost->show_on_start_page_until->i18nFormat('yyyy-MM-dd'));
+        $this->assertEquals('2040-03-30', $blogPost->show_on_start_page_until->i18nFormat('yyyy-MM-dd'));
 
     }
 
