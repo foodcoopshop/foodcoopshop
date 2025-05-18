@@ -17,7 +17,7 @@
     "@ericblade/quagga2": "^1.8.4",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "blueimp-file-upload": "^10.32.0",
-    "bootstrap": "^5.3.5",
+    "bootstrap": "^5.3.6",
     "bootstrap-select": "^1.14.0-beta3",
     "chart.js": "^4.4.9",
     "chartjs-plugin-datalabels": "^2.2.0",
