@@ -6,6 +6,13 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v4.1.1
+
+### Bug fix
+- Bugfix: Falscher Barcode auf Produktkarten (Selbstbedienungs-Modus).
+
+Datum: 18.05.2025 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.1.0...v4.1.1)
+
 ## v4.1
 
 ### Neue Funktionen / Verbesserungen
