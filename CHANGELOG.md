@@ -17,6 +17,13 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen für den Selbstbedienungs-Modus
 - Die Validerung des Lagerstandes kann jetzt deaktiviert werden. (`app.selfServiceIsAmountValidationEnabled`) [I#1129](https://github.com/foodcoopshop/foodcoopshop/issues/1129) / [PR#1132](https://github.com/foodcoopshop/foodcoopshop/pull/1132) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 
+## v4.1.1
+
+### Bug fix
+- Bugfix: Falscher Barcode auf Produktkarten (Selbstbedienungs-Modus).
+
+Datum: 18.05.2025 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.1.0...v4.1.1)
+
 ## v4.1
 
 ### Neue Funktionen / Verbesserungen

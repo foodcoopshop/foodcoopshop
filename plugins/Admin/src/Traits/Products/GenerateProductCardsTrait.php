@@ -60,7 +60,7 @@ trait GenerateProductCardsTrait
                     $product->name = $product->nameForBarcodePdf;
                 }
             }
-            if (!$productsTable->isMainProduct($product)) {
+            if ($productsTable->isMainProduct($product)) {
                 $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;
