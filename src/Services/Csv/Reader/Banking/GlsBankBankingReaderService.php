@@ -31,7 +31,7 @@ class GlsBankBankingReaderService extends BankingReaderService {
 
         $result = false;
 
-        if (count($record) == 19 &&
+        if (count($record) == 18 &&
             strlen($record['Valutadatum']) == 10 &&
             $record['Waehrung'] == 'EUR' &&
             is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag'])) &&
