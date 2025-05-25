@@ -15,7 +15,7 @@ parameters:
         - plugins/Network/src
         - plugins/Network/templates
         - plugins/Network/tests
-    ignoreErrors:
+    ignoreErrors:    
         - message: '#Access to an undefined property .*#'
         - message: '#Cannot access property .*#'
         - message: '#Variable \$.* might not be defined#'
@@ -26,6 +26,9 @@ parameters:
         - message: '#Call to an undefined method Authorization\\IdentityInterface::*.#'
         - message: '#Call to an undefined method Authentication\\IdentityInterface::*.#'
         - message: '#Method .* has parameter .* with no type specified.#'
+          paths:
+            - src/Services/HelloCash/HelloCashService.php
+            - plugins/Admin/src/Controller/HelloCashController.php
         - message: '#Method .* has parameter .* with no value type specified in iterable type array.#'
         - message: '#Method .* return type has no value type specified in iterable type array.#'
         - message: '#Property .* type has no value type specified in iterable type array.#'

@@ -34,14 +34,14 @@ class InvoicesTableTest extends AppCakeTestCase
         $invoicePrefix = 'ABC-';
         $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
         $invoicesTable = $this->getTableLocator()->get('Invoices');
-        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', null);
         $this->assertEquals($result, $invoicePrefix . '2020-000001');
     }
 
     public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExist(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
-        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', null);
         $this->assertEquals($result, '2020-000001');
     }
 

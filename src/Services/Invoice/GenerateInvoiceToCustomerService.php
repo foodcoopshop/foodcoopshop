@@ -55,7 +55,7 @@ class GenerateInvoiceToCustomerService
         } else {
             $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService();
         }
-        $pdfWriter->prepareAndSetData($data, $paidInCash, $invoiceNumber, $invoiceDate);
+        $pdfWriter->prepareAndSetData($data, (bool) $paidInCash, $invoiceNumber, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 

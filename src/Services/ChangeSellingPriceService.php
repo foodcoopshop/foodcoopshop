@@ -25,7 +25,7 @@ use Cake\ORM\TableRegistry;
 class ChangeSellingPriceService
 {
 
-    private function getOpenOrderDetails($productId, $productAttributeId): SelectQuery
+    private function getOpenOrderDetails(int $productId, int $productAttributeId): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $openOrderDetails = $orderDetailsTable->find('all',
@@ -119,7 +119,7 @@ class ChangeSellingPriceService
 
     }
 
-    public function changeOrderDetailPriceDepositTax($orderDetail, $grossPrice, $productAmount): OrderDetail
+    public function changeOrderDetailPriceDepositTax(OrderDetail $orderDetail, float $grossPrice, int $productAmount): OrderDetail
     {
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');

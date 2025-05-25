@@ -279,7 +279,7 @@ class ProductsForBackendService
         return $query;
     }
 
-    private function getProductName($originalProductName, $attribute, $addProductNameToAttributes): string
+    private function getProductName(string $originalProductName, ProductAttribute $attribute, bool $addProductNameToAttributes): string
     {
         if ($attribute->price_per_unit_enabled) {
             $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(

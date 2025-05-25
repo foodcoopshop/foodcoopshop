@@ -82,7 +82,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testCancel(): void
+    public function testCancelA(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);

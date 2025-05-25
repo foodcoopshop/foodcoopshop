@@ -231,7 +231,7 @@ class InvoicesController extends AdminAppController
             } else {
                 $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService();
             }
-            $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+            $pdfWriter->prepareAndSetData($invoiceData, (bool) $paidInCash, $newInvoiceNumber, $newInvoiceDate);
 
             if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
                 return $this->response->withStringBody($pdfWriter->writeHtml());
@@ -505,7 +505,7 @@ class InvoicesController extends AdminAppController
 
         $this->set('customersForDropdown', $customersTable->getForDropdown());
 
-        $preparedTaxRates = $invoicesTable->getPreparedTaxRatesForSumTable($invoices);
+        $preparedTaxRates = $invoicesTable->getPreparedTaxRatesForSumTable($invoices->toArray());
         $this->set('taxRates', $preparedTaxRates['taxRates']);
         $this->set('taxRatesSums', $preparedTaxRates['taxRatesSums']);
 

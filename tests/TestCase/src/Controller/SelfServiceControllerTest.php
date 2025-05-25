@@ -450,7 +450,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals($invoices->count(), 0);
     }
 
-    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer(): void
+    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomerA(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
