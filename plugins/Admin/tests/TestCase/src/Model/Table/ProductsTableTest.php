@@ -444,6 +444,16 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductDeposit($products);
     }
 
+    public function testChangeDepositNegativeWithOneProduct(): void
+    {
+        $products = [
+            [102 => '-1,00']
+        ];
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeDeposit($products);
+        $this->assertProductDeposit($products);
+    }
+
     public function testChangeDepositWithOneProductAttribute(): void
     {
         $products = [
@@ -470,8 +480,8 @@ class ProductsTableTest extends AppCakeTestCase
 
         // try to change deposits, but include one invalid deposit
         $products = [
-            [346 => '-1'], // invalid deposit
-            [102 => '2,00'],
+            [346 => 'adsf'], // invalid deposit
+            [102 => '2,30'],
             [103 => '1,00']
         ];
 

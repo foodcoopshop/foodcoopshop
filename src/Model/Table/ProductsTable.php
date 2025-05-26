@@ -301,9 +301,9 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $deposit = $product[$productId];
             if (is_string($deposit)) {
-                $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+                $deposit = Configure::read('app.numberHelper')->parseFloatRespectingLocale($product[$productId]);
             }
-            if ($deposit < 0) {
+            if ($deposit === false) {
                 throw new \Exception('input format not correct: '.$product[$productId]);
             }
         }
@@ -315,7 +315,7 @@ class ProductsTable extends AppTable
 
             $deposit = $product[$productId];
             if (is_string($deposit)) {
-                $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+                $deposit = Configure::read('app.numberHelper')->parseFloatRespectingLocale($product[$productId]);
             }
 
             $ids = $this->getProductIdAndAttributeId($productId);
@@ -337,7 +337,7 @@ class ProductsTable extends AppTable
 
                 $deposit2save = [
                     'id_product_attribute' => $ids['attributeId'],
-                    'deposit' => $deposit
+                    'deposit' => $deposit,
                 ];
             } else {
                 // deposit is set for productId
@@ -355,7 +355,7 @@ class ProductsTable extends AppTable
 
                 $deposit2save = [
                     'id_product' => $productId,
-                    'deposit' => $deposit
+                    'deposit' => $deposit,
                 ];
             }
 
