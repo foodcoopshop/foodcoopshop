@@ -11,7 +11,16 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-@media print {
+
+ @media print {
+    body {
+        color: #000 ! important;
+    }
+    body.admin table.list tr td a:not(.btn),
+    body.dark.admin table.list tr td a:not(.btn) {
+        color: #000 ! important;
+        text-decoration: none ! important;
+    }
     h1 {
         font-size: 20px ! important;
     }
@@ -26,8 +35,15 @@
     input[type="text"], select {
         width: 95px ! important;
     }
+    a.btn {
+        display: none;
+    }
     .filter-container {
         position: static;
         margin-top: -80px;
+        font-size: 1.3rem;
     }
-}
+    table td {
+        font-size: 1.3rem;
+    }
+ }
