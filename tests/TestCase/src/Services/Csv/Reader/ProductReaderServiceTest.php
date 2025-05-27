@@ -72,7 +72,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsB['active']['inList']);
         $this->assertEquals($productPriceWrongErrorMessage, $errorsB['price']['greaterThanOrEqual']);
-        $this->assertEquals('Bitte gib eine Zahl zwischen -5.000 und 5.000 an. Feld: Lagerstand / verfügbare Menge', $errorsA['stock_available']['quantity']['lessThanOrEqual']);
+        $this->assertEquals('Bitte gib eine Zahl zwischen -1.000.000 und 1.000.000 an. Feld: Lagerstand / verfügbare Menge', $errorsA['stock_available']['quantity']['lessThanOrEqual']);
 
         $productsTable = $this->getTableLocator()->get('Products');
         $this->assertCount(14, $productsTable->find('all'));
