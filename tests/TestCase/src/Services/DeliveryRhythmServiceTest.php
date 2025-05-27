@@ -23,6 +23,8 @@ use App\View\Helper\MyTimeHelper;
 use Cake\View\View;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\I18n\Date;
+use Cake\ORM\Entity;
+use App\Model\Entity\Product;
 
 class DeliveryRhythmServiceTest extends AppCakeTestCase
 {
@@ -231,8 +233,8 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('10.10.2018', '12.10.2018'); // wednesday
         $this->assertGetFormattedNextDeliveryDay('11.10.2018', '12.10.2018'); // thursday
         $this->assertGetFormattedNextDeliveryDay('12.10.2018', '12.10.2018'); // friday
-        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '19.10.2018'); // saturday
-        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '19.10.2018'); // sunday
+        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '12.10.2018'); // saturday
+        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '12.10.2018'); // sunday
         $this->assertGetFormattedNextDeliveryDay('15.10.2018', '19.10.2018'); // monday
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
@@ -245,8 +247,8 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('10.10.2018', '12.10.2018'); // wednesday
         $this->assertGetFormattedNextDeliveryDay('11.10.2018', '12.10.2018'); // thursday
         $this->assertGetFormattedNextDeliveryDay('12.10.2018', '12.10.2018'); // friday
-        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '19.10.2018'); // saturday
-        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '19.10.2018'); // sunday
+        $this->assertGetFormattedNextDeliveryDay('13.10.2018', '12.10.2018'); // saturday
+        $this->assertGetFormattedNextDeliveryDay('14.10.2018', '12.10.2018'); // sunday
         $this->assertGetFormattedNextDeliveryDay('15.10.2018', '19.10.2018'); // monday
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
@@ -1068,50 +1070,50 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    private function assertGetNextPickupDayForProduct($product, $currentDay, $expectedResult): void
+    private function assertGetNextPickupDayForProduct(Product $product, string $currentDay, string $expectedResult): void
     {
         $result = (new DeliveryRhythmService())->getNextPickupDayForProduct($product, $currentDay);
         $this->assertEquals($expectedResult, $result);
     }
 
-    private function assertGetOrderPeriodFirstDay($currentDay, $expected): void
+    private function assertGetOrderPeriodFirstDay(string $currentDay, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodFirstDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetOrderPeriodLastDay($currentDay, $expected): void
+    private function assertGetOrderPeriodLastDay(string $currentDay, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodLastDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetDeliveryDay($currentDay, $expected): void
+    private function assertGetDeliveryDay(string $currentDay, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getDeliveryDay(strtotime($currentDay));
         $result = date($this->MyTimeHelper->getI18Format('DateShortAlt'), $result);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetFormattedNextDeliveryDay($currentDay, $expected): void
+    private function assertGetFormattedNextDeliveryDay(string $currentDay, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected): void
+    private function assertGetOrderPeriodFirstDayByDeliveryDay(int $deliveryDay, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected): void
+    private function assertGetOrderPeriodLastDayByDeliveryDay(int $deliveryDay, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
-    private function assertGetLastOrderDay($product, $expected): void
+    private function assertGetLastOrderDay(array $product, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getLastOrderDay(
             $product['next_delivery_day'],

@@ -143,7 +143,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
 
     }
 
-    protected function getActionLogData($manufacturers): string
+    protected function getActionLogData(array $manufacturers): string
     {
 
         $tableData = '';

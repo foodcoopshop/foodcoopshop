@@ -81,7 +81,7 @@ use App\Model\Entity\OrderDetail;
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
                 echo $this->element('orderDetailList/pickupDayFilter', [
-                    'pickupDay' => $pickupDay
+                    'pickupDay' => $pickupDay,
                 ]);
             ?>
             <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
@@ -142,10 +142,10 @@ use App\Model\Entity\OrderDetail;
             
             echo $this->element('orderDetailList/moreDropdown', [
                 'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products')),
-                'emailAddresses' => $emailAddresses,
+                'emailAddresses' => $emailAddresses ?? [],
                 'pickupDay' => $pickupDay,
                 'deposit' => $deposit,
-                'orderDetails' => $orderDetails,
+                'orderDetails' => $orderDetails ?? [],
                 'groupBy' => $groupBy,
                 'filterByCartTypeEnabled' => $filterByCartTypeEnabled,
             ]);
@@ -156,7 +156,7 @@ use App\Model\Entity\OrderDetail;
 
 <?php
 
-if (count($orderDetails) == 0) {
+if (isset($orderDetails) && count($orderDetails) == 0) {
     echo '<h2 class="info">';
     if (count($pickupDay) == 1) {
         echo __d('admin', 'No_orders_found_for_pickup_day_{0}.', [$this->Time->formatToDateShort($pickupDay[0])]);
@@ -169,7 +169,7 @@ if (count($orderDetails) == 0) {
 echo '<table class="list">';
 echo '<tr class="sort">';
     echo $this->element('rowMarker/rowMarkerAll', [
-        'enabled' => count($orderDetails) > 0 && $groupBy == ''
+        'enabled' => isset($orderDetails) && count($orderDetails) > 0 && $groupBy == ''
     ]);
     echo '<th class="hide">ID</th>';
     $orderDetailTemplateElement = 'default';
@@ -180,100 +180,102 @@ echo '<tr class="sort">';
 
 echo '</tr>';
 
-foreach ($orderDetails as $orderDetail) {
+if (isset($orderDetails)) {
+    foreach ($orderDetails as $orderDetail) {
 
-    $editRecordAllowed = $groupBy == '' && (
-        in_array($orderDetail->order_state, [
-            OrderDetail::STATE_OPEN,
-            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
-        ]))
-        && (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
+        $editRecordAllowed = $groupBy == '' && (
+            in_array($orderDetail->order_state, [
+                OrderDetail::STATE_OPEN,
+                OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+            ]))
+            && (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
 
-    $rowClasses = [];
-    if (isset($orderDetail->row_class)) {
-        $rowClasses = $orderDetail->row_class;
+        $rowClasses = [];
+        if (isset($orderDetail->row_class)) {
+            $rowClasses = $orderDetail->row_class;
+        }
+        if (isset($orderDetail['row_class'])) {
+            $rowClasses = $orderDetail['row_class'];
+        }
+
+        $rowIdHtml = '';
+        if ($groupBy == '') {
+            $rowIdHtml = ' id="order-detail-' . $orderDetail->id_order_detail . '"';
+        }
+        echo '<tr' . $rowIdHtml . ' class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
+
+        echo $this->element('rowMarker/rowMarker', [
+            'show' => $editRecordAllowed,
+            'id' => $orderDetail->id_order_detail ?? '',
+        ]);
+
+        echo $this->element('orderDetailList/data/id', [
+            'orderDetail' => $orderDetail,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/amount', [
+            'orderDetail' => $orderDetail,
+            'editRecordAllowed' => $editRecordAllowed,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/mainObject', [
+            'orderDetail' => $orderDetail,
+            'editRecordAllowed' => $editRecordAllowed,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/price', [
+            'orderDetail' => $orderDetail,
+            'editRecordAllowed' => $editRecordAllowed,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/deposit', [
+            'orderDetail' => $orderDetail,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/quantity', [
+            'orderDetail' => $orderDetail,
+            'editRecordAllowed' => $editRecordAllowed,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/productsPickedUp', [
+            'orderDetail' => $orderDetail,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/invoiceLink', [
+            'orderDetail' => $orderDetail,
+            'groupBy' => $groupBy,
+        ]);
+
+        echo $this->element('orderDetailList/data/customer', [
+            'editRecordAllowed' => $editRecordAllowed,
+            'orderDetail' => $orderDetail
+        ]);
+
+        echo $this->element('orderDetailList/data/pickupDay', [
+            'orderDetail' => $orderDetail
+        ]);
+
+        echo $this->element('orderDetailList/data/orderState', [
+            'orderDetail' => $orderDetail,
+            'editRecordAllowed' => $editRecordAllowed,
+            'groupBy' => $groupBy
+        ]);
+
+        echo $this->element('orderDetailList/data/cancelButton', [
+            'orderDetail' => $orderDetail,
+            'editRecordAllowed' => $editRecordAllowed,
+            'groupBy' => $groupBy
+        ]);
+
+        echo '</tr>';
     }
-    if (isset($orderDetail['row_class'])) {
-        $rowClasses = $orderDetail['row_class'];
-    }
-
-    $rowIdHtml = '';
-    if ($groupBy == '') {
-        $rowIdHtml = ' id="order-detail-' . $orderDetail->id_order_detail . '"';
-    }
-    echo '<tr' . $rowIdHtml . ' class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
-
-    echo $this->element('rowMarker/rowMarker', [
-        'show' => $editRecordAllowed,
-        'id' => $orderDetail->id_order_detail ?? '',
-    ]);
-
-    echo $this->element('orderDetailList/data/id', [
-        'orderDetail' => $orderDetail,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/amount', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/mainObject', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/price', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/deposit', [
-        'orderDetail' => $orderDetail,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/quantity', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/productsPickedUp', [
-        'orderDetail' => $orderDetail,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/invoiceLink', [
-        'orderDetail' => $orderDetail,
-        'groupBy' => $groupBy,
-    ]);
-
-    echo $this->element('orderDetailList/data/customer', [
-        'editRecordAllowed' => $editRecordAllowed,
-        'orderDetail' => $orderDetail
-    ]);
-
-    echo $this->element('orderDetailList/data/pickupDay', [
-        'orderDetail' => $orderDetail
-    ]);
-
-    echo $this->element('orderDetailList/data/orderState', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/cancelButton', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo '</tr>';
 }
 
 echo '<tr>';
@@ -320,7 +322,7 @@ if ($groupBy == 'product') {
 echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
 if ($groupBy != 'customer') {
     $sumDepositString = '';
-    if ($sums['deposit']> 0) {
+    if ($sums['deposit'] != 0) {
         $sumDepositString = $this->Number->formatAsCurrency($sums['deposit']);
     }
     if (Configure::read('app.isDepositEnabled')) {

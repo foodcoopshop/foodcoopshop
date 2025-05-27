@@ -19,7 +19,7 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditProductsPickedUpTrait 
+trait EditProductsPickedUpTrait
 {
 
     public function editProductsPickedUp(): void
@@ -38,6 +38,8 @@ trait EditProductsPickedUpTrait
         $errorMessages = [];
         $result = false;
         foreach($customerIds as $customerId) {
+
+            $customerId = (int) $customerId;
 
             if ($state) {
 
@@ -61,7 +63,7 @@ trait EditProductsPickedUpTrait
                 }
 
             }
-            $result = $pickupDaysTable->changeState($customerId, $pickupDay, $state);
+            $result = $pickupDaysTable->changeStatus($customerId, $pickupDay, $state);
         }
 
         if (!empty($errorMessages)) {

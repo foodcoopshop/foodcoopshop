@@ -60,7 +60,7 @@ trait EditDeliveryRhythmTrait
             )->first();
         }
 
-        $deliveryRhythmCount = $splittedDeliveryRhythmType[0];
+        $deliveryRhythmCount = (int) $splittedDeliveryRhythmType[0];
         $deliveryRhythmType = $splittedDeliveryRhythmType[1];
 
         $product2update = [
@@ -117,7 +117,7 @@ trait EditDeliveryRhythmTrait
             } else {
                 if ($product2update['delivery_rhythm_send_order_list_weekday'] != (new DeliveryRhythmService())->getSendOrderListsWeekday()) {
                     $additionalMessages[] =  __d('admin', 'Last_order_weekday') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
-                        $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
+                        (int) $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
                         . '</b>';
                 }
             }
@@ -141,13 +141,13 @@ trait EditDeliveryRhythmTrait
                     '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                         $oldProduct->is_stock_product && $oldProduct->manufacturer->stock_management_enabled,
                         $deliveryRhythmType,
-                        $deliveryRhythmCount
+                        $deliveryRhythmCount,
                     ) . '</b>'
                 ]);
                 if (!empty($additionalMessages)) {
                     $messageString .= ' ' . join(', ', $additionalMessages);
                 }
-                $actionLogsTable->customSave('product_delivery_rhythm_changed', $this->identity->getId(), $productId, 'products', $messageString);
+                $actionLogsTable->customSave('product_delivery_rhythm_changed', $this->identity->getId(), (int) $productId, 'products', $messageString);
                 $this->getRequest()->getSession()->write('highlightedRowId', $productId);
             } else {
                 $messageString = __d('admin', 'Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}.', [

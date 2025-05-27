@@ -36,8 +36,20 @@ class CustomersController extends FrontendController
 
     use RenewAuthSessionTrait;
 
+    private function isPostRequestToLoginPage(): bool
+    {
+        return $this->request->is('post') && $this->request->getParam('_matchedRoute') == Configure::read('app.slugHelper')->getLogin();
+    }
+
     public function beforeFilter(EventInterface $event): void
     {
+
+        // when login page is opened in two tabs, sometimes form protection is triggered (sessionId changes after login)
+        // therefore simply disable it (on post). attention, registration is processed on same action, but not same url
+        if ($this->isPostRequestToLoginPage()) {
+            $this->formProtectionEnabled = false;
+        }
+
         parent::beforeFilter($event);
 
         $this->Authentication->allowUnauthenticated([
@@ -283,13 +295,19 @@ class CustomersController extends FrontendController
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $title = __('Sign_in');
+
         $enableRegistrationForm = true;
+
+        // after  failed login attempt the registration form would not work becaus of missing security token
+        if ($this->isPostRequestToLoginPage()) {
+            $enableRegistrationForm = false;
+        }
+
         $enableBarCodeLogin = false;
         $enableSelfServiceLoginAsCustomerButton = false;
 
-        $orderCustomerService = new OrderCustomerService();
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer())
+            && (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer())
             ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
@@ -321,7 +339,7 @@ class CustomersController extends FrontendController
                 } else {
                     $errorMessageSigningInFailed = __('Signing_in_failed_account_inactive_or_password_wrong?');
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-                        && $orderCustomerService->isSelfServiceMode()
+                        && OrderCustomerService::isSelfServiceMode()
                         && !empty(Configure::read('app.selfServiceLoginCustomers'))) {
                             $errorMessageSigningInFailed .= '</br></br>'.__('Signing_in_failed_info_click_location_button_for_self_service');
                     }

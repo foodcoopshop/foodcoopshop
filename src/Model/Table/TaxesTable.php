@@ -61,7 +61,7 @@ class TaxesTable extends AppTable
         return $taxes;
     }
 
-    public function getNetPriceAndTaxId($grossPrice, $taxRate): array
+    public function getNetPriceAndTaxId(float|false $grossPrice, float $taxRate): array
     {
 
         $taxId = false;
@@ -88,7 +88,7 @@ class TaxesTable extends AppTable
 
     }
 
-    public function getForDropdown($useRateAsKey = false): array
+    public function getForDropdown(bool $useRateAsKey = false): array
     {
         $taxes = $this->find('all',
         conditions: [

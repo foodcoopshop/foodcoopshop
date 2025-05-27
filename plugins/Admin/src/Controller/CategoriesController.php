@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Entity\Category;
 use App\Services\SanitizeService;
 
 /**
@@ -45,11 +46,8 @@ class CategoriesController extends AdminAppController
         }
     }
 
-    public function edit($categoryId): void
+    public function edit(int $categoryId): void
     {
-        if ($categoryId === null) {
-            throw new NotFoundException;
-        }
 
         $categoriesTable = $this->getTableLocator()->get('Categories');
         $category = $categoriesTable->find('all', conditions: [
@@ -72,7 +70,7 @@ class CategoriesController extends AdminAppController
         $this->_processForm($category, true);
     }
 
-    private function _processForm($category, $isEditMode): void
+    private function _processForm(Category $category, bool $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

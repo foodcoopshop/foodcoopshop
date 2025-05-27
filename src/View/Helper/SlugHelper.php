@@ -24,7 +24,7 @@ use App\Services\OutputFilter\OutputFilterService;
 class SlugHelper extends Helper
 {
 
-    public function getAutoLoginAsSelfServiceCustomer($id): string
+    public function getAutoLoginAsSelfServiceCustomer(int $id): string
     {
         return '/'.__('route_self_service').'/autoLoginAsSelfServiceCustomer/' . $id;
     }
@@ -39,32 +39,32 @@ class SlugHelper extends Helper
         return '/admin/feedbacks/myFeedback';
     }
 
-    public function getFeedbackForm($customerId): string
+    public function getFeedbackForm(int $customerId): string
     {
         return '/admin/feedbacks/form/' . $customerId;
     }
 
-    public function getInvoiceDownloadRoute($filename): string
+    public function getInvoiceDownloadRoute(string $filename): string
     {
         return '/admin/lists/getInvoice?file=' . $filename;
     }
 
-    public function getOrderListDownloadRoute($filename): string
+    public function getOrderListDownloadRoute(string $filename): string
     {
         return '/admin/lists/getOrderList?file=' . $filename;
     }
 
-    public function getHelloCashInvoice($invoiceId, $cancellation=0): string
+    public function getHelloCashInvoice(string|int $invoiceId, int $cancellation=0): string
     {
         return '/admin/hello-cash/getInvoice/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getHelloCashReceipt($invoiceId, $cancellation=0): string
+    public function getHelloCashReceipt(string|int $invoiceId, int $cancellation=0): string
     {
         return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getSelfService($keyword = '', $productWithError = ''): string
+    public function getSelfService(string|int $keyword = '', string $productWithError = ''): string
     {
         $url = '/'.__('route_self_service');
         $queryParams = [];
@@ -80,7 +80,7 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getActivateEmailAddress($activationCode): string
+    public function getActivateEmailAddress(string $activationCode): string
     {
         return '/customers/activateEmailAddress/' . $activationCode;
     }
@@ -90,7 +90,7 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/action-logs';
     }
 
-    public function getOrderDetailPurchasePriceEdit($orderDetailId): string
+    public function getOrderDetailPurchasePriceEdit(int $orderDetailId): string
     {
         return $this->getAdminHome().'/order-details/edit-purchase-price/' . $orderDetailId;
     }
@@ -115,12 +115,12 @@ class SlugHelper extends Helper
         return '/'.__('route_accept_terms_of_use');
     }
 
-    public function getManufacturerDetail($manufacturerId, $manufacturerName): string
+    public function getManufacturerDetail(int $manufacturerId, string $manufacturerName): string
     {
         return '/'.__('route_manufacturer_detail').'/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
     }
 
-    public function getPageDetail($pageId, $name): string
+    public function getPageDetail(int $pageId, string $name): string
     {
         return '/'.__('route_content').'/'.$pageId.'-'.StringComponent::slugify($name);
     }
@@ -150,7 +150,7 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/statistics/myIndex';
     }
 
-    public function getStatistics($manufacturerId = ''): string
+    public function getStatistics(string|int $manufacturerId = ''): string
     {
         $url = '/admin/statistics';
         if ($manufacturerId != '') {
@@ -159,7 +159,7 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getProductImport($manufacturerId = ''): string
+    public function getProductImport(string|int $manufacturerId = ''): string
     {
         $url = '/admin/products/import';
         if ($manufacturerId != '') {
@@ -178,12 +178,12 @@ class SlugHelper extends Helper
         return '/admin/deposits/myIndex';
     }
 
-    public function getMyDepositDetail($monthAndYear): string
+    public function getMyDepositDetail(string $monthAndYear): string
     {
         return '/admin/deposits/myDetail/'.$monthAndYear;
     }
 
-    public function getDepositList($manufacturerId = ''): string
+    public function getDepositList(string|int $manufacturerId = ''): string
     {
         $url = '/admin/deposits/index';
         if ($manufacturerId != '') {
@@ -197,7 +197,7 @@ class SlugHelper extends Helper
         return '/admin/deposits/overview_diagram';
     }
 
-    public function getDepositDetail($manufacturerId, $monthAndYear): string
+    public function getDepositDetail(string|int $manufacturerId, string $monthAndYear): string
     {
         $url = '/admin/deposits/detail/'.$monthAndYear;
         if ($manufacturerId != '') {
@@ -221,9 +221,9 @@ class SlugHelper extends Helper
         return '/'.__('route_cart') . '/' . __('route_cart_finish');
     }
 
-    public function getCartFinished($cartId): string
+    public function getCartFinished(int $cartId): string
     {
-        return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$cartId;
+        return '/'.__('route_cart') . '/' . __('route_cart_finished') . '/' . $cartId;
     }
 
     public function getAdminHome(): string
@@ -251,7 +251,7 @@ class SlugHelper extends Helper
         return '/admin/customers/changeShowOnlyProductsForNextWeek';
     }
 
-    public function getProductSearch($keyword): string
+    public function getProductSearch(string $keyword): string
     {
         return '/' . __('route_search') . '?keyword=' . $keyword;
     }
@@ -261,7 +261,7 @@ class SlugHelper extends Helper
         return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), __('route_all_products'));
     }
 
-    public function getCategoryDetail($categoryId, $name): string
+    public function getCategoryDetail(int $categoryId, string $name): string
     {
         // if "Produkte" is globally replaced with a word with an umlaut, this umlaut would not be replaced, so replace it here
         // eg: Produkte => Naturschätze
@@ -271,7 +271,7 @@ class SlugHelper extends Helper
         return '/' . __('route_category') . '/' . $categoryId . '-' . StringComponent::slugify($name);
     }
 
-    public function getLogin($redirect=''): string
+    public function getLogin(?string $redirect=''): string
     {
         $url = '/'.__('route_sign_in');
         if ($redirect != '') {
@@ -280,7 +280,7 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getLogout($redirect=''): string
+    public function getLogout(?string $redirect=''): string
     {
         $url = '/'.__('route_sign_out');
         if ($redirect != '') {
@@ -304,7 +304,7 @@ class SlugHelper extends Helper
         return '/admin/payments/overview';
     }
 
-    public function getCreditBalance($customerId): string
+    public function getCreditBalance(int $customerId): string
     {
         return '/admin/payments/product/?customerId='.$customerId;
     }
@@ -319,7 +319,7 @@ class SlugHelper extends Helper
         return '/admin/customers/profile';
     }
 
-    public function getCustomerEdit($customerId): string
+    public function getCustomerEdit(int $customerId): string
     {
         return '/admin/customers/edit/' . $customerId;
     }
@@ -339,7 +339,7 @@ class SlugHelper extends Helper
         return '/admin/manufacturers/myOptions';
     }
 
-    public function getActivateNewPassword($activateNewPasswordCode): string
+    public function getActivateNewPassword(string $activateNewPasswordCode): string
     {
         return '/'.__('route_activate_new_password') . '/' . $activateNewPasswordCode;
     }
@@ -349,7 +349,7 @@ class SlugHelper extends Helper
         return '/'.__('route_request_new_password');
     }
 
-    public function getProfit($dateFrom=null, $dateTo=null, $customerIds=null, $manufacturerId=null, $productId=null): string
+    public function getProfit(?string $dateFrom=null, ?string $dateTo=null, string|int|null $customerIds=null, string|int|null $manufacturerId=null, string|int|null $productId=null): string
     {
         $url = '/admin/order-details/profit';
         if ($dateFrom !== null) {
@@ -383,7 +383,7 @@ class SlugHelper extends Helper
         return '/admin/invoices/myInvoices';
     }
 
-    public function getReport($paymentType): string
+    public function getReport(int $paymentType): string
     {
         return '/admin/reports/payments/'.$paymentType;
     }
@@ -393,7 +393,7 @@ class SlugHelper extends Helper
         return '/'.__('route_news_list');
     }
 
-    public function getBlogPostDetail($blogPostId, $name): string
+    public function getBlogPostDetail(int $blogPostId, string $name): string
     {
         return '/'.__('route_news_detail') . '/' . $blogPostId . '-' . StringComponent::slugify($name);
     }
@@ -402,7 +402,7 @@ class SlugHelper extends Helper
     {
         return '/admin/blog-posts';
     }
-    public function getBlogPostEdit($blogPostId): string
+    public function getBlogPostEdit(int $blogPostId): string
     {
         return '/admin/blog-posts/edit/'.$blogPostId;
     }
@@ -416,7 +416,7 @@ class SlugHelper extends Helper
         return '/admin/pages';
     }
 
-    public function getPageEdit($pageId): string
+    public function getPageEdit(int $pageId): string
     {
         return '/admin/pages/edit/'.$pageId;
     }
@@ -426,7 +426,7 @@ class SlugHelper extends Helper
         return '/admin/pages/add';
     }
 
-    public function getPaymentEdit($paymentId): string
+    public function getPaymentEdit(int $paymentId): string
     {
         return '/admin/payments/edit/'.$paymentId;
     }
@@ -439,7 +439,7 @@ class SlugHelper extends Helper
     {
         return '/admin/attributes/add';
     }
-    public function getAttributeEdit($attributeId): string
+    public function getAttributeEdit(int $attributeId): string
     {
         return '/admin/attributes/edit/'.$attributeId;
     }
@@ -452,7 +452,7 @@ class SlugHelper extends Helper
     {
         return '/admin/categories/add';
     }
-    public function getCategoryEdit($categoryId): string
+    public function getCategoryEdit(int $categoryId): string
     {
         return '/admin/categories/edit/'.$categoryId;
     }
@@ -465,7 +465,7 @@ class SlugHelper extends Helper
     {
         return '/admin/taxes/add';
     }
-    public function getTaxEdit($taxId): string
+    public function getTaxEdit(int $taxId): string
     {
         return '/admin/taxes/edit/'.$taxId;
     }
@@ -474,11 +474,11 @@ class SlugHelper extends Helper
     {
         return '/admin/manufacturers';
     }
-    public function getManufacturerEdit($manufacturerId): string
+    public function getManufacturerEdit(int $manufacturerId): string
     {
         return '/admin/manufacturers/edit/'.$manufacturerId;
     }
-    public function getManufacturerEditOptions($manufacturerId): string
+    public function getManufacturerEditOptions(int $manufacturerId): string
     {
         return '/admin/manufacturers/editOptions/'.$manufacturerId;
     }
@@ -491,7 +491,7 @@ class SlugHelper extends Helper
     {
         return '/admin/sliders';
     }
-    public function getSliderEdit($slideId): string
+    public function getSliderEdit(int $slideId): string
     {
         return '/admin/sliders/edit/'.$slideId;
     }
@@ -500,7 +500,7 @@ class SlugHelper extends Helper
         return '/admin/sliders/add';
     }
 
-    public function getProductAdmin($manufacturerId = null, $productId = null): string
+    public function getProductAdmin(string|int|null $manufacturerId = null, ?int $productId = null): string
     {
         $url = '/admin/products';
 
@@ -516,7 +516,7 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getProductDetail($productId, $name): string
+    public function getProductDetail(int $productId, string $name): string
     {
         return '/' . __('routes_product') . '/' . $productId . '-' . StringComponent::slugify($name);
     }
@@ -526,7 +526,7 @@ class SlugHelper extends Helper
         return '/admin/configurations';
     }
 
-    public function getConfigurationEdit($name): string
+    public function getConfigurationEdit(string $name): string
     {
         return '/admin/configurations/edit/'.$name;
     }
@@ -536,7 +536,7 @@ class SlugHelper extends Helper
         return '/admin/cronjobs';
     }
 
-    public function getCronjobEdit($cronjobId): string
+    public function getCronjobEdit(int $cronjobId): string
     {
         return '/admin/cronjobs/edit/'.$cronjobId;
     }

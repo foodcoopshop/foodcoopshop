@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use App\Model\Entity\Manufacturer;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
@@ -12,7 +13,9 @@ use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Customer;
-use Cake\Log\Log;
+use Cake\Event\EventInterface;
+use ArrayObject;
+use App\Services\FormatterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -55,6 +58,16 @@ class ManufacturersTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        if (isset($data['send_order_list_cc'])) {
+            $data['send_order_list_cc'] = StringComponent::removeWhitespace($data['send_order_list_cc']);
+        }
+        if (isset($data['min_order_value'] ) && $data['min_order_value'] == '') {
+            $data['min_order_value'] = 0;
+        }
+    }
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
@@ -81,7 +94,7 @@ class ManufacturersTable extends AppTable
         $validator->add('send_order_list_cc', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
-            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma.')
         ]);
 
         $validator->allowEmptyString('no_delivery_days');
@@ -89,11 +102,12 @@ class ManufacturersTable extends AppTable
             'provider' => 'table',
             'rule' => 'noDeliveryDaysOrdersExist'
         ]);
-
+        $validator->allowEmptyString('min_order_value');
+        $validator->range('min_order_value', [-1, 501], __('Please_enter_a_number_between_{0}_and_{1}.', [0,500]));
         return $validator;
     }
 
-    public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId): Manufacturer
+    public function getManufacturerByIdForSendingOrderListsOrInvoice(int $manufacturerId): Manufacturer
     {
         $manufacturer = $this->find('all',
         conditions: [
@@ -109,6 +123,10 @@ class ManufacturersTable extends AppTable
         return $manufacturer;
     }
 
+    /**
+     * TODO add type bool to all getOption methods, in this step remove the fallbacks (and set the values in the database before)
+     */
+    /** @phpstan-ignore-next-line */
     public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification): bool
     {
         $result = $sendOrderedProductDeletedNotification;
@@ -118,6 +136,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification): bool
     {
         $result = $sendOrderedProductPriceChangedNotification;
@@ -127,6 +146,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendOrderedProductAmountChangedNotification($sendOrderedProductAmountChangedNotification): bool
     {
         $result = $sendOrderedProductAmountChangedNotification;
@@ -136,6 +156,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendInstantOrderNotification($sendInstantOrderNotification): bool
     {
         $result = $sendInstantOrderNotification;
@@ -145,6 +166,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /** @phpstan-ignore-next-line */
     public function getOptionSendInvoice($sendInvoice): bool
     {
         $result = $sendInvoice;
@@ -181,7 +203,8 @@ class ManufacturersTable extends AppTable
         return $result;
     }
 
-    public function getOptionSendOrderList($sendOrderList): bool
+    /** @phpstan-ignore-next-line */
+    public function getOptionSendOrderList( $sendOrderList): bool
     {
         $result = $sendOrderList;
         if (is_null($sendOrderList)) {
@@ -190,7 +213,7 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
-    public function getOptionSendOrderListCc($sendOrderListCc): array
+    public function getOptionSendOrderListCc(?string $sendOrderListCc): array
     {
         $ccRecipients = [];
         if (is_null($sendOrderListCc) || $sendOrderListCc == '') {
@@ -204,7 +227,7 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
-    public function getCustomerRecord($email): Customer|array|null
+    public function getCustomerRecord(string $email): Customer|array|null
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
@@ -233,40 +256,36 @@ class ManufacturersTable extends AppTable
     {
 
         $conditions = [
-            'Manufacturers.active' => APP_ON
+            $this->aliasField('active') => APP_ON
         ];
         $identity = Router::getRequest()->getAttribute('identity');
         if ($identity === null) {
-            $conditions['Manufacturers.is_private'] = APP_OFF;
+            $conditions[$this->aliasField('is_private')] = APP_OFF;
         }
 
         $manufacturers = $this->find('all',
-        fields: [
-            'Manufacturers.id_manufacturer',
-            'Manufacturers.name',
-            'Manufacturers.no_delivery_days'
-        ],
-        order: [
-            'Manufacturers.name' => 'ASC'
-        ],
-        conditions: $conditions);
+            fields: [
+                $this->aliasField('id_manufacturer'),
+                $this->aliasField('name'),
+                $this->aliasField('no_delivery_days'),
+            ],
+            order: [
+                $this->aliasField('name') => 'ASC'
+            ],
+            conditions: $conditions,
+        );
 
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
-            if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);
             if ($noDeliveryDaysString != '') {
                 $noDeliveryDaysString = __('Delivery_break') . ': ' . $noDeliveryDaysString;
-                if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                    $additionalInfo .= ' - ';
-                }
                 $additionalInfo .= $noDeliveryDaysString;
             }
             if ($additionalInfo != '') {
-                $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
+                $manufacturerName .= ' <span class="additional-info">- ('.$additionalInfo.')</span>';
             }
             $manufacturersForMenu[] = [
                 'name' => $manufacturerName,
@@ -276,17 +295,17 @@ class ManufacturersTable extends AppTable
         return $manufacturersForMenu;
     }
 
-    public function increasePriceWithVariableMemberFee($price, $variableMemberFee): float
+    public function increasePriceWithVariableMemberFee(float $price, int $variableMemberFee): float
     {
         return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    public function decreasePriceWithVariableMemberFee($price, $variableMemberFee): float
+    public function decreasePriceWithVariableMemberFee(float $price, int $variableMemberFee): float
     {
         return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
 
-    public function getVariableMemberFeeAsFloat($price, $variableMemberFee): float
+    public function getVariableMemberFeeAsFloat(float $price, int $variableMemberFee): float
     {
         return round($price * $variableMemberFee / 100, 2);
     }
@@ -318,7 +337,7 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function anonymizeCustomersInInvoiceOrOrderList($results): array
+    public function anonymizeCustomersInInvoiceOrOrderList(array $results): array
     {
         return array_map(function ($data) {
             $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
@@ -326,7 +345,26 @@ class ManufacturersTable extends AppTable
         }, $results);
     }
 
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = []): array
+    public function getDepositBalance(int $manufacturerId): float
+    {
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $sumDepositReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturerId, false);
+
+        $depositBalance = $sumDepositReturned[0]['sumDepositReturned'] - $sumDepositDelivered[0]['sumDepositDelivered'];
+        return FormatterService::assureCorrectFloat($depositBalance);
+    }
+
+    public function getDataForInvoiceOrOrderList(
+        int $manufacturerId,
+        string $order,
+        string $dateFrom,
+        ?string $dateTo,
+        array $orderState,
+        bool $includeStockProducts,
+        array $orderDetailIds = [],
+        ): array
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $orderClause = match($order) {
@@ -335,7 +373,7 @@ class ManufacturersTable extends AppTable
             default => '',
         };
         $params = [
-            'manufacturerId' => $manufacturerId
+            'manufacturerId' => $manufacturerId,
         ];
 
         if (is_null($dateTo)) {

@@ -99,7 +99,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->assertMailSubjectContainsAt($mailIndex, 'Demo Mitglied hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
-    private function addFeedbackToOrderDetail($orderDetailId, $orderDetailFeedback): ?object
+    private function addFeedbackToOrderDetail(int $orderDetailId, string $orderDetailFeedback): ?object
     {
         $this->ajaxPost(
             '/admin/order-details/addFeedback/',

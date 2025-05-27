@@ -21,7 +21,7 @@ $orderParam = '';
 if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
     $orderParam = 'order=storageLocation&';
 }
-if (count($orderDetails) == 0) {
+if (isset($orderDetails) && count($orderDetails) == 0) {
     $this->element('addScript', [ 'script' =>
         Configure::read('app.jsNamespace').".Helper.disableButton($('.generate-order-details-as-pdf'));"
     ]);

@@ -15,6 +15,9 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
+ use Cake\Core\Configure;
+ use App\Services\OrderCustomerService;
+ 
 if ($hideButton) {
     return;
 }
@@ -29,9 +32,8 @@ if ($hideButton) {
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
-    if (((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || $deliveryBreakManufacturerEnabled) {
-
+    if ((((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
+        || $deliveryBreakManufacturerEnabled) && (Configure::read('app.selfServiceIsAmountValidationEnabled') || !OrderCustomerService::isSelfServiceMode())) {
         $classes[] = 'disabled';
 
         if ($deliveryBreakManufacturerEnabled) {

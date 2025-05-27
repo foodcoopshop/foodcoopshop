@@ -68,6 +68,7 @@
             "include_stock_products_in_order_lists": 1,
             "send_delivery_notes": 0,
             "anonymize_customers": 0,
+            "min_order_value": "0.00",
             "customer": {
                 "id_customer": 88,
                 "id_default_group": 4,
@@ -202,7 +203,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": null,
             "tax": {
@@ -236,21 +238,20 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 1.82,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0.5,
             "price_is_zero": false,
-            "unit": null,
+            "unit": [],
             "unchanged_name": "Artischocke",
             "row_class": "main-product custom-odd",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 1.82,
+            "deposit": 0.5
         },
         {
             "id_product": 339,
@@ -322,7 +323,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": null,
             "tax": {
@@ -348,21 +350,20 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": true,
-            "unit": null,
+            "unit": [],
             "unchanged_name": "Kartoffel",
             "row_class": "main-product",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 0,
+            "deposit": 0
         },
         {
             "id_product": 344,
@@ -434,7 +435,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": null,
             "tax": {
@@ -460,21 +462,20 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 0.64,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
-            "unit": null,
+            "unit": [],
             "unchanged_name": "Knoblauch",
             "row_class": "main-product custom-odd",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 0.64,
+            "deposit": 0
         },
         {
             "id_product": 349,
@@ -546,7 +547,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": {
                 "id": 4,
@@ -586,16 +588,13 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 5,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": {
                 "id": 4,
@@ -611,7 +610,9 @@
             },
             "unchanged_name": "Lagerprodukt",
             "row_class": "main-product",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 5,
+            "deposit": 0
         },
         {
             "id_product": 351,
@@ -683,7 +684,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": {
                 "id": 8,
@@ -723,16 +725,13 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": {
                 "id": 8,
@@ -748,7 +747,9 @@
             },
             "unchanged_name": "Lagerprodukt 2",
             "row_class": "main-product custom-odd",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 0,
+            "deposit": 0
         },
         {
             "id_product": 352,
@@ -820,7 +821,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": {
                 "id": 9,
@@ -860,16 +862,13 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 1.44,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
             "unit": {
                 "id": 9,
@@ -885,7 +884,9 @@
             },
             "unchanged_name": "Lagerprodukt mit Gewichtsbarcode",
             "row_class": "main-product",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 1.44,
+            "deposit": 0
         },
         {
             "id_product": 350,
@@ -921,7 +922,7 @@
                         "attribute": {
                             "id_attribute": 36,
                             "name": "0,5 kg",
-                            "can_be_used_as_unit": 1,
+                            "can_be_used_as_unit": true,
                             "active": 1,
                             "created": null,
                             "modified": null
@@ -949,7 +950,8 @@
                         "sold_out_limit": "0.000",
                         "always_available": 0,
                         "default_quantity_after_sending_order_lists": null
-                    }
+                    },
+                    "deposit": 0
                 },
                 {
                     "id_product_attribute": 14,
@@ -962,7 +964,7 @@
                         "attribute": {
                             "id_attribute": 35,
                             "name": "1 kg",
-                            "can_be_used_as_unit": 1,
+                            "can_be_used_as_unit": true,
                             "active": 1,
                             "created": null,
                             "modified": null
@@ -990,7 +992,8 @@
                         "sold_out_limit": null,
                         "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
-                    }
+                    },
+                    "deposit": 0
                 },
                 {
                     "id_product_attribute": 15,
@@ -1003,7 +1006,7 @@
                         "attribute": {
                             "id_attribute": 36,
                             "name": "0,5 kg",
-                            "can_be_used_as_unit": 1,
+                            "can_be_used_as_unit": true,
                             "active": 1,
                             "created": null,
                             "modified": null
@@ -1031,7 +1034,8 @@
                         "sold_out_limit": null,
                         "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
-                    }
+                    },
+                    "deposit": 0
                 }
             ],
             "stock_available": {
@@ -1081,7 +1085,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": null,
             "tax": {
@@ -1110,21 +1115,20 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
-            "unit": null,
+            "unit": [],
             "unchanged_name": "Lagerprodukt mit Varianten",
             "row_class": "main-product custom-odd",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 0,
+            "deposit": 0
         },
         {
             "id_product": "350-13",
@@ -1144,6 +1148,9 @@
             },
             "default_on": 1,
             "stock_available": {
+                "id_stock_available": 710,
+                "id_product": 350,
+                "id_product_attribute": 13,
                 "quantity": "5.000",
                 "quantity_limit": "-5.000",
                 "sold_out_limit": "0.000",
@@ -1164,8 +1171,7 @@
                 "use_weight_as_amount": 0
             },
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "image": null,
             "barcode_product": null
@@ -1188,6 +1194,9 @@
             },
             "default_on": 0,
             "stock_available": {
+                "id_stock_available": 711,
+                "id_product": 350,
+                "id_product_attribute": 14,
                 "quantity": "999.000",
                 "quantity_limit": "0.000",
                 "sold_out_limit": null,
@@ -1208,8 +1217,7 @@
                 "use_weight_as_amount": 0
             },
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "image": null,
             "barcode_product": null
@@ -1232,6 +1240,9 @@
             },
             "default_on": 0,
             "stock_available": {
+                "id_stock_available": 712,
+                "id_product": 350,
+                "id_product_attribute": 15,
                 "quantity": "999.000",
                 "quantity_limit": "0.000",
                 "sold_out_limit": null,
@@ -1252,8 +1263,7 @@
                 "use_weight_as_amount": 0
             },
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "image": null,
             "barcode_product": null
@@ -1328,7 +1338,8 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_customers": 0
+                "anonymize_customers": 0,
+                "min_order_value": "0.00"
             },
             "unit_product": null,
             "tax": {
@@ -1354,21 +1365,20 @@
                 }
             ],
             "category": {
-                "names": [],
-                "all_products_found": true
+                "names": []
             },
             "selected_categories": [
                 20
             ],
-            "gross_price": 1.36,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
-            "deposit": 0,
             "price_is_zero": false,
-            "unit": null,
+            "unit": [],
             "unchanged_name": "Mangold",
             "row_class": "main-product",
-            "is_new": false
+            "is_new": false,
+            "gross_price": 1.36,
+            "deposit": 0
         }
     ]
 }

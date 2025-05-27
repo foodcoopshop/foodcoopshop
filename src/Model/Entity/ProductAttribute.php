@@ -1,0 +1,37 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Model\Entity;
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 4.2.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+class ProductAttribute extends AppEntity
+{
+
+    protected array $_virtual = ['deposit'];
+
+    protected function _getPricePerUnitEnabled(): bool
+    {
+        return !empty($this->unit_product_attribute) && $this->unit_product_attribute->price_per_unit_enabled;
+    }
+
+    public function _getDeposit(): float
+    {
+        if (empty($this->deposit_product_attribute)) {
+            return 0;
+        }
+        return (float) $this->deposit_product_attribute->deposit;
+    }
+
+}

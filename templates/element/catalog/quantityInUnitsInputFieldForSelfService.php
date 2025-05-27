@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Services\OrderCustomerService;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -16,7 +18,7 @@ declare(strict_types=1);
  */
 
 
-if (!($pricePerUnitEnabled && $orderCustomerService->isSelfServiceModeByUrl())) {
+if (!($pricePerUnitEnabled && OrderCustomerService::isSelfServiceModeByUrl())) {
     return;
 }
 ?>

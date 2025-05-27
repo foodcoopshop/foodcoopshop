@@ -501,14 +501,14 @@ class ActionLogsTable extends AppTable
         ];
     }
 
-    public function removeCustomerNameFromAllActionLogs($customerName): bool
+    public function removeCustomerNameFromAllActionLogs(string $customerName): bool
     {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
         $statement = $this->getConnection()->getDriver()->prepare($query);
         return $statement->execute();
     }
 
-    public function removeCustomerEmailFromAllActionLogs($email): bool
+    public function removeCustomerEmailFromAllActionLogs(string $email): bool
     {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $email . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerEmail().'\')';
         $statement = $this->getConnection()->getDriver()->prepare($query);
@@ -526,7 +526,7 @@ class ActionLogsTable extends AppTable
         return $types;
     }
 
-    public function customSave($type, $customerId, $objectId, $objectType, $text, $time=null): EntityInterface|false
+    public function customSave(string $type, ?int $customerId, ?int $objectId, ?string $objectType, string $text, ?DateTime $time=null): EntityInterface|false
     {
         $data2save = [
             'type' => $type,

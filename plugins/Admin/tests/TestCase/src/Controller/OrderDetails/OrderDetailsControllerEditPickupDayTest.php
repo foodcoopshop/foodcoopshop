@@ -121,7 +121,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Warum wurde der Abholtag geändert?', $email->getBodyHtml());
     }
 
-    private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason, $sendEmail, $resetOrderState): ?object
+    private function editPickupDayOfOrderDetails(array $orderDetailIds, string $pickupDay, string $reason, bool $sendEmail, bool $resetOrderState): ?object
     {
         $this->ajaxPost(
             '/admin/order-details/editPickupDay/',
@@ -136,7 +136,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         return $this->getJsonDecodedContent();
     }
 
-    private function assertChangedOrderDetails($orderDetails, $newPickupDay, $orderState): void
+    private function assertChangedOrderDetails(array $orderDetails, string $newPickupDay, int $orderState): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find()->where([ 

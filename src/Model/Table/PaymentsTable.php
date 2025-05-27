@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
 use App\Model\Traits\NumberRangeValidatorTrait;
 use Cake\I18n\DateTime;
 use Cake\ORM\Query\SelectQuery;
+use stdClass;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,16 +63,23 @@ class PaymentsTable extends AppTable
         $validator->allowEmptyDate('date_add');
         $validator->add('date_add', 'allowed-only-today-or-before', [
             'rule' => function ($value, $context) {
-                if ($value == 0) {
-                    return true;
+                if (is_object($value)) {
+                    $formattedValue = $value->format(Configure::read('DateFormat.DatabaseAlt'));
                 }
-                $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
-                if ($formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
-                    return false;
+                if (is_string($value)) {
+                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                }
+                if (isset($formattedValue)) {
+                    if ($formattedValue == '1970-01-01') {
+                        return false;
+                    }
+                    if ($formattedValue > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                        return false;
+                    }
                 }
                 return true;
             },
-            'message' => __('The_date_must_not_be_a_future_date.'),
+            'message' => __('The date has a wrong format is in the past.'),
         ]);
 
         return $validator;
@@ -115,20 +124,20 @@ class PaymentsTable extends AppTable
         return $alreadyImported;
     }
 
-    private function getManufacturerDepositConditions($manufacturerId = null): array
+    private function getManufacturerDepositConditions(?int $manufacturerId = null): array
     {
         $conditions = [
             'Payments.status' => APP_ON,
-            'Payments.id_customer' => 0
+            'Payments.id_customer' => 0,
         ];
         if (!is_null($manufacturerId)) {
             $conditions['Payments.id_manufacturer'] = $manufacturerId;
         }
-        $conditions['Payments.type'] = 'deposit';
+        $conditions['Payments.type'] = Payment::TYPE_DEPOSIT;
         return $conditions;
     }
 
-    public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear): SelectQuery
+    public function getManufacturerDepositsByMonth(?int $manufacturerId, string $monthAndYear): SelectQuery
     {
         $paymentSum = $this->find('all',
         conditions: $this->getManufacturerDepositConditions($manufacturerId),
@@ -141,7 +150,7 @@ class PaymentsTable extends AppTable
         return $paymentSum;
     }
 
-    public function getManufacturerDepositSumByCalendarWeekAndType($type): array
+    public function getManufacturerDepositSumByCalendarWeekAndType(string $type): array
     {
         if (!in_array($type, [Payment::TEXT_EMPTY_GLASSES, Payment::TEXT_MONEY])) {
             throw new \Exception('wrong type: was ' . $type);
@@ -162,12 +171,12 @@ class PaymentsTable extends AppTable
         return $result;
     }
 
-    public function getCustomerDepositNotBilled($customerId): array
+    public function getCustomerDepositNotBilled(int $customerId): array
     {
         $payments = $this->find('all', conditions: [
             'Payments.status' => APP_ON,
             '(Payments.invoice_id IS NULL OR Payments.invoice_id = 0)',
-            'Payments.type' => 'deposit',
+            'Payments.type' => Payment::TYPE_DEPOSIT,
             'Payments.id_manufacturer' => 0,
             'Payments.id_customer' => $customerId,
         ])->toArray();
@@ -178,7 +187,7 @@ class PaymentsTable extends AppTable
     {
         $query = $this->find('all', conditions: [
             'Payments.status' => APP_ON,
-            'Payments.type' => 'deposit',
+            'Payments.type' => Payment::TYPE_DEPOSIT,
             'Payments.id_manufacturer' => 0,
         ]);
         $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
@@ -211,7 +220,7 @@ class PaymentsTable extends AppTable
         return 0;
     }
 
-    public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth): array
+    public function getMonthlyDepositSumByManufacturer(int $manufacturerId, bool $groupByMonth): array
     {
 
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
@@ -233,7 +242,7 @@ class PaymentsTable extends AppTable
         return $query->toArray();
     }
 
-    public function onInvoiceCancellation($payments): void
+    public function onInvoiceCancellation(array $payments): void
     {
         foreach($payments  as $payment) {
             $payment->invoice_id = null;
@@ -241,7 +250,7 @@ class PaymentsTable extends AppTable
         }
     }
 
-    public function linkReturnedDepositWithInvoice($data, $invoiceId): void
+    public function linkReturnedDepositWithInvoice(stdClass|Customer $data, int $invoiceId): void
     {
         foreach($data->returned_deposit['entities'] as $payment) {
             // important to get a fresh payment entity as amount field could be changed for cancellation invoices
@@ -251,19 +260,19 @@ class PaymentsTable extends AppTable
         }
     }
 
-    public function getSum($customerId, $type): float
+    public function getSum(int $customerId, int $type): float
     {
         $conditions = [
-            'Payments.id_customer' => $customerId,
-            'Payments.id_manufacturer' => 0,
-            'Payments.status' => APP_ON,
+            $this->aliasField('id_customer') => $customerId,
+            $this->aliasField('id_manufacturer') => 0,
+            $this->aliasField('status') => APP_ON,
         ];
 
-        $conditions['Payments.type'] = $type;
+        $conditions[$this->aliasField('type')] = $type;
 
         $query = $this->find('all', conditions: $conditions);
         $query->select(
-            ['SumAmount' => $query->func()->sum('Payments.amount')]
+            ['SumAmount' => $query->func()->sum($this->aliasField('amount'))]
         );
         return (float) $query->toArray()[0]['SumAmount'];
     }

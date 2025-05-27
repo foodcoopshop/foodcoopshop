@@ -24,7 +24,8 @@ return [
         'TimeShort' => 'HH:mm',
         'DateForDatepicker' => 'mm/dd/yy',
         'Year' => 'Y',
-        'DateShortAlt' => 'm/d/Y'
+        'DateShortAlt' => 'm/d/Y',
+        'DateNTimeShortWithSecsAlt' => 'm/d/y H:i:s',
     ]
 ];
 ?>

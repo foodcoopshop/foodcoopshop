@@ -217,6 +217,9 @@ msgstr "Neue Produkte"
 msgid "Random_products"
 msgstr "Bunt gemischt"
 
+msgid "Here you can find randomly selected products."
+msgstr "Hier werden zufällig ausgewählte Produkte angezeigt."
+
 msgid "Show_only_products_for_next_week"
 msgstr "Nur Produkte für diese Woche anzeigen"
 
@@ -1697,8 +1700,8 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Bitte gibt eine gültige Internet-Adresse an."
 
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen)."
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma."
+msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen."
 
 msgid "Decimals_are_not_allowed."
 msgstr "Kommastellen sind nicht zulässig."
@@ -1826,8 +1829,8 @@ msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
-msgid "The_date_must_not_be_a_future_date."
-msgstr "Das Datum darf nicht in der Zukunft liegen."
+msgid "The date has a wrong format is in the past."
+msgstr "Das Datum ist ungültig oder liegt in der Zukunft."
 
 msgid "Please_enter_a_correct_amount."
 msgstr "Bitte gib einen korrekten Betrag ein."
@@ -2251,6 +2254,9 @@ msgstr "Gelöschte E-Mail-Adresse"
 
 msgid "{0}_further_delivery_breaks"
 msgstr "{0} weitere Lieferpausen"
+
+msgid "{0} further days"
+msgstr "{0} weiteren Tagen"
 
 msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr "Der Hersteller {0} hat am {1} Lieferpause."
@@ -3054,7 +3060,7 @@ msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
 msgstr "Wer soll bei neuen Registrierungen informiert werden?"
 
 msgid "Configuration_subtext_FCS_REGISTRATION_NOTIFICATION_EMAILS"
-msgstr "Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen."
+msgstr "Mehrere E-Mail-Adressen mit Komma trennen."
 
 msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
 msgstr "Selbstbedienungs-Modus für Lagerprodukte aktiv?"
@@ -3160,3 +3166,12 @@ msgstr "Filter \"Nur Produkte für diese Woche anzeigen?\" aktiv?"
 
 msgid "Configuration_subtext_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
 msgstr "Der Filter wird überhalb der Produkt-Kategorien im Produktkatalog (beim Bestellen) angezeigt; empfehlenswert bei vielen Produkten mit mehrwöchigen Lieferrhythmus."
+
+msgid "Minimum order value not reached"
+msgstr "Mindestbestellwert nicht erreicht"
+
+msgid "Minimal order value"
+msgstr "Mindestbestellwert"
+
+msgid "If this sum of all orders for a given period is less, products are automatically cancelled and no order list is sent."
+msgstr "Wenn dieser Wert nicht erreicht wird, werden die Produkte automatisch storniert und keine Bestellliste versendet."

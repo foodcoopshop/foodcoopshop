@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
 use App\Services\SanitizeService;
+use App\Model\Entity\Slider;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,12 +46,8 @@ class SlidersController extends AdminAppController
         }
     }
 
-    public function edit($sliderId): void
+    public function edit(int $sliderId): void
     {
-        if ($sliderId === null) {
-            throw new NotFoundException;
-        }
-
         $slidersTable = $this->getTableLocator()->get('Sliders');
         $slider = $slidersTable->find('all', conditions: [
             'Sliders.id_slider' => $sliderId
@@ -63,7 +60,7 @@ class SlidersController extends AdminAppController
         $this->_processForm($slider, true);
     }
 
-    private function _processForm($slider, $isEditMode): void
+    private function _processForm(Slider $slider, bool $isEditMode): void
     {
 
         $this->setFormReferer();

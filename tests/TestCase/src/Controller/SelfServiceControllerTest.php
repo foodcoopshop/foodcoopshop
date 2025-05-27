@@ -96,6 +96,15 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testSelfServiceAddProductNotAvailableIgnoreAmountCheck(): void
+    {
+        Configure::write('app.selfServiceIsAmountValidationEnabled', false);
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->addProductToSelfServiceCart($productId, 98);
+        $this->assertJsonOk();
+    }
+
     public function testSelfServiceAddAttributePricePerUnitWrong(): void
     {
         $this->loginAsSuperadmin();
@@ -441,7 +450,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals($invoices->count(), 0);
     }
 
-    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer(): void
+    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomerA(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
@@ -545,7 +554,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testProductDetailHtmlProductCatalogSelfServiceOrder(): void
     {
         $this->loginAsSuperadmin();
-        $this->isSelfServiceModeByUrl = true;
         $productId = 349;
         $this->get($this->Slug->getSelfService($productId));
         $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();

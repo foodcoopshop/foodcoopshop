@@ -43,7 +43,7 @@ class InvoicesController extends AdminAppController
 
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
-        
+
         $customerIds = [];
         if (! empty($this->getRequest()->getQuery('customerIds'))) {
             $customerIds = h($this->getRequest()->getQuery('customerIds'));
@@ -91,7 +91,7 @@ class InvoicesController extends AdminAppController
     public function generate(): void
     {
 
-        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $customerId = (int) h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
         $customerTable = $this->getTableLocator()->get('Customers');
@@ -153,7 +153,7 @@ class InvoicesController extends AdminAppController
 
             // mark row as picked up
             $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
-            $pickupDaysTable->changeState(
+            $pickupDaysTable->changeStatus(
                 $customerId,
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_ON,
@@ -181,7 +181,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogsTable->customSave('invoice_added', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable->customSave('invoice_added', $this->identity->getId(), (int) $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 
@@ -190,7 +190,7 @@ class InvoicesController extends AdminAppController
     public function preview(): mixed
     {
 
-        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $customerId = (int) h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
@@ -231,7 +231,7 @@ class InvoicesController extends AdminAppController
             } else {
                 $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService();
             }
-            $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+            $pdfWriter->prepareAndSetData($invoiceData, (bool) $paidInCash, $newInvoiceNumber, $newInvoiceDate);
 
             if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
                 return $this->response->withStringBody($pdfWriter->writeHtml());
@@ -288,7 +288,7 @@ class InvoicesController extends AdminAppController
             $cancelledInvoiceNumber = $responseObject->invoice_number;
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
             $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
-            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
+            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, 1);
 
         } else {
 
@@ -358,7 +358,7 @@ class InvoicesController extends AdminAppController
 
             // remove "mark row as picked up"
             $pickupDaysTable = $this->getTableLocator()->get('PickupDays');
-            $pickupDaysTable->changeState(
+            $pickupDaysTable->changeStatus(
                 $invoice->customer->id_customer,
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_OFF,
@@ -392,7 +392,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . $linkToInvoice);
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogsTable->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
+        $actionLogsTable->customSave('invoice_cancelled', $this->identity->getId(), (int) $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -457,7 +457,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    protected function processIndex($dateFrom, $dateTo, $customerIds): void
+    protected function processIndex(string $dateFrom, string $dateTo, array $customerIds): void
     {
 
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -505,13 +505,13 @@ class InvoicesController extends AdminAppController
 
         $this->set('customersForDropdown', $customersTable->getForDropdown());
 
-        $preparedTaxRates = $invoicesTable->getPreparedTaxRatesForSumTable($invoices);
+        $preparedTaxRates = $invoicesTable->getPreparedTaxRatesForSumTable($invoices->toArray());
         $this->set('taxRates', $preparedTaxRates['taxRates']);
         $this->set('taxRatesSums', $preparedTaxRates['taxRatesSums']);
 
     }
 
-    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerIds): SelectQuery
+    protected function setInvoiceConditions(SelectQuery $query, string $dateFrom, string $dateTo, array $customerIds): SelectQuery
     {
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

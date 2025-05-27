@@ -43,7 +43,7 @@ trait ManufacturersFilterTrait
         return APP_ON;
     }
 
-    public function getManufacturers($active, $dateFrom): SelectQuery|PaginatedInterface
+    public function getManufacturers(int|string $active, string $dateFrom): SelectQuery|PaginatedInterface
     {
 
         $conditions = [];
@@ -81,6 +81,8 @@ trait ManufacturersFilterTrait
         $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
 
         $catalogService = new CatalogService();
+        $catalogService->showOnlyProductsForNextWeekFilterEnabled = false;
+        
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturer->id_manufacturer, false);

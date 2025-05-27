@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 trait SelfServiceCartTrait
 {
 
-    private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1): ?object
+    private function addProductToSelfServiceCart(string|int $productId, int $amount, string|int $orderedQuantityInUnits = -1): ?object
     {
         $this->getSelfServicePostOptions();
         $this->post(
@@ -30,7 +30,7 @@ trait SelfServiceCartTrait
             [
                 'productId' => $productId,
                 'amount' => $amount,
-                'orderedQuantityInUnits' => $orderedQuantityInUnits
+                'orderedQuantityInUnits' => $orderedQuantityInUnits,
             ],
         );
         return $this->getJsonDecodedContent();
@@ -47,7 +47,7 @@ trait SelfServiceCartTrait
         ]);
     }
 
-    private function finishSelfServiceCart($generalTermsAndConditionsAccepted, $cancellationTermsAccepted): void
+    private function finishSelfServiceCart(int $generalTermsAndConditionsAccepted, int $cancellationTermsAccepted): void
     {
         $data = [
             'Carts' => [
@@ -67,13 +67,13 @@ trait SelfServiceCartTrait
         $this->runAndAssertQueue();
     }
 
-    private function removeProductFromSelfServiceCart($productId): ?object
+    private function removeProductFromSelfServiceCart(string|int $productId): ?object
     {
         $this->getSelfServicePostOptions();
         $this->post(
             '/warenkorb/ajaxRemove/',
             [
-                'productId' => $productId
+                'productId' => $productId,
             ],
         );
         return $this->getJsonDecodedContent();

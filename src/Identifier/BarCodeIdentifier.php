@@ -35,7 +35,7 @@ class BarCodeIdentifier extends AbstractIdentifier
         ],
     ];
     
-    public function getIdentifierField($table): string
+    public function getIdentifierField($table): string  // @phpstan-ignore-line
     {
         return $table->getBarcodeFieldString();
     }

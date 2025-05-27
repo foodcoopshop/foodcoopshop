@@ -26,12 +26,12 @@ class GlsBankBankingReaderService extends BankingReaderService {
         $this->setHeaderOffset(0);
     }
 
-    public function checkStructureForRecord($record): bool
+    public function checkStructureForRecord(array $record): bool
     {
 
         $result = false;
 
-        if (count($record) == 19 &&
+        if (count($record) == 18 &&
             strlen($record['Valutadatum']) == 10 &&
             $record['Waehrung'] == 'EUR' &&
             is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag'])) &&

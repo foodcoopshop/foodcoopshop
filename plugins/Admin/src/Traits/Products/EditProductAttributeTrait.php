@@ -27,9 +27,9 @@ trait EditProductAttributeTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $productId = h($this->getRequest()->getData('productId'));
-        $productAttributeId = h($this->getRequest()->getData('productAttributeId'));
-        $deleteProductAttribute = h($this->getRequest()->getData('deleteProductAttribute'));
+        $productId = (int) h($this->getRequest()->getData('productId'));
+        $productAttributeId = (int) h($this->getRequest()->getData('productAttributeId'));
+        $deleteProductAttribute = (bool) h($this->getRequest()->getData('deleteProductAttribute'));
         $barcode = $this->getRequest()->getData('barcode') ?? '';
         $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
 

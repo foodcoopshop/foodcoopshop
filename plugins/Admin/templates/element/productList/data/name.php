@@ -107,9 +107,6 @@ echo '<td class="cell-name">';
                 echo join(', ', $product->category->names);
             }
         echo '</span>';
-        if (! $product->category->all_products_found) {
-            echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
-        }
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
             echo '<span class="storage-location-for-dialog">';

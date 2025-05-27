@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Model\Entity\Customer;
 use App\Services\ProductQuantityService;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -77,7 +78,7 @@ foreach ($preparedProductAttributes as $attribute) {
                 $attribute->unit_product_attribute->price_incl_per_unit,
                 $attribute->unit_product_attribute->name,
                 $attribute->unit_product_attribute->amount,
-                !$orderCustomerService->isSelfServiceModeByUrl()
+                !OrderCustomerService::isSelfServiceModeByUrl()
             );
         }
         echo $priceHtml;
@@ -99,7 +100,7 @@ foreach ($preparedProductAttributes as $attribute) {
         'unitObject' => $attribute->unit_product_attribute,
         'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
         'hideAmountSelector' => $isStockProductOrderPossible || (new ProductQuantityService())->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $attribute->unit_product_attribute),
-        'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
+        'hideIsStockProductIcon' => OrderCustomerService::isSelfServiceModeByUrl(),
     ]);
     echo $this->element('catalog/cartButton', [
         'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
@@ -109,8 +110,8 @@ foreach ($preparedProductAttributes as $attribute) {
         'stockAvailableQuantityLimit' => $attribute->stock_available->quantity_limit,
         'stockAvailableAlwaysAvailable' => $attribute->stock_available->always_available,
         'hideButton' => $isStockProductOrderPossible,
-        'cartButtonLabel' => $orderCustomerService->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-        'cartButtonIcon' => $orderCustomerService->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
+        'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+        'cartButtonIcon' => OrderCustomerService::isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
     ]);
     echo $this->element('catalog/notAvailableInfo', [
         'product' => $product,
@@ -118,7 +119,7 @@ foreach ($preparedProductAttributes as $attribute) {
     ]);
     echo $this->element('catalog/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
         'showInfoText' => $isStockProductOrderPossible,
-        'keyword' => $orderCustomerService->isSelfServiceModeByUrl() ? $product->ProductIdentifier : null
+        'keyword' => OrderCustomerService::isSelfServiceModeByUrl() ? $product->ProductIdentifier : null
     ]);
 
     if ($showProductPrice) {

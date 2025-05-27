@@ -22,7 +22,7 @@ $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 
 $title = $results[0]['ManufacturerName'] . ': '.__d('admin', 'Order_list_grouped_by').' ' . $groupTypeLabel;
-$deliveryDateString = __d('admin', 'Delivery_day').': ' . $this->MyTime->getWeekdayName(date('N', strtotime($results[0]['OrderDetailPickupDay'])));
+$deliveryDateString = __d('admin', 'Delivery_day').': ' . $this->MyTime->getWeekdayName((int) date('N', strtotime($results[0]['OrderDetailPickupDay'])));
 $deliveryDateString .= ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($results[0]['OrderDetailPickupDay']));
 
 $pdf->infoTextForFooter = $results[0]['ManufacturerName'] . ', ' . $deliveryDateString;

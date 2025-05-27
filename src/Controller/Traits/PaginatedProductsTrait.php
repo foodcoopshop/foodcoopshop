@@ -29,7 +29,7 @@ trait PaginatedProductsTrait
         }
     }
 
-    public function throw404IfNoProductsOnPaginatedPageFound($products, $page): void
+    public function throw404IfNoProductsOnPaginatedPageFound(array $products, int $page): void
     {
         if (count($products) == 0 && $page > 1) {
             throw new RecordNotFoundException('page ' . $page . ' does not contain any products');

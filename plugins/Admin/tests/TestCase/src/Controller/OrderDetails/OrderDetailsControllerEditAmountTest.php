@@ -160,7 +160,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail): void
+    private function assertOrderDetailProductAmountChangedEmails(int $emailIndex, string $expectedToEmail): void
     {
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Menge angepasst: Artischocke : Stück');
@@ -171,7 +171,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertMailSentToAt($emailIndex, $expectedToEmail);
     }
 
-    private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason): void
+    private function editOrderDetailAmount(int $orderDetailId, float $productAmount, string $editAmountReason): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductAmount/',

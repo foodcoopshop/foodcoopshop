@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
 echo '<div class="heading">';
     echo '<h4>';
@@ -49,7 +50,7 @@ echo '</div>';
 
 if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
-    if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
+    if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
         $lastOrderDay = (new DeliveryRhythmService())->getLastOrderDay(
             $product->next_delivery_day,
@@ -71,27 +72,27 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
     }
 
-    if (!$orderCustomerService->isSelfServiceModeByUrl()) {
+    if (!OrderCustomerService::isSelfServiceModeByUrl()) {
         echo '<br />'.__('Pickup_day').': ';
     }
     echo '<span class="pickup-day">';
-    if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+    if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
         $pickupDayDetailText = __('Instant_order');
     } else {
         $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
             $product->is_stock_product && $product->manufacturer->stock_management_enabled,
             $product->delivery_rhythm_type,
             $product->delivery_rhythm_count,
-            );
+        );
     }
     if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
     }
     echo '</span>';
-    if (!$orderCustomerService->isSelfServiceModeByUrl()) {
+    if (!OrderCustomerService::isSelfServiceModeByUrl()) {
         echo ' (' . $pickupDayDetailText . ')';
     }
-    if (!$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+    if (!OrderCustomerService::isSelfServiceModeByUrl() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
         if (
             $product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break'
             && strtotime($product->next_delivery_day) != (new DeliveryRhythmService())->getDeliveryDayByCurrentDay()
@@ -123,7 +124,7 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     }
 }
 
-if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
     if ($identity !== null) {
         if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
             echo $this->Html->link(

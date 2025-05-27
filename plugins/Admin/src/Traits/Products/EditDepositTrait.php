@@ -54,7 +54,7 @@ trait EditDepositTrait
             return $this->sendAjaxError($e);
         }
 
-        $depositEntity = $oldProduct->deposit_product;
+        $oldDeposit = $oldProduct->deposit;
         $productName = $oldProduct->name;
 
         if ($ids['attributeId'] > 0) {
@@ -62,17 +62,13 @@ trait EditDepositTrait
             foreach ($oldProduct->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $ids['attributeId']) {
                     $attributeName = $attribute->product_attribute_combination->attribute->name;
-                    $depositEntity = $attribute->deposit_product_attribute;
+                    $oldDeposit = $attribute->deposit;
                     break;
                 }
             }
             $productName .= ' ('.__d('admin', 'Attribute').': '.$attributeName.')';
         }
 
-        $oldDeposit = 0;
-        if (!empty($depositEntity->deposit)) {
-            $oldDeposit = $depositEntity->deposit;
-        }
         $deposit = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('deposit'));
 
         $actionLogMessage = __d('admin', 'The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [

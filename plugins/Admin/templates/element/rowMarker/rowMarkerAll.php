@@ -14,9 +14,8 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
 
-echo '<th style="width:20px;">';
+echo '<th style="width:20px;text-align:center;">';
 if ($enabled) {
     echo '<input type="checkbox" id="row-marker-all" />';
 }

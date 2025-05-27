@@ -52,7 +52,7 @@ class ProductAttributesTable extends AppTable
         ]);
     }
 
-    public function deleteProductAttribute($productId, $productAttributeId): void
+    public function deleteProductAttribute(int $productId, int $productAttributeId): void
     {
 
         $productAttributeCombinationsTable = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
@@ -99,7 +99,7 @@ class ProductAttributesTable extends AppTable
     }
 
 
-    public function add($productId, $attributeId): void
+    public function add(int $productId, int $attributeId): void
     {
         $defaultQuantity = 0;
 
@@ -115,13 +115,13 @@ class ProductAttributesTable extends AppTable
                 ]
             )
         );
-        $productAttributeId = $newAttribute->id_product_attribute;
+        $productAttributeId = (int) $newAttribute->id_product_attribute;
 
         // INSERT in ProductAttributeCombination tricky because of set primary_key
         $sql = 'INSERT INTO ' . $this->tablePrefix . 'product_attribute_combination (id_attribute, id_product_attribute) VALUES (:attributeId, :productAttributeId)';
         $params = [
-            'attributeId' => (int) $attributeId,
-            'productAttributeId' => (int) $productAttributeId,
+            'attributeId' => $attributeId,
+            'productAttributeId' => $productAttributeId,
         ];
         $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
@@ -145,9 +145,9 @@ class ProductAttributesTable extends AppTable
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock' with custom sql
         $sql = 'INSERT INTO ' . $this->tablePrefix . 'stock_available (id_product, id_product_attribute, quantity) VALUES (:productId, :productAttributeId, :quantity)';
         $params = [
-            'productId' => (int) $productId,
-            'productAttributeId' => (int) $productAttributeId,
-            'quantity' => (int) $defaultQuantity,
+            'productId' => $productId,
+            'productAttributeId' => $productAttributeId,
+            'quantity' => $defaultQuantity,
         ];
         $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);

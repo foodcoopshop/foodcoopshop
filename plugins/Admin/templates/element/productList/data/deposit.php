@@ -33,7 +33,7 @@ echo '<td>';
                     'escape' => false
                 ]
             );
-        if ($product->deposit > 0) {
+        if ($product->deposit) {
             echo '<span class="deposit-for-dialog">';
             echo $this->Number->formatAsDecimal($product->deposit);
             echo '</span>';

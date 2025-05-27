@@ -16,15 +16,16 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
 $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $identity !== null;
 
 $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
-    $orderCustomerService->isOrderForDifferentCustomerMode(),
-    $orderCustomerService->isSelfServiceModeByUrl(),
-    Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
-    $product->manufacturer->stock_management_enabled,
-    $product->is_stock_product,
+    OrderCustomerService::isOrderForDifferentCustomerMode(),
+    OrderCustomerService::isSelfServiceModeByUrl(),
+    (bool) Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
+    (bool) $product->manufacturer->stock_management_enabled,
+    (bool) $product->is_stock_product,
 );
 
 if (!empty($product->product_attributes)) {

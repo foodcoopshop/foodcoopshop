@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,7 +43,7 @@ if (!$this->Html->paymentIsCashless() || $identity === null || $identity->isSelf
         ]);
 
         echo $this->Form->hidden('Payments.type', [
-            'value' => 'deposit'
+            'value' => Payment::TYPE_DEPOSIT,
         ]);
 
         echo $this->Form->hidden('Payments.customerId', [

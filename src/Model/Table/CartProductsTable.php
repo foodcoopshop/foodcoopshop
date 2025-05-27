@@ -51,10 +51,9 @@ class CartProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1): array|true
+    public function add(int $productId, int $attributeId, int $amount, float $orderedQuantityInUnits = -1): array|true
     {
         $identity = Router::getRequest()->getAttribute('identity');
-        $orderCustomerService = new OrderCustomerService();
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
@@ -71,7 +70,7 @@ class CartProductsTable extends AppTable
         // get product data from database
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => (int) $productId
+                'Products.id_product' => $productId,
             ],
             contain: [
                 'DepositProducts',
@@ -107,13 +106,13 @@ class CartProductsTable extends AppTable
         $productQuantityService = new ProductQuantityService();
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
         if ($isAmountBasedOnQuantityInUnits) {
-            if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+            if ($orderedQuantityInUnits == -1 && !OrderCustomerService::isSelfServiceMode()) {
                 $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $amount;
             }
             $combinedAmount = $productQuantityService->getCombinedAmount($existingCartProduct, $orderedQuantityInUnits);
         }
 
-        $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
+        $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -122,9 +121,9 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isAmountAvailableProduct(
-            $product->is_stock_product,
-            $product->manufacturer->stock_management_enabled,
-            $product->stock_available->always_available,
+            (bool) $product->is_stock_product,
+            (bool) $product->manufacturer->stock_management_enabled,
+            (bool) $product->stock_available->always_available,
             $attributeId,
             $availableQuantity,
             $combinedAmount,
@@ -140,16 +139,16 @@ class CartProductsTable extends AppTable
         }
 
         $unitObject = $product->unit_product;
-        $depositObject = $product->deposit_product;
+        $deposit = $product->deposit;
         $price = $product->price;
 
         if ($attributeId > 0) {
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
                     $unitObject = null;
-                    $depositObject = $attribute->deposit_product_attribute;
+                    $deposit = $attribute->deposit;
                     $price = $attribute->price;
-                    if (isset($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $unitObject =  $attribute->unit_product_attribute;
                     }
                     continue;
@@ -163,11 +162,11 @@ class CartProductsTable extends AppTable
             $unitObject,
             $amount,
             $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
-            $depositObject,
-            $product->tax->rate ?? 0,
+            $deposit,
+            $product->tax_rate,
         );
 
-        $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit'], $orderCustomerService);
+        $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit']);
         if ($result !== true) {
             return [
                 'status' => 0,
@@ -186,7 +185,7 @@ class CartProductsTable extends AppTable
 
                     $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $attribute->unit_product_attribute);
                     if ($isAmountBasedOnQuantityInUnits) {
-                        if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+                        if ($orderedQuantityInUnits == -1 && !OrderCustomerService::isSelfServiceMode()) {
                             $orderedQuantityInUnits = $attribute->unit_product_attribute->quantity_in_units * $amount;
                         }
                         $combinedAmount = $productQuantityService->getCombinedAmount($existingCartProduct, $orderedQuantityInUnits);
@@ -198,9 +197,9 @@ class CartProductsTable extends AppTable
                         $availableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                     }
                     $message = $this->isAmountAvailableAttribute(
-                        $product->is_stock_product,
-                        $product->manufacturer->stock_management_enabled,
-                        $attribute->stock_available->always_available,
+                        (bool) $product->is_stock_product,
+                        (bool) $product->manufacturer->stock_management_enabled,
+                        (bool) $attribute->stock_available->always_available,
                         $availableQuantity,
                         $combinedAmount,
                         $attribute->product_attribute_combination->attribute->name,
@@ -215,7 +214,7 @@ class CartProductsTable extends AppTable
                         ];
                     }
 
-                    $result = $this->validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $attribute, 'unit_product_attribute', $orderedQuantityInUnits);
+                    $result = $this->validateQuantityInUnitsForSelfServiceMode($attribute, 'unit_product_attribute', $orderedQuantityInUnits);
                     if ($result !== true) {
                         return [
                             'status' => 0,
@@ -247,12 +246,11 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
-            $orderCustomerService,
             $product->manufacturer->active,
             $product->manufacturer->no_delivery_days,
             $product->next_delivery_day,
-            $product->manufacturer->stock_management_enabled,
-            $product->is_stock_product,
+            (bool) $product->manufacturer->stock_management_enabled,
+            (bool) $product->is_stock_product,
             $product->name,
         );
         if ($message !== true) {
@@ -264,9 +262,8 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isProductBulkOrderStillPossible(
-            $orderCustomerService,
-            $product->manufacturer->stock_management_enabled,
-            $product->is_stock_product,
+            (bool) $product->manufacturer->stock_management_enabled,
+            (bool) $product->is_stock_product,
             $product->delivery_rhythm_type,
             $product->delivery_rhythm_order_possible_until,
             $product->name,
@@ -279,7 +276,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $product->next_delivery_day, $product->name);
+        $message = $this->isGlobalDeliveryBreakEnabled($product->next_delivery_day, $product->name);
         if ($message !== true) {
             return [
                 'status' => 0,
@@ -289,7 +286,7 @@ class CartProductsTable extends AppTable
         }
 
         if (!$attributeIdFound) {
-            $result = $this->validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $product, 'unit_product', $orderedQuantityInUnits);
+            $result = $this->validateQuantityInUnitsForSelfServiceMode($product, 'unit_product', $orderedQuantityInUnits);
             if ($result !== true) {
                 return [
                     'status' => 0,
@@ -299,7 +296,7 @@ class CartProductsTable extends AppTable
             }
         }
 
-        $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($orderCustomerService, $product->next_delivery_day, $product->name);
+        $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($product->next_delivery_day, $product->name);
         if ($message !== true) {
             return [
                 'status' => 0,
@@ -318,7 +315,7 @@ class CartProductsTable extends AppTable
             if ($existingCartProduct) {
                 $amountForDatabase = $existingCartProduct['amount'] + $amount;
             }
-            if ($orderCustomerService->isSelfServiceMode()) {
+            if (OrderCustomerService::isSelfServiceMode()) {
                 $amountForDatabase = 1;
             }
         }
@@ -357,11 +354,11 @@ class CartProductsTable extends AppTable
 
     }
 
-    public function setPickupDays($cartProducts, $customerId, $orderCustomerService): array
+    public function setPickupDays(array $cartProducts, int $customerId): array
     {
         $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
+            $cartProduct->pickup_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product);
         }
 
         $pickupDays = [];
@@ -396,9 +393,8 @@ class CartProductsTable extends AppTable
         return $pickupDays;
     }
 
-    public function removeAll($cartId, $customerId): int
+    public function removeAll(int $cartId, int $customerId): int
     {
-        $cartId = (int) $cartId;
         if (!$cartId > 0) {
             throw new \Exception('wrong cartId: ' . $cartId);
         }
@@ -419,7 +415,7 @@ class CartProductsTable extends AppTable
         return $this->deleteAll($cartProduct2remove);
     }
 
-    public function remove($productId, $attributeId, $cartId): int
+    public function remove(int $productId, int $attributeId, int $cartId): int
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {

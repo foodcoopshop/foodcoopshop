@@ -444,6 +444,16 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductDeposit($products);
     }
 
+    public function testChangeDepositNegativeWithOneProduct(): void
+    {
+        $products = [
+            [102 => '-1,00']
+        ];
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeDeposit($products);
+        $this->assertProductDeposit($products);
+    }
+
     public function testChangeDepositWithOneProductAttribute(): void
     {
         $products = [
@@ -470,8 +480,8 @@ class ProductsTableTest extends AppCakeTestCase
 
         // try to change deposits, but include one invalid deposit
         $products = [
-            [346 => '-1'], // invalid deposit
-            [102 => '2,00'],
+            [346 => 'adsf'], // invalid deposit
+            [102 => '2,30'],
             [103 => '1,00']
         ];
 
@@ -664,7 +674,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductName($products, $expectedResults);
     }
 
-    private function assertProductName($products, $expectedResults): void
+    private function assertProductName(array $products, array $expectedResults): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -694,7 +704,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    private function assertProductQuantity($products, $forceUseThisQuantity = null): void
+    private function assertProductQuantity(array $products, ?float $forceUseThisQuantity = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -715,7 +725,7 @@ class ProductsTableTest extends AppCakeTestCase
             }
             $changedProduct = $productsTable->find('all',
                 conditions: [
-                    'Products.id_product' => $productId
+                    'Products.id_product' => $productId,
                 ],
                 contain: $contain
             )->first();
@@ -728,7 +738,7 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
-    private function assertProductDeposit($products, $forceUseThisDeposit = null): void
+    private function assertProductDeposit(array $products, ?string $forceUseThisDeposit = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -762,11 +772,11 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0]->deposit_product_attribute;
             }
-            $this->assertEquals($expectedDeposit, $resultEntity->deposit, 'changing the deposit did not work');
+            $this->assertEquals($expectedDeposit, $resultEntity->deposit);
         }
     }
 
-    private function assertProductPrice($products, $forceUseThisPrice = null): void
+    private function assertProductPrice(array $products, ?string $forceUseThisPrice = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -796,12 +806,11 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0];
             }
-            $taxRate = $changedProduct->tax->rate ?? 0;
-            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice($resultEntity->price, $taxRate));
+            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice($resultEntity->price, $changedProduct->tax_rate));
         }
     }
 
-    private function assertProductStatus($products, $forceUseThisStatus = null): void
+    private function assertProductStatus(array $products, ?float $forceUseThisStatus = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         foreach ($products as $product) {
@@ -815,7 +824,7 @@ class ProductsTableTest extends AppCakeTestCase
                     'Products.id_product' => $productId,
                 ]
             )->first();
-            $this->assertEquals($expectedStatus, $changedProduct->active, 'changing the active flag did not work');
+            $this->assertEquals($expectedStatus, $changedProduct->active);
         }
     }
 }

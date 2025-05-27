@@ -8,6 +8,8 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
+use Cake\Datasource\EntityInterface;
+use App\Model\Entity\Product;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -44,7 +46,7 @@ class PurchasePriceProductsTable extends AppTable
         return $validator;
     }
 
-    public function isPurchasePriceSet($entity): bool
+    public function isPurchasePriceSet(EntityInterface $entity): bool
     {
         $result = true;
         if (!empty($entity->unit_product) && $entity->unit_product->price_per_unit_enabled) {
@@ -59,7 +61,11 @@ class PurchasePriceProductsTable extends AppTable
         return $result;
     }
 
-    public function calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate): float
+    public function calculateSellingPriceGrossBySurcharge(
+        null|string|float $purchasePriceNet,
+        string|float $surcharge,
+        string|float $sellingPriceTaxRate,
+        ): float
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
@@ -67,13 +73,18 @@ class PurchasePriceProductsTable extends AppTable
         return $sellingPriceGross;
     }
 
-    public function calculateSurchargeBySellingPriceNet($sellingPriceNet, $purchasePriceNet): float
+    public function calculateSurchargeBySellingPriceNet(string|float $sellingPriceNet, string|float $purchasePriceNet): float
     {
         $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
         return $surcharge;
     }
 
-    public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate): float
+    public function calculateSurchargeBySellingPriceGross(
+        string|float $sellingPriceGross,
+        string|float $sellingPriceTaxRate,
+        null|string|float $purchasePriceGross,
+        string|float $purchasePriceTaxRate,
+        ): float
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -89,7 +100,7 @@ class PurchasePriceProductsTable extends AppTable
 
     }
 
-    public function getSellingPricesWithSurcharge($productIds, $surcharge): array
+    public function getSellingPricesWithSurcharge(array $productIds, float $surcharge): array
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -113,8 +124,6 @@ class PurchasePriceProductsTable extends AppTable
 
         foreach($products as $product) {
 
-            $sellingPriceTaxRate = $product->tax->rate ?? 0;
-
             if (empty($product->purchase_price_product) || is_null($product->purchase_price_product->tax_id)) {
                 continue;
             }
@@ -130,13 +139,13 @@ class PurchasePriceProductsTable extends AppTable
 
                 $grossPrice = 0;
                 if (!empty($product->purchase_price_product)) {
-                    $grossPrice = $this->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
+                    $grossPrice = $this->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $product->tax_rate);
                 }
 
                 $grossPricePerUnit = 0;
                 if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                     $purchasePriceNet = $productsTable->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                    $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                    $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $product->tax_rate);
                 }
 
                 if ($grossPrice == 0 && $grossPricePerUnit == 0) {
@@ -160,13 +169,13 @@ class PurchasePriceProductsTable extends AppTable
 
                     $grossPrice = 0;
                     if (!empty($attribute->purchase_price_product_attribute)) {
-                        $grossPrice = $this->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+                        $grossPrice = $this->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $product->tax_rate);
                     }
 
                     $grossPricePerUnit = 0;
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                    if ($attribute->price_per_unit_enabled) {
                         $purchasePriceNet = $productsTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                        $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                        $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $product->tax_rate);
                     }
 
                     if ($grossPrice == 0 && $grossPricePerUnit == 0) {
@@ -212,7 +221,7 @@ class PurchasePriceProductsTable extends AppTable
 
     }
 
-    public function savePurchasePriceTax($taxId, $productId, $oldProduct): array
+    public function savePurchasePriceTax(int $taxId, int $productId, Product $oldProduct): array
     {
         $changedTaxInfoForMessage = [];
         $oldPurchasePriceTaxRate = 0;

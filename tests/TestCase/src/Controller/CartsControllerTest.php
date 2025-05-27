@@ -88,6 +88,26 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testOrderProductWithNegativeDeposit(): void
+    {
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->changeDeposit([
+            [$this->productId1 => -10]
+        ]);
+        $productsTable->changePrice([
+            [$this->productId1 => ['gross_price' => 0]],
+        ]);
+
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $creditBalanceBeforeOrder = $customersTable->getCreditBalance(Configure::read('test.customerId'));
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId1, 2);
+        $this->finishCart();
+        $creditBalanceAfterOrder = $customersTable->getCreditBalance(Configure::read('test.customerId'));
+        $creditOrderDifference = $creditBalanceAfterOrder - $creditBalanceBeforeOrder;
+        $this->assertEquals(20, $creditOrderDifference);
+    }
+
     public function testAddProductWithoutCredit(): void
     {
         $this->resetCustomerCreditBalance();
@@ -261,7 +281,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId1, 5);
     }
 
-    private function doPrepareAlwaysAvailable($productId, $originalQuantity): void
+    private function doPrepareAlwaysAvailable(string|int $productId, float $originalQuantity): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$productId => [
@@ -483,7 +503,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId1, 1);
         $this->assertJsonOk();
-        $this->finishCart(1, 1, '', null, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        $this->finishCart(1, 1, '', Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         $this->assertResponseNotContains('hat die Lieferpause aktiviert');
     }
 
@@ -495,13 +515,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->finishCart(1, 1, '');
+        $this->finishCart();
         $this->assertResponseContains('Bitte wähle einen Abholtag aus.');
-        $this->finishCart(1, 1, '', null, '');
+        $this->finishCart();
         $this->assertResponseContains('Bitte wähle einen Abholtag aus.');
-        $this->finishCart(1, 1, '', null, '2020-01-01'); // do not allow past pickup days
+        $this->finishCart(1, 1, '', '2020-01-01'); // do not allow past pickup days
         $this->assertResponseContains('Der Abholtag ist nicht gültig.');
-        $this->finishCart(1, 1, '', null, $tomorrow); // pickup day has value of FCS_NO_DELIVERY_DAYS_GLOBAL
+        $this->finishCart(1, 1, '', $tomorrow); // pickup day has value of FCS_NO_DELIVERY_DAYS_GLOBAL
         $this->assertResponseContains('Der Abholtag ist nicht gültig.');
     }
 
@@ -509,13 +529,13 @@ class CartsControllerTest extends AppCakeTestCase
     {
 
         $pickupDay = $this->Time->getTomorrowForDatabase();
-        $comment = 'this is the comment';
+        $comment = 'this is the <b>comment</b>';
 
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->finishCart(1, 1, $comment, null, $pickupDay);
+        $this->finishCart(1, 1, $comment, $pickupDay);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -530,7 +550,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
         $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>');
-        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $comment . '</b>"');
+        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>this is the comment</b>"');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }
 
@@ -558,7 +578,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsAdmin();
         $this->fillCart();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
-        $this->finishCart(1,1);
+        $this->finishCart();
         $this->assertResponseContains('Bitte lade neues Guthaben auf.');
         $this->assertResponseContains('-8,64');
         $this->assertMailCount(0);
@@ -578,7 +598,7 @@ class CartsControllerTest extends AppCakeTestCase
         $unitsTable->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
 
         $this->addAllDifferentProductTypesToCart();
-        $this->finishCart(1,1);
+        $this->finishCart();
         // product and missing pp per piece
         $this->assertMatchesRegularExpression('/Das Produkt (.*)Beuschl(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // product and missing pp per unit
@@ -626,7 +646,7 @@ class CartsControllerTest extends AppCakeTestCase
         $purchasePriceProductsTable->save($entity);
         $this->addProductToCart($productId, 2);
         $this->addProductToCart(163, 1); //mangold
-        $this->finishCart(1,1);
+        $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -688,7 +708,7 @@ class CartsControllerTest extends AppCakeTestCase
         $productA = '350-13';
         $this->loginAsSuperadmin();
         $this->addProductToCart($productA, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $this->checkStockAvailable($productA, 4);
         $this->checkStockAvailable('350-14', 999); // must be same as before fnishing order
     }
@@ -699,7 +719,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
         $this->loginAsSuperadmin();
         $this->fillCart();
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('App.fullBaseUrl') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
     }
 
@@ -709,7 +729,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 1);
         $this->loginAsSuperadmin();
         $this->fillCart();
-        $this->finishCart(1, 1);
+        $this->finishCart();
         // assertMailNotContainsAt not available!
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Du kannst unseren Newsletter', TestEmailTransport::getMessages()[0]->getBodyHtml());
     }
@@ -787,7 +807,7 @@ class CartsControllerTest extends AppCakeTestCase
         $stockProductAttributeId = '350-13';
         $this->addProductToCart($stockProductId, 6);
         $this->addProductToCart($stockProductAttributeId, 5);
-        $this->finishCart(1, 1);
+        $this->finishCart();
     }
 
     public function testFinishOrderWithMultiplePickupDays(): void
@@ -801,7 +821,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdA, 3);
         $this->addProductToCart($productIdB, 2);
         $this->addProductToCart($productIdC, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
 
         $this->assertMailCount(1);
     }
@@ -883,7 +903,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdA, 2);
         $this->addProductToCart($productIdB, 3);
 
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
 
         $this->checkCartStatusAfterFinish();
@@ -946,7 +966,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
         $this->addProductToCart($productIdC, 3);
 
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
 
         $this->checkCartStatusAfterFinish();
@@ -1010,7 +1030,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::ZERO_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
-        $this->finishCart(1,1);
+        $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -1063,7 +1083,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::PURCHASE_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
-        $this->finishCart(1,1);
+        $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
@@ -1135,7 +1155,7 @@ class CartsControllerTest extends AppCakeTestCase
         )->contain(['CartProducts'])->first();
         $this->assertCount(2, $cart->cart_products);
 
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
@@ -1170,7 +1190,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
@@ -1196,7 +1216,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
@@ -1317,7 +1337,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($cart->status, 0, 'cake cart status wrong');
     }
 
-    private function addTooManyProducts($productId, $amount, $expectedAmount, $expectedErrorMessage, $productIndex): void
+    private function addTooManyProducts(string|int $productId, int $amount, int $expectedAmount, string $expectedErrorMessage, int $productIndex): void
     {
         $this->addProductToCart($productId, $amount);
         $response = $this->getJsonDecodedContent();
@@ -1334,13 +1354,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMatchesRegularExpression('/initCartErrors()/', $this->_response->getBody()->__toString());
     }
 
-    private function changeStockAvailable($productId, $amount): void
+    private function changeStockAvailable(string|int $productId, int $amount): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->changeQuantity([[$productId => ['quantity' => $amount]]]);
     }
 
-    private function checkStockAvailable($productId, $result): void
+    private function checkStockAvailable(string|int $productId, int $result): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $ids = $productsTable->getProductIdAndAttributeId($productId);
@@ -1358,7 +1378,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');
     }
 
-    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxRate, $pickupDay): void
+    private function checkOrderDetails(OrderDetail $orderDetail, string $name, int $amount, int $productAttributeId, float $deposit, float $totalPriceTaxExcl, float $totalPriceTaxIncl, float $taxUnitAmount, float $taxTotalAmount, float $taxRate, string $pickupDay): void
     {
         $this->assertEquals($orderDetail->product_name, $name);
         $this->assertEquals($orderDetail->product_amount, $amount);
@@ -1374,21 +1394,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->tax_rate, $taxRate);
     }
 
-    private function changeProductStatus($productId, $status): void
+    private function changeProductStatus(string|int $productId, int $status): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->changeStatus([[$productId => $status]]);
     }
 
-    private function changeManufacturerStatus($manufacturerId, $status): void
+    private function changeManufacturerStatus(int $manufacturerId, int $status): void
     {
         $this->changeManufacturer($manufacturerId, 'active', $status);
     }
 
-    private function removeProduct($productId): ?object
+    private function removeProduct(string|int $productId): ?object
     {
         $this->ajaxPost('/warenkorb/ajaxRemove', [
-            'productId' => $productId
+            'productId' => $productId,
         ]);
         return $this->getJsonDecodedContent();
     }

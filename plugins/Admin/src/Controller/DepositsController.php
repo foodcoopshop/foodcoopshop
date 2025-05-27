@@ -184,7 +184,7 @@ class DepositsController extends AdminAppController
         $this->render('index');
     }
 
-    public function myDetail($monthAndYear): void
+    public function myDetail(string $monthAndYear): void
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->detail($monthAndYear);
@@ -208,7 +208,7 @@ class DepositsController extends AdminAppController
         }
 
         $manufacturer = $manufacturersTable->find('all', conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
@@ -219,9 +219,9 @@ class DepositsController extends AdminAppController
         $this->set('orderStates', $orderStates);
 
         $depositsDelivered = $orderDetailsTable->getDepositSum($manufacturerId, 'month');
-        $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, true);
+        $depositsReturned = $paymentsTable->getMonthlyDepositSumByManufacturer((int) $manufacturerId, true);
 
-        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
+        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear((int) date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
 
         $deposits = [];
@@ -256,8 +256,8 @@ class DepositsController extends AdminAppController
             } else {
                 $deposits[$monthAndYear]['monthAndYearAsString'] = $monthAndYearAsString;
                 $monthAndYearExploded = explode('-', $monthAndYear);
-                $year  = $monthAndYearExploded[0];
-                $month = $monthAndYearExploded[1];
+                $year  = (int) $monthAndYearExploded[0];
+                $month = (int) $monthAndYearExploded[1];
                 $deposits[$monthAndYear]['dateFrom'] = '01.' . Configure::read('app.htmlHelper')->addLeadingZero($month) . '.' . $year;
                 $deposits[$monthAndYear]['dateTo'] = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($monthAndYear) . '.' . Configure::read('app.htmlHelper')->addLeadingZero($month) . '.' . $year;
             }
@@ -274,16 +274,16 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', $title);
     }
 
-    public function detail($monthAndYear): void
+    public function detail(string $monthAndYear): void
     {
 
-        $manufacturerId = $this->getManufacturerId();
+        $manufacturerId = (int) $this->getManufacturerId();
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
         $manufacturer = $manufacturersTable->find('all', conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
@@ -296,8 +296,8 @@ class DepositsController extends AdminAppController
             throw new RecordNotFoundException('monthAndYear missing');
         }
         $monthAndYearExploded = explode('-', $monthAndYear);
-        $year  = $monthAndYearExploded[0];
-        $month = $monthAndYearExploded[1];
+        $year  = (int) $monthAndYearExploded[0];
+        $month = (int) $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
         $this->set('title_for_layout', __d('admin', 'Deposit_take_back_detail_for') . ' ' . $manufacturer->name);

@@ -2212,9 +2212,6 @@ msgstr "Define as new default attribute"
 msgid "change_category"
 msgstr "change category"
 
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Category \"all products\" is missing!"
-
 msgid "product_preview"
 msgstr "product preview"
 

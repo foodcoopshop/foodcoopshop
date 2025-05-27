@@ -167,7 +167,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdA, 2);
         $this->addProductToCart($productIdB, 3);
         $this->addProductToCart($productIdC, 1);
-        $this->finishCart(1, 1);
+        $this->finishCart();
 
         $productsTable = $this->getTableLocator()->get('Products');
         $dummyProduct = $productsTable->newEntity([

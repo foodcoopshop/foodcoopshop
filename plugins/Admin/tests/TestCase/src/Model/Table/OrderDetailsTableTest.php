@@ -41,7 +41,7 @@ class OrderDetailsTableTest extends AppCakeTestCase
         $this->assertGetDepositNet(3, 3, 2.49);
     }
 
-    private function assertGetDepositTax($gross, $amount, $expected): void
+    private function assertGetDepositTax(float $gross, float $amount, float $expected): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails'); 
         $result = $orderDetailsTable->getDepositTax($gross, $amount, 20);
@@ -50,7 +50,7 @@ class OrderDetailsTableTest extends AppCakeTestCase
         $this->assertEquals($result, $expected);
     }
 
-    private function assertGetDepositNet($gross, $amount, $expected): void
+    private function assertGetDepositNet(float $gross, float $amount, float $expected): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $result = $orderDetailsTable->getDepositNet($gross, $amount, 20);

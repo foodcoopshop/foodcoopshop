@@ -24,7 +24,7 @@ trait EditCommentTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $customerId = $this->getRequest()->getData('customerId');
+        $customerId = (int) $this->getRequest()->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
         $customersTable = $this->getTableLocator()->get('Customers');

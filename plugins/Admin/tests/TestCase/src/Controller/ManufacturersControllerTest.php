@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Laminas\Diactoros\UploadedFile;
+use App\Model\Entity\Manufacturer;
 
 class ManufacturersControllerTest extends AppCakeTestCase
 {
@@ -125,7 +126,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newStatus = APP_OFF;
 
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
-        $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
+        $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen.';
 
         $this->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -157,7 +158,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'Manufacturers' => [
                     'send_order_list' => $newSendOrderList,
                     'send_invoice' => $newSendInvoice,
-                    'send_order_list_cc' => implode(',', $newSendOrderListCc), // correct
+                    'send_order_list_cc' => ' office@rothauer-it.com, test@test.com ', // correct: any whitespace is removed in beforeMarshal
                     'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification,
                     'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification,
                     'send_instant_order_notification' => $newSendInstantOrderNotification,
@@ -167,6 +168,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
                     'send_ordered_product_deleted_notification' => 1,
                     'active' => $newStatus,
+                    'min_order_value' => 10.3
                 ],
                 'referer' => '/'
             ]
@@ -206,6 +208,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $customerRecord = $manufacturersTable->getCustomerRecord($manufacturerNew->address_manufacturer->email);
         $this->assertEquals($newStatus, $customerRecord->active);
         $this->assertEquals($newStatus, $manufacturerNew->active);
+        $this->assertEquals(10.3, $manufacturerNew->min_order_value);
 
         $this->logout();
     }
@@ -418,7 +421,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    private function doTestCustomerRecord($manufacturer): void
+    private function doTestCustomerRecord(Manufacturer $manufacturer): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $customerRecord = $manufacturersTable->getCustomerRecord($manufacturer->address_manufacturer->email);
@@ -428,7 +431,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $customerRecord->active);
     }
 
-    private function add($data): void
+    private function add(array $data): void
     {
         $this->post($this->Slug->getManufacturerAdd(), $data);
     }

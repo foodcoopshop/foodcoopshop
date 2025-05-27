@@ -17,13 +17,13 @@ trait AppIntegrationTestTrait
         ],
     ];
 
-    public function ajaxGet($url): void
+    public function ajaxGet(string $url): void
     {
         $this->configRequest($this->ajaxHeaders);
         $this->get($url);
     }
 
-    public function ajaxPost($url, $data = []): void
+    public function ajaxPost(string $url, array $data = []): void
     {
         $this->configRequest($this->ajaxHeaders);
         $this->post($url, $data);

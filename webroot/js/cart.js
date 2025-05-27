@@ -501,7 +501,7 @@ foodcoopshop.Cart = {
             '<span class="right">' +
                 '<span class="delete"><a class="btn" title="' + foodcoopshop.LocalizedJs.cart.removeFromCart + '" href="javascript:void(0);"><i class="fa-fw fas fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsCurrency(price) + '</span>' +
-                (deposit > 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsCurrency(deposit) + '</span></span>' : '') +
+                (deposit != 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsCurrency(deposit) + '</span></span>' : '') +
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsCurrency(tax) + '</span>' +
             '</span>' +
         '</span>';
@@ -524,7 +524,7 @@ foodcoopshop.Cart = {
             return;
         }
         var newCartAmountSumHtml = parseInt(cartAmountSum.html()) + amount;
-        if (newCartAmountSumHtml > 0) {
+        if (newCartAmountSumHtml != 0) {
             cartAmountSum.closest('.amount-sum-wrapper').show();
         }
         cartAmountSum.html(newCartAmountSumHtml);
@@ -537,7 +537,7 @@ foodcoopshop.Cart = {
             return;
         }
         var newCartTotalSum = foodcoopshop.Helper.getCurrencyAsFloat(cartTotalSum.html()) + amount;
-        newCartTotalSum = Math.abs(newCartTotalSum); // avoid -0,00 as total due to eg. -4.440892098500626e-16
+        newCartTotalSum = newCartTotalSum + 0;
         var newCartTotalSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(newCartTotalSum);
 
         cartTotalSum.html(newCartTotalSumHtml);
@@ -556,7 +556,7 @@ foodcoopshop.Cart = {
         var newDeposit = foodcoopshop.Helper.getCurrencyAsFloat(cartDepositSum.html()) + amount;
         $('.cart .sums-wrapper p.product-sum-wrapper').hide();
         cartDepositSum.parent().hide();
-        if (newDeposit > 0) {
+        if (newDeposit != 0) {
             $('.cart .sums-wrapper p.product-sum-wrapper').show();
             cartDepositSum.parent().show();
         }

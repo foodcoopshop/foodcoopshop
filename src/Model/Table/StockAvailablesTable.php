@@ -26,6 +26,9 @@ class StockAvailablesTable extends AppTable
     use NumberRangeValidatorTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    const MAX_QUANTITY = 1000000;
+    const MIN_QUANTITY = self::MAX_QUANTITY * -1;
+
     public function initialize(array $config): void
     {
         $this->setTable('stock_available');
@@ -36,23 +39,23 @@ class StockAvailablesTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->numeric('quantity', __('The_quantity_needs_to_be_a_number.'));
-        $validator = $this->getNumberRangeValidator($validator, 'quantity', -5000, 5000, __('Field:_Stock'));
+        $validator = $this->getNumberRangeValidator($validator, 'quantity', self::MIN_QUANTITY, self::MAX_QUANTITY, __('Field:_Stock'));
 
         $validator->numeric('quantity_limit', __('The_quantity_limit_needs_to_be_a_number.'));
-        $validator = $this->getNumberRangeValidator($validator, 'quantity_limit', -5000, 0, __('Field:_Order_possible_until'));
+        $validator = $this->getNumberRangeValidator($validator, 'quantity_limit', self::MIN_QUANTITY, 0, __('Field:_Order_possible_until'));
 
         $validator->numeric('sold_out_quantity', __('The_sold_out_quantity_needs_to_be_a_number.'));
-        $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', -5000, 5000, __('Field:_Notification_if_quantity_limit_reached'));
+        $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', self::MIN_QUANTITY, self::MAX_QUANTITY, __('Field:_Notification_if_quantity_limit_reached'));
         $validator->allowEmptyString('sold_out_quantity');
 
         $validator->numeric('default_quantity_after_sending_order_lists', __('The_default_quantity_after_sending_order_lists_needs_to_be_a_number.'));
-        $validator = $this->getNumberRangeValidator($validator, 'default_quantity_after_sending_order_lists', 1, 5000, __('Field:_Default_quantity_after_sending_order_lists'));
+        $validator = $this->getNumberRangeValidator($validator, 'default_quantity_after_sending_order_lists', 1, self::MAX_QUANTITY, __('Field:_Default_quantity_after_sending_order_lists'));
         $validator->allowEmptyString('default_quantity_after_sending_order_lists');
 
         return $validator;
     }
 
-    public function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions): void
+    public function saveStockAvailable(array $stockAvailable2saveData, array $stockAvailable2saveConditions): void
     {
         $i = 0;
         foreach($stockAvailable2saveConditions as $condition) {
@@ -71,9 +74,8 @@ class StockAvailablesTable extends AppTable
         }
     }
 
-    public function updateQuantityForMainProduct($productId): void
+    public function updateQuantityForMainProduct(int $productId): void
     {
-        $productId = (int) $productId;
         if ($productId > 0) {
             $query = 'UPDATE '.$this->getTable().' AS sa1, (
                         SELECT SUM(quantity) as quantitySum
@@ -83,10 +85,10 @@ class StockAvailablesTable extends AppTable
                         GROUP BY id_product
                         ) sa2
                     SET sa1.quantity = sa2.quantitySum
-                    WHERE sa1.id_product = ' . $productId . '
+                    WHERE sa1.id_product = :productId
                         AND sa1.id_product_attribute = 0';
             $params = [
-                'productId' => $productId
+                'productId' => $productId,
             ];
             $statement = $this->getConnection()->getDriver()->prepare($query);
             $statement->execute($params);

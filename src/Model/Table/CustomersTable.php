@@ -15,6 +15,7 @@ use App\Model\Entity\Customer;
 use App\Model\Entity\Manufacturer;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
+use App\Services\FormatterService;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query;
 use Cake\ORM\Query\SelectQuery;
@@ -114,7 +115,7 @@ class CustomersTable extends AppTable
         return $validator;
     }
 
-    public function validationChangePassword($validator): Validator
+    public function validationChangePassword(Validator $validator): Validator
     {
         $validator
         ->notEmptyString('passwd_old', __('Please_enter_your_old_password.'))
@@ -217,9 +218,9 @@ class CustomersTable extends AppTable
         return $query;
     }
 
-    public function sortByVirtualField($object, $name): object
+    public function sortByVirtualField(SelectQuery $query, string $name): object
     {
-        $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC', [
+        $sortedObject = (object) Hash::sort($query->toArray(), '{n}.' . $name, 'ASC', [
             'type' => 'locale',
             'ignoreCase' => true,
         ]);
@@ -239,11 +240,11 @@ class CustomersTable extends AppTable
             ]),
         ]);
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
-            (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
+            (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', OrderDetail::ORDER_STATES_CASHLESS),
         ]);
     }
 
-    public function getCustomerName($tableName = 'Customers'): string
+    public function getCustomerName(string $tableName = 'Customers'): string
     {
         $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
@@ -253,13 +254,13 @@ class CustomersTable extends AppTable
         return $sql;
     }
 
-    public function addCustomersNameForOrderSelect($query): SelectQuery
+    public function addCustomersNameForOrderSelect(SelectQuery $query): SelectQuery
     {
         $sql = $this->getCustomerName();
         return $query->select(['CustomerNameForOrder' => $sql]);
     }
 
-    public function getCustomerOrderClause($direction): array
+    public function getCustomerOrderClause(string $direction): array
     {
         $result = [
             'CustomerNameForOrder' => $direction,
@@ -267,7 +268,7 @@ class CustomersTable extends AppTable
         return $result;
     }
 
-    public function getModifiedProductPricesByShoppingPrice($productId, $price, $priceInclPerUnit, $deposit, $taxRate): array
+    public function getModifiedProductPricesByShoppingPrice(int $productId, string $price, float|string|null $priceInclPerUnit, float $deposit, string|float $taxRate): array
     {
 
         $result = [
@@ -316,7 +317,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getModifiedAttributePricesByShoppingPrice($productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate): array
+    public function getModifiedAttributePricesByShoppingPrice(int $productId, int $productAttributeId, string $price, string|float|null $priceInclPerUnit, float $deposit, string|float $taxRate): array
     {
 
         $result = [
@@ -377,7 +378,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getPersonalTransactionCode($customerId): string
+    public function getPersonalTransactionCode(int|string $customerId): string
     {
         $customer = $this->find('all',
         conditions: [
@@ -415,21 +416,21 @@ class CustomersTable extends AppTable
         return 'SUBSTRING(SHA1(CONCAT(' . $this->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
     }
 
-    public function getManufacturerRecord($customer): ?Manufacturer
+    public function getManufacturerRecord(Customer $customer): ?Manufacturer
     {
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'AddressManufacturers.email' => $customer->email
+                'AddressManufacturers.email' => $customer->email,
             ],
             contain: [
-                'AddressManufacturers'
+                'AddressManufacturers',
             ]
         )->first();
         return $manufacturer;
     }
 
-    public function setNewPassword($customerId): string
+    public function setNewPassword(int $customerId): string
     {
         $ph = new DefaultPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
@@ -446,7 +447,7 @@ class CustomersTable extends AppTable
         return $newPassword;
     }
 
-    public function getManufacturerByCustomerId($customerId): ?Manufacturer
+    public function getManufacturerByCustomerId(int $customerId): ?Manufacturer
     {
         $customer = $this->find('all', conditions: [
             $this->aliasField('id_customer') => $customerId,
@@ -457,7 +458,7 @@ class CustomersTable extends AppTable
         return null;
     }
 
-    public function getManufacturerIdByCustomerId($customerId): int
+    public function getManufacturerIdByCustomerId(int $customerId): int
     {
         $manufacturer = $this->getManufacturerByCustomerId($customerId);
         if (!empty($manufacturer)) {
@@ -489,7 +490,7 @@ class CustomersTable extends AppTable
         return $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
     }
 
-    private function getProductBalanceSumForCustomerIds($customerIds): float
+    private function getProductBalanceSumForCustomerIds(array $customerIds): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -532,7 +533,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getProductBalanceForCustomers($status): float
+    public function getProductBalanceForCustomers(int $status): float
     {
         $customerIds = $this->getCustomerIdsWithStatus($status);
         $productBalanceSum = $this->getProductBalanceSumForCustomerIds($customerIds);
@@ -540,14 +541,14 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getDepositBalanceForCustomers($status): float
+    public function getDepositBalanceForCustomers(int $status): float
     {
         $customerIds = $this->getCustomerIdsWithStatus($status);
         $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($customerIds);
         return $depositBalanceSum;
     }
 
-    public function getCustomerIdsWithStatus($status): array
+    public function getCustomerIdsWithStatus(int $status): array
     {
         $conditions = [
             $this->aliasField('active') => $status,
@@ -566,7 +567,7 @@ class CustomersTable extends AppTable
         return $customerIds;
     }
 
-    private function getDepositBalanceSumForCustomerIds($customerIds): float
+    private function getDepositBalanceSumForCustomerIds(array $customerIds): float
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -574,7 +575,7 @@ class CustomersTable extends AppTable
 
         $depositBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $paymentSumDeposit = $paymentsTable->getSum($customerId, 'deposit');
+            $paymentSumDeposit = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
             $depositSum = $orderDetailsTable->getSumDeposit($customerId);
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;
@@ -582,24 +583,34 @@ class CustomersTable extends AppTable
         return round($depositBalanceSum, 2);
     }
 
-    public function getCreditBalance($customerId): float
+    public function getDepositBalance(int $customerId): float
+    {
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $paymentDepositSum = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
+        $depositSum = $orderDetailsTable->getSumDeposit($customerId);
+
+        $creditBalance = $paymentDepositSum - $depositSum;
+        return FormatterService::assureCorrectFloat($creditBalance);
+
+    }
+
+    public function getCreditBalance(int $customerId): float
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
         $paymentProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PRODUCT);
-        $paybackProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);
+        $paymentPaybackSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);
         $paymentDepositSum = $paymentsTable->getSum($customerId, Payment::TYPE_DEPOSIT);
 
         $productSum = $orderDetailsTable->getSumProduct($customerId);
         $depositSum = $orderDetailsTable->getSumDeposit($customerId);
 
-        // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        $creditBalance = round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
-        // "+ 0" converts -0,00 to 0,00
-        return $creditBalance + 0;
+        $creditBalance = $paymentProductSum - $paymentPaybackSum + $paymentDepositSum - $productSum - $depositSum;
+        return FormatterService::assureCorrectFloat($creditBalance);
     }
 
-    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = []): array
+    public function getForDropdown(bool $includeManufacturers = false, bool $includeOfflineCustomers = true, array $conditions = []): array
     {
 
         $contain = [];

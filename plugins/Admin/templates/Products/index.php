@@ -158,7 +158,7 @@ $paginator = $this->loadHelper('Paginator', [
             if ($globalNoDeliveryDaysString != '') {
                 echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
             }
-            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true, 2);
             if ($manufacturerNoDeliveryDaysString != '') {
                 echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
             }

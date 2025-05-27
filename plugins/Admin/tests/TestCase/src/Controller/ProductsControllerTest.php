@@ -837,7 +837,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($expectedDropdownData, $this->getJsonDecodedContent()->dropdownData);
     }
     
-    private function deleteProduct($productId): ?Product
+    private function deleteProduct(int $productId): ?Product
     {
         $this->ajaxPost('/admin/products/delete', [
             'productIds' => [$productId]
@@ -851,7 +851,7 @@ class ProductsControllerTest extends AppCakeTestCase
         return $product;
     }
 
-    private function doPurchasePriceChange($productId, $price): ?Product
+    private function doPurchasePriceChange(string|int $productId, string $price): ?Product
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -878,7 +878,18 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
-    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0, $changeOpenOrderDetails = false): void
+    private function assertSellingPriceChange(
+        string|int $productId,
+        string|float $price,
+        string|float $expectedNetPrice,
+        string|float $taxRate,
+        bool $pricePerUnitEnabled = false,
+        string|float $priceInclPerUnit = 0,
+        string $priceUnitName = '',
+        float $priceUnitAmount = 0,
+        float $priceQuantityInUnits = 0,
+        bool $changeOpenOrderDetails = false,
+        ): void
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
@@ -889,7 +900,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 
-    private function assertTaxChange($productId, $newSellingPriceTaxId, $expectedSellingPriceTaxId, $newPurchasePriceTaxId = null, $expectedPurchasePriceTaxId = null): Product
+    private function assertTaxChange(
+        string|int $productId,
+        int $newSellingPriceTaxId,
+        int $expectedSellingPriceTaxId,
+        ?int $newPurchasePriceTaxId = null,
+        null|int|string $expectedPurchasePriceTaxId = null,
+        ): Product
     {
         $data = [
             'productId' => $productId,

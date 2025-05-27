@@ -53,7 +53,7 @@ class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsController
         $this->assertResponseContains('Bitte gib eine korrekte Zahl ein.');
     }
 
-    protected function editOrderDetailPurchasePrice($orderDetailId, $purchasePriceExcl, $taxRate): void
+    protected function editOrderDetailPurchasePrice(int $orderDetailId, float|string $purchasePriceExcl, float $taxRate): void
     {
         $this->post(
             Configure::read('app.slugHelper')->getOrderDetailPurchasePriceEdit($orderDetailId),

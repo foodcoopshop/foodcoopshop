@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
+use App\Services\ProductsForBackendService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -50,13 +51,19 @@ trait IndexTrait
         $this->set('categoryId', $categoryId);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $productsTable->getProductsForBackend(
+            $productsForBackendService = new ProductsForBackendService();
+            $query = $productsForBackendService->getQuery(
                 productIds: $productId,
                 manufacturerId: $manufacturerId,
                 active: $active,
                 categoryId: $categoryId,
-                controller: $this,
             );
+            $preparedProducts = $this->paginate($query, [
+                'sortableFields' => [
+                    'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name', 'Products.is_stock_product'
+                ],
+            ]);
+            $preparedProducts = $productsForBackendService->getPreparedProducts($preparedProducts);
         } else {
             $preparedProducts = [];
         }

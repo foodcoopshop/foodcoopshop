@@ -22,8 +22,23 @@ msgstr "gelöscht"
 msgid "The_attribute_{0}_has_been_{1}."
 msgstr "Die Variante {0} wurde {1}."
 
+msgid "The date range must not be greater than two years."
+msgstr "Der Zeitraum darf nicht größer als zwei Jahre sein."
+
 msgid "Attributes"
 msgstr "Varianten"
+
+msgid "The maximum amount of {0} was exceeded."
+msgstr "Der Maximalbetrag von {0} pro Eintragung wurde überschritten."
+
+msgid "The amount exceeds the deposit balance of {0}, the member would return more deposit than he has bought."
+msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}, das Mitglied hätte nach dem Eintragen insgesamt mehr Pfand zurückgebracht als gekauft."
+
+msgid "The amount exceeds the deposit balance of {0}, the manufacturer would take back more deposit than he sold."
+msgstr "Der Betrag überschreitet den Pfand-Saldo von {0}, der Hersteller hätte nach dem Eintragen insgesamt mehr Pfand zurückgenommen als verkauft."
+
+msgid "Press the submit button again to add the payment of {0} anyway."
+msgstr "Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag ({0}) trotzdem zu speichern."
 
 msgid "Add_blog_post"
 msgstr "Neuen Blog-Artikel erstellen"
@@ -2214,9 +2229,6 @@ msgstr "Als neue Standard-Variante festlegen"
 
 msgid "change_category"
 msgstr "Kategorie ändern"
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Kategorie \"Alle Produkte\" fehlt!"
 
 msgid "product_preview"
 msgstr "Produkt-Vorschau"

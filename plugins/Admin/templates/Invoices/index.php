@@ -189,7 +189,7 @@ $this->Paginator->setPaginated($invoices);
                 if ($invoice->filename == '') {
                     $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
                     if (!empty($invoice->cancelled_invoice)) {
-                        $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, true);
+                        $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, 1);
                     }
                     if ($invoiceCreatedBeforeHelloCashAccountChangedDate) {
                         echo $this->Html->link(
@@ -222,7 +222,7 @@ $this->Paginator->setPaginated($invoices);
             if ($invoice->filename == '') {
                 $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->id);
                 if (!empty($invoice->cancelled_invoice)) {
-                    $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->cancelled_invoice->id, true);
+                    $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->cancelled_invoice->id, 1);
                 }
             } else {
                 $invoiceDownloadLink = $this->Slug->getInvoiceDownloadRoute($invoice->filename);

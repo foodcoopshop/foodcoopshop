@@ -51,7 +51,7 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     <?php if (!empty($identity->getProducts())) { ?>
 
         <div class="sums-wrapper">
-            <?php if ($identity->getDepositSum() > 0) { ?>
+            <?php if ($identity->getDepositSum() != 0) { ?>
                 <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods');?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
                 <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             <?php } ?>

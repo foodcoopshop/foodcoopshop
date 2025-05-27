@@ -171,7 +171,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
         $this->loginAsSuperadmin();
         $this->addProductToCart($productId, 2);
-        $this->finishCart(1, 1);
+        $this->finishCart();
 
         $this->assertChangedStockAvailable($productId, 988.4);
         $this->deleteAndAssertRemoveFromDatabase([4]);
@@ -182,14 +182,14 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     }
 
-    private function deleteAndAssertRemoveFromDatabase($orderDetailIds): void
+    private function deleteAndAssertRemoveFromDatabase(array $orderDetailIds): void
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
         $orderDetails = $this->getOrderDetailsFromDatabase($orderDetailIds);
         $this->assertEmpty($orderDetails);
     }
 
-    private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails): void
+    private function assertOrderDetailDeletedEmails(int $emailIndex, array $expectedToEmails): void
     {
 
         $this->runAndAssertQueue();
@@ -206,7 +206,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     }
 
-    private function deleteOrderDetail($orderDetailIds, $cancellationReason): void
+    private function deleteOrderDetail(array $orderDetailIds, string $cancellationReason): void
     {
         $this->ajaxPost(
             '/admin/order-details/delete/',

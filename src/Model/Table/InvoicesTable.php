@@ -53,7 +53,7 @@ class InvoicesTable extends AppTable
         ]);
     }
 
-    public function getLatestInvoicesForCustomer($customerId): array
+    public function getLatestInvoicesForCustomer(int $customerId): array
     {
 
         $invoices = $this->find('all',
@@ -91,7 +91,7 @@ class InvoicesTable extends AppTable
         return $invoices;
     }
 
-    public function clearZeroArray($data): array
+    public function clearZeroArray(array $data): array
     {
         foreach($data as $key => $value) {
             if (array_sum($value) == 0) {
@@ -101,7 +101,7 @@ class InvoicesTable extends AppTable
         return $data;
     }
 
-    public function getPreparedTaxRatesForSumTable($invoices): array
+    public function getPreparedTaxRatesForSumTable(array $invoices): array
     {
 
         $defaultArray = [
@@ -168,7 +168,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getDataForCustomerInvoice($customerId, $currentDay): Customer
+    public function getDataForCustomerInvoice(int $customerId, string $currentDay): Customer
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -215,7 +215,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice): array
+    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice): array // @phpstan-ignore-line
     {
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
@@ -328,7 +328,7 @@ class InvoicesTable extends AppTable
         return $preparedData;
     }
 
-    private function getSumsTaxBasedOnNetInvoiceSum($orderDetails, $orderedDeposit, $returnedDeposit): array
+    private function getSumsTaxBasedOnNetInvoiceSum(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array
     {
 
         $result = [
@@ -353,7 +353,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    private function getSums($orderDetails, $orderedDeposit, $returnedDeposit): array 
+    private function getSums(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array 
     {
 
         $result = [
@@ -392,7 +392,16 @@ class InvoicesTable extends AppTable
         return $lastInvoice;
     }
 
-    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash, $invoicesPerEmailEnabled): Invoice|false
+    public function saveInvoice(
+        null|int|string $invoiceId,
+        int $customerId,
+        array $taxRates,
+        string $invoiceNumber,
+        string $invoicePdfFile,
+        string $currentDay,
+        int|bool|string $paidInCash,
+        int|bool|string $invoicesPerEmailEnabled,
+        ): Invoice|false
     {
 
         $invoiceData = [
@@ -429,7 +438,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getNextInvoiceNumberForCustomer($currentYear, $lastInvoice): string
+    public function getNextInvoiceNumberForCustomer(string $currentYear, ?Invoice $lastInvoice): string
     {
 
         $increasingNumberOfLastInvoice = 1;
@@ -457,7 +466,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function getNextInvoiceNumberForManufacturer($invoices): string
+    public function getNextInvoiceNumberForManufacturer(?array $invoices): string
     {
         $invoiceNumber = 1;
         if (! empty($invoices)) {

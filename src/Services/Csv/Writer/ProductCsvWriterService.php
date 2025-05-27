@@ -21,13 +21,15 @@ use App\Services\ProductQuantityService;
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
 use Cake\ORM\TableRegistry;
+use stdClass;
+use App\Services\ProductsForBackendService;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
 
     private array $productIds;
 
-    public function setProductIds($productIds): void
+    public function setProductIds(array $productIds): void
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');
         $stockProductIds = $productsTable->find()
@@ -66,14 +68,15 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     public function getRecords(): array
     {
-        $productsTable =TableRegistry::getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackend(
+        $productsForBackendService = new ProductsForBackendService();
+        $query = $productsForBackendService->getQuery(
             productIds: $this->productIds,
             manufacturerId: 'all',
             active: 'all',
-            addProductNameToAttributes: true,
         );
+        $products = $productsForBackendService->getPreparedProducts($query, true);
 
+        $productsTable =TableRegistry::getTableLocator()->get('Products');
         $records = [];
         $stockValueSum = 0;
         foreach ($products as $product) {
@@ -128,16 +131,16 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $records;
     }
 
-    private function getFromPattern($pattern, $string): string
+    private function getFromPattern(string $pattern, string $subject): string
     {
-        preg_match($pattern, $string, $matches);
+        preg_match($pattern, $subject, $matches);
         if (isset($matches[1])) {
             return $matches[1];
         }
         return '';
     }
 
-    private function getUnit($product, $isMainProduct): string
+    private function getUnit(stdClass $product, bool $isMainProduct): string
     {
 
         if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $product->unit))
@@ -164,7 +167,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     }
 
-    private function getProductName($product, $isMainProduct): string
+    private function getProductName(stdClass $product, bool $isMainProduct): string
     {
 
         $productName = $this->getFromPattern('/<span class="product-name">(.*?)<\/span>/', $product->name);
@@ -176,7 +179,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $productName;
     }
 
-    private function getSellingPriceGross($product): float
+    private function getSellingPriceGross(stdClass $product): float
     {
         $sellingPriceGross = $product->gross_price;
         if ($product->unit && $product->unit->price_per_unit_enabled) {
@@ -185,7 +188,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return (float) $sellingPriceGross;
     }
 
-    private function getPurchasePriceNet($product): float
+    private function getPurchasePriceNet(stdClass $product): float
     {
         $purchasePriceNet = $product->purchase_net_price ?? 0;
         if ($product->unit && $product->unit->price_per_unit_enabled) {
@@ -194,7 +197,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return (float) $purchasePriceNet;
     }
 
-    private function getStockValue($product, $price, $availableQuantity, $pricePerUnit): float|int
+    private function getStockValue(stdClass $product, float $price, float|string $availableQuantity, float|string $pricePerUnit): float|int
     {
         if ($availableQuantity <= 0) {
             return 0;
@@ -209,7 +212,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $stockValue;
     }
 
-    private function getUnitForPrice($product): string
+    private function getUnitForPrice(stdClass $product): string
     {
         $unitForPrice = '';
         if ($product->unit && $product->unit->price_per_unit_enabled) {

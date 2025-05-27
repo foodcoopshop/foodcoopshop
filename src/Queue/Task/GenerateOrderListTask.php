@@ -9,6 +9,7 @@ use App\Mailer\AppMailer;
 use App\Services\PdfWriter\OrderListByProductPdfWriterService;
 use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Manufacturer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,7 +32,7 @@ class GenerateOrderListTask extends Task {
     public ?int $timeout = 30;
     public ?int $retries = 2;
 
-    private function generateOrderListProduct($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
+    private function generateOrderListProduct(bool $isAnonymized, Manufacturer $manufacturer, string $pickupDayDbFormat, string $currentDateForOrderLists, array $orderDetailIds): string
     {
         $pdfWriter = new OrderListByProductPdfWriterService();
         $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
@@ -43,7 +44,7 @@ class GenerateOrderListTask extends Task {
         return $productPdfFile;
     }
 
-    private function generateOrderListCustomer($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
+    private function generateOrderListCustomer(bool $isAnonymized, Manufacturer $manufacturer, string $pickupDayDbFormat, string $currentDateForOrderLists, array $orderDetailIds): string
     {
         $pdfWriter = new OrderListByCustomerPdfWriterService();
         $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
@@ -55,7 +56,7 @@ class GenerateOrderListTask extends Task {
         return $customerPdfFile;
     }
 
-    public function run(array $data, $jobId) : void
+    public function run(array $data, int $jobId) : void
     {
 
         $pickupDayDbFormat = $data['pickupDayDbFormat'];

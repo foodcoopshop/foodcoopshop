@@ -201,7 +201,7 @@ $this->element('addScript', [
 
                 echo '<td>';
                     echo match($configuration->name) {
-                        'FCS_WEEKLY_PICKUP_DAY' => $this->MyTime->getWeekdayName($configuration->value),
+                        'FCS_WEEKLY_PICKUP_DAY' => $this->MyTime->getWeekdayName((int) $configuration->value),
                         'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA' => $configuration->value . ' (' . $this->MyTime->getWeekdayName((new DeliveryRhythmService)->getSendOrderListsWeekday()) . ')',
                         default => $configuration->value,
                     };
@@ -347,6 +347,16 @@ $this->element('addScript', [
         <tr>
             <td>app.selfServiceModeShowOnlyStockProducts</td>
             <td><?php echo Configure::read('app.selfServiceModeShowOnlyStockProducts') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.selfServiceIsAmountValidationEnabled</td>
+            <td><?php echo Configure::read('app.selfServiceIsAmountValidationEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.selfServiceEasyModeEnabled</td>
+            <td><?php echo Configure::read('app.selfServiceEasyModeEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>

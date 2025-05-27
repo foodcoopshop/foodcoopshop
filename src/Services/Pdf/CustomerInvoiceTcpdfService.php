@@ -67,9 +67,12 @@ class CustomerInvoiceTcpdfService extends CustomerInvoiceBaseTcpdfService
         ];
     }
 
-    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax): void
+    public function prepareTableData(
+        object $result,
+        string|float $sumPriceExcl,
+        string|float $sumPriceIncl,
+        string|float $sumTax): void
     {
-
         foreach($result->active_order_details as $orderDetail) {
 
             $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);

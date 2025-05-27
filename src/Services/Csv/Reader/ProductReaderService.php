@@ -39,7 +39,7 @@ class ProductReaderService extends Reader {
         return $preparedRecords;
     }
 
-    private function formatColumnsAndSetDefaultValues($record): array
+    private function formatColumnsAndSetDefaultValues(array $record): array
     {
         $record[__('Gross_price')] = isset($record[__('Gross_price')]) ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Gross_price')]) : 0;
         $record[__('Tax_rate')] = (isset($record[__('Tax_rate')]) && $record[__('Tax_rate')]) ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Tax_rate')]) : 0;
@@ -48,7 +48,7 @@ class ProductReaderService extends Reader {
         return $record;
     }
 
-    public function getAllErrors($entities): array
+    public function getAllErrors(array $entities): array
     {
         $errors = [];
         foreach($entities as $entity) {
@@ -61,7 +61,7 @@ class ProductReaderService extends Reader {
         return $errors;
     }
 
-    public function areAllEntitiesValid($entities): bool
+    public function areAllEntitiesValid(array $entities): bool
     {
         $allEntitiesValid = true;
         if (empty($entities)) {
@@ -75,7 +75,7 @@ class ProductReaderService extends Reader {
         return $allEntitiesValid;
     }
 
-    public function import($manufacturerId): array
+    public function import(int $manufacturerId): array
     {
         $records = $this->getPreparedRecords();
         $productsTable = TableRegistry::getTableLocator()->get('Products');

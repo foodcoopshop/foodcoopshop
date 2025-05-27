@@ -913,7 +913,7 @@ foodcoopshop.Helper = {
                 changeYear: true,
                 changeMonth: true,
                 duration: 'fast',
-                yearRange: '2014:2030'
+                yearRange: '2014:2035'
             };
             $.datepicker.setDefaults($.datepicker.regional);
         });
@@ -1040,6 +1040,10 @@ foodcoopshop.Helper = {
 
     showErrorMessage: function (message) {
         this.showFlashMessage(message, 'error');
+    },
+
+    showWarningMessage: function (message) {
+        this.showFlashMessage(message, 'warning');
     },
 
     ajaxCall: function (url, data, callbacks) {

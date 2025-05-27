@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Entity\Attribute;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 
@@ -28,7 +29,7 @@ class AttributesController extends AdminAppController
         $attributesTable = $this->getTableLocator()->get('Attributes');
         $attribute = $attributesTable->newEntity(
             ['active' => APP_ON],
-            ['validate' => false]
+            ['validate' => false],
         );
         $this->set('title_for_layout', __d('admin', 'Add_attribute'));
         $this->_processForm($attribute, false);
@@ -38,15 +39,12 @@ class AttributesController extends AdminAppController
         }
     }
 
-    public function edit($attributeId): void
+    public function edit(int $attributeId): void
     {
-        if ($attributeId === null) {
-            throw new NotFoundException;
-        }
 
         $attributesTable = $this->getTableLocator()->get('Attributes');
         $attribute = $attributesTable->find('all', conditions: [
-            'Attributes.id_attribute' => $attributeId
+            'Attributes.id_attribute' => $attributeId,
         ])->first();
 
         $productAttributeCombinationsTable = $this->getTableLocator()->get('ProductAttributeCombinations');
@@ -60,7 +58,7 @@ class AttributesController extends AdminAppController
         $this->_processForm($attribute, true);
     }
 
-    private function _processForm($attribute, $isEditMode): void
+    private function _processForm(Attribute $attribute, bool $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

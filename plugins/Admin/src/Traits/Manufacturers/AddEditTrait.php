@@ -5,6 +5,7 @@ namespace Admin\Traits\Manufacturers;
 
 use App\Services\SanitizeService;
 use App\Controller\Component\StringComponent;
+use App\Model\Entity\Manufacturer;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Core\Configure;
 
@@ -54,12 +55,8 @@ trait AddEditTrait
         }
     }
 
-    public function edit($manufacturerId): void
+    public function edit(int $manufacturerId): void
     {
-        if ($manufacturerId === null) {
-            throw new NotFoundException;
-        }
-
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
@@ -81,7 +78,7 @@ trait AddEditTrait
         $this->_processForm($manufacturer, true);
     }
 
-    private function _processForm($manufacturer, $isEditMode): void
+    private function _processForm(Manufacturer $manufacturer, bool $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -188,7 +185,7 @@ trait AddEditTrait
         copy(WWW_ROOT . $filename, WWW_ROOT . $newFilename);
     }
 
-    private function deleteUploadedGeneralTermsAndConditions($manufacturerId): void
+    private function deleteUploadedGeneralTermsAndConditions(int $manufacturerId): void
     {
         $fileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
         if (file_exists(WWW_ROOT . $fileName)) {
