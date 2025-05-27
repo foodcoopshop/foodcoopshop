@@ -267,7 +267,7 @@ class CartsController extends FrontendController
         $this->identity->setCart($this->identity->getCart());
     }
 
-    private function sendAutoLogoutEmptyCartEmailToCustomerSelfService($cart): void
+    private function sendAutoLogoutEmptyCartEmailToCustomerSelfService(array $cart): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
