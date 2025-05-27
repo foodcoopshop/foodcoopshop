@@ -88,6 +88,26 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testOrderProductWithNegativeDeposit(): void
+    {
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable->changeDeposit([
+            [$this->productId1 => -10]
+        ]);
+        $productsTable->changePrice([
+            [$this->productId1 => ['gross_price' => 0]],
+        ]);
+
+        $customersTable = TableRegistry::getTableLocator()->get('Customers');
+        $creditBalanceBeforeOrder = $customersTable->getCreditBalance(Configure::read('test.customerId'));
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId1, 2);
+        $this->finishCart();
+        $creditBalanceAfterOrder = $customersTable->getCreditBalance(Configure::read('test.customerId'));
+        $creditOrderDifference = $creditBalanceAfterOrder - $creditBalanceBeforeOrder;
+        $this->assertEquals(20, $creditOrderDifference);
+    }
+
     public function testAddProductWithoutCredit(): void
     {
         $this->resetCustomerCreditBalance();
