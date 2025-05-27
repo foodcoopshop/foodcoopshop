@@ -65,7 +65,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
         $this->assertEquals($productIdTaxWrongErrorMessage, $errorsA['id_tax']['inList']);
         $this->assertEquals('Der Lagerstand muss eine Zahl sein.', $errorsA['stock_available']['quantity']['numeric']);
-        $this->assertEquals('Bitte gib eine Zahl zwischen 0 und 100 an.', $errorsA['deposit_product']['deposit']['lessThanOrEqual']);
+        $this->assertEquals('Bitte gib eine Zahl zwischen -100 und 100 an.', $errorsA['deposit_product']['deposit']['lessThanOrEqual']);
         $this->assertEquals('Folgende Werte sind gültig: Keine Kühlung, Kühlschrank, Tiefkühler', $errorsA['id_storage_location'][0]);
 
         $errorsB = $productEntities[1]->getErrors();

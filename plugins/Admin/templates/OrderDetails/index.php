@@ -322,7 +322,7 @@ if ($groupBy == 'product') {
 echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
 if ($groupBy != 'customer') {
     $sumDepositString = '';
-    if ($sums['deposit']> 0) {
+    if ($sums['deposit'] != 0) {
         $sumDepositString = $this->Number->formatAsCurrency($sums['deposit']);
     }
     if (Configure::read('app.isDepositEnabled')) {

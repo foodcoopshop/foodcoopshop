@@ -38,11 +38,11 @@ if ($groupBy == 'customer' && Configure::read('app.isDepositEnabled') && $this->
 if ($groupBy != 'customer' && Configure::read('app.isDepositEnabled')) {
     echo '<td class="right">';
     if ($groupBy == '') {
-        if ($orderDetail->deposit > 0) {
+        if ($orderDetail->deposit != 0) {
             echo $this->Number->formatAsCurrency($orderDetail->deposit);
         }
     } else {
-        if ($orderDetail['sum_deposit'] > 0) {
+        if ($orderDetail['sum_deposit'] != 0) {
             echo $this->Number->formatAsCurrency($orderDetail['sum_deposit']);
         }
     }

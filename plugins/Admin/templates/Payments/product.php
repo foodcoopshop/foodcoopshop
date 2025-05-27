@@ -122,8 +122,12 @@ if (count($payments) == 0) {
         }
         echo '</td>';
 
-        echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClass . '>';
-        if ($payment['deposit'] < 0) {
+        $numberClassDeposit = $numberClass;
+        if ($payment['deposit'] > 0) {
+            $numberClassDeposit = '';
+        }
+        echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClassDeposit . '>';
+        if ($payment['deposit'] != 0) {
             if ($payment['type'] == 'order') {
                 $sumDeposits += $payment['deposit'];
                 echo $this->Number->formatAsCurrency($payment['deposit']);

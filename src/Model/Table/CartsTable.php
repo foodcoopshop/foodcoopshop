@@ -15,8 +15,6 @@ use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\UnitProduct;
 use App\Model\Entity\CartProduct;
-use App\Model\Entity\DepositProduct;
-use App\Model\Entity\DepositProductAttribute;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
