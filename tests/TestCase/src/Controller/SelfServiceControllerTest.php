@@ -599,7 +599,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ]);
     }
 
-    private function testAutoLogoutAsSelfServiceCustomer(): void
+    public function testAutoLogoutAsSelfServiceCustomer(): void
     {
         $selfServiceCustomerId = 93;
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
