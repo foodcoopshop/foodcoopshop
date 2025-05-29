@@ -79,4 +79,15 @@ trait SelfServiceCartTrait
         return $this->getJsonDecodedContent();
     }
 
+    private function doSelfServiceAutoLogout(): void
+    {
+        $this->getSelfServicePostOptions();
+        $this->post(
+            '/warenkorb/emptyCart/',
+            [
+                'autologout' => '1',
+            ],
+        ); 
+    }
+
 }

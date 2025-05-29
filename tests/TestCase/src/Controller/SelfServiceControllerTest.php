@@ -615,10 +615,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService());
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
-
-        $url = '/'.__('route_cart') . '/emptyCart/?redirect=' . '/'.__('route_sign_out') . '?redirect=' . $this->get($this->_response->getHeaderLine('Location')) . '&autologout=1';
-        $this->assertRedirect($url);
-        $this->runAndAssertQueue();
+        $this->doSelfServiceAutoLogout();
+        $this->assertJsonOk();
         $this->assertMailContainsHtmlAt(0, 'Artischocke');
         $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
