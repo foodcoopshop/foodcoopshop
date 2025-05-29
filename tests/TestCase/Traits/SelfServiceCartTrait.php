@@ -88,6 +88,7 @@ trait SelfServiceCartTrait
                 'autologout' => '1',
             ],
         ); 
+        $this->runAndAssertQueue();
     }
 
 }
