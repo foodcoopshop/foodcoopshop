@@ -243,14 +243,14 @@ class CartsController extends FrontendController
 
     public function emptyCart(): void
     {
-        if (!((h($this->getRequest()->getQuery('autologout'))=='1') && !($this->identity->isSelfServiceCustomer()))) {
-            if ((count($this->identity->getCart())>0) && ($this->getRequest()->getQuery('autologout')=='1') && ($this->identity->isSelfServiceCustomer())) {
-                $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($this->identity->getCart());
-            }
-            $this->doEmptyCart();
+        $this->doEmptyCart();
+        if ((count($this->identity->getCart())>0) && (! empty($this->getRequest()->getQuery('autologout'))) && ($this->getRequest()->getQuery('autologout')=='1') && ($this->identity->isSelfServiceCustomer())) {
+            $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($this->identity->getCart());
+        }
+        else{
             $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
             $this->Flash->success($message);
-        }
+        }   
 
         $redirectUrl = $this->referer();
         if ($this->request->getQuery('redirect')) {

@@ -262,7 +262,7 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.renderTimer();
                 if (foodcoopshop.SelfService.currentLogoutTimer == 0) {
                 $redirectUrl='/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + document.location.href;
-                document.location.href = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart/?redirect='+$redirectUrl+'&autologout=1';
+                document.location.href = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart?redirect='+$redirectUrl+'&autologout=1';
                 }
             },
             recurIdleCall : true,

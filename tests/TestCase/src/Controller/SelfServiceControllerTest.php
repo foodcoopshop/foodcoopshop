@@ -616,6 +616,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->doSelfServiceAutoLogout();
+        $this->assertMailCount(1);
         $this->assertMailContainsHtmlAt(0, 'Artischocke');
         $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
