@@ -328,7 +328,7 @@ class InvoicesController extends AdminAppController
             $customer->is_cancellation_invoice = true;
 
             $invoiceToCustomerService = new GenerateInvoiceToCustomerService();
-            $newInvoice = $invoiceToCustomerService->run($customer, $currentDay, $invoice->paid_in_cash);
+            $newInvoice = $invoiceToCustomerService->run($customer, $currentDay, $invoice->paid_in_cash_boolean);
             $invoiceId = $newInvoice->id;
             $cancelledInvoiceNumber = $invoice->invoice_number;
             $cancellationInvoiceNumber = $newInvoice->invoice_number;
@@ -340,7 +340,7 @@ class InvoicesController extends AdminAppController
         $invoicesTable->save($invoice);
 
         // cancel automatically added payment
-        if ($invoice->paid_in_cash) {
+        if ($invoice->paid_in_cash_boolean) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $paymentsTable = $this->getTableLocator()->get('Payments');

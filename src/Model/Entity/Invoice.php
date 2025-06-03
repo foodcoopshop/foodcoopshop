@@ -21,6 +21,14 @@ class Invoice extends AppEntity
 
     protected array $_virtual = ['sum_price_excl', 'sum_tax', 'sum_price_incl'];
 
+    /**
+     * sometimes null is stored instead of 0
+     */
+    protected function _getPaidInCashBoolean(): bool
+    {
+        return $this->paid_in_cash == 1 ? true : false;
+    }
+
     protected function _getSumPriceExcl(): float
     {
         $result = 0;

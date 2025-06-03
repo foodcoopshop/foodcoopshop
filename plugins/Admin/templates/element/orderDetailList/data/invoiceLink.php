@@ -33,7 +33,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
         foreach($orderDetail['latestInvoices'] as $invoice) {
             $invoiceRow = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
             if ($this->Html->paymentIsCashless()) {
-                $invoiceRow .=  ' / <b>' . ($invoice->paid_in_cash ? __d('admin', 'Paid_in_cash') : __d('admin', 'Credit')) . '</b>';
+                $invoiceRow .=  ' / <b>' . ($invoice->paid_in_cash_boolean ? __d('admin', 'Paid_in_cash') : __d('admin', 'Credit')) . '</b>';
             }
             $invoiceRow .= ' / ' . $this->Number->formatAsCurrency($invoice->total_sum_price_incl);
             $invoiceRowClass = '';
