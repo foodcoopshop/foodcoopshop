@@ -335,6 +335,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled</td>
+            <td><?php echo Configure::read('app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.sendEmailWhenOrderDetailQuantityChanged</td>
             <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>

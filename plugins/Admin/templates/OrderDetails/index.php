@@ -62,7 +62,10 @@ use App\Model\Entity\OrderDetail;
     if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" . ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ");".
+            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" .
+            ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ', '. 
+            (Configure::read('app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled') ? '1' : '0') .
+             ");".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.latest-invoices-tooltip-wrapper');"
         ]);
     }
