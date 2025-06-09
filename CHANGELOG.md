@@ -15,6 +15,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Min/Max-Menge für Lagerstände wurde von -5.000 / 5.000 auf -1.000.000 / 1.000.000 angepasst. So können auch Produkte, die in Gramm angegeben sind, korrekt verwaltet werden. [I#1163](https://github.com/foodcoopshop/foodcoopshop/issues/1163) / [PR#1166](https://github.com/foodcoopshop/foodcoopshop/pull/1166) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Wartung / Optimierungen
+- Bei Herstellern können jetzt IBANs aus allen EU-Ländern eingetragen werden. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/ad263ef6d09d6e6bdae74b67ba863bd3e4ad98a5)
 - Optimierung der Tabelle fcs_payments, führt unter anderem zu schnelleren Ladezeit der Mitglieder-Liste im Admin-Bereich. [I#1148](https://github.com/foodcoopshop/foodcoopshop/issues/1148) / [PR#1149](https://github.com/foodcoopshop/foodcoopshop/pull/1149) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Neue Funktionen für den Selbstbedienungs-Modus
