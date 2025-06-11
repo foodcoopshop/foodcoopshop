@@ -65,8 +65,6 @@
 * PHP Imagick and GD extension
 * PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0
-* Node.js and npm >= v9 ([installation](https://www.npmjs.com/get-npm)) developer packages
-* Composer v2 ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
 ## ❗ Legal information
