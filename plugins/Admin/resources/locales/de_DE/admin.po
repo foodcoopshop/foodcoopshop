@@ -446,10 +446,7 @@ msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
 
 msgid "An_email_was_sent_to_{0}."
-msgstr "Eine E-Mail wurde an {0} verschickt."
-
-msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
-msgstr "Eine E-Mail wurde an {0} sowie an den Hersteller {1} versendet."
+msgstr "Eine E-Mail wurde an {0} versendet."
 
 msgid "Reason"
 msgstr "Grund"
@@ -1581,6 +1578,9 @@ msgstr "Stornierungen"
 
 msgid "to_receive_an_email_on_every_cancellation."
 msgstr "bei jeder Stornierung eine Info-Mail erhalten."
+
+msgid "I want to receive an email on every cancellation."
+msgstr "Ich möchte bei jeder Stornierung eine Info-Mail erhalten."
 
 msgid "Adaptions_of_price_and_weight_of_ordered_products"
 msgstr "Preis- und Gewichtsanpassungen von bestellten Produkten"

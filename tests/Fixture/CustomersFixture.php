@@ -50,6 +50,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 1,
+            'send_cancellation_email' => 1,
         ],
         [
             'id_customer' => 88,
@@ -76,6 +77,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 0,
+            'send_cancellation_email' => 1,
         ],
         [
             'id_customer' => 89,
@@ -102,6 +104,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 0,
+            'send_cancellation_email' => 1,
         ],
         [
             'id_customer' => 90,
@@ -128,6 +131,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 0,
+            'send_cancellation_email' => 1,
         ],
         [
             'id_customer' => 91,
@@ -154,6 +158,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 0,
+            'send_cancellation_email' => 1,
         ],
         [
             'id_customer' => 92,
@@ -180,6 +185,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 0,
+            'send_cancellation_email' => 1,
         ],
         [
             'id_customer' => 93,
@@ -206,6 +212,7 @@ class CustomersFixture extends AppFixture
             'credit_upload_reminder_enabled' => 1,
             'newsletter_enabled' => 0,
             'show_only_products_for_next_week' => 0,
+            'send_cancellation_email' => 1,
         ],
     ];
 }
