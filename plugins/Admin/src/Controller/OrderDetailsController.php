@@ -18,6 +18,7 @@ use Admin\Traits\OrderDetails\IndexTrait;
 use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Admin\Traits\OrderDetails\SetElFinderUploadPathTrait;
+use Admin\Traits\OrderDetails\ExportTrait;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 use Cake\View\JsonView;
 
@@ -52,6 +53,7 @@ class OrderDetailsController extends AdminAppController
     use OrderForDifferentCustomerTrait;
     use ProfitTrait;
     use SetElFinderUploadPathTrait;
+    use ExportTrait;
 
     public function initialize(): void
     {
