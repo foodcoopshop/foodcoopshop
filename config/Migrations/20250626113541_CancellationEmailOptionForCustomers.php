@@ -11,7 +11,6 @@ class CancellationEmailOptionForCustomers extends BaseMigration
             ->addColumn('send_cancellation_email', 'tinyinteger', [
                 'default' => 1,
                 'null' => false,
-                'unsigned' => true,
             ])
             ->update();
     }
