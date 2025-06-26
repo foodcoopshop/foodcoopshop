@@ -2490,3 +2490,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+msgid "Current version"
+msgstr "Aktuelle Version"

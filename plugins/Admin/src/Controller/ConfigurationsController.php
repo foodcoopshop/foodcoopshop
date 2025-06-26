@@ -27,7 +27,12 @@ use App\Services\SanitizeService;
 
 class ConfigurationsController extends AdminAppController
 {
-    
+ 
+    public function changelog(): void
+    {
+        $this->set('title_for_layout', __d('admin', 'Changelog'));
+    }
+
     public function edit(string $name): void
     {
 
