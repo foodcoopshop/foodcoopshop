@@ -20,7 +20,12 @@ use Cake\ORM\TableRegistry;
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
 ]);
+?>
+<div class="filter-container">
+    <h1><?php echo $title_for_layout; ?></h1>
+</div>
 
+<?php
 $changelogFile = ROOT . DS . 'CHANGELOG.md';
 if (!file_exists($changelogFile)) {
     return;
@@ -48,6 +53,5 @@ $content = nl2br($content);
 $content = preg_replace('/(<br\s*\/?>\s*){2,}/', '<br>', $content);
 
 echo '<div class="changelog-content">';
-    echo '<h1>' . __d('admin', 'Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion() . '</h1>';
     echo $content;
 echo '</div>';

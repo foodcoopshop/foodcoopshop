@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Model\Entity\Configuration;
 
 $this->element('addScript', [
