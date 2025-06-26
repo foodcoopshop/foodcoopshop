@@ -318,7 +318,7 @@ abstract class AppCakeTestCase extends TestCase
         $manufacturersTable->save($newManufacturer);
     }
 
-    protected function changeCustomer(int $customerId, string $field, string|int $value): void
+    protected function changeCustomer(int $customerId, string $field, string|int|bool $value): void
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $newCustomer = $customersTable->get($customerId);

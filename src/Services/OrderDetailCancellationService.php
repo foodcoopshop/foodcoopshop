@@ -9,6 +9,8 @@ use App\Mailer\AppMailer;
 use Cake\Routing\Router;
 use App\Model\Entity\OrderDetail;
 use Admin\Traits\OrderDetails\UpdateOrderDetailsTrait;
+use Cake\Utility\Text;
+use PSpell\Config;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -79,40 +81,46 @@ class OrderDetailCancellationService
                 $cancelledQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $orderDetail->order_detail_unit->product_quantity_in_units, $orderDetail->order_detail_unit->unit_name);
             }
 
-            // send email to customer
+            $recipientNames = [];
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
-            $email->setTo($orderDetail->customer->email)
-            ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
-            ->setViewVars([
-                'orderDetail' => $orderDetail,
+            $email->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name);
+            $email->setViewVars([
                 'newsletterCustomer' => $orderDetail->customer,
                 'identity' => $identity,
                 'cancellationReason' => $cancellationReason,
                 'cancelledQuantity' => $cancelledQuantity,
             ]);
-            $email->addToQueue();
 
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
+            // send email to customer
+            if ($orderDetail->customer->send_cancellation_email) {
+                $email->setTo($orderDetail->customer->email);
+                $recipientNames[] = $orderDetail->customer->name;
+                $email->setViewVars([
+                    'orderDetail' => $orderDetail,
+                    'profileRoute' => Configure::read('app.slugHelper')->getCustomerProfile(),
+                ]);
+                $email->addToQueue();
+            }
 
             $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
             $sendOrderedProductDeletedNotification = $manufacturersTable->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
             if (($identity !== null && !$identity->isManufacturer()) && $orderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
-                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $orderDetail->customer->name . '</b>',
-                    '<b>' . $orderDetail->product->manufacturer->name . '</b>'
-                ]);
+                $recipientNames[] = $orderDetail->product->manufacturer->name;
                 $email->setTo($orderDetail->product->manufacturer->address_manufacturer->email);
                 $orderDetailForManufacturerEmail = $orderDetail;
                 $orderDetailForManufacturerEmail->customer = $orderDetail->product->manufacturer->address_manufacturer;
                 $email->setViewVars([
                     'orderDetail' => $orderDetailForManufacturerEmail,
+                    'profileRoute' => Configure::read('app.slugHelper')->getManufacturerProfile(),
                 ]);
                 $email->addToQueue();
             }
 
-            $message .= $emailMessage;
+            if (!empty($recipientNames)) {
+                $message .= __d('admin', 'An_email_was_sent_to_{0}.', [Text::toList($recipientNames)]);
+            }
 
             if ($cancellationReason != '') {
                 $message .= ' '.__d('admin', 'Reason').': <b>"' . $cancellationReason . '"</b>';
