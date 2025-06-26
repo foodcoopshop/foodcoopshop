@@ -1019,7 +1019,8 @@ body.products .product-import-wrapper > * {
 .elfinder-button-icon {
     background-image: url(/js/elfinder/img/toolbar.png);
 }
-.changelog-link {
+.changelog-link a:not(.btn) {
+    color: #333 ! important;
     position: fixed;
     right: 20px;
     bottom: 10px;

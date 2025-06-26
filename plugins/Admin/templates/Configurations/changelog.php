@@ -48,6 +48,6 @@ $content = nl2br($content);
 $content = preg_replace('/(<br\s*\/?>\s*){2,}/', '<br>', $content);
 
 echo '<div class="changelog-content">';
-    echo '<h1>' . __d('admin', 'Current version') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion() . '</h1>';
+    echo '<h1>' . __d('admin', 'Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion() . '</h1>';
     echo $content;
 echo '</div>';
