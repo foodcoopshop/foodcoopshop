@@ -213,7 +213,7 @@ $this->element('addScript', [
 
         <tr>
             <td><?php echo __d('admin', 'Version_FoodCoopShop'); ?></td>
-            <td><?php echo $versionFoodCoopShop; ?></td>
+            <td><?php echo $versionFoodCoopShop; ?> (<?php echo $this->Html->link(__d('admin', 'Changelog'), '/admin/configurations/changelog'); ?>)</td>
         </tr>
 
         <?php if (!empty($lastMigration)) { ?>
