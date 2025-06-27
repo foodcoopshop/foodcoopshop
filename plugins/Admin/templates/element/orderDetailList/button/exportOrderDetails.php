@@ -19,4 +19,4 @@ $queryParams = $this->request->getQueryParams() ?? [];
 $queryString = !empty($queryParams) ? '?' . http_build_query($queryParams) : '';
 $exportUrl = '/admin/order-details/export' . $queryString;
 
-echo '<a id="exportOrderDetailsButton" target="_blank" class="dropdown-item" href="'.$exportUrl.'"><i class="fa-fw fas fa-file-export"></i> ' . __d('admin', 'Export_{0}', [__('All') . ' ' . __d('admin', 'Products')]) . '</a>';
+echo '<a id="exportOrderDetailsButton" target="_blank" class="dropdown-item" href="'.$exportUrl.'"><i class="fa-fw fas fa-file-export"></i> ' . __d('admin', 'Export_{0}', [__d('admin', 'Ordered_products')]) . '</a>';
