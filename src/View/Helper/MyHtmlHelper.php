@@ -687,10 +687,10 @@ class MyHtmlHelper extends HtmlHelper
         return substr(WWW_ROOT, 0, - 1) . Configure::read('app.uploadedImagesDir');
     }
 
-    public function getSliderImageSrc(string $sliderImage): string
+    public function getSliderImageSrc(?string $sliderImage): string
     {
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'sliders' . DS;
-        return $this->prepareAsUrl($urlPrefix . $sliderImage);
+        return $this->prepareAsUrl($urlPrefix . ($sliderImage ?? ''));
     }
 
     public function getImageFile(string $thumbsPath, string $filenameWithoutExtension): string|null
