@@ -25,6 +25,11 @@ trait ExportTrait
 
     public function export(): Response
     {
+        $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
+        if ($groupBy != '') {
+           throw new \Exception(__('Export is not available for grouped order details.'));
+        }
+
         $writerService = new OrderDetailCsvWriterService();
         $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
         $writerService->setFilename(__d('admin', 'Ordered_products') . '_' . date('YmdHis') . '.csv');

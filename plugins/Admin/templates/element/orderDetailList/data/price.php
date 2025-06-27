@@ -15,8 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl <= 0 ? ' not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {

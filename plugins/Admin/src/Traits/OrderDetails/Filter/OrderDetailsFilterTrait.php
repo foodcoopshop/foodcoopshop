@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use App\Services\DeliveryRhythmService;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\TableRegistry;
+use App\Controller\Component\StringComponent;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -195,6 +196,41 @@ trait OrderDetailsFilterTrait
         }
 
         return $query;
+    }
+
+    private function applyUngroupedDefaultSort(array $orderDetails): array
+    {
+        $deliveryDay = [];
+        $manufacturerName = [];
+        $productName = [];
+        $customerName = [];
+        foreach ($orderDetails as $orderDetail) {
+            $orderDetail->quantityInUnitsNotYetChanged = false;
+            if (!empty($orderDetail->order_detail_unit)) {
+                $orderDetail->quantityInUnitsNotYetChanged = true;
+                if ($orderDetail->order_detail_unit->mark_as_saved) {
+                    $orderDetail->quantityInUnitsNotYetChanged = false;
+                }
+            }
+            $deliveryDay[] = $orderDetail->pickup_day;
+            $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
+            $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
+            if (!empty($orderDetail->customer)) {
+                $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
+            } else {
+                $customerName[] = '';
+            }
+        }
+        if (!in_array('sort', array_keys($this->getRequestQueryParams()))) {
+            array_multisort(
+                $deliveryDay, SORT_ASC,
+                $manufacturerName, SORT_ASC,
+                $productName, SORT_ASC,
+                $customerName, SORT_ASC,
+                $orderDetails
+            );
+        }
+        return $orderDetails;
     }
 
     private function addSelectGroupFields(SelectQuery $query): SelectQuery

@@ -21,28 +21,44 @@ use App\Services\Csv\Writer\OrderDetailCsvWriterService;
 class OrderDetailCsvWriterServiceTest extends AppCakeTestCase
 {
 
-    public string $defaultHeader = 'Id';
+    public string $defaultHeader = 'Id;Menge;Produkt;Hersteller;Preis;Pfand;Gewicht;"Preis pro";Mitglied;Abholtag;Bestellstatus;Bestell-Typ;Bestelldatum';
 
     public function testWrite(): void
     {
 
+        $this->loginAsSuperadmin();
+
+        $productIdA = 347; // forelle
+        $this->addProductToCart($productIdA, 2);
+        $this->finishCart();
+        $pickupDay = '2018-02-02';
+        $created = '2018-02-01 09:17:00';
+
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateAll([
+            'pickup_day' => $pickupDay,
+            'created' => $created,
+        ], null);
+
         $this->setDummyRequest();
+        
 
         $writerService = new OrderDetailCsvWriterService();
         $writerService->setRequestQueryParams([
             'pickupDay' => [
-                '2018-02-02',
+                $pickupDay,
             ],
         ]);
         $writerService->render();
         $result = $writerService->toString();
         $lines  = explode("\n", $result);
-
-        $this->assertEquals(5, count($lines));
+        
+        $this->assertEquals(6, count($lines));
         $this->assertEquals(Writer::BOM_UTF8 . $this->defaultHeader, $lines[0]);
-        $this->assertEquals('1', $lines[1]);
-        $this->assertEquals('2', $lines[2]);
-        $this->assertEquals('3', $lines[3]);
+        $this->assertEquals('2;1;Beuschl;"Demo Fleisch-Hersteller";4,54;;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[1]);
+        $this->assertEquals('4;2;"Forelle : Stück";"Demo Fleisch-Hersteller";10,50;;700;"100 g";"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[2]);
+        $this->assertEquals('1;1;"Artischocke : Stück";"Demo Gemüse-Hersteller";1,82;0,50;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[3]);
+        $this->assertEquals('3;1;"Milch : 0,5l";"Demo Milch-Hersteller";0,62;0,50;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[4]);
 
     }
 
