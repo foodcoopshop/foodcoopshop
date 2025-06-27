@@ -1,0 +1,40 @@
+<?php
+declare(strict_types=1);
+
+namespace Admin\Traits\OrderDetails;
+
+use App\Services\Csv\Writer\OrderDetailCsvWriterService;
+use Cake\Http\Response;
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 4.2.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+trait ExportTrait
+{
+
+    public function export(): Response
+    {
+        $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
+        if ($groupBy != '') {
+           throw new \Exception(__('Export is not available for grouped order details.'));
+        }
+
+        $writerService = new OrderDetailCsvWriterService();
+        $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
+        $writerService->setFilename(str_replace(' ', '_', __d('admin', 'Ordered_products')) . '_' . date('YmdHis') . '.csv');
+        $writerService->render();
+        return $writerService->forceDownload($this->getResponse());
+    }
+
+}

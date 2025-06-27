@@ -862,6 +862,15 @@ msgstr "Der Benutzer muss sich nach der Änderung neu einloggen."
 msgid "Member"
 msgstr "Mitglied"
 
+msgid "Order state"
+msgstr "Bestellstatus"
+
+msgid "Cart type"
+msgstr "Bestell-Typ"
+
+msgid "Order date"
+msgstr "Bestelldatum"
+
 msgid "Why_is_pickup_day_changed_(optional_field)?"
 msgstr "Warum wird der Abholtag geändert (optional)?"
 

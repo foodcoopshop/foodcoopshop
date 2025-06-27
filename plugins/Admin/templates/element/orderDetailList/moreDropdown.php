@@ -47,6 +47,10 @@ $buttons[] = $this->element('orderDetailList/button/deleteSelectedOrderDetails',
     'groupBy' => $groupBy
 ]);
 
+if ($groupBy == '') {
+    $buttons[] = $this->element('orderDetailList/button/exportOrderDetails');
+}
+
 $buttons[] = '<hr class="dropdown-divider" />';
 
 $buttons[] = $this->element('orderDetailList/button/multiplePickupDays', [
