@@ -32,7 +32,7 @@ trait ExportTrait
 
         $writerService = new OrderDetailCsvWriterService();
         $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
-        $writerService->setFilename(__d('admin', 'Ordered_products') . '_' . date('YmdHis') . '.csv');
+        $writerService->setFilename(str_replace(' ', '_', __d('admin', 'Ordered_products')) . '_' . date('YmdHis') . '.csv');
         $writerService->render();
         return $writerService->forceDownload($this->getResponse());
     }
