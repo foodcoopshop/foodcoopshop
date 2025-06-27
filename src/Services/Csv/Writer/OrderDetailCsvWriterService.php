@@ -19,11 +19,19 @@ namespace App\Services\Csv\Writer;
 use Admin\Traits\OrderDetails\Filter\OrderDetailsFilterTrait;
 use Cake\Core\Configure;
 use App\Model\Entity\OrderDetail;
+use Cake\Routing\Router;
 
 class OrderDetailCsvWriterService extends BaseCsvWriterService
 {
 
     use OrderDetailsFilterTrait;
+
+    private mixed $identity;
+
+    public function __construct()
+    {
+        $this->identity = Router::getRequest()->getAttribute('identity');
+    }
     
     public function getHeader(): array
     {
@@ -71,7 +79,7 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
                 $orderDetail->deposit > 0 ? Configure::read('app.numberHelper')->formatAsDecimal($orderDetail->deposit) : '',
                 $this->getProductUnits($orderDetail),
                 $this->getUnitName($orderDetail),
-                $orderDetail->customer->decoded_name,
+                $this->getCustomerName($orderDetail),
                 $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
                 Configure::read('app.htmlHelper')->getOrderStates()[$orderDetail->order_state],
                 Configure::read('app.htmlHelper')->getCartTypes()[$orderDetail->cart_product->cart->cart_type],
@@ -82,6 +90,15 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         }
 
         return $records;
+    }
+
+    private function getCustomerName(OrderDetail $orderDetail): string
+    {
+        $customerName = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+        if ($this->identity !== null && $this->identity->isManufacturer() && $this->identity->getManufacturerAnonymizeCustomers()) {
+            $customerName = Configure::read('app.htmlHelper')->anonymizeCustomerName($customerName, $orderDetail->id_customer);
+        }
+        return $customerName;
     }
 
     private function getProductUnits(OrderDetail $orderDetail): float|string
