@@ -445,6 +445,9 @@ msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}) vom {3} wurde erfolgreich stor
 msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
 
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "Eine E-Mail wurde an {0} sowie an den Hersteller {1} versendet."
+
 msgid "An_email_was_sent_to_{0}."
 msgstr "Eine E-Mail wurde an {0} versendet."
 
