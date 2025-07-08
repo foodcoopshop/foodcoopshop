@@ -769,6 +769,12 @@ msgstr "Produktdeklaration"
 msgid "Storage_location"
 msgstr "Lagerort"
 
+msgid "Storage locations"
+msgstr "Lagerorte"
+
+msgid "Add {0}"
+msgstr "{0} hinzufügen"
+
 msgid "Product_import_for_{0}"
 msgstr "Produkt-Import für {0}"
 
