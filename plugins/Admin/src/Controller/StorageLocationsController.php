@@ -34,21 +34,60 @@ class StorageLocationsController extends AdminAppController
 
     public function edit(int $storageLocationID): void
     {
-        $slidersTable = $this->getTableLocator()->get('Sliders');
-        $slider = $slidersTable->find('all', conditions: [
-            'Sliders.id_slider' => $storageLocationID
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->find('all', conditions: [
+            'StorageLocations.id' => $storageLocationID
         ])->first();
 
-        if (empty($slider)) {
+        if (empty($storageLocation)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_slider'));
-        $this->_processForm($slider, true);
+        $this->set('title_for_layout', __d('admin', 'Edit {0}', [__d('admin', 'Storage_location')]));
+        $this->_processForm($storageLocation, true);
     }
 
     private function _processForm(StorageLocation $storageLocation, bool $isEditMode): void
     {
+        $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
 
+        if (empty($this->getRequest()->getData())) {
+            $this->set('storageLocation', $storageLocation);
+            return;
+        }
+
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->patchEntity($storageLocation, $this->getRequest()->getData());
+        if ($storageLocation->hasErrors()) {
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->set('storageLocation', $storageLocation);
+            $this->render('edit');
+        } else {
+            $storageLocation = $storageLocationsTable->save($storageLocation);
+
+            if (!$isEditMode) {
+                $messageSuffix = __d('admin', 'created');
+                $actionLogType = 'storageLocation_added';
+            } else {
+                $messageSuffix = __d('admin', 'changed');
+                $actionLogType = 'storageLocation_changed';
+            }
+
+            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+
+            $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->id . '</b>', $messageSuffix]);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_Locations', $message);
+            $this->Flash->success($message);
+
+            $this->getRequest()->getSession()->write('highlightedRowId', $storageLocation->id);
+            $this->redirect($this->getPreparedReferer());
+        }
+
+        $this->set('storageLocation', $storageLocation);
     }
 
     public function index(): void

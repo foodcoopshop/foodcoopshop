@@ -394,6 +394,9 @@ msgstr "Slideshow-Bild bearbeiten"
 msgid "The_slider_{0}_has_been_{1}."
 msgstr "Das Slideshow-Bild {0} wurde {1}."
 
+msgid "The storage location {0} has been {1}."
+msgstr "Der Lagerort {0} wurde {1}."
+
 msgid "Slideshow"
 msgstr "Slideshow"
 
@@ -774,6 +777,9 @@ msgstr "Lagerorte"
 
 msgid "Add {0}"
 msgstr "{0} hinzufügen"
+
+msgid "Edit {0}"
+msgstr "{0} bearbeiten"
 
 msgid "Product_import_for_{0}"
 msgstr "Produkt-Import für {0}"
