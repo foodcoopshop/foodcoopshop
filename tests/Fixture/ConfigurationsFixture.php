@@ -402,7 +402,7 @@ class ConfigurationsFixture extends AppFixture
             'active' => 1,
             'name' => 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS',
             'text' => '',
-            'value' => '0',
+            'value' => '1',
             'type' => 'readonly',
             'position' => 589,
         ],
