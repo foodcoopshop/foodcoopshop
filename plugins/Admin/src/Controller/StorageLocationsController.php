@@ -30,6 +30,21 @@ class StorageLocationsController extends AdminAppController
 
     public function add(): void
     {
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->newEntity(
+            [
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
+                'active' => APP_ON,
+                'position' => 10,
+            ],
+            ['validate' => false]
+        );
+        $this->set('title_for_layout', __d('admin', 'Add {0}', [__d('admin', 'Storage_location')]));
+        $this->_processForm($storageLocation, false);
+
+        if (empty($this->getRequest()->getData())) {
+            $this->render('edit');
+        }
     }
 
     public function edit(int $storageLocationID): void
