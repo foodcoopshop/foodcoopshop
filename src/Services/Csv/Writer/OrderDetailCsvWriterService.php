@@ -73,7 +73,7 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
             $record = [
                 $orderDetail->id_order_detail,
                 $orderDetail->product_amount,
-                $orderDetail->product_name,
+                $this->getProductName($orderDetail),
                 $orderDetail->product->manufacturer->decoded_name,
                 Configure::read('app.numberHelper')->formatAsDecimal($orderDetail->total_price_tax_incl),
                 $orderDetail->deposit > 0 ? Configure::read('app.numberHelper')->formatAsDecimal($orderDetail->deposit) : '',
@@ -90,6 +90,13 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         }
 
         return $records;
+    }
+
+    private function getProductName(OrderDetail $orderDetail): string
+    {
+        $splitProductName = $this->getSplitProductName($orderDetail);
+        $productName = count($splitProductName) == 1 ? $orderDetail->product_name : $splitProductName[0];
+        return $productName;
     }
 
     private function getCustomerName(OrderDetail $orderDetail): string
@@ -112,14 +119,26 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
 
     private function getUnitName(OrderDetail $orderDetail): string
     {
-        if (empty($orderDetail->order_detail_unit)) {
-            return '';
+        $result = '';
+        if (!empty($orderDetail->order_detail_unit)) {
+            $unitAmount = $orderDetail->order_detail_unit->unit_amount;
+            $unitName = $orderDetail->order_detail_unit->unit_name;
+            $result = ($unitAmount > 1 ? Configure::read('app.numberHelper')->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
         }
 
-        $unitAmount = $orderDetail->order_detail_unit->unit_amount;
-        $unitName = $orderDetail->order_detail_unit->unit_name;
+        if ($result == '') {
+            $splitProductName = $this->getSplitProductName($orderDetail);
+            if (count($splitProductName) == 2) {
+                $result = $splitProductName[1];
+            }
+        }
 
-        return ($unitAmount > 1 ? Configure::read('app.numberHelper')->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+        return $result;
+    }
+
+    private function getSplitProductName(OrderDetail $orderDetail): array
+    {
+        return explode(' : ', $orderDetail->product_name);
     }
 
 }
