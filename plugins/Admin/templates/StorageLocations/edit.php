@@ -1,0 +1,95 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.0.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm);" . Configure::read('app.jsNamespace') . ".Admin.initForm();
+    "
+]);
+?>
+
+<div class="filter-container">
+    <h1><?php echo $title_for_layout; ?></h1>
+    <div class="right">
+        <a href="javascript:void(0);" class="btn btn-success submit"><i
+            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            <?php echo $this->element('printIcon'); ?>
+    </div>
+</div>
+
+<div class="sc"></div>
+
+<?php
+
+echo $this->Form->create($storageLocation, [
+    'class' => 'fcs-form',
+    'novalidate' => 'novalidate',
+    'url' => $isEditMode ? $this->Slug->getStorageLocationEdit($storageLocation->id) : $this->Slug->getStorageLocationAdd(),
+    'id' => 'sliderEditForm'
+]);
+
+echo $this->Form->hidden('referer', ['value' => $referer]);
+
+//echo '<div class="input">';
+//echo '<label>' . __d('admin', 'Slider_image');
+//if ($imageSrc) {
+//    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'<br />'.__d('admin', 'Width').': 908px</span>';
+//}
+//echo '</label>';
+//echo '<div style="float:right;">';
+//echo $this->Html->link(
+//    $imageSrc ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+//    'javascript:void(0);',
+//    [
+//        'class' => 'btn btn-outline-light add-image-button ' . ($imageSrc ? 'uploaded' : ''),
+//        'title' => __d('admin', 'Upload_new_image_or_change_it'),
+//        'data-object-id' => $idForImageUpload,
+//        'escape' => false
+//    ]
+//);
+//echo '</div>';
+//echo $this->Form->hidden('Sliders.tmp_image');
+//$this->Form->unlockField('Sliders.tmp_image');
+//echo '</div>';
+
+echo $this->Form->control('StorageLocation.name', [
+    'label' => __d('admin', 'Name'),
+]);
+echo $this->Form->control('StorageLocation.rank', [
+    'class' => 'short',
+    'label' => __d('admin', 'Rank'),
+    'type' => 'text',
+]);
+
+//if ($this->request->getRequestTarget() != $this->Slug->getStorageLocationAdd()) {
+//    echo '<div class="warning">';
+//        echo $this->Form->control('Sliders.delete_slider', [
+//            'label' => __d('admin', 'Delete_slider_image?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+//            'type' => 'checkbox',
+//            'escape' => false
+//        ]);
+//    echo '</div>';
+//}
+
+echo $this->Form->end();
+
+?>
+
+<div class="sc"></div>

@@ -34,6 +34,16 @@ class StorageLocationsController extends AdminAppController
 
     public function edit(int $storageLocationID): void
     {
+        $slidersTable = $this->getTableLocator()->get('Sliders');
+        $slider = $slidersTable->find('all', conditions: [
+            'Sliders.id_slider' => $storageLocationID
+        ])->first();
+
+        if (empty($slider)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', __d('admin', 'Edit_slider'));
+        $this->_processForm($slider, true);
     }
 
     private function _processForm(StorageLocation $storageLocation, bool $isEditMode): void

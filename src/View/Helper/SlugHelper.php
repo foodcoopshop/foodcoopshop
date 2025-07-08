@@ -487,6 +487,19 @@ class SlugHelper extends Helper
         return '/admin/manufacturers/add';
     }
 
+    public function getStorageLocationsList(): string
+    {
+        return '/admin/storage-locations';
+    }
+    public function getStorageLocationEdit(int $storageLocationId): string
+    {
+        return '/admin/storage-locations/edit/'.$storageLocationId;
+    }
+    public function getStorageLocationAdd(): string
+    {
+        return '/admin/storage-locations/add';
+    }
+
     public function getSlidersList(): string
     {
         return '/admin/sliders';
