@@ -25,7 +25,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_PRODUCT_AVAILABILITY_LOW',
-            'text' => 'Geringe Verfügbarkeit<br /><div class="small">Ab welcher verfügbaren Produkt-Menge soll beim Bestellen der Hinweis "(x verfügbar") angezeigt werden?',
             'value' => '10',
             'type' => 'number',
             'position' => 600,
@@ -33,7 +32,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DAYS_SHOW_PRODUCT_AS_NEW',
-            'text' => '',
             'value' => '7',
             'type' => 'number',
             'position' => 700,
@@ -41,7 +39,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_FOOTER_CMS_TEXT',
-            'text' => '',
             'value' => NULL,
             'type' => 'textarea_big',
             'position' => 920,
@@ -49,7 +46,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_FACEBOOK_URL',
-            'text' => '',
             'value' => 'https://www.facebook.com/FoodCoopShop/',
             'type' => 'text',
             'position' => 910,
@@ -57,7 +53,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_REGISTRATION_EMAIL_TEXT',
-            'text' => '',
             'value' => '',
             'type' => 'textarea_big',
             'position' => 1700,
@@ -65,7 +60,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_RIGHT_INFO_BOX_HTML',
-            'text' => '',
             'value' => '<h3>Abholzeiten</h3>',
             'type' => 'textarea_big',
             'position' => 1500,
@@ -73,7 +67,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_NO_DELIVERY_DAYS_GLOBAL',
-            'text' => '',
             'value' => '',
             'type' => 'multiple_dropdown',
             'position' => 100,
@@ -81,7 +74,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_ACCOUNTING_EMAIL',
-            'text' => '',
             'value' => 'fcs-demo-superadmin@mailinator.com',
             'type' => 'text',
             'position' => 1100,
@@ -89,7 +81,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_REGISTRATION_INFO_TEXT',
-            'text' => '',
             'value' => 'Um bei uns zu bestellen musst du Vereinsmitglied sein.',
             'type' => 'textarea_big',
             'position' => 1600,
@@ -97,7 +88,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SHOW_PRODUCTS_FOR_GUESTS',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 200,
@@ -105,7 +95,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DEFAULT_NEW_MEMBER_ACTIVE',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 500,
@@ -113,7 +102,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_MINIMAL_CREDIT_BALANCE',
-            'text' => '',
             'value' => '-100',
             'type' => 'number',
             'position' => 1250,
@@ -121,7 +109,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_BANK_ACCOUNT_DATA',
-            'text' => '',
             'value' => 'Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878',
             'type' => 'text',
             'position' => 1300,
@@ -129,7 +116,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS',
-            'text' => '',
             'value' => ', 15:00 bis 17:00 Uhr',
             'type' => 'text',
             'position' => 1200,
@@ -137,7 +123,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_BACKUP_EMAIL_ADDRESS_BCC',
-            'text' => '',
             'value' => '',
             'type' => 'text',
             'position' => 1900,
@@ -145,7 +130,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SHOW_FOODCOOPSHOP_BACKLINK',
-            'text' => '',
             'value' => '1',
             'type' => 'boolean',
             'position' => 930,
@@ -153,7 +137,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_APP_NAME',
-            'text' => '',
             'value' => 'FoodCoop Test',
             'type' => 'text',
             'position' => 50,
@@ -161,7 +144,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_APP_ADDRESS',
-            'text' => '',
             'value' => 'Demostra&szlig;e 4<br />A-4564 Demostadt',
             'type' => 'textarea',
             'position' => 60,
@@ -169,7 +151,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_APP_EMAIL',
-            'text' => '',
             'value' => 'demo-foodcoop@maillinator.com',
             'type' => 'text',
             'position' => 900,
@@ -177,7 +158,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_PLATFORM_OWNER',
-            'text' => '',
             'value' => '',
             'type' => 'textarea',
             'position' => 90,
@@ -185,7 +165,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_ORDER_COMMENT_ENABLED',
-            'text' => '',
             'value' => '1',
             'type' => 'boolean',
             'position' => 130,
@@ -193,7 +172,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_USE_VARIABLE_MEMBER_FEE',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 400,
@@ -201,7 +179,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 500,
@@ -209,7 +186,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_NETWORK_PLUGIN_ENABLED',
-            'text' => '',
             'value' => '1',
             'type' => 'readonly',
             'position' => 500,
@@ -217,7 +193,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 210,
@@ -225,7 +200,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_CURRENCY_SYMBOL',
-            'text' => 'Währungssymbol',
             'value' => '€',
             'type' => 'readonly',
             'position' => 520,
@@ -233,7 +207,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DEFAULT_LOCALE',
-            'text' => '',
             'value' => 'de_DE',
             'type' => 'readonly',
             'position' => 550,
@@ -241,7 +214,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_FOODCOOPS_MAP_ENABLED',
-            'text' => '',
             'value' => '1',
             'type' => 'boolean',
             'position' => 1280,
@@ -249,7 +221,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_WEEKLY_PICKUP_DAY',
-            'text' => '',
             'value' => '5',
             'type' => 'readonly',
             'position' => 600,
@@ -257,7 +228,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA',
-            'text' => '',
             'value' => '2',
             'type' => 'readonly',
             'position' => 650,
@@ -265,7 +235,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM',
-            'text' => '',
             'value' => '1',
             'type' => 'boolean',
             'position' => 750,
@@ -273,7 +242,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 760,
@@ -281,7 +249,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES',
-            'text' => '',
             'value' => '1',
             'type' => 'readonly',
             'position' => 600,
@@ -289,7 +256,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_REGISTRATION_NOTIFICATION_EMAILS',
-            'text' => '',
             'value' => 'fcs-demo-superadmin@mailinator.com',
             'type' => 'text',
             'position' => 550,
@@ -297,7 +263,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 3000,
@@ -305,7 +270,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_APP_ADDITIONAL_DATA',
-            'text' => '',
             'value' => '',
             'type' => 'textarea',
             'position' => 80,
@@ -313,7 +277,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED',
-            'text' => '',
             'value' => '1',
             'type' => 'boolean',
             'position' => 3100,
@@ -321,7 +284,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_CASHLESS_PAYMENT_ADD_TYPE',
-            'text' => '',
             'value' => 'manual',
             'type' => 'dropdown',
             'position' => 1450,
@@ -329,7 +291,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_FEEDBACK_TO_PRODUCTS_ENABLED',
-            'text' => '',
             'value' => '1',
             'type' => 'boolean',
             'position' => 3200,
@@ -337,7 +298,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 590,
@@ -345,7 +305,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SEND_INVOICES_TO_CUSTOMERS',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 580,
@@ -353,7 +312,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_DEPOSIT_TAX_RATE',
-            'text' => '',
             'value' => '20,00',
             'type' => 'readonly',
             'position' => 581,
@@ -361,7 +319,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_INVOICE_HEADER_TEXT',
-            'text' => '',
             'value' => 'FoodCoop Test<br />Demostraße 4<br />A-4564 Demostadt<br />demo-foodcoop@maillinator.com',
             'type' => 'readonly',
             'position' => 582,
@@ -369,7 +326,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_MEMBER_FEE_PRODUCTS',
-            'text' => '',
             'value' => '',
             'type' => 'multiple_dropdown',
             'position' => 3300,
@@ -377,7 +333,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_CHECK_CREDIT_BALANCE_LIMIT',
-            'text' => '',
             'value' => '0',
             'type' => 'number',
             'position' => 1450,
@@ -385,7 +340,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_PURCHASE_PRICE_ENABLED',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 587,
@@ -393,7 +347,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_HELLO_CASH_API_ENABLED',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 588,
@@ -401,7 +354,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS',
-            'text' => '',
             'value' => '1',
             'type' => 'readonly',
             'position' => 589,
@@ -409,7 +361,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_INSTAGRAM_URL',
-            'text' => '',
             'value' => '',
             'type' => 'text',
             'position' => 920,
@@ -417,7 +368,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 3210,
@@ -425,7 +375,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_INVOICE_NUMBER_PREFIX',
-            'text' => '',
             'value' => '',
             'type' => 'readonly',
             'position' => 586,
@@ -433,7 +382,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_TAX_BASED_ON_NET_INVOICE_SUM',
-            'text' => '',
             'value' => '0',
             'type' => 'readonly',
             'position' => 585,
@@ -441,7 +389,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_NEWSLETTER_ENABLED',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 3400,
@@ -449,7 +396,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_USER_FEEDBACK_ENABLED',
-            'text' => '',
             'value' => '0',
             'type' => 'boolean',
             'position' => 3500,
@@ -457,14 +403,12 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_HOME_TEXT',
-            'text' => '',
             'value' => '',
             'type' => 'textarea_big',
             'position' => 1290,
         ],
         [
             'name' => 'FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED',
-            'text' => '',
             'active' => 1,
             'value' => 0,
             'type' => 'boolean',
