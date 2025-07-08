@@ -25,7 +25,7 @@ use Cake\Core\Configure;
 
 <h2>1. Geltung</h2>
 
-<p>Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen ihrer Internet-Dienstleistung unter der Domain <https://pabneukistl.at> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
+<p>Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('App.fullBaseUrl'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
 
 <p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
