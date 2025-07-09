@@ -5,6 +5,7 @@ namespace Admin\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
+use Cake\Core\Configure;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
 
@@ -15,9 +16,9 @@ use Authorization\IdentityInterface;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 4.0.0
+ * @since         FoodCoopShop 4.2.0
  * @license       https://opensource.org/licenses/AGPL-3.0
- * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @author        Martin Haltauf <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
@@ -28,6 +29,10 @@ class StorageLocationsPolicy implements RequestPolicyInterface
     {
 
         if ($identity === null) {
+            return false;
+        }
+
+        if (!Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
             return false;
         }
 
