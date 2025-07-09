@@ -30,7 +30,7 @@ class StorageLocationsTable extends AppTable
     public function getForDropdown(): array
     {
         $storageLocations = $this->find('all', order: [
-            'StorageLocations.rank' => 'ASC',
+            $this->aliasField('position') => 'ASC',
         ]);
         $preparedStorageLocations = [];
         foreach ($storageLocations as $storageLocation) {

@@ -109,11 +109,11 @@ class StorageLocationsController extends AdminAppController
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $query = $storageLocationsTable->find('all');
         $storageLocations = $this->paginate($query, [
-//            'sortableFields' => [
-//                'Sliders.position', 'Sliders.active', 'Sliders.link', 'Sliders.is_private'
-//            ],
+            'sortableFields' => [
+                'StorageLocations.position', 'StorageLocations.name'
+            ],
             'order' => [
-                'Storage_Locations.position' => 'ASC'
+                'StorageLocations.position' => 'ASC'
             ]
         ]);
 //        dd($storageLocations);
