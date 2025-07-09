@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,6 +21,12 @@ namespace App\Model\Table;
 class StorageLocationsTable extends AppTable
 {
 
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
+
+        return $validator;
+    }
     public function getForDropdown(): array
     {
         $storageLocations = $this->find('all', order: [
