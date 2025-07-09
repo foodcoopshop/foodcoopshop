@@ -105,18 +105,32 @@ class StorageLocationsController extends AdminAppController
 
     public function index(): void
     {
-
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $query = $storageLocationsTable->find('all');
+        $query ->select([
+                'StorageLocations.id',
+                'StorageLocations.name',
+                'StorageLocations.position',
+                'product_count' => $query->func()->count('Products.id_product')
+            ])
+            ->leftJoinWith('Products', function ($q) {
+                return $q->where(['Products.active IN' => [APP_ON, APP_OFF]]);
+            })
+        ->groupBy(['StorageLocations.id']);
+
         $storageLocations = $this->paginate($query, [
             'sortableFields' => [
-                'StorageLocations.position', 'StorageLocations.name'
+                'StorageLocations.position',
+                'StorageLocations.name',
+                'StorageLocations.product_count',
             ],
             'order' => [
                 'StorageLocations.position' => 'ASC'
             ]
         ]);
+
 //        dd($storageLocations);
+
         $this->set('storageLocations', $storageLocations);
         $this->set('title_for_layout', __d('admin', 'Storage locations'));
     }

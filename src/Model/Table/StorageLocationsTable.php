@@ -21,6 +21,15 @@ use Cake\Validation\Validator;
 class StorageLocationsTable extends AppTable
 {
 
+    public function initialize(array $config): void
+    {
+        $this->setTable('storage_locations');
+        parent::initialize($config);
+        $this->hasMany('Products', [
+            'foreignKey' => 'id_storage_location'
+        ]);
+    }
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));

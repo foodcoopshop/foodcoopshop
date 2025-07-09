@@ -31,7 +31,7 @@ $this->element('highlightRowAfterEdit', [
     <div class="right">
         <?php
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add {0}', [__d('admin', 'Storage_location')]).'', $this->Slug->getStorageLocationAdd(), [
+        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ' . __d('admin', 'Add {0}', [__d('admin', 'Storage_location')]) . '', $this->Slug->getStorageLocationAdd(), [
             'class' => 'btn btn-outline-light',
             'escape' => false
         ]);
@@ -54,12 +54,13 @@ echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('StorageLocations.name', __d('admin', 'Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('StorageLocations.product_count', __d('admin', 'Products')) . '</th>';
 echo '<th>' . $this->Paginator->sort('StorageLocations.position', __d('admin', 'Rank')) . '</th>';
 echo '</tr>';
 
 $i = 0;
 foreach ($storageLocations as $storageLocation) {
-    $i ++;
+    $i++;
     $rowClass = [
         'data'
     ];
@@ -86,6 +87,10 @@ foreach ($storageLocations as $storageLocation) {
     echo $storageLocation->name;
     echo '</td>';
 
+    echo '<td align="center">';
+    echo $storageLocation->product_count;
+    echo '</td>';
+
     echo '<td align="right">';
     echo $storageLocation->position;
     echo '</td>';
@@ -94,7 +99,7 @@ foreach ($storageLocations as $storageLocation) {
 }
 
 echo '<tr>';
-echo '<td colspan="3"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="4"><b>' . $i . '</b> ' . __d('admin', '{0,plural,=1{record} other{records}}', $i) . '</td>';
 echo '</tr>';
 
 echo '</table>';
