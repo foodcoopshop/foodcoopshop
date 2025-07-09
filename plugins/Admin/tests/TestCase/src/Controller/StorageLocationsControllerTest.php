@@ -17,9 +17,12 @@ declare(strict_types=1);
 
 namespace TestCase\src\Controller;
 
+use App\Model\Entity\StorageLocation;
+use App\Test\Fixture\StorageLocationsFixture;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use Cake\Log\Log;
 
 class StorageLocationsControllerTest extends AppCakeTestCase
 {
@@ -75,6 +78,28 @@ class StorageLocationsControllerTest extends AppCakeTestCase
 
     }
 
+    public function testEditDuplicateName(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->post(
+            $this->Slug->getStorageLocationEdit(1),
+            [
+                'StorageLocations' => [
+                    'name' => 'Kühlschrank',
+                ],
+            ]
+        );
+
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->find('all',
+            conditions: [
+                'StorageLocations.id' => 1,
+            ],
+        )->first();
+
+        $this->assertEquals('Keine Kühlung', $storageLocation->name);
+    }
+
     public function testAddValidName(): void
     {
         $this->loginAsSuperadmin();
@@ -111,16 +136,34 @@ class StorageLocationsControllerTest extends AppCakeTestCase
                 ],
             ]
         );
+        $this->assertResponseContains("Bitte gib einen Namen ein.");
 
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
-        $storageLocation = $storageLocationsTable->find('all',
-            conditions: [
-                'StorageLocations.id' => 4,
-            ],
-        )->first();
+        $storageLocationCount = $storageLocationsTable->find('all',
+        )->count();
 
-        $this->assertEquals(null, $storageLocation);
+        $this->assertEquals(3, $storageLocationCount);
 
     }
 
+    public function testAddDuplicateName(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->post(
+            $this->Slug->getStorageLocationAdd(),
+            [
+                'StorageLocations' => [
+                    'name' => 'Kühlschrank',
+                ],
+            ]
+        );
+
+        $this->assertResponseContains("Beim Speichern sind Fehler aufgetreten!");
+
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocationCount = $storageLocationsTable->find('all',
+        )->count();
+
+        $this->assertEquals(3, $storageLocationCount);
+    }
 }

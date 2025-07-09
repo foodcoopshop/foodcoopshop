@@ -24,6 +24,11 @@ class StorageLocationsTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
+        $validator->add('name', 'unique', [
+            'rule' => 'validateUnique',
+            'provider' => 'table',
+            'message' => __('An_Storage_Location_with_this_name_already_exists.')
+        ]);
 
         return $validator;
     }
