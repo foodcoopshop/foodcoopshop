@@ -48,8 +48,6 @@ class ProductReaderServiceTest extends AppCakeTestCase
     public function testImportWithErrors(): void
     {
 
-        $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
-
         $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
@@ -81,8 +79,6 @@ class ProductReaderServiceTest extends AppCakeTestCase
 
     public function testImportSuccessful(): void
     {
-
-        $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
 
         $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
         $this->reader->configureType();

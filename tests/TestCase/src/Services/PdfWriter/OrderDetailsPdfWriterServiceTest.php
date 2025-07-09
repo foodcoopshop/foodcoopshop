@@ -23,10 +23,10 @@ class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
 
     public function testPdfContent(): void
     {
-        $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
         $pickupDay = ['2018-02-02'];
         $order = 'storageLocation';
 
+        $this->setDummyRequest();
         $pdfWriter = new OrderDetailsPdfWriterService();
         $pdfWriter->prepareAndSetData($pickupDay, $order);
         $html = $pdfWriter->writeHtml();

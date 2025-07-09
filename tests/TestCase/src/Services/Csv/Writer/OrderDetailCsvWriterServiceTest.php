@@ -56,9 +56,9 @@ class OrderDetailCsvWriterServiceTest extends AppCakeTestCase
         $this->assertEquals(6, count($lines));
         $this->assertEquals(Writer::BOM_UTF8 . $this->defaultHeader, $lines[0]);
         $this->assertEquals('2;1;Beuschl;"Demo Fleisch-Hersteller";4,54;;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[1]);
-        $this->assertEquals('4;2;"Forelle : Stück";"Demo Fleisch-Hersteller";10,50;;700;"100 g";"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[2]);
-        $this->assertEquals('1;1;"Artischocke : Stück";"Demo Gemüse-Hersteller";1,82;0,50;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[3]);
-        $this->assertEquals('3;1;"Milch : 0,5l";"Demo Milch-Hersteller";0,62;0,50;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[4]);
+        $this->assertEquals('4;2;Forelle;"Demo Fleisch-Hersteller";10,50;;700;"100 g";"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[2]);
+        $this->assertEquals('1;1;Artischocke;"Demo Gemüse-Hersteller";1,82;0,50;;Stück;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[3]);
+        $this->assertEquals('3;1;Milch;"Demo Milch-Hersteller";0,62;0,50;;0,5l;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[4]);
 
     }
 
