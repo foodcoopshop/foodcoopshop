@@ -33,9 +33,7 @@ class StorageLocationsController extends AdminAppController
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $storageLocation = $storageLocationsTable->newEntity(
             [
-                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
-                'active' => APP_ON,
-                'position' => 10,
+                'position' => 0,
             ],
             ['validate' => false]
         );

@@ -53,7 +53,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 echo $this->Form->control('StorageLocations.name', [
     'label' => __d('admin', 'Name'),
 ]);
-echo $this->Form->control('StorageLocations.rank', [
+echo $this->Form->control('StorageLocations.position', [
     'class' => 'short',
     'label' => __d('admin', 'Rank'),
     'type' => 'text',

@@ -50,7 +50,7 @@ echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('StorageLocations.name', __d('admin', 'Name')) . '</th>';
-echo '<th>' . $this->Paginator->sort('StorageLocations.rank', __d('admin', 'Rank')) . '</th>';
+echo '<th>' . $this->Paginator->sort('StorageLocations.position', __d('admin', 'Rank')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -83,7 +83,7 @@ foreach ($storageLocations as $storageLocation) {
     echo '</td>';
 
     echo '<td align="center">';
-    echo $storageLocation->rank;
+    echo $storageLocation->position;
     echo '</td>';
 
     echo '</tr>';
