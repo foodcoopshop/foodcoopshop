@@ -561,6 +561,11 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getTaxesList(),
             'key' => 'tax_rates',
         ];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-archive"></i> ' . __('Storage locations'),
+            'url' => Configure::read('app.slugHelper')->getStorageLocationsList(),
+            'key' => 'storage_locations',
+        ];
         return $tabs;
     }
 

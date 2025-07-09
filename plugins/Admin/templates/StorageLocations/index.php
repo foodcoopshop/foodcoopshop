@@ -44,6 +44,10 @@ $this->element('highlightRowAfterEdit', [
 
 <?php
 
+echo $this->element('navTabs/configurationNavTabs', [
+    'key' => 'storage_locations',
+]);
+
 $this->Paginator->setPaginated($storageLocations);
 echo '<table class="list">';
 echo '<tr class="sort">';
@@ -82,7 +86,7 @@ foreach ($storageLocations as $storageLocation) {
     echo $storageLocation->name;
     echo '</td>';
 
-    echo '<td align="center">';
+    echo '<td align="right">';
     echo $storageLocation->position;
     echo '</td>';
 

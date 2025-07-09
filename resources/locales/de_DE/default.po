@@ -2090,6 +2090,9 @@ msgstr "Bruttopreis"
 msgid "Tax_rate"
 msgstr "Steuersatz"
 
+msgid "Storage locations"
+msgstr "Lagerorte"
+
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
 

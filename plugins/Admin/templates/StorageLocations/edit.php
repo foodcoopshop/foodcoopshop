@@ -41,6 +41,10 @@ $this->element('addScript', [
 
 <?php
 
+echo $this->element('navTabs/configurationNavTabs', [
+    'key' => 'storage_locations',
+]);
+
 echo $this->Form->create($storageLocation, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
