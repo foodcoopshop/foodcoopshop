@@ -36,7 +36,7 @@ class StorageLocationsTable extends AppTable
         $validator->add('name', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => __('An_Storage_Location_with_this_name_already_exists.')
+            'message' => __('A storage location with this name already exists.')
         ]);
 
         return $validator;

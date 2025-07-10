@@ -92,7 +92,7 @@ class StorageLocationsController extends AdminAppController
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
 
-            $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->id . '</b>', $messageSuffix]);
+            $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_Locations', $message);
             $this->Flash->success($message);
 
@@ -107,10 +107,8 @@ class StorageLocationsController extends AdminAppController
     {
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $query = $storageLocationsTable->find('all');
-        $query ->select([
-                'StorageLocations.id',
-                'StorageLocations.name',
-                'StorageLocations.position',
+        $query->select($storageLocationsTable)
+            ->select([
                 'product_count' => $query->func()->count('Products.id_product')
             ])
             ->leftJoinWith('Products', function ($q) {
@@ -128,8 +126,6 @@ class StorageLocationsController extends AdminAppController
                 'StorageLocations.position' => 'ASC'
             ]
         ]);
-
-//        dd($storageLocations);
 
         $this->set('storageLocations', $storageLocations);
         $this->set('title_for_layout', __d('admin', 'Storage locations'));
