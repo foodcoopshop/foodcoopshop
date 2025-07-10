@@ -84,10 +84,10 @@ class StorageLocationsController extends AdminAppController
 
             if (!$isEditMode) {
                 $messageSuffix = __d('admin', 'created');
-                $actionLogType = 'storageLocation_added';
+                $actionLogType = 'storage_location_added';
             } else {
                 $messageSuffix = __d('admin', 'changed');
-                $actionLogType = 'storageLocation_changed';
+                $actionLogType = 'storage_location_changed';
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
