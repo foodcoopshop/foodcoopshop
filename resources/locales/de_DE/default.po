@@ -1517,6 +1517,12 @@ msgstr "Slideshow-Bild: geändert"
 msgid "Action_Log_Slider_deleted"
 msgstr "Slideshow-Bild: gelöscht"
 
+msgid "Action_Log_Storage_location_added"
+msgstr "Lagerort: erstellt"
+
+msgid "Action_Log_Storage_location_changed"
+msgstr "Lagerort: geändert"
+
 msgid "Action_Log_Tax_rate_added"
 msgstr "Steuersatz: erstellt"
 

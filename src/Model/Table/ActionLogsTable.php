@@ -374,6 +374,13 @@ class ActionLogsTable extends AppTable
                 'name' => __('Action_Log_Slider_deleted')
             ],
 
+            'storageLocation_added' => [
+                'name' => __('Action_Log_Storage_location_added')
+            ],
+            'storageLocation_changed' => [
+                'name' => __('Action_Log_Storage_location_changed')
+            ],
+
             'tax_added' => [
                 'name' => __('Action_Log_Tax_rate_added')
             ],
