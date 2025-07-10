@@ -1517,6 +1517,12 @@ msgstr "Slideshow-Bild: geändert"
 msgid "Action_Log_Slider_deleted"
 msgstr "Slideshow-Bild: gelöscht"
 
+msgid "Action_Log_Storage_location_added"
+msgstr "Lagerort: erstellt"
+
+msgid "Action_Log_Storage_location_changed"
+msgstr "Lagerort: geändert"
+
 msgid "Action_Log_Tax_rate_added"
 msgstr "Steuersatz: erstellt"
 
@@ -1660,6 +1666,9 @@ msgstr "Bitte gib einen Namen ein."
 
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "Eine Variante mit dem Namen existiert bereits."
+
+msgid "A storage location with this name already exists."
+msgstr "Ein Lagerort mit diesem Namen existiert bereits."
 
 msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
 msgstr "Die Länge des Barcodes muss genau {0} Zeichen betragen."
@@ -2089,6 +2098,9 @@ msgstr "Bruttopreis"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"
+
+msgid "Storage locations"
+msgstr "Lagerorte"
 
 msgid "Product_declaration"
 msgstr "Produktdeklaration"

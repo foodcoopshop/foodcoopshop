@@ -355,8 +355,8 @@ class ConfigurationsFixture extends AppFixture
             'active' => 1,
             'name' => 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS',
             'value' => '1',
-            'type' => 'readonly',
-            'position' => 589,
+            'type' => 'boolean',
+            'position' => 3210,
         ],
         [
             'active' => 1,
