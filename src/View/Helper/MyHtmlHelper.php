@@ -561,6 +561,13 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getTaxesList(),
             'key' => 'tax_rates',
         ];
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $tabs[] = [
+                'name' => '<i class="fas fa-fw ok fa-archive"></i> ' . __('Storage locations'),
+                'url' => Configure::read('app.slugHelper')->getStorageLocationsList(),
+                'key' => 'storage_locations',
+            ];
+        }
         return $tabs;
     }
 
