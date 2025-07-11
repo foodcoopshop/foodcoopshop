@@ -826,6 +826,18 @@ msgstr "Möchtest du das Produkt wirklich löschen?"
 msgid "Errors_occurred_while_product_was_deleted"
 msgstr "Beim Löschen des Produktes sind Fehler aufgetreten"
 
+msgid "Copy_product?"
+msgstr "Produkt kopieren?"
+
+msgid "Really_copy_product?"
+msgstr "Möchtest du das Produkt wirklich kopieren?"
+
+msgid "Amount_of_copies:"
+msgstr "Anzahl der Kopien:"
+
+msgid "Errors_occurred_while_product_was_copied"
+msgstr "Beim Kopieren des Produktes sind Fehler aufgetreten"
+
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
 
