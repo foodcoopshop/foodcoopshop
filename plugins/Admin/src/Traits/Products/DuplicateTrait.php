@@ -37,30 +37,35 @@ trait DuplicateTrait
             contain: [
                 'Manufacturers'
             ]
-        );
+        )->first();
 
-//        // copy the data
-//        // need to check if $product-id is in units table
-//        // if yes put all the new id's there with the correct values.
-//        for ($i = 0; $i < $copyOptions['amount']; $i++) {
-//            $productsTable->newEntity([
-//                'name' =>
-//                    __d('admin', 'Copy ({0}) of {1}', [
-//                        $i,
-//                        $product->getName(),
-//                    ]),
-//                'price' =>
-//                    $product->getPrice(),
-//                'new' =>
-//                    $product->getNew(),
-//
-//
-//            ]);
-//        }
-//
-//        $preparedProductForActionLog = [];
-//        $preparedProductForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
-//
+        // copy the data
+        // need to check if $product-id is in units table
+        // if yes put all the new id's there with the correct values.
+        $copys = [];
+        $productsTable->add();
+        for ($i = 0; $i < $copyOptions['amount']; $i++) {
+            $copys[] = $productsTable->add(
+                $product->manufacturer,
+                __d('admin', 'Copy ({0}) of {1}', [
+                    $i,
+                    $product->name,
+                ]),
+                $product->descriptionShort,
+                $product->description,
+                $product->unity,
+                $product->isDeclarationOk,
+                $product->idStorageLocation,
+                $product->barcode,
+            );
+        }
+        foreach ($copys as $copy) {
+            // add to other Tables
+        }
+
+        $preparedProductForActionLog = [];
+        $preparedProductForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+
 //        $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
 //        if ($cronjobsTable->isInvoiceCronjobActive()) {
 //            try {
@@ -106,26 +111,25 @@ trait DuplicateTrait
 //                return $this->sendAjaxError($e);
 //            }
 //        }
-//
-//        // 1) set field active to -1
-//        $productsTable->updateAll([
-//            'active' => APP_DEL,
-//            'modified' => DateTime::now() // timestamp behavior does not work here...
-//        ], [
-//            'id_product IN' => $productId
-//        ]);
-//
-//        $message = __d('admin', 'product_was_copied_successfully.');
-//
-//        $this->Flash->success($message);
-//        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-//        $actionLogsTable->customSave('product_deleted', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductForActionLog));
-//
-//        $this->set([
-//            'status' => 1,
-//            'msg' => 'ok',
-//        ]);
-//        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+        // 1) set field modified to now
+        $productsTable->updateAll([
+            'modified' => DateTime::now() // timestamp behavior does not work here...
+        ], [
+            'id_product IN' => $copys
+        ]);
+
+        $message = __d('admin', 'product_was_copied_successfully.');
+
+        $this->Flash->success($message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_deleted', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductForActionLog));
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
         return null;
 
     }
