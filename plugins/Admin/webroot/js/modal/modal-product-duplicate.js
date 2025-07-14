@@ -75,14 +75,11 @@ foodcoopshop.ModalProductDuplicate = {
     },
 
     getSuccessHandler : function(modalSelector, productId, amount) {
-        var copyOptions = {};
-        copyOptions['amount'] = amount;
-
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/duplicate/',
             {
-                productIds: productId,
-                copyOptions: copyOptions
+                productId: productId,
+                copyAmount: amount,
             },
             {
                 onOk: function (data) {
