@@ -152,3 +152,6 @@ table.list tr.fake-th td {
 body.feedbacks textarea {
     width: 100%;
 }
+ul.nav-tabs {
+    width: 100%;
+}
