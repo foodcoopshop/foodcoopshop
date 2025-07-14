@@ -28,6 +28,11 @@ trait DuplicateTrait
         $this->request = $this->request->withParam('_ext', 'json');
 
         $productsTable = $this->getTableLocator()->get('Products');
+
+        $stockAvailable = $this->getTableLocator()->get('StockAvailables');
+        $categoryProduct = $this->getTableLocator()->get('CategoryProducts');
+        $units = $this->getTableLocator()->get('Units');
+
         $productId = $this->getRequest()->getData('productId');
         $copyOptions = $this->getRequest()->getData('copyOptions');
         $product = $productsTable->find('all',
@@ -42,25 +47,32 @@ trait DuplicateTrait
         // copy the data
         // need to check if $product-id is in units table
         // if yes put all the new id's there with the correct values.
-        $copys = [];
+        $copies = [];
         $productsTable->add();
         for ($i = 0; $i < $copyOptions['amount']; $i++) {
-            $copys[] = $productsTable->add(
-                $product->manufacturer,
-                __d('admin', 'Copy ({0}) of {1}', [
-                    $i,
-                    $product->name,
-                ]),
-                $product->descriptionShort,
-                $product->description,
-                $product->unity,
-                $product->isDeclarationOk,
-                $product->idStorageLocation,
-                $product->barcode,
-            );
-        }
-        foreach ($copys as $copy) {
-            // add to other Tables
+            $copy = $productsTable->newEntity([
+                'id_manufacturer' => $product->id_manufacturer,
+                'id_tax' =>  $product->id_tax,
+                'id_price' =>  $product->id_price,
+                'name' =>  $product->name,
+                'unity' =>  $product->unity,
+                'is_declaration_ok' =>  $product->is_declaration_ok,
+                'is_stock_product' =>  $product->is_stock_product,
+                'delivery_rhythm_type' =>  $product->delivery_rhythm_type,
+                'delivery_rhythm_count' =>  $product->delivery_rhythm_count,
+                'delivery_rhythm_first_delivery_day' => $product->delivery_rhythm_first_delivery_day,
+                'delivery_rhythm_order_possible_units'  =>  $product->delivery_rhythm_order_possible_units,
+                'delivery_rhythm_send_order_list_week'  =>  $product->delivery_rhythm_send_order_list_week,
+                'delivery_rhythm_send_order_list_day'  =>  $product->delivery_rhythm_send_order_list_day,
+                'created' => DateTime::now(),
+                'modified' => DateTime::now(),
+                'new' => DateTime::now(),
+            ]);
+            $copy = $productsTable->save($copy);;
+            $copies[] = $copy;
+
+
+
         }
 
         $preparedProductForActionLog = [];
@@ -112,12 +124,6 @@ trait DuplicateTrait
 //            }
 //        }
 
-        // 1) set field modified to now
-        $productsTable->updateAll([
-            'modified' => DateTime::now() // timestamp behavior does not work here...
-        ], [
-            'id_product IN' => $copys
-        ]);
 
         $message = __d('admin', 'product_was_copied_successfully.');
 

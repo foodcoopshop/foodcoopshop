@@ -31,6 +31,7 @@ foodcoopshop.ModalProductDuplicate = {
 
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
             var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
+            var maxAmount = 10;
 
             var html = '<p style="margin-top: 10px;">';
             html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct;
@@ -43,8 +44,8 @@ foodcoopshop.ModalProductDuplicate = {
             html += '<div class="field-wrapper">';
             html += '<label class="dynamic-element default" for="copy-amount">'+ foodcoopshop.LocalizedJs.admin.AmountOfCopies +'</label><br>';
             html += '<select id="copy-amount" name="copy-amount" style="margin-top: 5px;">';
-            for (var i = 1; i <= 10; i++) {
-                html += '<option value= "'+i+'" >' + i + '</option>';
+            for (var i = 1; i <= maxAmount; i++) {
+                html += '<option value= i >' + i + '</option>';
             }
             html += '</select>';
             html += '</div>';
@@ -73,14 +74,14 @@ foodcoopshop.ModalProductDuplicate = {
         $(modalSelector).remove();
     },
 
-    getSuccessHandler : function(modalSelector, productIds, amount) {
+    getSuccessHandler : function(modalSelector, productId, amount) {
         var copyOptions = {};
         copyOptions['amount'] = amount;
 
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/duplicate/',
             {
-                productIds: productIds,
+                productIds: productId,
                 copyOptions: copyOptions
             },
             {
