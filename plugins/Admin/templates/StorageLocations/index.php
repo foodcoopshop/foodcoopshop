@@ -18,7 +18,8 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
     "
 ]);
 $this->element('highlightRowAfterEdit', [
