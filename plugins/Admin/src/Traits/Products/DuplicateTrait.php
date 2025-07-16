@@ -10,6 +10,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
 use Cake\Http\Response;
+use function PHPUnit\Framework\isType;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,7 +37,8 @@ trait DuplicateTrait
         $copies = [];
 
 //        $associations = [
-////            'StockAvailables',
+//            'StockAvailables',
+//            ''
 //        ];
 //
 //        for ($i = 0; $i < $copyAmount; $i++) {
@@ -70,6 +72,11 @@ trait DuplicateTrait
     {
         $productsTable = $this->getTableLocator()->get('Products');
 
+        $associationTables = [];
+        foreach ($associations as $association) {
+            $associationTables[$association] = $this->getTableLocator()->get($association);
+        }
+
         $srcProduct = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('id_product') => $productId,
@@ -82,21 +89,25 @@ trait DuplicateTrait
         $data = $srcProduct->toArray();
 
         // Unset fields that should not be copied
-        unset($data['id'], $data[$productsTable->getPrimaryKey()]);
+        // Unset PrimaryKeys
+        unset($data[$productsTable->getPrimaryKey()]);
+        foreach ($associations as $association) {
+            //check if only one attribute is PrimaryKey
+            if (!is_array($data[$associationTables[$association]->getPrimaryKey()])) {
+                unset($data[$associationTables[$association]->getPrimaryKey()]);
+            }
+            unset($data[$associationTables[$association]->aliasField('id_product')], $data[$associationTables[$association]->aliasField('product_id')]);
+        }
+
         $data[$productsTable->aliasField('name')] =
             __d('admin', 'Copy ({0}) of {1}', [
                     $copyIndex,
                     $srcProduct->name
                 ]
             );
-
-
-        // Recursively remove primary keys in associations
-        array_walk_recursive($data, function (&$value, $key) {
-            if ($key === 'id') {
-                $value = null;
-            }
-        });
+        $data[$productsTable->aliasField('modified')] = DateTime::now();
+        $data[$productsTable->aliasField('created')] = DateTime::now();
+        $data[$productsTable->aliasField('new')] = DateTime::now();
 
         // Create new entity with associations
         return $productsTable->newEntity($data, ['associated' => $associations]);
@@ -108,7 +119,7 @@ trait DuplicateTrait
         $productsTable = $this->getTableLocator()->get('Products');
         $stockAvailableTable = $this->getTableLocator()->get('StockAvailables');
         $categoryProductTable = $this->getTableLocator()->get('CategoryProducts');
-        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitsTable = $this->getTableLocator()->get('UnitProducts');
         $purchasePricesTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $depositsTable = $this->getTableLocator()->get('DepositProducts');
 
@@ -226,7 +237,7 @@ trait DuplicateTrait
                     [
                         'id_product' => $productCopy->id_product,
 
-                        'price_incl_per_unit' => $unitOg->price,
+                        'price_incl_per_unit' => $unitOg->price_incl_per_unit,
                         'name' => $unitOg->name,
                         'amount' => $unitOg->amount,
                         'price_per_unit_enabled' => $unitOg->price_per_unit_enabled,
