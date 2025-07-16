@@ -721,7 +721,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testDuplicate(): void
     {
-        $productId = 340;
+        $productId = 349;
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $srcProduct = $productsTable->find('all',
             conditions: [
@@ -731,6 +731,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 'DepositProducts',
                 'UnitProducts',
                 'StockAvailables',
+                'CategoryProducts',
             ]
         )->first();
 
@@ -753,6 +754,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 'DepositProducts',
                 'UnitProducts',
                 'StockAvailables',
+                'CategoryProducts',
             ]
         );
 
@@ -761,12 +763,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $copy = $copies->first();
 
         $this->assertEquals($srcProduct->price, $copy->price);
-        $this->assertEquals($srcProduct->deposit_product, $copy->deposit_product);
         $this->assertEquals($srcProduct->id_tax, $copy->id_tax);
         $this->assertEquals($srcProduct->id_manufacturer, $copy->id_manufacturer);
         $this->assertEquals($srcProduct->is_decleration_ok, $copy->is_decleration_ok);
         $this->assertEquals($srcProduct->status, $copy->status);
         $this->assertTrue($copy->new->isToday());
+
 
         $this->assertEquals($srcProduct->delivery_rhythm_type, $copy->delivery_rhythm_type);
         $this->assertEquals($srcProduct->delivery_rhythm_count, $copy->delivery_rhythm_count);
@@ -775,13 +777,17 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_weekday, $copy->delivery_rhythm_send_order_list_weekday);
         $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_day, $copy->delivery_rhythm_send_order_list_day);
 
+        $this->assertEquals($srcProduct->deposit_product, $copy->deposit_product);
+
         $this->assertEquals($srcProduct->stock_available->quantity, $copy->stock_available->quantity);
         $this->assertEquals($srcProduct->stock_available->quantity_limit, $copy->stock_available->quantity_limit);
         $this->assertEquals($srcProduct->stock_available->sold_out_limit, $copy->stock_available->sold_out_limit);
         $this->assertEquals($srcProduct->stock_available->always_available, $copy->stock_available->always_available);
         $this->assertEquals($srcProduct->stock_available->default_quantity_after_sending_order_lists, $copy->stock_available->default_quantity_after_sending_order_lists);
 
-        $this->assertEquals($srcProduct->unit, $copy->unit);
+        $this->assertEquals($srcProduct->unit_product->name, $copy->unit_product->name);
+
+        $this->assertEquals(array_pop($srcProduct->category_products)->id_category, array_pop($copy->category_products)->id_category);
 //        exit;
     }
 
