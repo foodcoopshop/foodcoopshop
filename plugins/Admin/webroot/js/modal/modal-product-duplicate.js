@@ -29,7 +29,7 @@ foodcoopshop.ModalProductDuplicate = {
 
         button.on('click', function () {
 
-            var productIds = foodcoopshop.Admin.getSelectedProductIds();
+            var productId = foodcoopshop.Admin.getSelectedProductIds().pop();
             var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
             var maxAmount = 10;
 
@@ -37,7 +37,7 @@ foodcoopshop.ModalProductDuplicate = {
             html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct;
             html += '</p>';
 
-            var product = $('tr#product-' + productIds[0] + ' span.product-name').html();
+            var product = $('tr#product-' + productId + ' span.product-name').html();
 
             html += '<ul><li>' + product + '</li></ul>';
 
@@ -45,7 +45,7 @@ foodcoopshop.ModalProductDuplicate = {
             html += '<label class="dynamic-element default" for="copy-amount">'+ foodcoopshop.LocalizedJs.admin.AmountOfCopies +'</label><br>';
             html += '<select id="copy-amount" name="copy-amount" style="margin-top: 5px;">';
             for (var i = 1; i <= maxAmount; i++) {
-                html += '<option value= i >' + i + '</option>';
+                html += '<option value= "'+i+'" >' + i + '</option>';
             }
             html += '</select>';
             html += '</div>';
@@ -58,7 +58,8 @@ foodcoopshop.ModalProductDuplicate = {
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                 var amountValue = parseInt($(modalSelector + ' #copy-amount').val());
-                foodcoopshop.ModalProductDuplicate.getSuccessHandler(modalSelector, productIds, amountValue);
+                console.log(amountValue);
+                foodcoopshop.ModalProductDuplicate.getSuccessHandler(modalSelector, productId, amountValue);
             });
 
             $(modalSelector).on('hidden.bs.modal', function (e) {

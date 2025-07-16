@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Model\Entity\Manufacturer;
+use App\Model\Entity\Product;
+use App\Model\Table\ProductsTable;
+use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
 use App\Model\Entity\OrderDetail;
 use Cake\Http\Response;
@@ -29,10 +33,78 @@ trait DuplicateTrait
 
         $productId = $this->getRequest()->getData('productId');
         $copyAmount = $this->getRequest()->getData('copyAmount');
+        $copies = [];
 
-        $productId = 60;
-        $copyAmount = 1;
+//        $associations = [
+////            'StockAvailables',
+//        ];
+//
+//        for ($i = 0; $i < $copyAmount; $i++) {
+//            $copies[] = $this->deepCopyProduct($productId, $associations, $i);
+//        }
+//        $productsTable = $this->getTableLocator()->get('Products');
+//        $productsTable->saveMany($copies);
 
+        $copies = $this->manuelCopy(intval($copyAmount), intval($productId));
+
+        $preparedProductForActionLog = [];
+        foreach ($copies as $productCopy) {
+            $preparedProductForActionLog[] = '<b>' . $productCopy->name . '</b>: ID ' . $productCopy->id_product;
+        }
+
+        $message = __d('admin', 'product_was_copied_successfully.');
+
+        $this->Flash->success($message);
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogsTable->customSave('product_copied', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductForActionLog));
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        return null;
+    }
+
+    function deepCopyProduct(mixed $productId, array $associations, int $copyIndex): EntityInterface
+    {
+        $productsTable = $this->getTableLocator()->get('Products');
+
+        $srcProduct = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('id_product') => $productId,
+            ],
+            contain: $associations
+            ,
+        )->first();
+
+        // Convert the entity to an array, including associations
+        $data = $srcProduct->toArray();
+
+        // Unset fields that should not be copied
+        unset($data['id'], $data[$productsTable->getPrimaryKey()]);
+        $data[$productsTable->aliasField('name')] =
+            __d('admin', 'Copy ({0}) of {1}', [
+                    $copyIndex,
+                    $srcProduct->name
+                ]
+            );
+
+
+        // Recursively remove primary keys in associations
+        array_walk_recursive($data, function (&$value, $key) {
+            if ($key === 'id') {
+                $value = null;
+            }
+        });
+
+        // Create new entity with associations
+        return $productsTable->newEntity($data, ['associated' => $associations]);
+    }
+
+
+    function manuelCopy(int $copyAmount, int $productId): array
+    {
         $productsTable = $this->getTableLocator()->get('Products');
         $stockAvailableTable = $this->getTableLocator()->get('StockAvailables');
         $categoryProductTable = $this->getTableLocator()->get('CategoryProducts');
@@ -79,30 +151,25 @@ trait DuplicateTrait
         )->first();
 
 
-        $maxCopyNumber = 1;
         $preExistingCopies = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', 'Copy_({0})_of_{1}', [
+                $productsTable->aliasField('name LIKE') => __d('admin', 'Copy ({0}) of {1}', [
                     '%',
                     $productOg->name,
                 ])
             ],
         );
-//        dd(
-//            [
-//                $stockAvailableTable,
-//                $stockAvailableOg,
-//            ]
-//        );
+        $amountOfPreCopies = $preExistingCopies->count() + 1;
+
         $copies = [];
         for ($i = 0; $i < $copyAmount; $i++) {
             $productCopy = $productsTable->newEntity(
                 [
                     'id_manufacturer' => $productOg->id_manufacturer,
                     'id_tax' => $productOg->id_tax,
-                    'id_price' => $productOg->id_price,
-                    'name' => __d('admin', 'Copy_({0})_of_{1}', [
-                        ($maxCopyNumber + $i),
+                    'price' => $productOg->price,
+                    'name' => __d('admin', 'Copy ({0}) of {1}', [
+                        ($amountOfPreCopies + $i),
                         $productOg->name,
                     ]),
                     'unity' => $productOg->unity,
@@ -113,7 +180,7 @@ trait DuplicateTrait
                     'delivery_rhythm_count' => $productOg->delivery_rhythm_count,
                     'delivery_rhythm_first_delivery_day' => $productOg->delivery_rhythm_first_delivery_day,
                     'delivery_rhythm_order_possible_units' => $productOg->delivery_rhythm_order_possible_units,
-                    'delivery_rhythm_send_order_list_week' => $productOg->delivery_rhythm_send_order_list_week,
+                    'delivery_rhythm_send_order_list_weekday' => $productOg->delivery_rhythm_send_order_list_weekday,
                     'delivery_rhythm_send_order_list_day' => $productOg->delivery_rhythm_send_order_list_day,
 
                     'created' => DateTime::now(),
@@ -126,25 +193,29 @@ trait DuplicateTrait
             );
             $productCopy = $productsTable->save($productCopy);;
 
-            $stockAvailableCopy = $stockAvailableTable->newEntity(
-                [
-                    'id_product' => $productCopy->id_product,
-                    'quantity' => $stockAvailableOg->quantity,
-                    'quantity_limit' => $stockAvailableOg->quantity_limit,
-                    'sold_out_limit' => $stockAvailableOg->sold_out_limit,
-                    'always_available' => $stockAvailableOg->always_available,
-                    'default_quantity_after_sending_order_lists' => $stockAvailableOg->default_quantity_after_sending_order_lists,
-                ],
-                [
-                    'validate' => false
-                ],
-            );
-            $stockAvailableCopy = $stockAvailableTable->save($stockAvailableCopy);
+            if (!empty($stockAvailableOg)) {
+                $stockAvailableCopy = $stockAvailableTable->newEntity(
+                    [
+                        'id_product' => $productCopy->id_product,
+                        'quantity' => $stockAvailableOg->quantity,
+                        'quantity_limit' => $stockAvailableOg->quantity_limit,
+                        'sold_out_limit' => $stockAvailableOg->sold_out_limit,
+                        'always_available' => $stockAvailableOg->always_available,
+                        'default_quantity_after_sending_order_lists' => $stockAvailableOg->default_quantity_after_sending_order_lists,
+                    ],
+                    [
+                        'validate' => false
+                    ],
+                );
+                $stockAvailableCopy = $stockAvailableTable->save($stockAvailableCopy);
+            }
 
             if (!empty($unitOg)) {
+                unset($unitOg->id_product);
                 $unitCopy = $unitsTable->newEntity(
                     [
                         'id_product' => $productCopy->id_product,
+
                         'price_incl_per_unit' => $unitOg->price,
                         'name' => $unitOg->name,
                         'amount' => $unitOg->amount,
@@ -159,17 +230,19 @@ trait DuplicateTrait
                 $unitCopy = $unitsTable->save($unitCopy);
             }
 
-            $purchasePriceCopy = $purchasePricesTable->newEntity(
-                [
-                    'product_id' => $productCopy->id_product,
-                    'tax_id' => $purchasePriceOg->id_tax,
-                    'price' => $purchasePriceOg->price,
-                ],
-                [
-                    'validate' => false
-                ],
-            );
-            $purchasePriceOg = $purchasePricesTable->save($purchasePriceCopy);
+            if (!empty($purchasePricesOg)) {
+                $purchasePriceCopy = $purchasePricesTable->newEntity(
+                    [
+                        'product_id' => $productCopy->id_product,
+                        'tax_id' => $purchasePriceOg->id_tax,
+                        'price' => $purchasePriceOg->price,
+                    ],
+                    [
+                        'validate' => false
+                    ],
+                );
+                $purchasePriceCopy = $purchasePricesTable->save($purchasePriceCopy);
+            }
 
             foreach ($categoriesOg as $categoryOg) {
                 $categoryCopy = $categoryProductTable->newEntity(
@@ -197,28 +270,9 @@ trait DuplicateTrait
                 $depositCopy = $depositsTable->save($depositCopy);
             }
 
-
             $copies[] = $productCopy;
         }
-
-        $preparedProductForActionLog = [];
-        foreach ($copies as $productCopy) {
-            $preparedProductForActionLog[] = '<b>' . $productCopy->name . '</b>: ID ' . $productCopy->id_product;
-        }
-
-        $message = __d('admin', 'product_was_copied_successfully.');
-
-        $this->Flash->success($message);
-        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogsTable->customSave('product_copied', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductForActionLog));
-
-        $this->set([
-            'status' => 1,
-            'msg' => 'ok',
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-        return null;
-
+        return $copies;
     }
 
 }
