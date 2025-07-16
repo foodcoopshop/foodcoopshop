@@ -25,6 +25,7 @@ use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Product;
+use Cake\I18n\DateTime;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -728,7 +729,7 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
             contains: [
                 'DepositProducts',
-
+                'StockAvailables',
             ]
         )->first();
 
@@ -749,6 +750,7 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
             contains: [
                 'DepositProducts',
+                'StockAvailables',
             ]
         );
 
@@ -758,6 +760,20 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->assertEquals($srcProduct->price, $copy->price);
         $this->assertEquals($srcProduct->deposit_product, $copy->deposit_product);
+        $this->assertEquals($srcProduct->id_tax, $copy->id_tax);
+        $this->assertEquals($srcProduct->id_manufacturer, $copy->id_manufacturer);
+        $this->assertEquals($srcProduct->is_decleration_ok, $copy->is_decleration_ok);
+        $this->assertEquals($srcProduct->status, $copy->status);
+        $this->assertTrue($copy->new->isToday());
+        $this->assertEquals($srcProduct->delivery_rhythm_type, $copy->delivery_rhythm_type);
+        $this->assertEquals($srcProduct->delivery_rhythm_count, $copy->delivery_rhythm_count);
+        $this->assertEquals($srcProduct->delivery_rhytm_first_delivery_day, $copy->delivery_rhytm_first_delivery_day);
+        $this->assertEquals($srcProduct->delivery_rhytm_order_possible_units, $copy->delivery_rhytm_order_possible_units);
+        $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_weekday, $copy->delivery_rhythm_send_order_list_weekday);
+        $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_day, $copy->delivery_rhythm_send_order_list_day);
+
+
+
 
 //        exit;
     }

@@ -150,6 +150,15 @@ trait DuplicateTrait
             ],
         )->first();
 
+//        dd(
+//            [
+//                $productsTable,
+//                $productOg,
+//                $stockAvailableTable,
+//                $stockAvailableOg,
+//            ]
+//        );
+
 
         $preExistingCopies = $productsTable->find('all',
             conditions: [
@@ -197,6 +206,7 @@ trait DuplicateTrait
                 $stockAvailableCopy = $stockAvailableTable->newEntity(
                     [
                         'id_product' => $productCopy->id_product,
+
                         'quantity' => $stockAvailableOg->quantity,
                         'quantity_limit' => $stockAvailableOg->quantity_limit,
                         'sold_out_limit' => $stockAvailableOg->sold_out_limit,
@@ -234,6 +244,7 @@ trait DuplicateTrait
                 $purchasePriceCopy = $purchasePricesTable->newEntity(
                     [
                         'product_id' => $productCopy->id_product,
+
                         'tax_id' => $purchasePriceOg->id_tax,
                         'price' => $purchasePriceOg->price,
                     ],
@@ -247,8 +258,8 @@ trait DuplicateTrait
             foreach ($categoriesOg as $categoryOg) {
                 $categoryCopy = $categoryProductTable->newEntity(
                     [
-                        'id_category' => $categoryOg->id_category,
                         'id_product' => $productCopy->id_product,
+                        'id_category' => $categoryOg->id_category,
                     ],
                     [
                         'validate' => false
@@ -261,6 +272,7 @@ trait DuplicateTrait
                 $depositCopy = $depositsTable->newEntity(
                     [
                         'id_product' => $productCopy->id_product,
+
                         'deposit' => $depositOg->deposit,
                     ],
                     [
