@@ -727,8 +727,9 @@ class ProductsControllerTest extends AppCakeTestCase
             conditions: [
                 $productsTable->aliasField('id_product') => $productId,
             ],
-            contains: [
+            contain: [
                 'DepositProducts',
+                'UnitProducts',
                 'StockAvailables',
             ]
         )->first();
@@ -748,8 +749,9 @@ class ProductsControllerTest extends AppCakeTestCase
                     $srcProduct->name,
                 ]),
             ],
-            contains: [
+            contain: [
                 'DepositProducts',
+                'UnitProducts',
                 'StockAvailables',
             ]
         );
@@ -765,6 +767,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($srcProduct->is_decleration_ok, $copy->is_decleration_ok);
         $this->assertEquals($srcProduct->status, $copy->status);
         $this->assertTrue($copy->new->isToday());
+
         $this->assertEquals($srcProduct->delivery_rhythm_type, $copy->delivery_rhythm_type);
         $this->assertEquals($srcProduct->delivery_rhythm_count, $copy->delivery_rhythm_count);
         $this->assertEquals($srcProduct->delivery_rhytm_first_delivery_day, $copy->delivery_rhytm_first_delivery_day);
@@ -772,9 +775,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_weekday, $copy->delivery_rhythm_send_order_list_weekday);
         $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_day, $copy->delivery_rhythm_send_order_list_day);
 
+        $this->assertEquals($srcProduct->stock_available->quantity, $copy->stock_available->quantity);
+        $this->assertEquals($srcProduct->stock_available->quantity_limit, $copy->stock_available->quantity_limit);
+        $this->assertEquals($srcProduct->stock_available->sold_out_limit, $copy->stock_available->sold_out_limit);
+        $this->assertEquals($srcProduct->stock_available->always_available, $copy->stock_available->always_available);
+        $this->assertEquals($srcProduct->stock_available->default_quantity_after_sending_order_lists, $copy->stock_available->default_quantity_after_sending_order_lists);
 
-
-
+        $this->assertEquals($srcProduct->unit, $copy->unit);
 //        exit;
     }
 

@@ -154,8 +154,8 @@ trait DuplicateTrait
 //            [
 //                $productsTable,
 //                $productOg,
-//                $stockAvailableTable,
-//                $stockAvailableOg,
+//                $unitsTable,
+//                $unitOg,
 //            ]
 //        );
 
@@ -240,7 +240,7 @@ trait DuplicateTrait
                 $unitCopy = $unitsTable->save($unitCopy);
             }
 
-            if (!empty($purchasePricesOg)) {
+            if (!empty($purchasePriceOg)) {
                 $purchasePriceCopy = $purchasePricesTable->newEntity(
                     [
                         'product_id' => $productCopy->id_product,
