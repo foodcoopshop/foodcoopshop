@@ -787,7 +787,10 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->assertEquals($srcProduct->unit_product->name, $copy->unit_product->name);
 
-        $this->assertEquals(array_pop($srcProduct->category_products)->id_category, array_pop($copy->category_products)->id_category);
+        $copyCategory = array_pop($copy->category_products);
+        $this->assertNotNull($copyCategory->id_category);
+        $this->assertEquals(array_pop($srcProduct->category_products)->id_category, $copyCategory->id_category);
+        $this->assertEquals($copy->id_product, $copyCategory->id_product);
 //        exit;
     }
 

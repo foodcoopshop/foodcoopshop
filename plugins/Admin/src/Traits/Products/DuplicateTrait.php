@@ -5,14 +5,13 @@ namespace Admin\Traits\Products;
 
 use App\Model\Entity\Product;
 use App\Model\Table\DepositProductsTable;
-use App\Model\Table\ProductsTable;
+use App\Model\Table\PurchasePriceProductsTable;
 use App\Model\Table\StockAvailablesTable;
 use App\Model\Table\UnitProductsTable;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
 use Cake\Http\Response;
 use Cake\Utility\Inflector;
-use function PHPUnit\Framework\isNull;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,34 +37,48 @@ trait DuplicateTrait
         $copyAmount = $this->getRequest()->getData('copyAmount');
         $copies = [];
 
+        $productsTable = $this->getTableLocator()->get('Products');
         $associations = [
             'StockAvailables' =>
                 [
                     'primaryKey' => StockAvailablesTable::ORIGINAL_PRIMARY_KEY
                 ],
-            'UnitProducts' => [
-                'primaryKey' => UnitProductsTable::ORIGINAL_PRIMARY_KEY
-            ],
-            'DepositProducts' => [
+            'UnitProducts' =>
+                [
+                    'primaryKey' => UnitProductsTable::ORIGINAL_PRIMARY_KEY
+                ],
+            'DepositProducts' =>
+            [
                 'primaryKey' => DepositProductsTable::ORIGINAL_PRIMARY_KEY
             ],
-            'PurchasePriceProducts' => [],
-//            'CategoryProducts' => [],
+            'PurchasePriceProducts' => [
+                'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
+            ],
+            'CategoryProducts' => [],
         ];
 
-        for ($i = 0; $i < $copyAmount; $i++) {
-            $copies[] = $this->deepCopyProduct($productId, $associations, $i);
-        }
-        $productsTable = $this->getTableLocator()->get('Products');
+        $srcProduct = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('id_product') => $productId,
+            ],
+            contain: array_keys($associations),
+        )->first();
 
-        pr($copies);
+        $preExistingCopies = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('name LIKE') => __d('admin', 'Copy ({0}) of {1}', [
+                    '%',
+                    $srcProduct->name,
+                ])
+            ],
+        );
+        $amountOfPreCopies = $preExistingCopies->count() + 1;
+
+        for ($i = 0; $i < $copyAmount; $i++) {
+            $copies[] = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
+        }
 
         $result = $productsTable->saveMany($copies);
-
-        pr($result);
-
-
-//        $copies = $this->manuelCopy(intval($copyAmount), intval($productId));
 
         $preparedProductForActionLog = [];
         foreach ($copies as $productCopy) {
@@ -86,21 +99,10 @@ trait DuplicateTrait
         return null;
     }
 
-    function deepCopyProduct(mixed $productId, array $associations, int $copyIndex): EntityInterface
+    function deepCopyProduct(Product $srcProduct, array $associations, int $copyIndex): EntityInterface
     {
         $productsTable = $this->getTableLocator()->get('Products');
 
-        $associationTables = [];
-        foreach ($associations as $associationName => $options) {
-            $associationTables[$associationName] = $this->getTableLocator()->get($associationName);
-        }
-
-        $srcProduct = $productsTable->find('all',
-            conditions: [
-                $productsTable->aliasField('id_product') => $productId,
-            ],
-            contain: array_keys($associations),
-        )->first();
 
         $product = $srcProduct->toArray();
 
@@ -115,17 +117,14 @@ trait DuplicateTrait
 
             $tableAssociationName = Inflector::tableize($associationName);
             $tableAssociationName = Inflector::singularize($tableAssociationName);
+
             if ($this->isAssociationNamePlural($tableAssociationName, $product)) {
-                pr("->pl");
+                $tableAssociationName = Inflector::pluralize($tableAssociationName);
+                $product[$tableAssociationName] = $this->removeHasManyAssociationKeys($product[$tableAssociationName]);
                 continue;
             }
 
-            if (!array_key_exists($tableAssociationName, $product)) {
-                pr("--------------->doesn't exist?");
-                continue;
-            }
-
-            $product[$tableAssociationName] = $this->removeHasOneAssociationPrimaryKeys($product[$tableAssociationName], $primaryKey);
+            $product[$tableAssociationName] = $this->removeHasOneAssociationKeys($product[$tableAssociationName], $primaryKey);
         }
 
         $product['name'] =
@@ -134,17 +133,24 @@ trait DuplicateTrait
                     $srcProduct->name
                 ]
             );
-        $product['modified'] = DateTime::now();
-        $product['created'] = DateTime::now();
-        $product['new'] = DateTime::now();
+        unset($product['modified']);
+        unset($product['created']);
 
-//        dd(
-//            [
-//                'stop',
-//            ]
-//        );
-        // Create new entity with associations
-        return $productsTable->newEntity($product, ['associated' => array_keys($associations)]);
+        $product['new'] = DateTime::now();
+        $product['active'] = APP_OFF;
+
+
+        $associationWithValidation = array_fill_keys(
+            array_keys($associations),
+            ['validate' => false]
+        );
+
+        return $productsTable->newEntity(
+            $product,
+            [
+                'associated' => $associationWithValidation,
+            ]
+        );
     }
 
     public function isAssociationNamePlural(string $associationName, array $product): bool
@@ -162,10 +168,9 @@ trait DuplicateTrait
     }
 
 
-    public function removeHasOneAssociationPrimaryKeys(mixed $associatedTable, string $primaryKey): mixed
+    public function removeHasOneAssociationKeys(mixed $associatedTable, string $primaryKey): mixed
     {
         if ($associatedTable == null) {
-            pr("-->table is null");
             return $associatedTable;
         }
 
@@ -173,194 +178,19 @@ trait DuplicateTrait
 
         unset($associatedTable['id_product'], $associatedTable['product_id']);
 
-        pr("->keys unset");
-
         return $associatedTable;
     }
 
-    function manuelCopy(int $copyAmount, int $productId): array
+    public function removeHasManyAssociationKeys(mixed $associatedTable): mixed
     {
-        $productsTable = $this->getTableLocator()->get('Products');
-        $stockAvailableTable = $this->getTableLocator()->get('StockAvailables');
-        $categoryProductTable = $this->getTableLocator()->get('CategoryProducts');
-        $unitsTable = $this->getTableLocator()->get('UnitProducts');
-        $purchasePricesTable = $this->getTableLocator()->get('PurchasePriceProducts');
-        $depositsTable = $this->getTableLocator()->get('DepositProducts');
-
-        $productOg = $productsTable->find('all',
-            conditions: [
-                $productsTable->aliasField('id_product') => $productId,
-            ],
-        )->first();
-
-        $stockAvailableOg = $stockAvailableTable->find('all',
-            conditions: [
-                $stockAvailableTable->aliasField('id_product') => $productId,
-                $stockAvailableTable->aliasField('id_product_attribute') => APP_OFF,
-            ],
-        )->first();
-
-        $unitOg = $unitsTable->find('all',
-            conditions: [
-                $unitsTable->aliasField('id_product') => $productId,
-            ],
-        )->first();
-
-        $purchasePriceOg = $purchasePricesTable->find('all',
-            conditions: [
-                $purchasePricesTable->aliasField('product_id') => $productId,
-                $purchasePricesTable->aliasField('product_attribute_id') => APP_OFF,
-            ],
-        )->first();
-
-        $categoriesOg = $categoryProductTable->find('all',
-            conditions: [
-                $categoryProductTable->aliasField('id_product') => $productId,
-            ],
-        );
-
-        $depositOg = $depositsTable->find('all',
-            conditions: [
-                $depositsTable->aliasField('id_product') => $productId,
-            ],
-        )->first();
-
-//        dd(
-//            [
-//                $productsTable,
-//                $productOg,
-//                $unitsTable,
-//                $unitOg,
-//            ]
-//        );
-
-
-        $preExistingCopies = $productsTable->find('all',
-            conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', 'Copy ({0}) of {1}', [
-                    '%',
-                    $productOg->name,
-                ])
-            ],
-        );
-        $amountOfPreCopies = $preExistingCopies->count() + 1;
-
-        $copies = [];
-        for ($i = 0; $i < $copyAmount; $i++) {
-            $productCopy = $productsTable->newEntity(
-                [
-                    'id_manufacturer' => $productOg->id_manufacturer,
-                    'id_tax' => $productOg->id_tax,
-                    'price' => $productOg->price,
-                    'name' => __d('admin', 'Copy ({0}) of {1}', [
-                        ($amountOfPreCopies + $i),
-                        $productOg->name,
-                    ]),
-                    'unity' => $productOg->unity,
-                    'is_declaration_ok' => $productOg->is_declaration_ok,
-                    'is_stock_product' => $productOg->is_stock_product,
-
-                    'delivery_rhythm_type' => $productOg->delivery_rhythm_type,
-                    'delivery_rhythm_count' => $productOg->delivery_rhythm_count,
-                    'delivery_rhythm_first_delivery_day' => $productOg->delivery_rhythm_first_delivery_day,
-                    'delivery_rhythm_order_possible_units' => $productOg->delivery_rhythm_order_possible_units,
-                    'delivery_rhythm_send_order_list_weekday' => $productOg->delivery_rhythm_send_order_list_weekday,
-                    'delivery_rhythm_send_order_list_day' => $productOg->delivery_rhythm_send_order_list_day,
-
-                    'created' => DateTime::now(),
-                    'modified' => DateTime::now(),
-                    'new' => DateTime::now(),
-                ],
-                [
-                    'validate' => false
-                ],
-            );
-            $productCopy = $productsTable->save($productCopy);;
-
-            if (!empty($stockAvailableOg)) {
-                $stockAvailableCopy = $stockAvailableTable->newEntity(
-                    [
-                        'id_product' => $productCopy->id_product,
-
-                        'quantity' => $stockAvailableOg->quantity,
-                        'quantity_limit' => $stockAvailableOg->quantity_limit,
-                        'sold_out_limit' => $stockAvailableOg->sold_out_limit,
-                        'always_available' => $stockAvailableOg->always_available,
-                        'default_quantity_after_sending_order_lists' => $stockAvailableOg->default_quantity_after_sending_order_lists,
-                    ],
-                    [
-                        'validate' => false
-                    ],
-                );
-                $stockAvailableCopy = $stockAvailableTable->save($stockAvailableCopy);
-            }
-
-            if (!empty($unitOg)) {
-                unset($unitOg->id_product);
-                $unitCopy = $unitsTable->newEntity(
-                    [
-                        'id_product' => $productCopy->id_product,
-
-                        'price_incl_per_unit' => $unitOg->price_incl_per_unit,
-                        'name' => $unitOg->name,
-                        'amount' => $unitOg->amount,
-                        'price_per_unit_enabled' => $unitOg->price_per_unit_enabled,
-                        'quantity_in_units' => $unitOg->quantity_in_units,
-                        'use_weight_as_amount' => $unitOg->use_weight_as_amount,
-                    ],
-                    [
-                        'validate' => false
-                    ],
-                );
-                $unitCopy = $unitsTable->save($unitCopy);
-            }
-
-            if (!empty($purchasePriceOg)) {
-                $purchasePriceCopy = $purchasePricesTable->newEntity(
-                    [
-                        'product_id' => $productCopy->id_product,
-
-                        'tax_id' => $purchasePriceOg->id_tax,
-                        'price' => $purchasePriceOg->price,
-                    ],
-                    [
-                        'validate' => false
-                    ],
-                );
-                $purchasePriceCopy = $purchasePricesTable->save($purchasePriceCopy);
-            }
-
-            foreach ($categoriesOg as $categoryOg) {
-                $categoryCopy = $categoryProductTable->newEntity(
-                    [
-                        'id_product' => $productCopy->id_product,
-                        'id_category' => $categoryOg->id_category,
-                    ],
-                    [
-                        'validate' => false
-                    ],
-                );
-                $categoryCopy = $categoryProductTable->save($categoryCopy);
-            }
-
-            if (!empty($depositOg)) {
-                $depositCopy = $depositsTable->newEntity(
-                    [
-                        'id_product' => $productCopy->id_product,
-
-                        'deposit' => $depositOg->deposit,
-                    ],
-                    [
-                        'validate' => false
-                    ],
-                );
-                $depositCopy = $depositsTable->save($depositCopy);
-            }
-
-            $copies[] = $productCopy;
+        if ($associatedTable == null) {
+            return $associatedTable;
         }
-        return $copies;
+
+        foreach ($associatedTable as $association) {
+            unset($association['id_product'], $associatedTable['product_id']);
+        }
+
+        return $associatedTable;
     }
-
-
 }
