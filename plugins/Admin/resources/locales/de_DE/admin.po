@@ -776,7 +776,7 @@ msgid "Storage locations"
 msgstr "Lagerorte"
 
 msgid "Add {0}"
-msgstr "{0} hinzufügen"
+msgstr "{0} erstellen"
 
 msgid "Edit {0}"
 msgstr "{0} bearbeiten"
@@ -1882,11 +1882,14 @@ msgstr "Hersteller auswählen..."
 msgid "chose_category..."
 msgstr "Kategorie auswählen..."
 
+msgid "Category"
+msgstr "Kategorie"
+
 msgid "price"
 msgstr "Preis"
 
-msgid "Add_product"
-msgstr "Neues Produkt"
+msgid "Add product"
+msgstr "Neues Produkt erstellen"
 
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"

@@ -33,8 +33,9 @@ use Cake\Core\Configure;
         <div class="right">
             <?php
             echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_category').'', $this->Slug->getCategoryAdd(), [
+            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getCategoryAdd(), [
                 'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Add_category'),
                 'escape' => false
             ]);
             echo '</div>';
