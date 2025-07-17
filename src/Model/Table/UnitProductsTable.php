@@ -25,6 +25,7 @@ class UnitProductsTable extends AppTable
 {
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
+    const ORIGINAL_PRIMARY_KEY = 'id';
 
     public function initialize(array $config): void
     {
