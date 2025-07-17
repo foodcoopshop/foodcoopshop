@@ -102,7 +102,7 @@ $paginator = $this->loadHelper('Paginator', [
                 'type' => 'select',
                 'label' => '',
                 'multiple' => true,
-                'empty' => __d('admin', 'chose_category...'),
+                'empty' => __d('admin', 'Category'),
                 'options' => $categoriesForDropdown,
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
@@ -117,8 +117,9 @@ $paginator = $this->loadHelper('Paginator', [
                         'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
+                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ', 'javascript:void(0);', [
                         'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Add product'),
                         'escape' => false
                     ]);
                     echo '</div>';

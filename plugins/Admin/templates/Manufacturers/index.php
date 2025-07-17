@@ -43,8 +43,9 @@ use Cake\ORM\TableRegistry;
                 <?php
                 if (Configure::read('app.showManufacturerListAndDetailPage') || count($manufacturers) == 0) {
                     echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
+                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getManufacturerAdd(), [
                         'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Add_manufacturer'),
                         'escape' => false
                     ]);
                     echo '</div>';

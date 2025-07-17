@@ -34,8 +34,9 @@ use Cake\Utility\Hash;
         <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_attribute').'', $this->Slug->getAttributeAdd(), [
+            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getAttributeAdd(), [
                 'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Add_attribute'),
                 'escape' => false
             ]);
             echo '</div>';

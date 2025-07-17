@@ -1852,7 +1852,7 @@ msgstr "amount"
 msgid "price"
 msgstr "price"
 
-msgid "Add_product"
+msgid "Add product"
 msgstr "Add product"
 
 msgid "Synchronize_products"
