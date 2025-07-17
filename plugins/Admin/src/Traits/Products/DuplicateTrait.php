@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Model\Entity\Manufacturer;
 use App\Model\Entity\Product;
+use App\Model\Table\DepositProductsTable;
 use App\Model\Table\ProductsTable;
+use App\Model\Table\StockAvailablesTable;
+use App\Model\Table\UnitProductsTable;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
-use App\Model\Entity\OrderDetail;
 use Cake\Http\Response;
-use function PHPUnit\Framework\isType;
+use Cake\Utility\Inflector;
+use function PHPUnit\Framework\isNull;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,18 +38,34 @@ trait DuplicateTrait
         $copyAmount = $this->getRequest()->getData('copyAmount');
         $copies = [];
 
-//        $associations = [
-//            'StockAvailables',
-//            ''
-//        ];
-//
-//        for ($i = 0; $i < $copyAmount; $i++) {
-//            $copies[] = $this->deepCopyProduct($productId, $associations, $i);
-//        }
-//        $productsTable = $this->getTableLocator()->get('Products');
-//        $productsTable->saveMany($copies);
+        $associations = [
+            'StockAvailables' =>
+                [
+                    'primaryKey' => StockAvailablesTable::ORIGINAL_PRIMARY_KEY
+                ],
+            'UnitProducts' => [
+                'primaryKey' => UnitProductsTable::ORIGINAL_PRIMARY_KEY
+            ],
+            'DepositProducts' => [
+                'primaryKey' => DepositProductsTable::ORIGINAL_PRIMARY_KEY
+            ],
+            'PurchasePriceProducts' => [],
+//            'CategoryProducts' => [],
+        ];
 
-        $copies = $this->manuelCopy(intval($copyAmount), intval($productId));
+        for ($i = 0; $i < $copyAmount; $i++) {
+            $copies[] = $this->deepCopyProduct($productId, $associations, $i);
+        }
+        $productsTable = $this->getTableLocator()->get('Products');
+
+        pr($copies);
+
+        $result = $productsTable->saveMany($copies);
+
+        pr($result);
+
+
+//        $copies = $this->manuelCopy(intval($copyAmount), intval($productId));
 
         $preparedProductForActionLog = [];
         foreach ($copies as $productCopy) {
@@ -73,46 +91,92 @@ trait DuplicateTrait
         $productsTable = $this->getTableLocator()->get('Products');
 
         $associationTables = [];
-        foreach ($associations as $association) {
-            $associationTables[$association] = $this->getTableLocator()->get($association);
+        foreach ($associations as $associationName => $options) {
+            $associationTables[$associationName] = $this->getTableLocator()->get($associationName);
         }
 
         $srcProduct = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('id_product') => $productId,
             ],
-            contain: $associations
-            ,
+            contain: array_keys($associations),
         )->first();
 
-        // Convert the entity to an array, including associations
-        $data = $srcProduct->toArray();
+        $product = $srcProduct->toArray();
 
-        // Unset fields that should not be copied
-        // Unset PrimaryKeys
-        unset($data[$productsTable->getPrimaryKey()]);
-        foreach ($associations as $association) {
-            //check if only one attribute is PrimaryKey
-            if (!is_array($data[$associationTables[$association]->getPrimaryKey()])) {
-                unset($data[$associationTables[$association]->getPrimaryKey()]);
+        unset($product[$productsTable->getPrimaryKey()]);
+
+        foreach ($associations as $associationName => $options) {
+
+            $primaryKey = $this->getTableLocator()->get($associationName)->getPrimaryKey();
+            if (isset($options['primaryKey'])) {
+                $primaryKey = $options['primaryKey'];
             }
-            unset($data[$associationTables[$association]->aliasField('id_product')], $data[$associationTables[$association]->aliasField('product_id')]);
+
+            $tableAssociationName = Inflector::tableize($associationName);
+            $tableAssociationName = Inflector::singularize($tableAssociationName);
+            if ($this->isAssociationNamePlural($tableAssociationName, $product)) {
+                pr("->pl");
+                continue;
+            }
+
+            if (!array_key_exists($tableAssociationName, $product)) {
+                pr("--------------->doesn't exist?");
+                continue;
+            }
+
+            $product[$tableAssociationName] = $this->removeHasOneAssociationPrimaryKeys($product[$tableAssociationName], $primaryKey);
         }
 
-        $data[$productsTable->aliasField('name')] =
+        $product['name'] =
             __d('admin', 'Copy ({0}) of {1}', [
                     $copyIndex,
                     $srcProduct->name
                 ]
             );
-        $data[$productsTable->aliasField('modified')] = DateTime::now();
-        $data[$productsTable->aliasField('created')] = DateTime::now();
-        $data[$productsTable->aliasField('new')] = DateTime::now();
+        $product['modified'] = DateTime::now();
+        $product['created'] = DateTime::now();
+        $product['new'] = DateTime::now();
 
+//        dd(
+//            [
+//                'stop',
+//            ]
+//        );
         // Create new entity with associations
-        return $productsTable->newEntity($data, ['associated' => $associations]);
+        return $productsTable->newEntity($product, ['associated' => array_keys($associations)]);
     }
 
+    public function isAssociationNamePlural(string $associationName, array $product): bool
+    {
+        if (array_key_exists($associationName, $product)) {
+            return false;
+        }
+
+        $pluralAssociationName = Inflector::pluralize($associationName);
+        if (array_key_exists($pluralAssociationName, $product)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function removeHasOneAssociationPrimaryKeys(mixed $associatedTable, string $primaryKey): mixed
+    {
+        if ($associatedTable == null) {
+            pr("-->table is null");
+            return $associatedTable;
+        }
+
+        unset($associatedTable[$primaryKey]);
+
+        unset($associatedTable['id_product'], $associatedTable['product_id']);
+
+        pr("->keys unset");
+
+        return $associatedTable;
+    }
 
     function manuelCopy(int $copyAmount, int $productId): array
     {
@@ -297,5 +361,6 @@ trait DuplicateTrait
         }
         return $copies;
     }
+
 
 }
