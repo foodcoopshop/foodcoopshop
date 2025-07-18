@@ -18,11 +18,18 @@ foodcoopshop.ModalProductDuplicate = {
         var modalSelector = '#modal-product-duplicate';
 
         var button = $('#duplicateSelectedProduct');
+        var buttonWrapper = $('#duplicateSelectedProductWrapper');
         foodcoopshop.Helper.disableButton(button);
+
+        this.updateTooltip(buttonWrapper);
 
         $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Helper.disableButton(button);
-            if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length === 1) {
+            var selectedCount = $('table.list').find('input.row-marker[type="checkbox"]:checked').length;
+
+            foodcoopshop.ModalProductDuplicate.updateTooltip(buttonWrapper);
+
+            if (selectedCount === 1) {
                 foodcoopshop.Helper.enableButton(button);
             }
         });
@@ -69,6 +76,14 @@ foodcoopshop.ModalProductDuplicate = {
 
         });
 
+    },
+
+    updateTooltip: function(wrapper) {
+        var selectedCount = $('table.list').find('input.row-marker[type="checkbox"]:checked').length;
+        var tooltipText = foodcoopshop.LocalizedJs.admin.XofXProductsSelected;
+        tooltipText = tooltipText.replace(/\{0\}/, selectedCount);
+        tooltipText = tooltipText.replace(/\{1\}/, 1);
+        wrapper.attr('title', tooltipText);
     },
 
     getCloseHandler : function(modalSelector) {

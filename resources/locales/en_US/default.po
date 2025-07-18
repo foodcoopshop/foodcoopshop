@@ -820,16 +820,16 @@ msgstr "Do you really want to delete one product?"
 msgid "Errors_occurred_while_product_was_deleted"
 msgstr "Errors occurred while the product was deleted"
 
-msgid "Copy_product?"
+msgid "Copy product?"
 msgstr "Copy product?"
 
-msgid "Really_copy_product?"
+msgid "Really copy product?"
 msgstr "Do you really want to copy the product?"
 
-msgid "Amount_of_copies:"
+msgid "Amount of copies:"
 msgstr "Amount of copies:"
 
-msgid "Errors_occurred_while_product_was_copied"
+msgid "Errors occurred while product was copied"
 msgstr "Errors occurred while the product was copied"
 
 msgid "Add_comment"

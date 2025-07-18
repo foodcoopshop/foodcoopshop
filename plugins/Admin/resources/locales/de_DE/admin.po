@@ -2509,5 +2509,11 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+msgid "Copy"
+msgstr "Kopieren"
+
 msgid "Copy ({0}) of {1}"
 msgstr "Kopie ({0}) von {1}"
+
+msgid "Product was copied successfully."
+msgstr "Produkt erfolgreich Kopiert."
