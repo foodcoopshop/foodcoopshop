@@ -78,14 +78,14 @@ trait DuplicateTrait
             $copies[] = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
         }
 
-        $result = $productsTable->saveMany($copies);
+        $copies = $productsTable->saveMany($copies);
 
         $preparedProductForActionLog = [];
         foreach ($copies as $productCopy) {
             $preparedProductForActionLog[] = '<b>' . $productCopy->name . '</b>: ID ' . $productCopy->id_product;
         }
 
-        $message = __d('admin', 'product_was_copied_successfully.');
+        $message = __d('admin', 'Product was copied successfully.');
 
         $this->Flash->success($message);
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
