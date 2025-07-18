@@ -213,7 +213,7 @@ class ActionLogsTable extends AppTable
                 ]
             ],
             'product_copied' => [
-                'name' => __('Action_Log_Product_copied'),
+                'name' => __('Action Log Product copied'),
                 'access' => [
                     'manufacturer'
                 ]

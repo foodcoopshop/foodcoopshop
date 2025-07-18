@@ -1412,7 +1412,7 @@ msgstr "Produkt: Lieferrhythmus geändert"
 msgid "Action_Log_Product_deleted"
 msgstr "Produkt: gelöscht"
 
-msgid "Action_Log_Product_copied"
+msgid "Action Log Product copied"
 msgstr "Produkt: kopiert"
 
 msgid "Action_Log_Order_status_changed"
