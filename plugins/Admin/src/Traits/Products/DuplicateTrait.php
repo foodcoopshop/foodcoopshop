@@ -8,6 +8,7 @@ use App\Model\Table\DepositProductsTable;
 use App\Model\Table\PurchasePriceProductsTable;
 use App\Model\Table\StockAvailablesTable;
 use App\Model\Table\UnitProductsTable;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
 use Cake\Http\Response;
@@ -48,14 +49,17 @@ trait DuplicateTrait
                     'primaryKey' => UnitProductsTable::ORIGINAL_PRIMARY_KEY
                 ],
             'DepositProducts' =>
-            [
-                'primaryKey' => DepositProductsTable::ORIGINAL_PRIMARY_KEY
-            ],
-            'PurchasePriceProducts' => [
-                'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
-            ],
+                [
+                    'primaryKey' => DepositProductsTable::ORIGINAL_PRIMARY_KEY
+                ],
             'CategoryProducts' => [],
         ];
+
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')==APP_ON) {
+            $associations['PurchasePriceProducts'] = [
+                'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
+            ];
+        }
 
         $srcProduct = $productsTable->find('all',
             conditions: [
