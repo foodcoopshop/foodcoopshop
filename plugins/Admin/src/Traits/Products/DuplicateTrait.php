@@ -55,7 +55,7 @@ trait DuplicateTrait
             'CategoryProducts' => [],
         ];
 
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')==APP_ON) {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             $associations['PurchasePriceProducts'] = [
                 'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
             ];
