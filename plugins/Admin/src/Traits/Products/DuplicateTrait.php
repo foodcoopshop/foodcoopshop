@@ -55,12 +55,6 @@ trait DuplicateTrait
             'CategoryProducts' => [],
         ];
 
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $associations['PurchasePriceProducts'] = [
-                'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
-            ];
-        }
-
         $srcProduct = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('id_product') => $productId,
@@ -70,9 +64,9 @@ trait DuplicateTrait
 
         $preExistingCopies = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', 'Copy ({0}) of {1}', [
-                    '%',
+                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
                     $srcProduct->name,
+                    '%',
                 ])
             ],
         );
@@ -89,6 +83,7 @@ trait DuplicateTrait
             $preparedProductForActionLog[] = '<b>' . $productCopy->name . '</b>: ID ' . $productCopy->id_product;
         }
 
+        $this->getRequest()->getSession()->write('highlightedRowId', $copies[0]->id_product);
         $message = __d('admin', 'Product was copied successfully.');
 
         $this->Flash->success($message);
@@ -132,10 +127,10 @@ trait DuplicateTrait
         }
 
         $product['name'] =
-            __d('admin', 'Copy ({0}) of {1}', [
+            __d('admin', '{0} - copy {1}', [
+                    $srcProduct->name,
                     $copyIndex,
-                    $srcProduct->name
-                ]
+                ],
             );
         unset($product['modified']);
         unset($product['created']);

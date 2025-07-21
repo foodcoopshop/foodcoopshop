@@ -664,6 +664,9 @@ msgstr "Warum werden die Produkte storniert (Pflichtfeld)?"
 msgid "Yes_do_cancel_button!"
 msgstr "Ja, stornieren!"
 
+msgid "Copy"
+msgstr "Kopieren"
+
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 
@@ -829,8 +832,8 @@ msgstr "Beim Löschen des Produktes sind Fehler aufgetreten"
 msgid "Copy product?"
 msgstr "Produkt kopieren?"
 
-msgid "Really copy product?"
-msgstr "Möchtest du das Produkt wirklich kopieren?"
+msgid "Really copy product {0}?"
+msgstr "Möchtest du das Produkt {0} wirklich kopieren?"
 
 msgid "Amount of copies:"
 msgstr "Anzahl der Kopien:"

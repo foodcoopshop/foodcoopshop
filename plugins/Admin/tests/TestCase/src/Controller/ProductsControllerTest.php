@@ -742,12 +742,11 @@ class ProductsControllerTest extends AppCakeTestCase
                 'copyAmount' => 2,
             ],
         );
-        Log::error(print_r($this->_response->getBody()->__toString(), true));
         $copies = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', 'Copy ({0}) of {1}', [
-                    '%',
+                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
                     $srcProduct->name,
+                    '%',
                 ]),
             ],
             contain: [
@@ -791,7 +790,6 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertNotNull($copyCategory->id_category);
         $this->assertEquals(array_pop($srcProduct->category_products)->id_category, $copyCategory->id_category);
         $this->assertEquals($copy->id_product, $copyCategory->id_product);
-//        exit;
     }
 
     public function testProductAdminPricesAsManufacturerWithPurchasePriceEnabled(): void

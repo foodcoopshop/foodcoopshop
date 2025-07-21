@@ -2512,8 +2512,8 @@ msgstr "Produkt-Nr."
 msgid "Copy"
 msgstr "Kopieren"
 
-msgid "Copy ({0}) of {1}"
-msgstr "Kopie ({0}) von {1}"
+msgid "{0} - copy {1}"
+msgstr "{0} - Kopie {1}"
 
 msgid "Product was copied successfully."
 msgstr "Produkt erfolgreich Kopiert."

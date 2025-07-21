@@ -39,13 +39,26 @@ foodcoopshop.ModalProductDuplicate = {
             var productId = foodcoopshop.Admin.getSelectedProductIds().pop();
             var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
 
-            var html = '<p style="margin-top: 10px;">';
-            html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct;
+            const productName = $('tr#product-' + productId + ' span.product-name').html();
+
+            var html = '<p>';
+            html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct0.replace(/\{0\}/, '<b>' + productName + '</b>');
             html += '</p>';
 
-            var product = $('tr#product-' + productId + ' span.product-name').html();
+            html += '<p style="margin-bottom:0;">Folgende Daten werden kopiert:</p>';
+            html += '<ul>';
+                html += '<li>Kategorien, Beschreibungen, Menge, Preis, Steuersatz, Pfand, Lieferrhytmus, Lagerprodukt</li>';
+            html += '</ul>';
 
-            html += '<ul><li>' + product + '</li></ul>';
+            html += '<p style="margin-top:15px;margin-bottom:0;">Folgende Daten werden <b>nicht</b> kopiert:</p>';
+            html += '<ul>';
+                html += '<li>Varianten, Bild</li>';
+            html += '</ul>';
+
+            html += '<p style="margin-top:15px;">';
+                html += 'Der Produktname wird automatisch auf "' + productName + ' - Kopie X" gesetzt.<br />';
+                html += 'Der Status wird automatisch auf <b>deaktiviert</b> gesetzt.';
+            html += '</p>';
 
             html += '<div class="field-wrapper">';
             html += '<label class="dynamic-element default" style="width: 140px;" for="copy-amount">'+ foodcoopshop.LocalizedJs.admin.AmountOfCopies +'</label>';
@@ -58,15 +71,20 @@ foodcoopshop.ModalProductDuplicate = {
             html += '</select>';
             html += '</div>';
 
+            var buttons = [
+                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.Copy, 'fas fa-check'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            ];
+
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 title,
-                html
+                html,
+                buttons,
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                 var amountValue = parseInt($(modalSelector + ' #copy-amount').val());
-                console.log(amountValue);
                 foodcoopshop.ModalProductDuplicate.getSuccessHandler(modalSelector, productId, amountValue);
             });
 

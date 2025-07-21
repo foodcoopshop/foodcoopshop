@@ -46,6 +46,18 @@ class ProductsPolicy implements RequestPolicyInterface
                 return $identity->isSuperadmin() || $identity->isAdmin();
             case 'editPrice':
             case 'editDeposit':
+            case 'duplicate': 
+                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                    return false;
+                }
+                if ($identity->isSuperadmin() || $identity->isAdmin()) {
+                    return true;
+                }
+                if (!$this->manufacturerIsProductOwner($identity, $request)) {
+                    return false;
+                }
+                return true;
+                
             case 'editTax':
                 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                     if ($identity->isSuperadmin() || $identity->isAdmin()) {
