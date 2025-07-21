@@ -47,7 +47,7 @@ foodcoopshop.ModalProductDuplicate = {
 
             html += '<p style="margin-bottom:0;">Folgende Daten werden kopiert:</p>';
             html += '<ul>';
-                html += '<li>Kategorien, Beschreibungen, Menge, Preis, Steuersatz, Pfand, Lieferrhytmus, Lagerprodukt</li>';
+                html += '<li>Kategorien, Beschreibungen, Menge, Preis, Steuersatz, Pfand, Lieferrhythmus, Lagerprodukt</li>';
             html += '</ul>';
 
             html += '<p style="margin-top:15px;margin-bottom:0;">Folgende Daten werden <b>nicht</b> kopiert:</p>';
