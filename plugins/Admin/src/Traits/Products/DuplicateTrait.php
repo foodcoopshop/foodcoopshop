@@ -102,9 +102,7 @@ trait DuplicateTrait
     {
         $productsTable = $this->getTableLocator()->get('Products');
 
-
         $product = $srcProduct->toArray();
-
         unset($product[$productsTable->getPrimaryKey()]);
 
         foreach ($associations as $associationName => $options) {
@@ -126,18 +124,15 @@ trait DuplicateTrait
             $product[$tableAssociationName] = $this->removeHasOneAssociationKeys($product[$tableAssociationName], $primaryKey);
         }
 
-        $product['name'] =
-            __d('admin', '{0} - copy {1}', [
-                    $srcProduct->name,
-                    $copyIndex,
-                ],
-            );
+        $product['name'] = __d('admin', '{0} - copy {1}', [
+            $srcProduct->name,
+            $copyIndex,
+        ]);
         unset($product['modified']);
         unset($product['created']);
 
         $product['new'] = DateTime::now();
         $product['active'] = APP_OFF;
-
 
         $associationWithValidation = array_fill_keys(
             array_keys($associations),
@@ -154,39 +149,33 @@ trait DuplicateTrait
 
     public function isAssociationNamePlural(string $associationName, array $product): bool
     {
-        if (array_key_exists($associationName, $product)) {
-            return false;
-        }
-
         $pluralAssociationName = Inflector::pluralize($associationName);
-        if (array_key_exists($pluralAssociationName, $product)) {
-            return true;
-        }
-
-        return false;
+        return array_key_exists($pluralAssociationName, $product);
     }
 
-
-    public function removeHasOneAssociationKeys(mixed $associatedTable, string $primaryKey): mixed
+    public function removeHasOneAssociationKeys(?array $associatedTable, string $primaryKey): ?array
     {
         if ($associatedTable == null) {
             return $associatedTable;
         }
-
         unset($associatedTable[$primaryKey]);
 
+        // tests would also pass like that:
+        //unset($associatedTable['id_product']);
         unset($associatedTable['id_product'], $associatedTable['product_id']);
 
         return $associatedTable;
     }
 
-    public function removeHasManyAssociationKeys(mixed $associatedTable): mixed
+    public function removeHasManyAssociationKeys(?array $associatedTable): ?array
     {
         if ($associatedTable == null) {
             return $associatedTable;
         }
 
         foreach ($associatedTable as $association) {
+            // tests would also pass like that:
+            //unset($association['id_product']);
             unset($association['id_product'], $associatedTable['product_id']);
         }
 
