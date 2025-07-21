@@ -8,6 +8,7 @@ use Admin\Traits\Products\AddTrait;
 use Admin\Traits\Products\CalculateSellingChargeWithSurchargeTrait;
 use Admin\Traits\Products\DeleteImageTrait;
 use Admin\Traits\Products\DeleteTrait;
+use Admin\Traits\Products\DuplicateTrait;
 use Admin\Traits\Products\EditCategoriesTrait;
 use Admin\Traits\Products\EditDefaultAttributeTrait;
 use Admin\Traits\Products\EditDeliveryRhythmTrait;
@@ -70,6 +71,7 @@ class ProductsController extends AdminAppController
     use ImportTrait;
     use ExportTrait;
     use SaveUploadedImageTrait;
+    use DuplicateTrait;
 
     public function initialize(): void
     {

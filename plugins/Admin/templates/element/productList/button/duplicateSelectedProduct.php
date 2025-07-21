@@ -1,0 +1,32 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 4.2.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Martin Hatlauf <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+use Cake\Core\Configure;
+
+if (empty($products)) {
+    return false;
+}
+
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    return false;
+}
+
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".ModalProductDuplicate.init();"
+]);
+echo '<span id="duplicateSelectedProductWrapper" title=' . __d("admin", "{0}/{1} products selected", ["0","1"]) . '>';
+echo '<a id="duplicateSelectedProduct" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-clone"></i> ' . __d('admin', 'Copy') . '</a>';
+echo '</span>';

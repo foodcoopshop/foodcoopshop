@@ -212,6 +212,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'product_copied' => [
+                'name' => __('Action Log Product copied'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
 
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')

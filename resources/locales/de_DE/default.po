@@ -664,6 +664,9 @@ msgstr "Warum werden die Produkte storniert (Pflichtfeld)?"
 msgid "Yes_do_cancel_button!"
 msgstr "Ja, stornieren!"
 
+msgid "Copy"
+msgstr "Kopieren"
+
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 
@@ -825,6 +828,21 @@ msgstr "Möchtest du das Produkt wirklich löschen?"
 
 msgid "Errors_occurred_while_product_was_deleted"
 msgstr "Beim Löschen des Produktes sind Fehler aufgetreten"
+
+msgid "Copy product?"
+msgstr "Produkt kopieren?"
+
+msgid "Really copy product {0}?"
+msgstr "Möchtest du das Produkt {0} wirklich kopieren?"
+
+msgid "Amount of copies:"
+msgstr "Anzahl der Kopien:"
+
+msgid "{0}/{1} products selected"
+msgstr "{0}/{1} Produkte ausgewählt"
+
+msgid "Errors occurred while product was copied"
+msgstr "Beim Kopieren des Produktes sind Fehler aufgetreten"
 
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
@@ -1396,6 +1414,9 @@ msgstr "Produkt: Lieferrhythmus geändert"
 
 msgid "Action_Log_Product_deleted"
 msgstr "Produkt: gelöscht"
+
+msgid "Action Log Product copied"
+msgstr "Produkt: kopiert"
 
 msgid "Action_Log_Order_status_changed"
 msgstr "Bestellung: Status geändert"

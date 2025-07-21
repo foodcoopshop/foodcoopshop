@@ -29,6 +29,8 @@ class StockAvailablesTable extends AppTable
     const MAX_QUANTITY = 1000000;
     const MIN_QUANTITY = self::MAX_QUANTITY * -1;
 
+    const ORIGINAL_PRIMARY_KEY = 'id_stock_available';
+
     public function initialize(array $config): void
     {
         $this->setTable('stock_available');
