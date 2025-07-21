@@ -56,8 +56,8 @@ foodcoopshop.ModalProductDuplicate = {
             html += '</ul>';
 
             html += '<p style="margin-top:15px;">';
-                html += 'Der Produktname wird automatisch auf "' + productName + ' - Kopie X" gesetzt.<br />';
-                html += 'Der Status wird automatisch auf <b>deaktiviert</b> gesetzt.';
+                html += 'Produktname der Kopie(n): <b>' + productName + ' - Kopie X</b><br />';
+                html += 'Status der Kopie(n): <b>deaktiviert</b>';
             html += '</p>';
 
             html += '<div class="field-wrapper">';
