@@ -306,7 +306,7 @@ if ($groupBy == 'customer') {
             '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId,
             [
-                'class' => 'btn btn-outline-light',
+                'class' => 'btn btn-outline-light with-text',
                 'title' => __d('admin', 'Show_all_ordered_products'),
                 'escape' => false
             ]

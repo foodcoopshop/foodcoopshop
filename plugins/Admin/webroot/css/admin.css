@@ -766,16 +766,16 @@ a.btn-arrow {
     width: 15px;
 }
 a.btn-previous-day {
-    right: 92px;
+    right: 94px;
 }
 a.btn-previous-day:nth-of-type(1) {
-    left: 3px;
+    left: 1px;
 }
 a.btn-next-day {
-    right: 3px;
+    right: 5px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 92px;
+    left: 90px;
 }
 a.btn-arrow i {
     font-size: 15px;

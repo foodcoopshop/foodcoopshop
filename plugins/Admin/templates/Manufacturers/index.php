@@ -164,7 +164,7 @@ foreach ($manufacturers as $manufacturer) {
         '<i class="fas fa-tag ok"></i> ' . str_replace(' ', '&nbsp;', $productString),
         $this->Slug->getProductAdmin($manufacturer->id_manufacturer),
         [
-            'class' => 'btn btn-outline-light',
+            'class' => 'btn btn-outline-light with-text',
             'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
             'escape' => false
         ]

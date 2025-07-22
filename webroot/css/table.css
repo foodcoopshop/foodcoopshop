@@ -124,9 +124,12 @@ table.list th.icon {
   width: 20px;
 }
 table.list a.btn {
-    padding: 0 4px ! important;
+    padding: 0 1px ! important;
     line-height: 20px;
 }
+table.list a.btn.with-text {
+    padding: 0 4px ! important;
+
 .sort a.asc:before,
 .sort a.desc:before {
     font-family: 'Font Awesome 6 Free';
