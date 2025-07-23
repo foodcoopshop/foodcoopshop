@@ -129,7 +129,7 @@ table.list a.btn {
 }
 table.list a.btn.with-text {
     padding: 0 4px ! important;
-
+}
 .sort a.asc:before,
 .sort a.desc:before {
     font-family: 'Font Awesome 6 Free';
