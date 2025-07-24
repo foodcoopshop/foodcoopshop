@@ -647,6 +647,14 @@ foodcoopshop.Helper = {
 
     },
 
+    /**
+     * columns property is not rendered correctly in safari
+     * so simply turn it off
+     */
+    applySafariFixForMenu: function() {
+        $('#main-menu li ul').css('columns', 'auto');
+    },
+
     initMenu: function () {
 
         // select and show submenu of vertical menu, recursive!

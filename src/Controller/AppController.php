@@ -66,6 +66,12 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
 
+        $isSafari = false;
+        if (PHP_SAPI !== 'cli') {
+            /** @phpstan-ignore-next-line */
+            $isSafari = Browser::isSafari();
+        }
+        $this->set('isSafari', $isSafari);
         parent::beforeFilter($event);
     }
 
