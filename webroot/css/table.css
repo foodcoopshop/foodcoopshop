@@ -132,7 +132,7 @@ table.list a.btn.with-text {
 }
 .sort a.asc:before,
 .sort a.desc:before {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     padding-right: 5px;
     font-weight: 600;
 }
