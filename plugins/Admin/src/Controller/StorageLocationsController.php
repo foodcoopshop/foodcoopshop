@@ -66,8 +66,9 @@ class StorageLocationsController extends AdminAppController
 
         $productsTable = $this->getTableLocator()->get('Products');
         $products = $productsTable->find('all', conditions: [
-            'id_storage_location' => $storageLocation->id
-        ])->select(['id_product', 'id_storage_location'])->toArray();
+            'id_storage_location' => $storageLocation->id,
+            'active IN' => [APP_ON, APP_OFF],
+        ])->select(['id_product', 'name', 'id_storage_location'])->toArray();
         $this->set('products', $products);
 
         if (empty($this->getRequest()->getData())) {

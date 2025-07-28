@@ -69,7 +69,9 @@ if ($this->request->getRequestTarget() != $this->Slug->getStorageLocationAdd()) 
     echo $this->Form->control('StorageLocations.delete_storage_location', [
         'label' => __d('admin', 'Delete storage location?') .
             '<span class="after small">' .
-                (empty($products) ? __d('admin', 'Check_and_do_not_forget_to_click_save_button.') : __d('admin', 'There are products associated with this storage location.')) .
+            (empty($products) ?
+                __d('admin', 'Check_and_do_not_forget_to_click_save_button.') :
+                __d('admin', 'There are products associated with this storage location.')) .
             '</span>',
         'disabled' => (empty($products) ? '' : 'disabled'),
         'type' => 'checkbox',
