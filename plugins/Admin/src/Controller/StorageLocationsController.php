@@ -64,6 +64,12 @@ class StorageLocationsController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
+        $productsTable = $this->getTableLocator()->get('Products');
+        $products = $productsTable->find('all', conditions: [
+            'id_storage_location' => $storageLocation->id
+        ])->select(['id_product', 'id_storage_location'])->toArray();
+        $this->set('products', $products);
+
         if (empty($this->getRequest()->getData())) {
             $this->set('storageLocation', $storageLocation);
             return;
@@ -91,6 +97,11 @@ class StorageLocationsController extends AdminAppController
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location'))) {
+                $storageLocationsTable->deleteAll(['id' => $storageLocation->id]);
+                $messageSuffix = __d('admin', 'deleted');
+                $actionLogType = 'storageLocation_deleted';
+            }
 
             $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_Locations', $message);
@@ -114,7 +125,7 @@ class StorageLocationsController extends AdminAppController
             ->leftJoinWith('Products', function ($q) {
                 return $q->where(['Products.active IN' => [APP_ON, APP_OFF]]);
             })
-        ->groupBy(['StorageLocations.id']);
+            ->groupBy(['StorageLocations.id']);
 
         $storageLocations = $this->paginate($query, [
             'sortableFields' => [
