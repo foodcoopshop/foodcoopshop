@@ -409,7 +409,7 @@ a.toggle-link.collapsed i:before {
 }
 #scroll-to-top a {
     width: 45px;
-    height: 45px;
+    height: 46px;
     display: block;
     -webkit-transition: 0.6s;
     -moz-transition: 0.6s;
@@ -424,6 +424,7 @@ a.toggle-link.collapsed i:before {
 }
 #scroll-to-top a i {
     font-size: 41px;
+    width: 41px;
 }
 div.input.error input {
     border-bottom-right-radius: 0 ! important;
