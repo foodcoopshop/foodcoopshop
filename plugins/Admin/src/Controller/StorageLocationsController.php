@@ -107,7 +107,7 @@ class StorageLocationsController extends AdminAppController
             }
 
             $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);
-            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_Locations', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_locations', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $storageLocation->id);
