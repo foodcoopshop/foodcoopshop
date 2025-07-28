@@ -103,7 +103,7 @@ class StorageLocationsController extends AdminAppController
             if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location'))) {
                 $storageLocationsTable->deleteAll(['id' => $storageLocation->id]);
                 $messageSuffix = __d('admin', 'deleted');
-                $actionLogType = 'storageLocation_deleted';
+                $actionLogType = 'storage_location_deleted';
             }
 
             $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);

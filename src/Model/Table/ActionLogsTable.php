@@ -386,6 +386,9 @@ class ActionLogsTable extends AppTable
             'storage_location_changed' => [
                 'name' => __('Action_Log_Storage_location_changed')
             ],
+            'storage_location_deleted' => [
+                'name' => __('Action_Log_Storage_location_deleted')
+            ],
 
             'tax_added' => [
                 'name' => __('Action_Log_Tax_rate_added')

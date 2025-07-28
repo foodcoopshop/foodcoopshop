@@ -397,6 +397,12 @@ msgstr "Das Slideshow-Bild {0} wurde {1}."
 msgid "The storage location {0} has been {1}."
 msgstr "Der Lagerort {0} wurde {1}."
 
+msgid "Delete storage location?"
+msgstr "Lagerort löschen?"
+
+msgid "Deleting is not possible. There are {0} products associated with this storage location."
+msgstr "Löschen nicht möglich. {0} Produkte sind diesem Lagerort zugewiesen."
+
 msgid "Slideshow"
 msgstr "Slideshow"
 
