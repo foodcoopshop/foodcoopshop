@@ -70,9 +70,9 @@ class StorageLocationsController extends AdminAppController
             $this->set('storageLocation', $storageLocation);
 
             $productCount = $productsTable->find('all', conditions: [
-                'id_storage_location' => $storageLocation->id,
+                'id_storage_location IS' => $storageLocation->id,
                 'active IN' => [APP_ON, APP_OFF],
-            ])->select(['id_product', 'id_storage_location'])->count();
+            ])->select(['id_storage_location'])->count();
 
             $this->set('productCount', $productCount);
             return;
