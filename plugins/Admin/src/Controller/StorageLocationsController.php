@@ -56,24 +56,23 @@ class StorageLocationsController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', __d('admin', 'Edit {0}', [__d('admin', 'Storage_location')]));
-        $this->_processForm($storageLocation, true);
+
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productCount = $productsTable->find('all', conditions: [
+            'id_storage_location' => $storageLocation->id,
+            'active IN' => [APP_ON, APP_OFF],
+        ])->select(['id_storage_location'])->count();
+
+        $this->_processForm($storageLocation, true, productCount: $productCount);
     }
 
-    private function _processForm(StorageLocation $storageLocation, bool $isEditMode): void
+    private function _processForm(StorageLocation $storageLocation, bool $isEditMode, int $productCount = 0): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        $productsTable = $this->getTableLocator()->get('Products');
-
         if (empty($this->getRequest()->getData())) {
             $this->set('storageLocation', $storageLocation);
-
-            $productCount = $productsTable->find('all', conditions: [
-                'id_storage_location IS' => $storageLocation->id,
-                'active IN' => [APP_ON, APP_OFF],
-            ])->select(['id_storage_location'])->count();
-
             $this->set('productCount', $productCount);
             return;
         }
@@ -100,7 +99,7 @@ class StorageLocationsController extends AdminAppController
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location'))) {
+            if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location'))&&$productCount<=0) {
                 $storageLocationsTable->deleteAll(['id' => $storageLocation->id]);
                 $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'storage_location_deleted';
