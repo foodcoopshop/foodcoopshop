@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## unreleased
 
 ### Neue Funktionen / Verbesserungen
+- Lagerorte können jetzt gelöscht werden wenn sie keinem Produkt zugewiesen sind. [I#1178](https://github.com/foodcoopshop/foodcoopshop/issues/1178) / [PR#1183](https://github.com/foodcoopshop/foodcoopshop/pull/1183) <a href="https://github.com/HatlaufMartin"><img src="https://github.com/HatlaufMartin.png" width="20"></a>
 - Neue Kopier-Funktion für Produkte (1 Produkt markieren - Aktionen - Kopieren). [I#547](https://github.com/foodcoopshop/foodcoopshop/issues/547) / [PR#1179](https://github.com/foodcoopshop/foodcoopshop/pull/1179) <a href="https://github.com/HatlaufMartin"><img src="https://github.com/HatlaufMartin.png" width="20"></a>
 - Lagerorte können jetzt im Admin-Bereich unter Einstellungen bearbeitet oder hinzugefügt werden (oben bei den Tabs). [I#1146](https://github.com/foodcoopshop/foodcoopshop/issues/1146) / [PR#1177](https://github.com/foodcoopshop/foodcoopshop/pull/1177) <a href="https://github.com/HatlaufMartin"><img src="https://github.com/HatlaufMartin.png" width="20"></a>
 - Ungruppierte Bestellungen können jetzt als CSV-Datei exportiert werden (Aktionen - Bestellte Produkte exportieren). [I#321](https://github.com/foodcoopshop/foodcoopshop/issues/321) / [PR#1173](https://github.com/foodcoopshop/foodcoopshop/pull/1173) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
