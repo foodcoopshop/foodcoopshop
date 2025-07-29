@@ -14,10 +14,10 @@ class UseStadardisedObjectTypeForStorageLocaions extends BaseMigration
      */
     public function change(): void
     {
-        $query = $this->getQueryBuilder('update');
-        $query->update('fcs_action_logs')
-            ->set('object_type', 'storage_locations')
-            ->where(['object_type' => 'storage_Locations'])
-            ->execute();
+        $this->execute("
+            UPDATE fcs_action_logs 
+            SET object_type = 'storage_location' 
+            WHERE object_type = 'storage_Location'
+        ");
     }
 }
