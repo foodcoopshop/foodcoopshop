@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Services\DeliveryRhythmService;
+use App\Services\ProductQuantityService;
 use App\Services\HelloCash\HelloCashService;
 use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use App\Services\PdfWriter\GeneralTermsAndConditionsPdfWriterService;
@@ -198,17 +199,11 @@ class CartService
         return $cart;
     }
 
-    public function finish(): array
+    private function removeZeroAmountProducts(): bool
     {
-
-        $cart = $this->identity->getCart();
-
-        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
-        $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
         $productsTable = TableRegistry::getTableLocator()->get('Products');
-
-        // START check if no amount is 0
         $productWithAmount0Found = false;
+        
         foreach ($this->identity->getProducts() as $cartProduct) {
             $ids = $productsTable->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
@@ -217,13 +212,12 @@ class CartService
                 $productWithAmount0Found = true;
             }
         }
+        
+        return $productWithAmount0Found;
+    }
 
-        if ($productWithAmount0Found) {
-            $cart = $this->identity->getCart();
-            $this->identity->setCart($cart);
-        }
-        // END check if no amount is 0
-
+    private function validateCartForCheckout(): array
+    {
         $cartErrors = [];
 
         if (Configure::read('app.htmlHelper')->paymentIsCashless() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
@@ -236,16 +230,22 @@ class CartService
             }
         }
 
+        return $cartErrors;
+    }
+
+    private function validateAndPrepareProducts(): array
+    {
         $orderDetails2save = [];
         $products = [];
         $stockAvailable2saveData = [];
         $stockAvailable2saveConditions = [];
+        $cartErrors = [];
 
         $contain = $this->getProductContain();
         $productQuantityService = new ProductQuantityService();
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
 
         foreach ($this->identity->getProducts() as $cartProduct) {
-
             $ids = $productsTable->getProductIdAndAttributeId($cartProduct['productId']);
             $product = $productsTable->find('all',
                 conditions: [
@@ -257,250 +257,359 @@ class CartService
             $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product);
             $products[] = $product;
 
-            $stockAvailableQuantity = $product->stock_available->quantity;
-            $stockAvailableAvailableQuantity = $stockAvailableQuantity;
-            if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-                $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
-            }
-    
-            $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'] ?? -1;
-            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
-            if ($isAmountBasedOnQuantityInUnits) {
-                if ($orderedQuantityInUnits == -1 && !OrderCustomerService::isSelfServiceMode()) {
-                    $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $cartProduct['amount'];
-                }
+            // Validate product availability and constraints
+            $productErrors = $this->validateSingleProduct($product, $cartProduct, $ids, $productQuantityService);
+            if (!empty($productErrors)) {
+                $cartErrors[$cartProduct['productId']] = $productErrors;
+                continue;
             }
 
-            $message = $this->isAmountAvailableProduct(
-                (bool) $product->is_stock_product,
-                (bool) $product->manufacturer->stock_management_enabled,
-                (bool) $product->stock_available->always_available,
-                $ids['attributeId'],
-                $stockAvailableAvailableQuantity,
-                $isAmountBasedOnQuantityInUnits ? $orderedQuantityInUnits : $cartProduct['amount'],
-                $product->name,
-                $isAmountBasedOnQuantityInUnits ? $product->unit_product->name : '',
-            );
-            if ($message !== true) {
-                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
-            }
-
-            // purchase price check for product
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
-                if ($ids['attributeId'] == 0 && !$purchasePriceProductsTable->isPurchasePriceSet($product)) {
-                    $message = __('The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $product->name . '</b>']);
-                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                    $cartErrors[$cartProduct['productId']][] = $message;
-                }
-            }
-
-            $attribute = null;
-            if ($ids['attributeId'] > 0) {
-                $attributeIdFound = false;
-                $attributesTable = TableRegistry::getTableLocator()->get('Attributes');
-
-                foreach ($product->product_attributes as $attribute) {
-                    if ($attribute->id_product_attribute == $ids['attributeId']) {
-
-                        $attributeIdFound = true;
-                        $stockAvailableQuantity = $attribute->stock_available->quantity;
-                        $stockAvailableAvailableQuantity = $stockAvailableQuantity;
-                        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-                            $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
-                        }
-
-                        $attributeEntity = $attributesTable->find('all',
-                            conditions: [
-                                'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
-                            ]
-                        )->first();
-
-                        $errorMessage = $this->isAmountAvailableAttribute(
-                            (bool) $product->is_stock_product,
-                            (bool) $product->manufacturer->stock_management_enabled,
-                            (bool) $attribute->stock_available->always_available,
-                            $stockAvailableAvailableQuantity,
-                            $cartProduct['amount'],
-                            $attributeEntity->name,
-                            $product->name,
-                        );
-                        if ($errorMessage !== true) {
-                            $message .= $errorMessage;
-                            $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
-                            $cartErrors[$cartProduct['productId']][] = $message;
-                        }
-
-                        // purchase price check for attribute
-                        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                            $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
-                            if (!$purchasePriceProductAttributesTable->isPurchasePriceSet($attribute)) {
-                                $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>']);
-                                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                                $cartErrors[$cartProduct['productId']][] = $message;
-                            }
-                        }
-
-                        break;
-                    }
-                }
-                if (! $attributeIdFound) {
-                    $message = __('The_attribute_does_not_exist.');
-                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                    $cartErrors[$cartProduct['productId']][] = $message;
-                }
-            } else {
-
-                if (!empty($product->product_attributes)) {
-                    $message = __('The_product_now_contains_attributes.');
-                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                    $message .= ' ' . __('You_can_add_it_again_after_having_it_deleted.');
-                    $cartErrors[$cartProduct['productId']][] = $message;
-                }
-            }
-
-            $message = $this->isProductActive($product->active, $product->name);
-            if ($message !== true) {
-                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
-            }
-
-            $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($product->next_delivery_day, $product->name);
-            if ($message !== true) {
-                $cartErrors[$cartProduct['productId']][] = $message;
-            }
-
-            $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
-                $product->manufacturer->active,
-                $product->manufacturer->no_delivery_days,
-                $product->next_delivery_day,
-                (bool) $product->manufacturer->stock_management_enabled,
-                (bool) $product->is_stock_product,
-                $product->name,
-            );
-            if ($message !== true) {
-                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
-            }
-
-            $message = $this->isProductBulkOrderStillPossible(
-                (bool) $product->manufacturer->stock_management_enabled,
-                (bool) $product->is_stock_product,
-                $product->delivery_rhythm_type,
-                $product->delivery_rhythm_order_possible_until,
-                $product->name,
-            );
-            if ($message !== true) {
-                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
-            }
-
-            $message = $this->isGlobalDeliveryBreakEnabled($product->next_delivery_day, $product->name);
-            if ($message !== true) {
-                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
-            }
-
-            // prepare data for table order_detail
-            $orderDetail2save = [
-                'product_id' => $ids['productId'],
-                'product_attribute_id' => $ids['attributeId'],
-                'product_name' => $cartsTable->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
-                'product_amount' => $cartProduct['amount'],
-                'total_price_tax_excl' => $cartProduct['priceExcl'],
-                'total_price_tax_incl' => $cartProduct['price'],
-                'tax_unit_amount' => $cartProduct['taxPerPiece'],
-                'tax_total_amount' => $cartProduct['tax'],
-                'tax_rate' => $product->tax_rate,
-                'order_state' => OrderDetail::STATE_OPEN,
-                'id_customer' => $this->identity->getId(),
-                'id_cart_product' => $cartProduct['cartProductId'],
-                'pickup_day' => $cartProduct['pickupDay'],
-                'deposit' => $cartProduct['deposit'],
-                'product' => $product,
-                'cartProductId' => $cartProduct['cartProductId'],
-            ];
-
-            $customerSelectedPickupDay = null;
-            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                $customerSelectedPickupDay = h($this->request->getData('Carts.pickup_day'));
-                $orderDetail2save['pickup_day'] = $customerSelectedPickupDay;
-            }
-
-            // prepare data for table order_detail_units
-            if (isset($cartProduct['quantityInUnits'])) {
-                $orderDetail2save['order_detail_unit'] = [
-                    'unit_name' => $cartProduct['unitName'],
-                    'unit_amount' => $cartProduct['unitAmount'],
-                    'mark_as_saved' => $cartProduct['markAsSaved'],
-                    'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
-                    'quantity_in_units' => $cartProduct['quantityInUnits'],
-                    'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
-                ];
-                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
-                    && in_array($this->identity->shopping_price, [Customer::PURCHASE_PRICE, Customer::SELLING_PRICE])
-                    && isset($cartProduct['purchasePriceInclPerUnit'])
-                    ) {
-                    $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
-                }
-            }
-
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
-                && in_array($this->identity->shopping_price, [Customer::PURCHASE_PRICE, Customer::SELLING_PRICE])
-                ) {
-                $orderDetailPurchasePrices = $this->prepareOrderDetailPurchasePrices($ids, $product, $cartProduct);
-                $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;
-            }
-
+            // Prepare order details for saving
+            $orderDetail2save = $this->prepareOrderDetail($product, $cartProduct, $ids);
             $orderDetails2save[] = $orderDetail2save;
 
-            $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available;
-            if (isset($attribute->stock_available)) {
-                $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available;
+            // Prepare stock updates
+            $stockUpdates = $this->prepareStockUpdates($product, $cartProduct, $ids, $productQuantityService);
+            if (!empty($stockUpdates)) {
+                $stockAvailable2saveData[] = $stockUpdates['data'];
+                $stockAvailable2saveConditions[] = $stockUpdates['conditions'];
             }
-
-            if ($decreaseQuantity) {
-
-                $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
-                $productQuantityService = new ProductQuantityService();
-
-                $unitObject = $product->unit_product;
-                if ($attribute !== null) {
-                    $unitObject = $attribute->unit_product_attribute;
-                }
-                if ($productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject)) {
-                    $newQuantity = $stockAvailableQuantity - ($unitObject->quantity_in_units * $cartProduct['amount']);
-                }
-
-                if ($productQuantityService->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject) && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
-                    $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
-                }
-
-                $stockAvailable2saveData[] = [
-                    'quantity' => $newQuantity,
-                ];
-                $stockAvailable2saveConditions[] = [
-                    'id_product' => $ids['productId'],
-                    'id_product_attribute' => $ids['attributeId'],
-                ];
-            }
-
         }
 
-        $this->controller->set('cartErrors', $cartErrors);
-        $options = [];
+        return [
+            'orderDetails2save' => $orderDetails2save,
+            'products' => $products,
+            'stockAvailable2saveData' => $stockAvailable2saveData,
+            'stockAvailable2saveConditions' => $stockAvailable2saveConditions,
+            'cartErrors' => $cartErrors,
+        ];
+    }
 
-        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-            // save pickup day: primary key needs to be changed!
-            $pickupDaysTable->setPrimaryKey(['customer_id', 'pickup_day']);
-            $options = [
-                'associated' => [
-                    'PickupDayEntities'
-                ]
+    private function validateSingleProduct(Product $product, array $cartProduct, array $ids, ProductQuantityService $productQuantityService): array
+    {
+        $errors = [];
+
+        $stockAvailableQuantity = $product->stock_available->quantity;
+        $stockAvailableAvailableQuantity = $stockAvailableQuantity;
+        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+            $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
+        }
+
+        $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'] ?? -1;
+        $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
+        if ($isAmountBasedOnQuantityInUnits) {
+            if ($orderedQuantityInUnits == -1 && !OrderCustomerService::isSelfServiceMode()) {
+                $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $cartProduct['amount'];
+            }
+        }
+
+        $message = $this->isAmountAvailableProduct(
+            (bool) $product->is_stock_product,
+            (bool) $product->manufacturer->stock_management_enabled,
+            (bool) $product->stock_available->always_available,
+            $ids['attributeId'],
+            $stockAvailableAvailableQuantity,
+            $isAmountBasedOnQuantityInUnits ? $orderedQuantityInUnits : $cartProduct['amount'],
+            $product->name,
+            $isAmountBasedOnQuantityInUnits ? $product->unit_product->name : '',
+        );
+        if ($message !== true) {
+            $errors[] = $message . ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+        }
+
+        // Add other validation checks (purchase price, attributes, etc.)
+        $errors = array_merge($errors, $this->validateProductConstraints($product, $cartProduct, $ids));
+
+        return $errors;
+    }
+
+    private function validateProductConstraints(Product $product, array $cartProduct, array $ids): array
+    {
+        $errors = [];
+
+        // Purchase price check for product
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+            if ($ids['attributeId'] == 0 && !$purchasePriceProductsTable->isPurchasePriceSet($product)) {
+                $errors[] = __('The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $product->name . '</b>'])
+                    . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+            }
+        }
+
+        // Validate product attributes if present
+        if ($ids['attributeId'] > 0) {
+            $attributeErrors = $this->validateProductAttribute($product, $cartProduct, $ids);
+            $errors = array_merge($errors, $attributeErrors);
+        } else {
+            if (!empty($product->product_attributes)) {
+                $errors[] = __('The_product_now_contains_attributes.')
+                    . ' ' . __('Please_delete_product_from_cart_to_place_order.')
+                    . ' ' . __('You_can_add_it_again_after_having_it_deleted.');
+            }
+        }
+
+        // Validate product status and delivery constraints
+        $errors = array_merge($errors, $this->validateProductStatus($product));
+
+        return $errors;
+    }
+
+    private function validateProductAttribute(Product $product, array $cartProduct, array $ids): array
+    {
+        $errors = [];
+        $attributeIdFound = false;
+        $attributesTable = TableRegistry::getTableLocator()->get('Attributes');
+
+        foreach ($product->product_attributes as $attribute) {
+            if ($attribute->id_product_attribute == $ids['attributeId']) {
+                $attributeIdFound = true;
+                
+                $stockAvailableQuantity = $attribute->stock_available->quantity;
+                $stockAvailableAvailableQuantity = $stockAvailableQuantity;
+                if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+                    $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
+                }
+
+                $attributeEntity = $attributesTable->find('all',
+                    conditions: [
+                        'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
+                    ]
+                )->first();
+
+                $errorMessage = $this->isAmountAvailableAttribute(
+                    (bool) $product->is_stock_product,
+                    (bool) $product->manufacturer->stock_management_enabled,
+                    (bool) $attribute->stock_available->always_available,
+                    $stockAvailableAvailableQuantity,
+                    $cartProduct['amount'],
+                    $attributeEntity->name,
+                    $product->name,
+                );
+                if ($errorMessage !== true) {
+                    $errors[] = $errorMessage . ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                }
+
+                // Purchase price check for attribute
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    $purchasePriceProductAttributesTable = TableRegistry::getTableLocator()->get('PurchasePriceProductAttributes');
+                    if (!$purchasePriceProductAttributesTable->isPurchasePriceSet($attribute)) {
+                        $errors[] = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>'])
+                            . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                    }
+                }
+
+                break;
+            }
+        }
+        
+        if (!$attributeIdFound) {
+            $errors[] = __('The_attribute_does_not_exist.')
+                . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+        }
+
+        return $errors;
+    }
+
+    private function validateProductStatus(Product $product): array
+    {
+        $errors = [];
+
+        $message = $this->isProductActive($product->active, $product->name);
+        if ($message !== true) {
+            $errors[] = $message . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+        }
+
+        $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($product->next_delivery_day, $product->name);
+        if ($message !== true) {
+            $errors[] = $message;
+        }
+
+        $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
+            $product->manufacturer->active,
+            $product->manufacturer->no_delivery_days,
+            $product->next_delivery_day,
+            (bool) $product->manufacturer->stock_management_enabled,
+            (bool) $product->is_stock_product,
+            $product->name,
+        );
+        if ($message !== true) {
+            $errors[] = $message . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+        }
+
+        $message = $this->isProductBulkOrderStillPossible(
+            (bool) $product->manufacturer->stock_management_enabled,
+            (bool) $product->is_stock_product,
+            $product->delivery_rhythm_type,
+            $product->delivery_rhythm_order_possible_until,
+            $product->name,
+        );
+        if ($message !== true) {
+            $errors[] = $message . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+        }
+
+        $message = $this->isGlobalDeliveryBreakEnabled($product->next_delivery_day, $product->name);
+        if ($message !== true) {
+            $errors[] = $message . ' ' . __('Please_delete_product_from_cart_to_place_order.');
+        }
+
+        return $errors;
+    }
+
+    private function prepareOrderDetail(Product $product, array $cartProduct, array $ids): array
+    {
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        
+        $orderDetail2save = [
+            'product_id' => $ids['productId'],
+            'product_attribute_id' => $ids['attributeId'],
+            'product_name' => $cartsTable->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
+            'product_amount' => $cartProduct['amount'],
+            'total_price_tax_excl' => $cartProduct['priceExcl'],
+            'total_price_tax_incl' => $cartProduct['price'],
+            'tax_unit_amount' => $cartProduct['taxPerPiece'],
+            'tax_total_amount' => $cartProduct['tax'],
+            'tax_rate' => $product->tax_rate,
+            'order_state' => OrderDetail::STATE_OPEN,
+            'id_customer' => $this->identity->getId(),
+            'id_cart_product' => $cartProduct['cartProductId'],
+            'pickup_day' => $cartProduct['pickupDay'],
+            'deposit' => $cartProduct['deposit'],
+            'product' => $product,
+            'cartProductId' => $cartProduct['cartProductId'],
+        ];
+
+        $customerSelectedPickupDay = null;
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $customerSelectedPickupDay = h($this->request->getData('Carts.pickup_day'));
+            $orderDetail2save['pickup_day'] = $customerSelectedPickupDay;
+        }
+
+        // Add unit details if present
+        if (isset($cartProduct['quantityInUnits'])) {
+            $orderDetail2save['order_detail_unit'] = [
+                'unit_name' => $cartProduct['unitName'],
+                'unit_amount' => $cartProduct['unitAmount'],
+                'mark_as_saved' => $cartProduct['markAsSaved'],
+                'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
+                'quantity_in_units' => $cartProduct['quantityInUnits'],
+                'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
             ];
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
+                && in_array($this->identity->shopping_price, [Customer::PURCHASE_PRICE, Customer::SELLING_PRICE])
+                && isset($cartProduct['purchasePriceInclPerUnit'])
+                ) {
+                $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
+            }
+        }
 
-            $preparedPickupDayEntities = [];
+        // Add purchase price details if enabled
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
+            && in_array($this->identity->shopping_price, [Customer::PURCHASE_PRICE, Customer::SELLING_PRICE])
+            ) {
+            $orderDetailPurchasePrices = $this->prepareOrderDetailPurchasePrices($ids, $product, $cartProduct);
+            $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;
+        }
+
+        return $orderDetail2save;
+    }
+
+    private function prepareStockUpdates(Product $product, array $cartProduct, array $ids, ProductQuantityService $productQuantityService): array
+    {
+        $stockAvailableQuantity = $product->stock_available->quantity;
+        $attribute = null;
+        
+        // Find attribute if present
+        if ($ids['attributeId'] > 0) {
+            foreach ($product->product_attributes as $attr) {
+                if ($attr->id_product_attribute == $ids['attributeId']) {
+                    $attribute = $attr;
+                    $stockAvailableQuantity = $attribute->stock_available->quantity;
+                    break;
+                }
+            }
+        }
+
+        $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available;
+        if (isset($attribute->stock_available)) {
+            $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available;
+        }
+
+        if (!$decreaseQuantity) {
+            return [];
+        }
+
+        $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
+
+        $unitObject = $product->unit_product;
+        if ($attribute !== null) {
+            $unitObject = $attribute->unit_product_attribute;
+        }
+        
+        if ($productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject)) {
+            $newQuantity = $stockAvailableQuantity - ($unitObject->quantity_in_units * $cartProduct['amount']);
+        }
+
+        if ($productQuantityService->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject) && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
+            $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
+        }
+
+        return [
+            'data' => ['quantity' => $newQuantity],
+            'conditions' => [
+                'id_product' => $ids['productId'],
+                'id_product_attribute' => $ids['attributeId'],
+            ]
+        ];
+    }
+
+    public function finish(): array
+    {
+        $cart = $this->identity->getCart();
+
+        // Remove products with zero amount
+        $productWithAmount0Found = $this->removeZeroAmountProducts();
+        
+        if ($productWithAmount0Found) {
+            $cart = $this->identity->getCart();
+            $this->identity->setCart($cart);
+        }
+
+        // Validate cart for checkout
+        $cartErrors = $this->validateCartForCheckout();
+
+        // Validate and prepare products for order
+        $preparationResult = $this->validateAndPrepareProducts();
+        $orderDetails2save = $preparationResult['orderDetails2save'];
+        $products = $preparationResult['products'];
+        $stockAvailable2saveData = $preparationResult['stockAvailable2saveData'];
+        $stockAvailable2saveConditions = $preparationResult['stockAvailable2saveConditions'];
+        $cartErrors = array_merge($cartErrors, $preparationResult['cartErrors']);
+
+        // Handle pickup day configuration
+        $customerSelectedPickupDay = null;
+        $preparedPickupDayEntities = $this->handlePickupDayConfiguration($customerSelectedPickupDay);
+
+        // Process form validation
+        $formErrors = $this->processFormValidation($cart, $preparedPickupDayEntities, $customerSelectedPickupDay);
+
+        $this->controller->set('cartErrors', $cartErrors);
+        $this->controller->set('formErrors', $formErrors);
+
+        if (!empty($cartErrors) || !empty($formErrors)) {
+            $this->controller->Flash->error(__('Errors_occurred.'));
+            return $cart;
+        }
+
+        $cart = $this->saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products);
+        return $cart;
+    }
+
+    private function handlePickupDayConfiguration(?string &$customerSelectedPickupDay): array
+    {
+        $preparedPickupDayEntities = [];
+        
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
@@ -512,7 +621,29 @@ class CartService
                 }
                 $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
+        }
 
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $customerSelectedPickupDay = h($this->request->getData('Carts.pickup_day'));
+        }
+
+        return $preparedPickupDayEntities;
+    }
+
+    private function processFormValidation(array $cart, array $preparedPickupDayEntities, ?string $customerSelectedPickupDay): bool
+    {
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        
+        $options = [];
+
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');
+            $pickupDaysTable->setPrimaryKey(['customer_id', 'pickup_day']);
+            $options = [
+                'associated' => [
+                    'PickupDayEntities'
+                ]
+            ];
         }
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -530,24 +661,12 @@ class CartService
             $options,
         );
 
-        // $preparedPickupDayEntities are not merged properly in $cartsTable->patchEntity above, so set the entities manually
-        $cart['Cart']->pickup_day_entities = $preparedPickupDayEntities ?? [];
+        // Set pickup day entities manually as they are not merged properly in patchEntity
+        $cart['Cart']->pickup_day_entities = $preparedPickupDayEntities;
 
-        $formErrors = false;
-        if ($cart['Cart']->hasErrors()) {
-            $formErrors = true;
-        }
-        $this->controller->set('cart', $cart['Cart']); // to show error messages in form (from validation)
-        $this->controller->set('formErrors', $formErrors);
-
-        if (!empty($cartErrors) || !empty($formErrors)) {
-            $this->controller->Flash->error(__('Errors_occurred.'));
-            return $cart;
-        }
-
-        $cart = $this->saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay ?? null, $products);
-        return $cart;
-
+        $this->controller->set('cart', $cart['Cart']);
+        
+        return $cart['Cart']->hasErrors();
     }
 
     private function prepareOrderDetailPurchasePrices(array $ids, Product $product, array $cartProduct): array

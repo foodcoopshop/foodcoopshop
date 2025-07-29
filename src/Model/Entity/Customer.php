@@ -6,6 +6,7 @@ namespace App\Model\Entity;
 use Authentication\IdentityInterface;
 use Cake\Core\Configure;
 use App\Services\OrderCustomerService;
+use App\Services\CustomerCartService;
 use App\Model\Entity\Cart;
 use ArrayAccess;
 use Cake\ORM\TableRegistry;
@@ -41,6 +42,7 @@ class Customer extends AppEntity implements IdentityInterface
     const ZERO_PRICE = 'ZP';
 
     private Manufacturer|string|null $_manufacturer = 'not-yet-loaded';
+    private ?CustomerCartService $_cartService = null;
 
     public function getIdentifier(): array|string|int|null
     {
@@ -200,16 +202,6 @@ class Customer extends AppEntity implements IdentityInterface
         return $futureOrderDetails;
     }
 
-    public function getCreditBalanceMinusCurrentCartSum(): float
-    {
-        return $this->getCreditBalance() - $this->getCart()['CartProductSum'] - $this->getCart()['CartDepositSum'];
-    }
-
-    public function hasEnoughCreditForProduct(float $grossPrice): bool
-    {
-        return $this->getCreditBalanceMinusCurrentCartSum() - Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') >= $grossPrice;
-    }
-
     public function isAdmin(): bool
     {
         if ($this->isManufacturer()) {
@@ -253,128 +245,98 @@ class Customer extends AppEntity implements IdentityInterface
         return $customersTable->getCreditBalance($this->getId());
     }
 
+    private function getCartService(): CustomerCartService
+    {
+        if ($this->_cartService === null) {
+            $this->_cartService = new CustomerCartService($this);
+        }
+        return $this->_cartService;
+    }
+
+    // Cart-related methods delegated to CustomerCartService
     public function getCartType(): int
     {
-        $cartType = Cart::TYPE_WEEKLY_RHYTHM;
-        if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
-            $cartType = Cart::TYPE_INSTANT_ORDER;
-        }
-        if (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer()) {
-            $cartType = Cart::TYPE_SELF_SERVICE;
-        }
-        return $cartType;
+        return $this->getCartService()->getCartType();
     }
 
     public function setCart(array $cart): void
     {
-        $this->cart = $cart;
+        $this->getCartService()->setCart($cart);
     }
 
     public function getCart(): array
     {
-        $cartType = $this->getCartType();
-        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
-        return $cartsTable->getCart($this, $cartType);
+        return $this->getCartService()->getCart();
     }
 
     public function getProducts(): array
     {
-        if ($this->cart !== null) {
-            return $this->cart['CartProducts'];
-        }
-        return [];
+        return $this->getCartService()->getProducts();
     }
 
     public function getProductsWithUnitCount(): int
     {
-        if ($this->cart !== null) {
-            return $this->cart['ProductsWithUnitCount'];
-        }
-        return 0;
+        return $this->getCartService()->getProductsWithUnitCount();
     }
 
     public function getProductAndDepositSum(): float
     {
-        return $this->getProductSum() + $this->getDepositSum();
+        return $this->getCartService()->getProductAndDepositSum();
     }
 
     public function getTaxSum(): float
     {
-        if ($this->cart !== null) {
-            return $this->cart['CartTaxSum'];
-        }
-        return 0;
+        return $this->getCartService()->getTaxSum();
     }
 
     public function getDepositSum(): float
     {
-        if ($this->cart !== null) {
-            return $this->cart['CartDepositSum'];
-        }
-        return 0;
+        return $this->getCartService()->getDepositSum();
     }
 
     public function getProductSum(): float
     {
-        if ($this->cart !== null) {
-            return $this->cart['CartProductSum'];
-        }
-        return 0;
+        return $this->getCartService()->getProductSum();
     }
 
     public function getProductSumExcl(): float
     {
-        if ($this->cart !== null) {
-            return $this->cart['CartProductSumExcl'];
-        }
-        return 0;
+        return $this->getCartService()->getProductSumExcl();
     }
 
     public function getCartId(): int
     {
-        return $this->cart['Cart']->id_cart;
+        return $this->getCartService()->getCartId();
     }
 
     public function markCartAsSaved(): Cart|false
     {
-        if ($this->cart === null) {
-            return false;
-        }
-        $cc = TableRegistry::getTableLocator()->get('Carts');
-        $patchedEntity = $cc->patchEntity(
-            $cc->get($this->getCartId()), [
-                'status' => APP_OFF,
-            ],
-            ['validate' => false],
-        );
-        $savedCart = $cc->save($patchedEntity);
-        return $savedCart;
+        return $this->getCartService()->markCartAsSaved();
     }
 
     public function getUniqueManufacturers(): array
     {
-        $manufactures = [];
-        foreach ($this->getProducts() as $product) {
-            $manufactures[$product['manufacturerId']] = [
-                'name' => $product['manufacturerName']
-            ];
-        }
-        return $manufactures;
+        return $this->getCartService()->getUniqueManufacturers();
     }
 
     public function getProduct(int|string $productId): array|false
     {
-        foreach ($this->getProducts() as $product) {
-            if ($product['productId'] == $productId) {
-                return $product;
-            }
-        }
-        return false;
+        return $this->getCartService()->getProduct($productId);
     }
 
     public function isCartEmpty(): bool
     {
-        return empty($this->getProducts());
+        return $this->getCartService()->isCartEmpty();
+    }
+
+    public function getCreditBalanceMinusCurrentCartSum(): float
+    {
+        return $this->getCartService()->getCreditBalanceMinusCurrentCartSum();
+    }
+
+    public function hasEnoughCreditForProduct(float $grossPrice): bool
+    {
+        return $this->getCartService()->hasEnoughCreditForProduct($grossPrice);
     }
 
 }
