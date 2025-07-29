@@ -47,4 +47,4 @@ nbproject/*
 /.buildpath
 /.phpunit.result.cache
 .phpunit.cache
-/vendor
+/vendorphpstan.phar
