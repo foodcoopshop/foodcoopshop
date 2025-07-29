@@ -816,77 +816,97 @@ class CartService
         )->first();
 
         foreach($cart->cart_products as $cartProduct) {
-            $stockAvailable = $cartProduct->product->stock_available;
-            if (!empty($cartProduct->product_attribute)) {
-                $stockAvailable = $cartProduct->product_attribute->stock_available;
-            }
-            if (is_null($stockAvailable->sold_out_limit)) {
-                continue;
-            }
+            $this->processCartProductForStockLimitNotification($cartProduct);
+        }
+    }
 
-            $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
-
-            $productQuantityService = new ProductQuantityService();
-            $unitsTable = TableRegistry::getTableLocator()->get('Units');
-            $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
-            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
-            $unitName = !empty($unitObject) ? $unitObject->name : '';
-            $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName);
-            $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity_limit, $unitName);
-            $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->sold_out_limit, $unitName);
-
-            // send email to manufacturer
-            if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
-    
-                $email = new AppMailer();
-                $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
-                $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
-                ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
-                    $cartProduct->order_detail->product_name,
-                    $formattedQuantity,
-                ]))
-                ->setViewVars([
-                    'identity' => $this->identity,
-                    'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->address_manufacturer->firstname,
-                    'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin(null, $cartProduct->product->id_product),
-                    'cartProduct' => $cartProduct,
-                    'stockAvailable' => $stockAvailable,
-                    'formattedQuantity' => $formattedQuantity,
-                    'formattedQuantityLimit' => $formattedQuantityLimit,
-                    'formattedSoldOutLimit' => $formattedSoldOutLimit,
-                    'manufacturer' => $cartProduct->product->manufacturer,
-                    'showManufacturerUnsubscribeLink' => true
-                ]);
-                $email->addToQueue();
-            }
-
-            // send email to contact person
-            if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
-                $email = new AppMailer();
-                $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
-                $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
-                ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
-                    $cartProduct->order_detail->product_name,
-                    $formattedQuantity,
-                ]))
-                ->setViewVars([
-                    'identity' => $this->identity,
-                    'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
-                    'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin($cartProduct->product->id_manufacturer, $cartProduct->product->id_product),
-                    'cartProduct' => $cartProduct,
-                    'stockAvailable' => $stockAvailable,
-                    'formattedQuantity' => $formattedQuantity,
-                    'formattedQuantityLimit' => $formattedQuantityLimit,
-                    'formattedSoldOutLimit' => $formattedSoldOutLimit,
-                    'manufacturer' => $cartProduct->product->manufacturer,
-                    'showManufacturerName' => true,
-                    'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
-                ]);
-                $email->addToQueue();
-            }
-
+    private function processCartProductForStockLimitNotification($cartProduct): void
+    {
+        $stockAvailable = $cartProduct->product->stock_available;
+        if (!empty($cartProduct->product_attribute)) {
+            $stockAvailable = $cartProduct->product_attribute->stock_available;
+        }
+        if (is_null($stockAvailable->sold_out_limit)) {
+            return;
         }
 
+        $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
+
+        $formattedAmounts = $this->getFormattedStockAmounts($cartProduct, $stockAvailable);
+
+        // Send email to manufacturer
+        if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
+            $this->sendStockLimitEmailToManufacturer($cartProduct, $stockAvailable, $formattedAmounts);
+        }
+
+        // Send email to contact person
+        if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
+            $this->sendStockLimitEmailToContactPerson($cartProduct, $stockAvailable, $formattedAmounts);
+        }
+    }
+
+    private function getFormattedStockAmounts($cartProduct, $stockAvailable): array
+    {
+        $productQuantityService = new ProductQuantityService();
+        $unitsTable = TableRegistry::getTableLocator()->get('Units');
+        $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
+        $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
+        $unitName = !empty($unitObject) ? $unitObject->name : '';
+        
+        return [
+            'formattedQuantity' => $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName),
+            'formattedQuantityLimit' => $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity_limit, $unitName),
+            'formattedSoldOutLimit' => $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->sold_out_limit, $unitName),
+        ];
+    }
+
+    private function sendStockLimitEmailToManufacturer($cartProduct, $stockAvailable, array $formattedAmounts): void
+    {
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
+        $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
+        ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
+            $cartProduct->order_detail->product_name,
+            $formattedAmounts['formattedQuantity'],
+        ]))
+        ->setViewVars([
+            'identity' => $this->identity,
+            'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->address_manufacturer->firstname,
+            'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin(null, $cartProduct->product->id_product),
+            'cartProduct' => $cartProduct,
+            'stockAvailable' => $stockAvailable,
+            'formattedQuantity' => $formattedAmounts['formattedQuantity'],
+            'formattedQuantityLimit' => $formattedAmounts['formattedQuantityLimit'],
+            'formattedSoldOutLimit' => $formattedAmounts['formattedSoldOutLimit'],
+            'manufacturer' => $cartProduct->product->manufacturer,
+            'showManufacturerUnsubscribeLink' => true
+        ]);
+        $email->addToQueue();
+    }
+
+    private function sendStockLimitEmailToContactPerson($cartProduct, $stockAvailable, array $formattedAmounts): void
+    {
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
+        $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
+        ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
+            $cartProduct->order_detail->product_name,
+            $formattedAmounts['formattedQuantity'],
+        ]))
+        ->setViewVars([
+            'identity' => $this->identity,
+            'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
+            'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin($cartProduct->product->id_manufacturer, $cartProduct->product->id_product),
+            'cartProduct' => $cartProduct,
+            'stockAvailable' => $stockAvailable,
+            'formattedQuantity' => $formattedAmounts['formattedQuantity'],
+            'formattedQuantityLimit' => $formattedAmounts['formattedQuantityLimit'],
+            'formattedSoldOutLimit' => $formattedAmounts['formattedSoldOutLimit'],
+            'manufacturer' => $cartProduct->product->manufacturer,
+            'showManufacturerName' => true,
+            'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
+        ]);
+        $email->addToQueue();
     }
 
     private function sendConfirmationEmailToCustomerSelfService(?array $cart): void
