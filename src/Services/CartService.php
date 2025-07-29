@@ -59,6 +59,9 @@ class CartService
         return $this->request;
     }
 
+    /**
+     * @return array<int, string|array<string, mixed>>
+     */
     protected function getProductContain(): array
     {
         $contain = [
@@ -216,6 +219,9 @@ class CartService
         return $productWithAmount0Found;
     }
 
+    /**
+     * @return array<string, array<string>>
+     */
     private function validateCartForCheckout(): array
     {
         $cartErrors = [];
@@ -233,6 +239,9 @@ class CartService
         return $cartErrors;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function validateAndPrepareProducts(): array
     {
         $orderDetails2save = [];
@@ -285,6 +294,11 @@ class CartService
         ];
     }
 
+    /**
+     * @param array<string, mixed> $cartProduct
+     * @param array<string, int> $ids
+     * @return array<string, string>
+     */
     private function validateSingleProduct(Product $product, array $cartProduct, array $ids, ProductQuantityService $productQuantityService): array
     {
         $errors = [];
@@ -323,6 +337,11 @@ class CartService
         return $errors;
     }
 
+    /**
+     * @param array<string, mixed> $cartProduct
+     * @param array<string, int> $ids
+     * @return array<int, string>
+     */
     private function validateProductConstraints(Product $product, array $cartProduct, array $ids): array
     {
         $errors = [];
@@ -562,6 +581,9 @@ class CartService
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function finish(): array
     {
         $cart = $this->identity->getCart();
