@@ -10,7 +10,7 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     name: FoodCoopShop CI
     steps:
       - name: Checkout code
@@ -75,7 +75,7 @@ jobs:
         run: docker exec -w /app fcs.php php ./vendor/bin/phpunit --coverage-clover ./coverage.xml
 
       - name: Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: ./coverage.xml
 
