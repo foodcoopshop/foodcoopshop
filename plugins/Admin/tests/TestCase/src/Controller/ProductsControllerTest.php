@@ -829,12 +829,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertGreaterThan(1, $copies->count());
         $copy = $copies->first();
 
-        $normalizedSrc = $this->normalizeProductForComparison($srcProduct->toArray(), true);
-        $normalizedCopy = $this->normalizeProductForComparison($copy->toArray(), true);
+        $normalizedSrc = $this->normalizeProductForComparison($srcProduct->toArray() );
+        $normalizedCopy = $this->normalizeProductForComparison($copy->toArray());
 
         $this->assertEquals($normalizedSrc, $normalizedCopy);    }
 
-    private function normalizeProductForComparison(array $product, bool $includePurchasePrice = false): array
+    private function normalizeProductForComparison(array $product): array
     {
         unset($product['id_product']);
         unset($product['name']);
