@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('" . __d('admin', 'Website_administration') . "', '" . __d('admin', 'Configurations') . "');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -50,7 +50,7 @@ echo $this->Form->create($storageLocation, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
     'url' => $isEditMode ? $this->Slug->getStorageLocationEdit($storageLocation->id) : $this->Slug->getStorageLocationAdd(),
-    'id' => 'sliderEditForm'
+    'id' => 'storageLocationEditForm'
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
@@ -63,6 +63,23 @@ echo $this->Form->control('StorageLocations.position', [
     'label' => __d('admin', 'Rank'),
     'type' => 'text',
 ]);
+
+if ($this->request->getRequestTarget() != $this->Slug->getStorageLocationAdd()) {
+    echo '<div class="warning">';
+    echo $this->Form->control('StorageLocations.delete_storage_location', [
+        'label' => __d('admin', 'Delete storage location?') .
+            '<span class="after small">' .
+            ($productCount > 0 ?
+                __d('admin', 'Deleting is not possible. There are {0} products associated with this storage location.', $productCount) :
+                __d('admin', 'Check_and_do_not_forget_to_click_save_button.')
+            ).
+            '</span>',
+        'disabled' => ($productCount > 0 ? 'disabled' : ''),
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+    echo '</div>';
+}
 
 echo $this->Form->end();
 
