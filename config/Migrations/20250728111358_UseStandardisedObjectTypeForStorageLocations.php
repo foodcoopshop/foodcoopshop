@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Migrations\BaseMigration;
 
-class UseStadardisedObjectTypeForStorageLocaions extends BaseMigration
+class UseStandardisedObjectTypeForStorageLocations extends BaseMigration
 {
     /**
      * Change Method.

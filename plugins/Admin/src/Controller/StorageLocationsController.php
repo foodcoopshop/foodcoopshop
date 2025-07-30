@@ -61,7 +61,7 @@ class StorageLocationsController extends AdminAppController
         $productCount = $productsTable->find('all', conditions: [
             'id_storage_location' => $storageLocation->id,
             'active IN' => [APP_ON, APP_OFF],
-        ])->select(['id_storage_location'])->count();
+        ])->count();
 
         $this->_processForm($storageLocation, true, productCount: $productCount);
     }
@@ -99,7 +99,7 @@ class StorageLocationsController extends AdminAppController
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location'))&&$productCount<=0) {
+            if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location')) && $productCount == 0) {
                 $storageLocationsTable->deleteAll(['id' => $storageLocation->id]);
                 $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'storage_location_deleted';

@@ -178,7 +178,7 @@ class ProductsForBackendService
         int|string $manufacturerId,
         string $active,
         string|array $categoryId = '',
-        string|array $storageLocationId = '',
+        int|string $storageLocationId = '',
     ): SelectQuery {
 
         $conditions = [];
