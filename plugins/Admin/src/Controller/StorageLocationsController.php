@@ -70,10 +70,10 @@ class StorageLocationsController extends AdminAppController
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
+        $this->set('productCount', $productCount);
 
         if (empty($this->getRequest()->getData())) {
             $this->set('storageLocation', $storageLocation);
-            $this->set('productCount', $productCount);
             return;
         }
 
