@@ -873,7 +873,7 @@ class ProductsControllerTest extends AppCakeTestCase
         return $product;
     }
 
-    private function isAssociationHasMany($association): bool
+    private function isAssociationHasMany(mixed $association): bool
     {
         return is_array($association) && isset($association[0]) && is_array($association[0]);
     }
