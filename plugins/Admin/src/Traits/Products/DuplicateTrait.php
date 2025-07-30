@@ -4,16 +4,16 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Model\Entity\Product;
+use App\Model\Entity\PurchasePriceProduct;
 use App\Model\Table\DepositProductsTable;
 use App\Model\Table\PurchasePriceProductsTable;
 use App\Model\Table\StockAvailablesTable;
 use App\Model\Table\UnitProductsTable;
-use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
 use Cake\Http\Response;
+use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
-use function PHPUnit\Framework\assertEquals;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -54,9 +54,6 @@ trait DuplicateTrait
                     'primaryKey' => DepositProductsTable::ORIGINAL_PRIMARY_KEY
                 ],
             'CategoryProducts' => [],
-            'PurchasePriceProducts' => [
-                'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
-            ]
         ];
 
         $srcProduct = $productsTable->find('all',
@@ -66,7 +63,6 @@ trait DuplicateTrait
             contain: array_keys($associations),
         )->first();
 
-        pr($srcProduct);
 
         $preExistingCopies = $productsTable->find('all',
             conditions: [
@@ -79,15 +75,37 @@ trait DuplicateTrait
         $amountOfPreCopies = $preExistingCopies->count() + 1;
 
         for ($i = 0; $i < $copyAmount; $i++) {
-            $copies[] = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
+            $copy = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
+
+            /** @var Product $copy */
+            $copy = $productsTable->save($copy);
+            $copies[] = $copy;
+
+            $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
+            $srcPurchasePrice = $purchasePriceProductTable->find('all',
+                conditions: [
+                    $purchasePriceProductTable->getPrimaryKey() => $productId,
+                ],
+            )->first();
+
+            if (!$srcPurchasePrice instanceof PurchasePriceProduct) {
+                continue;
+            }
+
+            $copyPurchasePriceData = $srcPurchasePrice->toArray();
+
+            unset($copyPurchasePriceData[PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY]);
+            $copyPurchasePriceData[$purchasePriceProductTable->getPrimaryKey()] = $copy->id_product;
+
+            $purchasePriceCopy = new Entity(
+                $copyPurchasePriceData,
+                [
+                    'validate' => false,
+                ]
+            );
+
+            $purchasePriceProductTable->save($purchasePriceCopy);
         }
-
-        pr($copies[0]);
-        pr("-------");
-
-        $copies = $productsTable->saveMany($copies);
-
-        pr($copies[0]);
 
 
         $preparedProductForActionLog = [];
@@ -119,13 +137,6 @@ trait DuplicateTrait
 
         foreach ($associations as $associationName => $options) {
 
-            pr("________________________________________________________________________________________");
-            pr("________________________________________________________________________________________");
-            pr("________________________________________________________________________________________");
-            pr("------------");
-            pr($associationName);
-            pr("--");
-
             $primaryKey = $this->getTableLocator()->get($associationName)->getPrimaryKey();
             if (isset($options['primaryKey'])) {
                 $primaryKey = $options['primaryKey'];
@@ -133,11 +144,6 @@ trait DuplicateTrait
 
             $tableAssociationName = Inflector::tableize($associationName);
             $tableAssociationName = Inflector::singularize($tableAssociationName);
-
-            pr($tableAssociationName);
-            pr("------------");
-            pr($product[$tableAssociationName]);
-            pr("------------");
 
             if ($this->isAssociationNamePlural($tableAssociationName, $product)) {
                 $tableAssociationName = Inflector::pluralize($tableAssociationName);
@@ -162,20 +168,6 @@ trait DuplicateTrait
             array_keys($associations),
             ['validate' => false]
         );
-
-        pr("#########################################################################################");
-        pr("#########################################################################################");
-        pr(
-            $productsTable->newEntity(
-                $product,
-                [
-                    'associated' => $associationWithValidation,
-                ]
-            )
-        );
-        pr("#########################################################################################");
-        pr("#########################################################################################");
-
 
         return $productsTable->newEntity(
             $product,

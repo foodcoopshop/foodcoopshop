@@ -719,7 +719,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($product->active, APP_ON);
     }
 
-    public function testDuplicate(): void
+    public function testDuplicateDefault(): void
     {
         $this->loginAsSuperadmin();
 
@@ -743,6 +743,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 'copyAmount' => 2,
             ],
         );
+
         $copies = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
@@ -758,42 +759,19 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         );
 
-
         $this->assertGreaterThan(1, $copies->count());
         $copy = $copies->first();
 
-        $this->assertEquals($srcProduct->price, $copy->price);
-        $this->assertEquals($srcProduct->id_tax, $copy->id_tax);
-        $this->assertEquals($srcProduct->id_manufacturer, $copy->id_manufacturer);
-        $this->assertEquals($srcProduct->is_decleration_ok, $copy->is_decleration_ok);
-        $this->assertEquals($srcProduct->status, $copy->status);
+        $normalizedSrc = $this->normalizeProductForComparison($srcProduct->toArray());
+        $normalizedCopy = $this->normalizeProductForComparison($copy->toArray());
+
+        $this->assertEquals($normalizedSrc, $normalizedCopy);
+
         $this->assertTrue($copy->new->isToday());
-
-
-        $this->assertEquals($srcProduct->delivery_rhythm_type, $copy->delivery_rhythm_type);
-        $this->assertEquals($srcProduct->delivery_rhythm_count, $copy->delivery_rhythm_count);
-        $this->assertEquals($srcProduct->delivery_rhytm_first_delivery_day, $copy->delivery_rhytm_first_delivery_day);
-        $this->assertEquals($srcProduct->delivery_rhytm_order_possible_units, $copy->delivery_rhytm_order_possible_units);
-        $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_weekday, $copy->delivery_rhythm_send_order_list_weekday);
-        $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_day, $copy->delivery_rhythm_send_order_list_day);
-
-        $this->assertEquals($srcProduct->deposit_product, $copy->deposit_product);
-
-        $this->assertEquals($srcProduct->stock_available->quantity, $copy->stock_available->quantity);
-        $this->assertEquals($srcProduct->stock_available->quantity_limit, $copy->stock_available->quantity_limit);
-        $this->assertEquals($srcProduct->stock_available->sold_out_limit, $copy->stock_available->sold_out_limit);
-        $this->assertEquals($srcProduct->stock_available->always_available, $copy->stock_available->always_available);
-        $this->assertEquals($srcProduct->stock_available->default_quantity_after_sending_order_lists, $copy->stock_available->default_quantity_after_sending_order_lists);
-
-        $this->assertEquals($srcProduct->unit_product->name, $copy->unit_product->name);
-
-        $copyCategory = array_pop($copy->category_products);
-        $this->assertNotNull($copyCategory->id_category);
-        $this->assertEquals(array_pop($srcProduct->category_products)->id_category, $copyCategory->id_category);
-        $this->assertEquals($copy->id_product, $copyCategory->id_product);
+        $this->assertStringContainsString(__d('admin', '{0} - copy {1}', ['', '']), $copy->name);
     }
 
-    public function testDuplicateP(): void
+    public function testDuplicatePurchasePrice(): void
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
@@ -826,7 +804,6 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         )->first();
 
-
         $this->ajaxPost('/admin/products/duplicate',
             [
                 'productId' => $productId,
@@ -848,24 +825,57 @@ class ProductsControllerTest extends AppCakeTestCase
                 'PurchasePriceProducts',
             ]
         );
-        exit;
 
         $this->assertGreaterThan(1, $copies->count());
         $copy = $copies->first();
 
-        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
-        $purchasePrice = $purchasePriceProductsTable->find('all'
-        )->toArray();
+        $normalizedSrc = $this->normalizeProductForComparison($srcProduct->toArray(), true);
+        $normalizedCopy = $this->normalizeProductForComparison($copy->toArray(), true);
 
+        $this->assertEquals($normalizedSrc, $normalizedCopy);    }
 
-        pr("???????????????????????????????????????????????????????????????????????????????????????????????????????????ß");
-        pr($copy);
-        pr("???????????????????????????????????????????????????????????????????????????????????????????????????????????ß");
-        pr($purchasePrice);
+    private function normalizeProductForComparison(array $product, bool $includePurchasePrice = false): array
+    {
+        unset($product['id_product']);
+        unset($product['name']);
+        unset($product['is_new']);
+        unset($product['new']);
+        unset($product['created']);
+        unset($product['modified']);
+        unset($product['active']);
 
+        $associations = [
+            'deposit_product' => ['id_deposit_product', 'id_product'],
+            'unit_product' => ['id', 'id_product'],
+            'stock_available' => ['id_stock_available', 'id_product'],
+            'purchase_price_product' => ['id', 'product_id'],
+            'category_products' => ['id_product'],
+        ];
 
-        $this->assertNotNull($srcProduct->purchase_price_product->tax_id);
-        $this->assertEquals($srcProduct->purchase_price_product->tax_id, $copy->purchase_price_product->tax_id);
+        foreach ($associations as $associationName => $keysToRemove) {
+            if (!isset($product[$associationName])) {
+                continue;
+            }
+
+            if ($this->isAssociationHasMany($product[$associationName])) {
+                foreach ($product[$associationName] as &$item) {
+                    foreach ($keysToRemove as $key) {
+                        unset($item[$key]);
+                    }
+                }
+            } else {
+                foreach ($keysToRemove as $key) {
+                    unset($product[$associationName][$key]);
+                }
+            }
+        }
+
+        return $product;
+    }
+
+    private function isAssociationHasMany($association): bool
+    {
+        return is_array($association) && isset($association[0]) && is_array($association[0]);
     }
 
 
