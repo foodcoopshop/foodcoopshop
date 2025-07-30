@@ -13,6 +13,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\I18n\DateTime;
 use Cake\Http\Response;
 use Cake\Utility\Inflector;
+use function PHPUnit\Framework\assertEquals;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -53,6 +54,9 @@ trait DuplicateTrait
                     'primaryKey' => DepositProductsTable::ORIGINAL_PRIMARY_KEY
                 ],
             'CategoryProducts' => [],
+            'PurchasePriceProducts' => [
+                'primaryKey' => PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY
+            ]
         ];
 
         $srcProduct = $productsTable->find('all',
@@ -61,6 +65,8 @@ trait DuplicateTrait
             ],
             contain: array_keys($associations),
         )->first();
+
+        pr($srcProduct);
 
         $preExistingCopies = $productsTable->find('all',
             conditions: [
@@ -76,7 +82,13 @@ trait DuplicateTrait
             $copies[] = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
         }
 
+        pr($copies[0]);
+        pr("-------");
+
         $copies = $productsTable->saveMany($copies);
+
+        pr($copies[0]);
+
 
         $preparedProductForActionLog = [];
         foreach ($copies as $productCopy) {
@@ -107,6 +119,13 @@ trait DuplicateTrait
 
         foreach ($associations as $associationName => $options) {
 
+            pr("________________________________________________________________________________________");
+            pr("________________________________________________________________________________________");
+            pr("________________________________________________________________________________________");
+            pr("------------");
+            pr($associationName);
+            pr("--");
+
             $primaryKey = $this->getTableLocator()->get($associationName)->getPrimaryKey();
             if (isset($options['primaryKey'])) {
                 $primaryKey = $options['primaryKey'];
@@ -114,6 +133,11 @@ trait DuplicateTrait
 
             $tableAssociationName = Inflector::tableize($associationName);
             $tableAssociationName = Inflector::singularize($tableAssociationName);
+
+            pr($tableAssociationName);
+            pr("------------");
+            pr($product[$tableAssociationName]);
+            pr("------------");
 
             if ($this->isAssociationNamePlural($tableAssociationName, $product)) {
                 $tableAssociationName = Inflector::pluralize($tableAssociationName);
@@ -139,10 +163,25 @@ trait DuplicateTrait
             ['validate' => false]
         );
 
+        pr("#########################################################################################");
+        pr("#########################################################################################");
+        pr(
+            $productsTable->newEntity(
+                $product,
+                [
+                    'associated' => $associationWithValidation,
+                ]
+            )
+        );
+        pr("#########################################################################################");
+        pr("#########################################################################################");
+
+
         return $productsTable->newEntity(
             $product,
             [
                 'associated' => $associationWithValidation,
+                'validate' => false,
             ]
         );
     }

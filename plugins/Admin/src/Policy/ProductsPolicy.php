@@ -66,9 +66,6 @@ class ProductsPolicy implements RequestPolicyInterface
                 }
                 return false;
             case 'duplicate': 
-                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-                    return false;
-                }
                 if ($identity->isSuperadmin() || $identity->isAdmin()) {
                     return true;
                 }

@@ -721,6 +721,8 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testDuplicate(): void
     {
+        $this->loginAsSuperadmin();
+
         $productId = 349;
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $srcProduct = $productsTable->find('all',
@@ -735,7 +737,6 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         )->first();
 
-        $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/products/duplicate',
             [
                 'productId' => $productId,
@@ -791,6 +792,82 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(array_pop($srcProduct->category_products)->id_category, $copyCategory->id_category);
         $this->assertEquals($copy->id_product, $copyCategory->id_product);
     }
+
+    public function testDuplicateP(): void
+    {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+
+        $this->loginAsSuperadmin();
+
+        $productId = 349;
+
+        $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
+        $entity = $purchasePriceProductsTable->newEntity(
+            [
+                'product_id' => $productId,
+                'tax_id' => 1,
+                'price' => 64.03434,
+            ],
+        );
+        $purchasePriceProductsTable->save($entity);
+
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $srcProduct = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('id_product') => $productId,
+            ],
+            contain: [
+                'DepositProducts',
+                'UnitProducts',
+                'StockAvailables',
+                'CategoryProducts',
+                'PurchasePriceProducts',
+            ]
+        )->first();
+
+
+        $this->ajaxPost('/admin/products/duplicate',
+            [
+                'productId' => $productId,
+                'copyAmount' => 2,
+            ],
+        );
+        $copies = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                    $srcProduct->name,
+                    '%',
+                ]),
+            ],
+            contain: [
+                'DepositProducts',
+                'UnitProducts',
+                'StockAvailables',
+                'CategoryProducts',
+                'PurchasePriceProducts',
+            ]
+        );
+        exit;
+
+        $this->assertGreaterThan(1, $copies->count());
+        $copy = $copies->first();
+
+        $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
+        $purchasePrice = $purchasePriceProductsTable->find('all'
+        )->toArray();
+
+
+        pr("???????????????????????????????????????????????????????????????????????????????????????????????????????????ß");
+        pr($copy);
+        pr("???????????????????????????????????????????????????????????????????????????????????????????????????????????ß");
+        pr($purchasePrice);
+
+
+        $this->assertNotNull($srcProduct->purchase_price_product->tax_id);
+        $this->assertEquals($srcProduct->purchase_price_product->tax_id, $copy->purchase_price_product->tax_id);
+    }
+
 
     public function testProductAdminPricesAsManufacturerWithPurchasePriceEnabled(): void
     {
