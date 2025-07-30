@@ -106,6 +106,15 @@ $paginator = $this->loadHelper('Paginator', [
                 'options' => $categoriesForDropdown,
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
+            if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+                echo $this->Form->control('storageLocationId', [
+                    'type' => 'select',
+                    'label' => '',
+                    'empty' => __d('admin', 'Storage locations'),
+                    'options' => $storageLocationsForForDropdown,
+                    'default' => isset($storageLocationId) ? $storageLocationId : ''
+                ]);
+            }
             ?>
 
             <div class="right">

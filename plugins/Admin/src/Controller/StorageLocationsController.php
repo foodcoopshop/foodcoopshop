@@ -56,16 +56,24 @@ class StorageLocationsController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', __d('admin', 'Edit {0}', [__d('admin', 'Storage_location')]));
-        $this->_processForm($storageLocation, true);
+
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productCount = $productsTable->find('all', conditions: [
+            'id_storage_location' => $storageLocation->id,
+            'active IN' => [APP_ON, APP_OFF],
+        ])->count();
+
+        $this->_processForm($storageLocation, true, productCount: $productCount);
     }
 
-    private function _processForm(StorageLocation $storageLocation, bool $isEditMode): void
+    private function _processForm(StorageLocation $storageLocation, bool $isEditMode, int $productCount = 0): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
         if (empty($this->getRequest()->getData())) {
             $this->set('storageLocation', $storageLocation);
+            $this->set('productCount', $productCount);
             return;
         }
 
@@ -91,9 +99,14 @@ class StorageLocationsController extends AdminAppController
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+            if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location')) && $productCount == 0) {
+                $storageLocationsTable->deleteAll(['id' => $storageLocation->id]);
+                $messageSuffix = __d('admin', 'deleted');
+                $actionLogType = 'storage_location_deleted';
+            }
 
             $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);
-            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_Locations', $message);
+            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_locations', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $storageLocation->id);
@@ -114,7 +127,7 @@ class StorageLocationsController extends AdminAppController
             ->leftJoinWith('Products', function ($q) {
                 return $q->where(['Products.active IN' => [APP_ON, APP_OFF]]);
             })
-        ->groupBy(['StorageLocations.id']);
+            ->groupBy(['StorageLocations.id']);
 
         $storageLocations = $this->paginate($query, [
             'sortableFields' => [

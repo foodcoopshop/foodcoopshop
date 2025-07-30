@@ -166,4 +166,49 @@ class StorageLocationsControllerTest extends AppCakeTestCase
 
         $this->assertEquals(3, $storageLocationCount);
     }
+
+    public function testDeleteWithoutAssociations(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->post(
+            $this->Slug->getStorageLocationEdit(2),
+            [
+                'StorageLocations' => [
+                    'delete_storage_location' =>  true,
+                ],
+            ]
+        );
+
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->find('all',
+            conditions: [
+                'StorageLocations.id' => 2,
+            ],
+        )->first();
+
+        $this->assertNull($storageLocation);
+    }
+
+
+    public function testDeleteWithAssociations(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->post(
+            $this->Slug->getStorageLocationEdit(1),
+            [
+                'StorageLocations' => [
+                    'delete_storage_location' =>  true,
+                ],
+            ]
+        );
+
+        $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->find('all',
+            conditions: [
+                'StorageLocations.id' => 1,
+            ],
+        )->first();
+
+        $this->assertNotNull($storageLocation);
+    }
 }
