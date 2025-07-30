@@ -739,7 +739,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->ajaxPost('/admin/products/duplicate',
             [
-                'productId' => $productId,
+                'productIds' => [$productId],
                 'copyAmount' => 2,
             ],
         );
@@ -806,7 +806,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->ajaxPost('/admin/products/duplicate',
             [
-                'productId' => $productId,
+                'productIds' => [$productId],
                 'copyAmount' => 2,
             ],
         );

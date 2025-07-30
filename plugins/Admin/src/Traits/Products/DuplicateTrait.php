@@ -35,7 +35,7 @@ trait DuplicateTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $productId = $this->getRequest()->getData('productId');
+        $productIds = $this->getRequest()->getData('productIds');
         $copyAmount = $this->getRequest()->getData('copyAmount');
         $copies = [];
 
@@ -56,55 +56,57 @@ trait DuplicateTrait
             'CategoryProducts' => [],
         ];
 
-        $srcProduct = $productsTable->find('all',
+        $srcProducts = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('id_product') => $productId,
+                $productsTable->aliasField('id_product IN') => $productIds,
             ],
             contain: array_keys($associations),
-        )->first();
-
-
-        $preExistingCopies = $productsTable->find('all',
-            conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
-                    $srcProduct->name,
-                    '%',
-                ])
-            ],
         );
-        $amountOfPreCopies = $preExistingCopies->count() + 1;
 
-        for ($i = 0; $i < $copyAmount; $i++) {
-            $copy = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
 
-            /** @var Product $copy */
-            $copy = $productsTable->save($copy);
-            $copies[] = $copy;
-
-            $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
-            $srcPurchasePrice = $purchasePriceProductTable->find('all',
+        foreach ($srcProducts as $srcProduct) {
+            $preExistingCopies = $productsTable->find('all',
                 conditions: [
-                    $purchasePriceProductTable->getPrimaryKey() => $productId,
+                    $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                        $srcProduct->name,
+                        '%',
+                    ])
                 ],
-            )->first();
-
-            if (!$srcPurchasePrice instanceof PurchasePriceProduct) {
-                continue;
-            }
-
-            $copyPurchasePriceData = $srcPurchasePrice->toArray();
-
-            unset($copyPurchasePriceData[PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY]);
-            $copyPurchasePriceData[$purchasePriceProductTable->getPrimaryKey()] = $copy->id_product;
-
-            $purchasePriceCopy = new Entity(
-                $copyPurchasePriceData,
-                [
-                    'validate' => false,
-                ]
             );
+            $amountOfPreCopies = $preExistingCopies->count() + 1;
 
-            $purchasePriceProductTable->save($purchasePriceCopy);
+            for ($i = 0; $i < $copyAmount; $i++) {
+                $copy = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
+
+                /** @var Product $copy */
+                $copy = $productsTable->save($copy);
+                $copies[] = $copy;
+
+                $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
+                $srcPurchasePrice = $purchasePriceProductTable->find('all',
+                    conditions: [
+                        $purchasePriceProductTable->getPrimaryKey() => $srcProduct->toArray()['id_product']
+                    ],
+                )->first();
+
+                if (!$srcPurchasePrice instanceof PurchasePriceProduct) {
+                    continue;
+                }
+
+                $copyPurchasePriceData = $srcPurchasePrice->toArray();
+
+                unset($copyPurchasePriceData[PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY]);
+                $copyPurchasePriceData[$purchasePriceProductTable->getPrimaryKey()] = $copy->id_product;
+
+                $purchasePriceCopy = new Entity(
+                    $copyPurchasePriceData,
+                    [
+                        'validate' => false,
+                    ]
+                );
+
+                $purchasePriceProductTable->save($purchasePriceCopy);
+            }
         }
 
 

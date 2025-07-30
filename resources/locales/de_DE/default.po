@@ -832,17 +832,17 @@ msgstr "Beim Löschen des Produktes sind Fehler aufgetreten"
 msgid "Copy product?"
 msgstr "Produkt kopieren?"
 
-msgid "Really copy product {0}?"
-msgstr "Möchtest du das Produkt {0} wirklich kopieren?"
+msgid "Really copy product?"
+msgstr "Möchtest du das Produkt wirklich kopieren?"
+
+msgid "Really copy products?"
+msgstr "Möchtest du die Produkte wirklich kopieren?"
 
 msgid "The following data will be copied:"
 msgstr "Folgende Daten werden kopiert:"
 
 msgid "The following data <b>won\'t</b> be copied:"
 msgstr "Folgende Daten werden <b>nicht</b> kopiert:"
-
-msgid "Product name of copy(s): <b>{0} - copy X</b>"
-msgstr "Produktname der Kopie(n): <b>{0} - Kopie X</b>"
 
 msgid "Status of copy(s): <b>deactivated</b>"
 msgstr "Status der Kopie(n): <b>deaktiviert</b>"
