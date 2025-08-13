@@ -11,7 +11,7 @@
     ],
     "config": {
         "platform": {
-            "php": "8.2"
+            "php": "8.4"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "cakephp/cakephp": "^5.2",
         "cakephp/migrations": "^4.0",
         "cakephp/plugin-installer": "~2.0",
@@ -40,7 +40,7 @@
     "require-dev": {
         "cakephp/debug_kit": "5.*",
         "cakephp/cakephp-codesniffer": "^5.0",
-        "phpunit/phpunit": "^11.0",
+        "phpunit/phpunit": "^12.0",
         "phpstan/phpstan": "2.*",
         "cakephp/bake": "^3.0.0",
         "ergebnis/phpstan-rules": "^2.5",
