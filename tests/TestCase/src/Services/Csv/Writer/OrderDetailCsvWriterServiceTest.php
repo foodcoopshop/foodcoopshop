@@ -54,7 +54,7 @@ class OrderDetailCsvWriterServiceTest extends AppCakeTestCase
         $lines  = explode("\n", $result);
         
         $this->assertEquals(6, count($lines));
-        $this->assertEquals(Bom::Utf8 . $this->defaultHeader, $lines[0]);
+        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader, $lines[0]);
         $this->assertEquals('2;1;Beuschl;"Demo Fleisch-Hersteller";4,54;;;;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[1]);
         $this->assertEquals('4;2;Forelle;"Demo Fleisch-Hersteller";10,50;;700;"100 g";"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[2]);
         $this->assertEquals('1;1;Artischocke;"Demo Gemüse-Hersteller";1,82;0,50;;Stück;"Demo Superadmin";02.02.2018;"Bestellung getätigt";Vorbestellung;"01.02.2018 09:17"', $lines[3]);

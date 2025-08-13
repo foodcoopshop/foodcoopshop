@@ -76,7 +76,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->writer = Writer::createFromFileObject(new \SplTempFileObject());
 
 		$this->writer->setDelimiter(';');
-		$this->writer->setOutputBOM(Bom::Utf8);
+		$this->writer->setOutputBOM(Bom::Utf8->value);
 
 		$header = $this->getHeader();
 		if (!empty($header)) {

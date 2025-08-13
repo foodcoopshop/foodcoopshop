@@ -33,7 +33,7 @@ class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
         $lines  = explode("\n", $result);
 
         $this->assertEquals(6, count($lines));
-        $this->assertEquals(Bom::Utf8 . $this->defaultHeader, $lines[0]);
+        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader, $lines[0]);
         
         $this->assertEquals('4;"Demo Fleisch-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-fleisch-hersteller@mailinator.com;1;;0;0;', $lines[1]);
         $this->assertEquals('5;"Demo Gemüse-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-gemuese-hersteller@mailinator.com;1;0,50;1;0;"Demo Admin"', $lines[2]);
