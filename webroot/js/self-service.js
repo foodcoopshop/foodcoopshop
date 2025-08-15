@@ -13,7 +13,7 @@
  */
 foodcoopshop.SelfService = {
 
-    autoLogoutTimer : 5,
+    autoLogoutTimer : 300,
     currentLogoutTimer : 0,
 
     init : function() {

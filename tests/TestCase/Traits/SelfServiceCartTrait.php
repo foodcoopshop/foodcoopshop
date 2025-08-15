@@ -83,10 +83,9 @@ trait SelfServiceCartTrait
     {
         $this->getSelfServicePostOptions();
         $this->post(
-            '/warenkorb/emptyCart/',
-            [
-                'autologout' => '1',
-            ],
+            '/warenkorb/emptyCart/?autologout=1',
+            [],
+            ['HTTP_REFERER' => '/selbstbedienung'] 
         ); 
         $this->runAndAssertQueue();
     }
