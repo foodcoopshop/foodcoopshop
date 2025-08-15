@@ -243,14 +243,22 @@ class CartsController extends FrontendController
 
     public function emptyCart(): void
     {
-        $this->doEmptyCart();
-        if ((count($this->identity->getCart())>0) && (! empty($this->getRequest()->getQuery('autologout'))) && ($this->getRequest()->getQuery('autologout')=='1') && ($this->identity->isSelfServiceCustomer())) {
-            $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($this->identity->getCart());
+        // Warenkorb vor dem Leeren sichern
+        $cartBeforeEmpty = $this->identity->getCart();
+
+        if (count($cartBeforeEmpty) > 0){
+            if ((!empty($this->getRequest()->getQuery('autologout'))) && ($this->getRequest()->getQuery('autologout')=='1')){
+                if((OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer()) && $this->identity->isSelfServiceCustomer()) {
+                  $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($cartBeforeEmpty);
+                  $this->doEmptyCart();
+                }
+            }
+            else{
+                $this->doEmptyCart();
+                $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
+                $this->Flash->success($message);
+            }   
         }
-        else{
-            $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
-            $this->Flash->success($message);
-        }   
 
         $redirectUrl = $this->referer();
         if ($this->request->getQuery('redirect')) {

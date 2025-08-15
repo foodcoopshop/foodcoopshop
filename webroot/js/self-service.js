@@ -13,7 +13,7 @@
  */
 foodcoopshop.SelfService = {
 
-    autoLogoutTimer : 300,
+    autoLogoutTimer : 5,
     currentLogoutTimer : 0,
 
     init : function() {
@@ -261,8 +261,8 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.currentLogoutTimer--;
                 foodcoopshop.SelfService.renderTimer();
                 if (foodcoopshop.SelfService.currentLogoutTimer == 0) {
-                $redirectUrl='/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + document.location.href;
-                document.location.href = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart?redirect='+$redirectUrl+'&autologout=1';
+                    $redirectUrl='/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + document.location.href;
+                    document.location.href = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart?redirect='+$redirectUrl+'&autologout=1';
                 }
             },
             recurIdleCall : true,
