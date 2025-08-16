@@ -13,20 +13,24 @@
  */
 foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
-    getSuccessHandler : function() {
+    getSuccessHandler : function(selfServicePaymentTypes, paymentType) {
+
         var selfSForm = $('#SelfServiceForm');
-        var paymentTypeId = selfSForm.find('input[name="payment_type"]').val();
-        var selectedPayment = foodcoopshop.SelfService.getPaymentTypeById(paymentTypeId);
-
-        if(selectedPayment.useCardPaymentIntegration) {
-            var amount = $('p.total-sum-wrapper > span.sum').text();
-
+        selfServicePaymentTypes = typeof selfServicePaymentTypes === 'string' ? JSON.parse(selfServicePaymentTypes) : selfServicePaymentTypes;
+        var paymentTypeOfModal = selfServicePaymentTypes.find(function(pt) {
+            return pt.payment_type.trim() === paymentType.trim();
+        });
+        if (paymentTypeOfModal != null && paymentTypeOfModal.useCardPaymentIntegration) {
+            var amountText = $('p.total-sum-wrapper > span.sum').first().text().trim();
+            amountText = amountText.replace(/[^\d.,]/g, '');
+            var amountFloat = parseFloat(amountText.replace(',', '.')); 
+            var amountInCents = Math.round(amountFloat * 100);
             $.ajax({
                 url: '/self-service/sumupPayment',
                 type: 'POST',
                 data: {
-                    invoice_id: selfSForm.find('input[name="invoice_id"]').val(),
-                    amount: amount
+                    //TODO: invoice_id: 
+                    amount: amountInCents
                 },
                 success: function(response) {
                     if(response.success) {
@@ -45,8 +49,9 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
         }
     },
 
-    getOpenHandler : function(modalSelector, paymentName, paymentText) {
+    getOpenHandler : function(modalSelector, paymentName, paymentText, selfServicePaymentTypes) {
         var modalSelector = '#self-service-confirm-dialog-paymenttype-details';
+
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseButton, 'fa-fw fas fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.cart.selfServiceDenyPurchaseButton, null, true)
@@ -64,7 +69,7 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
         $(modalSelector + ' .modal-body').html('<p>' + foodcoopshop.LocalizedJs.cart.selfServiceAmountToBePaid + '<b>' + amount + '</b>' + paymentText + '</p>');
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler();
+            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler(selfServicePaymentTypes, paymentName);
         });
 
         $(modalSelector + ' button.btn-outline-light').on('click', function () {

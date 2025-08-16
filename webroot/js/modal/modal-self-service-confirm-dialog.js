@@ -13,7 +13,7 @@
  */
 foodcoopshop.ModalSelfServiceConfirmDialog = {
    
-    init : function(title, html, dialogbuttons) {
+    init : function(title, html, dialogbuttons, selfServicePaymentTypes) {
 
         var modalSelector = '#self-service-confirm-dialog';
         var buttons = [];
@@ -43,7 +43,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         });
 
         $(modalSelector + ' button.btn-success.no-auto-bind').on('click', function () {
-            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details', $(this).text(), $(this).attr('value'));
+            foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getOpenHandler('#self-service-confirm-dialog-paymenttype-details', $(this).text(), $(this).attr('value'), selfServicePaymentTypes);
         });
 
         $(modalSelector + ' button.btn-outline-light').on('click', function () {

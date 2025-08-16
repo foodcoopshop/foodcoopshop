@@ -57,4 +57,4 @@ $dialogButtons[] = [
     'isCloseButton' => true
 ];
 
-$this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init('$title', '$html', '".json_encode($dialogButtons)."');" ]);
+$this->element('addScript', ['script' => Configure::read('app.jsNamespace').".ModalSelfServiceConfirmDialog.init('$title', '$html', '".json_encode($dialogButtons)."', '".json_encode($selfServicePaymentTypes)."');" ]);
