@@ -204,6 +204,9 @@ return [
             'payment_type_cash' => 'Bar',
             'payment_type_cashless' => 'Guthaben-System',
         ],
+        
+        //'SUMUP_API_BASE' => 'https://api.sumup.com',
+        //'SUMUP_API_KEY' =>'<api-key>',
 
         'helloCashAccountChangedDate' => '2020-01-01',
 
@@ -224,4 +227,5 @@ return [
         'DatabaseWithTimeAndMicrosecondsAlt' => 'Y-m-d H:i:s.u',
         'DateWithTimeForFilename' => 'Y-m-d_H-i-s',
     ],
+
 ];
