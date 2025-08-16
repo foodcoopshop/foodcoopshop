@@ -236,4 +236,44 @@ class SelfServiceController extends FrontendController
 
     }
 
+    public function sumupPayment() {
+        $this->autoRender = false;
+        $invoiceId = $this->request->getData('invoice_id');
+        $amountStr = $this->request->getData('amount'); // z.B. "12,50"
+    
+        // Komma in Punkt für Float
+        $amount = floatval(str_replace(',', '.', $amountStr));
+
+        $sumupToken = Configure::read('SumUp.access_token'); // Sandbox oder Live
+        $terminalId = Configure::read('SumUp.terminal_id');
+
+        $payload = [
+            'amount' => $amount,
+            'currency' => 'EUR',
+            'checkout_reference' => 'SB-' . $invoiceId,
+            'terminal' => $terminalId
+        ];
+
+        $ch = curl_init('https://api.sumup.com/v0.1/transactions');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $sumupToken,
+            'Content-Type: application/json'
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        $data = json_decode($response, true);
+
+        if ($httpCode == 201 && isset($data['transaction_code'])) {
+            echo json_encode(['success' => true, 'transactionId' => $data['transaction_code']]);
+        } else {
+            echo json_encode(['success' => false, 'message' => $data['error_message'] ?? 'Unbekannter Fehler']);
+        }
+    }
+
 }

@@ -14,8 +14,35 @@
 foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
     getSuccessHandler : function() {
-       var selfSForm = $('#SelfServiceForm');
-       selfSForm.submit();
+        var selfSForm = $('#SelfServiceForm');
+        var paymentTypeId = selfSForm.find('input[name="payment_type"]').val();
+        var selectedPayment = foodcoopshop.SelfService.getPaymentTypeById(paymentTypeId);
+
+        if(selectedPayment.useCardPaymentIntegration) {
+            var amount = $('p.total-sum-wrapper > span.sum').text();
+
+            $.ajax({
+                url: '/self-service/sumupPayment',
+                type: 'POST',
+                data: {
+                    invoice_id: selfSForm.find('input[name="invoice_id"]').val(),
+                    amount: amount
+                },
+                success: function(response) {
+                    if(response.success) {
+                        console.log('SumUp Zahlung erfolgreich, Transaction ID:', response.transactionId);
+                        selfSForm.submit(); // Zahlung abgeschlossen → Formular absenden
+                    } else {
+                        alert('SumUp Fehler: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Fehler beim Kontakt zu SumUp. Bitte versuchen Sie es erneut.');
+                }
+            });
+        } else {
+            selfSForm.submit(); // normale Barzahlung
+        }
     },
 
     getOpenHandler : function(modalSelector, paymentName, paymentText) {

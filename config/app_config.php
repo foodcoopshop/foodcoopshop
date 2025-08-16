@@ -110,6 +110,7 @@ return [
             //     'id' => 1, 
             //     'payment_type' => 'Bar',
             //     'payment_text' => 'Bitte Einkauf in Bar bezahlen.',
+            //     'useCardPaymentIntegration' => false, 
             // ],
         ],
         'selfServiceEasyModeEnabled' => false,
