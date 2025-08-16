@@ -1286,6 +1286,9 @@ msgstr "List of allergens"
 msgid "Self_service_mode"
 msgstr "Self-service mode"
 
+msgid "Self_service_purchase"
+msgstr "Self-service purchase"
+
 msgid "The_product_{0}_was_added_to_your_cart."
 msgstr "The product {0} was added to your cart."
 

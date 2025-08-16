@@ -205,8 +205,12 @@ return [
             'payment_type_cashless' => 'Guthaben-System',
         ],
         
-        //'SUMUP_API_BASE' => 'https://api.sumup.com',
-        //'SUMUP_API_KEY' =>'<api-key>',
+        //'sumupRestEndpoint' => 'https://api.sumup.com',  //?
+        //'sumupRestTokenUrl' => 'https://api.sumup.com/token',
+        //'sumupRestCheckouts' => 'https://api.sumup.com/v0.1/checkouts',
+        //'sumupClientId' => '<client_id>',
+        //'sumupClientSecret' => '<client_secret>',
+        //'sumupPayToEmail' => '<pay_to_email>',
 
         'helloCashAccountChangedDate' => '2020-01-01',
 

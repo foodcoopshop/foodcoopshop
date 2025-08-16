@@ -1304,6 +1304,9 @@ msgstr "Allergenliste"
 msgid "Self_service_mode"
 msgstr "Selbstbedienungs-Modus"
 
+msgid "Self_service_purchase"
+msgstr "Selbstbedienungs-Einkauf"
+
 msgid "The_product_{0}_was_added_to_your_cart."
 msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 

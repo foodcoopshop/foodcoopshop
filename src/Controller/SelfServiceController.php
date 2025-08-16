@@ -237,43 +237,100 @@ class SelfServiceController extends FrontendController
     }
 
     public function sumupPayment() {
+       /* if (!$this->request->is('ajax')) {  TODO
+            throw new ForbiddenException();
+        }*/
         $this->autoRender = false;
-        $invoiceId = $this->request->getData('invoice_id');
-        $amountStr = $this->request->getData('amount'); // z.B. "12,50"
-    
-        // Komma in Punkt für Float
-        $amount = floatval(str_replace(',', '.', $amountStr));
 
-        $sumupToken = Configure::read('SumUp.access_token'); // Sandbox oder Live
-        $terminalId = Configure::read('SumUp.terminal_id');
+        try {
+            $accessToken = $this->getSumUpAccessToken();
+        } catch (\Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+            return;
+        }
+        $amountFloat = (float)$this->request->getData('amount');
+        $totalAmountValue = (int)($amountFloat * 100);
+        $minorUnit = 2; // für EUR  TODO
+        $currency = 'EUR';  //TODO
+        $checkoutReference = 'POS-' . time();
+        $payToEmail = Configure::read('app.sumupPayToEmail');
+        $data = [
+            'total_amount' => [
+                'value' => $totalAmountValue,
+                'currency' => 'EUR',
+                'minor_unit' => $minorUnit
+            ],
+            'currency' => $currency,
+            'checkout_reference' => $checkoutReference,
+            'pay_to_email' => $payToEmail,
+            'description' => __('Self_service_purchase'),
+        ];
+        $options = [
+            'http' => [
+                'header' => "Content-Type: application/json\r\nAuthorization: Bearer $accessToken\r\n",
+                'method' => 'POST',
+                'content' => json_encode($data)
+            ]
+        ];
+        $context  = stream_context_create($options);
+        $result = @file_get_contents(Configure::read('app.sumupRestCheckouts'), false, $context);
+        if ($result === FALSE) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Fehler beim Kontakt zu SumUp'
+            ]);
+            return;
+        }
 
-        $payload = [
-            'amount' => $amount,
-            'currency' => 'EUR',
-            'checkout_reference' => 'SB-' . $invoiceId,
-            'terminal' => $terminalId
+        $response = json_decode($result, true);
+        if (isset($response['id'])) {
+            echo json_encode([
+                'success' => true,
+                'transactionId' => $response['id'],
+                'checkoutUrl' => $response['checkout_url'] ?? null
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => $response['error'] ?? 'Unbekannter Fehler'
+            ]);
+        }
+    }
+
+    private function getSumUpAccessToken()
+    {
+        $clientId = Configure::read('app.sumupClientId');
+        $clientSecret = Configure::read('app.sumupClientSecret');
+        $url = Configure::read('app.sumupRestTokenUrl');
+
+        $data = http_build_query([
+            'grant_type' => 'client_credentials',
+            'client_id' => $clientId,
+            'client_secret' => $clientSecret
+        ]);
+        $options = [
+            'http' => [
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => $data
+            ]
         ];
 
-        $ch = curl_init('https://api.sumup.com/v0.1/transactions');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $sumupToken,
-            'Content-Type: application/json'
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
 
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        $data = json_decode($response, true);
-
-        if ($httpCode == 201 && isset($data['transaction_code'])) {
-            echo json_encode(['success' => true, 'transactionId' => $data['transaction_code']]);
-        } else {
-            echo json_encode(['success' => false, 'message' => $data['error_message'] ?? 'Unbekannter Fehler']);
+        if ($result === FALSE) {
+            throw new \Exception('Fehler beim Abruf des Access Tokens von SumUp');
         }
+        $response = json_decode($result, true);
+        if (!isset($response['access_token'])) {
+            throw new \Exception('Kein Access Token erhalten: ' . json_encode($response));
+        }
+
+        return $response['access_token'];
     }
 
 }

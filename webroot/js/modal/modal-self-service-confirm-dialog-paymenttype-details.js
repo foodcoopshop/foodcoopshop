@@ -14,7 +14,6 @@
 foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
     getSuccessHandler : function(selfServicePaymentTypes, paymentType) {
-
         var selfSForm = $('#SelfServiceForm');
         selfServicePaymentTypes = typeof selfServicePaymentTypes === 'string' ? JSON.parse(selfServicePaymentTypes) : selfServicePaymentTypes;
         var paymentTypeOfModal = selfServicePaymentTypes.find(function(pt) {
@@ -24,13 +23,14 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
             var amountText = $('p.total-sum-wrapper > span.sum').first().text().trim();
             amountText = amountText.replace(/[^\d.,]/g, '');
             var amountFloat = parseFloat(amountText.replace(',', '.')); 
-            var amountInCents = Math.round(amountFloat * 100);
             $.ajax({
                 url: '/self-service/sumupPayment',
                 type: 'POST',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+                },
                 data: {
-                    //TODO: invoice_id: 
-                    amount: amountInCents
+                    amount: amountFloat
                 },
                 success: function(response) {
                     if(response.success) {
