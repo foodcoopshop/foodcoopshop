@@ -243,33 +243,29 @@ class CartsController extends FrontendController
 
     public function emptyCart(): void
     {
-    // Warenkorb vor dem Leeren sichern
-    $cartBeforeEmpty = $this->identity->getCart();
+        $cartBeforeEmpty = $this->identity->getCart();
 
-    if (count($cartBeforeEmpty) > 0) {
-        $isAutoLogout = $this->getRequest()->getQuery('autologout') == '1' || $this->getRequest()->getData('autologout') == '1';
+        if (count($cartBeforeEmpty) > 0) {
+            $isAutoLogout = $this->getRequest()->getQuery('autologout') == '1' || $this->getRequest()->getData('autologout') == '1';
+       
+            if ($isAutoLogout) {
+               $isSelfServiceMode = OrderCustomerService::isSelfServiceMode();
+               $isSelfServiceCustomer = $this->identity->isSelfServiceCustomer();
 
-        if ($isAutoLogout) {
-            $isSelfServiceUrl = OrderCustomerService::isSelfServiceModeByUrl();
-            $isSelfServiceReferer = OrderCustomerService::isSelfServiceModeByReferer();
-            $isSelfServiceMode = OrderCustomerService::isSelfServiceMode();
-            $isSelfServiceCustomer = $this->identity->isSelfServiceCustomer();
-
-
-            if (($isSelfServiceUrl || $isSelfServiceReferer) && $isSelfServiceCustomer) {
-                $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($cartBeforeEmpty);
+               if ($isSelfServiceMode && $isSelfServiceCustomer) {
+                   $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($cartBeforeEmpty);
+                   $this->doEmptyCart();
+               }
+               } else {
                 $this->doEmptyCart();
+                $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
+                $this->Flash->success($message);
             }
-        } else {
-            $this->doEmptyCart();
-            $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
-            $this->Flash->success($message);
         }
-    }
 
         $redirectUrl = $this->referer();
         if ($this->request->getQuery('redirect')) {
-            $redirectUrl = $this->request->getQuery('redirect');
+             $redirectUrl = $this->request->getQuery('redirect');
         }
         $this->redirect($redirectUrl);
     }
