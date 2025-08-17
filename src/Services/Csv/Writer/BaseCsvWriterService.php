@@ -23,6 +23,7 @@ use App\Services\OutputFilter\OutputFilterService;
 use App\Controller\Component\StringComponent;
 use Cake\ORM\Query\SelectQuery;
 use Cake\Http\Response;
+use League\Csv\Bom;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
@@ -46,7 +47,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->requestQueryParams = $requestQueryParams;
 	}
 
-	public function getRequestQuery(string $name, string|int|null $default = null): string|int|null
+	public function getRequestQuery(string $name, string|int|null $default = null): string|int|null|array
 	{
 		return $this->requestQueryParams[$name] ?? $default;
 	}
@@ -75,7 +76,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->writer = Writer::createFromFileObject(new \SplTempFileObject());
 
 		$this->writer->setDelimiter(';');
-		$this->writer->setOutputBOM(Writer::BOM_UTF8);
+		$this->writer->setOutputBOM(Bom::Utf8->value);
 
 		$header = $this->getHeader();
 		if (!empty($header)) {

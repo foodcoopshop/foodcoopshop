@@ -38,6 +38,13 @@ use App\Services\OrderCustomerService;
         );
     }
 
+    if ($isSafari) {
+        echo $this->MyHtml->scriptBlock(
+            $this->Html->wrapJavascriptBlock(Configure::read('app.jsNamespace') . ".Helper.applySafariFixForMenu();"),
+            ['inline' => true]
+        );
+    }
+
     $scripts = $this->fetch('script');
     if ($scripts != '') {
         echo $this->Html->wrapJavascriptBlock($scripts);

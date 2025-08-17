@@ -163,7 +163,7 @@ $this->Paginator->setPaginated($invoices);
             echo '</td>';
 
             echo '<td>';
-                echo $invoice->paid_in_cash ? __d('admin', 'yes') : __d('admin', 'no');
+                echo $invoice->paid_in_cash_boolean ? __d('admin', 'yes') : __d('admin', 'no');
             echo '</td>';
 
             echo '<td style="text-align:center;">';

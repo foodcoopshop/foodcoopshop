@@ -23,7 +23,7 @@ echo $this->Html->link(
     'javascript:void(0);',
     [
         'data-object-id' => $objectId,
-        'class' => 'btn btn-outline-light add-payment-deposit-button',
+        'class' => 'btn btn-outline-light add-payment-deposit-button with-text',
         'title' => __d('admin', 'Add_deposit_amount'),
         'escape' => false
     ]

@@ -56,10 +56,10 @@ class ReportsController extends AdminAppController
             $reader = $bankingReaderService::createFromString($content);
 
             if ($reader->csvHasIsoFormat) {
-                $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+                $reader->appendStreamFilterOnRead('convert.iconv.ISO-8859-15/UTF-8');
             }
             if ($reader->csvHasUTF16Format) {
-                $reader->addStreamFilter('convert.iconv.UTF-16/UTF-8');
+                $reader->appendStreamFilterOnRead('convert.iconv.UTF-16/UTF-8');
             }
 
             try {

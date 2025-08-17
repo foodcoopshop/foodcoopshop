@@ -13,14 +13,14 @@
  */
 foodcoopshop.ModalInvoiceForCustomerAdd = {
 
-    init : function(paymentIsCashless) {
+    init : function(paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled) {
         var modalSelector = '#modal-invoice-for-customer-add';
         $('a.invoice-for-customer-add-button:not(.disabled)').on('click', function () {
-            foodcoopshop.ModalInvoiceForCustomerAdd.getOpenHandler($(this), modalSelector, paymentIsCashless);
+            foodcoopshop.ModalInvoiceForCustomerAdd.getOpenHandler($(this), modalSelector, paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled);
         });
     },
 
-    getHtml : function(customerName, invoiceAmount, paymentIsCashless) {
+    getHtml : function(customerName, invoiceAmount, paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled) {
         var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
         html += '<h3 style="text-align:center;font-weight:bold;font-size:35px" id="invoiceAmount">' + invoiceAmount + '</h3>';
         html += '<div class="field-wrapper">';
@@ -33,7 +33,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         html += '<div class="field-wrapper">';
         if (paymentIsCashless) {
             html += '<label class="checkbox">';
-            html += '<input type="checkbox" checked="checked" name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
+            html += '<input type="checkbox" ' + (isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled ? ' checked="checked"' : '') + ' name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
             html += ' ' + foodcoopshop.LocalizedJs.admin.PaidInCash + '?';
             html += '</label>';
         }
@@ -58,7 +58,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         return paidInCash;
     },
 
-    getOpenHandler : function(button, modalSelector, paymentIsCashless) {
+    getOpenHandler : function(button, modalSelector, paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled) {
 
         var row = button.closest('tr');
 
@@ -75,7 +75,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.GenerateInvoice,
-            foodcoopshop.ModalInvoiceForCustomerAdd.getHtml(customerName, invoiceAmount, paymentIsCashless),
+            foodcoopshop.ModalInvoiceForCustomerAdd.getHtml(customerName, invoiceAmount, paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled),
             buttons
         );
 

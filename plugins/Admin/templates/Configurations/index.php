@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Model\Entity\Configuration;
 
 $this->element('addScript', [
@@ -122,8 +121,9 @@ $this->element('addScript', [
                 <?php if (!Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
-                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_remote_foodcoop').'', $this->Network->getSyncDomainAdd(), [
+                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Network->getSyncDomainAdd(), [
                         'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Add_remote_foodcoop'),
                         'escape' => false
                     ]);
                 if (!empty($syncDomains)) {
@@ -213,7 +213,7 @@ $this->element('addScript', [
 
         <tr>
             <td><?php echo __d('admin', 'Version_FoodCoopShop'); ?></td>
-            <td><?php echo $versionFoodCoopShop; ?></td>
+            <td><?php echo $versionFoodCoopShop; ?> (<?php echo $this->Html->link(__d('admin', 'Changelog'), '/admin/configurations/changelog'); ?>)</td>
         </tr>
 
         <?php if (!empty($lastMigration)) { ?>
@@ -332,6 +332,11 @@ $this->element('addScript', [
         <tr>
             <td>app.applyPaymentsOkCheckOnDeletingCustomers</td>
             <td><?php echo Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled</td>
+            <td><?php echo Configure::read('app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>

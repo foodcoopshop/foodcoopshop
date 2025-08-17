@@ -116,6 +116,10 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCronjobsList(),
             $this->Slug->getCronjobEdit(1),
             $this->Slug->getProductImport(4),
+            '/admin/configurations/changelog',
+            $this->Slug->getStorageLocationsList(),
+            $this->Slug->getStorageLocationAdd(),
+            $this->Slug->getStorageLocationEdit(2),
         ];
 
         $this->assertPagesForErrors($testUrls);

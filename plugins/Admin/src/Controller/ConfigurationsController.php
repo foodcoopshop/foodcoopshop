@@ -10,6 +10,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use App\Services\SanitizeService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +28,12 @@ use App\Services\SanitizeService;
 
 class ConfigurationsController extends AdminAppController
 {
-    
+ 
+    public function changelog(): void
+    {
+        $this->set('title_for_layout', __d('admin', 'Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion());
+    }
+
     public function edit(string $name): void
     {
 

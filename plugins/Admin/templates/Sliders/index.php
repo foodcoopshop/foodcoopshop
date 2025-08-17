@@ -31,8 +31,9 @@ $this->element('highlightRowAfterEdit', [
     <div class="right">
         <?php
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_slider').'', $this->Slug->getSliderAdd(), [
+        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getSliderAdd(), [
             'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Add_slider'),
             'escape' => false
         ]);
         echo '</div>';

@@ -178,6 +178,7 @@ class ProductsForBackendService
         int|string $manufacturerId,
         string $active,
         string|array $categoryId = '',
+        int|string $storageLocationId = '',
     ): SelectQuery {
 
         $conditions = [];
@@ -196,6 +197,10 @@ class ProductsForBackendService
             $conditions['Products.active'] = $active;
         } else {
             $conditions['Products.active >'] = APP_DEL;
+        }
+
+        if ($storageLocationId != '') {
+            $conditions['Products.id_storage_location'] = $storageLocationId;
         }
 
         $contain = [

@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use Cake\TestSuite\TestEmailTransport;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
@@ -83,7 +84,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
-    public function testCancellationAsSuperadminWithDisabledNotification(): void
+    public function testCancellationAsSuperadminWithDisabledManufacturerNotification(): void
     {
         $this->loginAsSuperadmin();
         $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
@@ -95,6 +96,20 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails);
+
+        $this->assertChangedStockAvailable($this->productIdA, 98);
+    }
+
+    public function testCancellationAsSuperadminWithDisabledCustomerNotification(): void
+    {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'send_cancellation_email', false);
+        $this->loginAsSuperadmin();
+        $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
+
+        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
+        
+        $expectedToEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails);
 
         $this->assertChangedStockAvailable($this->productIdA, 98);

@@ -15,8 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 if ($groupBy == 'customer') {
     return false;
 }

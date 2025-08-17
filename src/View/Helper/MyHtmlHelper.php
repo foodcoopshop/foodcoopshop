@@ -561,6 +561,13 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getTaxesList(),
             'key' => 'tax_rates',
         ];
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $tabs[] = [
+                'name' => '<i class="fas fa-fw ok fa-archive"></i> ' . __('Storage locations'),
+                'url' => Configure::read('app.slugHelper')->getStorageLocationsList(),
+                'key' => 'storage_locations',
+            ];
+        }
         return $tabs;
     }
 
@@ -687,10 +694,10 @@ class MyHtmlHelper extends HtmlHelper
         return substr(WWW_ROOT, 0, - 1) . Configure::read('app.uploadedImagesDir');
     }
 
-    public function getSliderImageSrc(string $sliderImage): string
+    public function getSliderImageSrc(?string $sliderImage): string
     {
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'sliders' . DS;
-        return $this->prepareAsUrl($urlPrefix . $sliderImage);
+        return $this->prepareAsUrl($urlPrefix . ($sliderImage ?? ''));
     }
 
     public function getImageFile(string $thumbsPath, string $filenameWithoutExtension): string|null

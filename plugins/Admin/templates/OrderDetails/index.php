@@ -62,7 +62,10 @@ use App\Model\Entity\OrderDetail;
     if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" . ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ");".
+            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" .
+            ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ', '. 
+            (Configure::read('app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled') ? '1' : '0') .
+             ");".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.latest-invoices-tooltip-wrapper');"
         ]);
     }
@@ -303,7 +306,7 @@ if ($groupBy == 'customer') {
             '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId,
             [
-                'class' => 'btn btn-outline-light',
+                'class' => 'btn btn-outline-light with-text',
                 'title' => __d('admin', 'Show_all_ordered_products'),
                 'escape' => false
             ]

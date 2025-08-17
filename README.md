@@ -60,13 +60,11 @@
 ## ✔ Requirements
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
-* PHP >= 8.2
+* PHP >= 8.4
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP Imagick and GD extension
 * PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0
-* Node.js and npm >= v9 ([installation](https://www.npmjs.com/get-npm)) developer packages
-* Composer v2 ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
 ## ❗ Legal information

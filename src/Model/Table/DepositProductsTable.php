@@ -25,6 +25,7 @@ class DepositProductsTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use NumberRangeValidatorTrait;
+    const ORIGINAL_PRIMARY_KEY = 'id';
 
     public function initialize(array $config): void
     {

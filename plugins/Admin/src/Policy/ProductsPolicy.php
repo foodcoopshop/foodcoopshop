@@ -65,6 +65,17 @@ class ProductsPolicy implements RequestPolicyInterface
                     }
                 }
                 return false;
+            case 'duplicate': 
+                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                    return false;
+                }
+                if ($identity->isSuperadmin() || $identity->isAdmin()) {
+                    return true;
+                }
+                if (!$this->manufacturerIsProductOwner($identity, $request)) {
+                    return false;
+                }
+                return true;
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':

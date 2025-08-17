@@ -30,6 +30,8 @@ class PurchasePriceProductsTable extends AppTable
     use ProductAndAttributeEntityTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    const ORIGINAL_PRIMARY_KEY = 'id';
+
     public function initialize(array $config): void
     {
         $this->setTable('purchase_prices');

@@ -40,12 +40,12 @@ if ($identity !== null) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $this->request->getSession()->read('OriginalIdentity')->name];
     }
 }
-if ($identity !== null && !$identity->isCustomer() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
-    $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
-}
 
-if ($identity !== null && $identity->isCustomer() && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
-    $menu[1]['children'] = $this->Menu->getCustomerMenuElements($identity);
+if ($identity !== null && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
+    $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
+    if ($identity->isCustomer()) {
+        $menu[1]['children'] = array_merge($menu[1]['children'], $this->Menu->getCustomerMenuElements($identity));
+    }
 }
 
 if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {

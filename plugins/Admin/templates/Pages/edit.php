@@ -50,7 +50,6 @@ echo $this->Form->create($page, [
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
-echo $this->Form->hidden('Pages.id_page');
 echo $this->Form->control('Pages.title', [
     'label' => __d('admin', 'Page_title'),
     'required' => true

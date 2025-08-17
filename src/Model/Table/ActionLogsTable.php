@@ -212,6 +212,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'product_copied' => [
+                'name' => __('Action Log Product copied'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
 
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
@@ -372,6 +378,16 @@ class ActionLogsTable extends AppTable
             ],
             'slider_deleted' => [
                 'name' => __('Action_Log_Slider_deleted')
+            ],
+
+            'storage_location_added' => [
+                'name' => __('Action_Log_Storage_location_added')
+            ],
+            'storage_location_changed' => [
+                'name' => __('Action_Log_Storage_location_changed')
+            ],
+            'storage_location_deleted' => [
+                'name' => __('Action_Log_Storage_location_deleted')
             ],
 
             'tax_added' => [

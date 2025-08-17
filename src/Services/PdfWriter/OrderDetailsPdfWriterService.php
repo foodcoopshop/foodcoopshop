@@ -59,7 +59,7 @@ class OrderDetailsPdfWriterService extends PdfWriterService
         foreach($orderDetails as $orderDetail) {
             $storageLocationValue = 0;
             if (!is_null($order) && !is_null($orderDetail->product->storage_location)) {
-                $storageLocationValue = $orderDetail->product->storage_location->rank;
+                $storageLocationValue = $orderDetail->product->storage_location->position;
             }
             $storageLocation[] = $storageLocationValue;
             $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
@@ -81,7 +81,6 @@ class OrderDetailsPdfWriterService extends PdfWriterService
             }
             $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
-        
         $this->setData([
             'orderDetails' => $preparedOrderDetails,
             'order' => $order,

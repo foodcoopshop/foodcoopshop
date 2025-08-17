@@ -394,6 +394,15 @@ msgstr "Slideshow-Bild bearbeiten"
 msgid "The_slider_{0}_has_been_{1}."
 msgstr "Das Slideshow-Bild {0} wurde {1}."
 
+msgid "The storage location {0} has been {1}."
+msgstr "Der Lagerort {0} wurde {1}."
+
+msgid "Delete storage location?"
+msgstr "Lagerort löschen?"
+
+msgid "Deleting is not possible. There are {0} products associated with this storage location."
+msgstr "Löschen nicht möglich. {0} Produkte sind diesem Lagerort zugewiesen."
+
 msgid "Slideshow"
 msgstr "Slideshow"
 
@@ -445,11 +454,11 @@ msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}) vom {3} wurde erfolgreich stor
 msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
 
-msgid "An_email_was_sent_to_{0}."
-msgstr "Eine E-Mail wurde an {0} verschickt."
-
 msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
 msgstr "Eine E-Mail wurde an {0} sowie an den Hersteller {1} versendet."
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "Eine E-Mail wurde an {0} versendet."
 
 msgid "Reason"
 msgstr "Grund"
@@ -768,6 +777,15 @@ msgstr "Produktdeklaration"
 
 msgid "Storage_location"
 msgstr "Lagerort"
+
+msgid "Storage locations"
+msgstr "Lagerorte"
+
+msgid "Add {0}"
+msgstr "{0} erstellen"
+
+msgid "Edit {0}"
+msgstr "{0} bearbeiten"
 
 msgid "Product_import_for_{0}"
 msgstr "Produkt-Import für {0}"
@@ -1582,6 +1600,9 @@ msgstr "Stornierungen"
 msgid "to_receive_an_email_on_every_cancellation."
 msgstr "bei jeder Stornierung eine Info-Mail erhalten."
 
+msgid "I want to receive an email on every cancellation."
+msgstr "Ich möchte bei jeder Stornierung eine Info-Mail erhalten."
+
 msgid "Adaptions_of_price_and_weight_of_ordered_products"
 msgstr "Preis- und Gewichtsanpassungen von bestellten Produkten"
 
@@ -1867,11 +1888,14 @@ msgstr "Hersteller auswählen..."
 msgid "chose_category..."
 msgstr "Kategorie auswählen..."
 
+msgid "Category"
+msgstr "Kategorie"
+
 msgid "price"
 msgstr "Preis"
 
-msgid "Add_product"
-msgstr "Neues Produkt"
+msgid "Add product"
+msgstr "Neues Produkt erstellen"
 
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"
@@ -2490,3 +2514,12 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+msgid "Copy"
+msgstr "Kopieren"
+
+msgid "{0} - copy {1}"
+msgstr "{0} - Kopie {1}"
+
+msgid "Product was copied successfully."
+msgstr "Produkt erfolgreich kopiert."

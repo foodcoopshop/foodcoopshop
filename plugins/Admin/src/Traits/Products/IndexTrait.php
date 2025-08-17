@@ -50,6 +50,9 @@ trait IndexTrait
         $categoryId = h($this->getRequest()->getQuery('categoryId', ''));
         $this->set('categoryId', $categoryId);
 
+        $storageLocationId = h($this->getRequest()->getQuery('storageLocationId', ''));
+        $this->set('storageLocationId', $storageLocationId);
+
         if ($manufacturerId != '') {
             $productsForBackendService = new ProductsForBackendService();
             $query = $productsForBackendService->getQuery(
@@ -57,6 +60,7 @@ trait IndexTrait
                 manufacturerId: $manufacturerId,
                 active: $active,
                 categoryId: $categoryId,
+                storageLocationId: $storageLocationId
             );
             $preparedProducts = $this->paginate($query, [
                 'sortableFields' => [

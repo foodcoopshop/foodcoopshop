@@ -30,7 +30,7 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
             'javascript:void(0);',
             [
                 'escape' => false,
-                'class' => 'change-products-picked-up-button btn btn-outline-light'
+                'class' => 'change-products-picked-up-button btn btn-outline-light with-text',
             ]
         );
 

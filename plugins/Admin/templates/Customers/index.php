@@ -250,7 +250,7 @@ foreach ($customers as $customer) {
                 $creditBalanceHtml,
                 $this->Slug->getCreditBalance($customer->id_customer),
                 [
-                    'class' => 'btn btn-outline-light',
+                    'class' => 'btn btn-outline-light with-text',
                     'title' => __d('admin', 'Show_credit'),
                     'escape' => false
                 ]

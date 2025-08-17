@@ -206,6 +206,8 @@ return [
 
         'helloCashAccountChangedDate' => '2020-01-01',
 
+        'isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled' => true,
+
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),

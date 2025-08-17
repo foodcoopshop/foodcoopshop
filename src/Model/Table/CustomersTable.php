@@ -88,6 +88,10 @@ class CustomersTable extends AppTable
         ]);
 
         $this->setPrimaryKey('id_customer');
+
+        if ($this->getSchema()->hasColumn('send_cancellation_email')) {
+            $this->getSchema()->setColumnType('send_cancellation_email', 'boolean');
+        }
     }
 
     public function validationEdit(Validator $validator): Validator
