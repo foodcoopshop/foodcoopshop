@@ -618,9 +618,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->doSelfServiceAutoLogout();
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
         $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
-        
+
         $this->assertNotEmpty($queuedJob, 'Kein Job gefunden – Mail wurde nicht in die Queue gelegt.');
-        //$this->assertEquals('AppEmail', $queuedJob->job_type, 'Job ist nicht vom Typ Email.');
+        $this->assertEquals('AppEmail', $queuedJob->job_type, 'Job ist nicht vom Typ Email.');
+        $payload = json_decode($queuedJob->data, true);
         $this->assertEquals(Configure::read('test.loginEmailSelfServiceCustomer'),$payload['to'][0],'Falscher Empfänger in der Mail.');
         $this->assertStringContainsString('Artischocke',$payload['content']['html'],'Produkt "Artischocke" fehlt im Mail-Body.');
         $this->assertStringContainsString('Lagerprodukt 2 : 0,5',$payload['content']['html'],'Produkt "Lagerprodukt 2 : 0,5" fehlt im Mail-Body.');
