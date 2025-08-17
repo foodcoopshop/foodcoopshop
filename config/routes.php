@@ -73,7 +73,6 @@ return function (RouteBuilder $routes) {
                 'action' => 'autoLoginAsSelfServiceCustomer',
             ])->setPatterns(['id' => '[0-9]+']);
             $routes->connect('/'.__('route_self_service'), ['controller' => 'SelfService']);
-            $routes->connect('/warenkorb/emptyCart',['controller' => 'Carts', 'action' => 'emptyCart']);
         }
 
         $routes->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
