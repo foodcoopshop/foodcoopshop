@@ -601,16 +601,17 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testAutoLogoutAsSelfServiceCustomer(): void
     {
-        $selfServiceCustomerId = 93;
-        $this->changeCustomer($selfServiceCustomerId, 'active', 1);
-        Configure::write('app.selfServiceLoginCustomers', [
-            [
-                'id' => 1,
-                'label' => 'SB-Kunde',
-                'customerId' => $selfServiceCustomerId,
-            ],
-        ]);
-        $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
+        //$selfServiceCustomerId = 93;
+        //$this->changeCustomer($selfServiceCustomerId, 'active', 1);
+        //Configure::write('app.selfServiceLoginCustomers', [
+        //    [
+        //        'id' => 1,
+        //        'label' => 'SB-Kunde',
+        //        'customerId' => $selfServiceCustomerId,
+        //    ],
+        //]);
+        //$this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
+        $this->loginAsSelfServiceCustomer();
         $this->assertSession($selfServiceCustomerId, 'Auth.id_customer');
         $this->assertRedirect($this->Slug->getSelfService());
         $this->addProductToSelfServiceCart(346, 1, 0);
