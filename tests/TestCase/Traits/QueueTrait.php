@@ -30,7 +30,7 @@ trait QueueTrait
             if (!empty($queuedJob->failure_message)) {
                 pr($queuedJob->failure_message);
             }
-            $this->assertEmpty($queuedJob->failurue_message);
+            $this->assertEmpty($queuedJob->failure_message);
         }
     }
 

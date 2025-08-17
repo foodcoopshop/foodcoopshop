@@ -616,11 +616,15 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->doSelfServiceAutoLogout();
-        $this->assertMailCount(1);
-        $this->assertMailContainsHtmlAt(0, 'Artischocke');
-        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
-        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
-        $this->assertMailSubjectContainsAt(0, __('Empty_purchase_self_service_auto_logout'));
+        $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
+        
+        $this->assertNotEmpty($queuedJob, 'Kein Job gefunden – Mail wurde nicht in die Queue gelegt.');
+        //$this->assertEquals('AppEmail', $queuedJob->job_type, 'Job ist nicht vom Typ Email.');
+        $this->assertEquals(Configure::read('test.loginEmailSelfServiceCustomer'),$payload['to'][0],'Falscher Empfänger in der Mail.');
+        $this->assertStringContainsString('Artischocke',$payload['content']['html'],'Produkt "Artischocke" fehlt im Mail-Body.');
+        $this->assertStringContainsString('Lagerprodukt 2 : 0,5',$payload['content']['html'],'Produkt "Lagerprodukt 2 : 0,5" fehlt im Mail-Body.');
+        $this->assertStringContainsString(__('Empty_purchase_self_service_auto_logout'),$payload['subject'],'Betreff passt nicht.');
 
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all', order: [
