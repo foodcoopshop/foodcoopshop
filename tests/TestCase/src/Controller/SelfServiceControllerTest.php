@@ -599,19 +599,27 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ]);
     }
 
-    public function testAutoLogoutAsSelfServiceCustomer(): void
+    public function testSelfServiceAutoLogoutEmptyCart(): void
     {
-        //$selfServiceCustomerId = 93;
-        //$this->changeCustomer($selfServiceCustomerId, 'active', 1);
-        //Configure::write('app.selfServiceLoginCustomers', [
-        //    [
-        //        'id' => 1,
-        //        'label' => 'SB-Kunde',
-        //        'customerId' => $selfServiceCustomerId,
-        //    ],
-        //]);
-        //$this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
-        $this->loginAsSelfServiceCustomer();
+        $this->loginAsSuperadmin();
+        $this->assertRedirect($this->Slug->getSelfService());
+        $this->addProductToSelfServiceCart(346, 1, 0);
+        $this->addProductToSelfServiceCart(351, 1, '0,5');
+        $this->doSelfServiceAutoLogout();
+        $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
+        $this->assertEmpty($queuedJob);
+
+        $selfServiceCustomerId = 93;
+        $this->changeCustomer($selfServiceCustomerId, 'active', 1);
+        Configure::write('app.selfServiceLoginCustomers', [
+            [
+                'id' => 1,
+                'label' => 'SB-Kunde',
+                'customerId' => $selfServiceCustomerId,
+            ],
+        ]);
+        $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
         $this->assertSession($selfServiceCustomerId, 'Auth.id_customer');
         $this->assertRedirect($this->Slug->getSelfService());
         $this->addProductToSelfServiceCart(346, 1, 0);
@@ -619,9 +627,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->doSelfServiceAutoLogout();
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
         $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
-
         $this->assertNotEmpty($queuedJob, 'Kein Job gefunden – Mail wurde nicht in die Queue gelegt.');
-        $this->assertEquals('AppEmail', $queuedJob->job_type, 'Job ist nicht vom Typ Email.');
+        $this->assertEquals('AppEmail', $queuedJob->job_task, 'Job ist nicht vom Typ Email.');
         $payload = json_decode($queuedJob->data, true);
         $this->assertEquals(Configure::read('test.loginEmailSelfServiceCustomer'),$payload['to'][0],'Falscher Empfänger in der Mail.');
         $this->assertStringContainsString('Artischocke',$payload['content']['html'],'Produkt "Artischocke" fehlt im Mail-Body.');
