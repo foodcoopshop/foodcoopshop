@@ -243,39 +243,28 @@ class CartsController extends FrontendController
 
     public function emptyCart(): void
     {
-    Log::write('debug', 'emptyCart() aufgerufen.');
-
     // Warenkorb vor dem Leeren sichern
     $cartBeforeEmpty = $this->identity->getCart();
-    Log::write('debug', 'Cart vor Leeren: ' . json_encode($cartBeforeEmpty));
 
     if (count($cartBeforeEmpty) > 0) {
         $isAutoLogout = $this->getRequest()->getQuery('autologout') == '1' || $this->getRequest()->getData('autologout') == '1';
-        Log::write('debug', 'isAutoLogout: ' . ($isAutoLogout ? 'JA' : 'NEIN'));
 
         if ($isAutoLogout) {
             $isSelfServiceUrl = OrderCustomerService::isSelfServiceModeByUrl();
             $isSelfServiceReferer = OrderCustomerService::isSelfServiceModeByReferer();
+            $isSelfServiceMode = OrderCustomerService::isSelfServiceMode();
             $isSelfServiceCustomer = $this->identity->isSelfServiceCustomer();
 
-            Log::write('debug', 'isSelfServiceModeByUrl(): ' . ($isSelfServiceUrl ? 'JA' : 'NEIN'));
-            Log::write('debug', 'isSelfServiceModeByReferer(): ' . ($isSelfServiceReferer ? 'JA' : 'NEIN'));
-            Log::write('debug', 'isSelfServiceCustomer(): ' . ($isSelfServiceCustomer ? 'JA' : 'NEIN'));
 
             if (($isSelfServiceUrl || $isSelfServiceReferer) && $isSelfServiceCustomer) {
                 $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($cartBeforeEmpty);
-                Log::write('debug', 'Email-Funktion für AutoLogout ausgeführt.');
                 $this->doEmptyCart();
-            } else {
-                Log::write('debug', 'Bedingungen für AutoLogout-Mail nicht erfüllt.');
             }
         } else {
             $this->doEmptyCart();
             $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
             $this->Flash->success($message);
         }
-    } else {
-        Log::write('debug', 'Cart war bereits leer.');
     }
 
         $redirectUrl = $this->referer();

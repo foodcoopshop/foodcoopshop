@@ -47,7 +47,8 @@ class OrderCustomerService
         $serverParams = Router::getRequest()->getServerParams();
         $requestUriAllowed = [
             '/' . __('route_cart') . '/ajaxAdd/',
-            '/' . __('route_cart') . '/ajaxRemove/'
+            '/' . __('route_cart') . '/ajaxRemove/',
+            '/' . __('route_cart') . '/emptyCart/'
         ];
         if (isset($serverParams['HTTP_REFERER'])) {
             $result = preg_match(

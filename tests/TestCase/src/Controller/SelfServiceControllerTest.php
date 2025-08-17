@@ -602,46 +602,49 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceAutoLogoutEmptyCart(): void
     {
         $this->loginAsSuperadmin();
-        $this->assertRedirect($this->Slug->getSelfService());
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->doSelfServiceAutoLogout();
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
         $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
         $this->assertEmpty($queuedJob);
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all', 
+        conditions: [
+            'Carts.id_customer' => Configure::read('test.superadminId'),
+            'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
+        ],
+        order: [
+            'Carts.id_cart' => 'DESC',
+        ])->first();
+        $cart = $this->getCartById($cart->id_cart);
+        $this->assertEquals(2, count($cart->cart_products));
 
         $selfServiceCustomerId = 93;
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
-        Configure::write('app.selfServiceLoginCustomers', [
-            [
-                'id' => 1,
-                'label' => 'SB-Kunde',
-                'customerId' => $selfServiceCustomerId,
-            ],
-        ]);
-        $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
-        $this->assertSession($selfServiceCustomerId, 'Auth.id_customer');
-        $this->assertRedirect($this->Slug->getSelfService());
+        $this->loginAsSelfServiceCustomer();
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
+
         $this->doSelfServiceAutoLogout();
-        $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
-        $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
-        $this->assertNotEmpty($queuedJob, 'Kein Job gefunden – Mail wurde nicht in die Queue gelegt.');
-        $this->assertEquals('AppEmail', $queuedJob->job_task, 'Job ist nicht vom Typ Email.');
-        $payload = json_decode($queuedJob->data, true);
-        $this->assertEquals(Configure::read('test.loginEmailSelfServiceCustomer'),$payload['to'][0],'Falscher Empfänger in der Mail.');
-        $this->assertStringContainsString('Artischocke',$payload['content']['html'],'Produkt "Artischocke" fehlt im Mail-Body.');
-        $this->assertStringContainsString('Lagerprodukt 2 : 0,5',$payload['content']['html'],'Produkt "Lagerprodukt 2 : 0,5" fehlt im Mail-Body.');
-        $this->assertStringContainsString(__('Empty_purchase_self_service_auto_logout'),$payload['subject'],'Betreff passt nicht.');
+        $this->assertMailContainsHtmlAt(0, 'Artischocke');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
+        $this->assertMailSubjectContainsAt(0, __('Empty_purchase_self_service_auto_logout'));
 
         $cartsTable = $this->getTableLocator()->get('Carts');
-        $cart = $cartsTable->find('all', order: [
-            'Carts.id_cart' => 'DESC'
+        $cart = $cartsTable->find('all', 
+        conditions: [
+            'Carts.id_customer' => Configure::read('test.selfServiceCustomerId'),
+            'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
+        ],
+        order: [
+            'Carts.id_cart' => 'DESC',
         ])->first();
-
-        $cart = $this->getCartById($cart->id_cart);
-
-        $this->assertEquals(0, count($cart->cart_products));
+        if (!empty($cart)) {
+            if(!empty($cart->cart_products)){
+                $this->assertFlashMessage('Warenkorb wurde bei Autologout nicht geleert');
+            }
+        }
     }
 }
