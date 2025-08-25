@@ -30,9 +30,8 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 ?>
 <div id="login-form" class="form">
 <?php
-    $selfServiceLoginCustomers = Configure::read('app.selfServiceLoginCustomers');
-    $hasMulipleButtons = count($selfServiceLoginCustomers) > 0;
-    if (!$hasMulipleButtons) {
+    $hasSelfServiceLoginCustomers = !empty(Configure::read('app.selfServiceLoginCustomers'));
+    if (!$hasSelfServiceLoginCustomers) {
         ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php
@@ -62,15 +61,15 @@ if ($this->getRequest()->is('get')) {
 }
 
     if ($enableSelfServiceLoginAsCustomerButton) {
-        if (!empty($selfServiceLoginCustomers)) {
+        if ($hasSelfServiceLoginCustomers) {
             echo '<div class="self-service-login-button-wrapper">';
-                if ($hasMulipleButtons) {
+                if ($hasSelfServiceLoginCustomers) {
                     echo '<h7>' . __('Start_self_service') . '</h7>';
                     echo '</br>';
                     echo '</br>';
                 }
                 $buttonHtml = '';
-                foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
+                foreach(Configure::read('app.selfServiceLoginCustomers') as $selfServiceLoginCustomer) {
                     $buttonHtml .= $this->Html->link(
                         '<i class="fas fa-sign-in-alt"></i> ' . $selfServiceLoginCustomer['label'],
                         $this->Slug->getAutoLoginAsSelfServiceCustomer($selfServiceLoginCustomer['id']),
