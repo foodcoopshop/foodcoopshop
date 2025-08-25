@@ -28,7 +28,7 @@ if ($groupBy == 'customer' && Configure::read('app.isDepositEnabled') && $this->
             'manufacturerId' => null,
         ]);
     } else {
-        if ($orderDetail['sum_deposit'] > 0) {
+        if ($orderDetail['sum_deposit'] != 0) {
             echo $this->Number->formatAsCurrency($orderDetail['sum_deposit']);
         }
     }

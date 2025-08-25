@@ -124,7 +124,7 @@ foreach ($orderDetails as $od) {
 
         if (Configure::read('app.isDepositEnabled')) {
             $deposit = $orderDetail->deposit;
-            if ($deposit > 0) {
+            if ($deposit != 0) {
                 $sumDeposit += $deposit;
                 $deposit = $this->Number->formatAsCurrency($deposit);
             } else {
