@@ -63,11 +63,9 @@ if ($this->getRequest()->is('get')) {
     if ($enableSelfServiceLoginAsCustomerButton) {
         if ($hasSelfServiceLoginCustomers) {
             echo '<div class="self-service-login-button-wrapper">';
-                if ($hasSelfServiceLoginCustomers) {
-                    echo '<h7>' . __('Start_self_service') . '</h7>';
-                    echo '</br>';
-                    echo '</br>';
-                }
+                echo '<h7>' . __('Start_self_service') . '</h7>';
+                echo '</br>';
+                echo '</br>';
                 $buttonHtml = '';
                 foreach(Configure::read('app.selfServiceLoginCustomers') as $selfServiceLoginCustomer) {
                     $buttonHtml .= $this->Html->link(
