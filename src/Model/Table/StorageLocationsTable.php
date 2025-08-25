@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,10 +21,30 @@ namespace App\Model\Table;
 class StorageLocationsTable extends AppTable
 {
 
+    public function initialize(array $config): void
+    {
+        $this->setTable('storage_locations');
+        parent::initialize($config);
+        $this->hasMany('Products', [
+            'foreignKey' => 'id_storage_location'
+        ]);
+    }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
+        $validator->add('name', 'unique', [
+            'rule' => 'validateUnique',
+            'provider' => 'table',
+            'message' => __('A storage location with this name already exists.')
+        ]);
+
+        return $validator;
+    }
     public function getForDropdown(): array
     {
         $storageLocations = $this->find('all', order: [
-            'StorageLocations.rank' => 'ASC',
+            $this->aliasField('position') => 'ASC',
         ]);
         $preparedStorageLocations = [];
         foreach ($storageLocations as $storageLocation) {

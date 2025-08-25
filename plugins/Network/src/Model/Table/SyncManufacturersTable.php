@@ -18,16 +18,17 @@ declare(strict_types=1);
 namespace Network\Model\Table;
 
 use App\Model\Table\ManufacturersTable;
+use Authorization\IdentityInterface;
 
 class SyncManufacturersTable extends ManufacturersTable
 {
 
-    public function isAllowedToUseAsMasterFoodcoop($identity): bool
+    public function isAllowedToUseAsMasterFoodcoop(?IdentityInterface $identity): bool
     {
         $isAllowed =
             $identity->isManufacturer() &&
             $this->getOptionVariableMemberFee(
-                $identity->getManufacturerVariableMemberFee()
+                $identity->getManufacturerVariableMemberFee(),
             ) == 0;
         return $isAllowed;
     }

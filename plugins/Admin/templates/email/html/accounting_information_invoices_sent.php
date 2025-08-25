@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 ?>
 <?php echo $this->element('email/tableHead'); ?>
@@ -43,7 +44,7 @@ use Cake\Core\Configure;
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p>
                     <?php echo __d('admin', 'This_is_a_great_opportunity_to_check_the_credit_uploads_link_below.')?><br />
-                    <?php $link = Configure::read('App.fullBaseUrl').$this->Slug->getReport('product'); ?>
+                    <?php $link = Configure::read('App.fullBaseUrl').$this->Slug->getReport(Payment::TYPE_PRODUCT); ?>
                     <a href="<?php echo $link; ?>"><?php echo $link; ?></a> <?php echo __d('admin', '(Link_only_works_for_superadmins).'); ?>
                 </p>
             <?php } ?>

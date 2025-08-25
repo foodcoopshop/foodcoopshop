@@ -26,7 +26,7 @@ trait EditNameTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $productId = $this->getRequest()->getData('productId');
+        $productId = (int) $this->getRequest()->getData('productId');
 
         $productsTable = $this->getTableLocator()->get('Products');
         $oldProduct = $productsTable->find('all',

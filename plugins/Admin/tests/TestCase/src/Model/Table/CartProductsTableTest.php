@@ -21,14 +21,6 @@ use App\Model\Entity\Cart;
 class CartProductsTableTest extends AppCakeTestCase
 {
 
-    public function testRemoveAllWithWrongCartId(): void
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('wrong cartId: 0');
-        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductsTable->removeAll('bla', Configure::read('test.superadminId'));
-    }
-
     public function testRemoveAllWithCorrectCartIdAndWrongCustomerId(): void
     {
         $cartId = 1;
@@ -49,16 +41,16 @@ class CartProductsTableTest extends AppCakeTestCase
         $this->assertEmpty($cart->cart_products, 'cart products not empty');
     }
 
-    private function getCartWithCartProducts($cartId, $customerId): Cart
+    private function getCartWithCartProducts(int $cartId, int $customerId): Cart
     {
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
             conditions: [
                 'Carts.id_cart' => $cartId,
-                'Carts.id_customer' => $customerId
+                'Carts.id_customer' => $customerId,
             ],
             contain: [
-                'CartProducts'
+                'CartProducts',
             ]
         )->first();
         return $cart;

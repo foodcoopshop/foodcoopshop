@@ -27,7 +27,7 @@ class UnitsTableTest extends AppCakeTestCase
     public string $name = 'kg';
     public int|string $amount = 2;
     public float|string $quantityInUnits = 9.323;
-    public bool $useWeightAsAmount = false;
+    public int $useWeightAsAmount = 0;
 
     public function testSaveProductWithInvalidPriceString(): void
     {

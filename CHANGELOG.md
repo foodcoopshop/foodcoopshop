@@ -6,7 +6,35 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## unreleased
+
+### Neue Funktionen / Verbesserungen
+- Die Software ist jetzt kompatibel mit PHP 8.4. [I#1008](https://github.com/foodcoopshop/foodcoopshop/issues/1008) / [PR#1185](https://github.com/foodcoopshop/foodcoopshop/pull/1185) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Neue Kopier-Funktion für Produkte (1 Produkt markieren - Aktionen - Kopieren). [I#547](https://github.com/foodcoopshop/foodcoopshop/issues/547) / [PR#1179](https://github.com/foodcoopshop/foodcoopshop/pull/1179) <a href="https://github.com/HatlaufMartin"><img src="https://github.com/HatlaufMartin.png" width="20"></a>
+- Lagerorte für Produkte können jetzt im Admin-Bereich unter Einstellungen verwaltet werden (oben bei den Tabs). Die Einstellung dafür muss aktiviert sein. [I#1146](https://github.com/foodcoopshop/foodcoopshop/issues/1146) / [PR#1177](https://github.com/foodcoopshop/foodcoopshop/pull/1177) / [PR#1183](https://github.com/foodcoopshop/foodcoopshop/pull/1183) <a href="https://github.com/HatlaufMartin"><img src="https://github.com/HatlaufMartin.png" width="20"></a>
+- Ungruppierte Bestellungen können jetzt als CSV-Datei exportiert werden (Aktionen - Bestellte Produkte exportieren). [I#321](https://github.com/foodcoopshop/foodcoopshop/issues/321) / [PR#1173](https://github.com/foodcoopshop/foodcoopshop/pull/1173) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Neben den Herstellern können jetzt auch Mitglieder die Stornierungs-E-Mails in ihrem Profil abbestellen. [I#1164](https://github.com/foodcoopshop/foodcoopshop/issues/1164) / [PR#1172](https://github.com/foodcoopshop/foodcoopshop/pull/1172) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bestellungen können ja auch erst am Wochenende abgeholt werden, deswegen bleibt im Admin-Bereich unter "Bestellungen" der vergangene Freitag auch am Samstag und Sonntag als Abholtag ausgewählt. [I#1125](https://github.com/foodcoopshop/foodcoopshop/issues/1125) / [PR#1133](https://github.com/foodcoopshop/foodcoopshop/pull/1133) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Beim Eintragen von Pfand gibt es jetzt eine Obergrenze pro Eintragung. Ein Überschreiten ist möglich, muss aber extra bestätigt werden. Außerdem wird überprüft, ob ein Mitglied mehr Pfand zurückgeben möchte als es insgesamt gekauft hat. Weitere Obergrenzen gelten jetzt auch für Guthaben-Aufladungen, Pfand-Ausgleichszahlungen und Guthaben-Rückzahlungen. [I#1126](https://github.com/foodcoopshop/foodcoopshop/issues/1126) / [PR#1135](https://github.com/foodcoopshop/foodcoopshop/pull/1135) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bei den Hersteller-Einstellungen kann jetzt ein Mindestbestellwert eingetragen werden. Wird dieser nicht erreicht, werden die Produkte automatisch storniert und keine Bestellliste versendet. [I#1004](https://github.com/foodcoopshop/foodcoopshop/issues/1004) / [PR#1145](https://github.com/foodcoopshop/foodcoopshop/pull/1145) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die Min/Max-Menge für Lagerstände wurde von -5.000 / 5.000 auf -1.000.000 / 1.000.000 angepasst. So können auch Produkte, die in Gramm angegeben sind, korrekt verwaltet werden. [I#1163](https://github.com/foodcoopshop/foodcoopshop/issues/1163) / [PR#1166](https://github.com/foodcoopshop/foodcoopshop/pull/1166) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Wartung / Optimierungen
+- Bei Herstellern können jetzt IBANs aus allen EU-Ländern eingetragen werden. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/ad263ef6d09d6e6bdae74b67ba863bd3e4ad98a5)
+- Optimierung der Tabelle fcs_payments, führt unter anderem zu schnelleren Ladezeit der Mitglieder-Liste im Admin-Bereich. [I#1148](https://github.com/foodcoopshop/foodcoopshop/issues/1148) / [PR#1149](https://github.com/foodcoopshop/foodcoopshop/pull/1149) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Neue Funktionen für den Selbstbedienungs-Modus
+- Die Validerung des Lagerstandes kann jetzt deaktiviert werden. (`app.selfServiceIsAmountValidationEnabled`) [I#1129](https://github.com/foodcoopshop/foodcoopshop/issues/1129) / [PR#1132](https://github.com/foodcoopshop/foodcoopshop/pull/1132) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+- Der Pfand-Betrag bei Produkten kann jetzt auch ein negativer Wert sein. Das erleichtert das Handling von Pfand-Rückgaben im Selbstbedienungs-Modus, da ab sofort Produkte mit Preis=0 und eben negativem Pfand angelegt werden können. [I#1161](https://github.com/foodcoopshop/foodcoopshop/issues/1161) / [PR#1165](https://github.com/foodcoopshop/foodcoopshop/pull/1165) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+
+## v4.1.1
+
+### Bug fix
+- Bugfix: Falscher Barcode auf Produktkarten (Selbstbedienungs-Modus).
+
+Datum: 18.05.2025 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.1.0...v4.1.1)
+
+## v4.1
 
 ### Neue Funktionen / Verbesserungen
 - Bei Lagerprodukten mit Preis nach Gewicht kann der Lagerstand jetzt auch über das Gewicht berechnet werden, und nicht mehr ausschließlich über die Anzahl. Das ist vor allem für Lagerprodukte gedacht, die bei jeder Entnahme aus einem Großgebinde abgewogen werden (z.B. Nudeln, Reis, Äpfel usw.). [I#336](https://github.com/foodcoopshop/foodcoopshop/issues/336) / [PR#1036](https://github.com/foodcoopshop/foodcoopshop/pull/1036) / [PR#1029](https://github.com/foodcoopshop/foodcoopshop/pull/1029) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -40,6 +68,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Vereinfachung der Übersetzungen: Configuration Text und Subtext werden nicht mehr in der Datenbank gespeichert. [I#1072](https://github.com/foodcoopshop/foodcoopshop/issues/1072) / [PR#1074](https://github.com/foodcoopshop/foodcoopshop/pull/1074) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Statische Code-Analyse mittels PHPStan: Verbesserung der Code-Qualität auf Level 5 ([Level 6 in progress](https://github.com/foodcoopshop/foodcoopshop/issues/1108)). [PR#1107](https://github.com/foodcoopshop/foodcoopshop/pull/1107) | [PR#1111](https://github.com/foodcoopshop/foodcoopshop/pull/1111) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+Datum: 27.02.2025 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/1) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.0.0...v4.1.0)
 
 ## v4.0
 

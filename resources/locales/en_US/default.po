@@ -823,6 +823,18 @@ msgstr "Do you really want to delete one product?"
 msgid "Errors_occurred_while_product_was_deleted"
 msgstr "Errors occurred while the product was deleted"
 
+msgid "Copy product?"
+msgstr "Copy product?"
+
+msgid "Really copy product?"
+msgstr "Do you really want to copy the product?"
+
+msgid "Amount of copies:"
+msgstr "Amount of copies:"
+
+msgid "Errors occurred while product was copied"
+msgstr "Errors occurred while the product was copied"
+
 msgid "Add_comment"
 msgstr "Add comment"
 
@@ -1700,8 +1712,8 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Please enter a valid email address."
 
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "At least one email address is not valid. Please separate multiple addresses with , (without spaces)."
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma."
+msgstr "At least one email address is not valid. Please separate multiple addresses with comma."
 
 msgid "Decimals_are_not_allowed."
 msgstr "Decimals are not allowed."

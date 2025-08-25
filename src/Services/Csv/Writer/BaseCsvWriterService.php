@@ -23,6 +23,7 @@ use App\Services\OutputFilter\OutputFilterService;
 use App\Controller\Component\StringComponent;
 use Cake\ORM\Query\SelectQuery;
 use Cake\Http\Response;
+use League\Csv\Bom;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
@@ -33,7 +34,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 
 	private array $requestQueryParams = [];
 
-	public function setFilename($filename): void
+	public function setFilename(string $filename): void
 	{
 		if (Configure::check('app.outputStringReplacements')) {
             $filename = OutputFilterService::replace($filename, Configure::read('app.outputStringReplacements'));
@@ -41,12 +42,12 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->filename = $filename;
 	}
 
-	public function setRequestQueryParams($requestQueryParams): void
+	public function setRequestQueryParams(array $requestQueryParams): void
 	{
 		$this->requestQueryParams = $requestQueryParams;
 	}
 
-	public function getRequestQuery($name, $default = null): string|int|null
+	public function getRequestQuery(string $name, string|int|null $default = null): string|int|null|array
 	{
 		return $this->requestQueryParams[$name] ?? $default;
 	}
@@ -56,15 +57,15 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		return $this->requestQueryParams;
 	}
 
-	final public function paginate($query, $params): SelectQuery
+	final public function paginate(SelectQuery $query, array $params): SelectQuery
 	{
-		$results = $query->find('all', 
+		$results = $query->find('all',
 			order: $params['order'] ?? null,
 		);
 		return $results;
 	}
 
-	final public function decodeHtml($string): string
+	final public function decodeHtml(?string $string): string
 	{
 		return StringComponent::br2space(html_entity_decode($string ?? ''));
 	}
@@ -75,7 +76,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->writer = Writer::createFromFileObject(new \SplTempFileObject());
 
 		$this->writer->setDelimiter(';');
-		$this->writer->setOutputBOM(Writer::BOM_UTF8);
+		$this->writer->setOutputBOM(Bom::Utf8->value);
 
 		$header = $this->getHeader();
 		if (!empty($header)) {
@@ -98,7 +99,7 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		return $result;
 	}
 
-	public function forceDownload($response): Response
+	public function forceDownload(Response $response): Response
 	{
 		$response = $response->withStringBody($this->toString());
 		$response = $response->withDownload($this->filename);

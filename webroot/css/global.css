@@ -84,6 +84,10 @@ body.admin h2 span a:hover,
 .btn {
     border-radius: 4px;
 }
+.btn-success.confirm-submit {
+    box-shadow: inset 0 0 0 3px var(--warning-yellow);
+    border-color: var(--warning-yellow);
+}
 .btn-success:active {
     border-color: transparent;
 }
@@ -285,6 +289,11 @@ h2.info a:not(.btn) {
     background: #f3515c;
     border-color: #f3515c;
 }
+#flashMessage.warning {
+    color: #fff;
+    background: var(--warning-yellow);
+    border-color: var(--warning-yellow);
+}
 #flashMessage.success {
     color: #fff;
 }
@@ -400,7 +409,7 @@ a.toggle-link.collapsed i:before {
 }
 #scroll-to-top a {
     width: 45px;
-    height: 45px;
+    height: 46px;
     display: block;
     -webkit-transition: 0.6s;
     -moz-transition: 0.6s;
@@ -415,6 +424,7 @@ a.toggle-link.collapsed i:before {
 }
 #scroll-to-top a i {
     font-size: 41px;
+    width: 41px;
 }
 div.input.error input {
     border-bottom-right-radius: 0 ! important;
@@ -578,7 +588,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     height: auto ! important;
 }
 .bootstrap-select {
-    width: 193px ! important;
+    width: 177px ! important;
 }
 .bootstrap-select .dropdown-toggle .filter-option-inner {
     padding-right: 12px;

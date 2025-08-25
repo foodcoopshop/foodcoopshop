@@ -34,14 +34,14 @@ class InvoicesTableTest extends AppCakeTestCase
         $invoicePrefix = 'ABC-';
         $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
         $invoicesTable = $this->getTableLocator()->get('Invoices');
-        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', null);
         $this->assertEquals($result, $invoicePrefix . '2020-000001');
     }
 
     public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExist(): void
     {
         $invoicesTable = $this->getTableLocator()->get('Invoices');
-        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', []);
+        $result = $invoicesTable->getNextInvoiceNumberForCustomer('2020', null);
         $this->assertEquals($result, '2020-000001');
     }
 
@@ -227,28 +227,28 @@ class InvoicesTableTest extends AppCakeTestCase
                 'cashless' => [
                     '10' => [
                         'sum_price_excl' => 34.95,
-                        'sum_tax' => 3.5,
-                        'sum_price_incl' => 38.45,
+                        'sum_tax' => 3.49,
+                        'sum_price_incl' => 38.44,
                     ],
                 ],
                 'total' => [
                     '10' => [
                         'sum_price_excl' => 34.95,
-                        'sum_tax' => 3.5,
-                        'sum_price_incl' => 38.45,
+                        'sum_tax' => 3.49,
+                        'sum_price_incl' => 38.44,
                     ],
                 ]
             ],
             'taxRatesSums' => [
                 'cashless' => [
                     'sum_price_excl' => 34.95,
-                    'sum_tax' => 3.5,
-                    'sum_price_incl' => 38.45,
+                    'sum_tax' => 3.49,
+                    'sum_price_incl' => 38.44,
                 ],
                 'total' => [
                     'sum_price_excl' => 34.95,
-                    'sum_tax' => 3.5,
-                    'sum_price_incl' => 38.45,
+                    'sum_tax' => 3.49,
+                    'sum_price_incl' => 38.44,
                 ],
             ],
         ];

@@ -62,7 +62,11 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
         ];
     }
 
-    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax): void
+    public function prepareTableData(
+        object $result,
+        string|float $sumPriceExcl,
+        string|float $sumPriceIncl,
+        string|float $sumTax): void
     {
 
         foreach($result->active_order_details as $orderDetail) {
@@ -113,7 +117,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
 
     }
 
-    private function renderSumRow($label, $value): void
+    private function renderSumRow(string $label, string $value): void
     {
         $this->table .= '<tr>';
             $this->table .= '<td colspan="4" align="right">' . $label . '</td>';

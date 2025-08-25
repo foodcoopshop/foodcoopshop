@@ -46,7 +46,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
         );
 
         echo '<span class="purchase-price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
-            if (!is_null($product->purchase_gross_price)) {
+            if (isset($product->purchase_gross_price)) {
                 echo $this->Number->formatAsCurrency($product->purchase_gross_price);
             }
         echo '</span>';

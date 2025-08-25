@@ -7,6 +7,8 @@ use App\Controller\AppController;
 use App\Services\SanitizeService;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Network\Model\Entity\SyncDomain;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,7 +38,7 @@ class SyncDomainsController extends AppController
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomain = $syncDomainsTable->newEntity(
             ['active' => APP_ON],
-            ['validate' => false]
+            ['validate' => false],
         );
         $this->set('title_for_layout', __d('network', 'Add_remote_foodcoop'));
         $this->_processForm($syncDomain, false);
@@ -46,12 +48,8 @@ class SyncDomainsController extends AppController
         }
     }
 
-    public function edit($syncDomainId): void
+    public function edit(int $syncDomainId): void
     {
-        if ($syncDomainId === null) {
-            throw new NotFoundException;
-        }
-
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomain = $syncDomainsTable->find('all', conditions: [
             'SyncDomains.id' => $syncDomainId
@@ -64,7 +62,7 @@ class SyncDomainsController extends AppController
         $this->_processForm($syncDomain, true);
     }
 
-    private function _processForm($syncDomain, $isEditMode): void
+    private function _processForm(SyncDomain|EntityInterface $syncDomain, bool $isEditMode): void
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

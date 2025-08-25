@@ -48,7 +48,7 @@ class InvoicesControllerTest extends AppCakeTestCase
             'Invoices.id_customer' => $customerId,
         ])->first();
 
-        $this->assertEquals($invoice->paid_in_cash, $paidInCash);
+        $this->assertEquals($invoice->paid_in_cash_boolean, (bool) $paidInCash);
 
         // assert that payment was automatically added
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -82,7 +82,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
-    public function testCancel(): void
+    public function testCancelA(): void
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);

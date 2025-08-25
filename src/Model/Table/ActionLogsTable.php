@@ -212,6 +212,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'product_copied' => [
+                'name' => __('Action Log Product copied'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
 
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
@@ -374,6 +380,16 @@ class ActionLogsTable extends AppTable
                 'name' => __('Action_Log_Slider_deleted')
             ],
 
+            'storage_location_added' => [
+                'name' => __('Action_Log_Storage_location_added')
+            ],
+            'storage_location_changed' => [
+                'name' => __('Action_Log_Storage_location_changed')
+            ],
+            'storage_location_deleted' => [
+                'name' => __('Action_Log_Storage_location_deleted')
+            ],
+
             'tax_added' => [
                 'name' => __('Action_Log_Tax_rate_added')
             ],
@@ -501,14 +517,14 @@ class ActionLogsTable extends AppTable
         ];
     }
 
-    public function removeCustomerNameFromAllActionLogs($customerName): bool
+    public function removeCustomerNameFromAllActionLogs(string $customerName): bool
     {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
         $statement = $this->getConnection()->getDriver()->prepare($query);
         return $statement->execute();
     }
 
-    public function removeCustomerEmailFromAllActionLogs($email): bool
+    public function removeCustomerEmailFromAllActionLogs(string $email): bool
     {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $email . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerEmail().'\')';
         $statement = $this->getConnection()->getDriver()->prepare($query);
@@ -526,7 +542,7 @@ class ActionLogsTable extends AppTable
         return $types;
     }
 
-    public function customSave($type, $customerId, $objectId, $objectType, $text, $time=null): EntityInterface|false
+    public function customSave(string $type, ?int $customerId, ?int $objectId, ?string $objectType, string $text, ?DateTime $time=null): EntityInterface|false
     {
         $data2save = [
             'type' => $type,

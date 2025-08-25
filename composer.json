@@ -11,7 +11,7 @@
     ],
     "config": {
         "platform": {
-            "php": "8.2"
+            "php": "8.4"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
@@ -19,8 +19,8 @@
         }
     },
     "require": {
-        "php": ">=8.2",
-        "cakephp/cakephp": "5.1.*",
+        "php": ">=8.4",
+        "cakephp/cakephp": "^5.2",
         "cakephp/migrations": "^4.0",
         "cakephp/plugin-installer": "~2.0",
         "markstory/asset_compress": "5.*",
@@ -32,15 +32,15 @@
         "dereuromark/cakephp-queue": "8.*",
         "tecnickcom/tcpdf": "^6.4",
         "hisorange/browser-detect": "5.*",
-        "phpoffice/phpspreadsheet": "4.*",
-        "druidfi/mysqldump-php": "^1.0",
+        "phpoffice/phpspreadsheet": "5.*",
+        "druidfi/mysqldump-php": "^2.0",
         "cakephp/authentication": "^3.0",
         "cakephp/authorization": "^3.0"
     },
     "require-dev": {
         "cakephp/debug_kit": "5.*",
         "cakephp/cakephp-codesniffer": "^5.0",
-        "phpunit/phpunit": "^11.0",
+        "phpunit/phpunit": "^12.0",
         "phpstan/phpstan": "2.*",
         "cakephp/bake": "^3.0.0",
         "ergebnis/phpstan-rules": "^2.5",

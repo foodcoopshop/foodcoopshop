@@ -24,4 +24,10 @@ class OrderDetail extends AppEntity
     const STATE_BILLED_CASHLESS = 11;
     const STATE_BILLED_CASH = 12;
 
+    const ORDER_STATES_CASHLESS = [
+        self::STATE_OPEN,
+        self::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+        self::STATE_BILLED_CASHLESS,
+    ];
+
 }

@@ -26,13 +26,10 @@ class ConfigurationsPolicy implements RequestPolicyInterface
 
     public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
-
-        if ($identity === null) {
-            return false;
-        }
-
-        return $identity->isSuperadmin();
-
+        return match($request->getParam('action')) {
+           'changelog' => $identity !== null,
+            default => $identity !== null && $identity->isSuperadmin(),
+        };
     }
 
 }

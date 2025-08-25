@@ -47,9 +47,9 @@ class PagesTable extends AppTable
         return $validator;
     }
 
-    private function flattenNestedArrayWithChildren($array, $separator = ''): array
+    private function flattenNestedArrayWithChildren(SelectQuery|array $items, string $separator = ''): array
     {
-        foreach ($array as $item) {
+        foreach ($items as $item) {
             $statusString = '';
             if (! $item->active) {
                 $statusString = ' ('.__('offline').')';
@@ -65,7 +65,7 @@ class PagesTable extends AppTable
         return $this->flattenedArray;
     }
 
-    public function getThreaded($conditions = []): SelectQuery
+    public function getThreaded(array $conditions = []): SelectQuery
     {
         $pages = $this->find('threaded',
         parentField: 'id_parent',
@@ -73,15 +73,15 @@ class PagesTable extends AppTable
         order: [
             'Pages.menu_type' => 'DESC',
             'Pages.position' => 'ASC',
-            'Pages.title' => 'ASC'
+            'Pages.title' => 'ASC',
         ],
         contain: [
-            'Customers'
+            'Customers',
         ]);
         return $pages;
     }
 
-    public function getForSelect($excludePageId = null): array
+    public function getForSelect(?int $excludePageId = null): array
     {
         $conditions = [];
         if ($excludePageId) {

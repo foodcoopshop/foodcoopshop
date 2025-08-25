@@ -65,6 +65,17 @@ class ProductsPolicy implements RequestPolicyInterface
                     }
                 }
                 return false;
+            case 'duplicate': 
+                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                    return false;
+                }
+                if ($identity->isSuperadmin() || $identity->isAdmin()) {
+                    return true;
+                }
+                if (!$this->manufacturerIsProductOwner($identity, $request)) {
+                    return false;
+                }
+                return true;
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
@@ -84,7 +95,7 @@ class ProductsPolicy implements RequestPolicyInterface
 
     }
 
-    protected function productExists($request): bool
+    protected function productExists(ServerRequest $request): bool
     {
         $productTable = TableRegistry::getTableLocator()->get('Products');
         $ids = $productTable->getProductIdAndAttributeId($request->getData('productId'));
@@ -97,7 +108,7 @@ class ProductsPolicy implements RequestPolicyInterface
         return !empty($product);
     }
 
-    protected function manufacturerIsProductOwner($identity, $request): bool
+    protected function manufacturerIsProductOwner(IdentityInterface $identity, ServerRequest $request): bool
     {
         if (!$identity->isManufacturer()) {
             return true;

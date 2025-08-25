@@ -34,8 +34,9 @@ use Cake\Utility\Hash;
         <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_attribute').'', $this->Slug->getAttributeAdd(), [
+            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getAttributeAdd(), [
                 'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Add_attribute'),
                 'escape' => false
             ]);
             echo '</div>';
@@ -92,7 +93,7 @@ foreach ($attributes as $attribute) {
     echo '</td>';
 
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
-        if ($attribute->can_be_used_as_unit == 1) {
+        if ($attribute->can_be_used_as_unit) {
             echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';

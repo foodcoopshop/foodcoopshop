@@ -31,7 +31,7 @@ use Cake\Core\Configure;
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Der Betreiber stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Herstellers an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller. <b>Ein Vertrag zwischen dem Nutzer und dem Hersteller kommt dann zustande, wenn der Hersteller mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
+<p>2.1. Der Betreiber stellt dem Nutzer eine Plattform zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Herstellers an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller. <b>Ein Vertrag zwischen dem Nutzer und dem Hersteller kommt dann zustande, wenn der Hersteller mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
 
 <p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande (Direktverkauf).</p>
 
@@ -41,7 +41,7 @@ use Cake\Core\Configure;
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 
-<p>3.1. Die Nutzung der Plattform ist für die Nutzer kostenlos. Eine Haftung ist daher ausgeschlossen.</p>
+<p>3.1. Die Nutzung der Plattform ist für die Nutzer prinzipiell kostenlos, eine Haftung ist daher ausgeschlossen. Es steht dem Betreiber der Plattform allerdings frei, für die Nutzung einen Mitgliedsbeitrag zu einzuheben.</p>
 
 <p>3.2. Für Schäden infolge schuldhafter Vertragsverletzung haftet der Betreiber bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p>
 

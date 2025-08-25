@@ -38,7 +38,7 @@ class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
         $this->assertEquals($newName, $changedOrder->cart_products[1]->order_detail->product_name);
     }
 
-    private function editOrderDetailName($orderDetailId, $productName): void
+    private function editOrderDetailName(int $orderDetailId, string $productName): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductName/',

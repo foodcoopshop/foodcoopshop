@@ -92,7 +92,7 @@ body.categories.detail div.img-wrapper {
 body.categories.detail div.img-wrapper img {
     max-width: 717px;
 }
-body.categories.detail div.description-wrapper {
+body.categories div.description-wrapper {
     margin-bottom: 10px;
     clear: both;
 }

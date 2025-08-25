@@ -766,16 +766,16 @@ a.btn-arrow {
     width: 15px;
 }
 a.btn-previous-day {
-    right: 92px;
+    right: 94px;
 }
 a.btn-previous-day:nth-of-type(1) {
-    left: 3px;
+    left: 1px;
 }
 a.btn-next-day {
-    right: 3px;
+    right: 5px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 92px;
+    left: 90px;
 }
 a.btn-arrow i {
     font-size: 15px;
@@ -827,7 +827,10 @@ body.deposits .add-payment-deposit-wrapper {
 }
 body.taxes.index table.list,
 body.slider.index table.list {
-    width: 300px;
+    width: 400px;
+}
+body.storage_locations.index table.list {
+    width: 400px;
 }
 .accept-updated-terms-of-use-form {
     width: 800px;
@@ -1018,4 +1021,26 @@ body.products .product-import-wrapper > * {
 /* fix path for packed css */
 .elfinder-button-icon {
     background-image: url(/js/elfinder/img/toolbar.png);
+}
+.changelog-link a:not(.btn) {
+    color: #333 ! important;
+    position: fixed;
+    right: 20px;
+    bottom: 10px;
+    font-size: 12px;
+}
+.changelog-content {
+    padding: 20px;
+    line-height: 1.7em;
+}
+.changelog-content h2 {
+    margin-top: 40px;
+    font-size: 22px;
+    border-bottom: none;
+    margin-bottom: -10px;
+}
+.changelog-content h3 {
+    font-size: 16px;
+    margin-top: 25px;
+    font-weight: bold;
 }

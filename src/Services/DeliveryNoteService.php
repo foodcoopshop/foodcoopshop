@@ -21,11 +21,13 @@ use Cake\Core\Configure;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Cake\ORM\Query\SelectQuery;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class DeliveryNoteService
 {
 
-    public function getSpreadsheet($orderDetails): Spreadsheet
+    public function getSpreadsheet(SelectQuery $orderDetails): Spreadsheet
     {
 
         $headlines = [
@@ -179,7 +181,12 @@ class DeliveryNoteService
 
     }
 
-    public function writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturerName): string
+    public function writeSpreadsheetAsFile(
+        Spreadsheet $spreadsheet,
+        string $dateFrom,
+        string $dateTo,
+        string $manufacturerName,
+        ): string
     {
         $writer = new Xlsx($spreadsheet);
         $filename = __('Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturerName) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
@@ -187,24 +194,24 @@ class DeliveryNoteService
         return $filename;
     }
 
-    public function deleteTmpFile($filename): void
+    public function deleteTmpFile(string $filename): void
     {
         unlink(TMP . $filename);
     }
 
-    protected function setAlignmentForCell($sheet, $column, $row, $alignment): void
+    protected function setAlignmentForCell(Worksheet $spreadsheet, int $column, int $row, string $alignment): void
     {
-        $sheet->getStyle([$column, $row, $column, $row])->getAlignment()->setHorizontal($alignment);
+        $spreadsheet->getStyle([$column, $row, $column, $row])->getAlignment()->setHorizontal($alignment);
     }
 
-    protected function setBoldForCell($sheet, $column, $row): void
+    protected function setBoldForCell(Worksheet $spreadsheet, int $column, int $row): void
     {
-        $sheet->getStyle([$column, $row, $column, $row])->getFont()->setBold(true);
+        $spreadsheet->getStyle([$column, $row, $column, $row])->getFont()->setBold(true);
     }
 
-    protected function setNumberFormatForCell($sheet, $column, $row): void
+    protected function setNumberFormatForCell(Worksheet $spreadsheet, int $column, int $row): void
     {
-        $sheet->getStyle([$column, $row, $column, $row])->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+        $spreadsheet->getStyle([$column, $row, $column, $row])->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
     }
 
 }

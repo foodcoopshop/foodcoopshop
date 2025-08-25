@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,10 +38,10 @@ class PurchasePriceProductAttributesTable extends AppTable
         return $validator;
     }
 
-    public function isPurchasePriceSet($entity): bool
+    public function isPurchasePriceSet(EntityInterface $entity): bool
     {
         $result = true;
-        if (!empty($entity->unit_product_attribute) && $entity->unit_product_attribute->price_per_unit_enabled) {
+        if ($entity->price_per_unit_enabled) {
             if (is_null($entity->unit_product_attribute->purchase_price_incl_per_unit)) {
                 $result = false;
             }

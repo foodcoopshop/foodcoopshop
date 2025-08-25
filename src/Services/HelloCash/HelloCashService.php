@@ -201,7 +201,7 @@ class HelloCashService
     {
 
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
-        $paymentsTable->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
+        $paymentsTable->linkReturnedDepositWithInvoice($data, (int) $responseObject->invoice_id);
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->updateOrderDetails($data, $responseObject->invoice_id);
@@ -266,7 +266,7 @@ class HelloCashService
         return $taxRates;
     }
 
-    protected function createOrUpdateUser($customerId): int
+    protected function createOrUpdateUser($customerId): ?int
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');

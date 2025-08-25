@@ -25,7 +25,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_PRODUCT_AVAILABILITY_LOW',
-            'text' => 'Geringe Verfügbarkeit<br /><div class="small">Ab welcher verfügbaren Produkt-Menge soll beim Bestellen der Hinweis "(x verfügbar") angezeigt werden?',
             'value' => '10',
             'type' => 'number',
             'position' => 600,
@@ -201,7 +200,6 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_CURRENCY_SYMBOL',
-            'text' => 'Währungssymbol',
             'value' => '€',
             'type' => 'readonly',
             'position' => 520,
@@ -356,9 +354,9 @@ class ConfigurationsFixture extends AppFixture
         [
             'active' => 1,
             'name' => 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS',
-            'value' => '0',
-            'type' => 'readonly',
-            'position' => 589,
+            'value' => '1',
+            'type' => 'boolean',
+            'position' => 3210,
         ],
         [
             'active' => 1,

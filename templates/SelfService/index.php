@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 use Cake\Routing\Router;
+use App\Services\OrderCustomerService;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
@@ -32,11 +33,11 @@ $this->element('addScript', ['script' =>
 
 $this->element('selfService/initCartFinishDialog');
 
-if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
+if (!$isMobile && !OrderCustomerService::isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"]);
 }
 
-if ($orderCustomerService->isSelfServiceModeByUrl()) {
+if (OrderCustomerService::isSelfServiceModeByUrl()) {
     $this->element('addScript', ['script' => Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"]);
 }
 
@@ -76,7 +77,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 <div class="header">
     <h2>
     <?php
-        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             echo __('Stock_products');
         } else {
             echo __('Self_service');
@@ -154,7 +155,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceEasyModeEnabled')){
+        if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !Configure::read('app.selfServiceEasyModeEnabled')){
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }

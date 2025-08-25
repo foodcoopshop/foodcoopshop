@@ -14,15 +14,18 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Product;
+use Cake\I18n\DateTime;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -54,7 +57,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_ON;
-        $this->get('/admin/products/editNewStatus/' . $productId  . '/' . $status);
+        $this->get('/admin/products/editNewStatus/' . $productId . '/' . $status);
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
@@ -69,14 +72,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_OFF;
-        $this->get('/admin/products/editNewStatus/' . $productId  . '/' . $status);
+        $this->get('/admin/products/editNewStatus/' . $productId . '/' . $status);
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
                 'Products.id_product' => $productId,
             ]
         )->first();
-        $this->assertTrue($product->new->addDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1)->isToday());
+        $this->assertTrue($product->new->addDays((int)Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1)->isToday());
     }
 
     public function testEditProductStatus(): void
@@ -700,7 +703,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $product = $this->deleteProduct($productId);
         $this->assertEquals($product->active, APP_ON);
     }
-    
+
     public function testDeleteProductAccessLoggedOut(): void
     {
         $this->deleteProduct(364);
@@ -714,6 +717,79 @@ class ProductsControllerTest extends AppCakeTestCase
         $product = $this->deleteProduct($productId);
         // active must not be changed!
         $this->assertEquals($product->active, APP_ON);
+    }
+
+    public function testDuplicate(): void
+    {
+        $productId = 349;
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $srcProduct = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('id_product') => $productId,
+            ],
+            contain: [
+                'DepositProducts',
+                'UnitProducts',
+                'StockAvailables',
+                'CategoryProducts',
+            ]
+        )->first();
+
+        $this->loginAsSuperadmin();
+        $this->ajaxPost('/admin/products/duplicate',
+            [
+                'productId' => $productId,
+                'copyAmount' => 2,
+            ],
+        );
+        $copies = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                    $srcProduct->name,
+                    '%',
+                ]),
+            ],
+            contain: [
+                'DepositProducts',
+                'UnitProducts',
+                'StockAvailables',
+                'CategoryProducts',
+            ]
+        );
+
+
+        $this->assertGreaterThan(1, $copies->count());
+        $copy = $copies->first();
+
+        $this->assertEquals($srcProduct->price, $copy->price);
+        $this->assertEquals($srcProduct->id_tax, $copy->id_tax);
+        $this->assertEquals($srcProduct->id_manufacturer, $copy->id_manufacturer);
+        $this->assertEquals($srcProduct->is_decleration_ok, $copy->is_decleration_ok);
+        $this->assertEquals($srcProduct->status, $copy->status);
+        $this->assertTrue($copy->new->isToday());
+
+
+        $this->assertEquals($srcProduct->delivery_rhythm_type, $copy->delivery_rhythm_type);
+        $this->assertEquals($srcProduct->delivery_rhythm_count, $copy->delivery_rhythm_count);
+        $this->assertEquals($srcProduct->delivery_rhytm_first_delivery_day, $copy->delivery_rhytm_first_delivery_day);
+        $this->assertEquals($srcProduct->delivery_rhytm_order_possible_units, $copy->delivery_rhytm_order_possible_units);
+        $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_weekday, $copy->delivery_rhythm_send_order_list_weekday);
+        $this->assertEquals($srcProduct->delivery_rhythm_send_order_list_day, $copy->delivery_rhythm_send_order_list_day);
+
+        $this->assertEquals($srcProduct->deposit_product, $copy->deposit_product);
+
+        $this->assertEquals($srcProduct->stock_available->quantity, $copy->stock_available->quantity);
+        $this->assertEquals($srcProduct->stock_available->quantity_limit, $copy->stock_available->quantity_limit);
+        $this->assertEquals($srcProduct->stock_available->sold_out_limit, $copy->stock_available->sold_out_limit);
+        $this->assertEquals($srcProduct->stock_available->always_available, $copy->stock_available->always_available);
+        $this->assertEquals($srcProduct->stock_available->default_quantity_after_sending_order_lists, $copy->stock_available->default_quantity_after_sending_order_lists);
+
+        $this->assertEquals($srcProduct->unit_product->name, $copy->unit_product->name);
+
+        $copyCategory = array_pop($copy->category_products);
+        $this->assertNotNull($copyCategory->id_category);
+        $this->assertEquals(array_pop($srcProduct->category_products)->id_category, $copyCategory->id_category);
+        $this->assertEquals($copy->id_product, $copyCategory->id_product);
     }
 
     public function testProductAdminPricesAsManufacturerWithPurchasePriceEnabled(): void
@@ -753,7 +829,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testEditQuantityOk(): void
     {
-    
+
         $this->loginAsSuperadmin();
         $productId = 346;
 
@@ -788,7 +864,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testEditNameOk(): void
     {
-    
+
         $this->loginAsSuperadmin();
         $productId = 346;
 
@@ -836,8 +912,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $expectedDropdownData = '<option value="">Alle Produkte</option><optgroup label="online-5"><option value="340">Beuschl - Demo Fleisch-Hersteller</option><option value="103">Bratwürstel - Demo Fleisch-Hersteller</option><option value="347">Forelle - Demo Fleisch-Hersteller</option><option value="102">Frankfurter - Demo Fleisch-Hersteller</option><option value="348">Rindfleisch - Demo Fleisch-Hersteller</option></optgroup>';
         $this->assertEquals($expectedDropdownData, $this->getJsonDecodedContent()->dropdownData);
     }
-    
-    private function deleteProduct($productId): ?Product
+
+    private function deleteProduct(int $productId): ?Product
     {
         $this->ajaxPost('/admin/products/delete', [
             'productIds' => [$productId]
@@ -851,7 +927,7 @@ class ProductsControllerTest extends AppCakeTestCase
         return $product;
     }
 
-    private function doPurchasePriceChange($productId, $price): ?Product
+    private function doPurchasePriceChange(string|int $productId, string $price): ?Product
     {
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -878,7 +954,18 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
-    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0, $changeOpenOrderDetails = false): void
+    private function assertSellingPriceChange(
+        string|int   $productId,
+        string|float $price,
+        string|float $expectedNetPrice,
+        string|float $taxRate,
+        bool         $pricePerUnitEnabled = false,
+        string|float $priceInclPerUnit = 0,
+        string       $priceUnitName = '',
+        float        $priceUnitAmount = 0,
+        float        $priceQuantityInUnits = 0,
+        bool         $changeOpenOrderDetails = false,
+    ): void
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
@@ -889,7 +976,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 
-    private function assertTaxChange($productId, $newSellingPriceTaxId, $expectedSellingPriceTaxId, $newPurchasePriceTaxId = null, $expectedPurchasePriceTaxId = null): Product
+    private function assertTaxChange(
+        string|int      $productId,
+        int             $newSellingPriceTaxId,
+        int             $expectedSellingPriceTaxId,
+        ?int            $newPurchasePriceTaxId = null,
+        null|int|string $expectedPurchasePriceTaxId = null,
+    ): Product
     {
         $data = [
             'productId' => $productId,
@@ -947,7 +1040,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $imageIdAsPath = $this->Html->getProductImageIdAsPath($imageId);
         $thumbsPath = $this->Html->getProductThumbsPath($imageIdAsPath);
-        $expectedFilesizes = [4224,12364,36656];
+        $expectedFilesizes = [4224, 12364, 36656];
         $i = 0;
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';

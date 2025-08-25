@@ -18,10 +18,10 @@ namespace App\Services;
 
 class RemoteFileService
 {
-    public static function exists(string $remoteFile, $allowedHosts = []): bool
+    public static function exists(string $remoteFile, array $allowedHosts = []): bool
     {
 
-        self::verifyAllowedHosts($allowedHosts, $remoteFile);
+        self::verifyAllowedHosts($remoteFile, $allowedHosts);
 
         $ch = curl_init($remoteFile);
         curl_setopt($ch, CURLOPT_NOBODY, true);
@@ -29,7 +29,7 @@ class RemoteFileService
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($responseCode == 200){
+        if ($responseCode == 200) {
             return true;
         }
 
@@ -37,7 +37,7 @@ class RemoteFileService
 
     }
 
-    private static function verifyAllowedHosts($allowedHosts, $remoteFile): void
+    private static function verifyAllowedHosts(string $remoteFile, array $allowedHosts): void
     {
         if (empty($allowedHosts)) {
             throw new \Exception('allowedHosts must be set');

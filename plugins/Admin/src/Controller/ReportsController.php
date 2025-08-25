@@ -56,7 +56,10 @@ class ReportsController extends AdminAppController
             $reader = $bankingReaderService::createFromString($content);
 
             if ($reader->csvHasIsoFormat) {
-                $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+                $reader->appendStreamFilterOnRead('convert.iconv.ISO-8859-15/UTF-8');
+            }
+            if ($reader->csvHasUTF16Format) {
+                $reader->appendStreamFilterOnRead('convert.iconv.UTF-16/UTF-8');
             }
 
             try {
@@ -107,6 +110,7 @@ class ReportsController extends AdminAppController
                             'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->identity->getId(),
+                            'type' => Payment::TYPE_PRODUCT,
                         ],
                         [
                             'validate' => 'csvImportSave',
@@ -188,7 +192,7 @@ class ReportsController extends AdminAppController
         }
     }
 
-    public function payments($paymentType): void
+    public function payments(int $paymentType): void
     {
 
         if ($paymentType == Payment::TYPE_PRODUCT && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
@@ -214,7 +218,7 @@ class ReportsController extends AdminAppController
         $this->set('customerId', $customerId);
 
         $conditions = [
-            'Payments.type' => $paymentType
+            'Payments.type' => $paymentType,
         ];
 
         if ($customerId != '') {

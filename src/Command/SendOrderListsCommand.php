@@ -23,6 +23,8 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\I18n\Date;
 use App\Command\Traits\CronjobCommandTrait;
+use Cake\ORM\Query\SelectQuery;
+use App\Services\OrderDetailCancellationService;
 
 class SendOrderListsCommand extends AppCommand
 {
@@ -60,7 +62,7 @@ class SendOrderListsCommand extends AppCommand
         $allOrderDetails = $orderDetailsTable->getOrderDetailsForSendingOrderLists(
             $pickupDay,
             $this->cronjobRunDay,
-            Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
+            (bool) Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
         );
 
         // 3) add up the order detail by manufacturer
@@ -95,6 +97,7 @@ class SendOrderListsCommand extends AppCommand
 
         $actionLog = $actionLogsTable->customSave('cronjob_send_order_lists', 0, 0, '', $outString);
 
+        $orderDetailCancellationService = new OrderDetailCancellationService();
         foreach ($manufacturers as $manufacturer) {
 
             // it's possible, that - within one request - orders with different pickup days are available
@@ -108,10 +111,20 @@ class SendOrderListsCommand extends AppCommand
                 }
                 $groupedOrderDetails[$formattedPickupDay][] = $orderDetail;
             }
+
+            // cancel order details if minimum order value is not reached
+            foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
+                $orderDetailPriceSum = array_sum(Hash::extract($orderDetails, '{n}.total_price_tax_incl'));
+                if ($orderDetailPriceSum < $manufacturer->min_order_value) {
+                    $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
+                    $orderDetailCancellationService->delete($orderDetailIds, __('Minimum order value not reached'));
+                    $groupedOrderDetails[$pickupDayDbFormat] = []; // unset to prevent sending order list
+                }
+            }
+
             foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
 
                 // avoid generating empty order lists
-                /** @phpstan-ignore-next-line */
                 if (empty($orderDetails)) {
                     continue;
                 }
@@ -147,7 +160,7 @@ class SendOrderListsCommand extends AppCommand
      * prepare action log string is complicated because of
      * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
      */
-    protected function getActionLogData($orderDetails, $manufacturers, $pickupDay): array
+    protected function getActionLogData(SelectQuery $orderDetails, array $manufacturers, string $pickupDay): array
     {
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
@@ -175,6 +188,9 @@ class SendOrderListsCommand extends AppCommand
                 if (in_array($manufacturer->id_manufacturer, array_keys($tmpActionLogDatas))) {
                     ksort($tmpActionLogDatas[$manufacturer->id_manufacturer]);
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
+                        if ($tmpActionLogData['order_detail_price_sum'] < $manufacturer->min_order_value) {
+                            continue;
+                        }
                         $pickupDayFormatted = new Date($pickupDayDbFormat);
                         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                         $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormatted;
@@ -198,7 +214,7 @@ class SendOrderListsCommand extends AppCommand
     /**
      * reset quantity to default_quantity_after_sending_order_lists
      */
-    protected function resetQuantityToDefaultQuantity($orderDetails): void
+    protected function resetQuantityToDefaultQuantity(SelectQuery $orderDetails): void
     {
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -213,7 +229,7 @@ class SendOrderListsCommand extends AppCommand
             if (!is_null($stockAvailableObject->default_quantity_after_sending_order_lists) && $stockAvailableObject->quantity != $stockAvailableObject->default_quantity_after_sending_order_lists) {
                 $productsToSave[] = [
                     $compositeProductId => [
-                        'quantity' => $stockAvailableObject->default_quantity_after_sending_order_lists
+                        'quantity' => $stockAvailableObject->default_quantity_after_sending_order_lists,
                     ]
                 ];
             }

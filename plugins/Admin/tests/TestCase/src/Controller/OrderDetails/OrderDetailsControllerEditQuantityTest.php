@@ -213,7 +213,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $productId = '348-11';
         $this->changeProductPrice($productId, 0, true, '25,2', 'g', 1000, 80);
         $this->addProductToCart($productId, 99);
-        $this->finishCart(1, 1, '', null);
+        $this->finishCart();
         $orderDetailId = 4;
         $newQuantity = 8000;
         $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
@@ -235,13 +235,13 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
     {
         $productIdA = 347; // forelle
         $this->addProductToCart($productIdA, 2);
-        $this->finishCart(1, 1);
+        $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         return $cart;
     }
 
-    private function editOrderDetailQuantity($orderDetailId, $productQuantity): void
+    private function editOrderDetailQuantity(int $orderDetailId, float $productQuantity): void
     {
         $this->ajaxPost(
             '/admin/order-details/editProductQuantity/',

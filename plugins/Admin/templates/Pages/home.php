@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 $this->element('addScript', [
     'script' =>
@@ -43,4 +44,14 @@ echo '<br />';
 echo '<div class="filter-container"></div>';
 echo '<img id="installation-logo" src="/files/images/' . Configure::read('app.logoFileName') . '?' . filemtime(WWW_ROOT.'files'.DS.'images'.DS.Configure::read('app.logoFileName')) . '" />';
 echo '<div class="sc"></div>';
+
+echo '<div class="changelog-link">';
+    echo $this->Html->link(
+        '<i class="fas fa-file-alt"></i> ' . __d('admin', 'Changelog') . ' ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion(),
+        '/admin/configurations/changelog',
+        [
+            'escape' => false,
+            'title' => __d('admin', 'Changelog'),
+        ]
+    );
 echo '</div>';

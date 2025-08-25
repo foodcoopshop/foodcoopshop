@@ -25,6 +25,7 @@ class DepositProductsTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use NumberRangeValidatorTrait;
+    const ORIGINAL_PRIMARY_KEY = 'id';
 
     public function initialize(array $config): void
     {
@@ -36,7 +37,7 @@ class DepositProductsTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->allowEmptyString('deposit');
-        $validator = $this->getNumberRangeValidator($validator, 'deposit', 0, 100);
+        $validator = $this->getNumberRangeValidator($validator, 'deposit', -100, 100);
         return $validator;
     }
 

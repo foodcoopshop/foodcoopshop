@@ -9,6 +9,7 @@ use Cake\Mailer\Mailer;
 use Cake\Network\Exception\SocketException;
 use Cake\Utility\Text;
 use Cake\Routing\Router;
+use Stringable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +27,7 @@ use Cake\Routing\Router;
 class FileAndEmailLog extends FileLog
 {
 
-    public function log($level, $message, array $context = []): void
+    public function log($level, Stringable|string $message, array $context = []): void
     {
         parent::log($level, $message, $context);
         if (Configure::read('app.emailErrorLoggingEnabled')) {
@@ -34,7 +35,7 @@ class FileAndEmailLog extends FileLog
         }
     }
 
-    private function sendEmailWithErrorInformation($message): bool
+    private function sendEmailWithErrorInformation(string $message): bool
     {
 
         $ignoredPatterns = [
@@ -80,7 +81,7 @@ class FileAndEmailLog extends FileLog
             '{"name":{"unique":',
             '{"name":{"minLength":"Der Name des Produktes',
             '{"title":{"_empty":"Bitte gib einen Titel ein."}}',
-            '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000',
+            '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen',
             '{"quantity_limit":{"_empty":',
             '{"quantity_limit":{"lessThanOrEqual":',
             '{"quantity":{"numeric":',
@@ -91,7 +92,6 @@ class FileAndEmailLog extends FileLog
             '{"amount":{"numeric":"Bitte gib eine korrekte Zahl ein.',
             '{"no_delivery_days":',
             '{"price_incl_per_unit":{"greaterThan":',
-            'Form tampering protection token validation failed',
             'General error: 1205 Lock wait timeout exceeded',
             'Communication link failure: 1053 Server shutdown in progress',
             '{"barcode":{"lengthBetween":',

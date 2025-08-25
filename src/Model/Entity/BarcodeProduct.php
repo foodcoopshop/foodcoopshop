@@ -21,7 +21,7 @@ use App\Controller\Component\StringComponent;
 
  class BarcodeProduct extends AppEntity {
 
-    protected function _setBarcode($value): string
+    protected function _setBarcode(string $value): string
     {
         return StringComponent::removeSpecialChars(strip_tags(trim($value)));
     }

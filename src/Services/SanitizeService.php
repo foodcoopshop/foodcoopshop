@@ -19,7 +19,7 @@ namespace App\Services;
 class SanitizeService
 {
 
-    public function trimRecursive($data, $excludedFields = []): array
+    public function trimRecursive(array $data, array $excludedFields = []): array
     {
         array_walk_recursive($data, function (&$item, $key) use ($excludedFields) {
             if (is_string($item) && !in_array($key, $excludedFields)) {
@@ -29,13 +29,13 @@ class SanitizeService
         return $data;
     }
 
-    public function stripBase64DataFromImageTag($item): string
+    public function stripBase64DataFromImageTag(string $item): string
     {
         $item = preg_replace('/src="(data:image\/[^;]+;base64[^"]+)"/i', 'src="invalid-image"', $item);
         return $item;
     }
 
-    public function stripTagsAndPurifyRecursive($data, $excludedFields = []): array
+    public function stripTagsAndPurifyRecursive(array $data, array $excludedFields = []): array
     {
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', TMP . 'cache' . DS . 'html_purifier');

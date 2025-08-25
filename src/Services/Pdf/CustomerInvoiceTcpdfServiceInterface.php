@@ -20,7 +20,12 @@ interface CustomerInvoiceTcpdfServiceInterface {
 
     public function setHeaders(): void;
 
-    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax): void;
+    public function prepareTableData(
+        object $result,
+        string|float $sumPriceExcl,
+        string|float $sumPriceIncl,
+        string|float $sumTax,
+    ): void;
 
 }
 

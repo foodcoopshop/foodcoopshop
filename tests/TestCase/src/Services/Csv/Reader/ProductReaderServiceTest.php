@@ -48,8 +48,6 @@ class ProductReaderServiceTest extends AppCakeTestCase
     public function testImportWithErrors(): void
     {
 
-        $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
-
         $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
@@ -65,14 +63,14 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
         $this->assertEquals($productIdTaxWrongErrorMessage, $errorsA['id_tax']['inList']);
         $this->assertEquals('Der Lagerstand muss eine Zahl sein.', $errorsA['stock_available']['quantity']['numeric']);
-        $this->assertEquals('Bitte gib eine Zahl zwischen 0 und 100 an.', $errorsA['deposit_product']['deposit']['lessThanOrEqual']);
+        $this->assertEquals('Bitte gib eine Zahl zwischen -100 und 100 an.', $errorsA['deposit_product']['deposit']['lessThanOrEqual']);
         $this->assertEquals('Folgende Werte sind gültig: Keine Kühlung, Kühlschrank, Tiefkühler', $errorsA['id_storage_location'][0]);
 
         $errorsB = $productEntities[1]->getErrors();
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsB['active']['inList']);
         $this->assertEquals($productPriceWrongErrorMessage, $errorsB['price']['greaterThanOrEqual']);
-        $this->assertEquals('Bitte gib eine Zahl zwischen -5.000 und 5.000 an. Feld: Lagerstand / verfügbare Menge', $errorsA['stock_available']['quantity']['lessThanOrEqual']);
+        $this->assertEquals('Bitte gib eine Zahl zwischen -1.000.000 und 1.000.000 an. Feld: Lagerstand / verfügbare Menge', $errorsA['stock_available']['quantity']['lessThanOrEqual']);
 
         $productsTable = $this->getTableLocator()->get('Products');
         $this->assertCount(14, $productsTable->find('all'));
@@ -81,8 +79,6 @@ class ProductReaderServiceTest extends AppCakeTestCase
 
     public function testImportSuccessful(): void
     {
-
-        $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
 
         $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
         $this->reader->configureType();

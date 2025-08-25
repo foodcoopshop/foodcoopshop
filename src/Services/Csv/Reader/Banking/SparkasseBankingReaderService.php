@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
 class SparkasseBankingReaderService extends BankingReaderService {
 
-    public bool $csvHasIsoFormat = true;
+    public bool $csvHasUTF16Format = true;
 
     public function configureType(): void
     {
@@ -28,7 +28,7 @@ class SparkasseBankingReaderService extends BankingReaderService {
         $this->setHeaderOffset(0);
     }
 
-    public function checkStructureForRecord($record): bool
+    public function checkStructureForRecord(array $record): bool
     {
 
         $result = false;

@@ -33,11 +33,8 @@ trait EditTrait
         }
     }
 
-    public function edit($customerId): void
+    public function edit(int $customerId): void
     {
-        if ($customerId === null) {
-            throw new NotFoundException;
-        }
         $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         $this->_processForm($customerId);
         if (empty($this->getRequest()->getData())) {
@@ -45,7 +42,7 @@ trait EditTrait
         }
     }
 
-    private function _processForm($customerId): void
+    private function _processForm(int $customerId): void
     {
 
         $isOwnProfile = $this->identity->getId() == $customerId;

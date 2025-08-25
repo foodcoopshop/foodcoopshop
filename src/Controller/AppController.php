@@ -55,10 +55,7 @@ class AppController extends Controller
         $this->identity = $identity;
         $this->set('identity', $identity);
 
-        $orderCustomerService = new OrderCustomerService();
-        $this->set('orderCustomerService', $orderCustomerService);
-
-        if (!$this->getRequest()->is('json') && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+        if ($this->formProtectionEnabled && !$this->getRequest()->is('json') && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
 
@@ -69,6 +66,12 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
 
+        $isSafari = false;
+        if (PHP_SAPI !== 'cli') {
+            /** @phpstan-ignore-next-line */
+            $isSafari = Browser::isSafari();
+        }
+        $this->set('isSafari', $isSafari);
         parent::beforeFilter($event);
     }
 
@@ -110,7 +113,7 @@ class AppController extends Controller
      *      return $this->sendAjaxError($e);
      *  }
      */
-    protected function sendAjaxError($error): Response
+    protected function sendAjaxError(\Exception $error): Response
     {
         if ($this->getRequest()->is('json')) {
             $this->setResponse($this->getResponse()->withStatus(500));

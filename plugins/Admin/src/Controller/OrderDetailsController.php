@@ -18,7 +18,8 @@ use Admin\Traits\OrderDetails\IndexTrait;
 use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Admin\Traits\OrderDetails\SetElFinderUploadPathTrait;
-use App\Services\PdfWriter\OrderDetailsPdfWriterService;
+use Admin\Traits\OrderDetails\ExportTrait;
+use Admin\Traits\OrderDetails\OrderDetailsAsPdfTrait;
 use Cake\View\JsonView;
 
 /**
@@ -52,20 +53,13 @@ class OrderDetailsController extends AdminAppController
     use OrderForDifferentCustomerTrait;
     use ProfitTrait;
     use SetElFinderUploadPathTrait;
+    use ExportTrait;
+    use OrderDetailsAsPdfTrait;
 
     public function initialize(): void
     {
         parent::initialize();
         $this->addViewClasses([JsonView::class]);
-    }
-
-    public function orderDetailsAsPdf(): void
-    {
-        $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
-        $order = $this->getRequest()->getQuery('order') ?? null;
-        $pdfWriter = new OrderDetailsPdfWriterService();
-        $pdfWriter->prepareAndSetData($pickupDay, $order);
-        die($pdfWriter->writeInline());
     }
 
 }

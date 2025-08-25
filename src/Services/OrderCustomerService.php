@@ -22,17 +22,17 @@ use Cake\Routing\Router;
 class OrderCustomerService
 {
 
-    public function isOrderForDifferentCustomerMode(): bool
+    public static function isOrderForDifferentCustomerMode(): bool
     {
         return Router::getRequest()->getSession()->check('OrderIdentity');
     }
 
-    public function isSelfServiceMode(): bool
+    public static function isSelfServiceMode(): bool
     {
-        return $this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer();
+        return self::isSelfServiceModeByUrl() || self::isSelfServiceModeByReferer();
     }
 
-    public function isSelfServiceModeByUrl(): bool
+    public static function isSelfServiceModeByUrl(): bool
     {
         $result = Router::getRequest()->getPath() == '/' . __('route_self_service');
         if (!empty(Router::getRequest()->getQuery('redirect'))) {
@@ -41,7 +41,7 @@ class OrderCustomerService
         return $result;
     }
 
-    public function isSelfServiceModeByReferer(): bool
+    public static function isSelfServiceModeByReferer(): bool
     {
         $result = false;
         $serverParams = Router::getRequest()->getServerParams();

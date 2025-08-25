@@ -25,17 +25,17 @@ class StorageLocationsFixture extends AppFixture
         [
             'id' => 1,
             'name' => 'Keine Kühlung',
-            //'rank' => 10, // rank is a reserved word in mysql, change that to "sortkey"
+            'position' => 1,
         ],
         [
             'id' => 2,
             'name' => 'Kühlschrank',
-            //'rank' => 20,
+            'position' => 2,
         ],
         [
             'id' => 3,
             'name' => 'Tiefkühler',
-            //'rank' => 30,
+            'position' => 3,
         ],
     ];
 

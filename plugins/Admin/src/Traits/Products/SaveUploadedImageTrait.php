@@ -29,14 +29,14 @@ trait SaveUploadedImageTrait
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $productId = $this->getRequest()->getData('objectId');
+        $productId = (int) $this->getRequest()->getData('objectId');
         $filename = $this->getRequest()->getData('filename');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         $productsTable = $this->getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ],
             contain: [
                 'Images',

@@ -26,7 +26,11 @@ use Cake\ORM\TableRegistry;
 class GenerateInvoiceToCustomerService
 {
 
-    public function run($data, $currentDay, $paidInCash): Invoice
+    public function run(
+        object $data,
+        string $currentDay,
+        bool|string|int $paidInCash,
+        ): Invoice
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -51,7 +55,7 @@ class GenerateInvoiceToCustomerService
         } else {
             $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService();
         }
-        $pdfWriter->prepareAndSetData($data, $paidInCash, $invoiceNumber, $invoiceDate);
+        $pdfWriter->prepareAndSetData($data, (bool) $paidInCash, $invoiceNumber, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 

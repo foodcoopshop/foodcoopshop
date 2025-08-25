@@ -10,6 +10,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use App\Services\SanitizeService;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,15 +28,16 @@ use App\Services\SanitizeService;
 
 class ConfigurationsController extends AdminAppController
 {
-    
-    public function edit($name): void
+ 
+    public function changelog(): void
+    {
+        $this->set('title_for_layout', __d('admin', 'Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion());
+    }
+
+    public function edit(string $name): void
     {
 
         $this->viewBuilder()->addHelper('Configuration');
-
-        if ($name === null) {
-            throw new NotFoundException;
-        }
 
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $configuration = $configurationsTable->find('all', conditions: [
@@ -105,7 +107,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('configuration', $configuration);
     }
 
-    public function previewEmail($configurationName): void
+    public function previewEmail(string $configurationName): void
     {
 
         $this->disableAutoRender();

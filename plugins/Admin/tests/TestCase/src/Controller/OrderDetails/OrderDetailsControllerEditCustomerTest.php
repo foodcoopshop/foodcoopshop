@@ -183,7 +183,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->assertNoMailSent();
     }
 
-    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount, $sendEmailToCustomers): void
+    private function editOrderDetailCustomer(int $orderDetailId, int $customerId, string $editCustomerReason, float $amount, bool $sendEmailToCustomers): void
     {
         $this->post(
             '/admin/order-details/editCustomer/',

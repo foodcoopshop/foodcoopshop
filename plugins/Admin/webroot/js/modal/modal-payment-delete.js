@@ -49,7 +49,7 @@ foodcoopshop.ModalPaymentDelete = {
         var paymentId = dataRow.find('td:nth-child(1)').text();
 
         foodcoopshop.Helper.ajaxCall(
-            '/admin/payments/changeState/',
+            '/admin/payments/changeStatus/',
             {
                 paymentId: paymentId
             },
@@ -58,7 +58,7 @@ foodcoopshop.ModalPaymentDelete = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.Modal.appendFlashMessageError(modalSelector, data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }

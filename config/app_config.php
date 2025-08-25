@@ -113,6 +113,7 @@ return [
             // ],
         ],
         'selfServiceEasyModeEnabled' => false,
+        'selfServiceIsAmountValidationEnabled' => true,
         'showOrderedProductsTotalAmountInCatalog' => false,
         'applyOpenOrderCheckForOrderReminder' => true,
         'changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled' => false,
@@ -204,6 +205,8 @@ return [
         ],
 
         'helloCashAccountChangedDate' => '2020-01-01',
+
+        'isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled' => true,
 
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),

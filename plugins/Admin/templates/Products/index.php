@@ -102,10 +102,19 @@ $paginator = $this->loadHelper('Paginator', [
                 'type' => 'select',
                 'label' => '',
                 'multiple' => true,
-                'empty' => __d('admin', 'chose_category...'),
+                'empty' => __d('admin', 'Category'),
                 'options' => $categoriesForDropdown,
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
+            if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+                echo $this->Form->control('storageLocationId', [
+                    'type' => 'select',
+                    'label' => '',
+                    'empty' => __d('admin', 'Storage locations'),
+                    'options' => $storageLocationsForForDropdown,
+                    'default' => isset($storageLocationId) ? $storageLocationId : ''
+                ]);
+            }
             ?>
 
             <div class="right">
@@ -117,8 +126,9 @@ $paginator = $this->loadHelper('Paginator', [
                         'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
+                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ', 'javascript:void(0);', [
                         'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Add product'),
                         'escape' => false
                     ]);
                     echo '</div>';
@@ -158,7 +168,7 @@ $paginator = $this->loadHelper('Paginator', [
             if ($globalNoDeliveryDaysString != '') {
                 echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
             }
-            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true, 2);
             if ($manufacturerNoDeliveryDaysString != '') {
                 echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
             }

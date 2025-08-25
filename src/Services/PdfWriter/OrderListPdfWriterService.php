@@ -32,7 +32,7 @@ abstract class OrderListPdfWriterService extends PdfWriterService
         $this->setPdfLibrary(new ListTcpdfService());
     }
 
-    public function prepareAndSetData($manufacturerId, $pickupDay, $validOrderStates, $orderDetailIds, $isAnonymized): void
+    public function prepareAndSetData(int $manufacturerId, string $pickupDay, array $validOrderStates, array $orderDetailIds, bool $isAnonymized): void
     {
 
         $reflect = new \ReflectionClass($this);

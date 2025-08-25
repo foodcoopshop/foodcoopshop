@@ -23,7 +23,7 @@ class CronjobLogsTable extends AppTable
 
     const DIFF_IN_DAYS_DELETE_LOGS = 60;
 
-    public function deleteOldLogs($timestamp): void
+    public function deleteOldLogs(DateTime|string|int $timestamp): void
     {
 
         if (is_object($timestamp) && get_class($timestamp)  == DateTime::class) {

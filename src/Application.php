@@ -244,16 +244,12 @@ class Application extends BaseApplication
             'queryParam' => 'redirect',
         ]);
 
-        $service->loadIdentifier('Authentication.Password', [
-            'resolver' => $ormResolver,
-            'fields' => $fields,
-        ]);
-
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $service->loadIdentifier('App.BarCode', [
+        $passwordIdentifier = [
+            'Authentication.Password' => [
                 'resolver' => $ormResolver,
-            ]);
-        }
+                'fields' => $fields,
+            ],
+        ];
 
         $isApiRequest = in_array($request->getUri()->getPath(), $this->getApiUrls());
         if ($isApiRequest) {
@@ -271,6 +267,7 @@ class Application extends BaseApplication
                 'resolver' => $ormResolver,
                 'fields' => $fields,
                 'realm' => $request->getServerParams()['SERVER_NAME'] ?? 'FCS',
+                'identifier' => $passwordIdentifier,
             ]);
             return $service;
         }
@@ -278,11 +275,24 @@ class Application extends BaseApplication
         $service->loadAuthenticator('Authentication.Session', [
             'fields' => [AbstractIdentifier::CREDENTIAL_USERNAME => 'email'],
             'identify' => true,
+            'identifier' => $passwordIdentifier,
         ]);
 
         $service->loadAuthenticator('App.AppForm', [
             'loginUrl' => Configure::read('app.slugHelper')->getLogin(),
+            'identifier' => $passwordIdentifier,
         ]);
+
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $service->loadAuthenticator('App.AppBarCodeForm', [
+                'loginUrl' => Configure::read('app.slugHelper')->getLogin(),
+                'identifier' => [
+                   'App.BarCode' => [
+                        'resolver' => $ormResolver,
+                    ],
+                ],
+            ]);
+        }
 
         $service->loadAuthenticator('Authentication.Cookie', [
             'fields' => $fields,
@@ -290,6 +300,7 @@ class Application extends BaseApplication
             'cookie' => [
                 'expires' => new DateTime('+30 day'),
             ],
+            'identifier' => $passwordIdentifier,
         ]);
 
         return $service;

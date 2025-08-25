@@ -1852,7 +1852,7 @@ msgstr "amount"
 msgid "price"
 msgstr "price"
 
-msgid "Add_product"
+msgid "Add product"
 msgstr "Add product"
 
 msgid "Synchronize_products"
@@ -2211,9 +2211,6 @@ msgstr "Define as new default attribute"
 
 msgid "change_category"
 msgstr "change category"
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Category \"all products\" is missing!"
 
 msgid "product_preview"
 msgstr "product preview"

@@ -34,7 +34,7 @@ class SyncProductsTable extends AppTable
         ]);
     }
 
-    public function addDashSeparatedProductIds($syncProducts): SelectQuery
+    public function addDashSeparatedProductIds(SelectQuery $syncProducts): SelectQuery
     {
         foreach ($syncProducts as $syncProduct) {
             $remoteProductId = $syncProduct->remote_product_id;
@@ -52,13 +52,13 @@ class SyncProductsTable extends AppTable
         return $syncProducts;
     }
 
-    public function findAllSyncProducts($manufacturerId): SelectQuery
+    public function findAllSyncProducts(int $manufacturerId): SelectQuery
     {
         $syncProducts = $this->find('all',
         conditions: [
             'SyncProducts.sync_domain_id > 0',
             'SyncDomains.active' => APP_ON,
-            'Products.id_manufacturer' => $manufacturerId
+            'Products.id_manufacturer' => $manufacturerId,
         ],
         contain: [
             'SyncDomains',

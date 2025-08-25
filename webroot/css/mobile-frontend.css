@@ -225,9 +225,9 @@
     }
     #responsive-header .sb-toggle-left {
         float: left ! important;
-        margin: 12px 8px 5px 3px ! important;
+        margin: 12px 8px 5px 0 ! important;
         text-align: center;
-        width: 25px;
+        width: 32px;
     }
     #responsive-header .open-with-modal {
         float: right ! important;

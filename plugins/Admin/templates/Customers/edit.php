@@ -158,6 +158,11 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         'escape' => false,
     ]);
 }
+echo $this->Form->control('Customers.send_cancellation_email', [
+    'label' => __d('admin', 'Cancellations').'<span class="after small">'.__d('admin', 'I want to receive an email on every cancellation.').'</span>',
+    'type' => 'checkbox',
+    'escape' => false,
+]);
 
 if ($this->Html->paymentIsCashless()) {
     echo $this->Form->control('Customers.check_credit_reminder_enabled', [

@@ -45,19 +45,19 @@ trait GetOrderListTrait
     protected function getOrderList(string $type, OrderListByProductPdfWriterService|OrderListByCustomerPdfWriterService $pdfWriter)
     {
 
-        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $manufacturerId = (int) h($this->getRequest()->getQuery('manufacturerId'));
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all', conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ])->first();
 
         if (!in_array('isAnonymized', array_keys($this->getRequest()->getQueryParams()))) {
-            $isAnonymized = $manufacturer->anonymize_customers;
+            $isAnonymized = (bool) $manufacturer->anonymize_customers;
         } else {
-            $isAnonymized = h($this->getRequest()->getQuery('isAnonymized'));
+            $isAnonymized = (bool) h($this->getRequest()->getQuery('isAnonymized'));
         }
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
@@ -88,7 +88,7 @@ trait GetOrderListTrait
 
     }
 
-    private function getOrderListFilenameForWriteInline($manufacturerId, $manufacturerName, $pickupDay, $type): string
+    private function getOrderListFilenameForWriteInline(int $manufacturerId, string $manufacturerName, string $pickupDay, string $type): string
     {
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
         $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists, false);

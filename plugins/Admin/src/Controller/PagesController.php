@@ -7,6 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
+use App\Model\Entity\Page;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -48,12 +49,8 @@ class PagesController extends AdminAppController
         }
     }
 
-    public function edit($pageId): void
+    public function edit(int $pageId): void
     {
-        if ($pageId === null) {
-            throw new NotFoundException;
-        }
-
         $pagesTable = $this->getTableLocator()->get('Pages');
         $page = $pagesTable->find('all', conditions: [
             $pagesTable->aliasField('id_page') => $pageId,
@@ -78,7 +75,7 @@ class PagesController extends AdminAppController
         $this->_processForm($page, true);
     }
 
-    private function _processForm($page, $isEditMode): void
+    private function _processForm(Page $page, bool $isEditMode): void
     {
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/pages",

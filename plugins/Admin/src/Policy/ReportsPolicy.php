@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Policy;
 
+use App\Model\Entity\Payment;
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
@@ -32,7 +33,7 @@ class ReportsPolicy implements RequestPolicyInterface
             return false;
         }
 
-        if (isset($request->getParam('pass')[0]) && $request->getParam('pass')[0] == 'deposit') {
+        if (isset($request->getParam('pass')[0]) && $request->getParam('pass')[0] == Payment::TYPE_DEPOSIT) {
             // allow deposit for cash configuration
             return $identity->isSuperadmin();
         }

@@ -27,19 +27,28 @@ trait GetInvoiceTrait
     /** @phpstan-ignore-next-line */
     public function getInvoice()
     {
-        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $manufacturerId = (int) h($this->getRequest()->getQuery('manufacturerId'));
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all', conditions: [
-            'Manufacturers.id_manufacturer' => $manufacturerId
+            'Manufacturers.id_manufacturer' => $manufacturerId,
         ])->first();
 
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoiceToManufacturerPdfWriterService();
-        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx', $manufacturer->anonymize_customers);
+        $pdfWriter->prepareAndSetData(
+            $manufacturerId,
+            $dateFrom,
+            $dateTo,
+            $newInvoiceNumber,
+            [],
+            '',
+            'xxx',
+            (bool) $manufacturer->anonymize_customers,
+        );
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }

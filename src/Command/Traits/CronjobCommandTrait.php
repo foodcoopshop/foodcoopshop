@@ -27,7 +27,7 @@ trait CronjobCommandTrait
 {
     public ?string $cronjobRunDay;
 
-    public function setCronjobRunDay(Arguments $args = null): void
+    public function setCronjobRunDay(Arguments $args): void
     {
         if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();

@@ -5,6 +5,8 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
+use App\Model\Entity\Customer;
+use Authentication\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,14 +24,14 @@ use Cake\View\Helper;
 class MenuHelper extends Helper
 {
 
-    public function render($array, $options): string
+    public function render(array $array, array $options): string
     {
         $tmpMenu = '<ul id="'.$options['id'].'" class="'.$options['class'].'">';
         if (!empty($options['header'])) {
             $tmpMenu .= '<li class="header">'.$options['header'].'</li>';
         }
         foreach ($array as $index => $item) {
-            $tmpMenu .= $this->buildMenuItem($item, $index);
+            $tmpMenu .= $this->buildMenuItem($item);
         }
         if (!empty($options['footer'])) {
             $tmpMenu .= '<li class="footer">'.$options['footer'].'</li>';
@@ -38,7 +40,7 @@ class MenuHelper extends Helper
         return $tmpMenu;
     }
 
-    public function buildPageMenu($pages): array
+    public function buildPageMenu(array $pages): array
     {
 
         $menu = [];
@@ -71,7 +73,7 @@ class MenuHelper extends Helper
         return $menu;
     }
 
-    private function buildMenuItem($item, $index): string
+    private function buildMenuItem(array $item): string
     {
 
         $liClass = [];
@@ -92,7 +94,7 @@ class MenuHelper extends Helper
             if (!empty($item['children'])) {
                 $tmpMenuItem .= '<ul>';
                 foreach ($item['children'] as $index => $child) {
-                    $tmpMenuItem .= $this->buildMenuItem($child, $index);
+                    $tmpMenuItem .= $this->buildMenuItem($child);
                 }
                 $tmpMenuItem .= '</ul>';
             }
@@ -102,7 +104,7 @@ class MenuHelper extends Helper
         return $tmpMenuItem;
     }
 
-    private function renderMenuElement($slug, $name, $style = '', $class = [], $fontAwesomeIconClass = ''): string
+    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = ''): string
     {
 
         if ($style != '') {
@@ -131,7 +133,7 @@ class MenuHelper extends Helper
             $class[] = 'has-icon';
         }
 
-        $fontAwesomeIconString = '<i class="fas ' . ($fontAwesomeIconClass ?? '') . '"></i>';
+        $fontAwesomeIconString = '<i class="fas ' . $fontAwesomeIconClass . '"></i>';
 
         if (preg_match('/far /', $fontAwesomeIconClass)) {
             $fontAwesomeIconString = str_replace('fas ', 'far ', $fontAwesomeIconString);
@@ -147,7 +149,7 @@ class MenuHelper extends Helper
         return $naviElement;
     }
 
-    public function getAuthMenuElement($identity): array
+    public function getAuthMenuElement(?IdentityInterface $identity): array
     {
         $menuElement = [];
         if ($identity !== null) {
@@ -182,7 +184,7 @@ class MenuHelper extends Helper
         return [];
     }
 
-    public function getMyFeedbackMenuElement($identity): array
+    public function getMyFeedbackMenuElement(?IdentityInterface $identity): array
     {
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null) {
             return [
@@ -262,7 +264,7 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getCustomerMenuElements($identity): array
+    public function getCustomerMenuElements(Customer|IdentityInterface|null $identity): array
     {
 
         $menu = [];

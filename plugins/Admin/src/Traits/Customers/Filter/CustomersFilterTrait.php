@@ -6,7 +6,6 @@ namespace Admin\Traits\Customers\Filter;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,9 +24,9 @@ use Cake\ORM\Query\SelectQuery;
 trait CustomersFilterTrait 
 {
 
-    public function getDefaultYear(): string
+    public function getDefaultYear(): int
     {
-        return date('Y');
+        return (int) date('Y');
     }
 
     public function getDefaultActive(): int
@@ -35,12 +34,12 @@ trait CustomersFilterTrait
         return APP_ON;
     }
 
-    public function getDefaultNewsletter(): string
+    public function getDefaultNewsletter(): null
     {
-        return '';
+        return null;
     }
 
-    public function getCustomers($active, $year, $newsletter): array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): array
     {
 
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -53,7 +52,7 @@ trait CustomersFilterTrait
             $conditions['Customers.active'] = $active;
         }
 
-        if ($newsletter != '') {
+        if ($newsletter !== null) {
             $conditions['Customers.newsletter_enabled'] = $newsletter;
         }
 

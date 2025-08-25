@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
@@ -105,8 +106,8 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
     ]);
 }
 
-if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl()) {
-    $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl()) {
+    $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true, 2);
     if ($manufacturerNoDeliveryDaysString != '') {
         echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
     }

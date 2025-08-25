@@ -62,12 +62,15 @@ body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
 }
 .sb-toggle-left {
     float: left;
-    margin: 0 5px 0 0;
+    margin: 0;
     border-radius: 3px;
-    padding: 2px 5px 0px 5px;
+    padding: 2px 1px 1px 1px;
     background: #fff;
-    width: 36px;
+    width: 34px;
     text-align: center;
+}
+.sb-toggle-left i {
+    width: auto;
 }
 .sb-left img.logo {
     width: 80%;
@@ -150,5 +153,8 @@ table.list tr.fake-th td {
     width: 100% ! important;
 }
 body.feedbacks textarea {
+    width: 100%;
+}
+ul.nav-tabs {
     width: 100%;
 }

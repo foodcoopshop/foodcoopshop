@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Services\ProductsForBackendService;
 use App\Services\PdfWriter\ProductCardsPdfWriterService;
 use Cake\Core\Configure;
 
@@ -33,12 +34,13 @@ trait GenerateProductCardsTrait
         $productIds = explode(',', $productIds);
 
         $productsTable = $this->getTableLocator()->get('Products');
-        $products = $productsTable->getProductsForBackend(
+        $productsForBackendService = new ProductsForBackendService();
+        $query = $productsForBackendService->getQuery(
             productIds: $productIds,
             manufacturerId: 'all',
-            addProductNameToAttributes: true,
             active: 'all',
         );
+        $products = $productsForBackendService->getPreparedProducts($query, true);
 
         $preparedProducts = [];
         foreach($products as &$product) {
@@ -58,7 +60,7 @@ trait GenerateProductCardsTrait
                     $product->name = $product->nameForBarcodePdf;
                 }
             }
-            if (!$productsTable->isMainProduct($product)) {
+            if ($productsTable->isMainProduct($product)) {
                 $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;

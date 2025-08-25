@@ -24,7 +24,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait ChangeStatusTrait
 {
 
-    public function changeStatus($customerId, $status, $sendEmail): void
+    public function changeStatus(int $customerId, int $status, bool $sendEmail): void
     {
         if (! in_array($status, [
             APP_OFF,
@@ -36,7 +36,7 @@ trait ChangeStatusTrait
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all',
         conditions: [
-            'Customers.id_customer' => $customerId
+            'Customers.id_customer' => $customerId,
         ],
         contain: [
             'AddressCustomers'

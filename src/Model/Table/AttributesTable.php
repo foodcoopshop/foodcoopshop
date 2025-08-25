@@ -30,6 +30,7 @@ class AttributesTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_attribute');
         $this->addBehavior('Timestamp');
+        $this->getSchema()->setColumnType('can_be_used_as_unit', 'boolean');
     }
 
     public function validationDefault(Validator $validator): Validator

@@ -217,6 +217,9 @@ msgstr "Neue Produkte"
 msgid "Random_products"
 msgstr "Bunt gemischt"
 
+msgid "Here you can find randomly selected products."
+msgstr "Hier werden zufällig ausgewählte Produkte angezeigt."
+
 msgid "Show_only_products_for_next_week"
 msgstr "Nur Produkte für diese Woche anzeigen"
 
@@ -664,6 +667,9 @@ msgstr "Warum werden die Produkte storniert (Pflichtfeld)?"
 msgid "Yes_do_cancel_button!"
 msgstr "Ja, stornieren!"
 
+msgid "Copy"
+msgstr "Kopieren"
+
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 
@@ -826,6 +832,21 @@ msgstr "Möchtest du das Produkt wirklich löschen?"
 msgid "Errors_occurred_while_product_was_deleted"
 msgstr "Beim Löschen des Produktes sind Fehler aufgetreten"
 
+msgid "Copy product?"
+msgstr "Produkt kopieren?"
+
+msgid "Really copy product {0}?"
+msgstr "Möchtest du das Produkt {0} wirklich kopieren?"
+
+msgid "Amount of copies:"
+msgstr "Anzahl der Kopien:"
+
+msgid "{0}/{1} products selected"
+msgstr "{0}/{1} Produkte ausgewählt"
+
+msgid "Errors occurred while product was copied"
+msgstr "Beim Kopieren des Produktes sind Fehler aufgetreten"
+
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
 
@@ -861,6 +882,15 @@ msgstr "Der Benutzer muss sich nach der Änderung neu einloggen."
 
 msgid "Member"
 msgstr "Mitglied"
+
+msgid "Order state"
+msgstr "Bestellstatus"
+
+msgid "Cart type"
+msgstr "Bestell-Typ"
+
+msgid "Order date"
+msgstr "Bestelldatum"
 
 msgid "Why_is_pickup_day_changed_(optional_field)?"
 msgstr "Warum wird der Abholtag geändert (optional)?"
@@ -1388,6 +1418,9 @@ msgstr "Produkt: Lieferrhythmus geändert"
 msgid "Action_Log_Product_deleted"
 msgstr "Produkt: gelöscht"
 
+msgid "Action Log Product copied"
+msgstr "Produkt: kopiert"
+
 msgid "Action_Log_Order_status_changed"
 msgstr "Bestellung: Status geändert"
 
@@ -1507,6 +1540,15 @@ msgstr "Slideshow-Bild: geändert"
 
 msgid "Action_Log_Slider_deleted"
 msgstr "Slideshow-Bild: gelöscht"
+
+msgid "Action_Log_Storage_location_added"
+msgstr "Lagerort: erstellt"
+
+msgid "Action_Log_Storage_location_changed"
+msgstr "Lagerort: geändert"
+
+msgid "Action_Log_Storage_location_deleted"
+msgstr "Lagerort: gelöscht"
 
 msgid "Action_Log_Tax_rate_added"
 msgstr "Steuersatz: erstellt"
@@ -1652,6 +1694,9 @@ msgstr "Bitte gib einen Namen ein."
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "Eine Variante mit dem Namen existiert bereits."
 
+msgid "A storage location with this name already exists."
+msgstr "Ein Lagerort mit diesem Namen existiert bereits."
+
 msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
 msgstr "Die Länge des Barcodes muss genau {0} Zeichen betragen."
 
@@ -1700,8 +1745,8 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Bitte gibt eine gültige Internet-Adresse an."
 
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen)."
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma."
+msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen."
 
 msgid "Decimals_are_not_allowed."
 msgstr "Kommastellen sind nicht zulässig."
@@ -1829,8 +1874,8 @@ msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
-msgid "The_date_must_not_be_a_future_date."
-msgstr "Das Datum darf nicht in der Zukunft liegen."
+msgid "The date has a wrong format is in the past."
+msgstr "Das Datum ist ungültig oder liegt in der Zukunft."
 
 msgid "Please_enter_a_correct_amount."
 msgstr "Bitte gib einen korrekten Betrag ein."
@@ -2081,6 +2126,9 @@ msgstr "Bruttopreis"
 msgid "Tax_rate"
 msgstr "Steuersatz"
 
+msgid "Storage locations"
+msgstr "Lagerorte"
+
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
 
@@ -2251,6 +2299,9 @@ msgstr "Gelöschte E-Mail-Adresse"
 
 msgid "{0}_further_delivery_breaks"
 msgstr "{0} weitere Lieferpausen"
+
+msgid "{0} further days"
+msgstr "{0} weiteren Tagen"
 
 msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr "Der Hersteller {0} hat am {1} Lieferpause."
@@ -3054,7 +3105,7 @@ msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
 msgstr "Wer soll bei neuen Registrierungen informiert werden?"
 
 msgid "Configuration_subtext_FCS_REGISTRATION_NOTIFICATION_EMAILS"
-msgstr "Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen."
+msgstr "Mehrere E-Mail-Adressen mit Komma trennen."
 
 msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
 msgstr "Selbstbedienungs-Modus für Lagerprodukte aktiv?"
@@ -3160,3 +3211,12 @@ msgstr "Filter \"Nur Produkte für diese Woche anzeigen?\" aktiv?"
 
 msgid "Configuration_subtext_FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED"
 msgstr "Der Filter wird überhalb der Produkt-Kategorien im Produktkatalog (beim Bestellen) angezeigt; empfehlenswert bei vielen Produkten mit mehrwöchigen Lieferrhythmus."
+
+msgid "Minimum order value not reached"
+msgstr "Mindestbestellwert nicht erreicht"
+
+msgid "Minimal order value"
+msgstr "Mindestbestellwert"
+
+msgid "If this sum of all orders for a given period is less, products are automatically cancelled and no order list is sent."
+msgstr "Wenn dieser Wert nicht erreicht wird, werden die Produkte automatisch storniert und keine Bestellliste versendet."
