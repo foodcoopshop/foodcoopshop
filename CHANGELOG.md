@@ -26,6 +26,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen für den Selbstbedienungs-Modus
 - Die Validerung des Lagerstandes kann jetzt deaktiviert werden. (`app.selfServiceIsAmountValidationEnabled`) [I#1129](https://github.com/foodcoopshop/foodcoopshop/issues/1129) / [PR#1132](https://github.com/foodcoopshop/foodcoopshop/pull/1132) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 - Der Pfand-Betrag bei Produkten kann jetzt auch ein negativer Wert sein. Das erleichtert das Handling von Pfand-Rückgaben im Selbstbedienungs-Modus, da ab sofort Produkte mit Preis=0 und eben negativem Pfand angelegt werden können. [I#1161](https://github.com/foodcoopshop/foodcoopshop/issues/1161) / [PR#1165](https://github.com/foodcoopshop/foodcoopshop/pull/1165) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+- Kleinere Verbesserungen beim Verwenden der SB-Login-Buttons. [I#1117](https://github.com/foodcoopshop/foodcoopshop/issues/1117) / [PR#1131](https://github.com/foodcoopshop/foodcoopshop/pull/1131) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 
 ## v4.1.1
 
