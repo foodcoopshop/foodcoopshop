@@ -298,6 +298,9 @@ msgstr "I accept the general terms and rights of withdrawal and choose following
 msgid "Confirm_self_service_purchase_button"
 msgstr "Confirm order and pay"
 
+msgid "Confirm_self_service_purchase_completed_button"
+msgstr "Order was payed"
+
 msgid "Deny_self_service_purchase_button"
 msgstr "Deny order"
 
