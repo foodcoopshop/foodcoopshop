@@ -245,18 +245,15 @@ class CartsController extends FrontendController
     {
         $cartBeforeEmpty = $this->identity->getCart();
 
-        if (count($cartBeforeEmpty) > 0) {
-            $isAutoLogout = $this->getRequest()->getQuery('autologout') == '1' || $this->getRequest()->getData('autologout') == '1';
+        if (!$this->identity->isCartEmpty()) {
+            $isAutoLogout = $this->getRequest()->getQuery('autologout') == '1';
        
             if ($isAutoLogout) {
-               $isSelfServiceMode = OrderCustomerService::isSelfServiceMode();
-               $isSelfServiceCustomer = $this->identity->isSelfServiceCustomer();
-
-               if ($isSelfServiceMode && $isSelfServiceCustomer) {
+               if (OrderCustomerService::isSelfServiceMode() && $this->identity->isSelfServiceCustomer()) {
                    $this->sendAutoLogoutEmptyCartEmailToCustomerSelfService($cartBeforeEmpty);
                    $this->doEmptyCart();
                }
-               } else {
+            } else {
                 $this->doEmptyCart();
                 $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
                 $this->Flash->success($message);

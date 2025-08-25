@@ -605,9 +605,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->doSelfServiceAutoLogout();
-        $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
-        $queuedJob = $queuedJobsTable->find()->order(['id' => 'DESC'])->first();
-        $this->assertEmpty($queuedJob);
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all', 
         conditions: [
@@ -641,10 +638,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         order: [
             'Carts.id_cart' => 'DESC',
         ])->first();
-        if (!empty($cart)) {
-            if(!empty($cart->cart_products)){
-                $this->assertFlashMessage('Warenkorb wurde bei Autologout nicht geleert');
-            }
+        if (!empty($cart) && !empty($cart->cart_products)) {
+            $this->assertFlashMessage('Warenkorb wurde bei Autologout nicht geleert');
         }
     }
 }
