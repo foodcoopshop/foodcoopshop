@@ -29,7 +29,7 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     $priceColspan++;
 }
 $columns[] = __('Price');
-if ($depositSum > 0) {
+if ($depositSum != 0) {
     $columns[] = __('Deposit');
 }
 
@@ -113,10 +113,10 @@ if ($depositSum > 0) {
                 ?>
             </td>
 
-            <?php if ($depositSum > 0) { ?>
+            <?php if ($depositSum != 0) { ?>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php
-                        if ($product['deposit'] > 0) {
+                        if ($product['deposit'] != 0) {
                             echo $this->MyNumber->formatAsCurrency($product['deposit']);
                         }
                     ?>
@@ -127,13 +127,13 @@ if ($depositSum > 0) {
 
     <?php } ?>
 
-    <?php if ($depositSum > 0) { ?>
+    <?php if ($depositSum != 0) { ?>
         <tr>
             <td style="border:1px solid #d6d4d4;" colspan="<?php echo $priceColspan; ?>"></td>
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
-                if ($depositSum > 0) {
+                if ($depositSum != 0) {
                     echo $this->MyNumber->formatAsCurrency($depositSum);
                 }
                 ?>
@@ -144,7 +144,7 @@ if ($depositSum > 0) {
     <tr>
         <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="<?php echo $beforeTotalPriceColspan; ?>"></td>
         <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;"><?php echo __('Total'); ?></td>
-        <td align="<?php echo ($depositSum > 0 ? 'center' : 'right'); ?>" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="<?php echo ($depositSum > 0 ? 2 : 1); ?>">
+        <td align="<?php echo ($depositSum != 0 ? 'center' : 'right'); ?>" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="<?php echo ($depositSum != 0 ? 2 : 1); ?>">
             <?php
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
             ?>

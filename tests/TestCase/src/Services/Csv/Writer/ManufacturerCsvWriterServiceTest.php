@@ -15,8 +15,8 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use League\Csv\Writer;
 use App\Services\Csv\Writer\ManufacturerCsvWriterService;
+use League\Csv\Bom;
 
 class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
 {
@@ -33,7 +33,7 @@ class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
         $lines  = explode("\n", $result);
 
         $this->assertEquals(6, count($lines));
-        $this->assertEquals(Writer::BOM_UTF8 . $this->defaultHeader, $lines[0]);
+        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader, $lines[0]);
         
         $this->assertEquals('4;"Demo Fleisch-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-fleisch-hersteller@mailinator.com;1;;0;0;', $lines[1]);
         $this->assertEquals('5;"Demo Gemüse-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-gemuese-hersteller@mailinator.com;1;0,50;1;0;"Demo Admin"', $lines[2]);

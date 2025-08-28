@@ -29,10 +29,13 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 }
 ?>
 <div id="login-form" class="form">
-
-    <h1><?php echo $title_for_layout; ?></h1>
-
-    <?php
+<?php
+    $hasSelfServiceLoginCustomers = !empty(Configure::read('app.selfServiceLoginCustomers'));
+    if (!$hasSelfServiceLoginCustomers) {
+        ?>
+        <h1><?php echo $title_for_layout; ?></h1>
+        <?php
+    }
 
 if ($this->getRequest()->is('get')) {
     if ($identity !== null) {
@@ -58,17 +61,13 @@ if ($this->getRequest()->is('get')) {
 }
 
     if ($enableSelfServiceLoginAsCustomerButton) {
-        $selfServiceLoginCustomers = Configure::read('app.selfServiceLoginCustomers');
-        if (!empty($selfServiceLoginCustomers)) {
+        if ($hasSelfServiceLoginCustomers) {
             echo '<div class="self-service-login-button-wrapper">';
-                $hasMulipleButtons = count($selfServiceLoginCustomers) > 1;
-                if ($hasMulipleButtons) {
-                    echo '<h7>' . __('Start_self_service') . '</h7>';
-                    echo '</br>';
-                    echo '</br>';
-                }
+                echo '<h7>' . __('Start_self_service') . '</h7>';
+                echo '</br>';
+                echo '</br>';
                 $buttonHtml = '';
-                foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
+                foreach(Configure::read('app.selfServiceLoginCustomers') as $selfServiceLoginCustomer) {
                     $buttonHtml .= $this->Html->link(
                         '<i class="fas fa-sign-in-alt"></i> ' . $selfServiceLoginCustomer['label'],
                         $this->Slug->getAutoLoginAsSelfServiceCustomer($selfServiceLoginCustomer['id']),
@@ -80,7 +79,9 @@ if ($this->getRequest()->is('get')) {
                     );
                 }
             echo '</div>';
-            echo '</br>';
+            echo '<div class="self-service-click-image">';
+            if(!$isMobile){echo '<i class="fa-solid fa-hand-point-up fa-beat"></i>';}
+            echo '</div>';
             echo '<h6>' . __('For_self_service_with_account') . '</h6>';
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace').".SelfService.injectLoginButtons('".base64_encode($buttonHtml)."');"

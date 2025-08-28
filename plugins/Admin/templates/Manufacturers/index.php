@@ -184,7 +184,7 @@ foreach ($manufacturers as $manufacturer) {
                 $depositCreditBalanceHtml,
                 $this->Slug->getDepositList($manufacturer->id_manufacturer),
                 [
-                    'class' => 'btn btn-outline-light',
+                    'class' => 'btn btn-outline-light with-text',
                     'title' => __d('admin', 'Show_deposit_account'),
                     'escape' => false
                 ]

@@ -28,7 +28,7 @@ class ConfigurationsPolicy implements RequestPolicyInterface
     {
         return match($request->getParam('action')) {
            'changelog' => $identity !== null,
-            default => $identity->isSuperadmin(),
+            default => $identity !== null && $identity->isSuperadmin(),
         };
     }
 
