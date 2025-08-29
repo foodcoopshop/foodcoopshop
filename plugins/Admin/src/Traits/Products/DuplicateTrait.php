@@ -5,7 +5,10 @@ namespace Admin\Traits\Products;
 
 use App\Model\Entity\Product;
 use App\Model\Entity\PurchasePriceProduct;
+use App\Model\Table\AttributesTable;
 use App\Model\Table\DepositProductsTable;
+use App\Model\Table\ProductAttributeCombinationsTable;
+use App\Model\Table\ProductAttributesTable;
 use App\Model\Table\PurchasePriceProductsTable;
 use App\Model\Table\StockAvailablesTable;
 use App\Model\Table\UnitProductsTable;
@@ -56,13 +59,19 @@ trait DuplicateTrait
             'CategoryProducts' => [],
         ];
 
-        $srcProducts = $productsTable->find('all',
-            conditions: [
-                $productsTable->aliasField('id_product IN') => $productIds,
-            ],
-            contain: array_keys($associations),
-        );
-
+        $srcProducts = [];
+        foreach ($productIds as $productId) {
+            $srcProduct = $productsTable->find('all',
+                conditions: [
+                    $productsTable->aliasField('id_product IN') => $productId,
+                ],
+                contain: array_keys($associations),
+            );
+            if ($srcProduct->count() > 1) {
+                continue;
+            }
+            $srcProducts[] = $srcProduct;
+        }
 
         foreach ($srcProducts as $srcProduct) {
             $preExistingCopies = $productsTable->find('all',
@@ -70,42 +79,19 @@ trait DuplicateTrait
                     $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
                         $srcProduct->name,
                         '%',
-                    ])
+                    ]),
+                    'NOT active IN' => APP_DEL,
                 ],
             );
             $amountOfPreCopies = $preExistingCopies->count() + 1;
 
             for ($i = 0; $i < $copyAmount; $i++) {
-                $copy = $this->deepCopyProduct($srcProduct, $associations, $amountOfPreCopies + $i);
+                $copy = $this->deepCopyProduct($srcProduct, $associations, ($amountOfPreCopies + $i));
 
-                /** @var Product $copy */
                 $copy = $productsTable->save($copy);
                 $copies[] = $copy;
 
-                $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
-                $srcPurchasePrice = $purchasePriceProductTable->find('all',
-                    conditions: [
-                        $purchasePriceProductTable->getPrimaryKey() => $srcProduct->toArray()['id_product']
-                    ],
-                )->first();
-
-                if (!$srcPurchasePrice instanceof PurchasePriceProduct) {
-                    continue;
-                }
-
-                $copyPurchasePriceData = $srcPurchasePrice->toArray();
-
-                unset($copyPurchasePriceData[PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY]);
-                $copyPurchasePriceData[$purchasePriceProductTable->getPrimaryKey()] = $copy->id_product;
-
-                $purchasePriceCopy = new Entity(
-                    $copyPurchasePriceData,
-                    [
-                        'validate' => false,
-                    ]
-                );
-
-                $purchasePriceProductTable->save($purchasePriceCopy);
+                $this->checkPurchasePrices($srcProduct, $copy);
             }
         }
 
@@ -130,6 +116,34 @@ trait DuplicateTrait
         return null;
     }
 
+    public function checkPurchasePrices(mixed $srcProduct, mixed $copy)
+    {
+        $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
+        $srcPurchasePrice = $purchasePriceProductTable->find('all',
+            conditions: [
+                $purchasePriceProductTable->getPrimaryKey() => $srcProduct->toArray()['id_product']
+            ],
+        )->first();
+
+        if (!$srcPurchasePrice instanceof PurchasePriceProduct) {
+            return;
+        }
+
+        $copyPurchasePriceData = $srcPurchasePrice->toArray();
+
+        unset($copyPurchasePriceData[PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY]);
+        $copyPurchasePriceData[$purchasePriceProductTable->getPrimaryKey()] = $copy->id_product;
+
+        $purchasePriceCopy = new Entity(
+            $copyPurchasePriceData,
+            [
+                'validate' => false,
+            ]
+        );
+
+        $purchasePriceProductTable->save($purchasePriceCopy);
+    }
+
     function deepCopyProduct(Product $srcProduct, array $associations, int $copyIndex): EntityInterface
     {
         $productsTable = $this->getTableLocator()->get('Products');
@@ -137,34 +151,9 @@ trait DuplicateTrait
         $product = $srcProduct->toArray();
         unset($product[$productsTable->getPrimaryKey()]);
 
-        foreach ($associations as $associationName => $options) {
+        $product = $this->removeAssociationKeysFromProduct($associations, $product);
 
-            $primaryKey = $this->getTableLocator()->get($associationName)->getPrimaryKey();
-            if (isset($options['primaryKey'])) {
-                $primaryKey = $options['primaryKey'];
-            }
-
-            $tableAssociationName = Inflector::tableize($associationName);
-            $tableAssociationName = Inflector::singularize($tableAssociationName);
-
-            if ($this->isAssociationNamePlural($tableAssociationName, $product)) {
-                $tableAssociationName = Inflector::pluralize($tableAssociationName);
-                $product[$tableAssociationName] = $this->removeHasManyAssociationKeys($product[$tableAssociationName]);
-                continue;
-            }
-
-            $product[$tableAssociationName] = $this->removeHasOneAssociationKeys($product[$tableAssociationName], $primaryKey);
-        }
-
-        $product['name'] = __d('admin', '{0} - copy {1}', [
-            $srcProduct->name,
-            $copyIndex,
-        ]);
-        unset($product['modified']);
-        unset($product['created']);
-
-        $product['new'] = DateTime::now();
-        $product['active'] = APP_OFF;
+        $product = $this->configureCopy($srcProduct, $copyIndex, $product);
 
         $associationWithValidation = array_fill_keys(
             array_keys($associations),
@@ -209,9 +198,47 @@ trait DuplicateTrait
         foreach ($associatedTable as $association) {
             // tests would also pass like that:
             //unset($association['id_product']);
-            unset($association['id_product'], $associatedTable['product_id']);
+            unset($association['id_product'], $association['product_id']);
         }
 
         return $associatedTable;
     }
+
+    public function removeAssociationKeysFromProduct(array $associations, array $product): array
+    {
+        foreach ($associations as $associationName => $options) {
+
+            $primaryKey = $this->getTableLocator()->get($associationName)->getPrimaryKey();
+            if (isset($options['primaryKey'])) {
+                $primaryKey = $options['primaryKey'];
+            }
+
+            $tableAssociationName = Inflector::tableize($associationName);
+            $tableAssociationName = Inflector::singularize($tableAssociationName);
+
+            if ($this->isAssociationNamePlural($tableAssociationName, $product)) {
+                $tableAssociationName = Inflector::pluralize($tableAssociationName);
+                $product[$tableAssociationName] = $this->removeHasManyAssociationKeys($product[$tableAssociationName]);
+                continue;
+            }
+
+            $product[$tableAssociationName] = $this->removeHasOneAssociationKeys($product[$tableAssociationName], $primaryKey);
+        }
+        return $product;
+    }
+
+    public function configureCopy(Product $srcProduct, int $copyIndex, array $product): array
+    {
+        $product['name'] = __d('admin', '{0} - copy {1}', [
+            $srcProduct->name,
+            $copyIndex,
+        ]);
+        unset($product['modified']);
+        unset($product['created']);
+
+        $product['new'] = DateTime::now();
+        $product['active'] = APP_OFF;
+        return $product;
+    }
+
 }
