@@ -63,7 +63,7 @@ trait DuplicateTrait
         foreach ($productIds as $productId) {
             $srcProduct = $productsTable->find('all',
                 conditions: [
-                    $productsTable->aliasField('id_product IN') => $productId,
+                    $productsTable->aliasField('id_product') => $productId,
                 ],
                 contain: array_keys($associations),
             );
