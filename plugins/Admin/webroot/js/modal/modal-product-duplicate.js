@@ -35,7 +35,7 @@ foodcoopshop.ModalProductDuplicate = {
                 var hasAttributes = foodcoopshop.Admin.hasProductAttributes(productRow);
 
                 if (hasAttributes) {
-                    productNamesWithAttributes.push($('tr#product-' + productId + ' span.product-name').html())
+                    productNamesWithAttributes.push($('tr#product-' + productId + ' span.product-name').html());
                 } else {
                     productNames.push($('tr#product-' + productId + ' span.product-name').html())
                 }
