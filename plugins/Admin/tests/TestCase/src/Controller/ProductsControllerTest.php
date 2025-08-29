@@ -827,7 +827,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($normalizedSrc, $normalizedCopy);
     }
 
-    public function testDuplicateProductAttribute()
+    public function testDuplicateProductAttribute(): void
     {
         $this->loginAsSuperadmin();
 
