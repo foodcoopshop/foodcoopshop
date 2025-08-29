@@ -37,7 +37,7 @@ foodcoopshop.ModalProductDuplicate = {
                 if (hasAttributes) {
                     productNamesWithAttributes.push($('tr#product-' + productId + ' span.product-name').html());
                 } else {
-                    productNames.push($('tr#product-' + productId + ' span.product-name').html())
+                    productNames.push($('tr#product-' + productId + ' span.product-name').html());
                 }
             }
             var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
