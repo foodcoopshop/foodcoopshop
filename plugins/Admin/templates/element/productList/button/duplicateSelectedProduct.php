@@ -20,10 +20,6 @@ if (empty($products)) {
     return false;
 }
 
-if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-    return false;
-}
-
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ModalProductDuplicate.init();"
 ]);
