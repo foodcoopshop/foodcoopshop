@@ -129,7 +129,7 @@ trait DuplicateTrait
         return null;
     }
 
-    public function checkPurchasePrices(mixed $srcProduct, mixed $copy)
+    public function checkPurchasePrices(mixed $srcProduct, mixed $copy): void
     {
         $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $srcPurchasePrice = $purchasePriceProductTable->find('all',
