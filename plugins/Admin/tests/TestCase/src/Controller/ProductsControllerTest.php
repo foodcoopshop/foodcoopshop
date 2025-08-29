@@ -724,17 +724,19 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $productId = 349;
+        $associations = [
+            'DepositProducts',
+            'UnitProducts',
+            'StockAvailables',
+            'CategoryProducts',
+        ];
+
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $srcProduct = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('id_product') => $productId,
             ],
-            contain: [
-                'DepositProducts',
-                'UnitProducts',
-                'StockAvailables',
-                'CategoryProducts',
-            ]
+            contain: $associations,
         )->first();
 
         $this->ajaxPost('/admin/products/duplicate',
@@ -751,12 +753,7 @@ class ProductsControllerTest extends AppCakeTestCase
                     '%',
                 ]),
             ],
-            contain: [
-                'DepositProducts',
-                'UnitProducts',
-                'StockAvailables',
-                'CategoryProducts',
-            ]
+            contain: $associations,
         );
 
         $this->assertGreaterThan(1, $copies->count());
@@ -779,6 +776,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $productId = 349;
+        $associations = [
+            'DepositProducts',
+            'UnitProducts',
+            'StockAvailables',
+            'CategoryProducts',
+            'PurchasePriceProducts',
+        ];
 
         $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $entity = $purchasePriceProductsTable->newEntity(
@@ -795,13 +799,7 @@ class ProductsControllerTest extends AppCakeTestCase
             conditions: [
                 $productsTable->aliasField('id_product') => $productId,
             ],
-            contain: [
-                'DepositProducts',
-                'UnitProducts',
-                'StockAvailables',
-                'CategoryProducts',
-                'PurchasePriceProducts',
-            ]
+            contain: $associations,
         )->first();
 
         $this->ajaxPost('/admin/products/duplicate',
@@ -817,22 +815,57 @@ class ProductsControllerTest extends AppCakeTestCase
                     '%',
                 ]),
             ],
-            contain: [
-                'DepositProducts',
-                'UnitProducts',
-                'StockAvailables',
-                'CategoryProducts',
-                'PurchasePriceProducts',
-            ]
+            contain: $associations,
         );
 
         $this->assertGreaterThan(1, $copies->count());
         $copy = $copies->first();
 
-        $normalizedSrc = $this->normalizeProductForComparison($srcProduct->toArray() );
+        $normalizedSrc = $this->normalizeProductForComparison($srcProduct->toArray());
         $normalizedCopy = $this->normalizeProductForComparison($copy->toArray());
 
-        $this->assertEquals($normalizedSrc, $normalizedCopy);    }
+        $this->assertEquals($normalizedSrc, $normalizedCopy);
+    }
+
+    public function testDuplicateProductAttribute()
+    {
+        $this->loginAsSuperadmin();
+
+        $productId = 348;
+        $associations = [
+            'DepositProducts',
+            'UnitProducts',
+            'StockAvailables',
+            'CategoryProducts',
+        ];
+
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $srcProduct = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('id_product') => $productId,
+            ],
+            contain: $associations,
+        )->first();
+
+        $this->ajaxPost('/admin/products/duplicate',
+            [
+                'productIds' => [$productId],
+                'copyAmount' => 2,
+            ],
+        );
+
+        $copies = $productsTable->find('all',
+            conditions: [
+                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                    $srcProduct->name,
+                    '%',
+                ]),
+            ],
+            contain: $associations,
+        );
+
+        $this->assertEquals(0, $copies->count());
+    }
 
     private function normalizeProductForComparison(array $product): array
     {

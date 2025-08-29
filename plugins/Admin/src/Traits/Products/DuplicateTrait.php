@@ -67,10 +67,24 @@ trait DuplicateTrait
                 ],
                 contain: array_keys($associations),
             );
+            // Product has Attributes
             if ($srcProduct->count() > 1) {
                 continue;
             }
-            $srcProducts[] = $srcProduct;
+            $srcProducts[] = $srcProduct->first();
+        }
+
+        if (count($srcProducts) === 0) {
+            $message = __d('admin', 'No copyable products were found.');
+
+            $this->Flash->success($message);
+
+            $this->set([
+                'status' => 1,
+                'msg' => 'ok',
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return null;
         }
 
         foreach ($srcProducts as $srcProduct) {
@@ -80,7 +94,7 @@ trait DuplicateTrait
                         $srcProduct->name,
                         '%',
                     ]),
-                    'NOT active IN' => APP_DEL,
+                    $productsTable->aliasField('active IN') => [APP_ON, APP_OFF],
                 ],
             );
             $amountOfPreCopies = $preExistingCopies->count() + 1;
@@ -94,7 +108,6 @@ trait DuplicateTrait
                 $this->checkPurchasePrices($srcProduct, $copy);
             }
         }
-
 
         $preparedProductForActionLog = [];
         foreach ($copies as $productCopy) {
