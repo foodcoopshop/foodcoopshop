@@ -27,22 +27,52 @@ foodcoopshop.ModalProductDuplicate = {
         button.on('click', function () {
 
             let productIds = foodcoopshop.Admin.getSelectedProductIds();
+            let productNames = [];
+            let productNamesWithAttributes = [];
+
+            for (const productId of productIds) {
+                var productRow = $('tr#product-' + productId);
+                var hasAttributes = foodcoopshop.Admin.hasProductAttributes(productRow);
+
+                if (hasAttributes) {
+                    productNamesWithAttributes.push($('tr#product-' + productId + ' span.product-name').html())
+                } else {
+                    productNames.push($('tr#product-' + productId + ' span.product-name').html())
+                }
+            }
             var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
 
-            let productNames = [];
-            for (const productId in productIds) {
-                productNames.push($('tr#product-' + productIds + ' span.product-name').html())
+            var html='';
+            if (productNamesWithAttributes.length > 0) {
+                html += '<p style="margin-bottom:0px;"><b>';
+                html += foodcoopshop.LocalizedJs.admin.AttributeInfo;
+                html += '</b></p>';
+
+                html += '<ul style="margin-bottom:15px;">';
+                for (const name in productNamesWithAttributes) {
+                    html += '<li><b>' + productNamesWithAttributes[name] + '</b></li>';
+                }
+                html += '</ul>';
             }
 
-            var html = '<p>';
-            if (productIds.length>1){
-                html += foodcoopshop.LocalizedJs.admin.ReallyCopyProductX;
-            }else {
-                html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct1;
-            }
-            html += '</p>';
+            if (productNames.length > 0) {
+                html += '<p style="margin-bottom:0px;">';
+                if (productNames.length > 1) {
+                    html += foodcoopshop.LocalizedJs.admin.ReallyCopyProductX;
+                } else {
+                    html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct1;
+                }
+                html += '</p>';
 
-            html += '<p style="margin-bottom:0;">' + foodcoopshop.LocalizedJs.admin.DataCopyInfo + '</p>';
+                html += '<ul style="margin-bottom:0px;">';
+                for (const name in productNames) {
+                    html += '<li><b>' + productNames[name] + '</b></li>';
+                }
+                html += '</ul>';
+            }
+
+
+            html += '<p style="margin-top:15px; margin-bottom:0;">' + foodcoopshop.LocalizedJs.admin.DataCopyInfo + '</p>';
             html += '<ul>';
             html += '<li>' + foodcoopshop.LocalizedJs.admin.CopiedData + '</li>';
             html += '</ul>';
@@ -68,7 +98,11 @@ foodcoopshop.ModalProductDuplicate = {
             html += '</div>';
 
             var buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.Copy, 'fas fa-check'),
+                foodcoopshop.Modal.createButton(
+                    productNames.length === 0 ? ['btn-success', 'disabled'] : ['btn-success'],
+                    foodcoopshop.LocalizedJs.admin.Copy,
+                    'fas fa-check'
+                ),
                 foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
 

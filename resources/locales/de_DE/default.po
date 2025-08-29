@@ -850,6 +850,9 @@ msgstr "Folgende Daten werden <b>nicht</b> kopiert:"
 msgid "Status of copy(s): <b>deactivated</b>"
 msgstr "Status der Kopie(n): <b>deaktiviert</b>"
 
+msgid "Products with attributes cannot be copied yet: "
+msgstr "Produkte mit Varianten können leider noch nicht kopiert werden: "
+
 msgid "Amount of copies:"
 msgstr "Anzahl der Kopien:"
 
