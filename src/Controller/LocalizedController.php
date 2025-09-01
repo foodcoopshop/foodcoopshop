@@ -129,7 +129,7 @@ class LocalizedController extends Controller
                 'showAllProducts' => __('Show_all_products')
             ],
             'admin' => [
-                'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
+                'routeCartFinished' => '/' . __('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
                 'PlaceOrderFor' => __('Place_order_for'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
@@ -215,7 +215,13 @@ class LocalizedController extends Controller
                 'ReallyDeleteOneProduct' => __('Really_delete_1_product?'),
                 'ErrorsOccurredWhileProductWasDeleted' => __('Errors_occurred_while_product_was_deleted'),
                 'CopyProduct' => __('Copy product?'),
-                'ReallyCopyProduct0' => __('Really copy product {0}?'),
+                'ReallyCopyProduct1' => __('Really copy product?'),
+                'ReallyCopyProductX' => __('Really copy products?'),
+                'DataNotCopyInfo' => __('The following data <b>won\'t</b> be copied:'),
+                'CopiedData' => __('Categories') . ', ' . __('Descriptions') . ', ' . __('Amount') . ', ' . __('Price') . ', ' . __('Tax_rate') . ', ' . __('Deposit') . ', ' . __('Delivery_rhythm') . ', ' . __('Storage_location'),
+                'NotCopiedData' => __('Image'),
+                'CopyStatus' => __('Status of copy(s): <b>deactivated</b>'),
+                'AttributeInfo' => __('Products with attributes cannot be copied yet: '),
                 'AmountOfCopies' => __('Amount of copies:'),
                 'ErrorsOccurredWhileProductWasCopied' => __('Errors occurred while product was copied'),
                 'XofXProductsSelected' => __('{0}/{1} products selected'),

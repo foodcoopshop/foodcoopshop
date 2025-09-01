@@ -331,7 +331,7 @@ h2.info a:not(.btn) {
     width: 48%;
 }
 #flashMessage ul {
-  padding-left: 10px;
+  padding-left: 10px ! important;
   margin-left: 10px;
   margin-top: 10px;
 }

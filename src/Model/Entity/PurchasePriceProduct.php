@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Model\Entity;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,13 +16,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
+class PurchasePriceProduct extends AppEntity
+{
 
-if (empty($products)) {
-    return false;
 }
-
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".ModalProductDuplicate.init();"
-]);
-echo '<a id="duplicateSelectedProduct" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-clone"></i> ' . __d('admin', 'Copy') . '</a>';
