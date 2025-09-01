@@ -43,18 +43,6 @@ foodcoopshop.ModalProductDuplicate = {
             var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
 
             var html='';
-            if (productNamesWithAttributes.length > 0) {
-                html += '<p style="margin-bottom:0px;"><b>';
-                html += foodcoopshop.LocalizedJs.admin.AttributeInfo;
-                html += '</b></p>';
-
-                html += '<ul style="margin-bottom:15px;">';
-                for (const name in productNamesWithAttributes) {
-                    html += '<li><b>' + productNamesWithAttributes[name] + '</b></li>';
-                }
-                html += '</ul>';
-            }
-
             if (productNames.length > 0) {
                 html += '<p style="margin-bottom:0px;">';
                 if (productNames.length > 1) {
@@ -70,12 +58,6 @@ foodcoopshop.ModalProductDuplicate = {
                 }
                 html += '</ul>';
             }
-
-
-            html += '<p style="margin-top:15px; margin-bottom:0;">' + foodcoopshop.LocalizedJs.admin.DataCopyInfo + '</p>';
-            html += '<ul>';
-            html += '<li>' + foodcoopshop.LocalizedJs.admin.CopiedData + '</li>';
-            html += '</ul>';
 
             html += '<p style="margin-top:15px;margin-bottom:0;">' + foodcoopshop.LocalizedJs.admin.DataNotCopyInfo + '</p>';
             html += '<ul>';
@@ -112,6 +94,17 @@ foodcoopshop.ModalProductDuplicate = {
                 html,
                 buttons,
             );
+
+            if (productNamesWithAttributes.length > 0) {
+                let warning = '<p>' + foodcoopshop.LocalizedJs.admin.AttributeInfo + '</p>';
+
+                warning += '<ul>';
+                for (const name in productNamesWithAttributes) {
+                    warning += '<li>' + productNamesWithAttributes[name] + '</li>';
+                }
+                warning += '</ul>';
+                foodcoopshop.Modal.appendFlashMessageWarning(modalSelector, warning);
+            }
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function () {
                 var amountValue = parseInt($(modalSelector + ' #copy-amount').val());

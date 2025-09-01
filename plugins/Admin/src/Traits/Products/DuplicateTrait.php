@@ -115,7 +115,7 @@ trait DuplicateTrait
         }
 
         $this->getRequest()->getSession()->write('highlightedRowId', $copies[0]->id_product);
-        $message = __d('admin', 'Product was copied successfully.');
+        $message = __d('admin', '{0,plural,=1{Product was copied successfully.} other{Products were copied successfully.}}', [count($srcProducts)]);
 
         $this->Flash->success($message);
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
@@ -129,7 +129,7 @@ trait DuplicateTrait
         return null;
     }
 
-    public function checkPurchasePrices(mixed $srcProduct, mixed $copy): void
+    public function checkPurchasePrices(Product $srcProduct, EntityInterface $copy): void
     {
         $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $srcPurchasePrice = $purchasePriceProductTable->find('all',
@@ -194,9 +194,6 @@ trait DuplicateTrait
             return $associatedTable;
         }
         unset($associatedTable[$primaryKey]);
-
-        // tests would also pass like that:
-        //unset($associatedTable['id_product']);
         unset($associatedTable['id_product'], $associatedTable['product_id']);
 
         return $associatedTable;
@@ -209,8 +206,6 @@ trait DuplicateTrait
         }
 
         foreach ($associatedTable as $association) {
-            // tests would also pass like that:
-            //unset($association['id_product']);
             unset($association['id_product'], $association['product_id']);
         }
 

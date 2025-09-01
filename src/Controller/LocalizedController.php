@@ -217,7 +217,6 @@ class LocalizedController extends Controller
                 'CopyProduct' => __('Copy product?'),
                 'ReallyCopyProduct1' => __('Really copy product?'),
                 'ReallyCopyProductX' => __('Really copy products?'),
-                'DataCopyInfo' => __('The following data will be copied:'),
                 'DataNotCopyInfo' => __('The following data <b>won\'t</b> be copied:'),
                 'CopiedData' => __('Categories') . ', ' . __('Descriptions') . ', ' . __('Amount') . ', ' . __('Price') . ', ' . __('Tax_rate') . ', ' . __('Deposit') . ', ' . __('Delivery_rhythm') . ', ' . __('Storage_location'),
                 'NotCopiedData' => __('Image'),

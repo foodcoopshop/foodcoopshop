@@ -841,9 +841,6 @@ msgstr "Möchtest du das Produkt wirklich kopieren?"
 msgid "Really copy products?"
 msgstr "Möchtest du die Produkte wirklich kopieren?"
 
-msgid "The following data will be copied:"
-msgstr "Folgende Daten werden kopiert:"
-
 msgid "The following data <b>won\'t</b> be copied:"
 msgstr "Folgende Daten werden <b>nicht</b> kopiert:"
 
