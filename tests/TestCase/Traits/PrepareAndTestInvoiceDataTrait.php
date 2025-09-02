@@ -61,6 +61,9 @@ trait PrepareAndTestInvoiceDataTrait
         $this->assertEquals(round($data->total_price_tax_incl, 2), $incl);
     }
 
+    /**
+     * @param array<int> $orderDetailIds
+     */
     public function getAndAssertOrderDetailsAfterCancellation(array $orderDetailIds): void
     {
 
@@ -83,6 +86,9 @@ trait PrepareAndTestInvoiceDataTrait
 
     }
 
+    /**
+     * @param array<int> $paymentIds
+     */
     public function getAndAssertPaymentsAfterCancellation(array $paymentIds): void
     {
 

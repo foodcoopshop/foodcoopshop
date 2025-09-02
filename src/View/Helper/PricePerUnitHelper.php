@@ -23,6 +23,9 @@ class PricePerUnitHelper extends Helper
 
     public array $helpers = ['MyHtml', 'MyNumber'];
 
+    /**
+     * @param array<string, float> $unitSums
+     */
     public function getStringFromUnitSums(array $unitSums, string $separator): string
     {
         $result = '';

@@ -91,6 +91,9 @@ trait OrderDetailsFilterTrait
         return '';
     }
 
+    /**
+     * @param array<string> $pickupDay
+     */
     public function getOrderDetails(
         int|string $manufacturerId,
         int|string $productId,

@@ -245,6 +245,9 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
+    /**
+     * @param array<string> $testPages
+     */
     protected function assertPagesFor404(array $testPages): void
     {
         foreach ($testPages as $url) {

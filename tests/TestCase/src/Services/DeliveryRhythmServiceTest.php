@@ -1113,6 +1113,9 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @param array{next_delivery_day: string|null, delivery_rhythm_type: string, delivery_rhythm_send_order_list_weekday: int|null, delivery_rhythm_order_possible_until: Date|null} $product
+     */
     private function assertGetLastOrderDay(array $product, string $expected): void
     {
         $result = (new DeliveryRhythmService())->getLastOrderDay(
