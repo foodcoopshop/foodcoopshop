@@ -87,7 +87,8 @@ class EmailOrderReminderCommand extends AppCommand
         $i = 0;
         $outString = '';
 
-        $sendOrderListWeekday = ((new DeliveryRhythmService())->getSendOrderListsWeekday() -1) % 7;
+        $deliveryRhythmService = new DeliveryRhythmService();
+        $sendOrderListWeekday = ($deliveryRhythmService->getSendOrderListsWeekday() -1) % 7;
         $cronjobRunWeekday = date('N', strtotime($this->cronjobRunDay)) % 7;
         $lastOrderDayDiff = $sendOrderListWeekday - $cronjobRunWeekday;
 
@@ -96,6 +97,10 @@ class EmailOrderReminderCommand extends AppCommand
             1 => __('tomorrow'),
             default => Configure::read('app.timeHelper')->getWeekdayName($sendOrderListWeekday),
         };
+
+        if ($deliveryRhythmService->hasSaturdayToWednesdayOrThursdayConfig()) {
+            $lastOrderDayAsString = __('Tuesday');
+        }
 
         foreach ($customers as $customer) {
             // customer has open orders, do not send email

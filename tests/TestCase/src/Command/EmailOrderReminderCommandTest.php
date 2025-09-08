@@ -20,6 +20,8 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use App\Test\TestCase\Traits\DeliveryRhythmConfigsTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class EmailOrderReminderCommandTest extends AppCakeTestCase
 {
@@ -27,6 +29,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
+    use DeliveryRhythmConfigsTrait;
 
     public function testNoActiveOrder(): void
     {
@@ -143,6 +146,15 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->exec('email_order_reminder');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
+    }
+
+    public function testSendOnSaturdayWithSaturdayWednesdayConfig(): void
+    {
+        $this->prepareSaturdayWednesdayConfig();
+        $this->exec('email_order_reminder 2022-08-27'); // saturday
+        $this->runAndAssertQueue();
+        $this->assertMailCount(3);
+        $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>Dienstag Mitternacht</b> bestellt werden.');
     }
 
     public function testApplyOpenOrderCheckForOrderReminderFalse(): void
