@@ -41,6 +41,18 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
+    public function testGetOrderPeriodFirstDayByDeliveryDaySaturdayWednesday(): void
+    {
+        $this->prepareSaturdayWednesdayConfig();
+        $this->assertGetOrderPeriodFirstDayByDeliveryDay(strtotime('12.01.2023'), '31.12.2022');
+    }
+
+    public function testGetOrderPeriodLastDayByDeliveryDaySaturdayWednesday(): void
+    {
+        $this->prepareSaturdayWednesdayConfig();
+        $this->assertGetOrderPeriodLastDayByDeliveryDay(strtotime('12.01.2023'), '06.01.2023');
+    }
+
     public function testGetOrderPeriodFirstDayByDeliveryDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
@@ -69,6 +81,19 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
     {
         $this->prepareTuesdayFridayConfig();
         $this->assertGetDeliveryDay('25.07.2018', '03.08.2018');
+    }
+
+    public function testGetDeliveryDaySaturdayWednesday(): void
+    {
+        $this->prepareSaturdayWednesdayConfig();
+        $this->assertGetDeliveryDay('24.08.2022', '31.08.2022'); // wednesday
+        $this->assertGetDeliveryDay('25.08.2022', '31.08.2022'); // thursday
+        $this->assertGetDeliveryDay('26.08.2022', '31.08.2022'); // friday
+        $this->assertGetDeliveryDay('27.08.2022', '07.09.2022'); // saturday
+        $this->assertGetDeliveryDay('28.08.2022', '07.09.2022'); // sunday
+        $this->assertGetDeliveryDay('29.08.2022', '07.09.2022'); // monday
+        $this->assertGetDeliveryDay('30.08.2022', '07.09.2022'); // tuesday
+        $this->assertGetDeliveryDay('31.08.2022', '07.09.2022'); // wednesday
     }
 
     public function testGetDeliveryDaySaturdayThursday(): void
@@ -140,6 +165,20 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '27.11.2017'); // tuesday
     }
 
+    public function testGetOrderPeriodFirstDaySaturdayWednesday(): void
+    {
+        $this->prepareSaturdayWednesdayConfig();
+        $this->assertGetOrderPeriodFirstDay('22.08.2022', '20.08.2022'); // monday
+        $this->assertGetOrderPeriodFirstDay('23.08.2022', '20.08.2022'); // tuesday
+        $this->assertGetOrderPeriodFirstDay('24.08.2022', '20.08.2022'); // wednesday
+        $this->assertGetOrderPeriodFirstDay('25.08.2022', '20.08.2022'); // thursday
+        $this->assertGetOrderPeriodFirstDay('26.08.2022', '20.08.2022'); // friday
+        $this->assertGetOrderPeriodFirstDay('27.08.2022', '27.08.2022'); // saturday
+        $this->assertGetOrderPeriodFirstDay('28.08.2022', '27.08.2022'); // sunday
+        $this->assertGetOrderPeriodFirstDay('29.08.2022', '27.08.2022'); // monday
+        $this->assertGetOrderPeriodFirstDay('30.08.2022', '27.08.2022'); // tuesday
+    }
+
     public function testGetOrderPeriodFirstDaySaturdayThursday(): void
     {
         $this->prepareSaturdayThursdayConfig();
@@ -209,6 +248,20 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('04.12.2017', '03.12.2017'); // monday
         $this->assertGetOrderPeriodLastDay('05.12.2017', '03.12.2017'); // tuesday
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
+    }
+
+    public function testGetOrderPeriodLastDaySaturdayWednesday(): void
+    {
+        $this->prepareSaturdayWednesdayConfig();
+        $this->assertGetOrderPeriodLastDay('29.08.2022', '02.09.2022'); // monday
+        $this->assertGetOrderPeriodLastDay('30.08.2022', '02.09.2022'); // tuesday
+        $this->assertGetOrderPeriodLastDay('31.08.2022', '02.09.2022'); // wednesday
+        $this->assertGetOrderPeriodLastDay('01.09.2022', '02.09.2022'); // thursday
+        $this->assertGetOrderPeriodLastDay('02.09.2022', '02.09.2022'); // friday
+        $this->assertGetOrderPeriodLastDay('03.09.2022', '09.09.2022'); // saturday
+        $this->assertGetOrderPeriodLastDay('04.09.2022', '09.09.2022'); // sunday
+        $this->assertGetOrderPeriodLastDay('05.09.2022', '09.09.2022'); // monday
+        $this->assertGetOrderPeriodLastDay('06.09.2022', '09.09.2022'); // tuesday
     }
 
     public function testGetOrderPeriodLastDaySaturdayThursday(): void

@@ -105,7 +105,7 @@ class DeliveryRhythmService
 
     public function getFormattedNextDeliveryDay(int $day): string
     {
-        if (!$this->hasSaturdayThursdayConfig()) {
+        if (!$this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $day = strtotime('-2 days', $day);
         }
         return date($this->Time->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
@@ -113,7 +113,7 @@ class DeliveryRhythmService
 
     public function getOrderPeriodFirstDayByDeliveryDay(int $deliveryDay): string
     {
-        if ($this->hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $deliveryDay = strtotime('-7 days', $deliveryDay);
         }
         return $this->getOrderPeriodFirstDay($deliveryDay);
@@ -121,7 +121,7 @@ class DeliveryRhythmService
 
     public function getOrderPeriodLastDayByDeliveryDay(int $deliveryDay): string
     {
-        if ($this->hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $deliveryDay = strtotime('-7 days', $deliveryDay);
         }
         return $this->getOrderPeriodLastDay($deliveryDay);
@@ -131,7 +131,7 @@ class DeliveryRhythmService
     {
         $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
         $deliveryDay = date($this->Time->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
-        if ($this->hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $deliveryDay = date(
                 $this->Time->getI18Format('DatabaseAlt'),
                 strtotime($deliveryDay . '-7 days'),
@@ -162,13 +162,10 @@ class DeliveryRhythmService
         $weekdayDeliveryDate = $this->Time->formatAsWeekday($deliveryDate);
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
 
-        if ($this->hasSaturdayThursdayConfig()) {
-            $calculateNextDeliveryDay = $weekdayOrderDay == 6 || (
-                $weekdayOrderDay == 5 && $sendOrderListsWeekday == 5
-            );
+        if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
+            $calculateNextDeliveryDay = $weekdayOrderDay == 6 || ($weekdayOrderDay == 5 && $sendOrderListsWeekday == 5);
         } else {
-            $calculateNextDeliveryDay = $weekdayOrderDay >= $sendOrderListsWeekday
-                && $weekdayOrderDay <= $weekdayDeliveryDate;
+            $calculateNextDeliveryDay = $weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate;
         }
 
         if ($calculateNextDeliveryDay && $deliveryRhythmType != 'individual') {
@@ -186,7 +183,7 @@ class DeliveryRhythmService
         $dateDiff = 7 - $this->getSendOrderListsWeekday() + $currentWeekday;
         $date = strtotime('-' . $dateDiff . ' day ', $day);
 
-        if ($this->hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $addOneWeekCondition = in_array($currentWeekday, [6,7]) && $this->getDeliveryWeekday();
         } else {
             $addOneWeekCondition = $currentWeekday > $this->getDeliveryWeekday();
@@ -237,7 +234,7 @@ class DeliveryRhythmService
             $dateDiff = $negatedDelta;
         }
 
-        if ($this->hasSaturdayThursdayConfig() && $dateDiff < 0) {
+        if ($this->hasSaturdayToWednesdayOrThursdayConfig() && $dateDiff < 0) {
             $dateDiff += 7;
         }
 
@@ -338,10 +335,21 @@ class DeliveryRhythmService
         return Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
     }
 
+    public function hasSaturdayToWednesdayOrThursdayConfig(): bool
+    {
+        return $this->hasSaturdayWednesdayConfig() || $this->hasSaturdayThursdayConfig();
+    }
+
+    public function hasSaturdayWednesdayConfig(): bool
+    {
+        return $this->compareConfig(3, 4);
+    }
+
     public function hasSaturdayThursdayConfig(): bool
     {
         return $this->compareConfig(4, 5);
     }
+
 
     private static function compareConfig(int $weeklyPickupDay, int $defaultSendOrderListsDayDelta): bool
     {
