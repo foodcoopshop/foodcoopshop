@@ -16,6 +16,7 @@ use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\CronjobLog;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -323,6 +324,7 @@ class CronjobsTable extends AppTable
             $success = $command->execute($args, $io);
             $success = $success !== $command::CODE_SUCCESS ? CronjobLog::FAILURE : CronjobLog::SUCCESS;
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             $success = CronjobLog::FAILURE;
         }
 
