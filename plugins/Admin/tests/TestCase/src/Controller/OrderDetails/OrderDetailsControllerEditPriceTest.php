@@ -169,6 +169,9 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(1, []);
     }
 
+    /**
+     * @param array<string> $expectedToEmails
+     */
     private function assertOrderDetailProductPriceChangedEmails(int $emailIndex, array $expectedToEmails): void
     {
         $this->runAndAssertQueue();

@@ -457,6 +457,9 @@ class InvoicesController extends AdminAppController
 
     }
 
+    /**
+     * @param array<int|string> $customerIds
+     */
     protected function processIndex(string $dateFrom, string $dateTo, array $customerIds): void
     {
 
@@ -511,6 +514,9 @@ class InvoicesController extends AdminAppController
 
     }
 
+    /**
+     * @param array<int|string> $customerIds
+     */
     protected function setInvoiceConditions(SelectQuery $query, string $dateFrom, string $dateTo, array $customerIds): SelectQuery
     {
 

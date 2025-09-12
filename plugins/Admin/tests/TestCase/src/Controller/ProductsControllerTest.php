@@ -19,13 +19,11 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\Log\Log;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Product;
-use Cake\I18n\DateTime;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -867,6 +865,9 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $copies->count());
     }
 
+    /**
+     * @param array<string, mixed> $product
+     */
     private function normalizeProductForComparison(array $product): array
     {
         unset($product['id_product']);

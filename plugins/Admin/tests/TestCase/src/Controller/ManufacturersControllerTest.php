@@ -431,6 +431,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $customerRecord->active);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private function add(array $data): void
     {
         $this->post($this->Slug->getManufacturerAdd(), $data);

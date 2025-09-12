@@ -18,6 +18,8 @@ use App\Test\TestCase\Traits\LoginTrait;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * 
+ * @phpstan-type ProductArray array<int, array<int|string, mixed>>
  */
 class ProductsTableTest extends AppCakeTestCase
 {
@@ -674,6 +676,10 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductName($products, $expectedResults);
     }
 
+    /**
+     * @param ProductArray $products
+     * @param array<string, int|string> $expectedResults
+     */
     private function assertProductName(array $products, array $expectedResults): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
@@ -704,6 +710,9 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
+    /**
+     * @param ProductArray $products
+     */
     private function assertProductQuantity(array $products, ?float $forceUseThisQuantity = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
@@ -738,6 +747,9 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
+    /**
+     * @param ProductArray $products
+     */
     private function assertProductDeposit(array $products, ?string $forceUseThisDeposit = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
@@ -776,6 +788,9 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
+    /**
+     * @param ProductArray $products
+     */
     private function assertProductPrice(array $products, ?string $forceUseThisPrice = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
@@ -810,6 +825,9 @@ class ProductsTableTest extends AppCakeTestCase
         }
     }
 
+    /**
+     * @param array<mixed> $products
+     */
     private function assertProductStatus(array $products, ?float $forceUseThisStatus = null): void
     {
         $productsTable = $this->getTableLocator()->get('Products');

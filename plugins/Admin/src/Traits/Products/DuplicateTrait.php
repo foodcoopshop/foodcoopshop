@@ -5,10 +5,7 @@ namespace Admin\Traits\Products;
 
 use App\Model\Entity\Product;
 use App\Model\Entity\PurchasePriceProduct;
-use App\Model\Table\AttributesTable;
 use App\Model\Table\DepositProductsTable;
-use App\Model\Table\ProductAttributeCombinationsTable;
-use App\Model\Table\ProductAttributesTable;
 use App\Model\Table\PurchasePriceProductsTable;
 use App\Model\Table\StockAvailablesTable;
 use App\Model\Table\UnitProductsTable;
@@ -30,6 +27,9 @@ use Cake\Utility\Inflector;
  * @author        Martin Hatlauf <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * 
+ * @phpstan-type AssociationOptions array{primaryKey?: string}
+ * @phpstan-type Associations array<string, AssociationOptions>
  */
 trait DuplicateTrait
 {
@@ -157,6 +157,9 @@ trait DuplicateTrait
         $purchasePriceProductTable->save($purchasePriceCopy);
     }
 
+    /**
+     * @param Associations $associations
+     */
     function deepCopyProduct(Product $srcProduct, array $associations, int $copyIndex): EntityInterface
     {
         $productsTable = $this->getTableLocator()->get('Products');
@@ -182,12 +185,18 @@ trait DuplicateTrait
         );
     }
 
+    /**
+     * @param array<string, mixed> $product
+     */
     public function isAssociationNamePlural(string $associationName, array $product): bool
     {
         $pluralAssociationName = Inflector::pluralize($associationName);
         return array_key_exists($pluralAssociationName, $product);
     }
 
+    /**
+     * @param array<string, mixed> $associatedTable
+     */
     public function removeHasOneAssociationKeys(?array $associatedTable, string $primaryKey): ?array
     {
         if ($associatedTable == null) {
@@ -199,6 +208,9 @@ trait DuplicateTrait
         return $associatedTable;
     }
 
+    /**
+     * @param array<string, mixed> $associatedTable
+     */
     public function removeHasManyAssociationKeys(?array $associatedTable): ?array
     {
         if ($associatedTable == null) {
@@ -212,6 +224,10 @@ trait DuplicateTrait
         return $associatedTable;
     }
 
+    /**
+     * @param Associations $associations
+     * @param array<string, mixed> $product
+     */
     public function removeAssociationKeysFromProduct(array $associations, array $product): array
     {
         foreach ($associations as $associationName => $options) {
@@ -235,6 +251,9 @@ trait DuplicateTrait
         return $product;
     }
 
+    /**
+     * @param array<string, mixed> $product
+     */
     public function configureCopy(Product $srcProduct, int $copyIndex, array $product): array
     {
         $product['name'] = __d('admin', '{0} - copy {1}', [
