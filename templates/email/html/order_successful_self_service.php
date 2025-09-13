@@ -76,7 +76,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
         <tr><td>
 
             <?php
-                echo __('Order date');
+                echo __('Order_date');
             ?>: <?php
                 echo date(Configure::read('app.timeHelper')->getI18Format('DateNTimeShortWithSecsAlt'), time());
             ?>

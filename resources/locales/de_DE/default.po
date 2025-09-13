@@ -901,7 +901,7 @@ msgstr "Bestellstatus"
 msgid "Cart type"
 msgstr "Bestell-Typ"
 
-msgid "Order date"
+msgid "Order_date"
 msgstr "Bestelldatum"
 
 msgid "Why_is_pickup_day_changed_(optional_field)?"
