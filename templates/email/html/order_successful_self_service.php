@@ -73,6 +73,16 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             ?>
         </td></tr>
 
+        <tr><td>
+
+            <?php
+                echo __('Order_date');
+            ?>: <?php
+                echo date(Configure::read('app.timeHelper')->getI18Format('DateNTimeShortWithSecsAlt'), time());
+            ?>
+
+        </td></tr>
+
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <tr><td style="padding-top:20px;"><b>
                 <?php echo Configure::read('app.manufacturerComponensationInfoText'); ?>
