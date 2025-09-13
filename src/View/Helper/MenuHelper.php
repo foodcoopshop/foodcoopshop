@@ -24,6 +24,10 @@ use Authentication\IdentityInterface;
 class MenuHelper extends Helper
 {
 
+    /**
+     * @param array<string, mixed> $array
+     * @param array<string, mixed> $options
+     */
     public function render(array $array, array $options): string
     {
         $tmpMenu = '<ul id="'.$options['id'].'" class="'.$options['class'].'">';
@@ -40,6 +44,9 @@ class MenuHelper extends Helper
         return $tmpMenu;
     }
 
+    /**
+     * @param array<string, mixed> $pages
+     */
     public function buildPageMenu(array $pages): array
     {
 
@@ -73,6 +80,9 @@ class MenuHelper extends Helper
         return $menu;
     }
 
+    /**
+     * @param array<string, mixed> $item
+     */
     private function buildMenuItem(array $item): string
     {
 
@@ -104,6 +114,9 @@ class MenuHelper extends Helper
         return $tmpMenuItem;
     }
 
+    /**
+     * @param list<string> $class
+     */
     private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = ''): string
     {
 

@@ -19,6 +19,9 @@ namespace App\Services\PdfWriter\Traits;
 trait SetSumTrait
 {
 
+    /**
+     * @param array<array<string, float>> $results
+     */
     public function setSums(array $results): void
     {
 

@@ -18,6 +18,10 @@ namespace App\Services;
 
 class RemoteFileService
 {
+
+    /**
+     * @param list<string> $allowedHosts
+     */
     public static function exists(string $remoteFile, array $allowedHosts = []): bool
     {
 
@@ -37,6 +41,9 @@ class RemoteFileService
 
     }
 
+    /**
+     * @param list<string> $allowedHosts
+     */
     private static function verifyAllowedHosts(string $remoteFile, array $allowedHosts): void
     {
         if (empty($allowedHosts)) {

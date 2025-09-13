@@ -361,7 +361,7 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
      *
      * @param array<string, mixed> $options Pagination options.
      * @param string|null $model Which model to paginate on
-     * @param array $url URL.
+     * @param array<string, mixed> $url URL.
      * @param array<string, mixed> $urlOptions Array of options
      * @return string By default, returns a full pagination URL string for use
      *   in non-standard contexts (i.e. JavaScript)
@@ -386,7 +386,7 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
      *
      * @param array<string, mixed> $options Pagination/URL options array
      * @param string|null $model Which model to paginate on
-     * @param array $url URL.
+     * @param array<string, mixed> $url URL.
      * @return array An array of URL parameters
      */
     public function generateUrlParams(array $options = [], ?string $model = null, array $url = []): array

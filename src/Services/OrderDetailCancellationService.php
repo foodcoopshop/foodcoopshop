@@ -30,6 +30,9 @@ class OrderDetailCancellationService
 {
     use UpdateOrderDetailsTrait;
     
+    /**
+     * @param list<int> $orderDetailIds
+     */
     public function delete(array $orderDetailIds, string $cancellationReason): string
     {
         $identity = null;

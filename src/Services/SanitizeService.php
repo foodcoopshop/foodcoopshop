@@ -19,6 +19,10 @@ namespace App\Services;
 class SanitizeService
 {
 
+    /**
+     * @param array<string, mixed> $data
+     * @param list<string> $excludedFields
+     */
     public function trimRecursive(array $data, array $excludedFields = []): array
     {
         array_walk_recursive($data, function (&$item, $key) use ($excludedFields) {
@@ -35,6 +39,10 @@ class SanitizeService
         return $item;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @param list<string> $excludedFields
+     */
     public function stripTagsAndPurifyRecursive(array $data, array $excludedFields = []): array
     {
         $config = \HTMLPurifier_Config::createDefault();

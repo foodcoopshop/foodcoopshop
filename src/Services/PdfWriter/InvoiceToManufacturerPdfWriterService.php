@@ -32,6 +32,9 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
         $this->setPdfLibrary(new ListTcpdfService());
     }
 
+    /**
+     * @param list<int> $validOrderStates
+     */
     public function prepareAndSetData(
         int $manufacturerId,
         string $dateFrom,
