@@ -91,6 +91,11 @@ trait OrderDetailsFilterTrait
         return '';
     }
 
+    public function getDefaultCategoryId(): string
+    {
+        return '';
+    }
+
     /**
      * @param array<string> $pickupDay
      */
@@ -102,11 +107,12 @@ trait OrderDetailsFilterTrait
         int|string $orderDetailId,
         float|string $deposit,
         string $groupBy,
-        ?string $cartType
+        ?string $cartType,
+        array|string $categoryId = ''
         ): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
+        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $categoryId);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
