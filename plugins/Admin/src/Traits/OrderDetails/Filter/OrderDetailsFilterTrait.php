@@ -250,6 +250,7 @@ trait OrderDetailsFilterTrait
     {
         $query->select([
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            'sum_price_net' => $query->func()->sum('OrderDetails.total_price_tax_excl'),
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
             'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
             'sum_units' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),

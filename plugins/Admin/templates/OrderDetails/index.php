@@ -29,6 +29,8 @@ use App\Model\Entity\OrderDetail;
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $identity->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
+                        Configure::read('app.jsNamespace') . ".Helper.initTooltip('#price-with-tooltip');" .
+
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);
         "
     ]);
@@ -330,7 +332,7 @@ if ($groupBy == 'product') {
         echo '<td colspan="2"></td>';
     }
 }
-echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
+echo '<td class="right"><b id="price-with-tooltip" title="'.__('Price_net') . ': ' . $this->Number->formatAsCurrency($sums['price_net']) . '">' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
 if ($groupBy != 'customer') {
     $sumDepositString = '';
     if ($sums['deposit'] != 0) {

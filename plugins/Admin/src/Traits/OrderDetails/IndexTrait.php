@@ -86,6 +86,7 @@ trait IndexTrait
             'records_count' => 0,
             'amount' => 0,
             'price' => 0,
+            'price_net' => 0,
             'deposit' => 0,
             'units' => [
                 'g' => 0,
@@ -132,10 +133,12 @@ trait IndexTrait
             $sums['records_count']++;
             if ($groupBy == '') {
                 $sums['price'] += $orderDetail->total_price_tax_incl;
+                $sums['price_net'] += $orderDetail->total_price_tax_excl;
                 $sums['amount'] += $orderDetail->product_amount;
                 $sums['deposit'] += $orderDetail->deposit;
             } else {
                 $sums['price'] += $orderDetail['sum_price'];
+                $sums['price_net'] += $orderDetail['sum_price_net'];
                 $sums['amount'] += $orderDetail['sum_amount'];
                 if ($groupBy == 'manufacturer') {
                     $sums['reduced_price'] += $orderDetail['reduced_price'];
