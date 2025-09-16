@@ -753,7 +753,7 @@ class OrderDetailsTable extends AppTable
         array $pickupDay,
         int|string $orderDetailId,
         float|string $deposit,
-        array|string $categoryId = '',
+        array|string $categoryIds = '',
         ): array
     {
         $conditions = [];
@@ -799,15 +799,15 @@ class OrderDetailsTable extends AppTable
             $conditions['Products.id_manufacturer'] = $manufacturerId;
         }
 
-        // Add category filtering if specified
-        if ($categoryId != '') {
-            // Use EXISTS subquery to check if product belongs to any of the specified categories
+        if ($categoryIds != '') {
             $categoryProductsTable = TableRegistry::getTableLocator()->get('CategoryProducts');
-            $subquery = $categoryProductsTable->find()
-                ->select(['CategoryProducts.id_product'])
-                ->where(['CategoryProducts.id_category IN' => $categoryId])
-                ->where(['CategoryProducts.id_product = Products.id_product']);
-            $conditions[] = ['EXISTS' => $subquery];
+            $subQuery = $categoryProductsTable->find()
+                ->select([$categoryProductsTable->aliasField('id_product')])
+                ->where([$categoryProductsTable->aliasField('id_category IN') => $categoryIds])
+                ->where([$categoryProductsTable->aliasField('id_product = Products.id_product')]);
+            $conditions[] = function ($exp) use ($subQuery) {
+                return $exp->exists($subQuery);
+            };
         }
 
         // override params that manufacturer is not allowed to change

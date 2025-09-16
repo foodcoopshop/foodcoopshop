@@ -91,7 +91,7 @@ trait OrderDetailsFilterTrait
         return '';
     }
 
-    public function getDefaultCategoryId(): string
+    public function getDefaultCategoryIds(): string
     {
         return '';
     }

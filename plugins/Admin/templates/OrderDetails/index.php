@@ -91,13 +91,13 @@ use App\Model\Entity\OrderDetail;
             <?php if ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
-            <?php echo $this->Form->control('categoryId', [
+            <?php echo $this->Form->control('categoryIds', [
                 'type' => 'select',
                 'label' => '',
                 'multiple' => true,
                 'empty' => __d('admin', 'Category'),
                 'options' => $categoriesForDropdown,
-                'default' => isset($categoryId) ? $categoryId : ''
+                'default' => isset($categoryIds) ? $categoryIds : ''
             ]); ?>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>

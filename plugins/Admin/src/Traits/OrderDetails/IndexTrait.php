@@ -57,8 +57,8 @@ trait IndexTrait
         $filterByCartTypeEnabled = h($this->getRequest()->getQuery('filterByCartTypeEnabled', $this->getDefaultFilterByCartTypeEnabled($cartType)));
         $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
 
-        $categoryId = h($this->getRequest()->getQuery('categoryId', $this->getDefaultCategoryId()));
-        $this->set('categoryId', $categoryId);
+        $categoryIds = h($this->getRequest()->getQuery('categoryIds', $this->getDefaultCategoryIds()));
+        $this->set('categoryIds', $categoryIds);
 
         $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
         if ($this->identity->isManufacturer() && $groupBy != 'product') {
@@ -103,7 +103,7 @@ trait IndexTrait
             }
         }
 
-        $query = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $categoryId);
+        $query = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $categoryIds);
 
         $orderDetails = $this->paginate($query, [
             'sortableFields' => [
