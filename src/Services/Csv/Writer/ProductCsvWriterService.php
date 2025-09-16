@@ -29,6 +29,9 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     private array $productIds;
 
+    /**
+     * @param list<int> $productIds
+     */
     public function setProductIds(array $productIds): void
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');

@@ -40,6 +40,9 @@ class ListTcpdfService extends AppTcpdfService
         $this->SetFontSize(10);
     }
 
+    /**
+     * @param array<string, mixed> $results
+     */
     public function prepareTaxSumData(array $results): array|false
     {
 
@@ -67,6 +70,11 @@ class ListTcpdfService extends AppTcpdfService
 
     }
 
+    /**
+     * @param array<string, mixed> $results
+     * @param array<int, string> $widths
+     * @param array<int, string> $headers
+     */
     public function renderDetailedOrderList(array $results, array $widths, array $headers, string $groupType, bool $onlyShowSums = false): void
     {
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
@@ -232,6 +240,11 @@ class ListTcpdfService extends AppTcpdfService
         }
     }
 
+    /**
+     * @param array<int, string> $widths
+     * @param array<int, string> $headers
+     * @param array<string, float|int> $unitSums
+     */
     private function getInvoiceGenerateSum(
         string|float $amountSum,
         string|float $priceExclSum,
@@ -308,11 +321,17 @@ class ListTcpdfService extends AppTcpdfService
         }
     }
 
+    /**
+     * @param array<int, string> $headers
+     */
     public function isOrderList(array $headers): bool
     {
         return $this->getCorrectColspan($headers) == 3;
     }
 
+    /**
+     * @param array<int, string> $headers
+     */
     public function getCorrectColspan(array $headers): int
     {
         $diff = 2;
@@ -327,6 +346,9 @@ class ListTcpdfService extends AppTcpdfService
         return $colspan;
     }
 
+    /**
+     * @param array<int, string> $headers
+     */
     public function addLastSumRow(
         array $headers,
         string|float $sumAmount,
