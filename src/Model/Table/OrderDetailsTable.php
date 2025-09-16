@@ -652,6 +652,7 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetail['unit_name'] = $orderDetail->order_detail_unit->unit_name;
             }
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_price_net'] = $orderDetail->sum_price_net;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $preparedOrderDetail['sum_units'] = $orderDetail->sum_units;
@@ -672,6 +673,7 @@ class OrderDetailsTable extends AppTable
         foreach ($orderDetails as $orderDetail) {
             $preparedOrderDetail = [];
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_price_net'] = $orderDetail->sum_price_net;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
@@ -697,6 +699,7 @@ class OrderDetailsTable extends AppTable
         foreach ($orderDetails as $orderDetail) {
             $preparedOrderDetail = [];
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_price_net'] = $orderDetail->sum_price_net;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $preparedOrderDetail['order_detail_count'] = $orderDetail->order_detail_count;
