@@ -441,6 +441,9 @@ class CatalogService
 
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $products
+     */
     protected function addOrderedProductsTotalAmount(array $products): array
     {
 
@@ -476,6 +479,9 @@ class CatalogService
 
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $products
+     */
     protected function removeProductIfShowOnlyProductsForNextWeekEnabled(array $products): array
     {
         if ($this->identity === null ||
@@ -499,6 +505,9 @@ class CatalogService
         return $products;
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $products
+     */
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice(array $products): array
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -524,6 +533,9 @@ class CatalogService
         return $products;
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $products
+     */
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak(array $products): array
     {
 
@@ -577,6 +589,9 @@ class CatalogService
         return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 4)';
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $products
+     */
     public function prepareProducts(array $products): array
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');

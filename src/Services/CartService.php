@@ -77,6 +77,14 @@ class CartService
         return $contain;
     }
 
+    /**
+     * @param array<string, mixed> $cart
+     * @param array<array<string, mixed>> $orderDetails2save
+     * @param array<array<string, mixed>> $stockAvailable2saveData
+     * @param array<array<string, mixed>> $stockAvailable2saveConditions
+     * @param string|null $customerSelectedPickupDay
+     * @param \App\Model\Entity\Product[] $products
+     */
     protected function saveCart(
         array $cart,
         array $orderDetails2save,
@@ -550,6 +558,10 @@ class CartService
 
     }
 
+    /**
+     * @param array{productId: int, attributeId: int} $ids
+     * @param array<string, mixed> $cartProduct
+     */
     private function prepareOrderDetailPurchasePrices(array $ids, Product $product, array $cartProduct): array
     {
 
@@ -613,6 +625,9 @@ class CartService
 
     }
 
+    /**
+     * @param array<array<string, mixed>> $orderDetails2save
+     */
     private function saveOrderDetails(array $orderDetails2save): void
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -621,6 +636,9 @@ class CartService
         );
     }
 
+    /**
+     * @param array<array<string, mixed>> $cartProducts
+     */
     private function sendInstantOrderNotificationToManufacturers(array $cartProducts): array
     {
 
@@ -770,6 +788,9 @@ class CartService
 
     }
 
+    /**
+     * @param array<string, mixed>|null $cart
+     */
     private function sendConfirmationEmailToCustomerSelfService(?array $cart): void
     {
         if (is_null($cart)) {
@@ -788,6 +809,9 @@ class CartService
         $email->addToQueue();
     }
 
+    /**
+     * @param \App\Model\Entity\PickupDay[] $pickupDayEntities
+     */
     private function sendOrderCommentNotificationToPlatformOwner(array $pickupDayEntities): null
     {
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
@@ -818,6 +842,10 @@ class CartService
 
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
+     * @param array<string, mixed> $cart
+     * @param array<array<string, mixed>> $cartGroupedByPickupDay
+     * @param \App\Model\Entity\Product[] $products
+     * @param \App\Model\Entity\PickupDay[]|null $pickupDayEntities
      */
     private function sendConfirmationEmailToCustomer(array $cart, array $cartGroupedByPickupDay, array $products, ?array $pickupDayEntities): null
     {
@@ -870,6 +898,10 @@ class CartService
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $cart
+     * @param \App\Model\Entity\Product[] $products
+     */
     private function generateRightOfWithdrawalInformationAndForm(array $cart, array $products): string
     {
         $manufacturers = [];
@@ -893,6 +925,9 @@ class CartService
         return $pdfWriter->writeAttachment();
     }
 
+    /**
+     * @param array<string, mixed> $cart
+     */
     private function generateOrderConfirmation(array $cart): string
     {
 

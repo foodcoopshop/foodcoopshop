@@ -39,6 +39,9 @@ class ProductReaderService extends Reader {
         return $preparedRecords;
     }
 
+    /**
+     * @param array<string, mixed> $record
+     */
     private function formatColumnsAndSetDefaultValues(array $record): array
     {
         $record[__('Gross_price')] = isset($record[__('Gross_price')]) ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Gross_price')]) : 0;
@@ -48,6 +51,9 @@ class ProductReaderService extends Reader {
         return $record;
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $entities
+     */
     public function getAllErrors(array $entities): array
     {
         $errors = [];
@@ -61,6 +67,9 @@ class ProductReaderService extends Reader {
         return $errors;
     }
 
+    /**
+     * @param \App\Model\Entity\Product[] $entities
+     */
     public function areAllEntitiesValid(array $entities): bool
     {
         $allEntitiesValid = true;
