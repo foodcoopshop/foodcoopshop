@@ -30,7 +30,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
     private array $productIds;
 
     /**
-     * @param list<int> $productIds
+     * @param list<int|string> $productIds
      */
     public function setProductIds(array $productIds): void
     {
