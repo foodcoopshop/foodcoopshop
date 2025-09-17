@@ -546,9 +546,9 @@ class ActionLogsTable extends AppTable
     {
         $data2save = [
             'type' => $type,
-            'customer_id' => $customerId,
-            'object_id' => $objectId,
-            'object_type' => $objectType,
+            'customer_id' => $customerId ?? 0,
+            'object_id' => $objectId ?? 0,
+            'object_type' => $objectType ?? '',
             'text' => $text,
             'date' => is_null($time) ? DateTime::now() : $time
         ];
