@@ -30,6 +30,9 @@ use stdClass;
 class ProductQuantityService
 {
 
+    /**
+     * @param Unit|UnitProduct|UnitProductAttribute|stdClass|array<string>|null $unit
+     */
     public function isAmountBasedOnQuantityInUnits(Product|stdClass $product, Unit|UnitProduct|UnitProductAttribute|stdClass|array|null $unit): bool
     {
         if (empty($product->manufacturer)) {
@@ -41,11 +44,17 @@ class ProductQuantityService
                (!empty($unit) && $unit->price_per_unit_enabled && $unit->use_weight_as_amount);
     }
 
+    /**
+     * @param Unit|UnitProduct|UnitProductAttribute|stdClass|array<string>|null $unit
+     */
     public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck(Product|stdClass $product, Unit|UnitProduct|UnitProductAttribute|stdClass|array|null $unit): bool
     {
         return OrderCustomerService::isSelfServiceMode() && $this->isAmountBasedOnQuantityInUnits($product, $unit);
     }
 
+    /**
+     * @param array<string, mixed>|false $existingCartProduct
+     */
     public function getCombinedAmount(array|false $existingCartProduct, float $orderedQuantityInUnits): int|float
     {
         $combinedAmount = $orderedQuantityInUnits;

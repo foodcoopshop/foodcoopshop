@@ -35,6 +35,9 @@ abstract class PdfWriterService
         return $this;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function setData(array $data): static
     {
         $this->data = array_merge($this->data, $data);

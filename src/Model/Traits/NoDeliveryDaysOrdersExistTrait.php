@@ -21,6 +21,10 @@ use Cake\ORM\TableRegistry;
 trait NoDeliveryDaysOrdersExistTrait
 {
 
+    /**
+     * @param array<string>|string $value
+     * @param array<string, mixed> $context
+     */
     public function noDeliveryDaysOrdersExist(array|string $value, array $context): bool|string
     {
 

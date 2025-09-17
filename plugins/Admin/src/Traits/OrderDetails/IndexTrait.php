@@ -155,7 +155,11 @@ trait IndexTrait
 
     }
 
-    private function prepareGroupedOrderDetails(array $orderDetails, string $groupBy): array
+     /**
+     * @param array<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return \App\Model\Entity\OrderDetail[]
+     */
+   private function prepareGroupedOrderDetails(array $orderDetails, string $groupBy): array
     {
 
         $preparedOrderDetails = [];

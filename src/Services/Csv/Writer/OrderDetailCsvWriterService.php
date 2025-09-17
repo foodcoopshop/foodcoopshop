@@ -48,7 +48,7 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
             __('Pickup_day'),
             __('Order state'),
             __('Cart type'),
-            __('Order date'),
+            __('Order_date'),
         ];
         return $header;
     }

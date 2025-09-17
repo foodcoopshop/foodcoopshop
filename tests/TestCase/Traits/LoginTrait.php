@@ -91,6 +91,9 @@ trait LoginTrait
         $this->get($this->Slug->getLogout());
     }
 
+    /**
+     * @param array<mixed> $session
+     */
     public function loginAsSuperadminAddOrderCustomerToSession(array $session): void
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));

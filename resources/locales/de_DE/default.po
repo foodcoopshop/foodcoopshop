@@ -835,8 +835,20 @@ msgstr "Beim Löschen des Produktes sind Fehler aufgetreten"
 msgid "Copy product?"
 msgstr "Produkt kopieren?"
 
-msgid "Really copy product {0}?"
-msgstr "Möchtest du das Produkt {0} wirklich kopieren?"
+msgid "Really copy product?"
+msgstr "Möchtest du das Produkt wirklich kopieren?"
+
+msgid "Really copy products?"
+msgstr "Möchtest du die Produkte wirklich kopieren?"
+
+msgid "The following data <b>won\'t</b> be copied:"
+msgstr "Folgende Daten werden <b>nicht</b> kopiert:"
+
+msgid "Status of copy(s): <b>deactivated</b>"
+msgstr "Status der Kopie(n): <b>deaktiviert</b>"
+
+msgid "Products with attributes cannot be copied yet: "
+msgstr "Produkte mit Varianten können leider noch nicht kopiert werden: "
 
 msgid "Amount of copies:"
 msgstr "Anzahl der Kopien:"
@@ -889,7 +901,7 @@ msgstr "Bestellstatus"
 msgid "Cart type"
 msgstr "Bestell-Typ"
 
-msgid "Order date"
+msgid "Order_date"
 msgstr "Bestelldatum"
 
 msgid "Why_is_pickup_day_changed_(optional_field)?"
@@ -1102,6 +1114,9 @@ msgstr "Kurze Beschreibung"
 
 msgid "Description_long"
 msgstr "Lange Beschreibung"
+
+msgid "Descriptions"
+msgstr "Beschreibungen"
 
 msgid "Product_declaration_ok?"
 msgstr "Produktdeklaration OK?"

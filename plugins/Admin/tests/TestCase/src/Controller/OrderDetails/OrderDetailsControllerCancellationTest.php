@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
-use Cake\TestSuite\TestEmailTransport;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
@@ -197,6 +196,9 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     }
 
+    /**
+     * @param int[] $orderDetailIds
+     */
     private function deleteAndAssertRemoveFromDatabase(array $orderDetailIds): void
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
@@ -204,6 +206,9 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertEmpty($orderDetails);
     }
 
+    /**
+     * @param string[] $expectedToEmails
+     */
     private function assertOrderDetailDeletedEmails(int $emailIndex, array $expectedToEmails): void
     {
 
@@ -221,6 +226,9 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     }
 
+    /**
+     * @param int[] $orderDetailIds
+     */
     private function deleteOrderDetail(array $orderDetailIds, string $cancellationReason): void
     {
         $this->ajaxPost(

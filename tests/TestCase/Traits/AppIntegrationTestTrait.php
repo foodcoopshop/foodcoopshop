@@ -23,6 +23,9 @@ trait AppIntegrationTestTrait
         $this->get($url);
     }
 
+    /**
+     * @param array<mixed> $data
+     */
     public function ajaxPost(string $url, array $data = []): void
     {
         $this->configRequest($this->ajaxHeaders);

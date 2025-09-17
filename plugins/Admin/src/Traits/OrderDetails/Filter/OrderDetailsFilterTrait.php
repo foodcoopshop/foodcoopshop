@@ -91,6 +91,9 @@ trait OrderDetailsFilterTrait
         return '';
     }
 
+    /**
+     * @param array<string> $pickupDay
+     */
     public function getOrderDetails(
         int|string $manufacturerId,
         int|string $productId,
@@ -198,6 +201,10 @@ trait OrderDetailsFilterTrait
         return $query;
     }
 
+    /**
+     * @param array<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return \App\Model\Entity\OrderDetail[]
+     */
     private function applyUngroupedDefaultSort(array $orderDetails): array
     {
         $deliveryDay = [];

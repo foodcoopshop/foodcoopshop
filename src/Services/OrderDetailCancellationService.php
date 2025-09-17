@@ -10,7 +10,6 @@ use Cake\Routing\Router;
 use App\Model\Entity\OrderDetail;
 use Admin\Traits\OrderDetails\UpdateOrderDetailsTrait;
 use Cake\Utility\Text;
-use PSpell\Config;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,6 +29,9 @@ class OrderDetailCancellationService
 {
     use UpdateOrderDetailsTrait;
     
+    /**
+     * @param list<int> $orderDetailIds
+     */
     public function delete(array $orderDetailIds, string $cancellationReason): string
     {
         $identity = null;
@@ -119,7 +121,7 @@ class OrderDetailCancellationService
             }
 
             if (!empty($recipientNames)) {
-                $message .= __d('admin', 'An_email_was_sent_to_{0}.', [Text::toList($recipientNames)]);
+                $message .= ' '.__d('admin', 'An_email_was_sent_to_{0}.', [Text::toList($recipientNames)]);
             }
 
             if ($cancellationReason != '') {

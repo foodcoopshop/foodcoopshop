@@ -29,6 +29,9 @@ trait PaginatedProductsTrait
         }
     }
 
+    /**
+     * @param array<array<string, mixed>> $products
+     */
     public function throw404IfNoProductsOnPaginatedPageFound(array $products, int $page): void
     {
         if (count($products) == 0 && $page > 1) {

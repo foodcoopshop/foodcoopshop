@@ -319,6 +319,9 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Kundenkonto erstellen');
     }
 
+    /**
+     * @param array<mixed> $data
+     */
     private function saveAndCheckValidCustomer(array $data, string $email): Customer
     {
 
@@ -463,6 +466,9 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
+    /**
+    * @param array<mixed> $data
+    */
     private function addCustomer(array $data): ResponseInterface
     {
         $this->post($this->Slug->getRegistration(), $data);

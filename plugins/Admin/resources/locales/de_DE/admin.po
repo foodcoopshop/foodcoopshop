@@ -2523,3 +2523,9 @@ msgstr "{0} - Kopie {1}"
 
 msgid "Product was copied successfully."
 msgstr "Produkt erfolgreich kopiert."
+
+msgid "{0,plural,=1{Product was copied successfully.} other{Products were copied successfully.}}"
+msgstr "{0,plural,=1{Ein Produkt wurde erfolgreich kopiert.} other{# Produkte wurden erfolgreich kopiert.}}"
+
+msgid "No copyable products were found."
+msgstr "Keine kopierbaren Produkte gefunden."

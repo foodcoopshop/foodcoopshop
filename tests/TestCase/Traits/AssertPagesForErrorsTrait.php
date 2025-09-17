@@ -19,6 +19,9 @@ namespace App\Test\TestCase\Traits;
 trait AssertPagesForErrorsTrait
 {
 
+    /**
+     * @param array<string> $testPages
+     */
     protected function assertPagesForErrors(array $testPages): void
     {
         foreach ($testPages as $url) {

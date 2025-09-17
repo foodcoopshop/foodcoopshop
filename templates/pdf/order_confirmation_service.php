@@ -96,7 +96,7 @@ if (!empty($manufacturers)) {
 
             if (Configure::read('app.isDepositEnabled')) {
                 $deposit = $orderDetail->deposit;
-                if ($deposit > 0) {
+                if ($deposit != 0) {
                     $sumDeposit += $deposit;
                     $deposit = $this->MyNumber->formatAsCurrency($deposit);
                 } else {

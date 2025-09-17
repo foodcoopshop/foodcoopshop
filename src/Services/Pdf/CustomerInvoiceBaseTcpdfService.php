@@ -57,6 +57,9 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
         $this->table .= '</tr></thead>';
     }
 
+    /**
+     * @param array<int, string> $values
+     */
     protected function renderTableRow(array $values): void
     {
         $i = 0;

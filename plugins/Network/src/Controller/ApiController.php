@@ -43,6 +43,9 @@ class ApiController extends Controller
         $this->set('identity', $identity);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $productsData
+     */
     private function getProductDetailLinks(array $productsData): string
     {
         $productDetailLinks = [];

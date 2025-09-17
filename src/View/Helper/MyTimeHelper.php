@@ -78,6 +78,9 @@ class MyTimeHelper extends TimeHelper
         return $monthsAndYear;
     }
 
+    /**
+     * @param array<string> $array
+     */
     public function sortArrayByDate(array $array): array
     {
         usort($array, function($a, $b) {

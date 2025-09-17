@@ -571,6 +571,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertEquals($expectedOrderState, $newOrderDetail->order_state);
     }
 
+    /**
+     * @param array<int> $clearText
+     * @param array<int> $anonymous
+     */
     private function assertGenerationOfOrderLists(string $datePath, array $clearText, array $anonymous): void
     {
         $path = realpath(Configure::read('app.folder_order_lists') . DS . $datePath);

@@ -143,6 +143,9 @@ class SendInvoicesToManufacturersCommand extends AppCommand
 
     }
 
+    /**
+     * @param \App\Model\Entity\Manufacturer[] $manufacturers
+     */
     protected function getActionLogData(array $manufacturers): string
     {
 

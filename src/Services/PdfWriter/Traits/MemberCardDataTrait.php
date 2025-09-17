@@ -22,6 +22,9 @@ use Cake\ORM\Query\SelectQuery;
 trait MemberCardDataTrait
 {
 
+    /**
+     * @param list<int|string> $customerIds
+     */
     public function getMemberCardCustomerData(array $customerIds): SelectQuery
     {
 

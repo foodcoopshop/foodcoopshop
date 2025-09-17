@@ -173,11 +173,15 @@ class ProductsForBackendService
         return $preparedProducts;
     }
 
+    /**
+     * @param list<string>|string $productIds
+     * @param list<string>|string $categoryId
+     */
     public function getQuery(
         array|string $productIds,
         int|string $manufacturerId,
         string $active,
-        string|array $categoryId = '',
+        array|string $categoryId = '',
         int|string $storageLocationId = '',
     ): SelectQuery {
 
@@ -303,6 +307,9 @@ class ProductsForBackendService
         return $productName;
     }
 
+    /** 
+     * @param array<string, mixed> $preparedProduct
+     */
     private function addPurchasePriceRelatedInfoToAttribute(array $preparedProduct, ProductAttribute $attribute, float $taxRate, float $grossPrice, float $purchasePriceTaxRate): array {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             return $preparedProduct;

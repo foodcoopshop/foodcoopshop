@@ -41,7 +41,7 @@ use Cake\Core\Configure;
             'error',
             'custom',
         ]);
-        if ($isMobile) {
+        if (isset($isMobile) && $isMobile) {
             echo $this->Html->css(['mobile-error']);
         }
     ?>

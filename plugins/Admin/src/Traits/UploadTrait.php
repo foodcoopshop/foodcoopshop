@@ -36,6 +36,9 @@ trait UploadTrait
         }
     }
 
+    /**
+     * @param array<string, array{suffix: string}> $imageSizes
+     */
     protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string|bool
     {
 
@@ -53,7 +56,7 @@ trait UploadTrait
             $image = $manager->read(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($image->height() > $image->width()) {
-                $thumbSize = (int) round($thumbSize * ($image->width() / $image->height()), 0);
+                $thumbSize = (int) round((int) $thumbSize * ($image->width() / $image->height()), 0);
             }
             $image->scale($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;

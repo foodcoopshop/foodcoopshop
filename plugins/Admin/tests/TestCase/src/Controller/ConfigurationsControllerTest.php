@@ -28,6 +28,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
+     * @param string|array<string> $newValue
      */
     protected function changeConfigurationEditForm(string $configKey, string|array $newValue): void
     {
@@ -135,6 +136,9 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ];
     }
 
+    /**
+     * @param string[] $testUrls
+     */
     private function assertShowProductForGuestsEnabledOrLoggedIn(array $testUrls, bool $expectPrice): void
     {
         $this->assertPagesForErrors($testUrls);

@@ -20,6 +20,9 @@ use Cake\Core\Configure;
 trait TaxSumTableTrait
 {
 
+    /**
+     * @param array<int, array<string, float>>|false $taxRates
+     */
     public function renderTaxSumTable(array|false $taxRates): void
     {
 

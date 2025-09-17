@@ -30,6 +30,10 @@ use App\Controller\Component\StringComponent;
  */
 class OutputFilterService
 {
+
+    /**
+     * @param array<string, string> $searchAndReplace
+     */
     public static function replace(string $text, array $searchAndReplace): string
     {
 

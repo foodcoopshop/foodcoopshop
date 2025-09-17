@@ -32,6 +32,10 @@ abstract class OrderListPdfWriterService extends PdfWriterService
         $this->setPdfLibrary(new ListTcpdfService());
     }
 
+    /**
+     * @param list<int> $validOrderStates
+     * @param list<int> $orderDetailIds
+     */
     public function prepareAndSetData(int $manufacturerId, string $pickupDay, array $validOrderStates, array $orderDetailIds, bool $isAnonymized): void
     {
 

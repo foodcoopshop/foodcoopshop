@@ -34,6 +34,9 @@ class OrderDetailsPdfWriterService extends PdfWriterService
 
     }
 
+    /**
+     * @param list<string> $pickupDay
+     */
     public function prepareAndSetData(array $pickupDay, ?string $order): void
     {
 

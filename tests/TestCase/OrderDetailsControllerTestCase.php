@@ -82,6 +82,9 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');
     }
 
+    /**
+     * @param array<int> $orderDetailIds
+     */
     protected function getOrderDetailsFromDatabase(array $orderDetailIds): array
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
