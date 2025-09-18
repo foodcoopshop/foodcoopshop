@@ -93,25 +93,27 @@ use App\Model\Entity\OrderDetail;
             <?php if ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
-            <?php echo $this->Form->control('categoryIds', [
-                'type' => 'select',
-                'label' => '',
-                'multiple' => true,
-                'empty' => __d('admin', 'Category'),
-                'options' => $categoriesForDropdown,
-                'default' => isset($categoryIds) ? $categoryIds : ''
-            ]); ?>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
             <?php } ?>
             <?php if ($identity->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
-<?php } ?>
+            <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <?php
-                if ($filterByCartTypeEnabled) {
+                if ($additionalFiltersEnabled) {
                     echo $this->Form->control('cartType', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_cart_types'), 'options' => $this->Html->getCartTypes(), 'default' => $cartType]);
+                    echo '<span style="margin-left: 3px;">'; // really strange - but gap would be missing here
+                        echo $this->Form->control('categoryIds', [
+                            'type' => 'select',
+                            'label' => '',
+                            'multiple' => true,
+                            'empty' => __d('admin', 'Category'),
+                            'options' => $categoriesForDropdown,
+                            'default' => isset($categoryIds) ? $categoryIds : ''
+                        ]);
+                    echo '</span>';
                 }
             ?>
         <?php echo $this->Form->end(); ?>
@@ -160,7 +162,7 @@ use App\Model\Entity\OrderDetail;
                 'deposit' => $deposit,
                 'orderDetails' => $orderDetails ?? [],
                 'groupBy' => $groupBy,
-                'filterByCartTypeEnabled' => $filterByCartTypeEnabled,
+                'additionalFiltersEnabled' => $additionalFiltersEnabled,
             ]);
 
             ?>

@@ -2080,8 +2080,8 @@ msgstr "Markierte Produkte stornieren"
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
 
-msgid "Filter_by_cart_type"
-msgstr "Nach Bestell-Typ filtern"
+msgid "Show additional filters"
+msgstr "Zusätzliche Filter anzeigen"
 
 msgid "Orders_as_pdf"
 msgstr "Bestellungen als PDF"

@@ -54,11 +54,11 @@ trait IndexTrait
         $cartType = h($this->getRequest()->getQuery('cartType', $this->getDefaultCartType()));
         $this->set('cartType', $cartType);
 
-        $filterByCartTypeEnabled = h($this->getRequest()->getQuery('filterByCartTypeEnabled', $this->getDefaultFilterByCartTypeEnabled($cartType)));
-        $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
-
         $categoryIds = h($this->getRequest()->getQuery('categoryIds', $this->getDefaultCategoryIds()));
         $this->set('categoryIds', $categoryIds);
+
+        $additionalFiltersEnabled = h($this->getRequest()->getQuery('additionalFiltersEnabled', $this->getDefaultAdditionalFiltersEnabled($cartType, $categoryIds)));
+        $this->set('additionalFiltersEnabled', $additionalFiltersEnabled);
 
         $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
         if ($this->identity->isManufacturer() && $groupBy != 'product') {

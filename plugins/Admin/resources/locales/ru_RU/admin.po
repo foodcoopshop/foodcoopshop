@@ -2048,8 +2048,8 @@ msgstr "Отменить выбранные товары"
 msgid "Copy_all_email_addresses"
 msgstr "Копировать все адреса эл.почты"
 
-msgid "Filter_by_cart_type"
-msgstr "Фильтр по типу заказа"
+msgid "Show additional filters"
+msgstr "Показать дополнительные фильтры"
 
 msgid "Orders_as_pdf"
 msgstr "Заказы в PDF"

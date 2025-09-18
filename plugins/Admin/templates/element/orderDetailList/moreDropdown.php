@@ -57,8 +57,8 @@ $buttons[] = $this->element('orderDetailList/button/multiplePickupDays', [
     'pickupDay' => $pickupDay
 ]);
 
-$buttons[] = $this->element('orderDetailList/button/filterByCartTypeEnabled', [
-    'filterByCartTypeEnabled' => $filterByCartTypeEnabled,
+$buttons[] = $this->element('orderDetailList/button/additionalFiltersEnabled', [
+    'additionalFiltersEnabled' => $additionalFiltersEnabled,
 ]);
 
 echo $this->element('dropdownWithButtons', [

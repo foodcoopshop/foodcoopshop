@@ -81,9 +81,12 @@ trait OrderDetailsFilterTrait
         return null;
     }
 
-    public function getDefaultFilterByCartTypeEnabled(int|string|null $cartType): bool
+    /**
+     * @param string|list(int) $categoryIds
+     */
+    public function getDefaultAdditionalFiltersEnabled(int|string|null $cartType, array|string $categoryIds): bool
     {
-        return !is_null($cartType);
+        return !is_null($cartType) || (!empty($categoryIds));
     }
 
     public function getDefaultGroupBy(): string
