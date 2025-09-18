@@ -82,7 +82,7 @@ trait OrderDetailsFilterTrait
     }
 
     /**
-     * @param string|list(int) $categoryIds
+     * @param string|list<int> $categoryIds
      */
     public function getDefaultAdditionalFiltersEnabled(int|string|null $cartType, array|string $categoryIds): bool
     {
