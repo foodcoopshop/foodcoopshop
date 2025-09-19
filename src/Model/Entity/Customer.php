@@ -265,6 +265,9 @@ class Customer extends AppEntity implements IdentityInterface
         return $cartType;
     }
 
+    /**
+     * @param array<string, mixed> $cart
+     */
     public function setCart(array $cart): void
     {
         $this->cart = $cart;

@@ -91,6 +91,9 @@ class InvoicesTable extends AppTable
         return $invoices;
     }
 
+    /**
+     * @param array<int|string, mixed> $data
+     */
     public function clearZeroArray(array $data): array
     {
         foreach($data as $key => $value) {
@@ -101,6 +104,9 @@ class InvoicesTable extends AppTable
         return $data;
     }
 
+    /**
+     * @param \App\Model\Entity\Invoice[] $invoices
+     */
     public function getPreparedTaxRatesForSumTable(array $invoices): array
     {
 
@@ -215,7 +221,11 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice): array // @phpstan-ignore-line
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     * @param array<int, mixed> $returnedDeposits
+     */
+    public function prepareDataForCustomerInvoice(array $orderDetails, array $returnedDeposits, ?Invoice $cancelledInvoice): array
     {
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
@@ -328,6 +338,11 @@ class InvoicesTable extends AppTable
         return $preparedData;
     }
 
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     * @param array<string, mixed> $orderedDeposit
+     * @param array<string, mixed> $returnedDeposit
+     */
     private function getSumsTaxBasedOnNetInvoiceSum(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array
     {
 
@@ -353,6 +368,11 @@ class InvoicesTable extends AppTable
 
     }
 
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     * @param array<string, mixed> $orderedDeposit
+     * @param array<string, mixed> $returnedDeposit
+     */
     private function getSums(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array 
     {
 
@@ -392,6 +412,9 @@ class InvoicesTable extends AppTable
         return $lastInvoice;
     }
 
+    /**
+     * @param array<float, array<string, float>> $taxRates
+     */
     public function saveInvoice(
         null|int|string $invoiceId,
         int $customerId,
@@ -466,6 +489,9 @@ class InvoicesTable extends AppTable
 
     }
 
+    /**
+     * @param \App\Model\Entity\Invoice[]|null $invoices
+     */
     public function getNextInvoiceNumberForManufacturer(?array $invoices): string
     {
         $invoiceNumber = 1;

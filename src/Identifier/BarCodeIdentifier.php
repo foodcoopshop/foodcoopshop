@@ -40,6 +40,9 @@ class BarCodeIdentifier extends AbstractIdentifier
         return $table->getBarcodeFieldString();
     }
 
+    /**
+     * @param array<string, mixed> $credentials
+     */
     public function identify(array $credentials): ArrayAccess|array|null
     {
 

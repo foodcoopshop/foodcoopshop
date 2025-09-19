@@ -57,6 +57,10 @@ class StockAvailablesTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $stockAvailable2saveData
+     * @param array<int, array<string, mixed>> $stockAvailable2saveConditions
+     */
     public function saveStockAvailable(array $stockAvailable2saveData, array $stockAvailable2saveConditions): void
     {
         $i = 0;

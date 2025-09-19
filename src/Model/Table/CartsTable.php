@@ -228,6 +228,9 @@ class CartsTable extends AppTable
         return $preparedCart;
     }
 
+    /**
+     * @param array<string, mixed> $cart
+     */
     public function getCartGroupedByPickupDay(array $cart, ?string $customerSelectedPickupDay=null): array
     {
         $manufacturerName = [];
@@ -264,6 +267,9 @@ class CartsTable extends AppTable
         return $cart;
     }
 
+    /**
+     * @param array<string, mixed> $productData
+     */
     private function addPurchasePricePerUnitProductData(array $productData, UnitProduct|UnitProductAttribute $unitProduct): array
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -272,6 +278,9 @@ class CartsTable extends AppTable
         return $productData;
     }
 
+    /**
+     * @param list<array> $productData
+     */
     private function getProductsWithUnitCount(array $productData): int
     {
         $count = 0;
