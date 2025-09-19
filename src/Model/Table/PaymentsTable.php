@@ -242,6 +242,9 @@ class PaymentsTable extends AppTable
         return $query->toArray();
     }
 
+    /**
+     * @param \App\Model\Entity\Payment[] $payments
+     */
     public function onInvoiceCancellation(array $payments): void
     {
         foreach($payments  as $payment) {

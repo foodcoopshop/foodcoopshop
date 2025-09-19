@@ -262,6 +262,9 @@ class ProductsTable extends AppTable
         return $compositeId;
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeStatus(array $products): bool
     {
 
@@ -294,6 +297,9 @@ class ProductsTable extends AppTable
         return $success;
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeDeposit(array $products): bool
     {
 
@@ -370,6 +376,9 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changePrice(array $products): bool
     {
 
@@ -455,6 +464,9 @@ class ProductsTable extends AppTable
 
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeQuantity(array $products): void
     {
 
@@ -495,6 +507,9 @@ class ProductsTable extends AppTable
         }
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeDeliveryRhythm(array $products): bool
     {
 
@@ -531,6 +546,9 @@ class ProductsTable extends AppTable
         return $success;
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeIsStockProduct(array $products): bool
     {
 
@@ -564,6 +582,9 @@ class ProductsTable extends AppTable
 
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeName(array $products): bool
     {
 
@@ -773,6 +794,9 @@ class ProductsTable extends AppTable
         }
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
     public function changeImage(array $products): bool
     {
 

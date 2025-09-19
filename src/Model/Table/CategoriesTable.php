@@ -22,6 +22,8 @@ use App\Model\Entity\Category;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * 
+ * @mixin \Cake\ORM\Behavior\TreeBehavior
  */
 class CategoriesTable extends AppTable
 {
@@ -64,30 +66,32 @@ class CategoriesTable extends AppTable
 
     }
 
-    private function flattenNestedArrayWithChildren(array $items, bool $renderParentIdAndChildrenIdContainers, string $separator = ''): array
+    /**
+     * @param \App\Model\Entity\Category[] $categories
+     */
+    private function flattenNestedArrayWithChildren(array $categories, bool $renderParentIdAndChildrenIdContainers, string $separator = ''): array
     {
-        foreach ($items as $item) {
+        foreach ($categories as $category) {
             $statusString = '';
-            if (! $item->active) {
+            if (! $category->active) {
                 $statusString = ' ('.__('offline').')';
             }
 
             $parentIdString = '';
             $childrenIdsString = '';
             if ($renderParentIdAndChildrenIdContainers) {
-                if ($item->id_parent > 0) {
-                    $parentIdString = '<span class="parent-id hide">' . $item->id_parent . '</span>';
+                if ($category->id_parent > 0) {
+                    $parentIdString = '<span class="parent-id hide">' . $category->id_parent . '</span>';
                 }
-                $childrenIds = $this->getChildrenIds($item);
+                $childrenIds = $this->getChildrenIds($category);
                 if (count($childrenIds) > 0) {
                     $childrenIdsString = '<span class="children-ids hide">' . join(',', $childrenIds) . '</span>';
                 }
             }
-            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString . $childrenIdsString;
-            if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, $renderParentIdAndChildrenIdContainers, str_repeat('-',
-                /** @phpstan-ignore-next-line */
-                $this->getLevel($item) + 1) . ' ');
+            $this->flattenedArray[$category->id_category] = $separator . $category->name . $statusString . $parentIdString . $childrenIdsString;
+            if (! empty($category['children'])) {
+                $this->flattenNestedArrayWithChildren($category->children, $renderParentIdAndChildrenIdContainers, str_repeat('-',
+                $this->getLevel($category) + 1) . ' ');
             }
         }
 
@@ -109,6 +113,9 @@ class CategoriesTable extends AppTable
         return $this->aliasField('id_category') . ' NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
     }
 
+    /**
+     * @param array<int|string, mixed> $conditions
+     */
     public function getThreaded(array $conditions = []): SelectQuery
     {
         $conditions = array_merge($conditions, [

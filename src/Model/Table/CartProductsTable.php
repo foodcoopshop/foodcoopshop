@@ -354,6 +354,9 @@ class CartProductsTable extends AppTable
 
     }
 
+    /**
+     * @param \App\Model\Entity\CartProduct[] $cartProducts
+     */
     public function setPickupDays(array $cartProducts, int $customerId): array
     {
         $pickupDaysTable = TableRegistry::getTableLocator()->get('PickupDays');

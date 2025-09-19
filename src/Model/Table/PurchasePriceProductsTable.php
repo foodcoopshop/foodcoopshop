@@ -102,6 +102,9 @@ class PurchasePriceProductsTable extends AppTable
 
     }
 
+    /**
+     * @param list<int> $productIds
+     */
     public function getSellingPricesWithSurcharge(array $productIds, float $surcharge): array
     {
 

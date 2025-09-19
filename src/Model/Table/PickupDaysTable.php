@@ -52,6 +52,9 @@ class PickupDaysTable extends AppTable
         return $result;
     }
 
+    /**
+     * @param \App\Model\Entity\CartProduct[] $cartProducts
+     */
     public function getUniquePickupDays(array $cartProducts): array
     {
         $uniquePickupDays = [];
@@ -63,6 +66,10 @@ class PickupDaysTable extends AppTable
         return array_unique($uniquePickupDays);
     }
 
+    /**
+     * @param array<string, int|string> $conditions
+     * @param array<string, mixed> $data
+     */
     public function insertOrUpdate(array $conditions, array $data): EntityInterface|false
     {
         $this->setPrimaryKey(['customer_id', 'pickup_day']);

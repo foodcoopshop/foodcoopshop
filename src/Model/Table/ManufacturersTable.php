@@ -337,6 +337,9 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
+    /**
+     * @param array<int, mixed> $results
+     */
     public function anonymizeCustomersInInvoiceOrOrderList(array $results): array
     {
         return array_map(function ($data) {
@@ -356,12 +359,16 @@ class ManufacturersTable extends AppTable
         return FormatterService::assureCorrectFloat($depositBalance);
     }
 
+    /**
+     * @param list<int> $orderStates
+     * @param list<int> $orderDetailIds
+     */
     public function getDataForInvoiceOrOrderList(
         int $manufacturerId,
         string $order,
         string $dateFrom,
         ?string $dateTo,
-        array $orderState,
+        array $orderStates,
         bool $includeStockProducts,
         array $orderDetailIds = [],
         ): array
@@ -378,7 +385,7 @@ class ManufacturersTable extends AppTable
 
         if (is_null($dateTo)) {
             // order list
-            // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
+            // do not use params for $orderStates, it will result in IN ('3,2,1') which is wrong
             $orderDetailCondition = "AND od.id_order_detail IN (" . join(',', $orderDetailIds) . ")" ;
             $dateConditions = "";
         } else {
@@ -395,10 +402,10 @@ class ManufacturersTable extends AppTable
             $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
         }
 
-        $orderStateCondition = "";
-        if (!empty($orderState)) {
-            // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
-            $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
+        $orderStatesCondition = "";
+        if (!empty($orderStates)) {
+            // do not use params for $orderStates, it will result in IN ('3,2,1') which is wrong
+            $orderStatesCondition = "AND od.order_state IN (" . join(',', $orderStates) . ")";
         }
 
         $customerNameAsSql = $customersTable->getCustomerName('c');
@@ -434,7 +441,7 @@ class ManufacturersTable extends AppTable
             {$dateConditions}
             AND m.id_manufacturer = :manufacturerId
             AND ma.id_manufacturer > 0
-            {$orderStateCondition}
+            {$orderStatesCondition}
             {$includeStockProductCondition}
             {$orderDetailCondition}
             ORDER BY {$orderClause}, DATE_FORMAT(od.created, '%d.%m.%Y, %H:%i') DESC;";

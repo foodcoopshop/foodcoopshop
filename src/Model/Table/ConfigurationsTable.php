@@ -219,6 +219,9 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @param array<int|string, mixed> $customConditions
+     */
     public function getConfigurations(array $customConditions = []): SelectQuery
     {
         $conditions = array_merge([

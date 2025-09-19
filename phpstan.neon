@@ -29,7 +29,7 @@ parameters:
           paths:
             - src/Services/HelloCash/HelloCashService.php
             - plugins/Admin/src/Controller/HelloCashController.php
-        - message: '#Method .* has parameter .* with no value type specified in iterable type array.#'
+        #- message: '#Method .* has parameter .* with no value type specified in iterable type array.#'
         - message: '#Method .* return type has no value type specified in iterable type array.#'
         - message: '#Property .* type has no value type specified in iterable type array.#'
         - message: '#Class .* extends generic class .* but does not specify its types: .*#'
