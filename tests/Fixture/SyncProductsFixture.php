@@ -22,6 +22,9 @@ class SyncProductsFixture extends AppFixture
 
     public string $table = 'fcs_sync_products';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

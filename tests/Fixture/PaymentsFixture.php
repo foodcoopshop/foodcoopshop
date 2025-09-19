@@ -23,6 +23,9 @@ class PaymentsFixture extends AppFixture
 {
     public string $table = 'fcs_payments';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_payment' => 1,

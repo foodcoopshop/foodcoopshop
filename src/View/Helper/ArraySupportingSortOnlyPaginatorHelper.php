@@ -57,9 +57,7 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
     use StringTemplateTrait;
 
     /**
-     * List of helpers used by this helper
-     *
-     * @var array
+     * @var list<string>
      */
     protected array $helpers = ['Url', 'Number', 'Html', 'Form'];
 

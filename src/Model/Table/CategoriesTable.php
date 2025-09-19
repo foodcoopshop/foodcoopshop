@@ -30,6 +30,9 @@ class CategoriesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    /**
+     * @var array<int, string>
+     */
     private array $flattenedArray = [];
 
     public function initialize(array $config): void

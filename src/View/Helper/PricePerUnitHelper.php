@@ -21,7 +21,10 @@ use Cake\View\Helper;
 class PricePerUnitHelper extends Helper
 {
 
-    public array $helpers = ['MyHtml', 'MyNumber'];
+     /**
+     * @var list<string>
+     */
+    protected array $helpers = ['MyHtml', 'MyNumber'];
 
     /**
      * @param array<string, float> $unitSums

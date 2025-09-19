@@ -22,6 +22,9 @@ class SyncDomainsFixture extends AppFixture
 
     public string $table = 'fcs_sync_domains';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

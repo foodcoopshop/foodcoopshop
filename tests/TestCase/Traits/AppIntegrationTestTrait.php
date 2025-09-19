@@ -10,6 +10,9 @@ trait AppIntegrationTestTrait
 
     use IntegrationTestTrait;
 
+    /**
+     * @var array<string, array<string, string>>
+     */
     private array $ajaxHeaders = [
         'headers' => [
             'X_REQUESTED_WITH' => 'XMLHttpRequest',

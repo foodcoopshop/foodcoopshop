@@ -21,6 +21,9 @@ class BarcodesFixture extends AppFixture
 {
     public string $table = 'fcs_barcodes';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

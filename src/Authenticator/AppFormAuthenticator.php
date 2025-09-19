@@ -24,6 +24,9 @@ use Authentication\Identifier\TokenIdentifier;
 class AppFormAuthenticator extends FormAuthenticator
 {
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $_defaultConfig = [
         'urlChecker' => 'Authentication.Default',
         'fields' => [

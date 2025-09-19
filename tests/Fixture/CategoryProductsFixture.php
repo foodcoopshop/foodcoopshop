@@ -21,7 +21,9 @@ class CategoryProductsFixture extends AppFixture
 {
     public string $table = 'fcs_category_product';
 
-
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_category' => 20,

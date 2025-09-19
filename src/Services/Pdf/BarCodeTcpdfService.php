@@ -19,6 +19,9 @@ namespace App\Services\Pdf;
 class BarCodeTcpdfService extends AppTcpdfService
 {
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $barCodeStyle = [
         'position' => '',
         'align' => 'C',

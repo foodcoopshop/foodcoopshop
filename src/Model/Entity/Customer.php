@@ -27,6 +27,9 @@ use Cake\ORM\Query\SelectQuery;
 class Customer extends AppEntity implements IdentityInterface
 {
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $cart;
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];

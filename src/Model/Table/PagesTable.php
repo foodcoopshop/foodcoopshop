@@ -24,6 +24,9 @@ use Cake\ORM\Query\SelectQuery;
 class PagesTable extends AppTable
 {
 
+    /**
+     * @var array<int, string>
+     */
     private array $flattenedArray = [];
 
     public function initialize(array $config): void

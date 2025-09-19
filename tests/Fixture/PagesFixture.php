@@ -21,6 +21,9 @@ class PagesFixture extends AppFixture
 {
     public string $table = 'fcs_pages';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_page' => 3,

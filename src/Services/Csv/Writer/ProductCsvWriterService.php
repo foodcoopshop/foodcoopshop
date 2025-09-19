@@ -27,6 +27,9 @@ use App\Services\ProductsForBackendService;
 class ProductCsvWriterService extends BaseCsvWriterService
 {
 
+    /**
+     * @var list<int|string>
+     */
     private array $productIds;
 
     /**

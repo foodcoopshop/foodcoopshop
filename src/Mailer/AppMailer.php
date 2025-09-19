@@ -25,6 +25,9 @@ use Cake\ORM\TableRegistry;
 class AppMailer extends Mailer
 {
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $afterRunParams = [];
 
     public bool $customerAnonymizationForManufacturers = true;

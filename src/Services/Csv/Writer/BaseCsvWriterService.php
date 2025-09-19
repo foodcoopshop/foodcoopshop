@@ -32,6 +32,9 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 
 	public string $filename = 'export.csv';
 
+	/**
+	 * @var array<string, mixed>
+	 */
 	private array $requestQueryParams = [];
 
 	public function setFilename(string $filename): void

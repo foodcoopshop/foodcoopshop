@@ -21,6 +21,9 @@ class StockAvailablesFixture extends AppFixture
 {
     public string $table = 'fcs_stock_available';    
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_stock_available' => 132,

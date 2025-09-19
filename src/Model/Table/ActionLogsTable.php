@@ -24,6 +24,9 @@ use Cake\Datasource\EntityInterface;
 class ActionLogsTable extends AppTable
 {
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $types;
 
     public function initialize(array $config): void

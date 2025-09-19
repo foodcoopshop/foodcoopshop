@@ -21,6 +21,9 @@ class TaxesFixture extends AppFixture
 {
     public string $table = 'fcs_tax';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_tax' => 1,
