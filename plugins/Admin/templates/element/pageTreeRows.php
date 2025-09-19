@@ -21,7 +21,6 @@ use Cake\ORM\TableRegistry;
 $pageTable = TableRegistry::getTableLocator()->get('Pages');
 
 foreach ($pages as $page) {
-    /** @phpstan-ignore-next-line */
     $level = $pageTable->getLevel($page);
 
     $rowClass = [

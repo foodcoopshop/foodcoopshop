@@ -289,6 +289,9 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     */
     public function getTaxSums(array $orderDetails): array
     {
         $taxRates = [];
@@ -396,6 +399,10 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
 
+    /**
+     * @param list<int> $oldOrderStates
+     * @param list<int> $orderDetailIds
+     */
     public function updateOrderState(
         ?string $dateFrom,
         ?string $dateTo,
@@ -643,7 +650,10 @@ class OrderDetailsTable extends AppTable
         return $price * (100 - $variableMemberFee) / 100;
     }
 
-    public function prepareOrderDetailsGroupedByProduct(SelectQuery|array $orderDetails): array
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     */
+    public function prepareOrderDetailsGroupedByProduct(array $orderDetails): array
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
@@ -666,6 +676,9 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     */
     public function prepareOrderDetailsGroupedByManufacturer(array $orderDetails): array
     {
         $preparedOrderDetails = [];
@@ -691,7 +704,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * $param $orderDetails is already grouped!
+     * @param array<int, mixed> $orderDetails
      */
     public function prepareOrderDetailsGroupedByCustomer(array $orderDetails): array
     {
@@ -729,6 +742,9 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
+    /**
+     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     */
     public function onInvoiceCancellation(array $orderDetails): void
     {
         foreach($orderDetails as $orderDetail) {
@@ -749,6 +765,9 @@ class OrderDetailsTable extends AppTable
         }
     }
 
+    /**
+     * @param list<string> $pickupDay
+     */
     public function getOrderDetailParams(
         int|string $manufacturerId,
         int|string $productId,

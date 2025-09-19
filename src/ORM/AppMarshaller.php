@@ -21,6 +21,9 @@ use Cake\Log\Log;
 
 class AppMarshaller extends Marshaller
 {
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function _validate(array $data, string|bool $validator, bool $isNew): array
     {
         $errors = parent::_validate($data, $validator, $isNew);

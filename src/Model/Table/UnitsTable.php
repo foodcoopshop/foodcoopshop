@@ -43,6 +43,9 @@ class UnitsTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function isValidName(string $value, array $context): bool
     {
         return in_array($value, ['kg', 'g', 'l'], true);

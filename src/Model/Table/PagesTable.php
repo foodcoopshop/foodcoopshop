@@ -18,6 +18,8 @@ use Cake\ORM\Query\SelectQuery;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * 
+ * @mixin \Cake\ORM\Behavior\TreeBehavior
  */
 class PagesTable extends AppTable
 {
@@ -47,24 +49,29 @@ class PagesTable extends AppTable
         return $validator;
     }
 
-    private function flattenNestedArrayWithChildren(SelectQuery|array $items, string $separator = ''): array
+    /**
+     * @param \App\Model\Entity\Page[] $pages
+     */
+    private function flattenNestedArrayWithChildren(array $pages, string $separator = ''): array
     {
-        foreach ($items as $item) {
+        foreach ($pages as $page) {
             $statusString = '';
-            if (! $item->active) {
+            if (! $page->active) {
                 $statusString = ' ('.__('offline').')';
             }
-            $this->flattenedArray[$item->id_page] = $separator . $item->title . $statusString;
-            if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-',
-                /** @phpstan-ignore-next-line */
-                $this->getLevel($item) + 1) . ' ');
+            $this->flattenedArray[$page->id_page] = $separator . $page->title . $statusString;
+            if (! empty($page['children'])) {
+                $this->flattenNestedArrayWithChildren($page->children, str_repeat('-',
+                $this->getLevel($page) + 1) . ' ');
             }
         }
 
         return $this->flattenedArray;
     }
 
+    /**
+     * @param array<int|string, mixed> $conditions
+     */
     public function getThreaded(array $conditions = []): SelectQuery
     {
         $pages = $this->find('threaded',
@@ -88,7 +95,7 @@ class PagesTable extends AppTable
             $conditions[] = 'Pages.active > ' . APP_DEL;
         }
         $pages = $this->getThreaded($conditions);
-        $flattenedPages = $this->flattenNestedArrayWithChildren($pages);
+        $flattenedPages = $this->flattenNestedArrayWithChildren($pages->toArray());
         return $flattenedPages;
     }
 }

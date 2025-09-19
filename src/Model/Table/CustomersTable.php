@@ -211,6 +211,9 @@ class CustomersTable extends AppTable
         return $validator->equals('terms_of_use_accepted_date_checkbox', 1, __('Please_accept_the_terms_of_use.'));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function findAuth(SelectQuery $query, array $options): SelectQuery
     {
         $query->where([
@@ -494,6 +497,9 @@ class CustomersTable extends AppTable
         return $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
     }
 
+    /**
+     * @param array<int> $customerIds
+     */
     private function getProductBalanceSumForCustomerIds(array $customerIds): float
     {
 
@@ -571,6 +577,9 @@ class CustomersTable extends AppTable
         return $customerIds;
     }
 
+    /**
+     * @param array<int> $customerIds
+     */
     private function getDepositBalanceSumForCustomerIds(array $customerIds): float
     {
 
@@ -614,6 +623,10 @@ class CustomersTable extends AppTable
         return FormatterService::assureCorrectFloat($creditBalance);
     }
 
+
+    /**
+     * @param array<string, mixed> $conditions
+     */
     public function getForDropdown(bool $includeManufacturers = false, bool $includeOfflineCustomers = true, array $conditions = []): array
     {
 

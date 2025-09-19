@@ -32,6 +32,9 @@ class GenerateOrderListTask extends Task {
     public ?int $timeout = 30;
     public ?int $retries = 2;
 
+    /**
+     * @param list<int> $orderDetailIds
+     */
     private function generateOrderListProduct(bool $isAnonymized, Manufacturer $manufacturer, string $pickupDayDbFormat, string $currentDateForOrderLists, array $orderDetailIds): string
     {
         $pdfWriter = new OrderListByProductPdfWriterService();
@@ -44,6 +47,9 @@ class GenerateOrderListTask extends Task {
         return $productPdfFile;
     }
 
+    /**
+     * @param list<int> $orderDetailIds
+     */
     private function generateOrderListCustomer(bool $isAnonymized, Manufacturer $manufacturer, string $pickupDayDbFormat, string $currentDateForOrderLists, array $orderDetailIds): string
     {
         $pdfWriter = new OrderListByCustomerPdfWriterService();
@@ -56,6 +62,9 @@ class GenerateOrderListTask extends Task {
         return $customerPdfFile;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function run(array $data, int $jobId) : void
     {
 
