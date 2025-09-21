@@ -213,6 +213,7 @@ class CustomersTable extends AppTable
 
     /**
      * @param array<string, mixed> $options
+     * @param SelectQuery<\App\Model\Entity\Customer> $query
      * @return SelectQuery<\App\Model\Entity\Customer>
      */
     public function findAuth(SelectQuery $query, array $options): SelectQuery
@@ -226,6 +227,9 @@ class CustomersTable extends AppTable
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Customer> $query
+     */
     public function sortByVirtualField(SelectQuery $query, string $name): object
     {
         $sortedObject = (object) Hash::sort($query->toArray(), '{n}.' . $name, 'ASC', [

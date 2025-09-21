@@ -28,6 +28,7 @@ class ProductsForBackendService
 {
 
     /**
+     * @param SelectQuery<\App\Model\Entity\Product>|PaginatedInterface $query
      * @return list<mixed>
      */
     public function getPreparedProducts(SelectQuery|PaginatedInterface $query, bool $addProductNameToAttributes = false): array

@@ -43,6 +43,11 @@ class ConfigurationsTable extends AppTable
         $this->setPrimaryKey('name');
     }
 
+    /**
+     * @param EventInterface<\App\Model\Table\ConfigurationsTable> $event
+     * @param ArrayObject<string, mixed> $data
+     * @param ArrayObject<string, mixed> $options
+     */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         $request = Router::getRequest();

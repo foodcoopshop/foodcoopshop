@@ -58,6 +58,11 @@ class ManufacturersTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    /**
+     * @param EventInterface<\App\Model\Table\ManufacturersTable> $event
+     * @param ArrayObject<string, mixed> $data
+     * @param ArrayObject<string, mixed> $options
+     */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         if (isset($data['send_order_list_cc'])) {
