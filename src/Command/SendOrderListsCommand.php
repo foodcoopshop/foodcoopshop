@@ -161,6 +161,10 @@ class SendOrderListsCommand extends AppCommand
      * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
      * @param \App\Model\Entity\Manufacturer[] $manufacturers
      */
+    /**
+     * @param \App\Model\Entity\Manufacturer[] $manufacturers
+     * @return list<string>
+     */
     protected function getActionLogData(SelectQuery $orderDetails, array $manufacturers, string $pickupDay): array
     {
 

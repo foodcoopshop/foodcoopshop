@@ -534,6 +534,9 @@ class ActionLogsTable extends AppTable
         return $statement->execute();
     }
 
+    /**
+     * @return list<string>
+     */
     public function getHiddenTypesForManufacturersWithEnabledAnonymization(): array
     {
         $types = [];
@@ -558,6 +561,9 @@ class ActionLogsTable extends AppTable
         return $this->save($this->newEntity($data2save));
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getTypesForDropdown(): array
     {
         $result = [];

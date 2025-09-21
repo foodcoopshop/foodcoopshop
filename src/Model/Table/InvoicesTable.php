@@ -7,6 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery as OrmSelectQuery;
 use Cake\I18n\DateTime;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Invoice;
@@ -53,6 +54,9 @@ class InvoicesTable extends AppTable
         ]);
     }
 
+    /**
+     * @return list<\App\Model\Entity\Invoice>
+     */
     public function getLatestInvoicesForCustomer(int $customerId): array
     {
 
@@ -92,7 +96,8 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param array<int|string, mixed> $data
+     * @param array<int|string, array<string, float|int>> $data
+     * @return array<int|string, array<string, float|int>>
      */
     public function clearZeroArray(array $data): array
     {
@@ -106,6 +111,13 @@ class InvoicesTable extends AppTable
 
     /**
      * @param \App\Model\Entity\Invoice[] $invoices
+     */
+    /**
+     * @param list<\App\Model\Entity\Invoice> $invoices
+     * @return array{
+     *   taxRates: array<string, array<float|int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
+     *   taxRatesSums: array<string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>
+     * }
      */
     public function getPreparedTaxRatesForSumTable(array $invoices): array
     {
@@ -184,7 +196,7 @@ class InvoicesTable extends AppTable
             ],
             contain: [
                 'AddressCustomers',
-                'ActiveOrderDetails' => function (Query $q) use ($currentDay) {
+                'ActiveOrderDetails' => function (OrmSelectQuery $q) use ($currentDay) {
                     $q->where(function (QueryExpression $exp) use ($currentDay) {
                         return $exp->lte('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $currentDay);
                     });
@@ -224,6 +236,21 @@ class InvoicesTable extends AppTable
     /**
      * @param \App\Model\Entity\OrderDetail[] $orderDetails
      * @param array<int, mixed> $returnedDeposits
+     */
+    /**
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @param list<mixed> $returnedDeposits
+     * @return array{
+     *   active_order_details: list<\App\Model\Entity\OrderDetail>,
+     *   ordered_deposit: array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>},
+     *   returned_deposit: array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>},
+     *   tax_rates: array<mixed>,
+     *   sumPriceIncl: float|int,
+     *   sumPriceExcl: float|int,
+     *   sumTax: float|int,
+     *   cancelledInvoice: \App\Model\Entity\Invoice|null,
+     *   new_invoice_necessary: bool
+     * }
      */
     public function prepareDataForCustomerInvoice(array $orderDetails, array $returnedDeposits, ?Invoice $cancelledInvoice): array
     {
@@ -343,6 +370,12 @@ class InvoicesTable extends AppTable
      * @param array<string, mixed> $orderedDeposit
      * @param array<string, mixed> $returnedDeposit
      */
+    /**
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $orderedDeposit
+     * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $returnedDeposit
+     * @return array{priceIncl: float|int, priceExcl: float|int, tax: float|int}
+     */
     private function getSumsTaxBasedOnNetInvoiceSum(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array
     {
 
@@ -372,6 +405,12 @@ class InvoicesTable extends AppTable
      * @param \App\Model\Entity\OrderDetail[] $orderDetails
      * @param array<string, mixed> $orderedDeposit
      * @param array<string, mixed> $returnedDeposit
+     */
+    /**
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $orderedDeposit
+     * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $returnedDeposit
+     * @return array{priceIncl: float|int, priceExcl: float|int, tax: float|int}
      */
     private function getSums(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array 
     {

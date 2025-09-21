@@ -89,6 +89,9 @@ class HelloCashService
         return $responseObject;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getInvoicePostData($data, $userId, $paidInCash, $isPreview): array
     {
 
@@ -139,6 +142,9 @@ class HelloCashService
 
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     public function getOptions(): array
     {
         $authHeader = [];
@@ -246,6 +252,9 @@ class HelloCashService
         $service->run();
     }
 
+    /**
+     * @return array<string|float|int, array{sum_price_excl: float|int, sum_price_incl: float|int, sum_tax: float|int}>
+     */
     protected function prepareTaxesFromResponse($responseObject, $cancellation): array
     {
 

@@ -21,6 +21,9 @@ use Cake\Routing\Router;
 trait LoginTrait
 {
 
+    /**
+     * @return array{Auth: array<string, mixed>}
+     */
     private function login(int $customerId): array
     {
 
@@ -101,6 +104,9 @@ trait LoginTrait
         $this->session($sessionData);
     }
 
+    /**
+     * @return int|array{}
+     */
     public function getId(): int|array
     {
         $identity = $this->getUser();
@@ -110,6 +116,9 @@ trait LoginTrait
         return $identity['id_customer'];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getUser(): array
     {
         if (empty($this->_session)) {

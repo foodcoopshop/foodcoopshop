@@ -20,6 +20,9 @@ namespace Admin\Traits;
 trait QueryFilterTrait
 {
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getRequestQueryParams(): array
     {
         return $this->getRequest()->getQueryParams();

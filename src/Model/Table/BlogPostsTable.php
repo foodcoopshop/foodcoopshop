@@ -50,13 +50,15 @@ class BlogPostsTable extends AppTable
     }
 
     /**
-     * @return SelectQuery<\App\Model\Entity\BlogPost>|array
+     * @return SelectQuery<\App\Model\Entity\BlogPost>|list<\App\Model\Entity\BlogPost>
      */
     public function findBlogPosts(?int $manufacturerId = null, bool $showOnStartPage = false): SelectQuery|array
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
-            return [];
+            /** @var list<\App\Model\Entity\BlogPost> $empty */
+            $empty = [];
+            return $empty;
         }
 
         $conditions = [

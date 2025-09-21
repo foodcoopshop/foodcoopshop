@@ -272,6 +272,9 @@ class CustomersTable extends AppTable
         return $query->select(['CustomerNameForOrder' => $sql]);
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getCustomerOrderClause(string $direction): array
     {
         $result = [
@@ -280,6 +283,9 @@ class CustomersTable extends AppTable
         return $result;
     }
 
+    /**
+     * @return array{price: string|float|int, price_incl_per_unit: string|float|int|null, deposit: float|int}
+     */
     public function getModifiedProductPricesByShoppingPrice(int $productId, string $price, float|string|null $priceInclPerUnit, float $deposit, string|float $taxRate): array
     {
 
@@ -329,6 +335,9 @@ class CustomersTable extends AppTable
 
     }
 
+    /**
+     * @return array{price: string|float|int, price_incl_per_unit: string|float|int|null, deposit: float|int}
+     */
     public function getModifiedAttributePricesByShoppingPrice(int $productId, int $productAttributeId, string $price, string|float|null $priceInclPerUnit, float $deposit, string|float $taxRate): array
     {
 
@@ -407,6 +416,9 @@ class CustomersTable extends AppTable
         return 'UPPER(SUBSTRING(SHA1(CONCAT(Customers.id_customer, "' .  Security::getSalt() . '", "personal-transaction-code")), 1, 8))';
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     public function getConditionToExcludeHostingUser(): array
     {
         $result = [];
@@ -563,6 +575,9 @@ class CustomersTable extends AppTable
         return $depositBalanceSum;
     }
 
+    /**
+     * @return list<int>
+     */
     public function getCustomerIdsWithStatus(int $status): array
     {
         $conditions = [
@@ -631,6 +646,10 @@ class CustomersTable extends AppTable
 
     /**
      * @param array<string, mixed> $conditions
+     */
+    /**
+     * @param array<string, mixed> $conditions
+     * @return array<string, array<int, string>>
      */
     public function getForDropdown(bool $includeManufacturers = false, bool $includeOfflineCustomers = true, array $conditions = []): array
     {

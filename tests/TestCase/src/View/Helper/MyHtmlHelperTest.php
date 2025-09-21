@@ -52,6 +52,9 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
     }
 
+    /**
+     * @return array<string, array{0: string, 1: string}>
+     */
     public static function removeTimestampFromFileDataProvider(): array
     {
         return [

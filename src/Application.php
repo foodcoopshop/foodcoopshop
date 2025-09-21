@@ -120,6 +120,9 @@ class Application extends BaseApplication
 
     }
 
+    /**
+     * @return list<string>
+     */
     private function getApiUrls(): array
     {
         return [

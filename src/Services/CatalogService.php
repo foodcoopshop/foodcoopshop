@@ -58,6 +58,9 @@ class CatalogService
         return (int) ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
     }
 
+    /**
+     * @return list<\App\Model\Entity\Product>|int
+     */
     public function getProducts(
         int|string $categoryId,
         bool $filterByNewProducts = false,
@@ -111,6 +114,9 @@ class CatalogService
 
     }
 
+    /**
+     * @return list<\App\Model\Entity\Product>|int
+     */
     public function getProductsByManufacturerId(int $manufacturerId, bool $countMode = false, int $page = 1): array|int
     {
         return $this->getProducts(0, false, '', 0, $countMode, false, $manufacturerId, $page);
@@ -499,6 +505,10 @@ class CatalogService
     /**
      * @param \App\Model\Entity\Product[] $products
      */
+    /**
+     * @param list<\App\Model\Entity\Product> $products
+     * @return list<\App\Model\Entity\Product>
+     */
     protected function addOrderedProductsTotalAmount(array $products): array
     {
 
@@ -537,6 +547,10 @@ class CatalogService
     /**
      * @param \App\Model\Entity\Product[] $products
      */
+    /**
+     * @param list<\App\Model\Entity\Product> $products
+     * @return list<\App\Model\Entity\Product>
+     */
     protected function removeProductIfShowOnlyProductsForNextWeekEnabled(array $products): array
     {
         if ($this->identity === null ||
@@ -562,6 +576,10 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
+     */
+    /**
+     * @param list<\App\Model\Entity\Product> $products
+     * @return list<\App\Model\Entity\Product>
      */
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice(array $products): array
     {
@@ -590,6 +608,10 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
+     */
+    /**
+     * @param list<\App\Model\Entity\Product> $products
+     * @return list<\App\Model\Entity\Product>
      */
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak(array $products): array
     {
@@ -646,6 +668,10 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
+     */
+    /**
+     * @param list<\App\Model\Entity\Product> $products
+     * @return list<\App\Model\Entity\Product>
      */
     public function prepareProducts(array $products): array
     {

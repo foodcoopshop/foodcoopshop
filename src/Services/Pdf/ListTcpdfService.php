@@ -41,7 +41,8 @@ class ListTcpdfService extends AppTcpdfService
     }
 
     /**
-     * @param array<string, mixed> $results
+     * @param list<array{TaxRate: float|int|string, OrderDetailPriceExcl: float|int|string, OrderDetailTaxAmount: float|int|string, OrderDetailPriceIncl: float|int|string}> $results
+     * @return array<string|float|int, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>|false
      */
     public function prepareTaxSumData(array $results): array|false
     {

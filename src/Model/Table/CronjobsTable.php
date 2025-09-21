@@ -168,6 +168,9 @@ class CronjobsTable extends AppTable
         return $invoiceCronjobs->count() > 0;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getTimeIntervals(): array
     {
         return [
@@ -177,6 +180,9 @@ class CronjobsTable extends AppTable
         ];
     }
 
+    /**
+     * @return array<int, int|string>
+     */
     public function getDaysOfMonth(): array
     {
         $days = [];
@@ -189,6 +195,9 @@ class CronjobsTable extends AppTable
         return $days;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getWeekdays(): array
     {
         $weekdays = [
@@ -225,6 +234,9 @@ class CronjobsTable extends AppTable
         return $query;
     }
 
+    /**
+     * @return list<array{name: string, time_interval: string, created: string, success: int}>
+     */
     public function run(): array
     {
 
@@ -298,6 +310,9 @@ class CronjobsTable extends AppTable
 
     }
 
+    /**
+     * @return array{name: string, time_interval: string, created: string, success: int}
+     */
     private function executeCronjobAndSaveLog(Cronjob $cronjob, DateTime $cronjobRunDayObject): array
     {
         $commandName = $cronjob->getOriginalValues()['name'];

@@ -58,6 +58,9 @@ class CartService
         return $this->request;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function getProductContain(): array
     {
         $contain = [
@@ -84,6 +87,15 @@ class CartService
      * @param array<array<string, mixed>> $stockAvailable2saveConditions
      * @param string|null $customerSelectedPickupDay
      * @param \App\Model\Entity\Product[] $products
+     */
+    /**
+     * @param array<string, mixed> $cart
+     * @param list<array<string, mixed>> $orderDetails2save
+     * @param list<array<string, mixed>> $stockAvailable2saveData
+     * @param list<array<string, mixed>> $stockAvailable2saveConditions
+     * @param string|null $customerSelectedPickupDay
+     * @param list<\App\Model\Entity\Product> $products
+     * @return array<string, mixed>
      */
     protected function saveCart(
         array $cart,
@@ -206,6 +218,9 @@ class CartService
         return $cart;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function finish(): array
     {
 
@@ -561,6 +576,7 @@ class CartService
     /**
      * @param array{productId: int, attributeId: int} $ids
      * @param array<string, mixed> $cartProduct
+     * @return array{tax_rate: float|int, total_price_tax_incl: float|int, total_price_tax_excl: float|int, tax_unit_amount: float|int, tax_total_amount: float|int}
      */
     private function prepareOrderDetailPurchasePrices(array $ids, Product $product, array $cartProduct): array
     {
@@ -638,6 +654,10 @@ class CartService
 
     /**
      * @param array<array<string, mixed>> $cartProducts
+     */
+    /**
+     * @param list<array<string, mixed>> $cartProducts
+     * @return list<string>
      */
     private function sendInstantOrderNotificationToManufacturers(array $cartProducts): array
     {
@@ -843,9 +863,10 @@ class CartService
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      * @param array<string, mixed> $cart
-     * @param array<array<string, mixed>> $cartGroupedByPickupDay
-     * @param \App\Model\Entity\Product[] $products
-     * @param \App\Model\Entity\PickupDay[]|null $pickupDayEntities
+     * @param array{Cart: \App\Model\Entity\Cart, CartProducts: array<string, array{CartDepositSum: float, CartProductSum: float, Products: list<array<string, mixed>>}>, CartDepositSum?: float, CartProductSum?: float, CartTaxSum?: float, CartProductSumExcl?: float, ProductsWithUnitCount?: int} $cartGroupedByPickupDay
+     * @param list<\App\Model\Entity\Product> $products
+     * @param list<\App\Model\Entity\PickupDay>|null $pickupDayEntities
+     * @return null
      */
     private function sendConfirmationEmailToCustomer(array $cart, array $cartGroupedByPickupDay, array $products, ?array $pickupDayEntities): null
     {

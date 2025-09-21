@@ -53,11 +53,17 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$this->requestQueryParams = $requestQueryParams;
 	}
 
+	/**
+	 * @return string|int|null|array<string, mixed>
+	 */
 	public function getRequestQuery(string $name, string|int|null $default = null): string|int|null|array
 	{
 		return $this->requestQueryParams[$name] ?? $default;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	final public function getRequestQueryParams(): array
 	{
 		return $this->requestQueryParams;

@@ -303,7 +303,8 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return array<string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>
      */
     public function getTaxSums(array $orderDetails): array
     {
@@ -342,6 +343,9 @@ class OrderDetailsTable extends AppTable
     }
 
 
+    /**
+     * @return array<string, string>
+     */
     public function getLastOrderDetailsForDropdown(int $customerId): array
     {
 
@@ -378,6 +382,9 @@ class OrderDetailsTable extends AppTable
 
     }
 
+    /**
+     * @return array<int|string, mixed>
+     */
     private function getFutureOrdersConditions(int $customerId): array
     {
         return [
@@ -400,6 +407,9 @@ class OrderDetailsTable extends AppTable
         return $futureOrders;
     }
 
+    /**
+     * @return list<\App\Model\Entity\OrderDetail>
+     */
     public function getGroupedFutureOrdersByCustomerId(int $customerId): array
     {
         $query = $this->find('all',
@@ -460,6 +470,9 @@ class OrderDetailsTable extends AppTable
 
     }
 
+    /**
+     * @return list<\App\Model\Entity\OrderDetail>
+     */
     public function getOrderDetailQueryForPeriodAndCustomerId(int $dateFrom, int $dateTo, int $customerId): array
     {
         $cartsAssociation = $this->getAssociation('CartProducts')->getAssociation('Carts');
@@ -510,6 +523,9 @@ class OrderDetailsTable extends AppTable
 
     }
 
+    /**
+     * @return list<array{sumDepositDelivered: float|int|string, monthAndYear?: string, Year?: string}>
+     */
     public function getDepositSum(int|string|false $manufacturerId, int|string|false $groupBy): array
     {
         $query = $this->find();
@@ -598,6 +614,9 @@ class OrderDetailsTable extends AppTable
         return $query->count();
     }
 
+    /**
+     * @return list<array{SumTotalPaid: float|int|string, SumDeposit: float|int|string, MonthAndYear: string}>
+     */
     public function getMonthlySumProductByCustomer(int|string $customerId): array
     {
         $query = $this->prepareSumProduct($customerId);
@@ -673,7 +692,8 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByProduct(array $orderDetails): array
     {
@@ -698,7 +718,8 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\OrderDetail[] $orderDetails
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByManufacturer(array $orderDetails): array
     {
@@ -724,7 +745,8 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param array<int, mixed> $orderDetails
+     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByCustomer(array $orderDetails): array
     {
@@ -786,6 +808,7 @@ class OrderDetailsTable extends AppTable
 
     /**
      * @param list<string> $pickupDay
+     * @return array<string, mixed>
      */
     public function getOrderDetailParams(
         int|string $manufacturerId,

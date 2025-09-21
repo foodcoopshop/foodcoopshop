@@ -23,6 +23,9 @@ use Cake\I18n\I18n;
 class AssetsProvider
 {
 
+    /**
+     * @return list<string>
+     */
     public static function getCssFilesBase(): array
     {
         return [
@@ -42,6 +45,9 @@ class AssetsProvider
         ];
     }
 
+    /**
+     * @return list<string>
+     */
     public static function getJsFilesBase(): array
     {
 

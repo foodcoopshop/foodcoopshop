@@ -25,6 +25,9 @@ use App\Model\Entity\Configuration;
  */
 class ConfigurationHelper extends Helper
 {
+    /**
+     * @return array<string, string|int|array<int, string>>
+     */
     public function getConfigurationDropdownOptions(string $name): array
     {
         switch ($name) {
@@ -69,6 +72,9 @@ class ConfigurationHelper extends Helper
         return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == Configuration::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getCashlessPaymentAddTypeOptions(): array
     {
         return [

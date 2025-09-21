@@ -5,20 +5,8 @@ namespace App\Model\Table;
 
 use Cake\Validation\Validator;
 use Cake\ORM\Query\SelectQuery;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
- *
- * Licensed under the GNU Affero General Public License version 3
- * For full copyright and license information, please see LICENSE
- * Redistributions of files must retain the above copyright notice.
- *
- * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/AGPL-3.0
- * @author        Mario Rothauer <office@foodcoopshop.com>
- * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
- * @link          https://www.foodcoopshop.com
- * 
  * @mixin \Cake\ORM\Behavior\TreeBehavior
  */
 class PagesTable extends AppTable
@@ -53,7 +41,8 @@ class PagesTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\Page[] $pages
+     * @param list<\App\Model\Entity\Page> $pages
+     * @return array<int, string>
      */
     private function flattenNestedArrayWithChildren(array $pages, string $separator = ''): array
     {
@@ -92,6 +81,9 @@ class PagesTable extends AppTable
         return $pages;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getForSelect(?int $excludePageId = null): array
     {
         $conditions = [];

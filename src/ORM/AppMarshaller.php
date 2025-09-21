@@ -23,6 +23,7 @@ class AppMarshaller extends Marshaller
 {
     /**
      * @param array<string, mixed> $data
+     * @return array<string, mixed>
      */
     protected function _validate(array $data, string|bool $validator, bool $isNew): array
     {

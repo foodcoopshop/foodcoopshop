@@ -124,6 +124,9 @@ class PaymentsTable extends AppTable
         return $alreadyImported;
     }
 
+    /**
+     * @return array<string, int|string>
+     */
     private function getManufacturerDepositConditions(?int $manufacturerId = null): array
     {
         $conditions = [
@@ -153,6 +156,9 @@ class PaymentsTable extends AppTable
         return $paymentSum;
     }
 
+    /**
+     * @return list<array{YearWeek: string, SumAmount: float|int|string}>
+     */
     public function getManufacturerDepositSumByCalendarWeekAndType(string $type): array
     {
         if (!in_array($type, [Payment::TEXT_EMPTY_GLASSES, Payment::TEXT_MONEY])) {
@@ -174,6 +180,9 @@ class PaymentsTable extends AppTable
         return $result;
     }
 
+    /**
+     * @return list<\App\Model\Entity\Payment>
+     */
     public function getCustomerDepositNotBilled(int $customerId): array
     {
         $payments = $this->find('all', conditions: [
@@ -186,6 +195,9 @@ class PaymentsTable extends AppTable
         return $payments;
     }
 
+    /**
+     * @return list<array{YearWeek: string, SumAmount: float|int|string}>
+     */
     public function getCustomerDepositSumByCalendarWeek(): array
     {
         $query = $this->find('all', conditions: [
@@ -223,6 +235,9 @@ class PaymentsTable extends AppTable
         return 0;
     }
 
+    /**
+     * @return list<array{sumDepositReturned: float|int|string, monthAndYear?: string}>
+     */
     public function getMonthlyDepositSumByManufacturer(int $manufacturerId, bool $groupByMonth): array
     {
 

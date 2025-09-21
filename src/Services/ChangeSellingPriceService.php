@@ -49,6 +49,10 @@ class ChangeSellingPriceService
     /**
      * @param array{productId: int, attributeId: int} $ids
      */
+    /**
+     * @param array{productId: int, attributeId: int} $ids
+     * @return list<\App\Model\Entity\OrderDetail>
+     */
     public function changeOpenOrderDetailPricePerUnit(array $ids, float $grossPrice, string $unitName, int $unitAmount, float $quantityInUnits): array
     {
 
@@ -102,6 +106,10 @@ class ChangeSellingPriceService
 
     /**
      * @param array{productId: int, attributeId: int} $ids
+     */
+    /**
+     * @param array{productId: int, attributeId: int} $ids
+     * @return list<\App\Model\Entity\OrderDetail>
      */
     public function changeOpenOrderDetailPrice(array $ids, float $grossPrice): array
     {
