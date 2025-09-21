@@ -4,7 +4,6 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\ORM\Query;
 use Cake\Validation\Validator;
 use Cake\Routing\Router;
 use Cake\ORM\Query\SelectQuery;
@@ -50,6 +49,9 @@ class BlogPostsTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\BlogPost>|array
+     */
     public function findBlogPosts(?int $manufacturerId = null, bool $showOnStartPage = false): SelectQuery|array
     {
 
@@ -84,9 +86,13 @@ class BlogPostsTable extends AppTable
         return $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\BlogPost> $query
+     * @return SelectQuery<\App\Model\Entity\BlogPost>
+     */
     public function getConditionShowOnStartPage(SelectQuery $query, bool $showOnStartPage): SelectQuery
     {
-        $query->where(function (QueryExpression $exp, Query $q) use ($showOnStartPage) {
+    $query->where(function (QueryExpression $exp, SelectQuery $q) use ($showOnStartPage) {
             $key = 'DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")';
             $value = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             if ($showOnStartPage) {

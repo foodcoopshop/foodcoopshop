@@ -83,6 +83,9 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getOrderDetailsForDeliveryNotes(int|string $manufacturerId, string $dateFrom, string $dateTo): SelectQuery
     {
         $query = $this->find('all',
@@ -176,6 +179,10 @@ class OrderDetailsTable extends AppTable
         return $orderDetail->pickup_day->i18nFormat('Y-MM') . '-01';
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\OrderDetail> $query
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function addLastMonthsCondition(SelectQuery $query, string $firstDayOfLastOrderMonth, int $lastMonths): SelectQuery
     {
         $lastMonths--;
@@ -212,6 +219,9 @@ class OrderDetailsTable extends AppTable
         return null;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getOrderDetailsForOrderListPreview(string $pickupDay): SelectQuery
     {
         $query = $this->find('all',
@@ -257,6 +267,9 @@ class OrderDetailsTable extends AppTable
 
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getOrderDetailsForSendingOrderLists(string $pickupDay, string $cronjobRunDay, bool $customerCanSelectPickupDay): SelectQuery
     {
         $query = $this->find('all', contain: [
@@ -373,6 +386,9 @@ class OrderDetailsTable extends AppTable
         ];
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getFutureOrdersByCustomerId(int $customerId): SelectQuery
     {
         $futureOrders = $this->find('all',
@@ -549,6 +565,9 @@ class OrderDetailsTable extends AppTable
         }
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     private function prepareSumProduct(int|string $customerId): SelectQuery
     {
         $query = $this->find('all', conditions: [
@@ -591,6 +610,9 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getMonthlySumProductByManufacturer(int|string $manufacturerId, ?string $year): SelectQuery
     {
         $conditions = [];

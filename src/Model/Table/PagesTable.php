@@ -74,6 +74,7 @@ class PagesTable extends AppTable
 
     /**
      * @param array<int|string, mixed> $conditions
+     * @return SelectQuery<\App\Model\Entity\Page>
      */
     public function getThreaded(array $conditions = []): SelectQuery
     {

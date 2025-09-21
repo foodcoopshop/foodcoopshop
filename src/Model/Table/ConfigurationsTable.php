@@ -221,6 +221,7 @@ class ConfigurationsTable extends AppTable
 
     /**
      * @param array<int|string, mixed> $customConditions
+     * @return SelectQuery<\App\Model\Entity\Configuration>
      */
     public function getConfigurations(array $customConditions = []): SelectQuery
     {

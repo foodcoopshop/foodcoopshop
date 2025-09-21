@@ -43,6 +43,9 @@ trait ManufacturersFilterTrait
         return APP_ON;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\Manufacturer>|PaginatedInterface
+     */
     public function getManufacturers(int|string $active, string $dateFrom): SelectQuery|PaginatedInterface
     {
 
@@ -57,16 +60,19 @@ trait ManufacturersFilterTrait
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
         $addressManufacturersTable = TableRegistry::getTableLocator()->get('AddressManufacturers');
 
+        /** @var SelectQuery<\App\Model\Entity\Manufacturer> $query */
         $query = $manufacturersTable->find('all',
-        conditions: $conditions,
-        contain: [
-            'AddressManufacturers',
-            'Customers'
-        ])
+            conditions: $conditions,
+            contain: [
+                'AddressManufacturers',
+                'Customers'
+            ]
+        )
         ->select($manufacturersTable)
         ->select($customersTable)
         ->select($addressManufacturersTable);
 
+        /** @var SelectQuery<\App\Model\Entity\Manufacturer>|PaginatedInterface $manufacturers */
         $manufacturers = $this->paginate($query, [
             'sortableFields' => [
                 'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'),

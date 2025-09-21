@@ -129,6 +129,9 @@ class CatalogService
 
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function getQuery(
         int|string $categoryId,
         bool $filterByNewProducts,
@@ -170,6 +173,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addOrderKeyword(SelectQuery $query, string $keyword): SelectQuery
     {
 
@@ -189,6 +196,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addOrder(SelectQuery $query): SelectQuery
     {
         $query->orderBy([
@@ -198,12 +209,20 @@ class CatalogService
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addOrderByRand(SelectQuery $query): SelectQuery
     {
         $query->orderBy(['RAND()']);
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addSelectFields(SelectQuery $query): SelectQuery
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
@@ -226,6 +245,10 @@ class CatalogService
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addContains(SelectQuery $query): SelectQuery
     {
         $query->contain([
@@ -252,6 +275,10 @@ class CatalogService
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addDefaultConditions(SelectQuery $query): SelectQuery
     {
         if ($this->identity === null) {
@@ -268,6 +295,10 @@ class CatalogService
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addManufacturerIdFilter(SelectQuery $query, int $manufacturerId): SelectQuery
     {
         if ($manufacturerId == 0) {
@@ -282,6 +313,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addProductIdFilter(SelectQuery $query, int $productId): SelectQuery
     {
         if ($productId == 0) {
@@ -296,6 +331,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addCategoryIdFilter(SelectQuery $query, int|string $categoryId): SelectQuery
     {
         if ($categoryId == 0) {
@@ -310,6 +349,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addGetOnlyStockProductsFilter(SelectQuery $query, bool $getOnlyStockProducts): SelectQuery
     {
         if (!$getOnlyStockProducts) {
@@ -327,6 +370,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addNewProductsFilter(SelectQuery $query, bool $filterByNewProducts): SelectQuery
     {
         if (!$filterByNewProducts) {
@@ -340,6 +387,10 @@ class CatalogService
         return $query;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addPurchasePriceIsSetFilter(SelectQuery $query): SelectQuery
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -388,6 +439,10 @@ class CatalogService
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product> $query
+     * @return SelectQuery<\App\Model\Entity\Product>
+     */
     protected function addKeywordFilter(SelectQuery $query, string $keyword): SelectQuery
     {
         if ($keyword == '') {

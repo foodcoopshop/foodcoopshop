@@ -174,8 +174,9 @@ class ProductsForBackendService
     }
 
     /**
-     * @param list<string>|string $productIds
-     * @param list<string>|string $categoryId
+     * @param array<int|string>|list<int>|string $productIds
+     * @param list<int>|string $categoryId
+     * @return SelectQuery<\App\Model\Entity\Product>
      */
     public function getQuery(
         array|string $productIds,

@@ -64,7 +64,10 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 	}
 
 	/**
+	 * @template TSubject of \Cake\Datasource\EntityInterface
+	 * @param SelectQuery<TSubject> $query
 	 * @param array<string, mixed> $params
+	 * @return SelectQuery<TSubject>
 	 */
 	final public function paginate(SelectQuery $query, array $params): SelectQuery
 	{

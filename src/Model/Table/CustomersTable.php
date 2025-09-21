@@ -213,6 +213,7 @@ class CustomersTable extends AppTable
 
     /**
      * @param array<string, mixed> $options
+     * @return SelectQuery<\App\Model\Entity\Customer>
      */
     public function findAuth(SelectQuery $query, array $options): SelectQuery
     {
@@ -261,6 +262,10 @@ class CustomersTable extends AppTable
         return $sql;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Customer> $query
+     * @return SelectQuery<\App\Model\Entity\Customer>
+     */
     public function addCustomersNameForOrderSelect(SelectQuery $query): SelectQuery
     {
         $sql = $this->getCustomerName();

@@ -118,6 +118,7 @@ class CategoriesTable extends AppTable
 
     /**
      * @param array<int|string, mixed> $conditions
+     * @return SelectQuery<\App\Model\Entity\Category>
      */
     public function getThreaded(array $conditions = []): SelectQuery
     {

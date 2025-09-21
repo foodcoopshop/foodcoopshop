@@ -137,6 +137,9 @@ class PaymentsTable extends AppTable
         return $conditions;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\Payment>
+     */
     public function getManufacturerDepositsByMonth(?int $manufacturerId, string $monthAndYear): SelectQuery
     {
         $paymentSum = $this->find('all',

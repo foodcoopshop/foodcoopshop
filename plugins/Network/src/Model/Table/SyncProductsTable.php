@@ -34,6 +34,10 @@ class SyncProductsTable extends AppTable
         ]);
     }
 
+    /**
+     * @param SelectQuery<\Network\Model\Entity\SyncProduct> $syncProducts
+     * @return SelectQuery<\Network\Model\Entity\SyncProduct>
+     */
     public function addDashSeparatedProductIds(SelectQuery $syncProducts): SelectQuery
     {
         foreach ($syncProducts as $syncProduct) {
@@ -52,6 +56,9 @@ class SyncProductsTable extends AppTable
         return $syncProducts;
     }
 
+    /**
+     * @return SelectQuery<\Network\Model\Entity\SyncProduct>
+     */
     public function findAllSyncProducts(int $manufacturerId): SelectQuery
     {
         $syncProducts = $this->find('all',

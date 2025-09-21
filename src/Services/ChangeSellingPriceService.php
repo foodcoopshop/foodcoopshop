@@ -25,6 +25,9 @@ use Cake\ORM\TableRegistry;
 class ChangeSellingPriceService
 {
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     private function getOpenOrderDetails(int $productId, int $productAttributeId): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');

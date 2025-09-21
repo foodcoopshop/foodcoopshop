@@ -196,6 +196,9 @@ class Customer extends AppEntity implements IdentityInterface
         return $dropdownData;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getFutureOrderDetails(): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');

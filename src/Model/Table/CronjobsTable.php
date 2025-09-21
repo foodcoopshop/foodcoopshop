@@ -204,6 +204,10 @@ class CronjobsTable extends AppTable
 
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Cronjob> $query
+     * @return SelectQuery<\App\Model\Entity\Cronjob>
+     */
     public function findAvailable(SelectQuery $query): SelectQuery
     {
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
