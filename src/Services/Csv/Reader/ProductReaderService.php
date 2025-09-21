@@ -20,6 +20,9 @@ use League\Csv\Reader;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
+/**
+ * @extends \League\Csv\Reader<array<string, scalar|null>>
+ */
 class ProductReaderService extends Reader {
 
     public const ALLOWED_UPLOAD_MIME_TYPES = ['text/csv'];

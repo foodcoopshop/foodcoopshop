@@ -23,6 +23,9 @@ use League\Csv\Reader;
 use Cake\I18n\DateTime;
 use Cake\ORM\TableRegistry;
 
+/**
+ * @extends \League\Csv\Reader<array<string, scalar|null>>
+ */
 abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
     public const ALLOWED_UPLOAD_MIME_TYPES = [
