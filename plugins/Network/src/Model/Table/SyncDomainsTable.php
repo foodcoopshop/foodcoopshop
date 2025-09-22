@@ -25,26 +25,28 @@ use Cake\ORM\Query\SelectQuery;
  */
 class SyncDomainsTable extends AppTable
 {
-
     public function validationDefault(Validator $validator): Validator
     {
         $validator->add('domain', 'hostname', [
             'rule' => ['custom', HOSTNAME_REGEX],
-            'message' => __d('network', 'The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash).')
+            'message' => __d('network', 'The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash).'),
         ]);
         $validator->notEmptyString('domain', 'Bitte gib eine Domain ein, sie muss mit https:// beginnen.');
         $validator->add('domain', 'https', [
             'rule' => ['custom', HTTPS_REGEX],
-            'message' => __d('network', 'The_domain_needs_to_start_with_https://.')
+            'message' => __d('network', 'The_domain_needs_to_start_with_https://.'),
         ]);
         $validator->add('domain', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => __d('network', 'The_domain_already_exists.')
+            'message' => __d('network', 'The_domain_already_exists.'),
         ]);
         return $validator;
     }
 
+    /**
+     * @return SelectQuery<\Network\Model\Entity\SyncDomain>
+     */
     public function getSyncDomains(int $minStatus = APP_OFF): SelectQuery
     {
         $syncDomains = $this->find('all', conditions: [
@@ -53,11 +55,17 @@ class SyncDomainsTable extends AppTable
         return $syncDomains;
     }
 
+    /**
+     * @return SelectQuery<\Network\Model\Entity\SyncDomain>
+     */
     public function getActiveSyncDomains(): SelectQuery
     {
         return $this->getSyncDomains(APP_ON);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getActiveSyncDomainHosts(): array
     {
         $syncDomains = $this->getActiveSyncDomains()->toArray();
@@ -73,7 +81,6 @@ class SyncDomainsTable extends AppTable
 
     public function isAllowedEditManufacturerOptionsDropdown(?IdentityInterface $identity): bool
     {
-
         $isAllowed = false;
         if ($identity->isSuperadmin()) {
             $isAllowed = true;
@@ -94,9 +101,11 @@ class SyncDomainsTable extends AppTable
         return $isAllowed;
     }
 
+    /**
+     * @return array<int, \Network\Model\Entity\SyncDomain>
+     */
     public function getActiveManufacturerSyncDomains(?string $enabledSyncDomains): array
     {
-
         if (is_null($enabledSyncDomains)) {
             return [];
         }
@@ -111,21 +120,24 @@ class SyncDomainsTable extends AppTable
         }
 
         return $preparedDomains;
-
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getForDropdown(): array
     {
-        $syncDomains = $this->find('all',
-        conditions: [
-            'SyncDomains.active' => APP_ON
-        ],
-        fields: ['SyncDomains.id', 'SyncDomains.domain']);
+        $syncDomains = $this->find(
+            'all',
+            conditions: [
+                'SyncDomains.active' => APP_ON,
+            ],
+            fields: ['SyncDomains.id', 'SyncDomains.domain']
+        );
         $result = [];
         foreach ($syncDomains as $syncDomain) {
             $result[$syncDomain->id] = $syncDomain->domain;
         }
         return $result;
-        
     }
 }

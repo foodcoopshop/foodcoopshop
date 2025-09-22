@@ -228,6 +228,9 @@ class ListsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
 
+    /**
+     * @return array{deliveryDate:string,manufacturerId:int,generationDate:string}
+     */
     private function splitOrderDetailStringIntoParts(string $fileName, string $ending): array
     {
         $result = [];

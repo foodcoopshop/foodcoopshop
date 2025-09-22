@@ -85,6 +85,10 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     /**
      * @param array<int> $orderDetailIds
      */
+    /**
+     * @param list<int> $orderDetailIds
+     * @return list<\App\Model\Entity\OrderDetail>
+     */
     protected function getOrderDetailsFromDatabase(array $orderDetailIds): array
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');

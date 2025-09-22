@@ -44,6 +44,9 @@ class AttributesTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getForDropdown(): array
     {
         $attributes = $this->find('all', order: [

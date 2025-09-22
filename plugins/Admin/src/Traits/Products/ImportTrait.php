@@ -30,6 +30,9 @@ trait ImportTrait
 
     use ManufacturerIdTrait;
 
+    /**
+     * @var array<string, string>
+     */
     private array $columnsFieldMap = [];
 
     public function initializeImportTrait(): void

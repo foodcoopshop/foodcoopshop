@@ -23,8 +23,11 @@ use TCPDF;
 abstract class PdfWriterService
 {
 
-    protected mixed $pdfLibrary;
+    /**
+     * @var array<string, mixed>
+     */
     protected array $data = [];
+    protected mixed $pdfLibrary;
     protected ?string $plugin = null;
     protected string $filename = '';
     public ?string $templateFile = null;
@@ -55,6 +58,9 @@ abstract class PdfWriterService
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;

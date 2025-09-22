@@ -48,12 +48,18 @@ class DeliveryRhythmService
         return $deliveryDate;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getNextWeeklyDeliveryDays(int $maxDays=52): array
     {
         $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
         return $this->Time->getWeekdayFormattedDaysList($nextDeliveryDay, $maxDays, 7);
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getNextDailyDeliveryDays(int $maxDays): array
     {
         $nextDeliveryDay = $this->Time->getTomorrowForDatabase();

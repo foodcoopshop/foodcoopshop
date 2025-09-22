@@ -239,6 +239,9 @@ class ProductsTable extends AppTable
         return (bool) $found;
     }
 
+    /**
+     * @return array{productId: int, attributeId: int}
+     */
     public function getProductIdAndAttributeId(string|int $productId): array
     {
         $attributeId = 0;
@@ -669,6 +672,9 @@ class ProductsTable extends AppTable
         return (bool) preg_match('/main-product/', $product->row_class);
     }
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     public function getForDropdown(int $manufacturerId): array
     {
         $identity = Router::getRequest()->getAttribute('identity');

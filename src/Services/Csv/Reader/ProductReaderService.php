@@ -20,6 +20,9 @@ use League\Csv\Reader;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
+/**
+ * @extends \League\Csv\Reader<array<string, scalar|null>>
+ */
 class ProductReaderService extends Reader {
 
     public const ALLOWED_UPLOAD_MIME_TYPES = ['text/csv'];
@@ -30,6 +33,9 @@ class ProductReaderService extends Reader {
         $this->setHeaderOffset(0);
     }
 
+    /**
+     * @return list<array<string, scalar|null>>
+     */
     public function getPreparedRecords(): array
     {
         $records = $this->getRecords();
@@ -40,7 +46,8 @@ class ProductReaderService extends Reader {
     }
 
     /**
-     * @param array<string, mixed> $record
+     * @param array<string, scalar|null> $record
+     * @return array<string, scalar|null>
      */
     private function formatColumnsAndSetDefaultValues(array $record): array
     {
@@ -53,6 +60,7 @@ class ProductReaderService extends Reader {
 
     /**
      * @param \App\Model\Entity\Product[] $entities
+     * @return list<array<string, mixed>>
      */
     public function getAllErrors(array $entities): array
     {
@@ -84,6 +92,9 @@ class ProductReaderService extends Reader {
         return $allEntitiesValid;
     }
 
+    /**
+     * @return list<\App\Model\Entity\Product|false>
+     */
     public function import(int $manufacturerId): array
     {
         $records = $this->getPreparedRecords();

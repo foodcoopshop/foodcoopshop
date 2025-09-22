@@ -21,6 +21,9 @@ class SlidersFixture extends AppFixture
 {
     public string $table = 'fcs_sliders';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_slider' => 6,

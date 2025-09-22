@@ -128,6 +128,9 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         }
     }
 
+    /**
+     * @return list<string>
+     */
     private function getTestUrlsForShowProductForGuests(): array
     {
         return [

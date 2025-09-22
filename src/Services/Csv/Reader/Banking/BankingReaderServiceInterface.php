@@ -26,7 +26,8 @@ interface BankingReaderServiceInterface {
     public function configureType(): void;
 
     /**
-     * @param array<string|int, mixed> $records
+     * @param array<int, array<string, mixed>> $records
+     * @return array<int, array<string, mixed>>
      */
     public function equalizeStructure(array $records): array;
 }

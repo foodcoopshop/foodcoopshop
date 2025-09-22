@@ -62,6 +62,9 @@ class FeedbacksTable extends AppTable
         return $privacyType;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getManufacturerPrivacyTypes(Manufacturer $manufacturer): array
     {
         $values = [
@@ -78,6 +81,9 @@ class FeedbacksTable extends AppTable
         return $privacyType;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getCustomerPrivacyTypes(Customer $customer): array
     {
         if ($customer->is_company) {

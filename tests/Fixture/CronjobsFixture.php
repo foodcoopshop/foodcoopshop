@@ -22,6 +22,9 @@ class CronjobsFixture extends AppFixture
     
     public string $table = 'fcs_cronjobs';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

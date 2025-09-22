@@ -45,6 +45,10 @@ class VolksbankBankingReaderService extends BankingReaderService {
         return $result;
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $records
+     * @return array<int, array<string, mixed>>
+     */
     public function equalizeStructure(array $records): array
     {
 

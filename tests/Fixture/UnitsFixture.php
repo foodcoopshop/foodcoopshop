@@ -22,6 +22,9 @@ class UnitsFixture extends AppFixture
 
     public string $table = 'fcs_units';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

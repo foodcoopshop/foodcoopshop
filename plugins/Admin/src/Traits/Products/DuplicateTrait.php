@@ -197,6 +197,10 @@ trait DuplicateTrait
     /**
      * @param array<string, mixed> $associatedTable
      */
+    /**
+     * @param array<string, mixed>|null $associatedTable
+     * @return array<string, mixed>|null
+     */
     public function removeHasOneAssociationKeys(?array $associatedTable, string $primaryKey): ?array
     {
         if ($associatedTable == null) {
@@ -210,6 +214,10 @@ trait DuplicateTrait
 
     /**
      * @param array<string, mixed> $associatedTable
+     */
+    /**
+     * @param array<int, array<string, mixed>>|null $associatedTable
+     * @return array<int, array<string, mixed>>|null
      */
     public function removeHasManyAssociationKeys(?array $associatedTable): ?array
     {
@@ -227,6 +235,11 @@ trait DuplicateTrait
     /**
      * @param Associations $associations
      * @param array<string, mixed> $product
+     */
+    /**
+     * @param array<string, array<string, mixed>> $associations
+     * @param array<string, mixed> $product
+     * @return array<string, mixed>
      */
     public function removeAssociationKeysFromProduct(array $associations, array $product): array
     {
@@ -253,6 +266,10 @@ trait DuplicateTrait
 
     /**
      * @param array<string, mixed> $product
+     */
+    /**
+     * @param array<string, mixed> $product
+     * @return array<string, mixed>
      */
     public function configureCopy(Product $srcProduct, int $copyIndex, array $product): array
     {

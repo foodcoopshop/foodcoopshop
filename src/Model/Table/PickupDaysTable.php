@@ -53,7 +53,8 @@ class PickupDaysTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\CartProduct[] $cartProducts
+     * @param list<\App\Model\Entity\CartProduct> $cartProducts
+     * @return list<string>
      */
     public function getUniquePickupDays(array $cartProducts): array
     {

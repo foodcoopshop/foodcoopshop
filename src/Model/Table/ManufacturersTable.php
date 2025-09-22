@@ -58,6 +58,11 @@ class ManufacturersTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    /**
+     * @param EventInterface<\App\Model\Table\ManufacturersTable> $event
+     * @param ArrayObject<string, mixed> $data
+     * @param ArrayObject<string, mixed> $options
+     */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         if (isset($data['send_order_list_cc'])) {
@@ -213,6 +218,9 @@ class ManufacturersTable extends AppTable
         return (bool) $result;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getOptionSendOrderListCc(?string $sendOrderListCc): array
     {
         $ccRecipients = [];
@@ -227,6 +235,9 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
+    /**
+     * @return Customer|array<never>|null
+     */
     public function getCustomerRecord(string $email): Customer|array|null
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
@@ -252,6 +263,9 @@ class ManufacturersTable extends AppTable
         return $customer;
     }
 
+    /**
+     * @return list<array{name: string, slug: string}>
+     */
     public function getForMenu(): array
     {
 
@@ -310,6 +324,9 @@ class ManufacturersTable extends AppTable
         return round($price * $variableMemberFee / 100, 2);
     }
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     public function getForDropdown(): array
     {
         $manufacturers = $this->find('all', order: [
@@ -340,6 +357,10 @@ class ManufacturersTable extends AppTable
     /**
      * @param array<int, mixed> $results
      */
+    /**
+     * @param list<array<string, mixed>> $results
+     * @return list<array<string, mixed>>
+     */
     public function anonymizeCustomersInInvoiceOrOrderList(array $results): array
     {
         return array_map(function ($data) {
@@ -362,6 +383,11 @@ class ManufacturersTable extends AppTable
     /**
      * @param list<int> $orderStates
      * @param list<int> $orderDetailIds
+     */
+    /**
+     * @param list<int> $orderStates
+     * @param list<int> $orderDetailIds
+     * @return list<array<string, mixed>>
      */
     public function getDataForInvoiceOrOrderList(
         int $manufacturerId,

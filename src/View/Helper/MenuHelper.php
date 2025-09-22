@@ -47,6 +47,10 @@ class MenuHelper extends Helper
     /**
      * @param array<string, mixed> $pages
      */
+    /**
+     * @param list<object> $pages
+     * @return list<array{name:string, slug:string, children:list<array{name:string, slug:string}>}>
+     */
     public function buildPageMenu(array $pages): array
     {
 
@@ -81,7 +85,7 @@ class MenuHelper extends Helper
     }
 
     /**
-     * @param array<string, mixed> $item
+     * @param array{name:string, slug:string, options:array<string, mixed>|null, children:list<array{name:string, slug:string, options?:array<string, mixed>, children?:list<array{name:string, slug:string}>}>|null} $item
      */
     private function buildMenuItem(array $item): string
     {
@@ -162,6 +166,9 @@ class MenuHelper extends Helper
         return $naviElement;
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}|array{}
+     */
     public function getAuthMenuElement(?IdentityInterface $identity): array
     {
         $menuElement = [];
@@ -183,6 +190,9 @@ class MenuHelper extends Helper
         return $menuElement;
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}|array{}
+     */
     public function getPaymentProductMenuElement(): array
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
@@ -197,6 +207,9 @@ class MenuHelper extends Helper
         return [];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}|array{}
+     */
     public function getMyFeedbackMenuElement(?IdentityInterface $identity): array
     {
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null) {
@@ -211,6 +224,9 @@ class MenuHelper extends Helper
         return [];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}
+     */
     public function getOrderDetailsGroupByCustomerMenuElement(): array
     {
         return [
@@ -222,6 +238,9 @@ class MenuHelper extends Helper
         ];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}
+     */
     public function getChangedOrderedProductsMenuElement(): array
     {
         return [
@@ -233,6 +252,9 @@ class MenuHelper extends Helper
         ];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}
+     */
     public function getCustomerProfileMenuElement(): array
     {
         return [
@@ -244,6 +266,9 @@ class MenuHelper extends Helper
         ];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}
+     */
     public function getActionLogsMenuElement(): array
     {
         return [
@@ -255,6 +280,9 @@ class MenuHelper extends Helper
         ];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}
+     */
     public function getChangePasswordMenuElement(): array
     {
         return [
@@ -266,6 +294,9 @@ class MenuHelper extends Helper
         ];
     }
 
+    /**
+     * @return array{slug:string,name:string,options?:array<string, mixed>}
+     */
     public function getMyInvoicesMenuElement(): array
     {
         return [
@@ -277,6 +308,9 @@ class MenuHelper extends Helper
         ];
     }
 
+    /**
+     * @return list<array{slug:string,name:string,options?:array<string, mixed>,children?:list<array{name:string,slug:string,options?:array<string, mixed>,children?:list<array{name:string,slug:string}>}>}>
+     */
     public function getCustomerMenuElements(Customer|IdentityInterface|null $identity): array
     {
 

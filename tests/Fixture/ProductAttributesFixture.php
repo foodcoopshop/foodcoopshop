@@ -21,6 +21,9 @@ class ProductAttributesFixture extends AppFixture
 {
     public string $table = 'fcs_product_attribute';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_product_attribute' => 10,

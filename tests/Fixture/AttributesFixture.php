@@ -21,6 +21,9 @@ class AttributesFixture extends AppFixture
 {
     public string $table = 'fcs_attribute';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_attribute' => 33,

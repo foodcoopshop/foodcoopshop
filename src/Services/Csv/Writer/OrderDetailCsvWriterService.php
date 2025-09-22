@@ -33,6 +33,9 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
     
+    /**
+     * @return list<string>
+     */
     public function getHeader(): array
     {
         $header = [
@@ -54,6 +57,9 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         return $header;
     }
 
+    /**
+     * @return list<list<string|int|float|bool|null>>
+     */
     public function getRecords(): array
     {
 
@@ -144,6 +150,9 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         return $result;
     }
 
+    /**
+     * @return list<string>
+     */
     private function getSplitProductName(OrderDetail $orderDetail): array
     {
         return explode(' : ', $orderDetail->product_name);

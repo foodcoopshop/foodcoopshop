@@ -24,6 +24,9 @@ class CustomerCsvWriterService extends BaseCsvWriterService
 
     use CustomersFilterTrait;
     
+    /**
+     * @return list<string>
+     */
     public function getHeader(): array
     {
         $header = [
@@ -57,6 +60,9 @@ class CustomerCsvWriterService extends BaseCsvWriterService
 
     }
 
+    /**
+     * @return list<list<string|int|float|bool|null>>
+     */
     public function getRecords(): array
     {
 

@@ -24,6 +24,7 @@ trait MemberCardDataTrait
 
     /**
      * @param list<int|string> $customerIds
+     * @return SelectQuery<\App\Model\Entity\Customer>
      */
     public function getMemberCardCustomerData(array $customerIds): SelectQuery
     {

@@ -41,6 +41,9 @@ class StorageLocationsTable extends AppTable
 
         return $validator;
     }
+    /**
+     * @return array<int, string>
+     */
     public function getForDropdown(): array
     {
         $storageLocations = $this->find('all', order: [

@@ -21,6 +21,9 @@ class ManufacturersFixture extends AppFixture
 {
     public string $table = 'fcs_manufacturer';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_manufacturer' => 4,

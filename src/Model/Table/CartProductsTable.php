@@ -51,6 +51,9 @@ class CartProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    /**
+     * @return true|array{status: 0, msg: string, productId: int|string}
+     */
     public function add(int $productId, int $attributeId, int $amount, float $orderedQuantityInUnits = -1): array|true
     {
         $identity = Router::getRequest()->getAttribute('identity');
@@ -355,7 +358,8 @@ class CartProductsTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\CartProduct[] $cartProducts
+     * @param list<\App\Model\Entity\CartProduct> $cartProducts
+     * @return list<\App\Model\Entity\PickupDay>
      */
     public function setPickupDays(array $cartProducts, int $customerId): array
     {
@@ -364,6 +368,7 @@ class CartProductsTable extends AppTable
             $cartProduct->pickup_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product);
         }
 
+        /** @var list<string> $pickupDays */
         $pickupDays = [];
         $uniquePickupDays = $pickupDaysTable->getUniquePickupDays($cartProducts);
         if (!empty($uniquePickupDays)) {
@@ -377,6 +382,7 @@ class CartProductsTable extends AppTable
                 ],
             );
 
+            /** @var list<string> $existingPickupDays */
             $existingPickupDays = [];
             foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
                 $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
@@ -393,6 +399,7 @@ class CartProductsTable extends AppTable
                 }
             }
         }
+        /** @var list<\App\Model\Entity\PickupDay> $pickupDays */
         return $pickupDays;
     }
 

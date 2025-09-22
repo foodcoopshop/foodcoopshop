@@ -30,6 +30,9 @@ class CategoriesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    /**
+     * @var array<int, string>
+     */
     private array $flattenedArray = [];
 
     public function initialize(array $config): void
@@ -51,6 +54,9 @@ class CategoriesTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @return list<int>
+     */
     private function getChildrenIds(Category $category): array
     {
         $childrenIds = [];
@@ -67,7 +73,8 @@ class CategoriesTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\Category[] $categories
+     * @param list<\App\Model\Entity\Category> $categories
+     * @return array<int, string>
      */
     private function flattenNestedArrayWithChildren(array $categories, bool $renderParentIdAndChildrenIdContainers, string $separator = ''): array
     {
@@ -98,6 +105,9 @@ class CategoriesTable extends AppTable
         return $this->flattenedArray;
     }
 
+    /**
+     * @return list<array{name: string, slug: string, children: list<mixed>}> 
+     */
     public function getForMenu(): array
     {
         $conditions = [
@@ -115,6 +125,7 @@ class CategoriesTable extends AppTable
 
     /**
      * @param array<int|string, mixed> $conditions
+     * @return SelectQuery<\App\Model\Entity\Category>
      */
     public function getThreaded(array $conditions = []): SelectQuery
     {
@@ -132,6 +143,9 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getForSelect(
         ?int $excludeCategoryId=null,
         bool $showOfflineCategories=true,
@@ -165,6 +179,10 @@ class CategoriesTable extends AppTable
         return $flattenedCategories;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Category> $items
+     * @return list<array{name: string, slug: string, children: list<mixed>}> 
+     */
     public function prepareTreeResultForMenu(SelectQuery $items): array
     {
         $itemsForMenu = [];
@@ -174,6 +192,9 @@ class CategoriesTable extends AppTable
         return $itemsForMenu;
     }
 
+    /**
+     * @return array{name: string, slug: string, children: list<array{name: string, slug: string, children: list<mixed>}>}
+     */
     private function buildItemForTree(Category $category, int $index): array
     {
         $tmpMenuItem = [

@@ -22,15 +22,16 @@ use App\Controller\Component\StringComponent;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-trait OrderDetailsFilterTrait 
+trait OrderDetailsFilterTrait
 {
-
     public function getDefaultOrderDetailId(): string
     {
         return '';
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getPickupDay(int|string $orderDetailId): array
     {
         $pickupDay = [];
@@ -100,7 +101,8 @@ trait OrderDetailsFilterTrait
     }
 
     /**
-     * @param array<string> $pickupDay
+     * @param array<int, string> $pickupDay
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
      */
     public function getOrderDetails(
         int|string $manufacturerId,
@@ -112,7 +114,7 @@ trait OrderDetailsFilterTrait
         string $groupBy,
         ?string $cartType,
         array|string $categoryId = ''
-        ): SelectQuery
+    ): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $categoryId);
@@ -249,6 +251,10 @@ trait OrderDetailsFilterTrait
         return $orderDetails;
     }
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\OrderDetail> $query
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     private function addSelectGroupFields(SelectQuery $query): SelectQuery
     {
         $query->select([

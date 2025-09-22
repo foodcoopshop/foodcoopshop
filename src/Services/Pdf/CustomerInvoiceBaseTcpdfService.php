@@ -32,6 +32,9 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
 
     public string $infoTextForFooter = '';
 
+    /**
+     * @var array<int, array<string, int|string>>
+     */
     public array $headers = [];
 
     public ?string $html;

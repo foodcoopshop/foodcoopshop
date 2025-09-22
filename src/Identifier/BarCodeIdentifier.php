@@ -29,6 +29,9 @@ class BarCodeIdentifier extends AbstractIdentifier
     use ResolverAwareTrait;
     use LocatorAwareTrait;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $_defaultConfig = [
         'fields' => [
             TokenIdentifier::CREDENTIAL_TOKEN => 'barcode',
@@ -42,6 +45,7 @@ class BarCodeIdentifier extends AbstractIdentifier
 
     /**
      * @param array<string, mixed> $credentials
+     * @return ArrayAccess<string, mixed>|array<string, mixed>|null
      */
     public function identify(array $credentials): ArrayAccess|array|null
     {
