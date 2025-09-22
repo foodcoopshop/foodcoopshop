@@ -102,6 +102,7 @@ trait OrderDetailsFilterTrait
 
     /**
      * @param array<int, string> $pickupDay
+     * @param array<string>|string $categoryIds
      * @return SelectQuery<\App\Model\Entity\OrderDetail>
      */
     public function getOrderDetails(
@@ -113,11 +114,11 @@ trait OrderDetailsFilterTrait
         float|string $deposit,
         string $groupBy,
         ?string $cartType,
-        array|string $categoryId = ''
+        array|string $categoryIds = '',
     ): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $categoryId);
+        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $categoryIds);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {

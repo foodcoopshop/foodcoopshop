@@ -810,7 +810,8 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<string> $pickupDay
+     * @param array<int, string> $pickupDay
+     * @param array<string>|string $categoryIds
      * @return array<string, mixed>
      */
     public function getOrderDetailParams(
