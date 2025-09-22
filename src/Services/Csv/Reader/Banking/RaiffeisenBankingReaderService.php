@@ -27,6 +27,9 @@ class RaiffeisenBankingReaderService extends BankingReaderService {
         $this->setDelimiter(';');
     }
 
+    /**
+     * @param array<int|string, mixed> $record
+     */
     public function checkStructureForRecord(array $record): bool
     {
 
@@ -46,6 +49,10 @@ class RaiffeisenBankingReaderService extends BankingReaderService {
         return $result;
     }
 
+    /**
+     * @param array<int, array<int|string, mixed>> $records
+     * @return array<int, array<string, mixed>>
+     */
     public function equalizeStructure(array $records): array
     {
 
@@ -55,13 +62,16 @@ class RaiffeisenBankingReaderService extends BankingReaderService {
             // remove empty array elements
             $record = array_filter($record);
 
-            $record['content'] = $record[1];
+            if (!isset($record[1]) || !isset($record[3]) || !isset($record[5])) {
+                // skip malformed records
+                continue;
+            }
 
-            $record['amount'] = $record[3];
+            $record['content'] = (string)$record[1];
+            $record['amount'] = (string)$record[3];
 
-            // 01.02.2019 02:51:14:563 =>
-            // 01.02.2019 02:51:14.563
-            $record['date'] =  substr_replace($record[5], '.', 19, 1);
+            // 01.02.2019 02:51:14:563 => 01.02.2019 02:51:14.563
+            $record['date'] =  substr_replace((string)$record[5], '.', 19, 1);
 
             $preparedRecords[] = $record;
         }

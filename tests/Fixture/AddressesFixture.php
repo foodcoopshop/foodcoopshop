@@ -21,6 +21,9 @@ class AddressesFixture extends AppFixture
 {
     public string $table = 'fcs_address';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_address' => 153,

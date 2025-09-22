@@ -22,6 +22,9 @@ class DepositsFixture extends AppFixture
 
     public string $table = 'fcs_deposits';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

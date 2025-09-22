@@ -21,6 +21,9 @@ class CartProductsFixture extends AppFixture
 {
     public string $table = 'fcs_cart_products';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_cart_product' => 1,

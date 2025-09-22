@@ -21,6 +21,9 @@ class CategoriesFixture extends AppFixture
 {
     public string $table = 'fcs_category';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_category' => 16,

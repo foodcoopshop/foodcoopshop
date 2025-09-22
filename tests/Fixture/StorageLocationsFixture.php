@@ -21,6 +21,9 @@ class StorageLocationsFixture extends AppFixture
 {
     public string $table = 'fcs_storage_locations';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id' => 1,

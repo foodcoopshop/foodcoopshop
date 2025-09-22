@@ -24,6 +24,9 @@ use Cake\Datasource\EntityInterface;
 class ActionLogsTable extends AppTable
 {
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $types;
 
     public function initialize(array $config): void
@@ -531,6 +534,9 @@ class ActionLogsTable extends AppTable
         return $statement->execute();
     }
 
+    /**
+     * @return list<string>
+     */
     public function getHiddenTypesForManufacturersWithEnabledAnonymization(): array
     {
         $types = [];
@@ -555,6 +561,9 @@ class ActionLogsTable extends AppTable
         return $this->save($this->newEntity($data2save));
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getTypesForDropdown(): array
     {
         $result = [];

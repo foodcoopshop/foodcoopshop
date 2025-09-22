@@ -27,6 +27,9 @@ use Cake\ORM\Query\SelectQuery;
 class Customer extends AppEntity implements IdentityInterface
 {
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $cart;
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
@@ -42,7 +45,7 @@ class Customer extends AppEntity implements IdentityInterface
 
     private Manufacturer|string|null $_manufacturer = 'not-yet-loaded';
 
-    public function getIdentifier(): array|string|int|null
+    public function getIdentifier(): int|null
     {
         return $this->id_customer;
     }
@@ -186,13 +189,20 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->id_default_group;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getLastOrderDetailsForDropdown(): array
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getId());
-        return $dropdownData;
+        // normalize keys to be numeric indexes as declared
+        return array_values($dropdownData);
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     */
     public function getFutureOrderDetails(): SelectQuery
     {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -273,6 +283,17 @@ class Customer extends AppEntity implements IdentityInterface
         $this->cart = $cart;
     }
 
+    /**
+     * @return array{
+     *   CartProductSum: float,
+     *   CartDepositSum: float,
+     *   CartTaxSum: float,
+     *   CartProductSumExcl: float,
+     *   CartProducts: list<array<string, mixed>>,
+     *   ProductsWithUnitCount: int,
+     *   Cart: \App\Model\Entity\Cart
+     * }
+     */
     public function getCart(): array
     {
         $cartType = $this->getCartType();
@@ -280,6 +301,9 @@ class Customer extends AppEntity implements IdentityInterface
         return $cartsTable->getCart($this, $cartType);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function getProducts(): array
     {
         if ($this->cart !== null) {
@@ -354,6 +378,9 @@ class Customer extends AppEntity implements IdentityInterface
         return $savedCart;
     }
 
+    /**
+     * @return array<int, array{name:string}>
+     */
     public function getUniqueManufacturers(): array
     {
         $manufactures = [];
@@ -365,6 +392,9 @@ class Customer extends AppEntity implements IdentityInterface
         return $manufactures;
     }
 
+    /**
+     * @return array<string, mixed>|false
+     */
     public function getProduct(int|string $productId): array|false
     {
         foreach ($this->getProducts() as $product) {

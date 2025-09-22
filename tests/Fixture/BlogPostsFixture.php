@@ -21,6 +21,9 @@ class BlogPostsFixture extends AppFixture
 {
     public string $table = 'fcs_blog_posts';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_blog_post' => 2,

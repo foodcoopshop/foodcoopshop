@@ -39,6 +39,9 @@ class SlidersTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @return SelectQuery<\App\Model\Entity\Slider>
+     */
     public function getForHome(): SelectQuery
     {
 

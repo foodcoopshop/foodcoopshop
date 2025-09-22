@@ -23,6 +23,9 @@ use League\Csv\Reader;
 use Cake\I18n\DateTime;
 use Cake\ORM\TableRegistry;
 
+/**
+ * @extends \League\Csv\Reader<array<string, scalar|null>>
+ */
 abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
     public const ALLOWED_UPLOAD_MIME_TYPES = [
@@ -58,6 +61,9 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
         return $foundCustomer;
     }
 
+    /**
+     * @return list<array{content:string,amount:float,date:string,original_id_customer:int|string}>
+     */
     public function getPreparedRecords(): array
     {
         $this->configureType();
@@ -65,11 +71,12 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
             throw new \Exception(__('The_structure_of_the_uploaded_file_is_not_valid.'));
         }
 
-        $records = $this->getRecords();
+    $records = $this->getRecords();
         $records = iterator_to_array($records);
         $records = $this->equalizeStructure($records);
 
-        $preparedRecords = [];
+    /** @var list<array{content:string,amount:float,date:string,original_id_customer:int|string}> $preparedRecords */
+    $preparedRecords = [];
         foreach($records as $record) {
 
             // never import negative transactions
@@ -78,11 +85,15 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
                 continue;
             }
 
-            $preparedRecord = [];
-            $preparedRecord['content'] = h($record['content']);
-            $preparedRecord['amount'] = $amount;
-            $date = new DateTime($record['date']);
-            $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
+            $preparedRecord = [
+                'content' => h((string)$record['content']),
+                'amount' => $amount,
+                'date' => (function(string $d): string {
+                    $date = new DateTime($d);
+                    return $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
+                })((string)$record['date']),
+                'original_id_customer' => '',
+            ];
 
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);
             $preparedRecord['original_id_customer'] = !is_null($customer) ? $customer->id_customer : '';

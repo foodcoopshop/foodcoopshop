@@ -45,6 +45,9 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getCartTypes(): array
     {
         $cartTypes = [
@@ -82,14 +85,20 @@ class MyHtmlHelper extends HtmlHelper
         return $elementCacheKey;
     }
 
+    /**
+     * @return array<int, string>
+     */
+    /**
+     * @return array<int, string>
+     */
     public function getShoppingPricesForDropdown(): array
     {
         $options = [];
-        $options[Customer::SELLING_PRICE] = __('Shopping_with_selling_price');
+        $options[(int)Customer::SELLING_PRICE] = __('Shopping_with_selling_price');
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $options[Customer::PURCHASE_PRICE] = __('Shopping_with_purchase_price');
+            $options[(int)Customer::PURCHASE_PRICE] = __('Shopping_with_purchase_price');
         }
-        $options[Customer::ZERO_PRICE] = __('Shopping_with_zero_price');
+        $options[(int)Customer::ZERO_PRICE] = __('Shopping_with_zero_price');
         return $options;
     }
 
@@ -174,6 +183,9 @@ class MyHtmlHelper extends HtmlHelper
         return $deliveryRhythmString;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getSendOrderListsWeekdayOptions(): array
     {
         $defaultSendOrderListsWeekday = (new DeliveryRhythmService())->getSendOrderListsWeekday();
@@ -187,6 +199,9 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getDeliveryRhythmTypesForDropdown(): array
     {
         return [
@@ -229,6 +244,9 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getYesNoArray()[$value];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getYesNoArray(): array
     {
         return [
@@ -375,9 +393,13 @@ class MyHtmlHelper extends HtmlHelper
         return $result;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getFormattedAndCleanedDeliveryDays(string $deliveryDays): array
     {
         $explodedNoDeliveryDays = explode(',', $deliveryDays);
+        /** @var list<string> $formattedAndCleanedDeliveryDays */
         $formattedAndCleanedDeliveryDays = [];
         foreach($explodedNoDeliveryDays as $noDeliveryDay) {
             if (date('Y-m-d') <= $noDeliveryDay) {
@@ -387,6 +409,9 @@ class MyHtmlHelper extends HtmlHelper
         return $formattedAndCleanedDeliveryDays;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getGlobalNoDeliveryDaysAsArray(): array
     {
         $result = [];
@@ -477,6 +502,9 @@ class MyHtmlHelper extends HtmlHelper
         return Configure::read('appDb.FCS_APP_ADDRESS');
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getMenuTypes(): array
     {
         return [
@@ -509,6 +537,9 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getMenuTypes()[$menuTypeId];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAuthDependentGroups(int $loggedGroupId): array
     {
         $groups = $this->getGroups();
@@ -520,6 +551,9 @@ class MyHtmlHelper extends HtmlHelper
         return $groups;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getGroups(): array
     {
         $groups = [];
@@ -543,6 +577,9 @@ class MyHtmlHelper extends HtmlHelper
         return (int) $cartId[5];
     }
 
+    /**
+     * @return list<array{name:string,url:string,key:string}>
+     */
     public function getConfigurationTabs(): array
     {
         $tabs = [];
@@ -571,6 +608,9 @@ class MyHtmlHelper extends HtmlHelper
         return $tabs;
     }
 
+    /**
+     * @return list<array{name:string,url:string,key:string|int}>
+     */
     public function getReportTabs(): array
     {
         $tabs = [];
@@ -613,6 +653,9 @@ class MyHtmlHelper extends HtmlHelper
         return $tabs;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getPaymentTexts(): array
     {
         $paymentTexts = [
@@ -628,6 +671,9 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getPaymentTexts()[$paymentType];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getSuperadminProductPaymentTexts(): array
     {
         return [
@@ -636,6 +682,9 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getManufacturerDepositPaymentTexts(): array
     {
         return [
@@ -823,6 +872,9 @@ class MyHtmlHelper extends HtmlHelper
     }
 
 
+    /**
+     * @return array{productImageLargeSrc:string,productImageLargeExists:bool,productImageSrc:string}
+     */
     public function getProductImageSrcWithManufacturerImageFallback(int $productImageId, int $manufacturerId): array
     {
 
@@ -883,6 +935,9 @@ class MyHtmlHelper extends HtmlHelper
         return $url;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getApprovalStates(): array
     {
         return [
@@ -892,6 +947,9 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getActiveStatesOnOff(): array
     {
         return [
@@ -900,6 +958,9 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    /**
+     * @return array<int|string, string>
+     */
     public function getActiveStates(): array
     {
         return [
@@ -909,11 +970,17 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getOrderStates(): array
     {
         return Configure::read('app.orderStates');
     }
 
+    /**
+     * @return list<int|string>
+     */
     public function getOrderStateIds(): array
     {
         return array_keys(self::getOrderStates());

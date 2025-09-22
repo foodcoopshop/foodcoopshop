@@ -25,6 +25,9 @@ use Cake\Utility\Hash;
 trait ProductTrait
 {
 
+    /**
+     * @var list<int>
+     */
     protected array $allowedPaymentTypes = [];
 
     public function product(): void

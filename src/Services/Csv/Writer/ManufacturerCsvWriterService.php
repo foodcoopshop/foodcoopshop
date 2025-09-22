@@ -24,6 +24,9 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
 
     use ManufacturersFilterTrait;
     
+    /**
+     * @return list<string>
+     */
     public function getHeader(): array
     {
         $header = [
@@ -47,6 +50,9 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
 
     }
 
+    /**
+     * @return list<list<string|int|float|bool|null>>
+     */
     public function getRecords(): array
     {
 

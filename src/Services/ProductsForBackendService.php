@@ -27,6 +27,10 @@ use App\Model\Entity\ProductAttribute;
 class ProductsForBackendService
 {
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\Product>|PaginatedInterface $query
+     * @return list<mixed>
+     */
     public function getPreparedProducts(SelectQuery|PaginatedInterface $query, bool $addProductNameToAttributes = false): array
     {
 
@@ -174,8 +178,9 @@ class ProductsForBackendService
     }
 
     /**
-     * @param list<string>|string $productIds
-     * @param list<string>|string $categoryId
+     * @param array<int|string>|list<int>|string $productIds
+     * @param list<int>|string $categoryId
+     * @return SelectQuery<\App\Model\Entity\Product>
      */
     public function getQuery(
         array|string $productIds,
@@ -309,6 +314,7 @@ class ProductsForBackendService
 
     /** 
      * @param array<string, mixed> $preparedProduct
+     * @return array<string, mixed>
      */
     private function addPurchasePriceRelatedInfoToAttribute(array $preparedProduct, ProductAttribute $attribute, float $taxRate, float $grossPrice, float $purchasePriceTaxRate): array {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -438,6 +444,9 @@ class ProductsForBackendService
         return join(' ', $rowClasses);
     }
 
+    /**
+     * @return list<string>
+     */
     private function getDefaultRowClasses(Product $product, bool $rowIsOdd): array
     {
         $rowClasses = [];

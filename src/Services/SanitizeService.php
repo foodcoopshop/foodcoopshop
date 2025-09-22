@@ -22,6 +22,7 @@ class SanitizeService
     /**
      * @param array<string, mixed> $data
      * @param list<string> $excludedFields
+     * @return array<string, mixed>
      */
     public function trimRecursive(array $data, array $excludedFields = []): array
     {
@@ -42,6 +43,7 @@ class SanitizeService
     /**
      * @param array<string, mixed> $data
      * @param list<string> $excludedFields
+     * @return array<string, mixed>
      */
     public function stripTagsAndPurifyRecursive(array $data, array $excludedFields = []): array
     {

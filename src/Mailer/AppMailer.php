@@ -25,6 +25,9 @@ use Cake\ORM\TableRegistry;
 class AppMailer extends Mailer
 {
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $afterRunParams = [];
 
     public bool $customerAnonymizationForManufacturers = true;
@@ -34,6 +37,7 @@ class AppMailer extends Mailer
         parent::__construct(null);
 
         if ($addBccBackupAddress && Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
+            /** @var list<string> $bccRecipients */
             $bccRecipients = [];
             $bccs = explode(',', Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
             foreach ($bccs as $bcc) {
@@ -43,6 +47,9 @@ class AppMailer extends Mailer
         }
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getAnonymizedCustomersAsStringReplacementArray(): array
     {
 
@@ -75,6 +82,7 @@ class AppMailer extends Mailer
                 );
                 foreach($customers as $customer) {
                     // eg. greeting is ALWAYS firstname - lastname (not respecting app.customerMainNamePart)
+                    /** @var list<string> $replaceArrays */
                     $replaceArrays = [
                         $customer->firstname . ' ' . $customer->lastname,
                         $customer->lastname . ' ' . $customer->firstname,
@@ -92,7 +100,6 @@ class AppMailer extends Mailer
 
     public function addToQueue(): void
     {
-
         $this->render();
 
         $outputStringReplacements = $this->getAnonymizedCustomersAsStringReplacementArray();

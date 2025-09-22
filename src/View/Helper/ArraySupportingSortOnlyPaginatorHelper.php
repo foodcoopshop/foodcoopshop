@@ -57,9 +57,7 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
     use StringTemplateTrait;
 
     /**
-     * List of helpers used by this helper
-     *
-     * @var array
+     * @var list<string>
      */
     protected array $helpers = ['Url', 'Number', 'Html', 'Form'];
 
@@ -136,6 +134,9 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
      *
      * @param string|null $model Optional model name. Uses the default if none is specified.
      * @return array The array of paging parameters for the paginated resultset.
+     */
+    /**
+     * @return array<string, mixed>
      */
     public function params(?string $model = null): array
     {
@@ -388,6 +389,11 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
      * @param string|null $model Which model to paginate on
      * @param array<string, mixed> $url URL.
      * @return array An array of URL parameters
+     */
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $url
+     * @return array<string, mixed>
      */
     public function generateUrlParams(array $options = [], ?string $model = null, array $url = []): array
     {

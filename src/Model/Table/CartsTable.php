@@ -114,6 +114,17 @@ class CartsTable extends AppTable
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
 
+    /**
+     * @return array{
+     *   CartProductSum: float,
+     *   CartDepositSum: float,
+     *   CartTaxSum: float,
+     *   CartProductSumExcl: float,
+     *   CartProducts: list<array<string, mixed>>,
+     *   ProductsWithUnitCount: int,
+     *   Cart: \App\Model\Entity\Cart
+     * }
+     */
     public function getCart(IdentityInterface|CartsControllerTest $identity, int $cartType): array
     {
 
@@ -229,7 +240,24 @@ class CartsTable extends AppTable
     }
 
     /**
-     * @param array<string, mixed> $cart
+     * @param array{
+     *   Cart: \App\Model\Entity\Cart,
+     *   CartProducts: list<array<string, mixed>>,
+     *   CartDepositSum?: float,
+     *   CartProductSum?: float,
+     *   CartTaxSum?: float,
+     *   CartProductSumExcl?: float,
+     *   ProductsWithUnitCount?: int
+     * } $cart
+     * @return array{
+     *   Cart: \App\Model\Entity\Cart,
+     *   CartProducts: array<string, array{CartDepositSum: float, CartProductSum: float, Products: list<array<string, mixed>>}>,
+     *   CartDepositSum?: float,
+     *   CartProductSum?: float,
+     *   CartTaxSum?: float,
+     *   CartProductSumExcl?: float,
+     *   ProductsWithUnitCount?: int
+     * }
      */
     public function getCartGroupedByPickupDay(array $cart, ?string $customerSelectedPickupDay=null): array
     {
@@ -261,7 +289,7 @@ class CartsTable extends AppTable
             }
             $preparedCartProducts[$pickupDay]['CartDepositSum'] += $cartProduct['deposit'] ?? 0;
             $preparedCartProducts[$pickupDay]['CartProductSum'] += $cartProduct['price'] ?? 0;
-            $preparedCartProducts[$pickupDay]['Products'][] = $cartProduct ?? 0;
+            $preparedCartProducts[$pickupDay]['Products'][] = $cartProduct;
         }
         $cart['CartProducts'] = $preparedCartProducts;
         return $cart;
@@ -269,6 +297,7 @@ class CartsTable extends AppTable
 
     /**
      * @param array<string, mixed> $productData
+     * @return array<string, mixed>
      */
     private function addPurchasePricePerUnitProductData(array $productData, UnitProduct|UnitProductAttribute $unitProduct): array
     {
@@ -292,6 +321,17 @@ class CartsTable extends AppTable
         return $count;
     }
 
+    /**
+     * @return array{
+     *   net_per_piece: float|int|string|null,
+     *   gross_per_piece: float,
+     *   gross: float,
+     *   net: float,
+     *   tax: float,
+     *   tax_per_piece: float|int|string,
+     *   gross_with_deposit: float|int|string
+     * }
+     */
     public function getPricesRespectingPricePerUnit(
         string|float|null $netPricePerPiece,
         UnitProduct|UnitProductAttribute|null $unitProduct,
@@ -354,6 +394,36 @@ class CartsTable extends AppTable
         return $prices;
     }
 
+    /**
+     * @return array{
+     *   cartProductId: int,
+     *   productId: int,
+     *   productName: string,
+     *   amount: int|float|string,
+     *   manufacturerId: int,
+     *   manufacturerName: string,
+     *   price: float,
+     *   priceExcl: float,
+     *   tax: float,
+     *   taxPerPiece: float|int|string,
+     *   pickupDay: string,
+     *   isStockProduct: bool|int,
+     *   deposit: float|int,
+     *   unity: string,
+     *   usesQuantityInUnits?: bool,
+     *   orderedQuantityInUnits?: float|int|string|null,
+     *   quantityInUnits?: float|int|string|null,
+     *   productQuantityInUnits?: float|int|string|null,
+     *   markAsSaved?: int,
+     *   unity_with_unit: string,
+     *   unitName: string,
+     *   unitAmount: float|int|string,
+     *   priceInclPerUnit: float|int|string,
+     *   image?: string,
+     *   manufacturerLink?: string,
+     *   nextDeliveryDay?: string
+     * }
+     */
     private function prepareMainProduct(CartProduct $cartProduct): array
     {
 
@@ -456,6 +526,33 @@ class CartsTable extends AppTable
 
     }
 
+    /**
+     * @return array{
+     *   cartProductId: int,
+     *   productId: string,
+     *   productName: string,
+     *   amount: int|float|string,
+     *   manufacturerId: int,
+     *   manufacturerName: string,
+     *   price: float,
+     *   priceExcl: float,
+     *   tax: float,
+     *   taxPerPiece: float|int|string,
+     *   pickupDay: string,
+     *   isStockProduct: bool|int,
+     *   deposit: float|int,
+     *   unity?: string,
+     *   usesQuantityInUnits?: bool,
+     *   orderedQuantityInUnits?: float|int|string|null,
+     *   quantityInUnits?: float|int|string|null,
+     *   productQuantityInUnits?: float|int|string|null,
+     *   markAsSaved?: int,
+     *   unity_with_unit?: string,
+     *   unitName?: string,
+     *   unitAmount?: float|int|string,
+     *   priceInclPerUnit?: float|int|string
+     * }
+     */
     private function prepareProductAttribute(CartProduct $cartProduct): array
     {
 

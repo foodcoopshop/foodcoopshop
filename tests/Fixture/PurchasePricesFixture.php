@@ -21,6 +21,9 @@ class PurchasePricesFixture extends AppFixture
 {
     public string $table = 'fcs_purchase_prices';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_purchase_price' => 1,

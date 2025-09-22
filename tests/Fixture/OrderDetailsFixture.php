@@ -21,6 +21,9 @@ class OrderDetailsFixture extends AppFixture
 {
     public string $table = 'fcs_order_detail';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_order_detail' => 1,

@@ -22,6 +22,9 @@ class ImagesFixture extends AppFixture
 
     public string $table = 'fcs_images';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_image' => 154,

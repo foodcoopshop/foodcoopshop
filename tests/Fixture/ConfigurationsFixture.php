@@ -21,6 +21,9 @@ class ConfigurationsFixture extends AppFixture
 {
     public string $table = 'fcs_configuration';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'active' => 1,

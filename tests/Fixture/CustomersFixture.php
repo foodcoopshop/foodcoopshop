@@ -24,6 +24,9 @@ class CustomersFixture extends AppFixture
     
     public string $table = 'fcs_customer';
 
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public array $records = [
         [
             'id_customer' => 87,

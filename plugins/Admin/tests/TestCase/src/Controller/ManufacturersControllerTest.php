@@ -27,6 +27,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $manufacturerData = [
         'Manufacturers' => [
             'name' => 'Test Manufacturer',

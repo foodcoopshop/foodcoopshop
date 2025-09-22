@@ -161,6 +161,11 @@ class SendOrderListsCommand extends AppCommand
      * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
      * @param \App\Model\Entity\Manufacturer[] $manufacturers
      */
+    /**
+     * @param \App\Model\Entity\Manufacturer[] $manufacturers
+     * @param SelectQuery<\App\Model\Entity\OrderDetail> $orderDetails
+     * @return list<string>
+     */
     protected function getActionLogData(SelectQuery $orderDetails, array $manufacturers, string $pickupDay): array
     {
 
@@ -214,6 +219,7 @@ class SendOrderListsCommand extends AppCommand
 
     /**
      * reset quantity to default_quantity_after_sending_order_lists
+     * @param SelectQuery<\App\Model\Entity\OrderDetail> $orderDetails
      */
     protected function resetQuantityToDefaultQuantity(SelectQuery $orderDetails): void
     {

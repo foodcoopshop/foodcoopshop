@@ -25,6 +25,12 @@ use Cake\Event\EventInterface;
 class LocalizedController extends Controller
 {
 
+    /**
+     * @return array{
+     *   datepicker: array{close:string,prev:string,next:string,today:string,weekHeader:string,dateFormat:string},
+     *   helper: array<string, string>
+     * }
+     */
     private function getStrings(): array
     {
         $strings = [
