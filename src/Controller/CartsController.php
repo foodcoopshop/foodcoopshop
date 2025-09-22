@@ -275,6 +275,9 @@ class CartsController extends FrontendController
         $this->identity->setCart($this->identity->getCart());
     }
 
+    /**
+     * @param array<string, mixed> $cart
+     */
     private function sendAutoLogoutEmptyCartEmailToCustomerSelfService(array $cart): void
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
