@@ -190,14 +190,14 @@ class Customer extends AppEntity implements IdentityInterface
     }
 
     /**
-     * @return array<int, string>
+     * @return array<string, string>
      */
     public function getLastOrderDetailsForDropdown(): array
     {
+        /** @var \App\Model\Table\OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getId());
-        // normalize keys to be numeric indexes as declared
-        return array_values($dropdownData);
+        return $dropdownData;
     }
 
     /**
@@ -205,6 +205,7 @@ class Customer extends AppEntity implements IdentityInterface
      */
     public function getFutureOrderDetails(): SelectQuery
     {
+        /** @var \App\Model\Table\OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
         return $futureOrderDetails;
