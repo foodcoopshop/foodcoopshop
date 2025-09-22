@@ -86,19 +86,16 @@ class MyHtmlHelper extends HtmlHelper
     }
 
     /**
-     * @return array<int, string>
-     */
-    /**
-     * @return array<int, string>
+     * @return array<string, string>
      */
     public function getShoppingPricesForDropdown(): array
     {
         $options = [];
-        $options[(int)Customer::SELLING_PRICE] = __('Shopping_with_selling_price');
+        $options[Customer::SELLING_PRICE] = __('Shopping_with_selling_price');
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $options[(int)Customer::PURCHASE_PRICE] = __('Shopping_with_purchase_price');
+            $options[Customer::PURCHASE_PRICE] = __('Shopping_with_purchase_price');
         }
-        $options[(int)Customer::ZERO_PRICE] = __('Shopping_with_zero_price');
+        $options[Customer::ZERO_PRICE] = __('Shopping_with_zero_price');
         return $options;
     }
 
