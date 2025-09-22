@@ -248,6 +248,9 @@ class SyncsController extends AppController
         return $emptyProductsString;
     }
 
+    /**
+     * @return list<\App\Model\Entity\Product>
+     */
     private function getLocalSyncProducts(): array
     {
         $productsForBackendService = new ProductsForBackendService();
@@ -262,7 +265,8 @@ class SyncsController extends AppController
     }
 
     /**
-     * @param array<mixed> $products
+     * @param list<\App\Model\Entity\Product> $products
+     * @return list<\App\Model\Entity\Product>
      */
     private function markProductsAsSynced(array $products): array
     {

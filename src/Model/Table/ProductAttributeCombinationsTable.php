@@ -35,6 +35,12 @@ class ProductAttributeCombinationsTable extends AppTable
         ]);
     }
 
+    /**
+     * @return array{
+     *   online: list<array{link: string, name: string, manufacturer_name: string}>,
+     *   offline: list<array{link: string, name: string, manufacturer_name: string}>
+     * }
+     */
     public function getCombinationCounts(int $attributeId): array
     {
         $combinations = $this->find('all',

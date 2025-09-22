@@ -36,12 +36,16 @@ class AppFormAuthenticator extends FormAuthenticator
         ],
     ];
 
+    /**
+     * @return array<string, mixed>|null
+     */
     protected function _getData(ServerRequestInterface $request): ?array
     {
         $fields = $this->_config['fields'];
 
         $body = $request->getParsedBody();
 
+        /** @var array<string, mixed> $data */
         $data = [];
         foreach ($fields as $key => $field) {
             $value = $body[$field] ?? '';

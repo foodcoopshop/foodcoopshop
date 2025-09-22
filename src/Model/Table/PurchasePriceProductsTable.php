@@ -104,6 +104,7 @@ class PurchasePriceProductsTable extends AppTable
 
     /**
      * @param list<int> $productIds
+     * @return array{pricesToChange: list<array<string, array<string, float|int|string|null>>>, preparedProductsForActionLog: list<string>}
      */
     public function getSellingPricesWithSurcharge(array $productIds, float $surcharge): array
     {
@@ -226,6 +227,9 @@ class PurchasePriceProductsTable extends AppTable
 
     }
 
+    /**
+     * @return list<array{label: string, oldTaxRate: float|int, newTaxRate: float|int}>
+     */
     public function savePurchasePriceTax(int $taxId, int $productId, Product $oldProduct): array
     {
         $changedTaxInfoForMessage = [];

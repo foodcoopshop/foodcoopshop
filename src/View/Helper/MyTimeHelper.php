@@ -58,6 +58,9 @@ class MyTimeHelper extends TimeHelper
         return join(' ', $result);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAllYearsUntilThisYear(int $thisYear, int $firstYear, string $labelPrefix=''): array
     {
         $years = [];
@@ -68,6 +71,9 @@ class MyTimeHelper extends TimeHelper
         return $years;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getAllMonthsUntilThisYear(int $thisYear, int $firstYear): array
     {
         $monthsAndYear = $this->getAllMonthsForYear($thisYear);
@@ -79,7 +85,8 @@ class MyTimeHelper extends TimeHelper
     }
 
     /**
-     * @param array<string> $array
+     * @param list<string> $array
+     * @return list<string>
      */
     public function sortArrayByDate(array $array): array
     {
@@ -162,6 +169,9 @@ class MyTimeHelper extends TimeHelper
         return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +' . $days . ' days'));
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getWeekdayFormattedDaysList(string $day, int $maxDays, int $factor): array
     {
         $days = [
@@ -185,6 +195,9 @@ class MyTimeHelper extends TimeHelper
         return (int) date('W', strtotime($year . '-12-28'));
     }
 
+    /**
+     * @return list<string>
+     */
     public function getAllCalendarWeeksUntilNow(int $timestampStart): array
     {
 
@@ -207,6 +220,9 @@ class MyTimeHelper extends TimeHelper
         return $result;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getCalendarWeeks(int $firstWeek, int $lastWeek, int $year): array
     {
         $firstWeek = (int) $firstWeek;
@@ -239,6 +255,9 @@ class MyTimeHelper extends TimeHelper
         return time();
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getWeekdays(): array
     {
         $weekdays = [
@@ -253,6 +272,9 @@ class MyTimeHelper extends TimeHelper
         return $weekdays;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getMonths(): array
     {
         $months = [
@@ -272,6 +294,9 @@ class MyTimeHelper extends TimeHelper
         return $months;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getAllMonthsForYear(int $year): array
     {
         $months = $this->getMonths();
@@ -295,6 +320,9 @@ class MyTimeHelper extends TimeHelper
         return $months[$month];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getLastNDays(int $n, string $startDate): array
     {
 

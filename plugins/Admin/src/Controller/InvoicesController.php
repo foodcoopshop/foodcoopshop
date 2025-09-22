@@ -516,6 +516,8 @@ class InvoicesController extends AdminAppController
 
     /**
      * @param array<int|string> $customerIds
+     * @param SelectQuery<\App\Model\Entity\Invoice> $query
+     * @return SelectQuery<\App\Model\Entity\Invoice>
      */
     protected function setInvoiceConditions(SelectQuery $query, string $dateFrom, string $dateTo, array $customerIds): SelectQuery
     {

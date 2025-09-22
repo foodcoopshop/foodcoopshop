@@ -45,6 +45,7 @@ class BarCodeIdentifier extends AbstractIdentifier
 
     /**
      * @param array<string, mixed> $credentials
+     * @return ArrayAccess<string, mixed>|array<string, mixed>|null
      */
     public function identify(array $credentials): ArrayAccess|array|null
     {

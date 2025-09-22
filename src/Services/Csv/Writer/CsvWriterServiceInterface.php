@@ -19,8 +19,14 @@ namespace App\Services\Csv\Writer;
 interface CsvWriterServiceInterface
 {
 
-    function getHeader(): array;
+	/**
+	 * @return list<string>
+	 */
+	function getHeader(): array;
 
+	/**
+	 * @return list<list<string|int|float|bool|null>>
+	 */
 	function getRecords(): array;
     
 }

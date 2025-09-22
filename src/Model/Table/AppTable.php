@@ -37,6 +37,9 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
+    /**
+     * @return list<string>
+     */
     public function getAllValidationErrors(EntityInterface $entity): array
     {
         $preparedErrors = [];

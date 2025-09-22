@@ -27,6 +27,9 @@ class NetworkHelper extends Helper
      */
     protected array $helpers = ['MyHtml'];
 
+    /**
+     * @return list<array{url:string,name:string}>
+     */
     public function getTabs(): array
     {
         return [

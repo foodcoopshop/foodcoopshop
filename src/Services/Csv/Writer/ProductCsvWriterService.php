@@ -56,6 +56,9 @@ class ProductCsvWriterService extends BaseCsvWriterService
         $this->productIds = $stockProductIds;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getHeader(): array
     {
         return [
@@ -72,6 +75,9 @@ class ProductCsvWriterService extends BaseCsvWriterService
         ];
     }
 
+    /**
+     * @return list<list<string|int|float|bool|null>>
+     */
     public function getRecords(): array
     {
         $productsForBackendService = new ProductsForBackendService();

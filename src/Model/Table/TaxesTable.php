@@ -42,6 +42,9 @@ class TaxesTable extends AppTable
         return $validator;
     }
 
+    /**
+     * @return list<int|string>
+     */
     public function getValidTaxIds(): array
     {
         $taxes = $this->getForDropdown();
@@ -50,6 +53,9 @@ class TaxesTable extends AppTable
         return $taxes;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getValidTaxRatesWithoutPercentSign(): array
     {
         $taxes = $this->getForDropdown();
@@ -61,6 +67,9 @@ class TaxesTable extends AppTable
         return $taxes;
     }
 
+    /**
+     * @return array{netPrice: float, taxId: int|false}
+     */
     public function getNetPriceAndTaxId(float|false $grossPrice, float $taxRate): array
     {
 
@@ -88,6 +97,9 @@ class TaxesTable extends AppTable
 
     }
 
+    /**
+     * @return array<int|string, string>
+     */
     public function getForDropdown(bool $useRateAsKey = false): array
     {
         $taxes = $this->find('all',

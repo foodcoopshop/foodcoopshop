@@ -29,10 +29,6 @@ parameters:
           paths:
             - src/Services/HelloCash/HelloCashService.php
             - plugins/Admin/src/Controller/HelloCashController.php
-        - message: '#Method .* return type has no value type specified in iterable type array.#'
-        - message: '#Class .* extends generic class .* but does not specify its types: .*#'
-        - message: '#Method .* has parameter .* with generic (class|interface) .* but does not specify its types: .*#'
-        - message: '#Method .* return type with generic (class|interface) .* does not specify its types: .*#'
         - message: '#will always evaluate to true#'
         - message: '#is not a file or it does not exist#'
 rules:

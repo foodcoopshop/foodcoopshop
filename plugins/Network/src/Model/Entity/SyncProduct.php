@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Admin\Traits;
+namespace Network\Model\Entity;
+
+use App\Model\Entity\AppEntity;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -10,28 +12,12 @@ namespace Admin\Traits;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 4.1.0
+ * @since         FoodCoopShop 4.2.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-trait QueryFilterTrait
+class SyncProduct extends AppEntity
 {
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function getRequestQueryParams(): array
-    {
-        return $this->getRequest()->getQueryParams();
-    }
-
-    public function getRequestQuery(string $name, ?string $default = null): mixed
-    {
-        return $this->getRequest()->getQuery($name, $default);
-    }
-
 }
-

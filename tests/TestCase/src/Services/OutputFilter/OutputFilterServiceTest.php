@@ -30,6 +30,9 @@ class OutputFilterServiceTest extends AppCakeTestCase
         $this->assertEquals(count($matches[0]), $count);
     }
 
+    /**
+     * @return array<string, array{0: string, 1: int}>
+     */
     public static function protectEmailAdressesDataProvider(): array
     {
         return [

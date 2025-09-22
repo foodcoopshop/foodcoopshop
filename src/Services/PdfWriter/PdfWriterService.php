@@ -58,6 +58,9 @@ abstract class PdfWriterService
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;

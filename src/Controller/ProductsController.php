@@ -41,7 +41,7 @@ class ProductsController extends FrontendController
         $product = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', $productId);
         $product = $catalogService->prepareProducts($product);
 
-        if (empty($product) || !isset($product[0])) {
+        if (empty($product)) {
             throw new RecordNotFoundException('product not found');
         }
 

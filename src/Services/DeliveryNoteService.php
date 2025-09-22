@@ -27,6 +27,9 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class DeliveryNoteService
 {
 
+    /**
+     * @param SelectQuery<\App\Model\Entity\OrderDetail> $orderDetails
+     */
     public function getSpreadsheet(SelectQuery $orderDetails): Spreadsheet
     {
 

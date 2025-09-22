@@ -39,6 +39,9 @@ trait CustomersFilterTrait
         return null;
     }
 
+    /**
+     * @return list<\App\Model\Entity\Customer>
+     */
     public function getCustomers(int|string $active, int $year, ?bool $newsletter): array
     {
 

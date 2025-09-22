@@ -30,7 +30,7 @@ trait PaginatedProductsTrait
     }
 
     /**
-     * @param array<array<string, mixed>> $products
+     * @param list<\App\Model\Entity\Product> $products
      */
     public function throw404IfNoProductsOnPaginatedPageFound(array $products, int $page): void
     {

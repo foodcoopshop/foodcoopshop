@@ -18,6 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
+/** @var \App\Model\Table\PagesTable $pageTable */
 $pageTable = TableRegistry::getTableLocator()->get('Pages');
 
 foreach ($pages as $page) {
