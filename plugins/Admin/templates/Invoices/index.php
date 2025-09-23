@@ -66,7 +66,7 @@ if ($isOverviewMode) {
     ]);
 }
 echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b>';
-    if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+    if (Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
         echo $this->Html->link(
             __d('admin', 'Show orders'),
             '/admin/order-details/index/?pickupDay[]=' . $dateFrom.','.$dateTo . '&groupBy=customer&additionalFiltersEnabled=1',
