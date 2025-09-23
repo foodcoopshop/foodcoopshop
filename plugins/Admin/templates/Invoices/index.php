@@ -65,8 +65,19 @@ if ($isOverviewMode) {
         'dateTo' => $dateTo,
     ]);
 }
-echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b></p>';
-
+echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b>';
+    if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+        echo $this->Html->link(
+            __d('admin', 'Show orders'),
+            '/admin/order-details/index/?pickupDay[]=' . $dateFrom.','.$dateTo . '&groupBy=customer&additionalFiltersEnabled=1',
+            [
+                'class' => 'btn btn-outline-light',
+                'style' => 'margin-left:15px;',
+                'escape' => false,
+            ]
+        );
+    }
+echo '</p>';
 if ($isOverviewMode && !empty($invoices)) {
 
     if (!empty($taxRates['cash'])) {

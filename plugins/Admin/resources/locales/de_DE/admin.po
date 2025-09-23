@@ -364,6 +364,9 @@ msgstr "Bestellungen"
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
 
+msgid "Show orders"
+msgstr "Bestellungen anzeigen"
+
 msgid "of_{0}"
 msgstr "von {0}"
 
