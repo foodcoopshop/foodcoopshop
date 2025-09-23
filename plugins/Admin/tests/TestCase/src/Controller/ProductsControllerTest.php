@@ -867,9 +867,6 @@ class ProductsControllerTest extends AppCakeTestCase
 
     /**
      * @param array<string, mixed> $product
-     */
-    /**
-     * @param array<string, mixed> $product
      * @return array<string, mixed>
      */
     private function normalizeProductForComparison(array $product): array

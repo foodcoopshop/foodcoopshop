@@ -195,9 +195,6 @@ trait DuplicateTrait
     }
 
     /**
-     * @param array<string, mixed> $associatedTable
-     */
-    /**
      * @param array<string, mixed>|null $associatedTable
      * @return array<string, mixed>|null
      */
@@ -212,9 +209,6 @@ trait DuplicateTrait
         return $associatedTable;
     }
 
-    /**
-     * @param array<string, mixed> $associatedTable
-     */
     /**
      * @param array<int, array<string, mixed>>|null $associatedTable
      * @return array<int, array<string, mixed>>|null
@@ -234,10 +228,6 @@ trait DuplicateTrait
 
     /**
      * @param Associations $associations
-     * @param array<string, mixed> $product
-     */
-    /**
-     * @param array<string, array<string, mixed>> $associations
      * @param array<string, mixed> $product
      * @return array<string, mixed>
      */
@@ -264,9 +254,6 @@ trait DuplicateTrait
         return $product;
     }
 
-    /**
-     * @param array<string, mixed> $product
-     */
     /**
      * @param array<string, mixed> $product
      * @return array<string, mixed>

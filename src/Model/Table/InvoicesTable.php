@@ -366,11 +366,6 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\OrderDetail[] $orderDetails
-     * @param array<string, mixed> $orderedDeposit
-     * @param array<string, mixed> $returnedDeposit
-     */
-    /**
      * @param list<\App\Model\Entity\OrderDetail> $orderDetails
      * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $orderedDeposit
      * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $returnedDeposit
@@ -401,11 +396,6 @@ class InvoicesTable extends AppTable
 
     }
 
-    /**
-     * @param \App\Model\Entity\OrderDetail[] $orderDetails
-     * @param array<string, mixed> $orderedDeposit
-     * @param array<string, mixed> $returnedDeposit
-     */
     /**
      * @param list<\App\Model\Entity\OrderDetail> $orderDetails
      * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $orderedDeposit
