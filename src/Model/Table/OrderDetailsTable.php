@@ -704,6 +704,7 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetail['unit_name'] = $orderDetail->order_detail_unit->unit_name;
             }
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_price_net'] = $orderDetail->sum_price_net;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $preparedOrderDetail['sum_units'] = $orderDetail->sum_units;
@@ -728,6 +729,7 @@ class OrderDetailsTable extends AppTable
         foreach ($orderDetails as $orderDetail) {
             $preparedOrderDetail = [];
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_price_net'] = $orderDetail->sum_price_net;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $variableMemberFee = $manufacturersTable->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
@@ -754,6 +756,7 @@ class OrderDetailsTable extends AppTable
         foreach ($orderDetails as $orderDetail) {
             $preparedOrderDetail = [];
             $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_price_net'] = $orderDetail->sum_price_net;
             $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $preparedOrderDetail['order_detail_count'] = $orderDetail->order_detail_count;
@@ -807,7 +810,8 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<string> $pickupDay
+     * @param array<int, string> $pickupDay
+     * @param array<string>|string $categoryIds
      * @return array<string, mixed>
      */
     public function getOrderDetailParams(
@@ -817,6 +821,7 @@ class OrderDetailsTable extends AppTable
         array $pickupDay,
         int|string $orderDetailId,
         float|string $deposit,
+        array|string $categoryIds = '',
         ): array
     {
         $conditions = [];
@@ -860,6 +865,17 @@ class OrderDetailsTable extends AppTable
 
         if ($manufacturerId != '') {
             $conditions['Products.id_manufacturer'] = $manufacturerId;
+        }
+
+        if ($categoryIds != '') {
+            $categoryProductsTable = TableRegistry::getTableLocator()->get('CategoryProducts');
+            $subQuery = $categoryProductsTable->find()
+                ->select([$categoryProductsTable->aliasField('id_product')])
+                ->where([$categoryProductsTable->aliasField('id_category IN') => $categoryIds])
+                ->where([$categoryProductsTable->aliasField('id_product = Products.id_product')]);
+            $conditions[] = function ($exp) use ($subQuery) {
+                return $exp->exists($subQuery);
+            };
         }
 
         // override params that manufacturer is not allowed to change

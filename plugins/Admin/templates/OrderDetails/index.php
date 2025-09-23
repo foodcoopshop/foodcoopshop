@@ -29,6 +29,8 @@ use App\Model\Entity\OrderDetail;
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $identity->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
+                        Configure::read('app.jsNamespace') . ".Helper.initTooltip('#price-with-tooltip');" .
+
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);
         "
     ]);
@@ -97,11 +99,21 @@ use App\Model\Entity\OrderDetail;
             <?php if ($identity->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
-<?php } ?>
+            <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <?php
-                if ($filterByCartTypeEnabled) {
+                if ($additionalFiltersEnabled) {
                     echo $this->Form->control('cartType', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_cart_types'), 'options' => $this->Html->getCartTypes(), 'default' => $cartType]);
+                    echo '<span style="margin-left: 3px;">'; // really strange - but gap would be missing here
+                        echo $this->Form->control('categoryIds', [
+                            'type' => 'select',
+                            'label' => '',
+                            'multiple' => true,
+                            'empty' => __d('admin', 'Category'),
+                            'options' => $categoriesForDropdown,
+                            'default' => isset($categoryIds) ? $categoryIds : ''
+                        ]);
+                    echo '</span>';
                 }
             ?>
         <?php echo $this->Form->end(); ?>
@@ -150,7 +162,7 @@ use App\Model\Entity\OrderDetail;
                 'deposit' => $deposit,
                 'orderDetails' => $orderDetails ?? [],
                 'groupBy' => $groupBy,
-                'filterByCartTypeEnabled' => $filterByCartTypeEnabled,
+                'additionalFiltersEnabled' => $additionalFiltersEnabled,
             ]);
 
             ?>
@@ -322,7 +334,7 @@ if ($groupBy == 'product') {
         echo '<td colspan="2"></td>';
     }
 }
-echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
+echo '<td class="right"><b id="price-with-tooltip" title="'.__('Price_net') . ': ' . $this->Number->formatAsCurrency($sums['price_net']) . '">' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
 if ($groupBy != 'customer') {
     $sumDepositString = '';
     if ($sums['deposit'] != 0) {

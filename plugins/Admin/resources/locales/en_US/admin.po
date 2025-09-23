@@ -2038,8 +2038,8 @@ msgstr "Cancel selected products"
 msgid "Copy_all_email_addresses"
 msgstr "Copy all e-mail adresses"
 
-msgid "Filter_by_cart_type"
-msgstr "Filter by order type"
+msgid "Show additional filters"
+msgstr "Show additional filters"
 
 msgid "Orders_as_pdf"
 msgstr "Orders as PDF"

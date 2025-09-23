@@ -43,7 +43,8 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
             __('Amount'),
             __('Product'),
             __('Manufacturer'),
-            __('Price'),
+            __('Gross_price'),
+            __('Price_net'),
             __('Deposit'),
             __('Weight'),
             __('Price_per'),
@@ -69,11 +70,12 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         $productId = h($this->getRequestQuery('productId', $this->getDefaultProductId()));
         $customerId = h($this->getRequestQuery('customerId', $this->getDefaultCustomerId()));
         $cartType = h($this->getRequestQuery('cartType', $this->getDefaultCartType()));
+        $categoryIds = h($this->getRequestQuery('categoryIds', $this->getDefaultCategoryIds()));
         $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
         $sort = $this->getRequestQuery('sort');
         $direction = $this->getRequestQuery('direction', 'ASC');
 
-        $orderDetails = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType);
+        $orderDetails = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $categoryIds);
         if (!is_null($sort)) {
             $orderDetails->orderBy([$sort => $direction]);
         }
@@ -87,6 +89,7 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
                 $this->getProductName($orderDetail),
                 $orderDetail->product->manufacturer->decoded_name,
                 Configure::read('app.numberHelper')->formatAsDecimal($orderDetail->total_price_tax_incl),
+                Configure::read('app.numberHelper')->formatAsDecimal($orderDetail->total_price_tax_excl),
                 $orderDetail->deposit > 0 ? Configure::read('app.numberHelper')->formatAsDecimal($orderDetail->deposit) : '',
                 $this->getProductUnits($orderDetail),
                 $this->getUnitName($orderDetail),

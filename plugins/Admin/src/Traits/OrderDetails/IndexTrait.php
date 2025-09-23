@@ -54,8 +54,11 @@ trait IndexTrait
         $cartType = h($this->getRequest()->getQuery('cartType', $this->getDefaultCartType()));
         $this->set('cartType', $cartType);
 
-        $filterByCartTypeEnabled = h($this->getRequest()->getQuery('filterByCartTypeEnabled', $this->getDefaultFilterByCartTypeEnabled($cartType)));
-        $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
+        $categoryIds = h($this->getRequest()->getQuery('categoryIds', $this->getDefaultCategoryIds()));
+        $this->set('categoryIds', $categoryIds);
+
+        $additionalFiltersEnabled = h($this->getRequest()->getQuery('additionalFiltersEnabled', $this->getDefaultAdditionalFiltersEnabled($cartType, $categoryIds)));
+        $this->set('additionalFiltersEnabled', $additionalFiltersEnabled);
 
         $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
         if ($this->identity->isManufacturer() && $groupBy != 'product') {
@@ -74,12 +77,16 @@ trait IndexTrait
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
 
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
+
         $this->set('title_for_layout', __d('admin', 'Orders'));
 
         $sums = [
             'records_count' => 0,
             'amount' => 0,
             'price' => 0,
+            'price_net' => 0,
             'deposit' => 0,
             'units' => [
                 'g' => 0,
@@ -97,7 +104,7 @@ trait IndexTrait
             }
         }
 
-        $query = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType);
+        $query = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $categoryIds);
 
         $orderDetails = $this->paginate($query, [
             'sortableFields' => [
@@ -126,10 +133,12 @@ trait IndexTrait
             $sums['records_count']++;
             if ($groupBy == '') {
                 $sums['price'] += $orderDetail->total_price_tax_incl;
+                $sums['price_net'] += $orderDetail->total_price_tax_excl;
                 $sums['amount'] += $orderDetail->product_amount;
                 $sums['deposit'] += $orderDetail->deposit;
             } else {
                 $sums['price'] += $orderDetail['sum_price'];
+                $sums['price_net'] += $orderDetail['sum_price_net'];
                 $sums['amount'] += $orderDetail['sum_amount'];
                 if ($groupBy == 'manufacturer') {
                     $sums['reduced_price'] += $orderDetail['reduced_price'];
