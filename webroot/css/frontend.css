@@ -1226,9 +1226,6 @@ a.blog-post-wrapper {
     -webkit-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
 }
-a.blog-post-wrapper:nth-of-type(3n) {
-    margin-right: 0;
-}
 a.blog-post-wrapper img {
     padding: 2px;
     margin-bottom: 5px;
@@ -1320,7 +1317,7 @@ body.manufacturers.detail .blog-wrapper {
     height: 330px;
     padding-top: 10px;
     overflow-y: auto;
-    width: 736px;
+    width: calc(100vw - var(--right-box-width) - var(--sidebar-width) - 120px);
     margin-top: -15px;
 }
 body.blog_posts.detail #inner-content .content h2,
