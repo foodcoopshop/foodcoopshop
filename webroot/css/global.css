@@ -20,6 +20,16 @@
     --dark-mode-main-border-color: #696969;
     --not-ok-red: #dc143c;
     --warning-yellow: #FDB813;
+    --right-box-width: 400px;
+    --container-min-width: 928px;
+    --scrollbar-width: 16px;
+    --sidebar-width: 240px;
+}
+
+@media (min-width: 1600px) {
+    :root {
+        --right-box-width: 500px;
+    }
 }
 
 @media print {

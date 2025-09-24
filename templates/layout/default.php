@@ -67,7 +67,7 @@ echo $this->element('layout/header');
         </div>
     </div>
 
-    <div id="footer">
+    <div id="footer" class="full-width-minus-right-sidebar">
         <div class="inner-footer">
             <?php
                 echo $this->element('footer');

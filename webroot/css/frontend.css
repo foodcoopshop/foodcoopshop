@@ -15,15 +15,20 @@ body {
     font-size: 14px;
 }
 
+#container #header,
+#container #content,
+#container #footer {
+    width: calc(100vw - var(--right-box-width) - var(--scrollbar-width));
+    min-width: var(--container-min-width);
+}
 #container {
-    width: 1234px;
+    min-width: calc(var(--container-min-width) + var(--right-box-width) + var(--scrollbar-width));
     float: left;
     display: none;
 }
 #content {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
-    width: 928px;
     float: left;
     background: #fff;
     z-index: 100;
@@ -33,14 +38,13 @@ body {
 }
 #inner-content {
     float: left;
-    width: 736px;
+    width: calc(100vw - var(--sidebar-width) - var(--right-box-width) - 27px);
     background: #fff;
     margin-top: 20px;
     padding-right: 10px;
     padding-bottom: 15px;
 }
 #header {
-    width: 928px;
     background: #fff;
     padding-top: 5px;
     float: left;
@@ -78,7 +82,7 @@ body {
     padding-right: 10px;
     background: #fff;
     padding-top: 15px;
-    width: 190px;
+    width: var(--sidebar-width);
 }
 .sidebar.empty {
     width: 100px;
@@ -99,10 +103,11 @@ body.categories div.description-wrapper {
 #slider {
     position: relative;
     overflow: hidden;
-    margin-left: 10px;
     width: 908px;
     margin-top: 10px;
     margin-bottom: -5px;
+    margin-left: auto;
+    margin-right: auto;
     z-index: 200;
 }
 #slider a.swiper-slide:hover {
@@ -123,7 +128,7 @@ body.categories div.description-wrapper {
     float: left;
     margin-bottom: 10px;
     clear: both;
-    width: 180px;
+    width: calc(var(--sidebar-width) - 10px);
 }
 .vertical.menu li.header {
     padding: 8px 10px;
@@ -677,7 +682,6 @@ body.manufacturers.index h2.info {
 }
 #footer {
     background-color: #dfdfdf;
-    width: 928px;
     min-height: 172px;
     float: left;
     border-right: 1px solid #d6d4d4;
@@ -759,11 +763,10 @@ body.manufacturers.index h2.info {
     float: left;
 }
 #right .inner-right {
+    min-width: var(--right-box-width);
     position: fixed;
 }
 .box {
-    left: 927px;
-    width: 306px;
     background: #fff;
     border-bottom: 1px solid #d6d4d4;
     border-right: 1px solid #d6d4d4;
@@ -909,7 +912,7 @@ body.carts #load-last-order-details,
 }
 .cart span.product-name-wrapper {
     float: left;
-    width: 185px; /* consider scrollbar! */
+    width: 75%; /* consider scrollbar! */
 }
 .cart span.product-name-wrapper a {
     word-wrap: break-word;
