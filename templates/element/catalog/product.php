@@ -24,13 +24,6 @@ if ($deliveryBreakManufacturerEnabled) {
 }
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
 
-    echo '<div class="c1">';
-        echo $this->element('catalog/columns/column1', [
-            'product' => $product,
-            'showIsNewBadgeAsLink' => $showIsNewBadgeAsLink,
-        ]);
-    echo '</div>';
-
     echo '<div class="c2">';
         echo $this->element('catalog/columns/column2', [
             'product' => $product,
@@ -40,6 +33,10 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
     echo '</div>';
 
     echo '<div class="c3">';
+        echo $this->element('catalog/columns/column1', [
+            'product' => $product,
+            'showIsNewBadgeAsLink' => $showIsNewBadgeAsLink,
+        ]);
         echo $this->element('catalog/columns/column3', [
             'product' => $product,
         ]);

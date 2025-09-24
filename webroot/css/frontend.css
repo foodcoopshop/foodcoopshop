@@ -41,7 +41,6 @@ body {
     width: calc(100vw - var(--sidebar-width) - var(--right-box-width) - 27px);
     background: #fff;
     margin-top: 20px;
-    padding-right: 10px;
     padding-bottom: 15px;
 }
 #header {
@@ -416,19 +415,32 @@ a[disabled] {
     opacity: 0.5;
 }
 
+.products-wrapper {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    float: left;
+}
 .pw,
 .manufacturer-wrapper {
     margin-bottom: 0px;
-    padding: 15px 0px;
-    border-top: 1px solid #d6d4d4;
-    float: left;
-    width: 100%;
+    padding: 10px;
+    border: 3px solid #d6d4d4;
     position: relative;
+    display: flex;
+    gap: 0 5px;
+    flex: 1 1 350px;
 }
-.pw .c1 a img {
+.pw .c3 img {
     max-width: 150px;
     height: auto;
 }
+.pw .c3 .image-wrapper {
+    padding-bottom: 10px;
+    position: relative;
+    text-align: center;
+}
+
 .pw .heading {
     width: 100%;
     float: left;
@@ -438,6 +450,7 @@ a[disabled] {
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
+    margin-bottom: 10px;
 }
 body.superadmin .pw .heading h4 {
     max-width: 95%;
@@ -447,19 +460,16 @@ body.superadmin .pw .heading h4 {
     margin-top: 0;
     line-height: 23px;
 }
-.pw div.c1,
-.manufacturer-wrapper div.c1 {
-    text-align: center;
-    float: left;
-    margin-right: 15px;
-    width: 150px;
+.pw div.c3,
+.manufacturer-wrapper div.c3 {
+    flex: 0 0 200px;
     position: relative;
+    padding-left: 10px;
 }
-.manufacturer-wrapper div.c1 img {
-    width: 148px;
+.manufacturer-wrapper div.c3 img {
     border-radius: 5px;
 }
-.pw div.c1 span.fa-stack i.fa-star {
+.pw div.c3 span.fa-stack i.fa-star {
     color: #fff;
 }
 .pw.delivery-break-enabled {
@@ -475,6 +485,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
  .pw div.c3 .unity,
 .pw .radio label {
     word-break: break-word;
+    text-align: left;
 }
 .pw .toggle-link {
     margin-top: 5px;
@@ -487,17 +498,16 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
 .pw div.c2,
 .manufacturer-wrapper div.c2 {
-    float: left;
-    width: 355px;
+    flex: 1 1 auto;
+    min-width: 200px;
     min-height: 113px;
-    padding-right: 15px;
-    margin-right: 15px;
-    border-right: 1px solid #d6d4d4;
+    padding-right: 10px;
 }
 .pw div.c2 {
     overflow: hidden;
     word-wrap: break-word;
     position: relative;
+    border-right: 1px solid #d6d4d4;
 }
 .pw div.c2 .toggle-content img {
     max-width: 100%;
@@ -509,16 +519,8 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
 .image-badge {
     position: absolute;
-    right: -10px;
-    top: -10px;
-}
-.pw div.c3,
-.manufacturer-wrapper div.c3 {
-    float: left;
-    width: 195px;
-    margin-left: -16px;
-    padding-left: 16px;
-    border-left: 1px solid #d6d4d4;
+    right: -5px;
+    top: -5px;
 }
 .manufacturer-wrapper div.c3 {
     text-align: center;
@@ -563,7 +565,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
 .pw .price,
 .pw .price-asterisk {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     margin-bottom: 5px;
     float: left;
@@ -690,7 +692,7 @@ body.manufacturers.index h2.info {
     padding: 20px;
     text-align: center;
 }
-#footer .c1 {
+#footer .c3 {
     width: 45%;
     float: left;
     text-align: left;
@@ -912,7 +914,7 @@ body.carts #load-last-order-details,
 }
 .cart span.product-name-wrapper {
     float: left;
-    width: 75%; /* consider scrollbar! */
+    width: 72%; /* consider scrollbar! */
 }
 .cart span.product-name-wrapper a {
     word-wrap: break-word;
@@ -934,7 +936,7 @@ body.carts #load-last-order-details,
     font-size: 14px;
 }
 .edit-shortcut-button {
-    padding: 0px 4px;
+    padding: 2px 4px;
 }
 .ew .btn,
 #cart .btn-success {

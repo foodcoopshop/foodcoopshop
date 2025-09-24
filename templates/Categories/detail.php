@@ -83,20 +83,22 @@ if (!empty($category)) {
 
 echo $this->element('stockProductInListInfo');
 
-foreach ($products as $product) {
-    echo $this->element('catalog/product', [
-        'product' => $product,
-        'showProductDetailLink' => true,
-        'showManufacturerDetailLink' => true,
-        'showIsNewBadgeAsLink' => true
-    ],
-    [
-        'cache' => [
-            'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+echo '<div class="products-wrapper">';
+    foreach ($products as $product) {
+        echo $this->element('catalog/product', [
+            'product' => $product,
+            'showProductDetailLink' => true,
+            'showManufacturerDetailLink' => true,
+            'showIsNewBadgeAsLink' => true
         ],
-    ]
-    );
-}
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+            ],
+        ]
+        );
+    }
+echo '</div>';
 
 echo $this->element('catalog/pagination', [
     'page' => $page,

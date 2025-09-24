@@ -20,15 +20,16 @@ $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback
     $product->id_manufacturer,
 );
 
-if ($productImageData['productImageLargeExists']) {
-    echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product->name) . ', ' . $product->manufacturer->name . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
-}
+echo '<div class="image-wrapper">';
+    if ($productImageData['productImageLargeExists']) {
+        echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product->name) . ', ' . $product->manufacturer->name . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
+    }
 
-echo '<img class="lazyload" data-src="' . $productImageData['productImageSrc']. '" />';
+    echo '<img class="lazyload" data-src="' . $productImageData['productImageSrc']. '" />';
 
-if ($productImageData['productImageLargeExists']) {
-    echo '</a>';
-}
+    if ($productImageData['productImageLargeExists']) {
+        echo '</a>';
+    }
 
 if ($product->is_new) {
     $isNewSrc = 'javascript:void(0);';
@@ -39,3 +40,5 @@ if ($product->is_new) {
         echo '<i class="fas fa-star gold"></i> '.__('New');
     echo '</a>';
 }
+
+echo '</div>';
