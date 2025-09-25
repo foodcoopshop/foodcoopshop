@@ -73,8 +73,6 @@ if (!empty($newProducts)) {
             echo $this->element('catalog/product', [
                 'product' => $product,
                 'showProductDetailLink' => true,
-                'showManufacturerDetailLink' => true,
-                'showIsNewBadgeAsLink' => true
             ],
             [
                 'cache' => [

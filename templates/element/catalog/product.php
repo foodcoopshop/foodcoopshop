@@ -1,5 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
+use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -15,31 +19,56 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-$classes = [
-    'pw'
-];
+$classes = ['pw'];
 $deliveryBreakManufacturerEnabled = $product->delivery_break_enabled ?? false;
 if ($deliveryBreakManufacturerEnabled) {
     $classes[] = 'delivery-break-enabled';
 }
+
+$isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
+    OrderCustomerService::isOrderForDifferentCustomerMode(),
+    OrderCustomerService::isSelfServiceModeByUrl(),
+    (bool) Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
+    (bool) $product->manufacturer->stock_management_enabled,
+    (bool) $product->is_stock_product,
+);
+
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
 
-    echo '<div class="c2">';
-        echo $this->element('catalog/columns/column2', [
-            'product' => $product,
-            'showProductDetailLink' => $showProductDetailLink,
-            'showManufacturerDetailLink' => $showManufacturerDetailLink,
-        ]);
+    echo $this->element('catalog/productImage', [
+        'product' => $product,
+    ]);
+
+    echo '<div class="content">';
+        echo '<h3>';
+            if ($showProductDetailLink) {
+                echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">'.$product->name.'</a>';
+            } else {
+                echo $product->name;
+            }
+        echo '</h3>';
+        if (Configure::read('app.showManufacturerListAndDetailPage')) {
+            echo '<h4>';
+                echo $product->manufacturer->name;
+            echo '</h4>';
+        }
+        echo '<div class="price-wrapper">';
+            echo '<div class="price">';
+                echo $this->Number->formatAsCurrency(rand(100, 10000) / 100);
+            echo '</div>';
+        echo '</div>';
     echo '</div>';
 
-    echo '<div class="c3">';
-        echo $this->element('catalog/columns/column1', [
-            'product' => $product,
-            'showIsNewBadgeAsLink' => $showIsNewBadgeAsLink,
-        ]);
-        echo $this->element('catalog/columns/column3', [
-            'product' => $product,
-        ]);
-    echo '</div>';
+    echo $this->element('catalog/cartButton', [
+        'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
+        'productId' => $product->id_product,
+        'product' => $product,
+        'stockAvailableQuantity' => $product->stock_available->quantity,
+        'stockAvailableQuantityLimit' => $product->stock_available->quantity_limit,
+        'stockAvailableAlwaysAvailable' => $product->stock_available->always_available,
+        'hideButton' => $isStockProductOrderPossible,
+        'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+        'cartButtonIcon' => OrderCustomerService::isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
+    ]);
 
 echo '</div>';

@@ -877,7 +877,7 @@ class MyHtmlHelper extends HtmlHelper
 
         $productImageLargeSrc = $this->getProductImageSrc($productImageId, 'thickbox');
         $productImageLargeExists = $this->largeImageExists($productImageLargeSrc);
-        $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
+        $productImageSrc = $this->getProductImageSrc($productImageId, 'large');
         if (!$productImageLargeExists) {
             $productImageLargeSrc = $this->getManufacturerImageSrc($manufacturerId, 'large');
             $productImageLargeExists = $this->largeImageExists($productImageLargeSrc);

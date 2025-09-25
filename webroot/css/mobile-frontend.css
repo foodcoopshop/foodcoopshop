@@ -14,11 +14,11 @@
 @media only screen and (max-device-width: 850px) {
 
     #container,
-    #header,
-    #content,
+    #container #header,
+    #container #content,
     #inner-content,
     .blog-wrapper,
-    #footer,
+    #container #footer,
     #login-form,
     #login-form form,
     #login-form .input,
@@ -29,6 +29,12 @@
     #RegistrationForm .input.checkbox label,
     #inner-content iframe {
         width: 100% ! important;
+    }
+    #container,
+    #container #header,
+    #container #content,
+    #container #footer {
+        min-width: 100% ! important;
     }
     .color-mode-toggle {
         margin-top: 0;

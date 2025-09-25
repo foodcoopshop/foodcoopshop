@@ -116,8 +116,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             echo $this->element('catalog/product', [
                 'product' => $product,
                 'showProductDetailLink' => false,
-                'showManufacturerDetailLink' => false,
-                'showIsNewBadgeAsLink' => false
             ],
             [
                 'cache' => [

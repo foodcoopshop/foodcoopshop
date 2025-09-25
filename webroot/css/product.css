@@ -1,0 +1,97 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 4.2.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+.pw {
+    --pw-width: 300px;
+}
+.products-wrapper {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    float: left;
+}
+.pw {
+    margin-bottom: 0px;
+    border: 1px solid #d6d4d4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+    flex: 1 1 var(--pw-width);
+    min-width: var(--pw-width);
+    min-height: 280px;
+}
+.pw .image-wrapper {
+    align-self: center;
+    min-height: 200px;
+}
+.pw .image-wrapper img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain; 
+}
+.pw .content h3 {
+    font-size: 16px;
+}
+.pw .content h4 {
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: normal;
+    color: var(--font-color-grey);
+}
+.pw.delivery-break-enabled {
+    background-color: #efefef;
+    opacity: .7;
+}
+.pw.delivery-break-enabled .descriptions {
+    display: none;
+}
+.pw .ew {
+    width: 100%;
+}
+.pw .ew:not(.active),
+.pw .ew div.tax {
+    display: none;
+}
+.pw .btn-cart {
+    margin-top: auto;
+}
+.pw .btn-cart.btn-outline-light {
+    border-color: #333333;
+}
+.ew .btn-cart i.fa-spin,
+.btn-cart-detail i.fa-spin {
+    padding-top: 2px; /* fix for non-centered spinner */
+}
+.pw .content .price-wrapper {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.pw .content .price,
+.pw .content .price-asterisk {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    float: left;
+}
+.pw .content .price-asterisk {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+.pw .content a.edit-shortcut-button {
+  position: absolute;
+  top: 0;
+  right: 5px;
+}

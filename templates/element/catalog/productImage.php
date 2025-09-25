@@ -21,6 +21,7 @@ $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback
 );
 
 echo '<div class="image-wrapper">';
+
     if ($productImageData['productImageLargeExists']) {
         echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product->name) . ', ' . $product->manufacturer->name . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
     }
@@ -30,15 +31,5 @@ echo '<div class="image-wrapper">';
     if ($productImageData['productImageLargeExists']) {
         echo '</a>';
     }
-
-if ($product->is_new) {
-    $isNewSrc = 'javascript:void(0);';
-    if ($showIsNewBadgeAsLink) {
-        $isNewSrc = $this->Slug->getNewProducts();
-    }
-    echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-outline-light" title="'.__('New').'">';
-        echo '<i class="fas fa-star gold"></i> '.__('New');
-    echo '</a>';
-}
 
 echo '</div>';

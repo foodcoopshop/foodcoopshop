@@ -23,30 +23,33 @@ if ($hideButton) {
 }
 ?>
 
-<div class="line">
+<?php
+$availableQuantity = $stockAvailableQuantity;
+$classes = ['btn', 'btn-cart', 'btn-outline-light'];
 
-    <?php
-    $availableQuantity = $stockAvailableQuantity;
-    $classes = ['btn', 'btn-cart', 'btn-outline-light'];
+if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+    $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
+}
+if ((((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
+    || $deliveryBreakManufacturerEnabled) && (Configure::read('app.selfServiceIsAmountValidationEnabled') || !OrderCustomerService::isSelfServiceMode())) {
+    $classes[] = 'disabled';
 
-    if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-        $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
-    }
-    if ((((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || $deliveryBreakManufacturerEnabled) && (Configure::read('app.selfServiceIsAmountValidationEnabled') || !OrderCustomerService::isSelfServiceMode())) {
-        $classes[] = 'disabled';
-
-        if ($deliveryBreakManufacturerEnabled) {
-            $classes[] = 'btn-danger';
-            $cartButtonIcon = 'fa-times';
-            $cartButtonLabel = __('Delivery_break') . '!';
+    if ($deliveryBreakManufacturerEnabled) {
+        // remove btn-outline-light and add btn-danger
+        $key = array_search('btn-outline-light', $classes);
+        if ($key !== false) {
+            unset($classes[$key]);
         }
-
+        $classes = array_values($classes);
+        $classes[] = 'btn-danger';
+        $cartButtonIcon = 'fa-times';
+        $cartButtonLabel = __('Delivery_break') . '!';
     }
-    ?>
 
-    <a id="btn-cart-<?php echo $productId; ?>" class="<?php echo join(' ', $classes); ?>" href="javascript:void(0);">
-        <i class="fas fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
-    </a>
+}
+?>
 
-</div>
+<a id="btn-cart-<?php echo $productId; ?>" class="<?php echo join(' ', $classes); ?>" href="javascript:void(0);">
+    <i class="fas fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
+</a>
+
