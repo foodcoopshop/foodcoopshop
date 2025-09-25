@@ -35,6 +35,25 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
 
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
 
+    echo '<div class="fcs-badges">';
+        echo '<div class="fcs-badge" title="Neu">';
+            echo '<img src="/img/badge-ring-light-mode.svg" />';
+            echo '<i class="fas gold fa-star"></i>';
+        echo '</div>';
+        echo '<div class="fcs-badge" title="Vorhandene Stück">';
+            echo '<img src="/img/badge-ring-light-mode.svg" />';
+            echo '<span>' . rand(0, 100) . 'x</span>';
+        echo '</div>';
+        echo '<div class="fcs-badge" title="Lagerprodukt">';
+            echo '<img src="/img/badge-ring-light-mode.svg" />';
+            echo '<i class="fas ok fa-store"></i>';
+        echo '</div>';
+        echo '<div class="fcs-badge" title="Bio">';
+            echo '<img src="/img/badge-ring-light-mode.svg" />';
+            echo '<i class="fas ok fa-leaf"></i>';
+        echo '</div>';
+    echo '</div>';
+
     echo $this->element('catalog/productImage', [
         'product' => $product,
     ]);

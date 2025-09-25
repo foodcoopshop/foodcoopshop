@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path
+    d="M50 5
+       C70 3, 95 20, 93 45
+       C91 70, 72 95, 47 94
+       C24 92, 6 73, 7 50
+       C8 28, 29 7, 50 5 Z"
+    fill="#0f0f0f"
+    stroke="#696969"
+    vector-effect="non-scaling-stroke"
+  />
+</svg>

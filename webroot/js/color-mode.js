@@ -22,12 +22,18 @@ foodcoopshop.ColorMode = {
             this.enableLightMode();
         }
         this.setBackgroundImage();
+        this.setBadgeSvg();
     },
 
     setBackgroundImage: function() {
         var colorMode = this.getColorMode();
         $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '")');
         this.setBackgroundColor(colorMode);
+    },
+
+    setBadgeSvg: function() {
+        var colorMode = this.getColorMode();
+        $('.fcs-badges img').attr('src', '/img/badge-ring-' + colorMode + '-mode.svg');
     },
 
     /**
@@ -52,6 +58,7 @@ foodcoopshop.ColorMode = {
                 foodcoopshop.ColorMode.enableDarkMode();
             }
             foodcoopshop.ColorMode.setBackgroundImage();
+            foodcoopshop.ColorMode.setBadgeSvg();
         });
     },
 

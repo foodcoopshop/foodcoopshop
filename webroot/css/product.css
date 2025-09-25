@@ -17,9 +17,51 @@
 }
 .products-wrapper {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
     float: left;
+}
+div.fcs-badges {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: -15px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+div.fcs-badge {
+    position: relative;
+    width: 35px;
+}
+div.fcs-badge img {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 35px;
+    height: 35px;
+}
+div.fcs-badge i,
+div.fcs-badge span {
+    position: absolute;
+    font-size: 17px;
+    top: -11px;
+    top: -11px;
+}
+div.fcs-badge span {
+    left: 0;
+    font-weight: 300;
+    font-size: 14px;
+    text-align: center;
+    width: 35px;
+    top: -13px;
+}
+div.fcs-badge i.fa-leaf {
+    left: 5px;
+}
+div.fcs-badge i.fa-star {
+    left: 6px;
+}
+div.fcs-badge i.fa-store {
+    left: 6px;
 }
 .pw {
     margin-bottom: 0px;
