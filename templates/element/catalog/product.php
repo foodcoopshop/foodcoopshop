@@ -40,6 +40,7 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
     ]);
 
     echo '<div class="content">';
+
         echo '<h3>';
             if ($showProductDetailLink) {
                 echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">'.$product->name.'</a>';
@@ -57,18 +58,46 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
                 echo $this->Number->formatAsCurrency(rand(100, 10000) / 100);
             echo '</div>';
         echo '</div>';
+
     echo '</div>';
 
-    echo $this->element('catalog/cartButton', [
-        'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
-        'productId' => $product->id_product,
-        'product' => $product,
-        'stockAvailableQuantity' => $product->stock_available->quantity,
-        'stockAvailableQuantityLimit' => $product->stock_available->quantity_limit,
-        'stockAvailableAlwaysAvailable' => $product->stock_available->always_available,
-        'hideButton' => $isStockProductOrderPossible,
-        'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-        'cartButtonIcon' => OrderCustomerService::isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
-    ]);
+    echo '<div class="actions">';
+
+        echo '<div class="units-wrapper">';
+            $preparedProductAttributes = [];
+            if (!empty($product->product_attributes)) {
+                foreach ($product->product_attributes as $attribute) {
+                    $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
+                        $attribute->product_attribute_combination->attribute->name,
+                        $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                        $attribute->unit_product_attribute->price_per_unit_enabled,
+                        $attribute->unit_product_attribute->quantity_in_units,
+                        $attribute->unit_product_attribute->name,
+                    );
+                    $preparedProductAttributes[$attribute->id_product_attribute] = $radioButtonLabel;
+                }
+            }
+            if (!empty($preparedProductAttributes)) {
+                echo $this->Form->control('attributes.' . $product->id_product, [
+                    'type' => 'select',
+                    'label' => false,
+                    'options' => $preparedProductAttributes,
+                ]);
+            }
+        echo '</div>';
+
+        echo $this->element('catalog/cartButton', [
+            'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
+            'productId' => $product->id_product,
+            'product' => $product,
+            'stockAvailableQuantity' => $product->stock_available->quantity,
+            'stockAvailableQuantityLimit' => $product->stock_available->quantity_limit,
+            'stockAvailableAlwaysAvailable' => $product->stock_available->always_available,
+            'hideButton' => $isStockProductOrderPossible,
+            'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+            'cartButtonIcon' => OrderCustomerService::isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
+        ]);
+
+    echo '</div>';
 
 echo '</div>';

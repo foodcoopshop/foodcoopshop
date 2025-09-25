@@ -69,8 +69,17 @@
 .pw .ew div.tax {
     display: none;
 }
-.pw .btn-cart {
+.pw .actions {
     margin-top: auto;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.pw .actions .btn-cart {
+    flex-grow: 1;
+}
+.pw .actions .units-wrapper select {
+    width: auto;
 }
 .pw .btn-cart.btn-outline-light {
     border-color: #333333;
