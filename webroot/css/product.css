@@ -33,6 +33,10 @@
     min-width: var(--pw-width);
     min-height: 280px;
 }
+.pw:hover {
+    background-color: #eee;
+    transition: background-color .3s ease;
+}
 .pw .image-wrapper {
     align-self: center;
     min-height: 200px;

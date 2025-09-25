@@ -56,6 +56,10 @@ body.dark .pw.delivery-break-enabled {
     background-color: var(--dark-mode-2nd-bg-color);
     border-color: var(--dark-mode-main-border-color);
 }
+body.dark .pw:hover {
+    background-color: var(--dark-mode-2nd-bg-color);
+}
+
 body.dark .vertical.menu a {
     background-color: var(--dark-mode-main-bg-color) ! important;
 }
