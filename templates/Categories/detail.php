@@ -95,8 +95,7 @@ echo '<div class="products-wrapper">';
             'cache' => [
                 'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
             ],
-        ]
-        );
+        ]);
     }
 echo '</div>';
 

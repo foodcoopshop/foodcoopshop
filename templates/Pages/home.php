@@ -67,20 +67,22 @@ if (!empty($newProducts)) {
         echo __('New_products');
     echo '</h2>';
 
-    foreach ($newProducts as $product) {
-        echo $this->element('catalog/product', [
-            'product' => $product,
-            'showProductDetailLink' => true,
-            'showManufacturerDetailLink' => true,
-            'showIsNewBadgeAsLink' => true
-        ],
-        [
-            'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+    if (!empty($newProducts)) {
+        echo '<div class="products-wrapper">';
+        foreach ($newProducts as $product) {
+            echo $this->element('catalog/product', [
+                'product' => $product,
+                'showProductDetailLink' => true,
+                'showManufacturerDetailLink' => true,
+                'showIsNewBadgeAsLink' => true
             ],
-        ]
-        );
-    }
+            [
+                'cache' => [
+                    'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+                ],
+            ]);
+        }
+        echo '</div>';
 
 }
 

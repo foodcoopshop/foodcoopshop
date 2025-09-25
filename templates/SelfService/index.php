@@ -111,20 +111,21 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         echo '</p>';
     }
 
-    foreach ($products as $product) {
-        echo $this->element('catalog/product', [
-            'product' => $product,
-            'showProductDetailLink' => false,
-            'showManufacturerDetailLink' => false,
-            'showIsNewBadgeAsLink' => false
-        ],
-        [
-            'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+    echo '<div class="products-wrapper">';
+        foreach ($products as $product) {
+            echo $this->element('catalog/product', [
+                'product' => $product,
+                'showProductDetailLink' => false,
+                'showManufacturerDetailLink' => false,
+                'showIsNewBadgeAsLink' => false
             ],
-        ]
-        );
-    }
+            [
+                'cache' => [
+                    'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+                ],
+            ]);
+        }
+    echo '</div>';
 
     echo $this->element('catalog/pagination', [
         'page' => $page,

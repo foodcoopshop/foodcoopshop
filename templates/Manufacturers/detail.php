@@ -116,20 +116,21 @@ if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerSe
 echo $this->element('stockProductInListInfo');
 
 if (!empty($manufacturer['Products'])) {
-    foreach ($manufacturer['Products'] as $product) {
-        echo $this->element('catalog/product', [
-            'product' => $product,
-            'showProductDetailLink' => true,
-            'showManufacturerDetailLink' => true,
-            'showIsNewBadgeAsLink' => true
-        ],
-        [
-            'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+    echo '<div class="products-wrapper">';
+        foreach ($manufacturer['Products'] as $product) {
+            echo $this->element('catalog/product', [
+                'product' => $product,
+                'showProductDetailLink' => true,
+                'showManufacturerDetailLink' => true,
+                'showIsNewBadgeAsLink' => true
             ],
-        ]
-        );
-    }
+            [
+                'cache' => [
+                    'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+                ],
+            ]);
+        }
+    echo '</div>';
 }
 
 if (Configure::read('app.showManufacturerImprint')) {

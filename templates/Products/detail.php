@@ -47,16 +47,17 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
 <h1><?php echo $title_for_layout; ?></h1>
 
 <?php
-    echo $this->element('catalog/product', [
-        'product' => $product,
-        'showProductDetailLink' => true,
-        'showManufacturerDetailLink' => true,
-        'showIsNewBadgeAsLink' => true
-    ],
-    [
-        'cache' => [
-            'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+    echo '<div class="products-wrapper">';
+        echo $this->element('catalog/product', [
+            'product' => $product,
+            'showProductDetailLink' => true,
+            'showManufacturerDetailLink' => true,
+            'showIsNewBadgeAsLink' => true
         ],
-    ]
-    );
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
+            ],
+        ]);
+    echo '</div>';
 ?>
