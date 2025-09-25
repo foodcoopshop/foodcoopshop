@@ -17,7 +17,7 @@
 }
 .products-wrapper {
     display: flex;
-    gap: 15px;
+    gap: 15px 5px;
     flex-wrap: wrap;
     float: left;
 }
