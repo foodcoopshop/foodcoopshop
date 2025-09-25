@@ -81,7 +81,7 @@ if (!empty($newProducts)) {
             ]);
         }
         echo '</div>';
-
+    }
 }
 
 if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) {
