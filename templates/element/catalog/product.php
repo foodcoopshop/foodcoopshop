@@ -36,10 +36,12 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
 
     echo '<div class="fcs-badges">';
-        echo '<div class="fcs-badge" title="Neu">';
-            echo '<img src="/img/badge-ring-light-mode.svg" />';
-            echo '<i class="fas gold fa-star"></i>';
-        echo '</div>';
+        if ($product->is_new) {
+            echo '<div class="fcs-badge" title="Neu">';
+                echo '<img src="/img/badge-ring-light-mode.svg" />';
+                echo '<i class="fas gold fa-star"></i>';
+            echo '</div>';
+        }
         echo '<div class="fcs-badge" title="Vorhandene Stück">';
             echo '<img src="/img/badge-ring-light-mode.svg" />';
             echo '<span>' . rand(0, 100) . 'x</span>';
