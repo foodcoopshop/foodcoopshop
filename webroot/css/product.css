@@ -12,16 +12,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-.pw {
-    --pw-width: 270px;
-}
-.products-wrapper {
-    display: flex;
-    gap: 15px 10px;
-    flex-wrap: wrap;
-    float: left;
-    margin-top: 10px;
-}
 div.fcs-badges {
     display: flex;
     flex-direction: row-reverse;
@@ -29,31 +19,43 @@ div.fcs-badges {
     margin-top: 3px;
     margin-bottom: 10px;
 }
-div.fcs-badge {
+.fcs-badge {
     position: relative;
     width: 35px;
 }
-div.fcs-badge img {
+.fcs-badge img {
     position: absolute;
     top: -20px;
     left: 0;
     width: 35px;
     height: 35px;
 }
-div.fcs-badge i,
-div.fcs-badge span {
+.fcs-badge i,
+.fcs-badge span {
     position: absolute;
     font-size: 17px;
     top: -11px;
     left: 6px;
 }
-div.fcs-badge span {
+.fcs-badge span {
     left: 0;
     font-weight: 300;
     font-size: 14px;
     text-align: center;
     width: 35px;
     top: -13px;
+}
+.pw {
+    --pw-width: 290px;
+}
+.products-wrapper {
+    display: flex;
+    gap: 15px 10px;
+    flex-wrap: wrap;
+    float: left;
+    margin-top: 10px;
+    width: 100%;
+    justify-content: space-between;
 }
 .pw {
     margin-bottom: 0px;
@@ -63,8 +65,7 @@ div.fcs-badge span {
     flex-direction: column;
     gap: 10px;
     padding: 5px;
-    flex: 1 1 var(--pw-width);
-    min-width: var(--pw-width);
+    flex: 0 0 var(--pw-width);
     min-height: 280px;
 }
 .pw:hover {

@@ -51,10 +51,10 @@ echo '<div class="fcs-badges">';
         if ($i >= 3) {
             break;
         }
-        echo '<div class="fcs-badge" title="' . h($categoryWithIcon['name']) . '">';
+        echo '<a href="' . h($categoryWithIcon['slug']) . '" class="fcs-badge" title="' . h($categoryWithIcon['name']) . '">';
             echo '<img src="/img/badge-ring-light.svg" />';
             echo '<i class="' . h($categoryWithIcon['options']['fa-icon']) . '"></i>';
-        echo '</div>';
+        echo '</a>';
         $i++;
     }
 echo '</div>';
