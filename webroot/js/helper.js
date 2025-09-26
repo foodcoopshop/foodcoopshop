@@ -320,6 +320,16 @@ foodcoopshop.Helper = {
         }
     },
 
+    linkProductCardsWithDetailPage : function() {
+        $('.pw').each(function() {
+            let productLink = $(this).data('product-link');
+            $(this).css('cursor', 'pointer');
+            $(this).on('click', function(e) {
+                location.href = productLink;
+            });
+        });
+    },
+
     initBootstrapSelect : function(container) {
         container.find('select:not(.no-bootstrap-select)').each(function () {
             var options = {

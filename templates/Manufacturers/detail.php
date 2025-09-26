@@ -26,7 +26,9 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalImage.init('.manufacturer-infos a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
+    Configure::read('app.jsNamespace').".Helper.linkProductCardsWithDetailPage();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Cart.initAttributesDropdown();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
 
@@ -119,7 +121,6 @@ if (!empty($manufacturer['Products'])) {
         foreach ($manufacturer['Products'] as $product) {
             echo $this->element('catalog/product', [
                 'product' => $product,
-                'showProductDetailLink' => true,
             ],
             [
                 'cache' => [

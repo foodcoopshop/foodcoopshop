@@ -24,6 +24,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('".__('Products')."');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Cart.initAttributesDropdown();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
 
@@ -48,7 +49,6 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
     echo '<div class="products-wrapper">';
         echo $this->element('catalog/product', [
             'product' => $product,
-            'showProductDetailLink' => true,
         ],
         [
             'cache' => [

@@ -33,7 +33,9 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     (bool) $product->is_stock_product,
 );
 
-echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
+
+
+echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '" data-product-link="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">';
 
     echo $this->element('catalog/badges', [
         'product' => $product,
@@ -44,14 +46,7 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
     ]);
 
     echo '<div class="content">';
-
-        echo '<h3>';
-            if ($showProductDetailLink) {
-                echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">'.$product->name.'</a>';
-            } else {
-                echo $product->name;
-            }
-        echo '</h3>';
+        echo '<h3>' . $product->name . '</h3>';
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             echo '<h4>';
                 echo $product->manufacturer->name;

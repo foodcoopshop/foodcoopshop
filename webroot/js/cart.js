@@ -182,6 +182,12 @@ foodcoopshop.Cart = {
         return priceInclPerUnit * orderedQuantityInUnits / unitAmount;
     },
 
+    initAttributesDropdown: function () {
+        $('.pw .units-wrapper select').on('click', function (e) {
+            e.stopPropagation();
+        });
+    },
+
     initAddToCartButton: function () {
 
         // if delivery break is enabled, disable button
@@ -191,7 +197,9 @@ foodcoopshop.Cart = {
             }
         });
 
-        $('.pw a.btn.btn-cart').on('click', function () {
+        $('.pw a.btn.btn-cart').on('click', function (e) {
+
+            e.stopPropagation();
 
             foodcoopshop.Helper.removeFlashMessage();
             foodcoopshop.Helper.disableButton($(this));

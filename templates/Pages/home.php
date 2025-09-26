@@ -44,7 +44,9 @@ if (!empty($newProducts)) {
         Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price, .c3 .is-stock-product');".
         Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
+        Configure::read('app.jsNamespace').".Helper.linkProductCardsWithDetailPage();".
         Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+        Configure::read('app.jsNamespace').".Cart.initAttributesDropdown();".
         Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
     ]);
 
@@ -70,7 +72,6 @@ if (!empty($newProducts)) {
         foreach ($newProducts as $product) {
             echo $this->element('catalog/product', [
                 'product' => $product,
-                'showProductDetailLink' => true,
             ],
             [
                 'cache' => [

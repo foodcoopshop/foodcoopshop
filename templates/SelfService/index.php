@@ -24,6 +24,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Cart.initAttributesDropdown();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
@@ -106,7 +107,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         foreach ($products as $product) {
             echo $this->element('catalog/product', [
                 'product' => $product,
-                'showProductDetailLink' => false,
             ],
             [
                 'cache' => [
