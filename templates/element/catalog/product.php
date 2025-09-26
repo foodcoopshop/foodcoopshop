@@ -74,7 +74,7 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
             'stockAvailableQuantityLimit' => $product->stock_available->quantity_limit,
             'stockAvailableAlwaysAvailable' => $product->stock_available->always_available,
             'hideButton' => $isStockProductOrderPossible,
-            'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+            'cartButtonLabel' => OrderCustomerService::isSelfServiceModeByUrl() ? __('Shopping_bag') : __('Cart'),
             'cartButtonIcon' => OrderCustomerService::isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
         ]);
 

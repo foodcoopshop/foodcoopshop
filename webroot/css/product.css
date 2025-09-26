@@ -13,7 +13,7 @@
  */
 
 .pw {
-    --pw-width: 300px;
+    --pw-width: 270px;
 }
 .products-wrapper {
     display: flex;
@@ -99,6 +99,7 @@ div.fcs-badge i.fa-store {
     text-transform: capitalize;
     font-weight: normal;
     color: var(--font-color-grey);
+    margin-top: 2px;
 }
 .pw.delivery-break-enabled {
     background-color: #efefef;
