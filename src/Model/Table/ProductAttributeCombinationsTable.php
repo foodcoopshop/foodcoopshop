@@ -73,17 +73,20 @@ class ProductAttributeCombinationsTable extends AppTable
             $tmpProduct['manufacturer_name'] = $preparedProduct->manufacturer->name;
 
             if ($preparedProduct->active == 1) {
-                $result['online'][] = $tmpProduct;
+                if (!in_array($tmpProduct, $result['online'])) {
+                    $result['online'][] = $tmpProduct;
+                }
             }
 
             if ($preparedProduct->active == 0) {
-                $result['offline'][] = $tmpProduct;
+                if (!in_array($tmpProduct, $result['offline'])) {
+                    $result['offline'][] = $tmpProduct;
+                }
             }
         }
-
         $result['online'] = Hash::sort($result['online'], '{n}.name', 'asc');
         $result['offline'] = Hash::sort($result['offline'], '{n}.name', 'asc');
-
+        
         return $result;
     }
 }

@@ -71,6 +71,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Unit'),
             Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ?  __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross') ,
             __('Price_per'),
+            __('Barcode'),
             __('Stock_value'),
         ];
     }
@@ -123,11 +124,13 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $unit,
                 Configure::read('app.numberHelper')->formatAsDecimal($price, 6),
                 $this->getUnitForPrice($product),
+                !empty($product->barcode_product) ? $product->barcode_product->barcode : null,
                 Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
             ];
         }
 
         $records[] = [
+            '',
             '',
             '',
             '',

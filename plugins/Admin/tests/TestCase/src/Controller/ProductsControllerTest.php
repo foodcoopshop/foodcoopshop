@@ -34,6 +34,8 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testExportProducts(): void
     {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(8);
         $unitEntityA->use_weight_as_amount = 1;
@@ -45,9 +47,9 @@ class ProductsControllerTest extends AppCakeTestCase
         ]);
 
         $this->assertResponseOk();
-        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Lagerwert');
-        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";14.985,00');
-        $this->assertResponseContains(';;;;;;;;14.985,00');
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Barcode;Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";;14.985,00');
+        $this->assertResponseContains(';;;;;;;;;14.985,00');
     }
 
     public function testEditProductNewStatusOn(): void
