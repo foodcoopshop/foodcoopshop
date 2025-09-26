@@ -61,6 +61,10 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 echo $this->Form->control('Categories.name', [
     'label' => __d('admin', 'Name')
 ]);
+echo $this->Form->control('Categories.icon', [
+    'label' => __d('admin', 'Icon').'<span class="after small">' . __d('admin', 'Font Awesome class including type (eg. "fas fa-egg")') . '</span>',
+    'escape' => false,
+]);
 echo $this->Form->control('Categories.id_parent', [
     'type' => 'select',
     'label' => __d('admin', 'Parent_category'),
@@ -103,7 +107,7 @@ if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
         echo $this->Form->control('Categories.delete_category', [
             'label' => __d('admin', 'Delete_category?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
             'type' => 'checkbox',
-            'escape' => false
+            'escape' => false,
         ]);
     echo '</div>';
 }

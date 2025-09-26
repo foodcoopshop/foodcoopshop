@@ -49,11 +49,12 @@ foreach ($categories as $category) {
             'escape' => false
         ]
     );
+
     echo '<td>';
     if ($level > 0) {
         echo '<i class="fas fa-level-up-alt fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
     }
-    echo $category->name;
+    echo $category->name_with_icon;
     echo '</td>';
 
     echo '<td>';

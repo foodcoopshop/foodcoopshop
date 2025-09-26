@@ -199,10 +199,16 @@ class CategoriesTable extends AppTable
     private function buildItemForTree(Category $category, int $index): array
     {
         $tmpMenuItem = [
+            'id' => $category->id_category,
             'name' => $category->name,
             'slug' => Configure::read('app.slugHelper')->getCategoryDetail($category->id_category, $category->name),
-            'children' => []
+            'children' => [],
         ];
+        if (!empty($category->icon)) {
+            $tmpMenuItem['options'] = [
+                'fa-icon' => $category->icon,
+            ];
+        }
         if (! empty($category->children)) {
             /** @var \App\Model\Entity\Category $child */
             foreach ($category->children as $index => $child) {

@@ -45,7 +45,7 @@ div.fcs-badge span {
     position: absolute;
     font-size: 17px;
     top: -11px;
-    top: -11px;
+    left: 6px;
 }
 div.fcs-badge span {
     left: 0;
@@ -54,15 +54,6 @@ div.fcs-badge span {
     text-align: center;
     width: 35px;
     top: -13px;
-}
-div.fcs-badge i.fa-leaf {
-    left: 5px;
-}
-div.fcs-badge i.fa-star {
-    left: 6px;
-}
-div.fcs-badge i.fa-store {
-    left: 6px;
 }
 .pw {
     margin-bottom: 0px;

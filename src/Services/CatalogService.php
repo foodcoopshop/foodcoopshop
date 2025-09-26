@@ -266,6 +266,7 @@ class CatalogService
                     'StockAvailables.id_product_attribute' => 0
                 ]
             ],
+            'CategoryProducts',
             'UnitProducts',
             'Taxes',
             'ProductAttributes',

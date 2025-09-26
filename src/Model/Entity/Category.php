@@ -18,4 +18,14 @@ namespace App\Model\Entity;
  */
 class Category extends AppEntity
 {
+
+    protected function _getNameWithIcon(): string
+    {
+        if (!empty($this->icon)) {
+            return '<i class="fa-fw ok ' . $this->icon . '"></i> ' . $this->name;
+        } else {
+            return $this->name;
+        }
+    }
+
 }

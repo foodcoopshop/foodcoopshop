@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Services\OrderCustomerService;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,21 +22,39 @@ echo '<div class="fcs-badges">';
     if ($product->is_new) {
         echo '<div class="fcs-badge" title="Neu">';
             echo '<img src="/img/badge-ring-light-mode.svg" />';
-            echo '<i class="fas gold fa-star"></i>';
+            echo '<i class="fas fa-fw gold fa-star"></i>';
         echo '</div>';
     }
     echo '<div class="fcs-badge" title="Vorhandene Stück">';
         echo '<img src="/img/badge-ring-light-mode.svg" />';
-        echo '<span>' . rand(0, 100) . 'x</span>';
+        echo '<span>' . rand(0, 99) . 'x</span>';
     echo '</div>';
     if (!OrderCustomerService::isSelfServiceModeByUrl() && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
         echo '<div class="fcs-badge" title="' . __('Stock_product') . '">';
             echo '<img src="/img/badge-ring-light-mode.svg" />';
-            echo '<i class="fas ok fa-store"></i>';
+            echo '<i class="fas fa-fw ok fa-store"></i>';
         echo '</div>';
     }
-    echo '<div class="fcs-badge" title="Bio">';
+    echo '<div class="fcs-badge" title="Lieferrhythmus">';
         echo '<img src="/img/badge-ring-light-mode.svg" />';
-        echo '<i class="fas ok fa-leaf"></i>';
+        echo '<i class="far fa-fw ok fa-clock"></i>';
     echo '</div>';
+    $i = 0;
+    foreach($product->category_products as $categoryProduct) {
+        $categoryWithIcon = array_filter($categoriesForMenu, function($cat) use ($categoryProduct) {
+            return isset($cat['id']) && $cat['id'] == $categoryProduct->id_category && isset($cat['options']['fa-icon']);
+        });
+        $categoryWithIcon = array_shift($categoryWithIcon);
+        if (empty($categoryWithIcon)) {
+            continue;
+        }
+        if ($i >= 3) {
+            break;
+        }
+        echo '<div class="fcs-badge" title="' . h($categoryWithIcon['name']) . '">';
+            echo '<img src="/img/badge-ring-light-mode.svg" />';
+            echo '<i class="' . h($categoryWithIcon['options']['fa-icon']) . '"></i>';
+        echo '</div>';
+        $i++;
+    }
 echo '</div>';
