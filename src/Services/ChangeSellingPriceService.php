@@ -62,7 +62,9 @@ class ChangeSellingPriceService
         }
 
         $orderDetailUnitsTable = TableRegistry::getTableLocator()->get('OrderDetailUnits');
+        /** @var list<\App\Model\Entity\OrderDetail> $changedOpenOrderDetails */
         $changedOpenOrderDetails = [];
+        /** @var \App\Model\Entity\OrderDetail $openOrderDetail */
         foreach($openOrderDetails as $openOrderDetail) {
 
             // never change price if price type changed
@@ -119,7 +121,9 @@ class ChangeSellingPriceService
             return [];
         }
 
+        /** @var list<\App\Model\Entity\OrderDetail> $changedOpenOrderDetails */
         $changedOpenOrderDetails = [];
+        /** @var \App\Model\Entity\OrderDetail $openOrderDetail */
         foreach($openOrderDetails as $openOrderDetail) {
 
             // never change price if price type changed

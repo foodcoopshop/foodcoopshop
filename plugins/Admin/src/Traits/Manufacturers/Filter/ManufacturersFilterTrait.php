@@ -44,7 +44,7 @@ trait ManufacturersFilterTrait
     }
 
     /**
-     * @return SelectQuery<\App\Model\Entity\Manufacturer>|PaginatedInterface
+     * @return SelectQuery<\App\Model\Entity\Manufacturer>|PaginatedInterface<array-key, \App\Model\Entity\Manufacturer>
      */
     public function getManufacturers(int|string $active, string $dateFrom): SelectQuery|PaginatedInterface
     {
@@ -72,7 +72,6 @@ trait ManufacturersFilterTrait
         ->select($customersTable)
         ->select($addressManufacturersTable);
 
-        /** @var SelectQuery<\App\Model\Entity\Manufacturer>|PaginatedInterface $manufacturers */
         $manufacturers = $this->paginate($query, [
             'sortableFields' => [
                 'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'),
@@ -89,6 +88,7 @@ trait ManufacturersFilterTrait
         $catalogService = new CatalogService();
         $catalogService->showOnlyProductsForNextWeekFilterEnabled = false;
         
+        /** @var \App\Model\Entity\Manufacturer $manufacturer */
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturer->id_manufacturer, false);

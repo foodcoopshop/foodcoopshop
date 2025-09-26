@@ -28,7 +28,7 @@ class ProductsForBackendService
 {
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product>|PaginatedInterface $query
+     * @param SelectQuery<\App\Model\Entity\Product>|PaginatedInterface<array-key, \App\Model\Entity\Product> $query
      * @return list<mixed>
      */
     public function getPreparedProducts(SelectQuery|PaginatedInterface $query, bool $addProductNameToAttributes = false): array
@@ -36,7 +36,8 @@ class ProductsForBackendService
 
         $i = 0;
         $preparedProducts = [];
-        foreach ($query as $product) {
+    /** @var \App\Model\Entity\Product $product */
+    foreach ($query as $product) {
             $product->category = $this->setCategory($product);
             $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
 

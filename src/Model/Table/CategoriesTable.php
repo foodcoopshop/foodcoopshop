@@ -186,6 +186,7 @@ class CategoriesTable extends AppTable
     public function prepareTreeResultForMenu(SelectQuery $items): array
     {
         $itemsForMenu = [];
+        /** @var \App\Model\Entity\Category $item */
         foreach ($items as $index => $item) {
             $itemsForMenu[] = $this->buildItemForTree($item, $index);
         }
@@ -203,6 +204,7 @@ class CategoriesTable extends AppTable
             'children' => []
         ];
         if (! empty($category->children)) {
+            /** @var \App\Model\Entity\Category $child */
             foreach ($category->children as $index => $child) {
                 $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);
             }
