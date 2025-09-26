@@ -55,7 +55,14 @@ div.fcs-badges {
     float: left;
     margin-top: 10px;
     width: 100%;
-    justify-content: space-between;
+    align-content: flex-start;
+}
+.products-wrapper::after {
+  content: "";
+  flex: 999 1 0px; /* do not stretch items in last row */
+  height: 0;
+  padding: 0;
+  margin: 0;
 }
 .pw {
     margin-bottom: 0px;
@@ -65,7 +72,7 @@ div.fcs-badges {
     flex-direction: column;
     gap: 10px;
     padding: 5px;
-    flex: 0 0 var(--pw-width);
+    flex: 1 1 var(--pw-width);
     min-height: 280px;
 }
 .pw:hover {
