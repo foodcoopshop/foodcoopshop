@@ -46,10 +46,12 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
             echo '<img src="/img/badge-ring-light-mode.svg" />';
             echo '<span>' . rand(0, 100) . 'x</span>';
         echo '</div>';
-        echo '<div class="fcs-badge" title="Lagerprodukt">';
-            echo '<img src="/img/badge-ring-light-mode.svg" />';
-            echo '<i class="fas ok fa-store"></i>';
-        echo '</div>';
+        if (!OrderCustomerService::isSelfServiceModeByUrl() && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+            echo '<div class="fcs-badge" title="' . __('Stock_product') . '">';
+                echo '<img src="/img/badge-ring-light-mode.svg" />';
+                echo '<i class="fas ok fa-store"></i>';
+            echo '</div>';
+        }
         echo '<div class="fcs-badge" title="Bio">';
             echo '<img src="/img/badge-ring-light-mode.svg" />';
             echo '<i class="fas ok fa-leaf"></i>';
