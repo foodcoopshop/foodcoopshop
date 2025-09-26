@@ -282,7 +282,7 @@ foodcoopshop.Mobile = {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
         $('.blog-post-wrapper div.c3 a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
-        $('.ew .btn').each(function() {
+        $('.pw .btn').each(function() {
             if (!$(this).find('i').hasClass('fa-times')) { // delivery break?
                 $(this).html($(this).find('i').after($(this).text()));
             }

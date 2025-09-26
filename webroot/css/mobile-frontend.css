@@ -13,6 +13,10 @@
  */
 @media only screen and (max-device-width: 850px) {
 
+    .pw {
+        --pw-width: 180px;
+    }
+
     #container,
     #container #header,
     #container #content,

@@ -21,17 +21,6 @@
     --not-ok-red: #dc143c;
     --font-color-grey: #515151;
     --warning-yellow: #FDB813;
-    --right-box-width: 350px;
-    --container-min-width: 928px;
-    --scrollbar-width: 16px;
-    --sidebar-width: 190px;
-}
-
-@media (min-width: 1700px) {
-    :root {
-        --right-box-width: 400px;
-        --sidebar-width: 240px;
-    }
 }
 
 @media print {
