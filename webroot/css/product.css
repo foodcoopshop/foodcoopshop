@@ -117,13 +117,14 @@ div.fcs-badge i.fa-store {
     gap: 5px;
     align-items: center;
 }
-.pw .actions .btn-cart {
-    flex-grow: 1;
+.pw .actions > * {
+    flex: 0 0 calc(50% - 2.5px);
 }
 .pw .actions .units-wrapper select {
-    width: auto;
+    width: 100%;
 }
 .pw .btn-cart.btn-outline-light {
+    width: 100%;
     border-color: #333333;
 }
 .ew .btn-cart i.fa-spin,

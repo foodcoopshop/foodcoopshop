@@ -35,28 +35,9 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
 
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
 
-    echo '<div class="fcs-badges">';
-        if ($product->is_new) {
-            echo '<div class="fcs-badge" title="Neu">';
-                echo '<img src="/img/badge-ring-light-mode.svg" />';
-                echo '<i class="fas gold fa-star"></i>';
-            echo '</div>';
-        }
-        echo '<div class="fcs-badge" title="Vorhandene Stück">';
-            echo '<img src="/img/badge-ring-light-mode.svg" />';
-            echo '<span>' . rand(0, 100) . 'x</span>';
-        echo '</div>';
-        if (!OrderCustomerService::isSelfServiceModeByUrl() && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-            echo '<div class="fcs-badge" title="' . __('Stock_product') . '">';
-                echo '<img src="/img/badge-ring-light-mode.svg" />';
-                echo '<i class="fas ok fa-store"></i>';
-            echo '</div>';
-        }
-        echo '<div class="fcs-badge" title="Bio">';
-            echo '<img src="/img/badge-ring-light-mode.svg" />';
-            echo '<i class="fas ok fa-leaf"></i>';
-        echo '</div>';
-    echo '</div>';
+    echo $this->element('catalog/badges', [
+        'product' => $product,
+    ]);
 
     echo $this->element('catalog/productImage', [
         'product' => $product,
@@ -86,28 +67,9 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
 
     echo '<div class="actions">';
 
-        echo '<div class="units-wrapper">';
-            $preparedProductAttributes = [];
-            if (!empty($product->product_attributes)) {
-                foreach ($product->product_attributes as $attribute) {
-                    $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
-                        $attribute->product_attribute_combination->attribute->name,
-                        $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
-                        $attribute->unit_product_attribute->price_per_unit_enabled,
-                        $attribute->unit_product_attribute->quantity_in_units,
-                        $attribute->unit_product_attribute->name,
-                    );
-                    $preparedProductAttributes[$attribute->id_product_attribute] = $radioButtonLabel;
-                }
-            }
-            if (!empty($preparedProductAttributes)) {
-                echo $this->Form->control('attributes.' . $product->id_product, [
-                    'type' => 'select',
-                    'label' => false,
-                    'options' => $preparedProductAttributes,
-                ]);
-            }
-        echo '</div>';
+        echo $this->element('catalog/units', [
+            'product' => $product,
+        ]);
 
         echo $this->element('catalog/cartButton', [
             'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
