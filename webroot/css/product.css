@@ -126,6 +126,7 @@ div.fcs-badge i.fa-store {
 }
 .pw .actions .units-wrapper select {
     width: 100%;
+    padding: 4px;
 }
 .pw .btn-cart.btn-outline-light {
     width: 100%;
