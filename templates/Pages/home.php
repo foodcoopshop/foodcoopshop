@@ -42,6 +42,7 @@ if (!empty($newProducts)) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
         Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price, .c3 .is-stock-product');".
+        Configure::read('app.jsNamespace').".Helper.initTooltipForBadges();".
         Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
         Configure::read('app.jsNamespace').".Helper.linkProductCardsWithDetailPage();".

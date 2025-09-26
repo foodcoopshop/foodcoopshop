@@ -22,6 +22,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
     Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
+    Configure::read('app.jsNamespace').".Helper.initTooltipForBadges();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initAttributesDropdown();".

@@ -20,6 +20,7 @@
     gap: 15px 10px;
     flex-wrap: wrap;
     float: left;
+    margin-top: 10px;
 }
 div.fcs-badges {
     display: flex;

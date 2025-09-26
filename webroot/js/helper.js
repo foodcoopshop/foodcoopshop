@@ -798,22 +798,28 @@ foodcoopshop.Helper = {
         );
     },
 
-    initTooltip: function (container) {
+    initTooltipForBadges: function () {
+        this.initTooltip('.pw .fcs-badge', { distance: 15 });
+    },
+
+    initTooltip: function (container, options) {
         var trigger = 'hover';
         if (this.isMobile()) {
             trigger = 'click';
         }
+        let defaultOptions = {
+            contentAsHTML: true,
+            interactive: true,
+            maxWidth: 450,
+            distance: 0,
+            trigger: trigger,
+            animationDuration: 0,
+            delay: 20,
+            theme: ['tooltipster-light']
+        };
+        options = $.extend({}, defaultOptions, options);
         $(container).each(function() {
-            $(this).not('.tooltipstered').tooltipster({
-                contentAsHTML: true,
-                interactive: true,
-                maxWidth: 450,
-                distance: 0,
-                trigger: trigger,
-                animationDuration: 0,
-                delay: 20,
-                theme: ['tooltipster-light']
-            });
+            $(this).not('.tooltipstered').tooltipster(options);
         });
     },
 
