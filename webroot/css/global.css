@@ -29,7 +29,7 @@
 
 @media (min-width: 1700px) {
     :root {
-        --right-box-width: 500px;
+        --right-box-width: 400px;
         --sidebar-width: 240px;
     }
 }
