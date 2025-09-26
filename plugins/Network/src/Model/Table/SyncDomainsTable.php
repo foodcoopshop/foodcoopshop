@@ -102,7 +102,7 @@ class SyncDomainsTable extends AppTable
     }
 
     /**
-     * @return array<int, \Network\Model\Entity\SyncDomain>
+     * @return list<\Network\Model\Entity\SyncDomain>
      */
     public function getActiveManufacturerSyncDomains(?string $enabledSyncDomains): array
     {
@@ -113,6 +113,7 @@ class SyncDomainsTable extends AppTable
         $activeSyncDomains = $this->getActiveSyncDomains();
         $preparedDomains = [];
         $enabledSyncDomainsAsArray = explode(',', $enabledSyncDomains);
+        /** @var \Network\Model\Entity\SyncDomain $activeSyncDomain */
         foreach ($activeSyncDomains as $activeSyncDomain) {
             if (in_array($activeSyncDomain->id, $enabledSyncDomainsAsArray)) {
                 $preparedDomains[] = $activeSyncDomain;
