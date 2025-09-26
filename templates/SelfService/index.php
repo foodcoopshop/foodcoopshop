@@ -44,31 +44,24 @@ if (OrderCustomerService::isSelfServiceModeByUrl()) {
 echo $this->element('autoPrintInvoice');
 
 if ($isMobile) {
+    $scripts = [];
     if ($identity->use_camera_for_barcode_scanning) {
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
-            Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
-        ]);
-    } else {
-        $js = Configure::read('app.jsNamespace').".Mobile.hideSelfServiceCart();";
-        if (!empty($_POST)) {
-            $js = Configure::read('app.jsNamespace').".Mobile.showSelfServiceCart();";
-        }
-        $this->element('addScript', ['script' => $js]);
+        $scripts[] = Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);";
     }
+    $scripts[] = Configure::read('app.jsNamespace').".Mobile.hideSelfServiceCart();";
+    if (!empty($_POST)) {
+        $script = Configure::read('app.jsNamespace').".Mobile.showSelfServiceCart();";
+    }
+    $this->element('addScript', ['script' => join('', $scripts)]);
 }
 
 if ($this->request->getSession()->read('highlightedProductId')) {
-
+    $scripts = [];
+    $scripts[] = Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');";
     if ($isMobile && $identity->use_camera_for_barcode_scanning) {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductIdForMobileBarcodeScanning('" . $this->request->getSession()->read('highlightedProductId') . "');"
-        ]);
-    } else {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');"
-        ]);
+        $scripts[] = Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductIdForMobileBarcodeScanning('" . $this->request->getSession()->read('highlightedProductId') . "');";
     }
+    $this->element('addScript', ['script' => join('', $scripts)]);
     $this->request->getSession()->delete('highlightedProductId');
 }
 
