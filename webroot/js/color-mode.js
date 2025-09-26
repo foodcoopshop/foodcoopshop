@@ -33,7 +33,7 @@ foodcoopshop.ColorMode = {
 
     setBadgeSvg: function() {
         var colorMode = this.getColorMode();
-        $('.fcs-badges img').attr('src', '/img/badge-ring-' + colorMode + '-mode.svg');
+        $('.fcs-badges img').attr('src', '/img/badge-ring-' + colorMode + '.svg');
     },
 
     /**
