@@ -82,6 +82,8 @@ div.fcs-badge i.fa-store {
 .pw .image-wrapper {
     align-self: center;
     min-height: 200px;
+    display: flex;
+    align-items: center;
 }
 .pw .image-wrapper img {
     max-width: 100%;

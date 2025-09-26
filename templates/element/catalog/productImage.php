@@ -21,15 +21,5 @@ $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback
 );
 
 echo '<div class="image-wrapper">';
-
-    if ($productImageData['productImageLargeExists']) {
-        echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product->name) . ', ' . $product->manufacturer->name . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
-    }
-
-    echo '<img class="lazyload" data-src="' . $productImageData['productImageSrc']. '" />';
-
-    if ($productImageData['productImageLargeExists']) {
-        echo '</a>';
-    }
-
+   echo '<img class="lazyload" data-src="' . $productImageData['productImageSrc']. '" />';
 echo '</div>';

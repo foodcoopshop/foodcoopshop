@@ -339,39 +339,6 @@ foodcoopshop.Helper = {
         });
     },
 
-    initAmountSwitcher : function() {
-        $('.ew a.as').on('click', function() {
-            var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');
-            var currentValue = parseInt(inputField.val());
-            if (isNaN(currentValue)) {
-                currentValue = 0;
-            }
-            var result = 0;
-            if ($(this).hasClass('as-plus')) {
-                result = currentValue + 1;
-            } else {
-                result = currentValue - 1;
-            }
-            if (result < 2) {
-                result = 1;
-            }
-            var maximum = $(this).closest('.amount-wrapper').find('.availibility');
-            if (maximum.length > 0) {
-                var max = parseInt(maximum.html().replace(/\D+/g, ''));
-                if (result > max) {
-                    result = max;
-                }
-            }
-            var amountSwitcherMinus = $(this).closest('.amount-wrapper').find('.as-minus .fas');
-            if (result > 1) {
-                amountSwitcherMinus.show();
-            } else {
-                amountSwitcherMinus.hide();
-            }
-            inputField.val(result);
-        });
-    },
-
     getUniqueHtmlValueOfDomElements: function(domElements, defaultValue) {
         var values = this.unique(
             $.map($(domElements),
