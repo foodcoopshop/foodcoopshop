@@ -19,6 +19,21 @@ use Cake\Log\Log;
  */
 
 echo '<div class="fcs-badges">';
+    if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
+        if ($identity !== null) {
+            if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
+                echo $this->Html->link(
+                    '<img src="/img/badge-ring-light.svg" /><i class="fas fa-fw not-ok fa-pencil-alt"></i>',
+                    $this->Slug->getProductAdmin(($identity->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
+                    [
+                        'class' => 'fcs-badge',
+                        'title' => __('Edit'),
+                        'escape' => false,
+                    ]
+                );
+            }
+        }
+    }
     if ($product->is_new) {
         echo '<div class="fcs-badge" title="Neu">';
             echo '<img src="/img/badge-ring-light.svg" />';
@@ -51,10 +66,15 @@ echo '<div class="fcs-badges">';
         if ($i >= 3) {
             break;
         }
-        echo '<a href="' . h($categoryWithIcon['slug']) . '" class="fcs-badge" title="' . h($categoryWithIcon['name']) . '">';
-            echo '<img src="/img/badge-ring-light.svg" />';
-            echo '<i class="' . h($categoryWithIcon['options']['fa-icon']) . '"></i>';
-        echo '</a>';
+        echo $this->Html->link(
+            '<img src="/img/badge-ring-light.svg" /><i class="' . h($categoryWithIcon['options']['fa-icon']) . '"></i>',
+            $categoryWithIcon['slug'],
+            [
+                'class' => 'fcs-badge',
+                'title' => $categoryWithIcon['name'],
+                'escape' => false,
+            ]
+        );
         $i++;
     }
 echo '</div>';
