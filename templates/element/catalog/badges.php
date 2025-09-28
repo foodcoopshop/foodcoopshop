@@ -69,13 +69,18 @@ echo '<div class="fcs-badges">';
             break;
         }
         $categories[] = $categoryWithIcon;
-        $i++;
     }
-    $categories = Hash::sort($categories, '{s}.name', 'DESC');
-    foreach($categories as $category) {
-        echo '<div class="fcs-badge" title="' . h($category['name']) . '">';
-            echo '<img src="/img/badge-ring-light.svg" />';
-            echo '<i class="fa-fw ok ' . h($category['options']['fa-icon']) . '"></i>';
-        echo '</div>';
+    $categories = Hash::sort($categories, '{n}.name', 'DESC');
+    foreach ($categories as $category) {
+        echo $this->Html->link(
+            '<img src="/img/badge-ring-light.svg" /><i class="' . h($category['options']['fa-icon']) . '"></i>',
+            $category['slug'],
+            [
+                'class' => 'fcs-badge',
+                'title' => $category['name'],
+                'escape' => false,
+            ]
+        );
+        $i++;
     }
 echo '</div>';
