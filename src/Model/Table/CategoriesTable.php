@@ -51,6 +51,15 @@ class CategoriesTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
+        $validator->add('icon', 'validFormat', [
+            'rule' => function ($value, $context) {
+                if (empty($value)) {
+                    return true;
+                }
+                return preg_match('/^(fas|far|fab) fa-[a-z0-9-]+$/', $value) === 1;
+            },
+            'message' => __('Please enter a valid icon class name like "fas fa-egg" or "far fa-apple".'),
+        ]);
         return $validator;
     }
 
@@ -204,7 +213,7 @@ class CategoriesTable extends AppTable
             'slug' => Configure::read('app.slugHelper')->getCategoryDetail($category->id_category, $category->name),
             'children' => [],
         ];
-        if (!empty($category->icon)) {
+        if (!empty($category->icon) && $category->id_parent === 0) {
             $tmpMenuItem['options'] = [
                 'fa-icon' => $category->icon,
             ];

@@ -62,7 +62,7 @@ echo $this->Form->control('Categories.name', [
     'label' => __d('admin', 'Name')
 ]);
 echo $this->Form->control('Categories.icon', [
-    'label' => __d('admin', 'Icon').'<span class="after small">' . __d('admin', 'Font Awesome class including type (eg. "fas fa-egg")') . '</span>',
+    'label' => __d('admin', 'Icon').'<span class="after small">' . __d('admin', 'Icon class + type (eg. "fas fa-egg"). Only for main category items.') . '</span>',
     'escape' => false,
 ]);
 echo $this->Form->control('Categories.id_parent', [

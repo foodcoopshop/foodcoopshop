@@ -21,7 +21,7 @@ class Category extends AppEntity
 
     protected function _getNameWithIcon(): string
     {
-        if (!empty($this->icon)) {
+        if (!empty($this->icon) && $this->id_parent === 0) {
             return '<i class="fa-fw ok ' . $this->icon . '"></i> ' . $this->name;
         } else {
             return $this->name;
