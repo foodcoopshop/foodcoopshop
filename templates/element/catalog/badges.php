@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Services\OrderCustomerService;
 use Cake\Log\Log;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -55,6 +56,7 @@ echo '<div class="fcs-badges">';
         echo '<i class="far fa-fw ok fa-clock"></i>';
     echo '</div>';
     $i = 0;
+    $categories = [];
     foreach($product->category_products as $categoryProduct) {
         $categoryWithIcon = array_filter($categoriesForMenu, function($cat) use ($categoryProduct) {
             return isset($cat['id']) && $cat['id'] == $categoryProduct->id_category && isset($cat['options']['fa-icon']);
@@ -66,15 +68,14 @@ echo '<div class="fcs-badges">';
         if ($i >= 3) {
             break;
         }
-        echo $this->Html->link(
-            '<img src="/img/badge-ring-light.svg" /><i class="' . h($categoryWithIcon['options']['fa-icon']) . '"></i>',
-            $categoryWithIcon['slug'],
-            [
-                'class' => 'fcs-badge',
-                'title' => $categoryWithIcon['name'],
-                'escape' => false,
-            ]
-        );
+        $categories[] = $categoryWithIcon;
         $i++;
+    }
+    $categories = Hash::sort($categories, '{s}.name', 'DESC');
+    foreach($categories as $category) {
+        echo '<div class="fcs-badge" title="' . h($category['name']) . '">';
+            echo '<img src="/img/badge-ring-light.svg" />';
+            echo '<i class="fa-fw ok ' . h($category['options']['fa-icon']) . '"></i>';
+        echo '</div>';
     }
 echo '</div>';
