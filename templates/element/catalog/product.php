@@ -37,7 +37,7 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
 
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '" data-product-link="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">';
 
-    echo $this->element('catalog/badges', [
+    echo $this->element('catalog/badges/badges', [
         'product' => $product,
     ]);
 
