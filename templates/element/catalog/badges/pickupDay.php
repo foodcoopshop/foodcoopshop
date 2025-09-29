@@ -30,7 +30,7 @@ if (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isOr
 
 $infos = [];
 
-$defaultIcon = 'far fa-clock fa-flip-horizontal ok';
+$defaultIcon = 'far fa-clock fa-flip-horizontal';
 $delayIcon = 'fas fa-clock-rotate-left fa-flip-horizontal not-ok';
 
 if ($product->delivery_rhythm_type == 'individual') {

@@ -23,6 +23,18 @@ div.fcs-badges {
     position: relative;
     width: 35px;
 }
+div.fcs-badges i {
+    color: var(--font-color-grey);
+}
+div.fcs-badge {
+    cursor: default;
+}
+a.fcs-badge {
+    cursor: pointer;
+}
+a.fcs-badge:hover i {
+    color: var(--theme-main-color);
+}
 .fcs-badge img {
     position: absolute;
     top: -20px;
