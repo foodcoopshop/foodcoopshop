@@ -799,7 +799,14 @@ foodcoopshop.Helper = {
     },
 
     initTooltipForBadges: function () {
-        this.initTooltip('.pw .fcs-badge', { distance: 15 });
+        this.initTooltip('.pw .fcs-badge', {
+            distance: 15,
+            functionInit: function(instance, helper) {
+                $(helper.origin).on('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+        });
     },
 
     initTooltip: function (container, options) {
