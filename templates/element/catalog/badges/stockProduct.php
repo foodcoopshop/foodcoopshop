@@ -21,6 +21,6 @@ use App\Services\OrderCustomerService;
 if (!OrderCustomerService::isSelfServiceModeByUrl() && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
     echo '<div class="fcs-badge" title="' . __('Stock_product') . '">';
         echo '<img src="/img/badge-ring-light.svg" />';
-        echo '<i class="fas fa-fw ok fa-store"></i>';
+        echo '<i class="fas fa-fw fa-store"></i>';
     echo '</div>';
 }

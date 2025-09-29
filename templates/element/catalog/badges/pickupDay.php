@@ -33,10 +33,10 @@ $infos = [];
 $defaultIcon = 'far fa-clock fa-flip-horizontal';
 $delayIcon = 'fas fa-clock-rotate-left fa-flip-horizontal not-ok';
 
+$icon = $defaultIcon;
 if ($product->delivery_rhythm_type == 'individual') {
     $infos[] = '<b>' . __('bulk_order') . '</b>';
 } else {
-    $icon = $defaultIcon;
     $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
         $product->is_stock_product && $product->manufacturer->stock_management_enabled,
         $product->delivery_rhythm_type,
