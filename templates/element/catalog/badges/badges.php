@@ -19,10 +19,9 @@ use Cake\Utility\Hash;
  */
 
 echo '<div class="fcs-badges">';
-    echo $this->element('catalog/badges/edit', ['product' => $product]);
-    echo $this->element('catalog/badges/new', ['product' => $product]);
-    echo $this->element('catalog/badges/amount', ['product' => $product]);
-    echo $this->element('catalog/badges/stockProduct', ['product' => $product]);
-    echo $this->element('catalog/badges/pickupDay', ['product' => $product]);
-    echo $this->element('catalog/badges/categories', ['product' => $product]);
+echo $this->element('catalog/badges/new', ['product' => $product]);
+echo $this->element('catalog/badges/pickupDay', ['product' => $product]);
+echo $this->element('catalog/badges/stockProduct', ['product' => $product]);
+echo $this->element('catalog/badges/categories', ['product' => $product]);
+echo $this->element('catalog/badges/edit', ['product' => $product]);
 echo '</div>';

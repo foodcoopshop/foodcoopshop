@@ -26,10 +26,10 @@ if ($identity === null) {
 
 if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
     echo $this->Html->link(
-        '<img src="/img/badge-ring-light.svg" /><i class="fas fa-fw fa-pencil-alt"></i>',
+        '<img src="/img/badge-ring-light.svg" /><i class="fas fa-fw fa-pencil-alt neutral"></i>',
         $this->Slug->getProductAdmin(($identity->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
         [
-            'class' => 'fcs-badge',
+            'class' => 'fcs-badge edit-link',
             'title' => __('Edit'),
             'escape' => false,
         ]

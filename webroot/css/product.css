@@ -29,6 +29,10 @@ div.fcs-badges i {
 div.fcs-badge {
     cursor: default;
 }
+a.fcs-badge.edit-link {
+    margin-right: auto;
+    margin-left: -10px;
+}
 a.fcs-badge {
     cursor: pointer;
 }
@@ -161,9 +165,4 @@ a.fcs-badge:hover i {
 .pw .content .price-asterisk {
     margin-bottom: 0;
     margin-left: 5px;
-}
-.pw .content a.edit-shortcut-button {
-  position: absolute;
-  top: 0;
-  right: 5px;
 }

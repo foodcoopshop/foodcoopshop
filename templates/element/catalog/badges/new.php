@@ -20,7 +20,7 @@ if (!$product->is_new) {
 }
 
 echo $this->Html->link(
-    '<img src="/img/badge-ring-light.svg" /><i class="fas fa-fw gold fa-star"></i>',
+    '<img src="/img/badge-ring-light.svg" /><i class="fas fa-fw warning fa-star"></i>',
     $this->Slug->getNewProducts(),
     [
         'class' => 'fcs-badge',
