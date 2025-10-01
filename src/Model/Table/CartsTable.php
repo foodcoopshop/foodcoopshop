@@ -259,7 +259,7 @@ class CartsTable extends AppTable
      *   ProductsWithUnitCount?: int
      * }
      */
-    public function getCartGroupedByPickupDay(array $cart, ?string $customerSelectedPickupDay=null): array
+    public function getCartGroupedByPickupDay(array $cart, bool $formatPickupDay = false, ?string $customerSelectedPickupDay=null): array
     {
         $manufacturerName = [];
         $productName = [];
@@ -279,6 +279,9 @@ class CartsTable extends AppTable
             $pickupDay = $cartProduct['pickupDay'];
             if (!is_null($customerSelectedPickupDay)) {
                 $pickupDay = $customerSelectedPickupDay;
+            }
+            if ($formatPickupDay) {
+                $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
             }
             if (!isset($preparedCartProducts[$pickupDay])) {
                 $preparedCartProducts[$pickupDay] = [

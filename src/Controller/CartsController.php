@@ -357,7 +357,8 @@ class CartsController extends FrontendController
         if (!is_array($result)) {
             $result = [
                 'status' => 1,
-                'msg' => 'ok'
+                'msg' => 'ok',
+                'updatedCart' => $this->identity->getCartGroupedByPickupDay(),
             ];
         }
 

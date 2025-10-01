@@ -45,7 +45,7 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
         'product' => $product,
     ]);
 
-    echo '<div class="content">';
+    echo '<div class="ew active">';
         echo '<h3>' . $product->name . '</h3>';
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             echo '<h4>';
@@ -56,7 +56,14 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
             echo '<div class="price">';
                 echo $this->Number->formatAsCurrency(rand(100, 10000) / 100);
             echo '</div>';
+
+            if ($product->deposit_product->deposit) {
+                echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product->deposit_product->deposit).'</b> '.__('deposit').'</div>';
+            }
+            echo '<div class="tax">'. $this->Number->formatAsCurrency($product->calculated_tax) . '</div>';
         echo '</div>';
+
+        echo $this->element('catalog/hiddenProductIdField', ['productId' => $product->id_product]);
 
     echo '</div>';
 

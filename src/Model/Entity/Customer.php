@@ -302,6 +302,12 @@ class Customer extends AppEntity implements IdentityInterface
         return $cartsTable->getCart($this, $cartType);
     }
 
+    public function getCartGroupedByPickupDay(): array
+    {
+        $cartsTable = TableRegistry::getTableLocator()->get('Carts');
+        return $cartsTable->getCartGroupedByPickupDay($this->getCart(), true);
+    }
+
     /**
      * @return list<array<string, mixed>>
      */

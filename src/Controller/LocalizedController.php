@@ -124,6 +124,10 @@ class LocalizedController extends Controller
                 'selfServiceConfirmPurchaseCompletedButton' => __('Confirm_self_service_purchase_completed_button'),
                 'selfServiceDenyPurchaseButton' => __('Deny_self_service_purchase_button'),
                 'selfServiceAmountToBePaid' => __('Amount_to_be_paid'),
+                'valueOfGoods' => __('Value_of_goods'),
+                'depositSum' => __('Deposit_sum'),
+                'total' => __('Total'),
+                'includingVat' => __('Including_vat'),
             ],
             'mobile' => [
                 'home' => __('Home'),

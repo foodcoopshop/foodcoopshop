@@ -106,10 +106,10 @@ a.fcs-badge:hover i {
     max-height: 200px;
     object-fit: contain; 
 }
-.pw .content h3 {
+.pw .ew h3 {
     font-size: 16px;
 }
-.pw .content h4 {
+.pw .ew h4 {
     font-size: 14px;
     text-transform: capitalize;
     font-weight: normal;
@@ -151,18 +151,18 @@ a.fcs-badge:hover i {
 .btn-cart-detail i.fa-spin {
     padding-top: 2px; /* fix for non-centered spinner */
 }
-.pw .content .price-wrapper {
+.pw .ew .price-wrapper {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.pw .content .price,
-.pw .content .price-asterisk {
+.pw .ew .price,
+.pw .ew .price-asterisk {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 5px;
     float: left;
 }
-.pw .content .price-asterisk {
+.pw .ew .price-asterisk {
     margin-bottom: 0;
     margin-left: 5px;
 }
