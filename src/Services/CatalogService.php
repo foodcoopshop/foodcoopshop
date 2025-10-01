@@ -36,7 +36,7 @@ class CatalogService
     protected mixed $identity;
     public bool $showOnlyProductsForNextWeekFilterEnabled = true;
 
-    const MAX_PRODUCTS_PER_PAGE = 100;
+    const MAX_PRODUCTS_PER_PAGE = 200;
     const BARCODE_WITH_WEIGHT_PREFIX = '27';
     const BARCODE_WITH_WEIGHT_PREFIX_INHOUSE = '21';
 
