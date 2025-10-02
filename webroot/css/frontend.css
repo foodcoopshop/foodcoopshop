@@ -643,6 +643,7 @@ body.carts #load-last-order-details,
     border-bottom: 1px solid #d6d4d4;
 }
 .cart p.no-products {
+    display: none;
     margin-bottom: 20px;
     padding-bottom: 3px;
 }

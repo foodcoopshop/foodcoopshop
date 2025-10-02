@@ -27,26 +27,24 @@ if ($identity === null || $identity->isManufacturer()) {
     return;
 }
 
-if ($identity->getProducts() !== null) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($identity->getProducts()))."');"
-    ]);
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace').".Cart.renderCart('".addslashes(json_encode($identity->getCartGroupedByPickupDay()))."');"
+]);
 
-    if (!empty($cartErrors)) {
-        $javascriptClass = 'Cart';
-        if ($selfServiceModeEnabled) {
-            $javascriptClass = 'SelfService';
-        }
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".".$javascriptClass.".initCartErrors('".addslashes(json_encode($cartErrors))."');"
-        ]);
+if (!empty($cartErrors)) {
+    $javascriptClass = 'Cart';
+    if ($selfServiceModeEnabled) {
+        $javascriptClass = 'SelfService';
     }
-    if ($this->name == 'Carts' && in_array($this->request->getParam('action'), ['finish', 'detail'])) {
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
-            Configure::read('app.jsNamespace').".Cart.initChangeAmountLinks();"
-        ]);
-    }
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".".$javascriptClass.".initCartErrors('".addslashes(json_encode($cartErrors))."');"
+    ]);
+}
+if ($this->name == 'Carts' && in_array($this->request->getParam('action'), ['finish', 'detail'])) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+        Configure::read('app.jsNamespace').".Cart.initChangeAmountLinks();"
+    ]);
 }
 ?>
 
@@ -111,19 +109,7 @@ if ($identity->getProducts() !== null) {
 
         <p class="no-products"><?php echo $cartEmptyMessage; ?></p>
         <p class="products"></p>
-
-        <div class="sums-wrapper">
-            <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-            <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-            <p class="total-sum-wrapper">
-                <b class="amount-sum-wrapper"><span class="sum"><span class="value">0</span>x</span></b>
-                <b><?php echo __('Total'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span>
-            </p>
-            <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-        </div>
-
-        <p class="tmp-wrapper"></p>
-
+        <div class="sums-wrapper"></div>
         <div class="sc"></div>
 
         <?php

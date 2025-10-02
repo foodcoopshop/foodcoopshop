@@ -198,6 +198,11 @@ foodcoopshop.Cart = {
     },
 
     renderCart: function(cart) {
+    
+        if (typeof cart === 'string') {
+            cart = $.parseJSON(cart);
+        }
+        
         let cartProductsHtml = '';
 
         Object.entries(cart.CartProducts).map(function([formattedPickupDay, cartProducts]) {
@@ -208,7 +213,7 @@ foodcoopshop.Cart = {
             });
             cartProductsHtml += '</p>';
         });
-        $('#cart p.products').html(cartProductsHtml);
+        $('.cart p.products').html(cartProductsHtml);
         foodcoopshop.Cart.initRemoveFromCartLinks();
 
         let cartSumsHtml = '';
@@ -224,7 +229,13 @@ foodcoopshop.Cart = {
 
         cartSumsHtml += '<p class="tax-sum-wrapper">' + foodcoopshop.LocalizedJs.cart.includingVat + ': <span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(cart.CartTaxSum) + '</span></p>';
 
-        $('#cart div.sums-wrapper').html(cartSumsHtml);
+        $('.cart div.sums-wrapper').html(cartSumsHtml);
+
+        if (cart.CartProducts.length == 0) {
+            $('.cart p.no-products').show();
+        } else {
+            $('.cart p.products').show();
+        }
     },
 
     initAddToCartButton: function () {
