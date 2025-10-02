@@ -694,6 +694,16 @@ foodcoopshop.Helper = {
         button.addClass('disabled'); // :enabled selector does not work in chrome, bootstrap adds pointer-events: none;
     },
 
+    disableButtonWithoutChangingStyle: function (button) {
+        foodcoopshop.Helper.disableButton(button);
+        button.addClass('disabled-without-changing-style');
+    },
+
+    enableButtonWithoutChangingStyle: function (button) {
+        foodcoopshop.Helper.enableButton(button);
+        button.removeClass('disabled-without-changing-style');
+    },
+
     applyBlinkEffect: function (container, callback) {
         container.fadeTo(150, 1, function () {
             $(this).fadeTo(150, 0, function () {

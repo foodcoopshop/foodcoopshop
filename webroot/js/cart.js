@@ -209,7 +209,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.removeFlashMessage();
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), foodcoopshop.Cart.cartButtonIcon);
-            foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
+            foodcoopshop.Helper.disableButtonWithoutChangingStyle($(foodcoopshop.Cart.orderButtons));
 
             $('#cart p.no-products').hide();
             $('#cart p.products').show();
@@ -221,7 +221,7 @@ foodcoopshop.Cart = {
             var button = productWrapper.find('.btn-cart');
 
             var disabledButtonsDuringUpdateCartRequest = $(foodcoopshop.Cart.disabledButtonsDuringUpdateCartRequest);
-            foodcoopshop.Helper.disableButton(disabledButtonsDuringUpdateCartRequest);
+            foodcoopshop.Helper.disableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
 
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
@@ -233,9 +233,9 @@ foodcoopshop.Cart = {
                 {
                     onOk: function (data) {
                         foodcoopshop.Helper.enableButton(button);
-                        foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
-                        foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
                         foodcoopshop.Cart.renderCart(data.updatedCart);
                         if (data.callback) {
                             eval(data.callback);
@@ -244,9 +244,9 @@ foodcoopshop.Cart = {
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
-                        foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
-                        foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
                         foodcoopshop.Cart.initRemoveFromCartLinks();
                         foodcoopshop.Helper.showErrorMessage(data.msg);
                         if (data.callback) {
@@ -307,7 +307,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
 
             var disabledButtonsDuringUpdateCartRequest = $(foodcoopshop.Cart.disabledButtonsDuringUpdateCartRequest);
-            foodcoopshop.Helper.disableButton(disabledButtonsDuringUpdateCartRequest);
+            foodcoopshop.Helper.disableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
 
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
@@ -320,7 +320,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.removeSpinnerFromButton(button, elementClass.replace(/fas /, ''));
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                        foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
                         foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax);
                         var minusButton = productContainer.find('.fa-minus-circle').parent();
                         if (oldAmount == 2 && amount == -1) {
@@ -333,7 +333,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.removeSpinnerFromButton(button, elementClass.replace(/fas /, ''));
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                        foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
                         foodcoopshop.Helper.showErrorMessage(data.msg);
                     }
                 }
@@ -396,7 +396,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.addSpinnerToButton(button, 'fa-times-circle');
 
             var disabledButtonsDuringUpdateCartRequest = $(foodcoopshop.Cart.disabledButtonsDuringUpdateCartRequest);
-            foodcoopshop.Helper.disableButton(disabledButtonsDuringUpdateCartRequest);
+            foodcoopshop.Helper.disableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
 
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxRemove/',
@@ -408,7 +408,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.removeSpinnerFromButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                        foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
                         foodcoopshop.Cart.renderCart(data.updatedCart);
                         if (data.callback) {
                             eval(data.callback);
@@ -421,7 +421,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.removeSpinnerFromButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.showErrorMessage(data.msg);
-                        foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Helper.enableButtonWithoutChangingStyle(disabledButtonsDuringUpdateCartRequest);
                         if (data.callback) {
                             eval(data.callback);
                         }

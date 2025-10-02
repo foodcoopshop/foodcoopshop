@@ -164,6 +164,9 @@ button,
     border-color: #f3515c;
     color: #fff;
 }
+.btn.disabled.disabled-without-changing-style {
+    opacity: 1;
+}
 .btn-danger {
     background-color: #f3515c;
     border-color: #d9534f;
