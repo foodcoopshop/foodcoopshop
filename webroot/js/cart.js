@@ -14,10 +14,25 @@
 foodcoopshop.Cart = {
 
     orderButtons: '.cart .btn-success.btn-order, .responsive-cart',
-
     disabledButtonsDuringUpdateCartRequest: '.btn-cart-detail, .btn-order, .btn-cart:not(.disabled), .delete .btn, .amount .btn',
-
     cartButtonIcon : '',
+    productIdSelector : 'input[name="productId"]',
+
+    initAttributesDropdown: function () {
+        
+        $('.pw .units-wrapper select').on('click', function (e) {
+            e.stopPropagation();
+        });
+
+        $('.pw .units-wrapper select').on('change', function (e) {
+            var selectedCompositeProductAttributeId = $(this).val();
+            var productWrapper = $(this).closest('.pw');
+            var attributeWrappers = productWrapper.find('.attribute-wrapper');
+            attributeWrappers.removeClass('active');
+            attributeWrappers.filter('.attribute-wrapper-' + selectedCompositeProductAttributeId).addClass('active');
+            productWrapper.find(foodcoopshop.Cart.productIdSelector).val(selectedCompositeProductAttributeId);
+        });
+    },
 
     getPickupDayHeaderSelector : function(pickupDay) {
         return '.cart p.pickup-day-header:contains("' + pickupDay + '")';
@@ -182,12 +197,6 @@ foodcoopshop.Cart = {
         return priceInclPerUnit * orderedQuantityInUnits / unitAmount;
     },
 
-    initAttributesDropdown: function () {
-        $('.pw .units-wrapper select').on('click', function (e) {
-            e.stopPropagation();
-        });
-    },
-
     renderCart: function(cart) {
         let cartProductsHtml = '';
 
@@ -240,7 +249,7 @@ foodcoopshop.Cart = {
             $('#cart p.products').show();
 
             const productWrapper = $(this).closest('.pw');
-            const productId = productWrapper.find('.ew.active input[name="productId"]').val();
+            const productId = productWrapper.find(foodcoopshop.Cart.productIdSelector).val();
             const amount = 1;
             const orderedQuantityInUnits = 0;
             var button = productWrapper.find('.btn-cart');

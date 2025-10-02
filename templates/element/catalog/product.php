@@ -33,7 +33,7 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     (bool) $product->is_stock_product,
 );
 
-
+$showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $identity !== null;
 
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '" data-product-link="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">';
 
@@ -45,33 +45,27 @@ echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product .
         'product' => $product,
     ]);
 
-    echo '<div class="ew active">';
+    echo '<div class="ew">';
+
+        echo $this->element('catalog/hiddenProductIdField', ['productId' => $product->id_product]);
+
         echo '<h3>' . $product->name . '</h3>';
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             echo '<h4>';
                 echo $product->manufacturer->name;
             echo '</h4>';
         }
-        echo '<div class="price-wrapper">';
-            echo '<div class="price">';
-                echo $this->Number->formatAsCurrency(rand(100, 10000) / 100);
-            echo '</div>';
 
-            if ($product->deposit_product->deposit) {
-                echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product->deposit_product->deposit).'</b> '.__('deposit').'</div>';
-            }
-            echo '<div class="tax">'. $this->Number->formatAsCurrency($product->calculated_tax) . '</div>';
-        echo '</div>';
-
-        echo $this->element('catalog/hiddenProductIdField', ['productId' => $product->id_product]);
+        echo $this->element('catalog/price', [
+            'showProductPrice' => $showProductPrice,
+            'product' => $product,
+        ]);
 
     echo '</div>';
 
     echo '<div class="actions">';
 
-        echo $this->element('catalog/units', [
-            'product' => $product,
-        ]);
+        echo $this->element('catalog/units', ['product' => $product]);
 
         echo $this->element('catalog/cartButton', [
             'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,

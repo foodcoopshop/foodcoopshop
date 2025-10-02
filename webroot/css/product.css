@@ -126,7 +126,7 @@ a.fcs-badge:hover i {
 .pw .ew {
     width: 100%;
 }
-.pw .ew:not(.active),
+.pw .ew .attribute-wrapper:not(.active),
 .pw .ew div.tax {
     display: none;
 }
@@ -163,6 +163,7 @@ a.fcs-badge:hover i {
     float: left;
 }
 .pw .ew .price-asterisk {
+    color: var(--font-color-grey);
     margin-bottom: 0;
     margin-left: 5px;
 }

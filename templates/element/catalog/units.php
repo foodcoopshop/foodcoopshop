@@ -28,10 +28,10 @@ echo '<div class="units-wrapper">';
                 $attribute->unit_product_attribute->quantity_in_units,
                 $attribute->unit_product_attribute->name,
             );
-            $preparedProductAttributes[$attribute->id_product_attribute] = $radioButtonLabel;
+            $preparedProductAttributes[$product->id_product . '-' . $attribute->id_product_attribute] = $radioButtonLabel;
         }
         if (!empty($preparedProductAttributes)) {
-            echo $this->Form->control('attributes.' . $product->id_product, [
+            echo $this->Form->control('product-attributes-' . $product->id_product, [
                 'type' => 'select',
                 'label' => false,
                 'options' => $preparedProductAttributes,
