@@ -863,7 +863,7 @@ class CartService
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      * @param array<string, mixed> $cart
-     * @param array{Cart: \App\Model\Entity\Cart, CartProducts: array<string, array{CartDepositSum: float, CartProductSum: float, Products: list<array<string, mixed>>}>, CartDepositSum?: float, CartProductSum?: float, CartTaxSum?: float, CartProductSumExcl?: float, ProductsWithUnitCount?: int} $cartGroupedByPickupDay
+     * @param array{Cart: \App\Model\Entity\Cart, CartProducts: array<string, array{CartAmountSum: int, CartDepositSum: float, CartProductSum: float, Products: list<array<string, mixed>>}>, CartDepositSum?: float, CartProductSum?: float, CartTaxSum?: float, CartProductSumExcl?: float, ProductsWithUnitCount?: int} $cartGroupedByPickupDay
      * @param list<\App\Model\Entity\Product> $products
      * @param list<\App\Model\Entity\PickupDay>|null $pickupDayEntities
      * @return null

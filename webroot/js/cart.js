@@ -209,12 +209,11 @@ foodcoopshop.Cart = {
         }
         
         cartSumsHtml += '<p class="total-sum-wrapper">';
-            cartSumsHtml += '<b class="amount-sum-wrapper"><span class="sum"><span class="value">' + 0 + '</span></span></b>';
-            cartSumsHtml += '<b>' + foodcoopshop.LocalizedJs.cart.total + '</b>:<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(cart.CartProductSum + cart.CartDepositSum) + '</span>';
+            cartSumsHtml += '<b class="amount-sum-wrapper" style="display: inline;"><span class="sum"><span class="value">' + cart.CartAmountSum + '</span>x</span></b>';
+            cartSumsHtml += '<b> ' + foodcoopshop.LocalizedJs.cart.total + '</b><span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(cart.CartProductSum + cart.CartDepositSum) + '</span>';
         cartSumsHtml += '</p>';
 
         cartSumsHtml += '<p class="tax-sum-wrapper">' + foodcoopshop.LocalizedJs.cart.includingVat + ': <span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(cart.CartTaxSum) + '</span></p>';
-        cartSumsHtml += '<div class="sc"></div>';
 
         $('#cart div.sums-wrapper').html(cartSumsHtml);
     },

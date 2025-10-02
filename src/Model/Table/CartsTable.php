@@ -226,11 +226,13 @@ class CartsTable extends AppTable
 
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
+        $preparedCart['CartAmountSum'] = 0;
         $preparedCart['CartDepositSum'] = 0;
         $preparedCart['CartProductSum'] = 0;
         $preparedCart['CartProductSumExcl'] = 0;
         $preparedCart['CartTaxSum'] = 0;
         foreach ($preparedCart['CartProducts'] as $p) {
+            $preparedCart['CartAmountSum'] += $p['amount'];
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
             $preparedCart['CartTaxSum'] += $p['tax'];
@@ -243,6 +245,7 @@ class CartsTable extends AppTable
      * @param array{
      *   Cart: \App\Model\Entity\Cart,
      *   CartProducts: list<array<string, mixed>>,
+     *   CartAmountSum: int,
      *   CartDepositSum?: float,
      *   CartProductSum?: float,
      *   CartTaxSum?: float,
@@ -251,7 +254,8 @@ class CartsTable extends AppTable
      * } $cart
      * @return array{
      *   Cart: \App\Model\Entity\Cart,
-     *   CartProducts: array<string, array{CartDepositSum: float, CartProductSum: float, Products: list<array<string, mixed>>}>,
+     *   CartProducts: array<string, array{CartAmountSum: int, CartDepositSum: float, CartProductSum: float, Products: list<array<string, mixed>>}>,
+     *   CartAmountSum: int,
      *   CartDepositSum?: float,
      *   CartProductSum?: float,
      *   CartTaxSum?: float,

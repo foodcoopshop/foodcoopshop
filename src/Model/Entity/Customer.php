@@ -287,6 +287,7 @@ class Customer extends AppEntity implements IdentityInterface
     /**
      * @return array{
      *   CartProductSum: float,
+     *   CartAmountSum: int,
      *   CartDepositSum: float,
      *   CartTaxSum: float,
      *   CartProductSumExcl: float,
