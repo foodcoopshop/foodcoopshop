@@ -498,38 +498,7 @@ foodcoopshop.Cart = {
         $('.cart span.delete a').off('click').on('click', function () {
 
             var productId = $(this).closest('.product').data('product-id');
-            var productContainer = $('.product.' + productId);
             foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
-
-            productContainer.each(function (index) {
-                var p = $(this);
-                var pickupDayHeader = $(foodcoopshop.Cart.getPickupDayHeaderSelector(p.find('.pickup-day').html()));
-                if (pickupDayHeader.first().find('span.product').length == 1) {
-                    foodcoopshop.Helper.applyBlinkEffect(pickupDayHeader, function() {
-                        pickupDayHeader.remove();
-                    });
-                }
-                foodcoopshop.Helper.applyBlinkEffect(p, function () {
-                    if (index == 0) {
-                        var priceToUpdate = foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.price').html()) * -1;
-                        foodcoopshop.Cart.updateCartProductSum(priceToUpdate);
-                        var deposit = p.find('.deposit span');
-                        var depositToUpdate = 0;
-                        if (deposit.length > 0) {
-                            depositToUpdate = foodcoopshop.Helper.getCurrencyAsFloat(deposit.html()) * -1;
-                            foodcoopshop.Cart.updateCartDepositSum(depositToUpdate);
-                        }
-                        foodcoopshop.Cart.updateCartTaxSum(
-                            foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.tax').html()) * -1
-                        );
-                        var amountToUpdate = foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.amount .value').html()) * -1;
-                        foodcoopshop.Cart.updateCartAmountSum(amountToUpdate);
-                        foodcoopshop.Cart.updateCartTotalSum(priceToUpdate + depositToUpdate);
-                    }
-                    p.remove();
-                    $('.error-message.' + productId).remove();
-                });
-            });
 
             var button = $(this);
             foodcoopshop.Helper.disableButton(button);
@@ -549,6 +518,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.removeSpinnerFromButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        foodcoopshop.Cart.renderCart(data.updatedCart);
                         if (data.callback) {
                             eval(data.callback);
                         }

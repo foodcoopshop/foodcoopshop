@@ -230,7 +230,8 @@ class CartsController extends FrontendController
 
         $result = [
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
+            'updatedCart' => $this->identity->getCartGroupedByPickupDay(),
         ];
         if (OrderCustomerService::isSelfServiceModeByReferer()) {
             $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
