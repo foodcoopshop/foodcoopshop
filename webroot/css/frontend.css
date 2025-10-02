@@ -29,6 +29,10 @@ body {
     font-size: 14px;
 }
 
+#flashMessage {
+    left: 50%;
+    transform: translateX(-50%);
+}
 #container #header,
 #container #content,
 #container #footer {
