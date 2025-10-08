@@ -35,25 +35,31 @@ class ProductCsvWriterService extends BaseCsvWriterService
     /**
      * @param list<int|string> $productIds
      */
-    public function setProductIds(array $productIds): void
+    public function setProductIds(array $productIds, bool $onlyStockProducts): void
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');
-        $stockProductIds = $productsTable->find()
-        ->where([
+
+        $conditions = [
             'Products.id_product IN' => $productIds,
-            'Products.is_stock_product' => APP_ON,
-            'Manufacturers.stock_management_enabled' => APP_ON,
-        ])
+        ];
+        if ($onlyStockProducts) {
+            $conditions += [
+                'Products.is_stock_product' => APP_ON,
+                'Manufacturers.stock_management_enabled' => APP_ON,
+            ];
+        }
+        $productIds = $productsTable->find()
+        ->where($conditions)
         ->contain([
             'Manufacturers',
         ])
         ->all()->extract('id_product')->toArray();
 
-        if (empty($stockProductIds)) {
-            throw new InvalidParameterException('no stock products found');
+        if (empty($productIds)) {
+            throw new InvalidParameterException('no products found');
         }
 
-        $this->productIds = $stockProductIds;
+        $this->productIds = $productIds;
     }
 
     /**
