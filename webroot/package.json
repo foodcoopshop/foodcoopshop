@@ -36,7 +36,7 @@
     "mathjs": "^14.8.2",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "12.0.2",
+    "swiper": "11.2.10",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.19.3",
     "webrtc-adapter": "^9.0.3"
