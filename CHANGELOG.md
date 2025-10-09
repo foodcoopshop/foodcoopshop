@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## unreleased
 
 ### Neue Funktionen / Verbesserungen
+- Der Bestellschluss kann jetzt auch einen Tag *nach* dem Standard-Bestellschluss angegeben werden. [I#1202](https://github.com/foodcoopshop/foodcoopshop/issues/1202) / [PR#1203](https://github.com/foodcoopshop/foodcoopshop/pull/1203) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Zusätzlich zur Exportmöglichkeit für Lagerprodukte können jetzt auch "alle Produkte" exportiert werden. [I#1200](https://github.com/foodcoopshop/foodcoopshop/issues/1200) / [PR#1201](https://github.com/foodcoopshop/foodcoopshop/pull/1201) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bestellungen können jetzt auch nach Kategorien gefiltert werden (Aktionen - Zusätzliche Filter anzeigen). Weiters wird bei den Bestellungen die Netto-Preis-Summe im Tooltip über der Brutto-Preis-Summe (Spalte: Preis) angezeigt. [I#1194](https://github.com/foodcoopshop/foodcoopshop/issues/1194) / [PR#1195](https://github.com/foodcoopshop/foodcoopshop/pull/1195) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Software ist jetzt kompatibel mit PHP 8.4. [I#1008](https://github.com/foodcoopshop/foodcoopshop/issues/1008) / [PR#1185](https://github.com/foodcoopshop/foodcoopshop/pull/1185) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
