@@ -36,7 +36,8 @@ if ($identity->isManufacturer()) {
 }
 $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import"></i> ' . __d('admin', 'Import_products') . '</a>';
 if (!empty($products)) {
-    $buttons[] = $this->element('productList/button/exportProducts');
+    $buttons[] = $this->element('productList/button/exportAllProducts');
+    $buttons[] = $this->element('productList/button/exportStockProducts');
 }
 
 echo $this->element('dropdownWithButtons', [

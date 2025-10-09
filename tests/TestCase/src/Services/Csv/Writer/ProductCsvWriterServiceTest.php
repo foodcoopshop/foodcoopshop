@@ -44,7 +44,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 
         $productIds = [344, 346, 349, 350, 351];
         $writerService = new ProductCsvWriterService();
-        $writerService->setProductIds($productIds);
+        $writerService->setProductIds($productIds, true);
         $writerService->render();
         $result = $writerService->toString();
 		$lines  = explode("\n", $result);
@@ -79,7 +79,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 
         $productIds = [347, 346, 60, 350, 351];
         $writerService = new ProductCsvWriterService();
-        $writerService->setProductIds($productIds);
+        $writerService->setProductIds($productIds, true);
         $writerService->render();
         $result = $writerService->toString();
 		$lines  = explode("\n", $result);

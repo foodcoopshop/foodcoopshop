@@ -32,10 +32,8 @@ class ProductsControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public function testExportProducts(): void
+    public function testExportProductsOnlyStockProductsEnabled(): void
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(8);
         $unitEntityA->use_weight_as_amount = 1;
@@ -43,12 +41,34 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $this->post('/admin/products/export', [
-            'productIds' => '351',
+            'productIds' => '351,102',
+            'onlyStockProducts' => 1,
         ]);
 
         $this->assertResponseOk();
         $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Barcode;Lagerwert');
         $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";;14.985,00');
+        $this->assertResponseNotContains('102;Frankfurter;"Demo Fleisch-Hersteller";1;2.996;;;0,000000;;;0,00');
+        $this->assertResponseContains(';;;;;;;;;14.985,00');
+    }
+
+    public function testExportProductsOnlyStockProductsDisabled(): void
+    {
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(8);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntityA);
+
+        $this->loginAsSuperadmin();
+        $this->post('/admin/products/export', [
+            'productIds' => '351,102',
+            'onlyStockProducts' => 0,
+        ]);
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Barcode;Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";;14.985,00');
+        $this->assertResponseContains('102;Frankfurter;"Demo Fleisch-Hersteller";1;2.996;;;0,000000;;;0,00');
         $this->assertResponseContains(';;;;;;;;;14.985,00');
     }
 

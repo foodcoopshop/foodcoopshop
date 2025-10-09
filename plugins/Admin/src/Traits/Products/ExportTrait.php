@@ -31,12 +31,14 @@ trait ExportTrait
         if ($productIds == '') {
             throw new \Exception('no product ids passed');
         }
-
         $productIds = explode(',', $productIds);
+        
+        $onlyStockProducts = (bool)$this->getRequest()->getData('onlyStockProducts');
 
         $writerService = new ProductCsvWriterService();
-        $writerService->setProductIds($productIds);
-        $writerService->setFilename(__('Products') . '_' . date('YmdHis') . '.csv');
+        $writerService->setProductIds($productIds, $onlyStockProducts);
+        $filenamePrefix = $onlyStockProducts ? 'Stock_products' : 'Products';
+        $writerService->setFilename(__($filenamePrefix) . '_' . date('YmdHis') . '.csv');
         $writerService->render();
         return $writerService->forceDownload($this->getResponse());
 
