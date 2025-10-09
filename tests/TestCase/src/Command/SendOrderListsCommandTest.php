@@ -10,6 +10,7 @@ use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use Cake\I18n\Date;
 use App\Model\Entity\OrderDetail;
+use App\View\Helper\MyTimeHelper;
 use Cake\Utility\Hash;
 
 /**
@@ -164,7 +165,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendOrderListsWithIndividualSendOrderListWeekday(): void
+    public function testSendOrderListsWithIndividualSendOrderListWeekdayTuesday(): void
     {
         $cronjobRunDay = '2018-01-30';
         $productId = 346;
@@ -184,7 +185,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
             $productsTable->patchEntity(
                 $productsTable->get($productId),
                 [
-                        'delivery_rhythm_send_order_list_weekday' => 2
+                        'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::TUESDAY,
                 ]
             )
         );
@@ -206,6 +207,50 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 €<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
 
         $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1], [2,3]);
+
+    }
+
+    public function testSendOrderListsWithIndividualSendOrderListWeekdayThursday(): void
+    {
+        $cronjobRunDay = '2018-02-01';
+        $productId = 346;
+        $orderDetailId = 1;
+
+        // 1) run cronjob on thursday and assert no changings
+        $this->exec('send_order_lists ' . $cronjobRunDay);
+        $this->runAndAssertQueue();
+
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_OPEN);
+        $this->assertMailCount(0);
+
+        // 2) change product send_order_list_weekday and run cronjob again
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->save(
+            $productsTable->patchEntity(
+                $productsTable->get($productId),
+                [
+                        'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::THURSDAY,
+                ]
+            )
+        );
+
+        $this->exec('send_order_lists ' . $cronjobRunDay);
+        $this->runAndAssertQueue();
+
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(2, OrderDetail::STATE_OPEN);
+        $this->assertOrderDetailState(3, OrderDetail::STATE_OPEN);
+
+        $this->assertMailCount(1);
+
+        // 3) assert action log
+        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $actionLogsTable->find('all', conditions: [
+            'type' => 'cronjob_send_order_lists'
+        ])->toArray();
+        $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 €<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
+
+        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1], []);
 
     }
 
