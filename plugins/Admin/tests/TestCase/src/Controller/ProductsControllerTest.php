@@ -46,10 +46,10 @@ class ProductsControllerTest extends AppCakeTestCase
         ]);
 
         $this->assertResponseOk();
-        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Barcode;Lagerwert');
-        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";;14.985,00');
-        $this->assertResponseNotContains('102;Frankfurter;"Demo Fleisch-Hersteller";1;2.996;;;0,000000;;;0,00');
-        $this->assertResponseContains(';;;;;;;;;14.985,00');
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";"Verkaufspreis pro Einheit";Barcode;Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";15,00;;14.985,00');
+        $this->assertResponseNotContains('102;Frankfurter;');
+        $this->assertResponseContains(';;;;;;;;;;14.985,00');
     }
 
     public function testExportProductsOnlyStockProductsDisabled(): void
@@ -66,10 +66,10 @@ class ProductsControllerTest extends AppCakeTestCase
         ]);
 
         $this->assertResponseOk();
-        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Barcode;Lagerwert');
-        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";;14.985,00');
-        $this->assertResponseContains('102;Frankfurter;"Demo Fleisch-Hersteller";1;2.996;;;0,000000;;;0,00');
-        $this->assertResponseContains(';;;;;;;;;14.985,00');
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";"Verkaufspreis pro Einheit";Barcode;Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";15,00;;14.985,00');
+        $this->assertResponseContains('102;Frankfurter;"Demo Fleisch-Hersteller";1;2.996;;;0,000000;;0,00;;0,00');
+        $this->assertResponseContains(';;;;;;;;;;;14.985,00');
     }
 
     public function testEditProductNewStatusOn(): void

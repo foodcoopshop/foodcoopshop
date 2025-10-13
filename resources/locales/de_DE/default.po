@@ -2708,6 +2708,9 @@ msgstr "Seite"
 msgid "Selling_price"
 msgstr "Verkaufspreis"
 
+msgid "Selling price per unit"
+msgstr "Verkaufspreis pro Einheit"
+
 msgid "Move_in_shopping_bag"
 msgstr "In die Einkaufstasche"
 

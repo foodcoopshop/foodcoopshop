@@ -50,15 +50,15 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 		$lines  = explode("\n", $result);
 
         $this->assertEquals(10, count($lines));
-        $this->assertEquals(Bom::Utf8->value . 'Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";Barcode;Lagerwert', $lines[0]);
-        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";1;97;;Stück;1,820000;;;176,54', $lines[1]);
-        $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";1;78;;"100 g";0,640000;;;49,92', $lines[2]);
-        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";1;5;0;;5,000000;;1234567890123;25,00', $lines[3]);
-        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";;14.985,00', $lines[4]);
-        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;5;0;"0,5 kg";2,000000;;2145678901234;10,00', $lines[5]);
-        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;"1 kg";4,000000;;;3.996,00', $lines[6]);
-        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;kg;10,000000;"1 kg";2112345000000;4.995,00', $lines[7]);
-        $this->assertEquals(';;;;;;;;;;24.237,46', $lines[8]);
+        $this->assertEquals(Bom::Utf8->value . 'Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";"Verkaufspreis pro Einheit";Barcode;Lagerwert', $lines[0]);
+        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";1;97;;Stück;1,820000;;1,82;;176,54', $lines[1]);
+        $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";1;78;;"100 g";0,640000;;0,64;;49,92', $lines[2]);
+        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";1;5;0;;5,000000;;5,00;1234567890123;25,00', $lines[3]);
+        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";15,00;;14.985,00', $lines[4]);
+        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;5;0;"0,5 kg";2,000000;;2,00;2145678901234;10,00', $lines[5]);
+        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;"1 kg";4,000000;;4,00;;3.996,00', $lines[6]);
+        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;kg;10,000000;"1 kg";5,00;2112345000000;4.995,00', $lines[7]);
+        $this->assertEquals(';;;;;;;;;;;24.237,46', $lines[8]);
 
     }
 
@@ -85,15 +85,15 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 		$lines  = explode("\n", $result);
 
         $this->assertEquals(10, count($lines));
-        $this->assertEquals(Bom::Utf8->value . 'Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Einkaufspreis netto";"Preis pro";Barcode;Lagerwert', $lines[0]);
-        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";1;97;;Stück;1,200000;;;116,40', $lines[1]);
-        $this->assertEquals('347;Forelle;"Demo Fleisch-Hersteller";1;999;;g;0,980000;"100 g";;3.426,57', $lines[2]);
-        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;0,000000;"1 kg";;0,00', $lines[3]);
-        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;5;0;"0,5 kg";1,400000;;2145678901234;7,00', $lines[4]);
-        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;"1 kg";0,000000;;;0,00', $lines[5]);
-        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;kg;6,000000;"1 kg";2112345000000;2.997,00', $lines[6]);
-        $this->assertEquals('60-10;Milch;"Demo Milch-Hersteller";1;19;;0,5l;0,250000;;;4,75', $lines[7]);
-        $this->assertEquals(';;;;;;;;;;6.551,72', $lines[8]);
+        $this->assertEquals(Bom::Utf8->value . 'Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Einkaufspreis netto";"Preis pro";"Verkaufspreis pro Einheit";Barcode;Lagerwert', $lines[0]);
+        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";1;97;;Stück;1,200000;;1,82;;116,40', $lines[1]);
+        $this->assertEquals('347;Forelle;"Demo Fleisch-Hersteller";1;999;;g;0,980000;"100 g";5,25;;3.426,57', $lines[2]);
+        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;0,000000;"1 kg";15,00;;0,00', $lines[3]);
+        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;5;0;"0,5 kg";1,400000;;2,00;2145678901234;7,00', $lines[4]);
+        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;"1 kg";0,000000;;4,00;;0,00', $lines[5]);
+        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;kg;6,000000;"1 kg";5,00;2112345000000;2.997,00', $lines[6]);
+        $this->assertEquals('60-10;Milch;"Demo Milch-Hersteller";1;19;;0,5l;0,250000;;0,62;;4,75', $lines[7]);
+        $this->assertEquals(';;;;;;;;;;;6.551,72', $lines[8]);
 
     }
 
