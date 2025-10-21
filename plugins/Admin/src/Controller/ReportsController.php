@@ -53,7 +53,7 @@ class ReportsController extends AdminAppController
 
             $content = $upload->getStream()->getContents();
             $bankingReaderService = BankingReaderServiceFactory::get(Configure::read('app.bankNameForCreditSystem'));
-            $reader = $bankingReaderService::createFromString($content);
+            $reader = $bankingReaderService::fromString($content);
 
             if ($reader->csvHasIsoFormat) {
                 $reader->appendStreamFilterOnRead('convert.iconv.ISO-8859-15/UTF-8');

@@ -57,7 +57,7 @@ trait ImportTrait
 
         $this->initializeImportTrait();
 
-        $writer = Writer::createFromString();
+        $writer = Writer::fromString();
         $columns = array_keys($this->columnsFieldMap);
         $writer->insertOne($columns);
 
@@ -108,7 +108,7 @@ trait ImportTrait
             }
 
             $content = $upload->getStream()->getContents();
-            $reader = ProductReaderService::createFromString($content);
+            $reader = ProductReaderService::fromString($content);
             $reader->configureType();
 
             $productEntities = $reader->import($manufacturerId);
