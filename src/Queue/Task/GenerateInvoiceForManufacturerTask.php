@@ -41,6 +41,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $actionLogId = $data['actionLogId'];
         $dateFrom = $data['dateFrom'];
         $dateTo = $data['dateTo'];
+        $invoicePeriodMonthAndYear = $data['invoicePeriodMonthAndYear'];
 
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
@@ -52,7 +53,6 @@ class GenerateInvoiceForManufacturerTask extends Task {
         ];
 
         $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
-        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $pdfWriter = new InvoiceToManufacturerPdfWriterService();
         $pdfWriter->prepareAndSetData(

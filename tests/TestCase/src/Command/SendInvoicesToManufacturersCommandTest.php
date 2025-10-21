@@ -66,7 +66,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
             if ($orderDetail->id_order_detail == 4) {
                 $expectedOrderState = OrderDetail::STATE_OPEN;
             }
-            $this->assertEquals($orderDetail->order_state, $expectedOrderState);
+            $this->assertEquals($expectedOrderState, $orderDetail->order_state);
         }
 
         $this->assertMailCount(4);
@@ -87,6 +87,30 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
         $this->assertResponseContains($expectedResult);
 
+    }
+
+    public function testSendInvoicesExtraBillingOnLastDayOfYearForManufacturersEnabled(): void
+    {
+        Configure::write('app.extraBillingOnLastDayOfYearForManufacturersEnabled', true);
+        $this->prepareSendInvoices();
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $orderDetail->pickup_day = '2018-12-01';
+            $orderDetail->order_state = OrderDetail::STATE_OPEN;
+            $orderDetailsTable->save($orderDetail);
+        }
+
+        $this->exec('send_invoices_to_manufacturers 2018-12-31 23:20:30');
+        $this->runAndAssertQueue();
+
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $this->assertEquals(OrderDetail::STATE_BILLED_CASHLESS, $orderDetail->order_state);
+        }
+
+        $this->assertMailCount(5);
+        $this->assertMailSubjectContainsAt(1, 'Rechnungen für Dezember 2018 wurden verschickt');
     }
 
     public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes(): void

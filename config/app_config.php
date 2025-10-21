@@ -186,6 +186,8 @@ return [
         // additionalTextForInvoice - for invoices to customers (not available if hello cash is used!)
         'additionalTextForInvoice' => '',
 
+        'extraBillingOnLastDayOfYearForManufacturersEnabled' => true,
+
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
