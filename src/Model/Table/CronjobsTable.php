@@ -300,10 +300,10 @@ class CronjobsTable extends AppTable
                 $executeCronjob = false;
             }
 
-            if (Configure::read('app.extraBillingOnLastDayOfYearForManufacturersEnabled')
+            if (Configure::read('app.extraBillingDayForManufacturers') != ''
                 && $cronjob->id == Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID
-                && $cronjobRunDayObject->format('m-d') == '12-31'
-                && (int)$cronjobRunDayObject->format('H') > 22
+                && $cronjobRunDayObject->format('m-d') == Configure::read('app.extraBillingDayForManufacturers')
+                && (int)$cronjobRunDayObject->format('H') > 8
                 ) {
                 $executeCronjob = true;
             }

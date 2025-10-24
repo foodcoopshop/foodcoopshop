@@ -89,9 +89,9 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
     }
 
-    public function testSendInvoicesExtraBillingOnLastDayOfYearForManufacturersEnabled(): void
+    public function testSendInvoicesExtraBillingDayForManufacturersRunOnSameDay(): void
     {
-        Configure::write('app.extraBillingOnLastDayOfYearForManufacturersEnabled', true);
+        Configure::write('app.extraBillingDayForManufacturers', '12-20');
         $this->prepareSendInvoices();
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find('all')->toArray();
@@ -101,7 +101,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
             $orderDetailsTable->save($orderDetail);
         }
 
-        $this->exec('send_invoices_to_manufacturers 2018-12-31 23:20:30');
+        $this->exec('send_invoices_to_manufacturers 2018-12-20 23:20:30');
         $this->runAndAssertQueue();
 
         $orderDetails = $orderDetailsTable->find('all')->toArray();
@@ -111,6 +111,29 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(5);
         $this->assertMailSubjectContainsAt(1, 'Rechnungen für Dezember 2018 wurden verschickt');
+    }
+
+    public function testSendInvoicesExtraBillingDayForManufacturersRunOnDifferentDay(): void
+    {
+        Configure::write('app.extraBillingDayForManufacturers', '12-20');
+        $this->prepareSendInvoices();
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $orderDetail->pickup_day = '2018-12-01';
+            $orderDetail->order_state = OrderDetail::STATE_OPEN;
+            $orderDetailsTable->save($orderDetail);
+        }
+
+        $this->exec('send_invoices_to_manufacturers 2018-12-24 23:20:30');
+        $this->runAndAssertQueue();
+
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $this->assertEquals(OrderDetail::STATE_OPEN, $orderDetail->order_state);
+        }
+
+        $this->assertMailCount(2);
     }
 
     public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes(): void
