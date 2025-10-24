@@ -425,6 +425,16 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.extraBillingDayForManufacturers</td>
+            <td><?php 
+                if (Configure::read('app.extraBillingDayForManufacturers') != '') {
+                    $date = DateTime::createFromFormat('m-d', Configure::read('app.extraBillingDayForManufacturers'));
+                    echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
+                }
+            ?></td>
+        </tr>
+
+        <tr>
             <td><?php echo __d('admin', 'Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/<?php echo Configure::read('app.logoFileName'); ?></td>
             <td><img src="/files/images/<?php echo Configure::read('app.logoFileName'); ?>" /></td>
         </tr>

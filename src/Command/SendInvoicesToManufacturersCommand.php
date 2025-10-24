@@ -39,9 +39,23 @@ class SendInvoicesToManufacturersCommand extends AppCommand
         $queuedJobsTable = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         $this->setCronjobRunDay($args);
-
+        
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
+        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
+
+        if (Configure::read('app.extraBillingDayForManufacturers') != '') {
+            $cronjobRunDayObject = new DateTime($this->cronjobRunDay);
+            if ($cronjobRunDayObject->format('m-d') == Configure::read('app.extraBillingDayForManufacturers')) {
+                $currentYear = $cronjobRunDayObject->format('Y');
+                $currentMonth = $cronjobRunDayObject->format('m');
+                $lastDayOfMonth = cal_days_in_month(CAL_GREGORIAN, (int)$currentMonth, (int)$currentYear);
+                $dateFrom = '01.'  . $currentMonth . '.' . $currentYear;
+                $dateTo  = $lastDayOfMonth . '.'  . $currentMonth . '.' . $currentYear;
+                $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getMonthNameAndYear(strtotime($currentYear . '-' . $currentMonth . '-01'));
+            }
+        }
 
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $manufacturersTable->find('all',
@@ -120,6 +134,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
                     'actionLogId' => $actionLog->id,
                     'dateFrom' => $dateFrom,
                     'dateTo' => $dateTo,
+                    'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
                 ]);
             }
         }
@@ -130,7 +145,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
             $email->setTo($accountingEmail)
-                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
+                ->setSubject(__('Invoices_for_{0}_have_been_sent', [$invoicePeriodMonthAndYear]))
                 ->setViewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,

@@ -2532,3 +2532,6 @@ msgstr "{0,plural,=1{Ein Produkt wurde erfolgreich kopiert.} other{# Produkte wu
 
 msgid "No copyable products were found."
 msgstr "Keine kopierbaren Produkte gefunden."
+
+msgid "Extra billing"
+msgstr "Sonderabrechnung"
