@@ -91,17 +91,17 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
     public function testSendInvoicesExtraBillingDayForManufacturersRunOnSameDay(): void
     {
-        Configure::write('app.extraBillingDayForManufacturers', '12-20');
+        Configure::write('app.extraBillingDayForManufacturers', '11-20');
         $this->prepareSendInvoices();
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
-            $orderDetail->pickup_day = '2018-12-01';
+            $orderDetail->pickup_day = '2018-11-01';
             $orderDetail->order_state = OrderDetail::STATE_OPEN;
             $orderDetailsTable->save($orderDetail);
         }
 
-        $this->exec('send_invoices_to_manufacturers 2018-12-20 23:20:30');
+        $this->exec('send_invoices_to_manufacturers 2018-11-20 23:20:30');
         $this->runAndAssertQueue();
 
         $orderDetails = $orderDetailsTable->find('all')->toArray();
@@ -110,7 +110,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
         }
 
         $this->assertMailCount(5);
-        $this->assertMailSubjectContainsAt(1, 'Rechnungen für Dezember 2018 wurden verschickt');
+        $this->assertMailSubjectContainsAt(1, 'Rechnungen für November 2018 wurden verschickt');
     }
 
     public function testSendInvoicesExtraBillingDayForManufacturersRunOnDifferentDay(): void

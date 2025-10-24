@@ -49,9 +49,11 @@ class SendInvoicesToManufacturersCommand extends AppCommand
             $cronjobRunDayObject = new DateTime($this->cronjobRunDay);
             if ($cronjobRunDayObject->format('m-d') == Configure::read('app.extraBillingDayForManufacturers')) {
                 $currentYear = $cronjobRunDayObject->format('Y');
-                $dateFrom = '01.12.' . $currentYear;
-                $dateTo = '31.12.' . $currentYear;
-                $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getMonthNameAndYear(strtotime($currentYear . '-12-01'));
+                $currentMonth = $cronjobRunDayObject->format('m');
+                $lastDayOfMonth = cal_days_in_month(CAL_GREGORIAN, (int)$currentMonth, (int)$currentYear);
+                $dateFrom = '01.'  . $currentMonth . '.' . $currentYear;
+                $dateTo  = $lastDayOfMonth . '.'  . $currentMonth . '.' . $currentYear;
+                $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getMonthNameAndYear(strtotime($currentYear . '-' . $currentMonth . '-01'));
             }
         }
 
