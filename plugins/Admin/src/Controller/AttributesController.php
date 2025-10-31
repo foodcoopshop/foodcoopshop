@@ -102,6 +102,7 @@ class AttributesController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $attribute->id_attribute);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('attribute', $attribute);

@@ -156,6 +156,7 @@ class CategoriesController extends FrontendController
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
+            return;
         }
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');

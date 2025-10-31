@@ -239,6 +239,7 @@ class FeedbacksController extends AdminAppController
 
             $this->Flash->success($message);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('feedback', $feedback);

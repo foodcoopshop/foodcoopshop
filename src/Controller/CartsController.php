@@ -246,6 +246,7 @@ class CartsController extends FrontendController
         $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
         $this->Flash->success($message);
         $this->redirect($this->referer());
+        return;
     }
 
     private function doEmptyCart(): void
@@ -261,6 +262,7 @@ class CartsController extends FrontendController
         $deliveryDate = h($this->getRequest()->getQuery('deliveryDate'));
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
+        return;
     }
 
     private function doAddOrderToCart(string $deliveryDate): void
@@ -324,6 +326,7 @@ class CartsController extends FrontendController
             $this->doAddOrderToCart($lastOrderDate);
         }
         $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
+        return;
     }
 
     public function ajaxAdd(): ?Response

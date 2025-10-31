@@ -112,6 +112,7 @@ class SlidersController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $slider->id_slider);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('slider', $slider);

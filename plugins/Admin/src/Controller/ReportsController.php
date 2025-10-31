@@ -68,6 +68,7 @@ class ReportsController extends AdminAppController
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
                 $this->redirect($this->referer());
+                return;
             }
 
             foreach($csvRecords as &$csvRecord) {

@@ -132,6 +132,7 @@ class PagesController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $page->id_page);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('page', $page);

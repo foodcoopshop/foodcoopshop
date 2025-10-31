@@ -107,6 +107,7 @@ class CustomersController extends FrontendController
 
         if (!$this->getRequest()->is('post')) {
             $this->redirect('/');
+            return;
         }
 
         $this->set('title_for_layout', __('Accept_terms_of_use'));
@@ -133,6 +134,7 @@ class CustomersController extends FrontendController
             $this->Flash->success(__('Accepting_the_terms_of_use_have_been_saved.'));
             $this->renewAuthSession();
             $this->redirect($this->referer());
+            return;
         }
     }
 
@@ -181,6 +183,7 @@ class CustomersController extends FrontendController
         }
 
         $this->redirect('/');
+        return;
 
     }
 
@@ -240,6 +243,7 @@ class CustomersController extends FrontendController
                 $this->Flash->success(__('We_successfully_sent_the_activation_link_for_your_new_password_to_you.'));
 
                 $this->redirect('/');
+                return;
             }
         }
 
@@ -289,6 +293,7 @@ class CustomersController extends FrontendController
         }
 
         $this->redirect('/');
+        return;
     }
 
     public function login(): void
@@ -336,6 +341,7 @@ class CustomersController extends FrontendController
                 if ($result->isValid()) {
                     $target = $this->Authentication->getLoginRedirect() ?? Configure::read('app.slugHelper')->getHome();
                     $this->redirect($target);
+                    return;
                 } else {
                     $errorMessageSigningInFailed = __('Signing_in_failed_account_inactive_or_password_wrong?');
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
@@ -377,6 +383,7 @@ class CustomersController extends FrontendController
             if ($this->identity !== null) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
+                return;
             }
 
             if (! empty($this->getRequest()->getData())) {
@@ -466,6 +473,7 @@ class CustomersController extends FrontendController
 
                     $this->Flash->success(__('Your_registration_was_successful.'));
                     $this->redirect(Configure::read('app.slugHelper')->getRegistrationSuccessful());
+                    return;
                 }
             }
         }
@@ -492,6 +500,7 @@ class CustomersController extends FrontendController
             $redirectUrl = $this->request->getQuery('redirect');
         }
         $this->redirect($redirectUrl);
+        return;
 
     }
 }

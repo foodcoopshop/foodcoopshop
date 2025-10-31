@@ -89,6 +89,7 @@ class CronjobsController extends AdminAppController
             $this->Flash->success($message);
 
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('cronjob', $cronjob);

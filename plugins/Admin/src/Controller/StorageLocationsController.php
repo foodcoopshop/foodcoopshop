@@ -111,6 +111,7 @@ class StorageLocationsController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $storageLocation->id);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('storageLocation', $storageLocation);

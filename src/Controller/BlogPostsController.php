@@ -59,6 +59,7 @@ class BlogPostsController extends FrontendController
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title));
+            return;
         }
 
         $this->set('blogPost', $blogPost);

@@ -129,6 +129,7 @@ class CategoriesController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $category->id_category);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('category', $category);

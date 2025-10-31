@@ -95,6 +95,7 @@ class TaxesController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $tax->id_tax);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('tax', $tax);

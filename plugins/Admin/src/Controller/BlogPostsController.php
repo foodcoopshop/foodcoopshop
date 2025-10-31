@@ -150,6 +150,7 @@ class BlogPostsController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $blogPost->id_blog_post);
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('blogPost', $blogPost);

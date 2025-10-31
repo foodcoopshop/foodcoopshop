@@ -41,6 +41,7 @@ class FeedbacksController extends FrontendController
 
         if ($this->request->getUri()->getPath() == '/feedbacks') {
             $this->redirect(Configure::read('app.slugHelper')->getFeedbackList());
+            return;
         }
 
         $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
