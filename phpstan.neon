@@ -1,4 +1,6 @@
 parameters:
+    parallel:
+        maximumNumberOfProcesses: 2
     level: 6
     bootstrapFiles:
         - config/bootstrap.php
