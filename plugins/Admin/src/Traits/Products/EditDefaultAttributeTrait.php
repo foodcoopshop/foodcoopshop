@@ -57,6 +57,7 @@ trait EditDefaultAttributeTrait
         $actionLogsTable->customSave('product_default_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
+        return;
     }
 
 }

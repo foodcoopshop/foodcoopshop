@@ -114,6 +114,7 @@ trait EditStatusTrait
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
+        return;
     }
 
 }

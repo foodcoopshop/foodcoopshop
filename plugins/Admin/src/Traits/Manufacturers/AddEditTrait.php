@@ -171,6 +171,7 @@ trait AddEditTrait
             }
 
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('manufacturer', $manufacturer);

@@ -212,6 +212,7 @@ trait EditOptionsTrait
             $actionLogsTable->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
             $this->redirect($this->getPreparedReferer());
+            return;
         }
 
         $this->set('manufacturer', $manufacturer);

@@ -68,6 +68,7 @@ trait AddProductAttributeTrait
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
+        return;
     }
 
 }

@@ -169,6 +169,7 @@ class ReportsController extends AdminAppController
                         if (empty($csvPayments)) {
                             $this->Flash->error(__d('admin', 'No_records_were_imported.'));
                             $this->redirect($this->referer());
+                            return;
                         }
 
                         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -182,6 +183,7 @@ class ReportsController extends AdminAppController
                             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
                             $actionLogsTable->customSave('payment_product_csv_imported', $this->identity->getId(), 0, 'payments', $message);
                             $this->redirect($this->referer());
+                            return;
                         }
 
                     });
