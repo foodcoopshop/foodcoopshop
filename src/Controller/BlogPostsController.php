@@ -7,6 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Http\Response;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -34,7 +35,7 @@ class BlogPostsController extends FrontendController
         ]);
     }
 
-    public function detail(): void
+    public function detail(): ?Response
     {
         $blogPostId = (int) $this->getRequest()->getParam('idAndSlug');
 
@@ -88,6 +89,8 @@ class BlogPostsController extends FrontendController
         $this->set('neighbors', $neighbors);
 
         $this->set('title_for_layout', $blogPost->title);
+        
+        return null;
     }
 
     public function index(): void
