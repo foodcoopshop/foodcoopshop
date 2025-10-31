@@ -25,8 +25,7 @@ trait PaginatedProductsTrait
     public function redirectIfPageIsSetTo1(): void
     {
         if ($this->getRequest()->getQuery('page') !== null && $this->getRequest()->getQuery('page') == 1) {
-            $this->redirect($this->getRequest()->getAttribute('here'));
-            return;
+            return $this->redirect($this->getRequest()->getAttribute('here'));
         }
     }
 

@@ -84,8 +84,7 @@ class PagesController extends FrontendController
 
         // redirect direct call of page with link
         if ($page->extern_url != '') {
-            $this->redirect($page->extern_url);
-            return;
+            return $this->redirect($page->extern_url);
         }
 
         $conditionsForChildren = ['Pages.active' => APP_ON];
@@ -105,8 +104,7 @@ class PagesController extends FrontendController
         $correctSlug = StringComponent::slugify($page->title);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getPageDetail($pageId, $page->title));
-            return;
+            return $this->redirect(Configure::read('app.slugHelper')->getPageDetail($pageId, $page->title));
         }
 
         $this->set('page', $page);
@@ -146,8 +144,7 @@ class PagesController extends FrontendController
         $query = $sso->getSignInString($nonce, $userId, $userEmail, $extraParameters);
         $query = (strpos($return_sso_url, '?') !== false ? '&' : '?') . $query;
 
-        $this->redirect($return_sso_url . $query);
-        return;
+        return $this->redirect($return_sso_url . $query);
     }
 
     public function termsOfUse(): void

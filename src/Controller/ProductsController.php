@@ -50,8 +50,7 @@ class ProductsController extends FrontendController
         $correctSlug = StringComponent::slugify($product[0]->name);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]->name));
-            return;
+            return $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]->name));
         }
 
         $this->set('title_for_layout', $product[0]->name);
