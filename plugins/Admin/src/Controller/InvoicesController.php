@@ -183,8 +183,7 @@ class InvoicesController extends AdminAppController
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave('invoice_added', $this->identity->getId(), (int) $invoiceId, 'invoices', $messageString);
 
-        $this->redirect($this->referer());
-        return;
+        return $this->redirect($this->referer());
 
     }
 

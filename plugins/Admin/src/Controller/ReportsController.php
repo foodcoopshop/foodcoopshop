@@ -67,8 +67,7 @@ class ReportsController extends AdminAppController
                 $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
-                $this->redirect($this->referer());
-                return;
+                return $this->redirect($this->referer());
             }
 
             foreach($csvRecords as &$csvRecord) {
@@ -168,8 +167,7 @@ class ReportsController extends AdminAppController
 
                         if (empty($csvPayments)) {
                             $this->Flash->error(__d('admin', 'No_records_were_imported.'));
-                            $this->redirect($this->referer());
-                            return;
+                            return $this->redirect($this->referer());
                         }
 
                         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -182,8 +180,7 @@ class ReportsController extends AdminAppController
                             $this->Flash->success($message);
                             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
                             $actionLogsTable->customSave('payment_product_csv_imported', $this->identity->getId(), 0, 'payments', $message);
-                            $this->redirect($this->referer());
-                            return;
+                            return $this->redirect($this->referer());
                         }
 
                     });

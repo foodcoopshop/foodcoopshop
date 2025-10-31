@@ -211,8 +211,7 @@ trait EditOptionsTrait
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogsTable->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
-            $this->redirect($this->getPreparedReferer());
-            return;
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('manufacturer', $manufacturer);

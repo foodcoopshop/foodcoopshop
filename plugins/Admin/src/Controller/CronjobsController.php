@@ -88,8 +88,7 @@ class CronjobsController extends AdminAppController
             $actionLogsTable->customSave('cronjob_changed', $this->identity->getId(), $cronjob->id, 'cronjobs', $message);
             $this->Flash->success($message);
 
-            $this->redirect($this->getPreparedReferer());
-            return;
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('cronjob', $cronjob);

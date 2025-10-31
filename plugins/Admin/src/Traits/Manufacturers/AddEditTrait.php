@@ -170,8 +170,7 @@ trait AddEditTrait
                 $this->renewAuthSession();
             }
 
-            $this->redirect($this->getPreparedReferer());
-            return;
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('manufacturer', $manufacturer);

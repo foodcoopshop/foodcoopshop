@@ -113,8 +113,7 @@ trait EditStatusTrait
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
-        $this->redirect($this->referer());
-        return;
+        return $this->redirect($this->referer());
     }
 
 }

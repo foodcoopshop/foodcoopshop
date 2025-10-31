@@ -56,8 +56,7 @@ trait EditDefaultAttributeTrait
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave('product_default_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
-        $this->redirect($this->referer());
-        return;
+        return $this->redirect($this->referer());
     }
 
 }
