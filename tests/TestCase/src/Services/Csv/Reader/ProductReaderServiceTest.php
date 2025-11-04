@@ -36,7 +36,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['Kurze Beschreibung']);
         $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $records[0]['Beschreibung']);
         $this->assertEquals('1 kg', $records[0]['Einheit']);
-        $this->assertEquals('1', $records[0]['Produktdeklaration']);
+        $this->assertEquals(1, $records[0]['Produktdeklaration']);
         $this->assertEquals('Keine Kühlung', $records[0]['Lagerort']);
         $this->assertEquals('1', $records[0]['Status']);
         $this->assertEquals(23.3, $records[0]['Bruttopreis']);

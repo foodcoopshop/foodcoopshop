@@ -84,11 +84,11 @@ trait ImportTrait
 
         $this->initializeImportTrait();
 
-        $manufacturerId = $this->getManufacturerId();
+        $manufacturerId = (int) $this->getManufacturerId();
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => (int) $manufacturerId,
+                'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
         )->first();
 
