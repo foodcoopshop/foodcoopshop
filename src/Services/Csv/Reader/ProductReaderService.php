@@ -113,7 +113,7 @@ class ProductReaderService extends Reader {
                 $record[__('Deposit')] ?? '',
                 $record[__('Amount')] ?? '',
                 $record[__('Status')] ?? '',
-                $record[__('Product_declaration')] ?? '',
+                (int) ($record[__('Product_declaration')] ?? 0),
                 $record[__('Storage_location')] ?? '',
             );
         }
