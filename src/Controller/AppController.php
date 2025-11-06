@@ -119,7 +119,7 @@ class AppController extends Controller
                 'msg' => $error->getMessage()
             ];
             $this->set(compact('response'));
-            $this->render('/Error/errorjson');
+            return $this->render('/Error/errorjson');
         }
         return $this->response;
     }

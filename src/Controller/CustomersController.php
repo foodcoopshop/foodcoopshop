@@ -102,11 +102,11 @@ class CustomersController extends FrontendController
         return $pdfWriter->writeAttachment();
     }
 
-    public function acceptUpdatedTermsOfUse(): void
+    public function acceptUpdatedTermsOfUse(): ?Response
     {
 
         if (!$this->getRequest()->is('post')) {
-            $this->redirect('/');
+            return $this->redirect('/');
         }
 
         $this->set('title_for_layout', __('Accept_terms_of_use'));
@@ -132,11 +132,13 @@ class CustomersController extends FrontendController
             $customersTable->save($patchedEntity);
             $this->Flash->success(__('Accepting_the_terms_of_use_have_been_saved.'));
             $this->renewAuthSession();
-            $this->redirect($this->referer());
+            return $this->redirect($this->referer());
         }
+
+        return null;
     }
 
-    public function activateEmailAddress(): void
+    public function activateEmailAddress(): ?Response
     {
         $emailActivationCode = h($this->getRequest()->getParam('pass')[0]);
 
@@ -180,11 +182,11 @@ class CustomersController extends FrontendController
             $this->Flash->success(__('Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you.'));
         }
 
-        $this->redirect('/');
+        return $this->redirect('/');
 
     }
 
-    public function newPasswordRequest(): void
+    public function newPasswordRequest(): ?Response
     {
         $this->set([
             'title_for_layout' => __('Request_new_password')
@@ -239,14 +241,15 @@ class CustomersController extends FrontendController
 
                 $this->Flash->success(__('We_successfully_sent_the_activation_link_for_your_new_password_to_you.'));
 
-                $this->redirect('/');
+                return $this->redirect('/');
             }
         }
 
         $this->set('customer', $customer);
+        return null;
     }
 
-    public function activateNewPassword(): void
+    public function activateNewPassword(): ?Response
     {
         $activateNewPasswordCode = h($this->getRequest()->getParam('pass')[0]);
 
@@ -288,10 +291,10 @@ class CustomersController extends FrontendController
 
         }
 
-        $this->redirect('/');
+        return $this->redirect('/');
     }
 
-    public function login(): void
+    public function login(): ?Response
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $title = __('Sign_in');
@@ -335,7 +338,7 @@ class CustomersController extends FrontendController
                 $result = $this->Authentication->getResult();
                 if ($result->isValid()) {
                     $target = $this->Authentication->getLoginRedirect() ?? Configure::read('app.slugHelper')->getHome();
-                    $this->redirect($target);
+                    return $this->redirect($target);
                 } else {
                     $errorMessageSigningInFailed = __('Signing_in_failed_account_inactive_or_password_wrong?');
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
@@ -370,13 +373,12 @@ class CustomersController extends FrontendController
             if (!empty($this->getRequest()->getData()) && ($this->getRequest()->getData('antiSpam') == '' || $this->getRequest()->getData('antiSpam') < 3)) {
                 $this->Flash->error('S-p-a-m-!');
                 Log::write('error', 'potential registration spam attack');
-                $this->redirect('/');
-                return;
+                return $this->redirect('/');
             }
 
             if ($this->identity !== null) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
-                $this->redirect(Configure::read('app.slugHelper')->getLogin());
+                return $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
 
             if (! empty($this->getRequest()->getData())) {
@@ -465,11 +467,12 @@ class CustomersController extends FrontendController
                     // END
 
                     $this->Flash->success(__('Your_registration_was_successful.'));
-                    $this->redirect(Configure::read('app.slugHelper')->getRegistrationSuccessful());
+                    return $this->redirect(Configure::read('app.slugHelper')->getRegistrationSuccessful());
                 }
             }
         }
         $this->set('customer', $customer);
+        return null;
     }
 
     public function registrationSuccessful(): void
@@ -481,7 +484,7 @@ class CustomersController extends FrontendController
         $this->set('blogPosts', $blogPosts);
     }
 
-    public function logout(): void
+    public function logout(): Response
     {
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));
@@ -491,7 +494,7 @@ class CustomersController extends FrontendController
         if ($this->request->getQuery('redirect')) {
             $redirectUrl = $this->request->getQuery('redirect');
         }
-        $this->redirect($redirectUrl);
+        return $this->redirect($redirectUrl);
 
     }
 }

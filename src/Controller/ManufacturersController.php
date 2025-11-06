@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use App\Services\CatalogService;
 use Cake\Event\EventInterface;
 use App\Controller\Traits\PaginatedProductsTrait;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -73,7 +74,7 @@ class ManufacturersController extends FrontendController
         $this->set('title_for_layout', __('Manufacturer'));
     }
 
-    public function detail(): void
+    public function detail(): ?Response
     {
         $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');
         $this->redirectIfPageIsSetTo1();
@@ -99,7 +100,7 @@ class ManufacturersController extends FrontendController
         $correctSlug = StringComponent::slugify($manufacturer->name);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
+            return $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         }
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
@@ -123,5 +124,7 @@ class ManufacturersController extends FrontendController
 
         $this->set('manufacturer', $manufacturer);
         $this->set('title_for_layout', $manufacturer->name);
+        
+        return null;
     }
 }

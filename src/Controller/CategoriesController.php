@@ -9,6 +9,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use App\Services\CatalogService;
 use Cake\Event\EventInterface;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -39,9 +40,12 @@ class CategoriesController extends FrontendController
         ]);
     }
 
-    public function newProducts(): void
+    public function newProducts(): Response
     {
-        $this->redirectIfPageIsSetTo1();
+        $result = $this->redirectIfPageIsSetTo1();
+        if ($result !== null) {
+            return $result;
+        }
         $page = (int) $this->getRequest()->getQuery('page', 1);
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
@@ -64,12 +68,15 @@ class CategoriesController extends FrontendController
 
         $this->set('title_for_layout', __('New_products'));
 
-        $this->render('detail');
+        return $this->render('detail');
     }
 
-    public function randomProducts(): void
+    public function randomProducts(): ?Response
     {
-        $this->redirectIfPageIsSetTo1();
+        $result = $this->redirectIfPageIsSetTo1();
+        if ($result !== null) {
+            return $result;
+        }
         $page = (int) $this->getRequest()->getQuery('page', 1);
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
@@ -98,12 +105,15 @@ class CategoriesController extends FrontendController
 
         $this->set('title_for_layout', __('Random_products'));
 
-        $this->render('detail');
+        return $this->render('detail');
     }
     
-    public function search(): void
+    public function search(): Response
     {
-        $this->redirectIfPageIsSetTo1();
+        $result = $this->redirectIfPageIsSetTo1();
+        if ($result !== null) {
+            return $result;
+        }
         $page = (int) $this->getRequest()->getQuery('page', 1);
         $keyword = h(trim($this->getRequest()->getQuery('keyword', '')));
 
@@ -133,12 +143,15 @@ class CategoriesController extends FrontendController
 
         $this->set('title_for_layout', __('Search') . ' "' . $keyword . '"');
 
-        $this->render('detail');
+        return $this->render('detail');
     }
 
-    public function detail(): void
+    public function detail(): ?Response
     {
-        $this->redirectIfPageIsSetTo1();
+        $result = $this->redirectIfPageIsSetTo1();
+        if ($result !== null) {
+            return $result;
+        }
         $page = (int) $this->getRequest()->getQuery('page', 1);
         $categoryId = (int) $this->getRequest()->getParam('idAndSlug');
 
@@ -155,7 +168,7 @@ class CategoriesController extends FrontendController
         $correctSlug = StringComponent::slugify($category->name);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
+            return $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
         }
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
@@ -181,5 +194,6 @@ class CategoriesController extends FrontendController
         $this->set('category', $category);
 
         $this->set('title_for_layout', $category->name);
+        return null;
     }
 }
