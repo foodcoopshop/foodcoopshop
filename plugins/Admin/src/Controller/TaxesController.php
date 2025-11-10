@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 use App\Model\Entity\Tax;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use App\Model\Entity\Tax;
 class TaxesController extends AdminAppController
 {
     
-    public function add(): void
+    public function add(): ?Response
     {
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $tax = $taxesTable->newEntity(
@@ -38,11 +39,12 @@ class TaxesController extends AdminAppController
         $this->_processForm($tax, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    public function edit(int $taxId): void
+    public function edit(int $taxId): ?Response
     {
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $tax = $taxesTable->find('all', conditions: [
@@ -53,10 +55,10 @@ class TaxesController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', __d('admin', 'Edit_tax_rate'));
-        $this->_processForm($tax, true);
+        return $this->_processForm($tax, true);
     }
 
-    private function _processForm(Tax $tax, bool $isEditMode): void
+    private function _processForm(Tax $tax, bool $isEditMode): ?Response
     {
 
         $this->setFormReferer();
@@ -64,7 +66,7 @@ class TaxesController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('tax', $tax);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -76,7 +78,7 @@ class TaxesController extends AdminAppController
         if ($tax->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('tax', $tax);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $tax = $taxesTable->save($tax);
 
@@ -94,10 +96,9 @@ class TaxesController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $tax->id_tax);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('tax', $tax);
     }
 
     public function index(): void

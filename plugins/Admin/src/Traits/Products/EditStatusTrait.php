@@ -72,7 +72,7 @@ trait EditStatusTrait
 
     }
 
-    public function editStatus(int $productId, int $previousProductId, int $status): void
+    public function editStatus(int $productId, int $previousProductId, int $status): Response
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeStatus(
@@ -113,7 +113,7 @@ trait EditStatusTrait
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }

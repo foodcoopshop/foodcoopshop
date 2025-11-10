@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Customers;
 
+use Cake\Http\Response;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -20,7 +22,7 @@ namespace Admin\Traits\Customers;
 trait ChangeShowOnlyProductsForNextWeekTrait
 {
 
-    public function changeShowOnlyProductsForNextWeek(): void
+    public function changeShowOnlyProductsForNextWeek(): Response
     {
 
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -37,7 +39,7 @@ trait ChangeShowOnlyProductsForNextWeekTrait
 
         $this->renewAuthSession();
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use Cake\Http\Response;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,7 +25,7 @@ trait DeleteImageTrait
     /**
      * deletes both db entries and physical files (thumbs)
      */
-    public function deleteImage(int $productId): void
+    public function deleteImage(int $productId): ?Response
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -35,7 +37,7 @@ trait DeleteImageTrait
                 'msg' => $message,
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-            return;
+            return null;
         }
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -67,7 +69,7 @@ trait DeleteImageTrait
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }

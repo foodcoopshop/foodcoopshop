@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use Cake\Http\Response;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -20,7 +22,7 @@ namespace Admin\Traits\Products;
 trait AddProductAttributeTrait 
 {
 
-    public function addProductAttribute(int $productId, int $productAttributeId): void
+    public function addProductAttribute(int $productId, int $productAttributeId): Response
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $oldProduct = $productsTable->find('all',
@@ -67,7 +69,7 @@ trait AddProductAttributeTrait
         
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }
