@@ -42,13 +42,10 @@ class BlogPostsController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', __d('admin', 'Add_blog_post'));
-        return $this->_processForm($blogPost, false);
-        if ($result !== null) {
-            return $result;
-        }
+        $this->_processForm($blogPost, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
         return null;
     }
