@@ -5,6 +5,7 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Admin\Traits\ManufacturerIdTrait;
+use Cake\Http\Response;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -25,11 +26,11 @@ class StatisticsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    public function myIndex(): void
+    public function myIndex(): Response
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->index();
-        $this->render('index');
+        return $this->render('index');
     }
 
     public function index(): void

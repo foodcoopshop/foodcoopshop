@@ -8,6 +8,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,7 +35,7 @@ class BlogPostsController extends FrontendController
         ]);
     }
 
-    public function detail(): void
+    public function detail(): ?Response
     {
         $blogPostId = (int) $this->getRequest()->getParam('idAndSlug');
 
@@ -58,7 +59,7 @@ class BlogPostsController extends FrontendController
         $correctSlug = StringComponent::slugify($blogPost->title);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title));
+            return $this->redirect(Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title));
         }
 
         $this->set('blogPost', $blogPost);
@@ -88,6 +89,7 @@ class BlogPostsController extends FrontendController
         $this->set('neighbors', $neighbors);
 
         $this->set('title_for_layout', $blogPost->title);
+        return null;
     }
 
     public function index(): void

@@ -72,11 +72,11 @@ trait ImportTrait
         return $response;
     }
 
-    public function myImport(): void
+    public function myImport(): Response
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->import();
-        $this->render('import');
+        return $this->render('import');
     }
 
     public function import(): void

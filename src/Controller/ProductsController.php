@@ -8,6 +8,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use App\Services\CatalogService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,7 +34,7 @@ class ProductsController extends FrontendController
         ]);
     }
 
-    public function detail(): void
+    public function detail(): ?Response
     {
         $productId = (int) $this->getRequest()->getParam('idAndSlug');
 
@@ -50,9 +51,10 @@ class ProductsController extends FrontendController
         $correctSlug = StringComponent::slugify($product[0]->name);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]->name));
+            return $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]->name));
         }
 
         $this->set('title_for_layout', $product[0]->name);
+        return null;
     }
 }

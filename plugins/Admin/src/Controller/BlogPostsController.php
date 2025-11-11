@@ -9,6 +9,7 @@ use Admin\Traits\UploadTrait;
 use App\Services\SanitizeService;
 use Cake\I18n\Date;
 use App\Model\Entity\BlogPost;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +30,7 @@ class BlogPostsController extends AdminAppController
 
     use UploadTrait;
 
-    public function add(): void
+    public function add(): ?Response
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $blogPostsTable->newEntity(
@@ -44,11 +45,12 @@ class BlogPostsController extends AdminAppController
         $this->_processForm($blogPost, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    public function edit(int $blogPostId): void
+    public function edit(int $blogPostId): ?Response
     {
 
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
@@ -71,10 +73,10 @@ class BlogPostsController extends AdminAppController
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Edit_blog_post'));
-        $this->_processForm($blogPost, true);
+        return $this->_processForm($blogPost, true);
     }
 
-    private function _processForm(BlogPost $blogPost, bool $isEditMode): void
+    private function _processForm(BlogPost $blogPost, bool $isEditMode): ?Response
     {
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $this->setFormReferer();
@@ -90,7 +92,7 @@ class BlogPostsController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('blogPost', $blogPost);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -116,7 +118,7 @@ class BlogPostsController extends AdminAppController
         if ($blogPost->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('blogPost', $blogPost);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $blogPost = $blogPostsTable->save($blogPost);
 
@@ -149,10 +151,9 @@ class BlogPostsController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $blogPost->id_blog_post);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('blogPost', $blogPost);
     }
 
     public function index(): void

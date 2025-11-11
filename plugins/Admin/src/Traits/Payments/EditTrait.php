@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\I18n\DateTime;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Mailer\AppMailer;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +27,7 @@ use App\Mailer\AppMailer;
 trait EditTrait
 {
 
-    public function edit(int $paymentId): void
+    public function edit(int $paymentId): ?Response
     {
 
         $this->set('title_for_layout', __d('admin', 'Check_credit_upload'));
@@ -53,7 +54,7 @@ trait EditTrait
 
         if (empty($this->getRequest()->getData())) {
             $this->set('payment', $payment);
-            return;
+            return null;
         }
 
         $payment = $paymentsTable->patchEntity(
@@ -110,10 +111,11 @@ trait EditTrait
 
             $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('payment', $payment);
+        return null;
     }
 
 }

@@ -4,11 +4,9 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Model\Entity\StorageLocation;
-use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Admin\Traits\UploadTrait;
 use App\Services\SanitizeService;
-use App\Model\Entity\Slider;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,9 +24,7 @@ use App\Model\Entity\Slider;
 class StorageLocationsController extends AdminAppController
 {
 
-    use UploadTrait;
-
-    public function add(): void
+    public function add(): ?Response
     {
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $storageLocation = $storageLocationsTable->newEntity(
@@ -41,11 +37,12 @@ class StorageLocationsController extends AdminAppController
         $this->_processForm($storageLocation, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    public function edit(int $storageLocationID): void
+    public function edit(int $storageLocationID): ?Response
     {
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $storageLocation = $storageLocationsTable->find('all', conditions: [
@@ -63,10 +60,10 @@ class StorageLocationsController extends AdminAppController
             'active IN' => [APP_ON, APP_OFF],
         ])->count();
 
-        $this->_processForm($storageLocation, true, productCount: $productCount);
+        return $this->_processForm($storageLocation, true, productCount: $productCount);
     }
 
-    private function _processForm(StorageLocation $storageLocation, bool $isEditMode, int $productCount = 0): void
+    private function _processForm(StorageLocation $storageLocation, bool $isEditMode, int $productCount = 0): ?Response
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -74,7 +71,7 @@ class StorageLocationsController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('storageLocation', $storageLocation);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -86,7 +83,7 @@ class StorageLocationsController extends AdminAppController
         if ($storageLocation->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('storageLocation', $storageLocation);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $storageLocation = $storageLocationsTable->save($storageLocation);
 
@@ -110,10 +107,9 @@ class StorageLocationsController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $storageLocation->id);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('storageLocation', $storageLocation);
     }
 
     public function index(): void

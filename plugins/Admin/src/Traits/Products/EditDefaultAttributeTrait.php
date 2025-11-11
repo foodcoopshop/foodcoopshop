@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Controller\Component\StringComponent;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use App\Controller\Component\StringComponent;
 trait EditDefaultAttributeTrait 
 {
 
-    public function editDefaultAttribute(int $productId, int $productAttributeId): void
+    public function editDefaultAttribute(int $productId, int $productAttributeId): Response
     {
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -56,7 +57,7 @@ trait EditDefaultAttributeTrait
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave('product_default_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }

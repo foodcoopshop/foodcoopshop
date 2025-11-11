@@ -8,6 +8,7 @@ use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
 use App\Model\Entity\Category;
 use App\Services\SanitizeService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +29,7 @@ class CategoriesController extends AdminAppController
 
     use UploadTrait;
     
-    public function add(): void
+    public function add(): ?Response
     {
         $categoriesTable = $this->getTableLocator()->get('Categories');
         $category = $categoriesTable->newEntity(
@@ -42,8 +43,9 @@ class CategoriesController extends AdminAppController
         $this->_processForm($category, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
     public function edit(int $categoryId): void
@@ -70,7 +72,7 @@ class CategoriesController extends AdminAppController
         $this->_processForm($category, true);
     }
 
-    private function _processForm(Category $category, bool $isEditMode): void
+    private function _processForm(Category $category, bool $isEditMode): ?Response
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -81,7 +83,7 @@ class CategoriesController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('category', $category);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -96,7 +98,7 @@ class CategoriesController extends AdminAppController
         if ($category->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('category', $category);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $category = $categoriesTable->save($category);
 
@@ -128,10 +130,9 @@ class CategoriesController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $category->id_category);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('category', $category);
     }
 
     public function index(): void

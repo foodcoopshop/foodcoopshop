@@ -97,12 +97,11 @@ class CartsController extends FrontendController
         die($pdfWriter->writeInline());
     }
 
-    public function finish(): void
+    public function finish(): Response
     {
 
         if (!$this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
-            $this->redirect('/');
-            return;
+            return $this->redirect('/');
         }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
@@ -114,20 +113,18 @@ class CartsController extends FrontendController
 
         if ($this->identity->isCartEmpty()) {
             $this->Flash->error(__('Your_cart_was_empty.'));
-            $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
-            return;
+            return $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
         }
 
         $cart = $this->cartService->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
-            return;
+            return $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
         }
 
         $this->detail();
-        $this->render('detail');
+        return $this->render('detail');
     }
 
     public function orderSuccessful(int $cartId): void
@@ -240,12 +237,12 @@ class CartsController extends FrontendController
         return null;
     }
 
-    public function emptyCart(): void
+    public function emptyCart(): Response
     {
         $this->doEmptyCart();
         $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
         $this->Flash->success($message);
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
     private function doEmptyCart(): void
@@ -256,11 +253,11 @@ class CartsController extends FrontendController
         $this->identity->setCart($this->identity->getCart());
     }
 
-    public function addOrderToCart(): void
+    public function addOrderToCart(): Response
     {
         $deliveryDate = h($this->getRequest()->getQuery('deliveryDate'));
         $this->doAddOrderToCart($deliveryDate);
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
     private function doAddOrderToCart(string $deliveryDate): void
@@ -311,7 +308,7 @@ class CartsController extends FrontendController
 
     }
 
-    public function addLastOrderToCart(): void
+    public function addLastOrderToCart(): Response
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->getLastOrderDetailsForDropdown($this->identity->getId());
@@ -323,7 +320,7 @@ class CartsController extends FrontendController
             $lastOrderDate = key($orderDetails);
             $this->doAddOrderToCart($lastOrderDate);
         }
-        $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
+        return $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
     }
 
     public function ajaxAdd(): ?Response

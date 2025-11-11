@@ -73,7 +73,7 @@ class SelfServiceController extends FrontendController
         return $this->redirect(Configure::read('app.slugHelper')->getSelfService());
     }
 
-    public function index(): void
+    public function index(): ?Response
     {
         $page = (int) $this->getRequest()->getQuery('page', 1);
 
@@ -181,8 +181,7 @@ class SelfServiceController extends FrontendController
                     ]) . $imgString);
                     $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
                 }
-                $this->redirect($redirectUrl);
-                return;
+                return $this->redirect($redirectUrl);
             }
         }
 
@@ -195,8 +194,7 @@ class SelfServiceController extends FrontendController
 
             if ($this->identity->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));
-                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
-                return;
+                return $this->redirect(Configure::read('app.slugHelper')->getSelfService());
             }
 
             $cart = $this->cartService->finish();
@@ -227,12 +225,13 @@ class SelfServiceController extends FrontendController
                 $this->resetOriginalLoggedCustomer();
                 $this->destroyOrderCustomer();
 
-                $this->redirect($redirectUrl);
-                return;
+                return $this->redirect($redirectUrl);
 
             }
 
         }
+
+        return null;
 
     }
 

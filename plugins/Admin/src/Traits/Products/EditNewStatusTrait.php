@@ -6,6 +6,7 @@ namespace Admin\Traits\Products;
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
 use Cake\I18n\Date;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use Cake\I18n\Date;
 trait EditNewStatusTrait
 {
 
-    public function editNewStatus(int $productId, int $status): void
+    public function editNewStatus(int $productId, int $status): Response
     {
 
         if (! in_array($status, [
@@ -69,7 +70,7 @@ trait EditNewStatusTrait
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }

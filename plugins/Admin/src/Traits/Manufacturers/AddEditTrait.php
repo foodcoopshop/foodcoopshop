@@ -8,6 +8,7 @@ use App\Controller\Component\StringComponent;
 use App\Model\Entity\Manufacturer;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Core\Configure;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,17 +27,18 @@ use Cake\Core\Configure;
 trait AddEditTrait
 {
 
-    public function profile(): void
+    public function profile(): ?Response
     {
         $this->edit($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
         $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    public function add(): void
+    public function add(): ?Response
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->newEntity(
@@ -51,11 +53,12 @@ trait AddEditTrait
         $this->_processForm($manufacturer, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    public function edit(int $manufacturerId): void
+    public function edit(int $manufacturerId): ?Response
     {
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/manufacturers/" . $manufacturerId,
@@ -75,16 +78,16 @@ trait AddEditTrait
             throw new NotFoundException;
         }
         $this->set('title_for_layout', __d('admin', 'Edit_manufacturer'));
-        $this->_processForm($manufacturer, true);
+        return $this->_processForm($manufacturer, true);
     }
 
-    private function _processForm(Manufacturer $manufacturer, bool $isEditMode): void
+    private function _processForm(Manufacturer $manufacturer, bool $isEditMode): ?Response
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
         if (empty($this->getRequest()->getData())) {
             $this->set('manufacturer', $manufacturer);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -115,7 +118,7 @@ trait AddEditTrait
         if ($manufacturer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('manufacturer', $manufacturer);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $manufacturer = $manufacturersTable->save($manufacturer);
 
@@ -170,12 +173,10 @@ trait AddEditTrait
                 $this->renewAuthSession();
             }
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('manufacturer', $manufacturer);
     }
-
 
     private function saveUploadedGeneralTermsAndConditions(int $manufacturerId, string $filename): void
     {
