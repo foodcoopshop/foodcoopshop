@@ -118,8 +118,7 @@ class BlogPostsController extends AdminAppController
         if ($blogPost->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('blogPost', $blogPost);
-            $this->render('edit');
-            return null;
+            return $this->render('edit');
         } else {
             $blogPost = $blogPostsTable->save($blogPost);
 
@@ -155,8 +154,6 @@ class BlogPostsController extends AdminAppController
             return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('blogPost', $blogPost);
-        return null;
     }
 
     public function index(): void

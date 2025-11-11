@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use App\Model\Entity\Attribute;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use App\Services\SanitizeService;
 class AttributesController extends AdminAppController
 {
 
-    public function add(): void
+    public function add(): ?Response
     {
         $attributesTable = $this->getTableLocator()->get('Attributes');
         $attribute = $attributesTable->newEntity(
@@ -35,8 +36,9 @@ class AttributesController extends AdminAppController
         $this->_processForm($attribute, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
     public function edit(int $attributeId): void
@@ -58,14 +60,14 @@ class AttributesController extends AdminAppController
         $this->_processForm($attribute, true);
     }
 
-    private function _processForm(Attribute $attribute, bool $isEditMode): void
+    private function _processForm(Attribute $attribute, bool $isEditMode): ?Response
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
         if (empty($this->getRequest()->getData())) {
             $this->set('attribute', $attribute);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -77,7 +79,7 @@ class AttributesController extends AdminAppController
         if ($attribute->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('attribute', $attribute);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $attribute = $attributesTable->save($attribute);
 
@@ -101,10 +103,9 @@ class AttributesController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $attribute->id_attribute);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('attribute', $attribute);
     }
 
     public function index(): void
