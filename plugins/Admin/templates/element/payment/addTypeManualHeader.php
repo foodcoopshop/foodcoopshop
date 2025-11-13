@@ -58,6 +58,14 @@ echo $this->Form->hidden('Payments.customerId', [
 ]);
 echo '<br />';
 
+if ($identity->isSuperadmin() && in_array($paymentType, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
+    echo $this->Form->control('Payments.approval_comment', [
+        'placeholder' => __d('admin', 'Optional'),
+        'type' => 'textarea',
+        'label' => __d('admin', 'Comment'),
+    ]);
+}
+
 if ($paymentType == Payment::TYPE_PRODUCT && $identity->isSuperadmin()) {
     echo '<p style="margin-top:10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
     $i = 0;

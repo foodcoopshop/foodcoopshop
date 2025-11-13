@@ -2161,6 +2161,9 @@ msgstr "Neue Zahlung eintragen"
 msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
 msgstr "Bitte trage hier den Betrag ein, den du soeben auf unser Konto überwiesen hast."
 
+msgid "Optional"
+msgstr "Optional"
+
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast."
 
