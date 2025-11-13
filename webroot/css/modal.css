@@ -177,6 +177,14 @@ body.iframe_self_service_order {
 .modal.add-payment-form .input.number {
     text-align: center;
 }
+.modal.add-payment-form .input.textarea {
+    margin-top: -10px;
+}
+.modal.add-payment-form .input.textarea textarea {
+    width: 100%;
+    padding: 5px;
+    margin-top: -5px;
+}
 .modal.add-payment-form .radio-wrapper {
     width: 100%;
     float: left;

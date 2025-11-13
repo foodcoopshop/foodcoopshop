@@ -72,7 +72,7 @@ if (count($payments) == 0) {
 
         echo '<td>';
 
-        if ($payment['type'] == Payment::TYPE_PRODUCT) {
+        if (in_array($payment['type'], [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
             echo match($payment['approval']) {
                 APP_DEL => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
                 APP_OFF => '',
