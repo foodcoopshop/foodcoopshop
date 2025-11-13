@@ -6,6 +6,7 @@ namespace Admin\Traits\Customers;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait ChangeStatusTrait
 {
 
-    public function changeStatus(int $customerId, int $status, bool $sendEmail): void
+    public function changeStatus(int $customerId, int $status, bool $sendEmail): Response
     {
         if (! in_array($status, [
             APP_OFF,
@@ -79,7 +80,7 @@ trait ChangeStatusTrait
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $customerId, 'customer', $message);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
     }
 
 }

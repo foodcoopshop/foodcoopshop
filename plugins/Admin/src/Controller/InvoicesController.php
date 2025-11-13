@@ -88,7 +88,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function generate(): void
+    public function generate(): Response
     {
 
         $customerId = (int) h($this->getRequest()->getQuery('customerId'));
@@ -107,8 +107,7 @@ class InvoicesController extends AdminAppController
         $invoiceData = $invoicesTable->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         if (!$invoiceData->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
-            $this->redirect($this->referer());
-            return;
+            return $this->redirect($this->referer());
         }
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
@@ -183,11 +182,11 @@ class InvoicesController extends AdminAppController
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave('invoice_added', $this->identity->getId(), (int) $invoiceId, 'invoices', $messageString);
 
-        $this->redirect($this->referer());
+        return $this->redirect($this->referer());
 
     }
 
-    public function preview(): mixed
+    public function preview(): Response
     {
 
         $customerId = (int) h($this->getRequest()->getQuery('customerId'));
@@ -218,8 +217,7 @@ class InvoicesController extends AdminAppController
             $helloCashService = new HelloCashService();
             $responseObject = $helloCashService->generateInvoice($invoiceData, $currentDay, $paidInCash, true);
             $invoiceId = $responseObject->invoice_id;
-            $this->redirect(Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId));
-            return null;
+            return $this->redirect(Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId));
 
         } else {
 
@@ -403,7 +401,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function myInvoices(): void
+    public function myInvoices(): Response
     {
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
@@ -422,7 +420,7 @@ class InvoicesController extends AdminAppController
         $this->processIndex($dateFrom, $dateTo, [$customerId]);
         $this->set('isOverviewMode', false);
         $this->set('title_for_layout', __d('admin', 'My_invoices'));
-        $this->render('index');
+        return $this->render('index');
     }
 
     public function index(): void

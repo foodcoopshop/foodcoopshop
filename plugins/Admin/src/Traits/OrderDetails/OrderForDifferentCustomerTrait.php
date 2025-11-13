@@ -5,6 +5,7 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,16 +43,16 @@ trait OrderForDifferentCustomerTrait
         }
     }
 
-    public function initInstantOrder(int $customerId): void
+    public function initInstantOrder(int $customerId): Response
     {
         $this->initOrderForDifferentCustomer($customerId);
-        $this->redirect('/');
+        return $this->redirect('/');
     }
 
-    public function initSelfServiceOrder(int $customerId): void
+    public function initSelfServiceOrder(int $customerId): Response
     {
         $this->initOrderForDifferentCustomer($customerId);
-        $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+        return $this->redirect(Configure::read('app.slugHelper')->getSelfService());
     }
 
     public function iframeInstantOrder(): void

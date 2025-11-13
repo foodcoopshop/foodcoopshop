@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
 use App\Services\SanitizeService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -40,7 +41,7 @@ class CronjobsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Cronjobs'));
     }
 
-    public function edit(int $cronjobId): void
+    public function edit(int $cronjobId): ?Response
     {
         $cronjobsTable = $this->getTableLocator()->get('Cronjobs');
         $cronjob = $cronjobsTable->find('available', conditions: [
@@ -59,7 +60,7 @@ class CronjobsController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('cronjob', $cronjob);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -88,10 +89,11 @@ class CronjobsController extends AdminAppController
             $actionLogsTable->customSave('cronjob_changed', $this->identity->getId(), $cronjob->id, 'cronjobs', $message);
             $this->Flash->success($message);
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('cronjob', $cronjob);
+        return null;
 
     }
 

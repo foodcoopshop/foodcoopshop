@@ -24,7 +24,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
 
     public function testReadCsv(): void
     {
-        $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
+        $this->reader = ProductReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
         $this->reader->configureType();
         $records = $this->reader->getPreparedRecords();
 
@@ -36,7 +36,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['Kurze Beschreibung']);
         $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $records[0]['Beschreibung']);
         $this->assertEquals('1 kg', $records[0]['Einheit']);
-        $this->assertEquals('1', $records[0]['Produktdeklaration']);
+        $this->assertEquals(1, $records[0]['Produktdeklaration']);
         $this->assertEquals('Keine Kühlung', $records[0]['Lagerort']);
         $this->assertEquals('1', $records[0]['Status']);
         $this->assertEquals(23.3, $records[0]['Bruttopreis']);
@@ -48,7 +48,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
     public function testImportWithErrors(): void
     {
 
-        $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
+        $this->reader = ProductReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
@@ -80,7 +80,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
     public function testImportSuccessful(): void
     {
 
-        $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
+        $this->reader = ProductReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);

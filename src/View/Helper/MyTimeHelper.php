@@ -23,6 +23,14 @@ use Cake\I18n\DateTime;
 class MyTimeHelper extends TimeHelper
 {
 
+    const SUNDAY = 0;
+    const MONDAY = 1;
+    const TUESDAY = 2;
+    const WEDNESDAY = 3;
+    const THURSDAY = 4;
+    const FRIDAY = 5;
+    const SATURDAY = 6;
+
     public function isDifferenceGreaterThanTwoYears(string $startDate, string $endDate): bool
     {
         $startDateTimestamp = strtotime($startDate);
@@ -349,8 +357,12 @@ class MyTimeHelper extends TimeHelper
 
     public function getLastMonthNameAndYear(): string
     {
-        $previousMonthModifier = strtotime('first day of previous month');
-        $lastMonthAndYearString = $this->getMonthName((int) date('n', $previousMonthModifier)) . ' ' . date('Y', $previousMonthModifier);
+        return $this->getMonthNameAndYear(strtotime('first day of previous month'));
+    }
+
+    public function getMonthNameAndYear(int $timestamp): string
+    {
+        $lastMonthAndYearString = $this->getMonthName((int) date('n', $timestamp)) . ' ' . date('Y', $timestamp);
         return $lastMonthAndYearString;
     }
 

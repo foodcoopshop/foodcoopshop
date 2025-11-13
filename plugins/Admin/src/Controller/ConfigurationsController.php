@@ -11,6 +11,7 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use App\Services\SanitizeService;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,7 +35,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion());
     }
 
-    public function edit(string $name): void
+    public function edit(string $name): ?Response
     {
 
         $this->viewBuilder()->addHelper('Configuration');
@@ -61,7 +62,7 @@ class ConfigurationsController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('configuration', $configuration);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -101,10 +102,11 @@ class ConfigurationsController extends AdminAppController
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
             $actionLogsTable->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('configuration', $configuration);
+        return null;
     }
 
     public function previewEmail(string $configurationName): void

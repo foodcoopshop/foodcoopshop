@@ -116,6 +116,8 @@ foodcoopshop.ModalPaymentAdd = {
         var dateAddDomElement = $(modalSelector + ' input[name="Payments[date_add]"]');
         var customerIdDomElement = $(modalSelector + ' [name="Payments[customerId]"]');
         var manufacturerIdDomElement = $(modalSelector + ' input[name="Payments[manufacturerId]"]');
+        const commentFieldSelector = $(modalSelector + ' textarea[name="Payments[approval_comment]"]');
+        const approvalComment = commentFieldSelector.length > 0 ? commentFieldSelector.val().trim() : '';
 
         var text = '';
         if ($(modalSelector + ' input[name="Payments[text]"]').length > 0) {
@@ -176,8 +178,10 @@ foodcoopshop.ModalPaymentAdd = {
         let postData = {
             amount: amount,
             type: type,
+            approval_comment: approvalComment,
             applyAmountTresholdCheck: submitButton.hasClass('confirm-submit') ? 0 : 1,
         };
+        
         if (customerId > 0) {
             postUrl += '/admin/payments/addCustomerPayment/' + customerId;
         }

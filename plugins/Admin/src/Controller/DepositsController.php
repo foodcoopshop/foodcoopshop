@@ -7,6 +7,7 @@ use Admin\Traits\ManufacturerIdTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use App\Model\Entity\Payment;
+use Cake\Http\Response;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -177,18 +178,18 @@ class DepositsController extends AdminAppController
 
     }
 
-    public function myIndex(): void
+    public function myIndex(): Response
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->index();
-        $this->render('index');
+        return $this->render('index');
     }
 
-    public function myDetail(string $monthAndYear): void
+    public function myDetail(string $monthAndYear): Response
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->detail($monthAndYear);
-        $this->render('detail');
+        return $this->render('detail');
     }
 
     public function index(): void

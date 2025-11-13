@@ -35,25 +35,31 @@ class ProductCsvWriterService extends BaseCsvWriterService
     /**
      * @param list<int|string> $productIds
      */
-    public function setProductIds(array $productIds): void
+    public function setProductIds(array $productIds, bool $onlyStockProducts): void
     {
         $productsTable =TableRegistry::getTableLocator()->get('Products');
-        $stockProductIds = $productsTable->find()
-        ->where([
+
+        $conditions = [
             'Products.id_product IN' => $productIds,
-            'Products.is_stock_product' => APP_ON,
-            'Manufacturers.stock_management_enabled' => APP_ON,
-        ])
+        ];
+        if ($onlyStockProducts) {
+            $conditions += [
+                'Products.is_stock_product' => APP_ON,
+                'Manufacturers.stock_management_enabled' => APP_ON,
+            ];
+        }
+        $productIds = $productsTable->find()
+        ->where($conditions)
         ->contain([
             'Manufacturers',
         ])
         ->all()->extract('id_product')->toArray();
 
-        if (empty($stockProductIds)) {
-            throw new InvalidParameterException('no stock products found');
+        if (empty($productIds)) {
+            throw new InvalidParameterException('no products found');
         }
 
-        $this->productIds = $stockProductIds;
+        $this->productIds = $productIds;
     }
 
     /**
@@ -69,8 +75,9 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Amount'),
             __('Minimal_stock_amount'),
             __('Unit'),
-            Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ?  __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross') ,
+            Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ?  __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross'),
             __('Price_per'),
+            __('Selling price per unit'),
             __('Barcode'),
             __('Stock_value'),
         ];
@@ -124,6 +131,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $unit,
                 Configure::read('app.numberHelper')->formatAsDecimal($price, 6),
                 $this->getUnitForPrice($product),
+                Configure::read('app.numberHelper')->formatAsDecimal($this->getSellingPricePerUnit($product), 2),
                 !empty($product->barcode_product) ? $product->barcode_product->barcode : null,
                 Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
             ];
@@ -140,10 +148,19 @@ class ProductCsvWriterService extends BaseCsvWriterService
             '',
             '',
             '',
+            '',
             Configure::read('app.numberHelper')->formatAsDecimal($stockValueSum),
         ];
 
         return $records;
+    }
+
+    private function getSellingPricePerUnit(stdClass $product): float
+    {
+        if ($product->unit && $product->unit->price_per_unit_enabled) {
+            return Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount);
+        }
+        return $product->gross_price;
     }
 
     private function getFromPattern(string $pattern, string $subject): string

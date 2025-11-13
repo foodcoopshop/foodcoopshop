@@ -325,7 +325,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-04',
             'delivery_rhythm_type' => 'week',
-            'delivery_rhythm_send_order_list_weekday' => 3,
+            'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::WEDNESDAY,
             'delivery_rhythm_order_possible_until' => null,
         ];
         $this->assertGetLastOrderDay($product, '2020-12-01');
@@ -336,7 +336,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-04',
             'delivery_rhythm_type' => 'week',
-            'delivery_rhythm_send_order_list_weekday' => 2,
+            'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::TUESDAY,
             'delivery_rhythm_order_possible_until' => null,
         ];
         $this->assertGetLastOrderDay($product, '2020-11-30');
@@ -347,7 +347,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-25',
             'delivery_rhythm_type' => 'month',
-            'delivery_rhythm_send_order_list_weekday' => 3,
+            'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::WEDNESDAY,
             'delivery_rhythm_order_possible_until' => null,
         ];
         $this->assertGetLastOrderDay($product, '2020-12-22');
@@ -358,7 +358,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-25',
             'delivery_rhythm_type' => 'month',
-            'delivery_rhythm_send_order_list_weekday' => 1,
+            'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
             'delivery_rhythm_order_possible_until' => null,
         ];
         $this->assertGetLastOrderDay($product, '2020-12-20');
@@ -369,7 +369,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-25',
             'delivery_rhythm_type' => 'individual',
-            'delivery_rhythm_send_order_list_weekday' => 3,
+            'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::WEDNESDAY,
             'delivery_rhythm_order_possible_until' => new Date('2020-12-12'),
         ];
         $this->assertGetLastOrderDay($product, '2020-12-12');
@@ -494,7 +494,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 5,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::FRIDAY,
                 ]
             ),
             'currentDay' => '2022-08-26',
@@ -515,7 +515,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 2,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::TUESDAY,
                 ]
             ),
             'currentDay' => '2017-08-08',
@@ -536,7 +536,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                 ]
             ),
             'currentDay' => '2020-04-05',
@@ -559,7 +559,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                         'stock_management_enabled' => '0',
                     ],
                     'delivery_rhythm_first_delivery_day' => new Date('2021-02-05'),
-                    'delivery_rhythm_send_order_list_weekday' => 0,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::SUNDAY,
                 ]
             ),
             'currentDay' => '2021-08-01',
@@ -583,7 +583,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                         'stock_management_enabled' => '0',
                     ],
                     'delivery_rhythm_first_delivery_day' => new Date('2021-02-05'),
-                    'delivery_rhythm_send_order_list_weekday' => 0,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::SUNDAY,
                 ]
             ),
             'currentDay' => '2021-08-01',
@@ -604,7 +604,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                 ]
             ),
             'currentDay' => '2022-02-01',
@@ -626,7 +626,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                 ]
             ),
             'currentDay' => '2022-02-01',
@@ -647,7 +647,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                     'delivery_rhythm_first_delivery_day' => new Date('2019-03-01'),
                 ]
             ),
@@ -670,7 +670,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                     'delivery_rhythm_first_delivery_day' => new Date('2019-03-01'),
                 ]
             ),
@@ -692,7 +692,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 4,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::THURSDAY,
                     'delivery_rhythm_first_delivery_day' => new Date('2019-03-01'),
                 ]
             ),
@@ -714,7 +714,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                     'delivery_rhythm_first_delivery_day' => new Date('2020-10-02'),
                 ]
             ),
@@ -867,7 +867,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::MONDAY,
                     'delivery_rhythm_first_delivery_day' => new Date('2023-11-17'),
                 ]
             ),

@@ -186,6 +186,9 @@ return [
         // additionalTextForInvoice - for invoices to customers (not available if hello cash is used!)
         'additionalTextForInvoice' => '',
 
+        // eg '20-12' for 20th december (format: 'mm-dd'), leave empty to disable
+        'extraBillingDayForManufacturers' => '',
+
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,

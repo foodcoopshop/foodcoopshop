@@ -6,6 +6,7 @@ namespace Admin\Traits\Customers;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,25 +25,27 @@ use App\Services\SanitizeService;
 trait EditTrait
 {
 
-    public function profile(): void
+    public function profile(): ?Response
     {
         $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
         $this->_processForm($this->identity->getId());
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    public function edit(int $customerId): void
+    public function edit(int $customerId): ?Response
     {
         $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         $this->_processForm($customerId);
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
-    private function _processForm(int $customerId): void
+    private function _processForm(int $customerId): ?Response
     {
 
         $isOwnProfile = $this->identity->getId() == $customerId;
@@ -65,7 +68,7 @@ trait EditTrait
 
         if (empty($this->getRequest()->getData())) {
             $this->set('customer', $customer);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -93,7 +96,7 @@ trait EditTrait
         if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $customersTable->save(
                 $customer,
@@ -127,10 +130,9 @@ trait EditTrait
                 $this->renewAuthSession();
             }
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('customer', $customer);
     }
 
 }

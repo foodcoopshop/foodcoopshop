@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Customers;
 
 use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
 trait ChangePasswordTrait
 {
 
-    public function changePassword(): null
+    public function changePassword(): ?Response
     {
         $this->set('title_for_layout', __d('admin', 'Change_password'));
 
@@ -47,6 +48,7 @@ trait ChangePasswordTrait
         if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
+            return null;
         } else {
             $ph = new DefaultPasswordHasher();
             $customersTable->save(
@@ -73,11 +75,9 @@ trait ChangePasswordTrait
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
-            $this->redirect($this->referer());
+            return $this->redirect($this->referer());
         }
 
-        $this->set('customer', $customer);
-        return null;
     }
 
 }

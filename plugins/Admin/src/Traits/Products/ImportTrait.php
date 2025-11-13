@@ -57,7 +57,7 @@ trait ImportTrait
 
         $this->initializeImportTrait();
 
-        $writer = Writer::createFromString();
+        $writer = Writer::fromString();
         $columns = array_keys($this->columnsFieldMap);
         $writer->insertOne($columns);
 
@@ -72,11 +72,11 @@ trait ImportTrait
         return $response;
     }
 
-    public function myImport(): void
+    public function myImport(): Response
     {
         $this->manufacturerId = $this->identity->getManufacturerId();
         $this->import();
-        $this->render('import');
+        return $this->render('import');
     }
 
     public function import(): void
@@ -84,11 +84,11 @@ trait ImportTrait
 
         $this->initializeImportTrait();
 
-        $manufacturerId = $this->getManufacturerId();
+        $manufacturerId = (int) $this->getManufacturerId();
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
             conditions: [
-                'Manufacturers.id_manufacturer' => (int) $manufacturerId,
+                'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
         )->first();
 
@@ -108,7 +108,7 @@ trait ImportTrait
             }
 
             $content = $upload->getStream()->getContents();
-            $reader = ProductReaderService::createFromString($content);
+            $reader = ProductReaderService::fromString($content);
             $reader->configureType();
 
             $productEntities = $reader->import($manufacturerId);

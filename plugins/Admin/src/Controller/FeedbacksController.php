@@ -7,6 +7,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Services\SanitizeService;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Customer;
+use Cake\Http\Response;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -53,18 +54,19 @@ class FeedbacksController extends AdminAppController
         return $customer;
     }
 
-    public function myFeedback(): void
+    public function myFeedback(): ?Response
     {
         $this->customerId = $this->identity->getId();
         $this->set('title_for_layout', __d('admin', 'My_feedback'));
         $this->isOwnForm = true;
         $this->_processForm();
         if (empty($this->getRequest()->getData())) {
-            $this->render('form');
+            return $this->render('form');
         }
+        return null;
     }
 
-    public function form(int $customerId): void
+    public function form(int $customerId): ?Response
     {
         $this->customerId = $customerId;
         $customer = $this->getCustomer();
@@ -81,11 +83,12 @@ class FeedbacksController extends AdminAppController
         $this->isOwnForm = false;
         $this->_processForm();
         if (empty($this->getRequest()->getData())) {
-            $this->render('form');
+            return $this->render('form');
         }
+        return null;
     }
 
-    public function _processForm(): void
+    public function _processForm(): ?Response
     {
 
         $customerId = $this->getCustomerId();
@@ -127,7 +130,7 @@ class FeedbacksController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('feedback', $feedback);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -154,7 +157,7 @@ class FeedbacksController extends AdminAppController
         if ($feedback->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('feedback', $feedback);
-            $this->render('form');
+            return $this->render('form');
         } else {
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
@@ -179,8 +182,7 @@ class FeedbacksController extends AdminAppController
                 }
                 $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                 $this->Flash->success($message);
-                $this->redirect($this->getPreparedReferer());
-                return;
+                return $this->redirect($this->getPreparedReferer());
             }
 
             $oldFeedback = clone $feedback;
@@ -238,10 +240,8 @@ class FeedbacksController extends AdminAppController
             }
 
             $this->Flash->success($message);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
-
-        $this->set('feedback', $feedback);
 
     }
 

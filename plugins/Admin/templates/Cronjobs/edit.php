@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Model\Entity\Cronjob;
 
 $this->element('addScript', [ 'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
@@ -85,6 +86,14 @@ echo $this->Form->control('Cronjobs.active', [
     'label' => __d('admin', 'Active'),
     'type' => 'checkbox',
 ]);
+
+if ($cronjob->id == Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID && Configure::read('app.extraBillingDayForManufacturers') != '') {
+    $date = DateTime::createFromFormat('m-d', Configure::read('app.extraBillingDayForManufacturers'));
+    echo '<h2 class="info" style="margin-bottom: 10px;">';
+        echo __d('admin', 'Extra billing') . ': ';
+        echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
+    echo '</h2>';
+}
 
 
 echo $this->Form->end();

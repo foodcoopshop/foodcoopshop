@@ -255,13 +255,22 @@ class CronjobsTable extends AppTable
 
         foreach($cronjobs as $cronjob) {
 
-            if (!$this->executeCronjobRespectingTimeInterval($cronjob)) {
-                continue;
-            }
-
             $cronjobRunDayObject = new DateTime($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
+
+            $executeCronjobOnExtraDay = false;
+            if (Configure::read('app.extraBillingDayForManufacturers') != ''
+                && $cronjob->id == Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID
+                && $cronjobRunDayObject->format('m-d') == Configure::read('app.extraBillingDayForManufacturers')
+                && (int)$cronjobRunDayObject->format('H') > 8
+                ) {
+                $executeCronjobOnExtraDay = true;
+            }
+
+            if (!$this->executeCronjobRespectingTimeInterval($cronjob) && !$executeCronjobOnExtraDay) {
+                continue;
+            }
 
             $cronjobNotBeforeTimeWithCronjobRunDay = DateTime::createFromArray([
                 'year' => $cronjobRunDayObject->year,

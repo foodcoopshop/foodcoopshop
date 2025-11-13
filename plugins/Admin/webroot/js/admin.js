@@ -513,8 +513,8 @@ foodcoopshop.Admin = {
         });
     },
 
-    initExportProductsButton : function() {
-        var button = $('#exportProductsButton');
+    initExportAllProductsButton : function() {
+        var button = $('#exportAllProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
         foodcoopshop.Admin.setCheckboxClickCallback(() => 
@@ -523,7 +523,27 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            foodcoopshop.Helper.postFormInNewWindow('/admin/products/export', {productIds: productIds});
+            foodcoopshop.Helper.postFormInNewWindow('/admin/products/export', {
+                productIds: productIds,
+                onlyStockProducts: 0,
+            });
+        });
+    },
+
+    initExportStockProductsButton : function() {
+        var button = $('#exportStockProductsButton');
+        foodcoopshop.Helper.disableButton(button);
+
+        foodcoopshop.Admin.setCheckboxClickCallback(() => 
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button)
+        );
+
+        button.on('click', function () {
+            var productIds = foodcoopshop.Admin.getSelectedProductIds();
+            foodcoopshop.Helper.postFormInNewWindow('/admin/products/export', {
+                productIds: productIds,
+                onlyStockProducts: 1,
+            });
         });
     },
 

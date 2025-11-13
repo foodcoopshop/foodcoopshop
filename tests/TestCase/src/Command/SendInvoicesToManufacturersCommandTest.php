@@ -66,7 +66,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
             if ($orderDetail->id_order_detail == 4) {
                 $expectedOrderState = OrderDetail::STATE_OPEN;
             }
-            $this->assertEquals($orderDetail->order_state, $expectedOrderState);
+            $this->assertEquals($expectedOrderState, $orderDetail->order_state);
         }
 
         $this->assertMailCount(4);
@@ -87,6 +87,53 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
         $this->assertResponseContains($expectedResult);
 
+    }
+
+    public function testSendInvoicesExtraBillingDayForManufacturersRunOnSameDay(): void
+    {
+        Configure::write('app.extraBillingDayForManufacturers', '11-20');
+        $this->prepareSendInvoices();
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $orderDetail->pickup_day = '2018-11-01';
+            $orderDetail->order_state = OrderDetail::STATE_OPEN;
+            $orderDetailsTable->save($orderDetail);
+        }
+
+        $this->exec('send_invoices_to_manufacturers 2018-11-20 23:20:30');
+        $this->runAndAssertQueue();
+
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $this->assertEquals(OrderDetail::STATE_BILLED_CASHLESS, $orderDetail->order_state);
+        }
+
+        $this->assertMailCount(5);
+        $this->assertMailSubjectContainsAt(1, 'Rechnungen für November 2018 wurden verschickt');
+    }
+
+    public function testSendInvoicesExtraBillingDayForManufacturersRunOnDifferentDay(): void
+    {
+        Configure::write('app.extraBillingDayForManufacturers', '12-20');
+        $this->prepareSendInvoices();
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $orderDetail->pickup_day = '2018-12-01';
+            $orderDetail->order_state = OrderDetail::STATE_OPEN;
+            $orderDetailsTable->save($orderDetail);
+        }
+
+        $this->exec('send_invoices_to_manufacturers 2018-12-24 23:20:30');
+        $this->runAndAssertQueue();
+
+        $orderDetails = $orderDetailsTable->find('all')->toArray();
+        foreach($orderDetails as $orderDetail) {
+            $this->assertEquals(OrderDetail::STATE_OPEN, $orderDetail->order_state);
+        }
+
+        $this->assertMailCount(2);
     }
 
     public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes(): void

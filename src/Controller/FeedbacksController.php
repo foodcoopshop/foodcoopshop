@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +33,7 @@ class FeedbacksController extends FrontendController
         ]);
     }
     
-    public function index(): void
+    public function index(): ?Response
     {
 
         if (!Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
@@ -40,7 +41,7 @@ class FeedbacksController extends FrontendController
         }
 
         if ($this->request->getUri()->getPath() == '/feedbacks') {
-            $this->redirect(Configure::read('app.slugHelper')->getFeedbackList());
+            return $this->redirect(Configure::read('app.slugHelper')->getFeedbackList());
         }
 
         $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
@@ -79,6 +80,7 @@ class FeedbacksController extends FrontendController
         $this->set('feedbacks', $preparedFeedbacks);
 
         $this->set('title_for_layout', __('Feedback'));
+        return null;
     }
 
 }

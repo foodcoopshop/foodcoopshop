@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 use App\Model\Entity\Page;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +31,7 @@ class PagesController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Home'));
     }
 
-    public function add(): void
+    public function add(): ?Response
     {
         $pagesTable = $this->getTableLocator()->get('Pages');
         $page = $pagesTable->newEntity(
@@ -45,8 +46,9 @@ class PagesController extends AdminAppController
         $this->set('disabledSelectPageIds', []);
         $this->_processForm($page, false);
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
     public function edit(int $pageId): void
@@ -75,7 +77,7 @@ class PagesController extends AdminAppController
         $this->_processForm($page, true);
     }
 
-    private function _processForm(Page $page, bool $isEditMode): void
+    private function _processForm(Page $page, bool $isEditMode): ?Response
     {
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/pages",
@@ -88,7 +90,7 @@ class PagesController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('page', $page);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -106,7 +108,7 @@ class PagesController extends AdminAppController
         if ($page->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('page', $page);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $page = $pagesTable->save($page);
 
@@ -131,10 +133,9 @@ class PagesController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $page->id_page);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('page', $page);
     }
 
     public function index(): void

@@ -186,13 +186,16 @@ class MyHtmlHelper extends HtmlHelper
     public function getSendOrderListsWeekdayOptions(): array
     {
         $defaultSendOrderListsWeekday = (new DeliveryRhythmService())->getSendOrderListsWeekday();
-        $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
-        $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
-        $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
+        $weekday4 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
+        $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
+        $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
+        $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(0, $defaultSendOrderListsWeekday);
+
         return [
+            $weekday4 => $this->MyTime->getWeekdayName($weekday4) . ' ' . __('midnight'),
             $weekday3 => $this->MyTime->getWeekdayName($weekday3) . ' ' . __('midnight'),
-            $weekday2 => $this->MyTime->getWeekdayName($weekday2) . ' ' . __('midnight'),
-            $weekday1 => $this->MyTime->getWeekdayName($weekday1) . ' ' . __('midnight') . ' (' . __('default_value') . ')'
+            $weekday2 => $this->MyTime->getWeekdayName($weekday2) . ' ' . __('midnight') . ' (' . __('default_value') . ')',
+            $weekday1 => $this->MyTime->getWeekdayName($weekday1) . ' ' . __('midnight'),
         ];
     }
 

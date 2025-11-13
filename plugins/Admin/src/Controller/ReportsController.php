@@ -12,6 +12,7 @@ use App\Services\Csv\Reader\Banking\BankingReaderServiceFactory;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Payment;
 use App\Services\Csv\Reader\Banking\BankingReaderService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,7 +36,7 @@ class ReportsController extends AdminAppController
         $this->FormProtection->setConfig('unlockedActions', ['payments']);
     }
 
-    private function handleCsvUpload(): void
+    private function handleCsvUpload(): ?Response
     {
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
@@ -48,12 +49,12 @@ class ReportsController extends AdminAppController
             $upload = $this->getRequest()->getData('upload');
             if (!in_array($upload->getClientMediaType(), BankingReaderService::ALLOWED_UPLOAD_MIME_TYPES)) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
-                return;
+                return null;
             }
 
             $content = $upload->getStream()->getContents();
             $bankingReaderService = BankingReaderServiceFactory::get(Configure::read('app.bankNameForCreditSystem'));
-            $reader = $bankingReaderService::createFromString($content);
+            $reader = $bankingReaderService::fromString($content);
 
             if ($reader->csvHasIsoFormat) {
                 $reader->appendStreamFilterOnRead('convert.iconv.ISO-8859-15/UTF-8');
@@ -67,7 +68,7 @@ class ReportsController extends AdminAppController
                 $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
-                $this->redirect($this->referer());
+                return $this->redirect($this->referer());
             }
 
             foreach($csvRecords as &$csvRecord) {
@@ -167,21 +168,19 @@ class ReportsController extends AdminAppController
 
                         if (empty($csvPayments)) {
                             $this->Flash->error(__d('admin', 'No_records_were_imported.'));
-                            $this->redirect($this->referer());
+                            return $this->redirect($this->referer());
                         }
 
                         $paymentsTable = $this->getTableLocator()->get('Payments');
-                        $success = $paymentsTable->saveManyOrFail($csvPayments);
-                        if ($success) {
-                            $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}', [
-                                count($csvPayments),
-                                '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($sumAmount) . '</b>',
-                            ]);
-                            $this->Flash->success($message);
-                            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-                            $actionLogsTable->customSave('payment_product_csv_imported', $this->identity->getId(), 0, 'payments', $message);
-                            $this->redirect($this->referer());
-                        }
+                        $paymentsTable->saveManyOrFail($csvPayments);
+                        $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}', [
+                            count($csvPayments),
+                            '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($sumAmount) . '</b>',
+                        ]);
+                        $this->Flash->success($message);
+                        $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
+                        $actionLogsTable->customSave('payment_product_csv_imported', $this->identity->getId(), 0, 'payments', $message);
+                        return $this->redirect($this->referer());
 
                     });
                 }
@@ -190,6 +189,7 @@ class ReportsController extends AdminAppController
                 $this->set('csvPayments', $csvPayments);
             }
         }
+        return null;
     }
 
     public function payments(int $paymentType): void

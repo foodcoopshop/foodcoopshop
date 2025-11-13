@@ -1,4 +1,6 @@
 parameters:
+    parallel:
+        maximumNumberOfProcesses: 2
     level: 6
     bootstrapFiles:
         - config/bootstrap.php
@@ -31,6 +33,7 @@ parameters:
             - plugins/Admin/src/Controller/HelloCashController.php
         - message: '#will always evaluate to true#'
         - message: '#is not a file or it does not exist#'
+
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
 includes:

@@ -53,7 +53,7 @@ trait ProductImportTrait
         float|false $deposit,
         string $quantity,
         string $status,
-        string $isDeclarationOk,
+        int $isDeclarationOk,
         string $storageLocationString,
     ): Product
     {

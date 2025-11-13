@@ -52,8 +52,7 @@ trait AddCustomerPaymentTrait
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         try {
-            $newEntity = $paymentsTable->newEntity(
-                [
+            $paymentData = [
                     'id_customer' => $customerId,
                     'amount' => $amount,
                     'date_add' => DateTime::now(),
@@ -61,9 +60,11 @@ trait AddCustomerPaymentTrait
                     'status' => APP_ON,
                     'date_changed' => DateTime::now(),
                     'created_by' => $this->identity->getId(),
-                ],
-                ['validate' => 'add']
-            );
+            ];
+            if ($this->identity->isSuperadmin() && in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
+                $paymentData['approval_comment'] = $this->getRequest()->getData('approval_comment');
+            }
+            $newEntity = $paymentsTable->newEntity($paymentData, ['validate' => 'add']);
             if ($newEntity->hasErrors()) {
                 throw new \Exception($paymentsTable->getAllValidationErrors($newEntity)[0]);
             }

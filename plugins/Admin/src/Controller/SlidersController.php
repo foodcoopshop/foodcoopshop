@@ -8,6 +8,7 @@ use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
 use App\Services\SanitizeService;
 use App\Model\Entity\Slider;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +28,7 @@ class SlidersController extends AdminAppController
 
     use UploadTrait;
 
-    public function add(): void
+    public function add(): ?Response
     {
         $slidersTable = $this->getTableLocator()->get('Sliders');
         $slider = $slidersTable->newEntity(
@@ -42,8 +43,9 @@ class SlidersController extends AdminAppController
         $this->_processForm($slider, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
     public function edit(int $sliderId): void
@@ -60,7 +62,7 @@ class SlidersController extends AdminAppController
         $this->_processForm($slider, true);
     }
 
-    private function _processForm(Slider $slider, bool $isEditMode): void
+    private function _processForm(Slider $slider, bool $isEditMode): ?Response
     {
 
         $this->setFormReferer();
@@ -68,7 +70,7 @@ class SlidersController extends AdminAppController
 
         if (empty($this->getRequest()->getData())) {
             $this->set('slider', $slider);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -80,7 +82,7 @@ class SlidersController extends AdminAppController
         if ($slider->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('slider', $slider);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $slider = $slidersTable->save($slider);
 
@@ -111,10 +113,9 @@ class SlidersController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $slider->id_slider);
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('slider', $slider);
     }
 
     public function index(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\OrderDetails;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait EditPurchasePriceTrait 
 {
 
-    public function editPurchasePrice(int $orderDetailId): void
+    public function editPurchasePrice(int $orderDetailId): ?Response
     {
         $this->set('title_for_layout', __d('admin', 'Edit_purchase_price'));
 
@@ -51,7 +52,7 @@ trait EditPurchasePriceTrait
         if (empty($this->getRequest()->getData())) {
             $orderDetail->order_detail_purchase_price->total_price_tax_excl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
             $this->set('orderDetail', $orderDetail);
-            return;
+            return null;
         }
 
         $orderDetail = $orderDetailsTable->patchEntity(
@@ -102,10 +103,11 @@ trait EditPurchasePriceTrait
             $this->Flash->success(__d('admin', 'Purchase_price_has_been_saved_successfully.'));
             $this->getRequest()->getSession()->write('highlightedRowId', $orderDetail->id_order_detail);
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('orderDetail', $orderDetail);
+        return null;
     }
 
 }

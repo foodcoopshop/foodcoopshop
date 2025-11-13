@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Traits;
 
+use App\View\Helper\MyTimeHelper;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -21,42 +23,42 @@ trait DeliveryRhythmConfigsTrait
 
     protected function prepareThursdayFridayConfig(): void
     {
-        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', MyTimeHelper::FRIDAY);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
     protected function prepareWednesdayFridayConfig(): void
     {
-        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', MyTimeHelper::FRIDAY);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 2);
     }
 
     protected function prepareTuesdayFridayConfig(): void
     {
-        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', MyTimeHelper::FRIDAY);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
     }
 
     protected function prepareMondayTuesdayConfig(): void
     {
-        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 2);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', MyTimeHelper::TUESDAY);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
     protected function prepareSaturdayThursdayConfig(): void
     {
-        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', MyTimeHelper::THURSDAY);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
         $productsTable = $this->getTableLocator()->get('Products');
-        $productsTable->updateAll(['delivery_rhythm_send_order_list_weekday' => 6], []);
+        $productsTable->updateAll(['delivery_rhythm_send_order_list_weekday' => MyTimeHelper::SATURDAY], []);
     }
 
     protected function prepareSaturdayWednesdayConfig(): void
     {
-        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 3);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', MyTimeHelper::WEDNESDAY);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 4);
         $productsTable = $this->getTableLocator()->get('Products');
-        $productsTable->updateAll(['delivery_rhythm_send_order_list_weekday' => 6], []);
+        $productsTable->updateAll(['delivery_rhythm_send_order_list_weekday' => MyTimeHelper::SATURDAY], []);
     }
 
 }

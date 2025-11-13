@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use App\Services\SanitizeService;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\DeliveryRhythmService;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,17 +26,18 @@ use App\Services\DeliveryRhythmService;
 trait EditOptionsTrait
 {
 
-    public function myOptions(): void
+    public function myOptions(): ?Response
     {
         $this->editOptions($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
         $this->set('title_for_layout', __d('admin', 'Edit_settings'));
         if (empty($this->getRequest()->getData())) {
-            $this->render('editOptions');
+            return$this->render('editOptions');
         }
+        return null;
     }
 
-    public function editOptions(int $manufacturerId): void
+    public function editOptions(int $manufacturerId): ?Response
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all', conditions: [
@@ -96,7 +98,7 @@ trait EditOptionsTrait
 
         if (empty($this->getRequest()->getData())) {
             $this->set('manufacturer', $manufacturer);
-            return;
+            return null;
         }
 
         // if checkbox is disabled, false is returned even if checkbox is active
@@ -120,7 +122,7 @@ trait EditOptionsTrait
         if ($manufacturer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('manufacturer', $manufacturer);
-            $this->render('edit_options');
+            return $this->render('edit_options');
         } else {
             // values that are the same as default values => null
             if (!$this->identity->isManufacturer()) {
@@ -211,10 +213,9 @@ trait EditOptionsTrait
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogsTable->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('manufacturer', $manufacturer);
     }
 
 }

@@ -5,6 +5,7 @@ namespace Admin\Traits\Payments;
 
 use App\Model\Entity\Payment;
 use Cake\Core\Configure;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +24,7 @@ use Cake\Core\Configure;
 trait OverviewTrait
 {
 
-    public function overview(): void
+    public function overview(): Response
     {
         $this->customerId = $this->identity->getId();
         $this->paymentType = Payment::TYPE_PRODUCT;
@@ -35,7 +36,7 @@ trait OverviewTrait
         }
 
         $this->product();
-        $this->render('product');
+        return $this->render('product');
     }
 
 }

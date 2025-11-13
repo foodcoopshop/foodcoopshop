@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Traits;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,11 +23,12 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait PaginatedProductsTrait 
 {
 
-    public function redirectIfPageIsSetTo1(): void
+    public function redirectIfPageIsSetTo1(): ?Response
     {
         if ($this->getRequest()->getQuery('page') !== null && $this->getRequest()->getQuery('page') == 1) {
-            $this->redirect($this->getRequest()->getAttribute('here'));
+            return $this->redirect($this->getRequest()->getAttribute('here'));
         }
+        return null;
     }
 
     /**

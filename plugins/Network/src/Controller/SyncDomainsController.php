@@ -9,6 +9,7 @@ use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use Network\Model\Entity\SyncDomain;
 use Cake\Datasource\EntityInterface;
+use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,7 +34,7 @@ class SyncDomainsController extends AppController
         $this->viewBuilder()->addHelper('Network.Network');
     }
 
-    public function add(): void
+    public function add(): ?Response
     {
         $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
         $syncDomain = $syncDomainsTable->newEntity(
@@ -44,8 +45,9 @@ class SyncDomainsController extends AppController
         $this->_processForm($syncDomain, false);
 
         if (empty($this->getRequest()->getData())) {
-            $this->render('edit');
+            return $this->render('edit');
         }
+        return null;
     }
 
     public function edit(int $syncDomainId): void
@@ -62,14 +64,14 @@ class SyncDomainsController extends AppController
         $this->_processForm($syncDomain, true);
     }
 
-    private function _processForm(SyncDomain|EntityInterface $syncDomain, bool $isEditMode): void
+    private function _processForm(SyncDomain|EntityInterface $syncDomain, bool $isEditMode): ?Response
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
         if (empty($this->getRequest()->getData())) {
             $this->set('syncDomain', $syncDomain);
-            return;
+            return null;
         }
 
         $sanitizeService = new SanitizeService();
@@ -84,7 +86,7 @@ class SyncDomainsController extends AppController
         if ($syncDomain->hasErrors()) {
             $this->Flash->error(__d('network', 'Errors_while_saving!'));
             $this->set('syncDomain', $syncDomain);
-            $this->render('edit');
+            return $this->render('edit');
         } else {
             $syncDomain->domain = mb_strtolower($syncDomain->domain);
             $syncDomain = $syncDomainsTable->save($syncDomain);
@@ -107,9 +109,8 @@ class SyncDomainsController extends AppController
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $syncDomain->id, 'sync_domains', $message);
             $this->Flash->success($message);
 
-            $this->redirect($this->getPreparedReferer());
+            return $this->redirect($this->getPreparedReferer());
         }
 
-        $this->set('attribute', $syncDomain);
     }
 }
