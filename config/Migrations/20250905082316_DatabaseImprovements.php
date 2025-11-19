@@ -16,7 +16,7 @@ class DatabaseImprovements extends BaseMigration
             'fcs_order_detail_purchase_prices'
         ];
         foreach ($tables as $table) {
-            $sql = "ALTER TABLE $table CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;";
+            $sql = "ALTER TABLE $table CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
             $this->execute($sql);
         }
 
