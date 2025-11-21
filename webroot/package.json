@@ -14,7 +14,7 @@
     "install": "bash ../devtools/npm-post-install.sh"
   },
   "dependencies": {
-    "@ericblade/quagga2": "^1.8.4",
+    "@ericblade/quagga2": "^1.10.2",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "blueimp-file-upload": "^10.32.0",
     "bootstrap": "^5.3.8",
