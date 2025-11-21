@@ -13,7 +13,7 @@ RUN apk update && \
     
 RUN npm install -g npm
 
-# avoid permission error on gitpod on running npm install
+# avoid permission error on ona (formerly gitpod) on running npm install
 RUN npm config set cache /app/tmp --global
 
 # install pcov on alpine requires some addtional packages
