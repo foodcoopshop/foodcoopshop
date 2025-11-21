@@ -31,10 +31,6 @@ use App\Model\Entity\Payment;
         <td>
 
             <p>
-                <?php echo __d('admin', 'the_invoices_from_{0}_have_just_been_sent.', [$this->MyTime->getLastMonthNameAndYear()]); ?>
-            </p>
-
-            <p>
                 <?php echo __d('admin', 'Here_you_find_the_overview_for_making_the_transfers:'); ?><br />
                 <?php $formattedCurrentDay = $this->MyTime->formatToDateShort($cronjobRunDay); ?>
                 <?php $link = Configure::read('App.fullBaseUrl') . $this->Slug->getActionLogsList() . '?types[]=cronjob_send_invoices&dateFrom='.$formattedCurrentDay.'&dateTo='.$formattedCurrentDay; ?>
