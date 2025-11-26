@@ -63,11 +63,14 @@ if (isset($manufacturerId)) {
 
     if ($identity->isSuperadmin()) {
         echo '<p style="margin-top:10px;">'.__d('admin', 'Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?').'</p>';
-        foreach ($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
-            echo '<div class="radio-wrapper">';
-            echo '<label for="payment-'.$paymentTextKey.'-'.$objectId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$objectId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
-            echo '</div>';
-        }
+        echo '<div class="radio-group">';
+            foreach ($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
+                echo '<div class="radio-wrapper">';
+                    echo '<input id="payment-'.$paymentTextKey.'-'.$objectId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
+                    echo '<label for="payment-'.$paymentTextKey.'-'.$objectId.'">'.$paymentText.'</label>';
+                echo '</div>';
+            }
+        echo '</div>';
     }
 
 }
@@ -77,6 +80,10 @@ echo $this->Form->control('Payments.amount', [
     'type' => 'number',
     'step' => '0.01',
 ]);
+
+if ($identity->isSuperadmin()) {
+    echo '<p style="margin-top:10px;">' . __d('admin', 'You can enter a negative amount if the manufacturer needs to pay money back to the initiative.') . '</p>';
+}
 
 if (isset($manufacturerId)) {
     echo $this->Form->control('Payments.date_add', [

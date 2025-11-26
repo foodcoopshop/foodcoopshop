@@ -99,7 +99,11 @@ echo '<div class="add-payment-deposit-wrapper">';
             }
                 echo '</td>';
 
-                echo '<td class="right negative">';
+                $classes = ['right'];
+                if (isset($deposit['returned']) && (float) $deposit['returned'] < 0) {
+                    $classes[] = 'negative';
+                }
+                echo '<td class="'.implode(' ', $classes).'">';
                     if (isset($deposit['returned'])) {
                         echo $this->Html->link(
                             '<i class="fas fa-search ok"></i> ' . __d('admin', 'Details'),
@@ -128,10 +132,14 @@ echo '<div class="add-payment-deposit-wrapper">';
         echo '<tr>';
             echo '<td></td>';
             echo '<td class="right"><b>'.$this->Number->formatAsCurrency($sumDepositsDelivered).'</b></td>';
-            echo '<td class="right negative">';
-        if ($sumDepositsReturned != 0) {
-            echo '<b>'.$this->Number->formatAsCurrency($sumDepositsReturned).'</b>';
-        }
+            $classes = ['right'];
+            if ($sumDepositsReturned < 0) {
+                $classes[] = 'negative';
+            }
+            echo '<td class="'.implode(' ', $classes).'">';
+            if ($sumDepositsReturned != 0) {
+                echo '<b>'.$this->Number->formatAsCurrency($sumDepositsReturned).'</b>';
+            }
             echo '</td>';
         echo '</tr>';
 
@@ -139,9 +147,9 @@ echo '<div class="add-payment-deposit-wrapper">';
             echo '<td colspan="2" class="right"><b>'.__d('admin', 'Your_deposit_balance').'</td>';
             $depositCreditBalance = $sumDepositsDelivered + $sumDepositsReturned;
             $depositCreditBalanceClasses = ['right'];
-        if ((float) $depositCreditBalance < 0) {
-            $depositCreditBalanceClasses[] = 'negative';
-        }
+            if ((float) $depositCreditBalance < 0) {
+                $depositCreditBalanceClasses[] = 'negative';
+            }
             echo '<td class="'.implode(' ', $depositCreditBalanceClasses).'"><b style="font-size: 16px;">'.$this->Number->formatAsCurrency($depositCreditBalance).'</b></td>';
         echo '</tr>';
 

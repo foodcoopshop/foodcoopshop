@@ -51,6 +51,22 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(24.88, $jsonDecodedContent->amount);
     }
 
+    public function testAddCustomerPaymentDepositParameterAmountNegativeAsSuperadmin(): void
+    {
+        $this->loginAsSuperadmin();
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '-10', Payment::TYPE_DEPOSIT, true);
+        $this->assertJsonOk();
+        $this->assertEquals(-10, $jsonDecodedContent->amount);
+    }
+
+    public function testAddCustomerPaymentProductParameterAmountNegativeAsSuperadmin(): void
+    {
+        $this->loginAsSuperadmin();
+        $jsonDecodedContent = $this->addCustomerPayment(Configure::read('test.customerId'), '-10', Payment::TYPE_PRODUCT, true);
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
+    }
+
     public function testAddCustomerPaymentParameterAmountNegative(): void
     {
         $this->loginAsCustomer();

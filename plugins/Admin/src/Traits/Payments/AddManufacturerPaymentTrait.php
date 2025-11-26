@@ -81,7 +81,7 @@ trait AddManufacturerPaymentTrait
                     'date_add' => $dateAddForEntity,
                     'text' => $text,
                 ],
-                ['validate' => 'add']
+                ['validate' => $this->identity->isSuperadmin() ? 'addSuperadmin' : 'add'],
             );
             if ($newEntity->hasErrors()) {
                 throw new \Exception($paymentsTable->getAllValidationErrors($newEntity)[0]);

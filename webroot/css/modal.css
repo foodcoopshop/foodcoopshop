@@ -185,14 +185,21 @@ body.iframe_self_service_order {
     padding: 5px;
     margin-top: -5px;
 }
-.modal.add-payment-form .radio-wrapper {
+.modal.add-payment-form .radio-group {
     width: 100%;
+    float: left;
+}
+.modal.add-payment-form .radio-wrapper {
+    width: 50%;
     float: left;
     margin-bottom: 10px;
 }
 .modal.add-payment-form .radio-wrapper label {
     float: left;
-    width: auto;
+    line-height: 14px;
+}
+.modal.add-payment-form .radio-wrapper input {
+    float: left;
     margin-right: 5px;
 }
 #order-detail-product-quantity-edit-form input[type="number"],

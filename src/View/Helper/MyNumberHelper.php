@@ -6,6 +6,7 @@ namespace App\View\Helper;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\View\Helper\NumberHelper;
+use App\Services\FormatterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,6 +43,7 @@ class MyNumberHelper extends NumberHelper
     public function formatAsCurrency(string|float|int $amount): string
     {
         $amount = round((float) $amount, 2); // 3.325 was rounded to 3.32 without this line
+        $amount = FormatterService::assureCorrectFloat($amount); // to convert -0.00 to 0.00
         $currency = self::currency($amount, 'USD');
         // e.g. PLN for polish zloty does not return the polish currency symbol
         $currency = str_replace('$', Configure::read('appDb.FCS_CURRENCY_SYMBOL'), $currency);
