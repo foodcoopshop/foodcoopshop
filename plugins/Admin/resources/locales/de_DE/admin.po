@@ -2014,6 +2014,9 @@ msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurü
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
 msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
 
+msgid "You can enter a negative amount if the manufacturer needs to pay money back to the initiative."
+msgstr "Du kannst auch einen negativen Betrag eintragen, wenn der Hersteller Geld an die Initiative zurückzahlen muss."
+
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 

@@ -85,6 +85,13 @@ class PaymentsTable extends AppTable
         return $validator;
     }
 
+    public function validationAddSuperadmin(Validator $validator): Validator
+    {
+        $validator = $this->validationAdd($validator);
+        $validator->remove('amount', 'greaterThanOrEqual');
+        return $validator;
+    }
+
     public function validationCsvImportUpload(Validator $validator): Validator
     {
         $validator = $this->validationAdd($validator);
