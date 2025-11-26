@@ -187,13 +187,12 @@ class ConfigurationsController extends AdminAppController
     {
         $this->set('title_for_layout', __d('admin', 'Send_test_email'));
         $email = new AppMailer(false);
-        $success = $email->setTo(Configure::read('app.hostingEmail'))
+        $email->setTo(Configure::read('app.hostingEmail'))
         ->setSubject(__d('admin', 'Test_email'))
         ->viewBuilder()->setTemplate('send_test_email_template');
         $email->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS . Configure::read('app.logoFileName'),
             ])
         ->addToQueue();
-        $this->set('success', $success);
     }
 }

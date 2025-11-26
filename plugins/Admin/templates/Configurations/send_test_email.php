@@ -25,5 +25,3 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Helper.initMenu();" . 
         Configure::read('app.jsNamespace') . ".ColorMode.init();"
 ]);
-
-print_r($success);

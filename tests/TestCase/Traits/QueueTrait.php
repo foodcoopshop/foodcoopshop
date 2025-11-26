@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Traits;
 
 use Cake\ORM\TableRegistry;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +29,7 @@ trait QueueTrait
         $queuedJobs = $queuedJobsTable->find('all');
         foreach($queuedJobs as $queuedJob) {
             if (!empty($queuedJob->failure_message)) {
-                pr($queuedJob->failure_message);
+                Log::error($queuedJob->failure_message);
             }
             $this->assertEmpty($queuedJob->failurue_message);
         }
