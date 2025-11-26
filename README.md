@@ -40,7 +40,7 @@
 </h3>
 
 ## 🤖 Self-hosting / developing
-* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/dev/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/dev/installation-guide)
+* 🐳 [Docker Dev](https://foodcoopshop.github.io/dev/docker-dev-environment) and [Prod Environment](https://github.com/foodcoopshop/foodcoopshop-docker) / 🔧 [Installation guide](https://foodcoopshop.github.io/dev/installation-guide)
 
 [![Run in Ona](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
 * Ona (formerly Gitpod): When all containers are up and running (takes about 1 minute), open your Bash-terminal (not in the Docker-terminal) and run
