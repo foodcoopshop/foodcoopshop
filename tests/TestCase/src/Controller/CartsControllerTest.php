@@ -766,7 +766,7 @@ class CartsControllerTest extends AppCakeTestCase
         // check new (empty) cart
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
-        $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']->id_cart, 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
         $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
@@ -1318,8 +1318,8 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
-        $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
-        $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']->status, 1, 'cake cart status wrong');
+        $this->assertEquals($cart['Cart']->id_cart, 2, 'cake cart id wrong');
     }
 
     /**

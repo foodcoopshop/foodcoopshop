@@ -838,10 +838,13 @@ class CartService
             return null;
         }
         foreach($pickupDayEntities as $pickupDay) {
-            if ($pickupDay['comment'] == '') {
+            if ($pickupDay['comment'] == '') { // @phpstan-ignore-line
                 continue;
             }
-            $formattedPickupDay = Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = Date::createFromFormat(
+                Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'),
+                $pickupDay['pickup_day'], // @phpstan-ignore-line
+            );
             $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('order_comment_notification');
@@ -851,7 +854,7 @@ class CartService
                 $formattedPickupDay,
             ]))
             ->setViewVars([
-                'comment' => $pickupDay['comment'],
+                'comment' => $pickupDay['comment'], // @phpstan-ignore-line
                 'formattedPickupDay' => $formattedPickupDay,
                 'identity' => $this->identity,
             ]);

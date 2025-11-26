@@ -33,7 +33,6 @@ parameters:
             - plugins/Admin/src/Controller/HelloCashController.php
         - message: '#will always evaluate to true#'
         - message: '#is not a file or it does not exist#'
-        - identifier: 'cake.entity.arrayAccess'
         - identifier: 'cake.debug.debugFuncCallUse'
         - identifier: 'cake.debug.debugStaticCallUse'
 

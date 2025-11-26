@@ -220,7 +220,7 @@ class CartsController extends FrontendController
         }
 
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']['id_cart']);
+        $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']->id_cart);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();

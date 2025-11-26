@@ -48,11 +48,11 @@ class PagesTable extends AppTable
     {
         foreach ($pages as $page) {
             $statusString = '';
-            if (! $page->active) {
+            if (!$page->active) {
                 $statusString = ' ('.__('offline').')';
             }
             $this->flattenedArray[$page->id_page] = $separator . $page->title . $statusString;
-            if (! empty($page['children'])) {
+            if (!empty($page->children)) {
                 $this->flattenNestedArrayWithChildren($page->children, str_repeat('-',
                 $this->getLevel($page) + 1) . ' ');
             }

@@ -137,13 +137,14 @@ trait IndexTrait
                 $sums['amount'] += $orderDetail->product_amount;
                 $sums['deposit'] += $orderDetail->deposit;
             } else {
-                $sums['price'] += $orderDetail['sum_price'];
-                $sums['price_net'] += $orderDetail['sum_price_net'];
-                $sums['amount'] += $orderDetail['sum_amount'];
+                $orderDetailIsArray = is_array($orderDetail);
+                $sums['price'] += $orderDetailIsArray ? $orderDetail['sum_price'] : $orderDetail->sum_price;
+                $sums['price_net'] += $orderDetailIsArray ? $orderDetail['sum_price_net'] : $orderDetail->sum_price_net;
+                $sums['amount'] += $orderDetailIsArray ? $orderDetail['sum_amount'] : $orderDetail->sum_amount;
                 if ($groupBy == 'manufacturer') {
-                    $sums['reduced_price'] += $orderDetail['reduced_price'];
+                    $sums['reduced_price'] += $orderDetailIsArray ? $orderDetail['reduced_price'] : $orderDetail->reduced_price;
                 }
-                $sums['deposit'] += $orderDetail['sum_deposit'];
+                $sums['deposit'] += $orderDetailIsArray ? $orderDetail['sum_deposit'] : $orderDetail->sum_deposit;
             }
             if (!empty($orderDetail->order_detail_unit)) {
                 $sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
@@ -166,7 +167,7 @@ trait IndexTrait
 
      /**
      * @param \App\Model\Entity\OrderDetail[] $orderDetails
-     * @return \App\Model\Entity\OrderDetail[]
+     * @return \App\Model\Entity\OrderDetail[]|list<array<string, mixed>>
      */
    private function prepareGroupedOrderDetails(array $orderDetails, string $groupBy): array
     {
