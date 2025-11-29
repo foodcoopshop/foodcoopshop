@@ -805,6 +805,18 @@ msgstr "Errors occurred while member was deleted"
 msgid "Errors_occurred_while_product_status_was_changed"
 msgstr "Errors occurred while the product status was changed"
 
+msgid "Errors_occurred_while_product_new_status_was_changed"
+msgstr "Errors occurred while the product new status was changed"
+
+msgid "Mark_as_new"
+msgstr "Mark as new"
+
+msgid "Unmark_as_new"
+msgstr "Unmark as new"
+
+msgid "Edit_new_status"
+msgstr "Edit new status"
+
 msgid "Delete_products?"
 msgstr "Delete products?"
 

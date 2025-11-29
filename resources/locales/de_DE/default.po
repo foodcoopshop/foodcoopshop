@@ -814,6 +814,18 @@ msgstr "Beim Löschen des Mitgliedskontos sind Fehler aufgetreten"
 msgid "Errors_occurred_while_product_status_was_changed"
 msgstr "Beim Ändern des Produkt-Status sind Fehler aufgetreten"
 
+msgid "Errors_occurred_while_product_new_status_was_changed"
+msgstr "Beim Ändern des Produkt-Neu-Status sind Fehler aufgetreten"
+
+msgid "Mark_as_new"
+msgstr "Als neu markieren"
+
+msgid "Unmark_as_new"
+msgstr "Nicht mehr als neu markieren"
+
+msgid "Edit_new_status"
+msgstr "Neu-Status ändern"
+
 msgid "Delete_products?"
 msgstr "Produkte löschen?"
 

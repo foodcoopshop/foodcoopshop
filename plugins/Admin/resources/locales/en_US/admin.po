@@ -700,6 +700,12 @@ msgstr "{0,plural,=1{One product was} other{# products were}} deactivated."
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
 msgstr "{0,plural,=1{One product was} other{# products were}} activated."
 
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_marked_as_new."
+msgstr "{0,plural,=1{One product was} other{# products were}} marked as new."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_unmarked_as_new."
+msgstr "{0,plural,=1{One product was} other{# products were}} unmarked as new."
+
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "The product {0} of manufacturer {1} has been deactivated."
 
@@ -2157,6 +2163,9 @@ msgstr "Edit delivery rhythm"
 
 msgid "Edit_status"
 msgstr "Edit status"
+
+msgid "Edit_new_status"
+msgstr "Edit new status"
 
 msgid "Generate_product_cards"
 msgstr "Generate product cards"
