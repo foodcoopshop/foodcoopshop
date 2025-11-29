@@ -7,5 +7,6 @@
 - Include type hints
 - Follow existing code style in the file
 - Verify against PHPStan rules (call `composer phpstan`)
+- Use trailing commas in arrays, function calls and function definitions where applicable
 - Ensure tests pass (call `composer test`)
 - Write unit tests for new functionality
