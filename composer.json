@@ -74,7 +74,8 @@
             "bash bin/cake migrations migrate",
             "bash bin/cake migrations migrate -p Queue"
         ],
-        "test": "phpunit --colors=always"
+        "test": "phpunit --colors=always",
+        "phpstan": "php ./vendor/bin/phpstan analyze -c phpstan.neon"
     },
     "prefer-stable": true
 }
