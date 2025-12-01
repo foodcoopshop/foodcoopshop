@@ -563,7 +563,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testAutoLoginAsSelfServiceCustomerOk(): void
     {
-        $selfServiceCustomerId = 93;
+        $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
         Configure::write('app.selfServiceLoginCustomers', [
             [
@@ -577,9 +577,32 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
+    public function testEmptyCartOnLogoutSelfServiceCustomer(): void
+    {
+        $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
+        $this->changeCustomer($selfServiceCustomerId, 'active', 1);
+        $this->loginAsSelfServiceCustomer();
+        $this->addProductToSelfServiceCart(346, 1);
+        $this->logoutSelfService();
+        $this->loginAsSelfServiceCustomer();
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
+            conditions: [
+                'Carts.id_customer' => $selfServiceCustomerId,
+                'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
+                'Carts.status' => APP_ON,
+            ],
+            contain: [
+                'CartProducts',
+            ],
+        )->first();
+
+        $this->assertEmpty($cart->cart_products);
+    }
+
     public function testAutoLoginAsSelfServiceCustomerNotOk(): void
     {
-        $selfServiceCustomerId = 93;
+        $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
         Configure::write('app.selfServiceLoginCustomers', [
             [
                 'id' => 1,

@@ -111,7 +111,7 @@ class Customer extends AppEntity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->id_default_group == self::GROUP_SUPERADMIN) {
+        if ($this->getGroupId() == self::GROUP_SUPERADMIN) {
             return true;
         }
         return false;
@@ -270,7 +270,7 @@ class Customer extends AppEntity implements IdentityInterface
         if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $cartType = Cart::TYPE_INSTANT_ORDER;
         }
-        if (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer()) {
+        if (OrderCustomerService::isSelfServiceMode()) {
             $cartType = Cart::TYPE_SELF_SERVICE;
         }
         return $cartType;

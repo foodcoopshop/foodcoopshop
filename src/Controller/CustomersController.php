@@ -310,7 +310,7 @@ class CustomersController extends FrontendController
         $enableSelfServiceLoginAsCustomerButton = false;
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer())
+            && (OrderCustomerService::isSelfServiceMode())
             ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
@@ -486,6 +486,11 @@ class CustomersController extends FrontendController
 
     public function logout(): Response
     {
+
+        if ($this->identity !== null && $this->identity->isSelfServiceCustomer() && OrderCustomerService::isSelfServiceModeByUrl()) {
+            $this->cartService->doEmptyCart();
+        }
+
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));
 
