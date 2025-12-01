@@ -1213,8 +1213,8 @@ msgstr "Komm."
 msgid "Newbie_has_{0}_orders."
 msgstr "Neuling: Hat erst {0}x bestellt."
 
-msgid "Show_all_orders_from_{0}"
-msgstr "Alle Bestellungen von {0} anzeigen"
+msgid "Show_orders_from_{0}"
+msgstr "Bestellungen von {0} anzeigen"
 
 msgid "Change_group"
 msgstr "Gruppe ändern"
