@@ -30,7 +30,7 @@ class FrontendController extends AppController
 
     public bool $protectEmailAddresses = true;
     
-    protected CartService $cartService;
+    protected ?CartService $cartService = null;
 
     protected function resetOriginalLoggedCustomer(): void
     {

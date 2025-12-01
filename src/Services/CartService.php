@@ -60,7 +60,7 @@ class CartService
 
     public function doEmptyCart(): void
     {
-        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');        
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
         $cartProductsTable->removeAll($this->identity->getCartId(), $this->identity->getId());
         $this->identity->setCart($this->identity->getCart());
     }
