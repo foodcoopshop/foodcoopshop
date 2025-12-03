@@ -824,10 +824,10 @@ msgid "Errors_occurred_while_product_new_status_was_changed"
 msgstr "Beim Ändern des Produkt-Neu-Status sind Fehler aufgetreten"
 
 msgid "Mark_as_new"
-msgstr "Als neu markieren"
+msgstr "Als neu anzeigen"
 
 msgid "Unmark_as_new"
-msgstr "Nicht mehr als neu markieren"
+msgstr "Nicht mehr als neu anzeigen"
 
 msgid "Edit_new_status"
 msgstr "Neu-Status ändern"

@@ -45,8 +45,8 @@ foodcoopshop.ModalProductStatusNewEditBulk = {
             html += '<ul><li>' + products.join('</li><li>') + '</li></ul>';
 
             var buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.MarkAsNew, 'fa-fw fas fa-star'),
-                foodcoopshop.Modal.createButton(['btn-danger'], foodcoopshop.LocalizedJs.admin.UnmarkAsNew, 'fa-fw far fa-star'),
+                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.MarkAsNew, 'fa-fw fas fa-check'),
+                foodcoopshop.Modal.createButton(['btn-danger'], foodcoopshop.LocalizedJs.admin.UnmarkAsNew, 'fa-fw fas fa-minus-circle'),
                 foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
 
