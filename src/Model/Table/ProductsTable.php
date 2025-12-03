@@ -315,11 +315,12 @@ class ProductsTable extends AppTable
                 throw new \Exception('change new status is not allowed for product attributes');
             }
             $status = $product[$ids['productId']];
-            if (!in_array($status, [APP_OFF, APP_ON], true)) { // last param for type check
+            $allowed = [APP_OFF, APP_ON];
+            if (!in_array($status, $allowed, true)) { // last param for type check
                 throw new \Exception('Products.new for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
                 $newDate = Date::now();
-                if ($status == APP_OFF) {
+                if ($status === APP_OFF) {
                     $newDate = Date::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
                 }
                 $products2save[] = [
