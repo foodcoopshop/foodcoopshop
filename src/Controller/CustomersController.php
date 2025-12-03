@@ -484,12 +484,35 @@ class CustomersController extends FrontendController
         $this->set('blogPosts', $blogPosts);
     }
 
+    private function emptyCartOnSelfServiceLogout(): void
+    {
+        if ($this->identity !== null && $this->identity->isSelfServiceCustomer() && OrderCustomerService::isSelfServiceModeByUrl()) {
+            $cart = $this->identity->getCart();
+
+            /** @var CartsTable $cartsTable */
+            $cartsTable = $this->getTableLocator()->get('Carts');
+            $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart);
+            if (!empty($cart['CartProducts'])) {
+                $email = new AppMailer();
+                $email->viewBuilder()->setTemplate('self_service_cart_emptied');
+                $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
+                    ->setSubject(__('User logged out and cart was emptied'))
+                    ->setViewVars([
+                        'cart' => $cartGroupedByPickupDay,
+                        'identity' => $this->identity,
+                    ]);
+                $email->addToQueue();
+            }
+
+            $this->cartService->doEmptyCart();
+        }
+
+    }
+
     public function logout(): Response
     {
 
-        if ($this->identity !== null && $this->identity->isSelfServiceCustomer() && OrderCustomerService::isSelfServiceModeByUrl()) {
-            $this->cartService->doEmptyCart();
-        }
+        $this->emptyCartOnSelfServiceLogout();
 
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));

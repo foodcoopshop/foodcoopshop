@@ -585,6 +585,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1);
         $this->logoutSelfService();
         $this->loginAsSelfServiceCustomer();
+        $this->runAndAssertQueue();
+
         $cartsTable = $this->getTableLocator()->get('Carts');
         $cart = $cartsTable->find('all',
             conditions: [
@@ -598,6 +600,9 @@ class SelfServiceControllerTest extends AppCakeTestCase
         )->first();
 
         $this->assertEmpty($cart->cart_products);
+        $this->assertMailSubjectContainsAt(0, 'Benutzer abgemeldet und Warenkorb geleert');
+        $this->assertMailContainsAt(0, 'Artischocke : Stück');
+        $this->assertMailContainsAt(0, '2,32 €');
     }
 
     public function testAutoLoginAsSelfServiceCustomerNotOk(): void
