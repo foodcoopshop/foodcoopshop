@@ -217,7 +217,7 @@ body.iframe_self_service_order {
     margin-bottom:5px;
 }
 #modal-product-status-new-edit-bulk .modal-dialog {
-    max-width: 560px;
+    max-width: 575px;
 }
 #modal-text .modal-dialog,
 #modal-image .modal-dialog {
