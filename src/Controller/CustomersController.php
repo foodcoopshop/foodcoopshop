@@ -17,6 +17,7 @@ use App\Controller\Traits\RenewAuthSessionTrait;
 use App\Services\SanitizeService;
 use App\Model\Entity\Customer;
 use Cake\Http\Response;
+use App\Model\Table\CartsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
