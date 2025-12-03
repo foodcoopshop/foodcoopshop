@@ -289,6 +289,12 @@ msgstr "Klicke auf deinen Standort um die SELBSTBEDIENUNG zu STARTEN"
 msgid "Confirm_self_service_purchase_dialog"
 msgstr "Einkauf abschließen"
 
+msgid "User logged out and cart was emptied"
+msgstr "Benutzer abgemeldet und Warenkorb geleert"
+
+msgid "The following cart was emptied because the user was logged out."
+msgstr "Der folgende Warenkorb wurde geleert, weil der Benutzer abgemeldet wurde."
+
 msgid "Choose_paymenttype_for_self_service_purchase_dialog"
 msgstr "Zahlungsart wählen"
 

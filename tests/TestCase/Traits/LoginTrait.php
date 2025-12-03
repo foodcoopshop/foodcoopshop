@@ -89,6 +89,11 @@ trait LoginTrait
         $this->session($sessionData);
     }
 
+    public function logoutSelfService(): void
+    {
+        $this->get($this->Slug->getLogout('/'.__('route_self_service')));
+    }
+
     public function logout(): void
     {
         $this->get($this->Slug->getLogout());
