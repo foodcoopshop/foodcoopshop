@@ -27,8 +27,6 @@ use Cake\Http\Response;
 class SelfServiceController extends FrontendController
 {
 
-    protected CartService $cartService;
-
     public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
@@ -36,7 +34,6 @@ class SelfServiceController extends FrontendController
             'index',
             'autoLoginAsSelfServiceCustomer',
         ]);
-        $this->cartService = new CartService($this);
     }
 
     public function autoLoginAsSelfServiceCustomer(): ?Response
