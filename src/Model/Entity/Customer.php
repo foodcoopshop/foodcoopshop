@@ -247,6 +247,21 @@ class Customer extends AppEntity implements IdentityInterface
         return false;
     }
 
+    public function isSelfServiceLoginCustomer(): bool
+    {
+        if (!$this->isSelfServiceCustomer()) {
+            return false;
+        }
+        
+        $selfServiceLoginCustomers = Configure::read('app.selfServiceLoginCustomers');
+        foreach ($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
+            if ($selfServiceLoginCustomer['customerId'] == $this->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function isSelfServiceCustomer(): bool
     {
         if ($this->isManufacturer()) {

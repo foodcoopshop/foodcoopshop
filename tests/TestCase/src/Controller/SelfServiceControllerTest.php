@@ -580,6 +580,13 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testEmptyCartOnLogoutSelfServiceCustomer(): void
     {
         $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
+        Configure::write('app.selfServiceLoginCustomers', [
+            [
+                'id' => 1,
+                'label' => 'SB-Kunde',
+                'customerId' => $selfServiceCustomerId,
+            ],
+        ]);
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
         $this->loginAsSelfServiceCustomer();
         $this->addProductToSelfServiceCart(346, 1);

@@ -486,7 +486,8 @@ class CustomersController extends FrontendController
 
     private function emptyCartOnSelfServiceLogout(): void
     {
-        if ($this->identity !== null && $this->identity->isSelfServiceCustomer() && OrderCustomerService::isSelfServiceModeByUrl()) {
+
+        if ($this->identity !== null && $this->identity->isSelfServiceLoginCustomer() && OrderCustomerService::isSelfServiceModeByUrl()) {
             $cart = $this->identity->getCart();
 
             /** @var CartsTable $cartsTable */
