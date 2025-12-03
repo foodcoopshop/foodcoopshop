@@ -72,6 +72,26 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains(';;;;;;;;;;;14.985,00');
     }
 
+    public function testEditProductNewStatusOnBulk(): void
+    {
+        $this->loginAsSuperadmin();
+        $productIds = [60, 102];
+        $status = APP_ON;
+        $this->ajaxPost('/admin/products/editNewStatusBulk', [
+            'productIds' => $productIds,
+            'status' => $status,
+        ]);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $products = $productsTable->find('all',
+            conditions: [
+                'Products.id_product IN' => $productIds,
+            ]
+        )->toArray();
+        foreach ($products as $product) {
+            $this->assertTrue($product->new->isToday());
+        }
+    }
+
     public function testEditProductNewStatusOn(): void
     {
         $this->loginAsSuperadmin();
