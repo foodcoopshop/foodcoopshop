@@ -444,6 +444,7 @@ foodcoopshop.Helper = {
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
         });
+        this.initPasswordToggle();
     },
 
     initSearchForm: function () {
@@ -836,6 +837,35 @@ foodcoopshop.Helper = {
                 animationDuration: 0,
                 delay: 20,
                 theme: ['tooltipster-light']
+            });
+        });
+    },
+
+    initPasswordToggle: function () {
+        $('input[type="password"]').each(function() {
+            var inputField = $(this);
+            
+            if (inputField.parent().hasClass('password-toggle-wrapper')) {
+                return;
+            }
+            
+            inputField.wrap('<div class="password-toggle-wrapper"></div>');
+            
+            var toggleIcon = $('<i class="fas fa-eye password-toggle-icon"></i>');
+            
+            inputField.after(toggleIcon);
+            
+            toggleIcon.on('click', function() {
+                var icon = $(this);
+                var $passwordInput = icon.prev('input');
+                
+                if ($passwordInput.attr('type') === 'password') {
+                    $passwordInput.attr('type', 'text');
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    $passwordInput.attr('type', 'password');
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
             });
         });
     },

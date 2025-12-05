@@ -10,3 +10,4 @@
 - Use trailing commas in arrays, function calls and function definitions where applicable
 - Ensure tests pass (call `composer test`)
 - Write unit tests for new functionality
+- If CSS or JS files are modified, there is no need to call `asset_compress build` as this is done automatically on deployment

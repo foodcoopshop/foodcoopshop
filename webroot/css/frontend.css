@@ -359,7 +359,6 @@ body.customers.new_password_request .input {
 body.customers.new_password_request .input input {
     width: 255px;
     padding: 3px;
-    border-radius: 3px;
 }
 body.customers.new_password_request .input {
     margin-right: 10px;

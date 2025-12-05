@@ -243,8 +243,22 @@
     /**
      * sidebar-left: menu starts here
      */
-    #login-form .input input,
+    #login-form .input input:not([type="checkbox"]):not([type="password"]):not([type="text"]),
+    #login-form .input input.no-password-toggle,
     body.customers.new_password_request .input input {
+        width: 60% ! important;
+    }
+    #login-form .password-toggle-wrapper {
+        width: 60%;
+        display: inline-block;
+    }
+    #login-form .password-toggle-wrapper input[type="password"],
+    #login-form .password-toggle-wrapper input[type="text"] {
+        width: 100% ! important;
+        padding-right: 35px !important;
+    }
+    #login-form .input input[type="password"]:not(.password-toggle-wrapper input),
+    #login-form .input input[type="text"]:not(.password-toggle-wrapper input) {
         width: 60% ! important;
     }
     body.customers.new_password_request .btn-success {
