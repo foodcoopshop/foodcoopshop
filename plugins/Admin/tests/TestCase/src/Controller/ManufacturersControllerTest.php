@@ -128,7 +128,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newDefaultTaxIdPurchasePrice = 3;
         $newStatus = APP_OFF;
 
-        $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
+        $newSendOrderListCc = ['office@rothauer-it.com', 'office@foodcoopshop.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen.';
 
         $this->post(
@@ -137,7 +137,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'Manufacturers' => [
                     'send_order_list' => $newSendOrderList, // do not use 0 here
                     'send_invoice' => $newSendInvoice, // do not use 0 here
-                    'send_order_list_cc' => 'office@rothauer-it.com;test@test.com', // wrong: comma expected as separator
+                    'send_order_list_cc' => 'office@rothauer-it.com;office@foodcoopshop.com', // wrong: comma expected as separator
                 ]
             ]
         );
@@ -161,7 +161,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'Manufacturers' => [
                     'send_order_list' => $newSendOrderList,
                     'send_invoice' => $newSendInvoice,
-                    'send_order_list_cc' => ' office@rothauer-it.com, test@test.com ', // correct: any whitespace is removed in beforeMarshal
+                    'send_order_list_cc' => ' office@rothauer-it.com, office@foodcoopshop.com ', // correct: any whitespace is removed in beforeMarshal
                     'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification,
                     'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification,
                     'send_instant_order_notification' => $newSendInstantOrderNotification,
