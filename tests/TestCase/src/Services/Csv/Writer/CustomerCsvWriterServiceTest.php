@@ -17,6 +17,7 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\Writer\CustomerCsvWriterService;
 use League\Csv\Bom;
+use App\Test\Fixture\ProductsFixture;
 
 class CustomerCsvWriterServiceTest extends AppCakeTestCase
 {
@@ -43,7 +44,7 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
     {
 
         $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', true);
-        $this->changeConfiguration('FCS_MEMBER_FEE_PRODUCTS', '346');
+        $this->changeConfiguration('FCS_MEMBER_FEE_PRODUCTS', ProductsFixture::ID_ARTICHOKE);
         $writerService = new CustomerCsvWriterService();
         $writerService->setRequestQueryParams(['year' => '2018']);
         $writerService->render();

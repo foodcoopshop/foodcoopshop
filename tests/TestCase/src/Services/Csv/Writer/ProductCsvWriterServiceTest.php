@@ -17,6 +17,7 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\Writer\ProductCsvWriterService;
 use League\Csv\Bom;
+use App\Test\Fixture\ProductsFixture;
 
 class ProductCsvWriterServiceTest extends AppCakeTestCase
 {
@@ -42,7 +43,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $unitEntityB->use_weight_as_amount = 1;
         $unitsTable->saveMany([$unitEntityA, $unitEntityB]);
 
-        $productIds = [344, 346, 349, 350, 351];
+        $productIds = [ProductsFixture::ID_GARLIC, ProductsFixture::ID_ARTICHOKE, ProductsFixture::ID_STOCK_PRODUCT_A, ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES, ProductsFixture::ID_STOCK_PRODUCT_B];
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds, true);
         $writerService->render();
@@ -77,7 +78,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $unitEntityC->use_weight_as_amount = 1;
         $unitsTable->saveMany([$unitEntityA, $unitEntityB, $unitEntityC]);
 
-        $productIds = [347, 346, 60, 350, 351];
+        $productIds = [ProductsFixture::ID_TROUT, ProductsFixture::ID_ARTICHOKE, ProductsFixture::ID_MILK, ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES, ProductsFixture::ID_STOCK_PRODUCT_B];
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds, true);
         $writerService->render();

@@ -27,7 +27,7 @@ class BarcodesFixture extends AppFixture
     public array $records = [
         [
             'id' => 1,
-            'product_id' => 349,
+            'product_id' => ProductsFixture::ID_STOCK_PRODUCT_A,
             'product_attribute_id' => 0,
             'barcode' => '1234567890123',
         ],

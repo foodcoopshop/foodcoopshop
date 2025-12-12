@@ -28,7 +28,7 @@ class UnitsFixture extends AppFixture
     public array $records = [
         [
             'id' => 1,
-            'id_product' => 347,
+            'id_product' => ProductsFixture::ID_TROUT,
             'id_product_attribute' => 0,
             'price_incl_per_unit' => 1.50,
             'purchase_price_incl_per_unit' => 0.98,
@@ -64,7 +64,7 @@ class UnitsFixture extends AppFixture
         ],
         [
             'id' => 4,
-            'id_product' => 349,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_A,
             'id_product_attribute' => 0,
             'price_incl_per_unit' => 0.00,
             'purchase_price_incl_per_unit' => null,
@@ -112,7 +112,7 @@ class UnitsFixture extends AppFixture
         ],
         [
             'id' => 8,
-            'id_product' => 351,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_B,
             'id_product_attribute' => 0,
             'price_incl_per_unit' => 15.00,
             'purchase_price_incl_per_unit' => null,

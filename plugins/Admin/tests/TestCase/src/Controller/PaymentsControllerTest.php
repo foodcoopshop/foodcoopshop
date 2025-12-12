@@ -10,6 +10,7 @@ use Cake\TestSuite\EmailTrait;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Payment;
 use App\Model\Entity\Configuration;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -122,7 +123,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddCustomerProductPaymentForOneself(): void
     {
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
@@ -144,7 +145,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
 
         $this->loginAsSuperadmin();
@@ -175,7 +176,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
         $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.superadminId'),
@@ -221,7 +222,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddCustomerDepositPayment(): void
     {
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
 
         $this->loginAsSuperadmin();
@@ -243,7 +244,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddCustomerDepositPaymentWithDepositBalanceTresholdExceeded(): void
     {
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 1);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 1);
         $this->finishCart(1,1);
 
         $this->loginAsSuperadmin();
@@ -337,7 +338,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeleteCustomerPaymentWithApprovalOk(): void
     {
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
         $this->addCustomerPayment(Configure::read('test.customerId'), '2,4', Payment::TYPE_PRODUCT, true);
         $addResponse = $this->getJsonDecodedContent();
@@ -361,7 +362,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeletePaymentAsCustomer(): void
     {
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
 
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -495,7 +496,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddManufacturerDepositMoneyDepositBalanceTresholdExceeded(): void
     {
         $this->loginAsCustomer();
-        $this->addProductToCart('60-10', 10);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
 
         $this->loginAsSuperadmin();

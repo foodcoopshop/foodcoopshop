@@ -27,27 +27,27 @@ class CategoryProductsFixture extends AppFixture
     public array $records = [
         [
             'id_category' => 20,
-            'id_product' => 60,
+            'id_product' => ProductsFixture::ID_MILK,
         ],
         [
             'id_category' => 16,
-            'id_product' => 102,
+            'id_product' => ProductsFixture::ID_FRANKFURTERS,
         ],
         [
             'id_category' => 20,
-            'id_product' => 102,
+            'id_product' => ProductsFixture::ID_FRANKFURTERS,
         ],
         [
             'id_category' => 16,
-            'id_product' => 103,
+            'id_product' => ProductsFixture::ID_BRATWURST,
         ],
         [
             'id_category' => 20,
-            'id_product' => 103,
+            'id_product' => ProductsFixture::ID_BRATWURST,
         ],
         [
             'id_category' => 20,
-            'id_product' => 163,
+            'id_product' => ProductsFixture::ID_CHARD,
         ],
         [
             'id_category' => 20,
@@ -55,47 +55,47 @@ class CategoryProductsFixture extends AppFixture
         ],
         [
             'id_category' => 16,
-            'id_product' => 340,
+            'id_product' => ProductsFixture::ID_LUNG_STEW,
         ],
         [
             'id_category' => 20,
-            'id_product' => 340,
+            'id_product' => ProductsFixture::ID_LUNG_STEW,
         ],
         [
             'id_category' => 20,
-            'id_product' => 344,
+            'id_product' => ProductsFixture::ID_GARLIC,
         ],
         [
             'id_category' => 20,
-            'id_product' => 346,
+            'id_product' => ProductsFixture::ID_ARTICHOKE,
         ],
         [
             'id_category' => 16,
-            'id_product' => 347,
+            'id_product' => ProductsFixture::ID_TROUT,
         ],
         [
             'id_category' => 20,
-            'id_product' => 347,
+            'id_product' => ProductsFixture::ID_TROUT,
         ],
         [
             'id_category' => 16,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
         ],
         [
             'id_category' => 20,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
         ],
         [
             'id_category' => 20,
-            'id_product' => 349,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_A,
         ],
         [
             'id_category' => 20,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
         ],
         [
             'id_category' => 20,
-            'id_product' => 351,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_B,
         ],
         [
             'id_category' => 20,

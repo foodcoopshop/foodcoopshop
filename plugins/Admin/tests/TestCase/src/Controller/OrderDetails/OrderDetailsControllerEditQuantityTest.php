@@ -20,6 +20,7 @@ use Cake\Core\Configure;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Cart;
+use App\Test\Fixture\ProductsFixture;
 
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
@@ -210,7 +211,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetailsTable->deleteAll([]);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
-        $productId = '348-11';
+        $productId = ProductsFixture::ID_BEEF_0_5KG;
         $this->changeProductPrice($productId, 0, true, '25,2', 'g', 1000, 80);
         $this->addProductToCart($productId, 99);
         $this->finishCart();
@@ -233,8 +234,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     private function preparePricePerUnitOrder(): Cart
     {
-        $productIdA = 347; // forelle
-        $this->addProductToCart($productIdA, 2);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);

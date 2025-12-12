@@ -17,6 +17,7 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\Writer\OrderDetailCsvWriterService;
 use League\Csv\Bom;
+use App\Test\Fixture\ProductsFixture;
 
 class OrderDetailCsvWriterServiceTest extends AppCakeTestCase
 {
@@ -27,9 +28,7 @@ class OrderDetailCsvWriterServiceTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-
-        $productIdA = 347; // forelle
-        $this->addProductToCart($productIdA, 2);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
         $this->finishCart();
         $pickupDay = '2018-02-02';
         $created = '2018-02-01 09:17:00';

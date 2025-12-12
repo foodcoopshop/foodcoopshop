@@ -23,12 +23,36 @@ class ProductsFixture extends AppFixture
 {
     public string $table = 'fcs_product';
 
+    public const int ID_MILK = 60;
+    public const string ID_MILK_0_5L = '60-10';
+
+    public const int ID_FRANKFURTERS = 102;
+    public const int ID_BRATWURST = 103;
+    public const int ID_CHARD = 163;
+    public const int ID_LUNG_STEW = 340;
+    public const int ID_GARLIC = 344;
+    public const int ID_ARTICHOKE = 346;
+    public const int ID_TROUT = 347;
+
+    public const int ID_BEEF = 348;
+    public const string ID_BEEF_0_5KG = '348-11';
+    public const string ID_BEEF_1KG = '348-12';
+
+    public const int ID_STOCK_PRODUCT_A = 349;
+
+    public const int ID_STOCK_PRODUCT_WITH_ATTRIBUTES = 350;
+    public const string ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_UNIT = '350-13';
+    public const string ID_STOCK_PRODUCT_WITH_ATTRIBUTES_1KG = '350-14';
+    public const string ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT = '350-15';
+
+    public const int ID_STOCK_PRODUCT_B = 351;
+
     /**
      * @var array<int, array<string, mixed>>
      */
     public array $records = [
         [
-            'id_product' => 60,
+            'id_product' => self::ID_MILK,
             'id_manufacturer' => 15,
             'id_tax' => 3,
             'id_storage_location' => 1,
@@ -50,7 +74,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2014-12-14 19:47:33',
         ],
         [
-            'id_product' => 102,
+            'id_product' => self::ID_FRANKFURTERS,
             'id_manufacturer' => 4,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -72,7 +96,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2014-09-19 14:32:51',
         ],
         [
-            'id_product' => 103,
+            'id_product' => self::ID_BRATWURST,
             'id_manufacturer' => 4,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -94,7 +118,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2014-08-16 14:05:58',
         ],
         [
-            'id_product' => 163,
+            'id_product' => self::ID_CHARD,
             'id_manufacturer' => 5,
             'id_tax' => 0,
             'id_storage_location' => 1,
@@ -138,7 +162,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2015-02-26 13:54:07',
         ],
         [
-            'id_product' => 340,
+            'id_product' => self::ID_LUNG_STEW,
             'id_manufacturer' => 4,
             'id_tax' => 0,
             'id_storage_location' => 1,
@@ -160,7 +184,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2015-06-23 14:52:53',
         ],
         [
-            'id_product' => 344,
+            'id_product' => self::ID_GARLIC,
             'id_manufacturer' => 5,
             'id_tax' => 0,
             'id_storage_location' => 1,
@@ -182,7 +206,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2015-07-06 10:24:44',
         ],
         [
-            'id_product' => 346,
+            'id_product' => self::ID_ARTICHOKE,
             'id_manufacturer' => 5,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -204,7 +228,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2015-08-19 09:35:45',
         ],
         [
-            'id_product' => 347,
+            'id_product' => self::ID_TROUT,
             'id_manufacturer' => 4,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -226,7 +250,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2015-06-23 14:52:53',
         ],
         [
-            'id_product' => 348,
+            'id_product' => self::ID_BEEF,
             'id_manufacturer' => 4,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -248,7 +272,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2018-05-17 16:16:38',
         ],
         [
-            'id_product' => 349,
+            'id_product' => self::ID_STOCK_PRODUCT_A,
             'id_manufacturer' => 5,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -270,7 +294,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2018-08-16 12:16:51',
         ],
         [
-            'id_product' => 350,
+            'id_product' => self::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_manufacturer' => 5,
             'id_tax' => 2,
             'id_storage_location' => 1,
@@ -292,7 +316,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2018-08-16 12:19:23',
         ],
         [
-            'id_product' => 351,
+            'id_product' => self::ID_STOCK_PRODUCT_B,
             'id_manufacturer' => 5,
             'id_tax' => 1,
             'id_storage_location' => 1,

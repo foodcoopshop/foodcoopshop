@@ -28,15 +28,11 @@ class ImagesFixture extends AppFixture
     public array $records = [
         [
             'id_image' => 154,
-            'id_product' => 60
+            'id_product' => ProductsFixture::ID_MILK,
         ],
         [
             'id_image' => 156,
-            'id_product' => 340
-        ],
-        [
-            'id_image' => 157,
-            'id_product' => 338
+            'id_product' => ProductsFixture::ID_LUNG_STEW,
         ],
    ];
 }

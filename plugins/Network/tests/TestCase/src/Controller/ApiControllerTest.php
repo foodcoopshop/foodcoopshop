@@ -17,11 +17,13 @@ declare(strict_types=1);
 
 namespace Network\Test\TestCase;
 
+use App\Model\Entity\Product;
 use App\Services\DeliveryRhythmService;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\StringCompareTrait;
+use App\Test\Fixture\ProductsFixture;
 
 class ApiControllerTest extends AppCakeTestCase
 {
@@ -86,14 +88,12 @@ class ApiControllerTest extends AppCakeTestCase
             ]
         ]);
 
-        $productId = 346;
-
         $data = [
             'data' => [
                 'data' => [
                     '0' => [
                         'image' => 'no-image',
-                        'remoteProductId' => $productId,
+                        'remoteProductId' => ProductsFixture::ID_ARTICHOKE,
                         'name' => [
                             'name' => 'Kantwurst',
                             'unity' => '',
@@ -133,7 +133,7 @@ class ApiControllerTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'StockAvailables',
@@ -160,13 +160,10 @@ class ApiControllerTest extends AppCakeTestCase
     public function testGetOrdersOk(): void
     {
 
-        $this->loginAsSuperadmin();
-        $productIdA = 347; // forelle
-        $productIdB = '348-11'; // rindfleisch, 0,5 kg
-        $productIdC = '103'; // bratwürstel
-        $this->addProductToCart($productIdA, 2);
-        $this->addProductToCart($productIdB, 3);
-        $this->addProductToCart($productIdC, 1);
+        $this->loginAsSuperadmin();      
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
+        $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 3);
+        $this->addProductToCart(ProductsFixture::ID_BRATWURST, 1);
         $this->finishCart();
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -187,7 +184,7 @@ class ApiControllerTest extends AppCakeTestCase
         $response = json_decode($this->_response->getBody()->__toString());
 
         $this->assertEquals(4, $response->app->orders[0]->id);
-        $this->assertEquals(103, $response->app->orders[0]->product_id);
+        $this->assertEquals(ProductsFixture::ID_BRATWURST, $response->app->orders[0]->product_id);
         $this->assertEquals(0, $response->app->orders[0]->attribute_id);
         $this->assertEquals('Bratwürstel', $response->app->orders[0]->name);
         $this->assertEquals(1, $response->app->orders[0]->amount);
@@ -195,7 +192,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertFalse(isset($response->app->orders[0]->unit));
 
         $this->assertEquals(5, $response->app->orders[1]->id);
-        $this->assertEquals(348, $response->app->orders[1]->product_id);
+        $this->assertEquals(ProductsFixture::ID_BEEF, $response->app->orders[1]->product_id);
         $this->assertEquals(11, $response->app->orders[1]->attribute_id);
         $this->assertEquals('Rindfleisch', $response->app->orders[1]->name);
         $this->assertEquals(3, $response->app->orders[1]->amount);
@@ -205,7 +202,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertEquals(false, $response->app->orders[1]->unit->mark_as_saved);
 
         $this->assertEquals(6, $response->app->orders[2]->id);
-        $this->assertEquals(347, $response->app->orders[2]->product_id);
+        $this->assertEquals(ProductsFixture::ID_TROUT, $response->app->orders[2]->product_id);
         $this->assertEquals(0, $response->app->orders[2]->attribute_id);
         $this->assertEquals('Forelle : Stück', $response->app->orders[2]->name);
         $this->assertEquals(2, $response->app->orders[2]->amount);

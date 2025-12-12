@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +26,7 @@ class PurchasePriceProductsTableTest extends AppCakeTestCase
         $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $entity = $purchasePriceProductsTable->newEntity(
             [
-                'product_id' => 340,
+                'product_id' => ProductsFixture::ID_LUNG_STEW,
                 'tax_id' => 0,
                 'price' => 10,
             ],
@@ -33,12 +34,12 @@ class PurchasePriceProductsTableTest extends AppCakeTestCase
         $purchasePriceProductsTable->save($entity);
 
         $productIds = [
-            103, // Bratwürstel with 0 % purchase price
-            163, // Mangold: no purchase price defined
-            346, // Artischocke: main product with normal price
-            347, // Forelle: main product with price per unit
-            348, // Rindfleisch: attributes with price per unit
-            60,  // Milch: attribute with normal price
+            ProductsFixture::ID_BRATWURST, // Bratwürstel with 0 % purchase price
+            ProductsFixture::ID_CHARD, // Mangold: no purchase price defined
+            ProductsFixture::ID_ARTICHOKE, // Artischocke: main product with normal price
+            ProductsFixture::ID_TROUT, // Forelle: main product with price per unit
+            ProductsFixture::ID_BEEF, // Rindfleisch: attributes with price per unit
+            ProductsFixture::ID_MILK,  // Milch: attribute with normal price
         ];
 
         $surcharge = 40;
@@ -52,23 +53,23 @@ class PurchasePriceProductsTableTest extends AppCakeTestCase
             $productId = key($pricesToChange);
             $values = $pricesToChange[$productId];
 
-            if ($productId == '346') {
+            if ($productId == ProductsFixture::ID_ARTICHOKE) {
                 $this->assertEquals(1.85, $values['gross_price']);
                 $this->assertNull($values['unit_product_price_incl_per_unit']);
             }
-            if ($productId == '347') {
+            if ($productId == ProductsFixture::ID_TROUT) {
                 $this->assertEquals(0, $values['gross_price']);
                 $this->assertEquals(1.34, $values['unit_product_price_incl_per_unit']);
             }
-            if ($productId == '60-10') {
+            if ($productId == ProductsFixture::ID_MILK_0_5L) {
                 $this->assertEquals(0.4, $values['gross_price']);
                 $this->assertNull($values['unit_product_price_incl_per_unit']);
             }
-            if ($productId == '348-12') {
+            if ($productId == ProductsFixture::ID_BEEF_1KG) {
                 $this->assertEquals(0, $values['gross_price']);
                 $this->assertEquals(19.08, $values['unit_product_price_incl_per_unit']);
             }
-            if ($productId == '340') {
+            if ($productId == ProductsFixture::ID_LUNG_STEW) {
                 $this->assertEquals(14, $values['gross_price']);
                 $this->assertNull($values['unit_product_price_incl_per_unit']);
             }

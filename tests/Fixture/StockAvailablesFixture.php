@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
+use App\Test\Fixture\ProductsFixture;
+
 class StockAvailablesFixture extends AppFixture
 {
     public string $table = 'fcs_stock_available';    
@@ -27,7 +29,7 @@ class StockAvailablesFixture extends AppFixture
     public array $records = [
         [
             'id_stock_available' => 132,
-            'id_product' => 60,
+            'id_product' => ProductsFixture::ID_MILK,
             'id_product_attribute' => 0,
             'quantity' => 1015,
             'quantity_limit' => 0,
@@ -37,7 +39,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 195,
-            'id_product' => 102,
+            'id_product' => ProductsFixture::ID_FRANKFURTERS,
             'id_product_attribute' => 0,
             'quantity' => 2996,
             'quantity_limit' => 0,
@@ -47,7 +49,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 196,
-            'id_product' => 103,
+            'id_product' => ProductsFixture::ID_BRATWURST,
             'id_product_attribute' => 0,
             'quantity' => 990,
             'quantity_limit' => 0,
@@ -57,7 +59,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 318,
-            'id_product' => 163,
+            'id_product' => ProductsFixture::ID_CHARD,
             'id_product_attribute' => 0,
             'quantity' => 988,
             'quantity_limit' => 0,
@@ -77,7 +79,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 678,
-            'id_product' => 340,
+            'id_product' => ProductsFixture::ID_LUNG_STEW,
             'id_product_attribute' => 0,
             'quantity' => 990,
             'quantity_limit' => 0,
@@ -87,7 +89,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 680,
-            'id_product' => 344,
+            'id_product' => ProductsFixture::ID_GARLIC,
             'id_product_attribute' => 0,
             'quantity' => 78,
             'quantity_limit' => 0,
@@ -97,7 +99,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 686,
-            'id_product' => 346,
+            'id_product' => ProductsFixture::ID_ARTICHOKE,
             'id_product_attribute' => 0,
             'quantity' => 97,
             'quantity_limit' => 0,
@@ -107,7 +109,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 692,
-            'id_product' => 60,
+            'id_product' => ProductsFixture::ID_MILK,
             'id_product_attribute' => 9,
             'quantity' => 996,
             'quantity_limit' => 0,
@@ -117,7 +119,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 693,
-            'id_product' => 60,
+            'id_product' => ProductsFixture::ID_MILK,
             'id_product_attribute' => 10,
             'quantity' => 19,
             'quantity_limit' => 0,
@@ -127,7 +129,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 704,
-            'id_product' => 347,
+            'id_product' => ProductsFixture::ID_TROUT,
             'id_product_attribute' => 0,
             'quantity' => 999,
             'quantity_limit' => 0,
@@ -137,7 +139,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 705,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
             'id_product_attribute' => 0,
             'quantity' => 1998,
             'quantity_limit' => 0,
@@ -147,7 +149,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 706,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
             'id_product_attribute' => 11,
             'quantity' => 999,
             'quantity_limit' => 0,
@@ -157,7 +159,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 707,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
             'id_product_attribute' => 12,
             'quantity' => 999,
             'quantity_limit' => 0,
@@ -167,7 +169,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 708,
-            'id_product' => 349,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_A,
             'id_product_attribute' => 0,
             'quantity' => 5,
             'quantity_limit' => -5,
@@ -177,7 +179,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 709,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_product_attribute' => 0,
             'quantity' => 1004,
             'quantity_limit' => 0,
@@ -187,7 +189,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 710,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_product_attribute' => 13,
             'quantity' => 5,
             'quantity_limit' => -5,
@@ -197,7 +199,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 711,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_product_attribute' => 14,
             'quantity' => 999,
             'quantity_limit' => 0,
@@ -207,7 +209,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 712,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_product_attribute' => 15,
             'quantity' => 999,
             'quantity_limit' => 0,

@@ -28,7 +28,7 @@ class CartProductsFixture extends AppFixture
         [
             'id_cart_product' => 1,
             'id_cart' => 1,
-            'id_product' => 346,
+            'id_product' => ProductsFixture::ID_ARTICHOKE,
             'id_product_attribute' => 0,
             'amount' => 1,
             'created' => '2018-03-01 10:17:14',
@@ -37,7 +37,7 @@ class CartProductsFixture extends AppFixture
         [
             'id_cart_product' => 2,
             'id_cart' => 1,
-            'id_product' => 340,
+            'id_product' => ProductsFixture::ID_LUNG_STEW,
             'id_product_attribute' => 0,
             'amount' => 1,
             'created' => '2018-03-01 10:17:14',
@@ -46,7 +46,7 @@ class CartProductsFixture extends AppFixture
         [
             'id_cart_product' => 3,
             'id_cart' => 1,
-            'id_product' => 60,
+            'id_product' => ProductsFixture::ID_MILK,
             'id_product_attribute' => 10,
             'amount' => 1,
             'created' => '2018-03-01 10:17:14',

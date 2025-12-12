@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * ProductTest
@@ -28,16 +29,15 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
     public function testAddProductAttribute(): void
     {
-        $productId = 346;
         $attributeId = 29;
 
         $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
-        $productAttributesTable->add($productId, $attributeId);
+        $productAttributesTable->add(ProductsFixture::ID_ARTICHOKE, $attributeId);
 
         $productsTable = $this->getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'ProductAttributes.StockAvailables',
@@ -52,13 +52,12 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
     public function testEditProductAttribute(): void
     {
-        $productId = 350;
         $productAttributeId = 13;
         $barcode = '1234567890123';
 
         $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/products/editProductAttribute', [
-            'productId' => $productId,
+            'productId' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'productAttributeId' => $productAttributeId,
             'barcode' => $barcode,
             'deleteProductAttribute' => 0,
@@ -68,7 +67,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                'Products.id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             ],
             contain: [
                 'ProductAttributes.BarcodeProductAttributes',
@@ -81,12 +80,10 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
     public function testDeleteProductAttribute(): void
     {
-        $productId = 350;
         $productAttributeId = 13;
-
         $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/products/editProductAttribute', [
-            'productId' => $productId,
+            'productId' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'productAttributeId' => $productAttributeId,
             'deleteProductAttribute' => 1,
         ]);
@@ -95,7 +92,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                'Products.id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             ],
             contain: [
                 'ProductAttributes.BarcodeProductAttributes',

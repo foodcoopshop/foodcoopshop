@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use App\Test\Fixture\ProductsFixture;
 
 class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestCase
 {
@@ -58,10 +59,9 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
     {
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -200);
         $this->loginAsSuperadmin();
-        $productId = '347'; // forelle
         $amount = 7;
         $this->editCustomerAmount = 2;
-        $this->addProductToCart($productId, $amount);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, $amount);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
@@ -94,10 +94,9 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -200);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $productId = '347'; // forelle
         $amount = 6;
         $this->editCustomerAmount = 2;
-        $this->addProductToCart($productId, $amount);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, $amount);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
@@ -139,10 +138,9 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
     public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5(): void
     {
         $this->loginAsSuperadmin();
-        $productId = '346'; // artischocke
         $amount = 7;
         $this->editCustomerAmount = 2;
-        $this->addProductToCart($productId, $amount);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, $amount);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);

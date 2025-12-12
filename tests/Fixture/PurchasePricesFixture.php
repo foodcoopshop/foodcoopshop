@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
+use App\Test\Fixture\ProductsFixture;
+
 class PurchasePricesFixture extends AppFixture
 {
     public string $table = 'fcs_purchase_prices';
@@ -27,7 +29,7 @@ class PurchasePricesFixture extends AppFixture
     public array $records = [
         [
             'id_purchase_price' => 1,
-            'product_id' => 346,
+            'product_id' => ProductsFixture::ID_ARTICHOKE,
             'product_attribute_id' => 0,
             'tax_id' => 1,
             'price' => 1.200000
@@ -41,21 +43,21 @@ class PurchasePricesFixture extends AppFixture
         ],
         [
             'id_purchase_price' => 3,
-            'product_id' => 347,
+            'product_id' => ProductsFixture::ID_TROUT,
             'product_attribute_id' => 0,
             'tax_id' => 3,
             'price' => NULL
         ],
         [
             'id_purchase_price' => 4,
-            'product_id' => 348,
+            'product_id' => ProductsFixture::ID_BEEF,
             'product_attribute_id' => 0,
             'tax_id' => 3,
             'price' => NULL
         ],
         [
             'id_purchase_price' => 5,
-            'product_id' => 60,
+            'product_id' => ProductsFixture::ID_MILK,
             'product_attribute_id' => 0,
             'tax_id' => 2,
             'price' => NULL
@@ -69,7 +71,7 @@ class PurchasePricesFixture extends AppFixture
         ],
         [
             'id_purchase_price' => 7,
-            'product_id' => 163,
+            'product_id' => ProductsFixture::ID_CHARD,
             'product_attribute_id' => 0,
             'tax_id' => 0,
             'price' => 1.072727
