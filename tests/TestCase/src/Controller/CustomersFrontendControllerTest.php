@@ -316,7 +316,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     public function testLoginPageWithOutputStringReplacements(): void
     {
         Configure::write('app.outputStringReplacements',
-           include(APP . 'Services' . DS . 'OutputFilter' . DS . 'config' . DS . 'de_DE' . DS . 'memberClientConfig.php'),
+           include(APP . 'Services/OutputFilter/config/de_DE/memberClientConfig.php'),
         );
         $this->get($this->Slug->getLogin());
         $this->assertResponseContains('Kundenkonto erstellen');

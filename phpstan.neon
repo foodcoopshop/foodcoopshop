@@ -32,7 +32,6 @@ parameters:
             - src/Services/HelloCash/HelloCashService.php
             - plugins/Admin/src/Controller/HelloCashController.php
         - message: '#will always evaluate to true#'
-        - message: '#is not a file or it does not exist#'
 
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

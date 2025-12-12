@@ -25,7 +25,7 @@ use App\Test\Fixture\AppFixture;
 use Cake\Datasource\ConnectionInterface;
 use App\Model\Entity\Cart;
 
-require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
+require_once ROOT . '/tests/config/test.config.php';
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
