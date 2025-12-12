@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+
+namespace App\Model\Table;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -12,9 +15,8 @@ declare(strict_types=1);
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\CartProductUnit>
  */
-namespace App\Model\Table;
-
 class CartProductUnitsTable extends AppTable
 {
 

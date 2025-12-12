@@ -17,6 +17,8 @@ use Cake\Validation\Validator;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\OrderDetailFeedback>
  */
 class OrderDetailFeedbacksTable extends AppTable
 {

@@ -23,6 +23,7 @@ use App\Model\Entity\Category;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  * 
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\Category>
  * @mixin \Cake\ORM\Behavior\TreeBehavior
  */
 class CategoriesTable extends AppTable
