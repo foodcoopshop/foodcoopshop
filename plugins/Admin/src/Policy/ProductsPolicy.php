@@ -76,7 +76,7 @@ class ProductsPolicy implements RequestPolicyInterface
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
-                return $identity !== null;
+                return true;
             default:
                 if (!empty($request->getData('productId')) && !$this->productExists($request)) {
                     return false;

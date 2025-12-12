@@ -33,13 +33,13 @@ class PaymentsPolicy implements RequestPolicyInterface
         }
 
         return match($request->getParam('action')) {
-            'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && $identity !== null && !$identity->isManufacturer(),
+            'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && !$identity->isManufacturer(),
             'product' => $identity->isSuperadmin(),
             'edit', 'previewEmail' => $identity->isSuperadmin(),
-            'addCustomerPayment' => $identity !== null && !$identity->isManufacturer(),
-            'addManufacturerPayment' => $identity !== null && !$identity->isCustomer(),
-            'changeStatus' => $identity !== null,
-             default => $identity !== null && !$identity->isManufacturer(),
+            'addCustomerPayment' => !$identity->isManufacturer(),
+            'addManufacturerPayment' => !$identity->isCustomer(),
+            'changeStatus' => true,
+             default => !$identity->isManufacturer(),
         };
 
     }

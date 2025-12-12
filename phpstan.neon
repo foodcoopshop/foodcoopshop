@@ -31,7 +31,6 @@ parameters:
           paths:
             - src/Services/HelloCash/HelloCashService.php
             - plugins/Admin/src/Controller/HelloCashController.php
-        - message: '#will always evaluate to true#'
 
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

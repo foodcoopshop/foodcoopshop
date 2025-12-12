@@ -33,8 +33,8 @@ class FeedbacksPolicy implements RequestPolicyInterface
         }
 
         return match($request->getParam('action')) {
-            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null,
-             default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin(),
+            'myFeedback' => (bool) Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED'),
+             default => (bool) Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin(),
         };
     
     }

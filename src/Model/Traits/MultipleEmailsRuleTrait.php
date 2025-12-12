@@ -23,9 +23,6 @@ trait MultipleEmailsRuleTrait
     public function ruleMultipleEmails(string $check): bool
     {
         $emails = explode(',', $check);
-        if (!is_array($emails)) {
-            $emails = [$emails];
-        }
         foreach ($emails as $email) {
             $validates = Validation::email($email, true);
             if (!$validates) {

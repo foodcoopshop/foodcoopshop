@@ -75,11 +75,8 @@ abstract class AppCakeTestCase extends TestCase
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
 
-        // enable tokens only for IntegrationTests
-        if (method_exists($this, 'enableSecurityToken')) {
-            $this->enableSecurityToken();
-            $this->enableCsrfToken();
-        }
+        $this->enableSecurityToken();
+        $this->enableCsrfToken();
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();

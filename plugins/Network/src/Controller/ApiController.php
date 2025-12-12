@@ -318,7 +318,6 @@ class ApiController extends Controller
             }
 
             $message = '';
-            $actionLogMessage = '';
             $errorMessage = '';
 
             $syncronizedProductsString = count($products) . ' '. (count($products) == 1 ? __d('network', 'product') : __d('network', 'products'));
@@ -344,9 +343,7 @@ class ApiController extends Controller
                 $actionLogMessage .= $errorMessage;
             }
 
-            if ($actionLogMessage != '') {
-                $actionLogsTable->customSave('product_remotely_changed', $this->identity->getId(), 0, 'products', $actionLogMessage);
-            }
+            $actionLogsTable->customSave('product_remotely_changed', $this->identity->getId(), 0, 'products', $actionLogMessage);
         }
 
         $this->set([

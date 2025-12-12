@@ -32,7 +32,7 @@ class PagesPolicy implements RequestPolicyInterface
         }
 
         return match($request->getParam('action')) {
-            'home' => $identity !== null,
+            'home' => true,
              default => $identity->isSuperadmin() || $identity->isAdmin(),
         };
 

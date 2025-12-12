@@ -72,7 +72,7 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 }
                 return false;
             case 'setElFinderUploadPath':
-                return $identity !== null && !$identity->isManufacturer();
+                return !$identity->isManufacturer();
             case 'delete':
             case 'editProductPrice':
             case 'editProductAmount':
@@ -106,7 +106,7 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 }
                 return true;
             default:
-                return $identity !== null;
+                return true;
         }
 
     }

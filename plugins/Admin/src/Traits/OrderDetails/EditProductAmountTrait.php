@@ -37,9 +37,6 @@ trait EditProductAmountTrait
 
         if ($productAmount < 1) {
             $message = __d('admin', 'The_amount_is_not_valid.');
-            if (! is_numeric($orderDetailId)) {
-                $message = 'input format wrong';
-            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,

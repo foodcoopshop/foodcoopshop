@@ -40,11 +40,8 @@ trait EditProductPriceTrait
         $productPrice = trim($this->getRequest()->getData('productPrice'));
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
 
-        if (! is_numeric($orderDetailId) || $productPrice === false) {
+        if ($productPrice === false) {
             $message = __d('admin', 'The_price_is_not_valid.');
-            if (! is_numeric($orderDetailId)) {
-                $message = 'input format wrong';
-            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,

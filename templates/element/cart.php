@@ -98,7 +98,7 @@ if ($identity->getProducts() !== null) {
             }
         }
 
-        if ($identity !== null && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
+        if ($identity && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
                 $class[] = 'negative';

@@ -248,7 +248,7 @@ class OrderDetailsTable extends AppTable
                 'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
             ];
             $query = $this->find('all', conditions: $conditions);
-            if ($year != '') {
+            if ($year !== 0) {
                 $query->where(function (QueryExpression $exp) use ($year) {
                     return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
                 });
