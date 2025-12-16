@@ -1730,8 +1730,8 @@ msgstr "Eine Variante mit dem Namen existiert bereits."
 msgid "A storage location with this name already exists."
 msgstr "Ein Lagerort mit diesem Namen existiert bereits."
 
-msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
-msgstr "Die Länge des Barcodes muss genau {0} Zeichen betragen."
+msgid "The_length_of_the_barcode_needs_to_be_{0}_or_{1}."
+msgstr "Die Länge des Barcodes muss {0} oder {1} Zeichen betragen."
 
 msgid "Please_enter_a_title."
 msgstr "Bitte gib einen Titel ein."
