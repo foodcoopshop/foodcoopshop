@@ -99,7 +99,7 @@ class CategoryProductsFixture extends AppFixture
         ],
         [
             'id_category' => 20,
-            'id_product' => 352,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_WEIGHT_BARCODE,
         ],
     ];
 
