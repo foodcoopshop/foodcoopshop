@@ -219,7 +219,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 713,
-            'id_product' => 351,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_B,
             'id_product_attribute' => 0,
             'quantity' => 999,
             'quantity_limit' => 0,
@@ -229,7 +229,7 @@ class StockAvailablesFixture extends AppFixture
         ],
         [
             'id_stock_available' => 714,
-            'id_product' => 352,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_WEIGHT_BARCODE,
             'id_product_attribute' => 0,
             'quantity' => 999,
             'quantity_limit' => 0,

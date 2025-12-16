@@ -54,7 +54,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $this->assertEquals(Bom::Utf8->value . 'Id;Produkt;Hersteller;Status;Menge;Mindestlagerstand;Einheit;"Verkaufspreis brutto";"Preis pro";"Verkaufspreis pro Einheit";Barcode;Lagerwert', $lines[0]);
         $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";1;97;;Stück;1,820000;;1,82;;176,54', $lines[1]);
         $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";1;78;;"100 g";0,640000;;0,64;;49,92', $lines[2]);
-        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";1;5;0;;5,000000;;5,00;1234567890123;25,00', $lines[3]);
+        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";1;5;0;;5,000000;;5,00;234567890123;25,00', $lines[3]);
         $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";15,00;;14.985,00', $lines[4]);
         $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;5;0;"0,5 kg";2,000000;;2,00;2145678901234;10,00', $lines[5]);
         $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;999;;"1 kg";4,000000;;4,00;;3.996,00', $lines[6]);

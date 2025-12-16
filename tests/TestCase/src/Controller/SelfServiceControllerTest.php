@@ -25,6 +25,7 @@ use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
 use App\Model\Entity\Cart;
+use App\Test\Fixture\BarcodesFixture;
 use Cake\ORM\TableRegistry;
 use App\Test\Fixture\ProductsFixture;
 
@@ -368,8 +369,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSearchByCustomProductBarcode(): void
     {
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '1234567890123';
-        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->get($this->Slug->getSelfService(BarcodesFixture::BARCODE_PRODUCT_A['barcode']));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
@@ -377,8 +377,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSearchByCustomProductAttributeBarcode(): void
     {
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '2145678901234';
-        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->get($this->Slug->getSelfService(BarcodesFixture::BARCODE_ATTRIBUTE_A['barcode']));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
@@ -386,8 +385,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSearchByCustomProductBarcodeWithWeight(): void
     {
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '2712345000235';
-        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $barcode = '2712345000235';
+        $this->get($this->Slug->getSelfService($barcode));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
 

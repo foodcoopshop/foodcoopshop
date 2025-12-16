@@ -46,6 +46,7 @@ class ProductsFixture extends AppFixture
     public const string ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT = '350-15';
 
     public const int ID_STOCK_PRODUCT_B = 351;
+    public const int ID_STOCK_PRODUCT_WITH_WEIGHT_BARCODE = 352;
 
     /**
      * @var array<int, array<string, mixed>>
@@ -338,7 +339,7 @@ class ProductsFixture extends AppFixture
             'modified' => '2019-06-05 15:10:08',
         ],
         [
-            'id_product' => 352,
+            'id_product' => self::ID_STOCK_PRODUCT_WITH_WEIGHT_BARCODE,
             'id_manufacturer' => 5,
             'id_tax' => 1,
             'id_storage_location' => 1,

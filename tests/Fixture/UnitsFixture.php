@@ -124,7 +124,7 @@ class UnitsFixture extends AppFixture
         ],
         [
             'id' => 9,
-            'id_product' => 352,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_WEIGHT_BARCODE,
             'id_product_attribute' => 0,
             'price_incl_per_unit' => 12.00,
             'purchase_price_incl_per_unit' => null,
