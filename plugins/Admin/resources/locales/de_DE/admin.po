@@ -2062,6 +2062,12 @@ msgstr "Bankdaten"
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr "werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet."
 
+msgid "Account holder"
+msgstr "Kontoinhaber"
+
+msgid "exact wording"
+msgstr "exakter Wortlaut"
+
 msgid "Bank"
 msgstr "Bank"
 

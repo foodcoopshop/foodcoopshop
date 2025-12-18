@@ -36,6 +36,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             'bank_name' => 'Test Bank',
             'iban' => 'Iban',
             'bic' => 'bic',
+            'bank_account_holder' => 'test account holder',
             'no_delivery_days' => '',
             'active' => 1,
             'additional_text_for_invoice' => '',
@@ -399,6 +400,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'Manufacturers' => [
                     'name' => 'Manufacturer & Sons',
                     'homepage' => 'https://www.foodcoopshop.com',
+                    'bank_account_holder' => 'test account holder',
                     'address_manufacturer' => [
                         'firstname' => 'firstname',
                         'lastname' => 'lastname',
@@ -432,6 +434,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($manufacturer->address_manufacturer->lastname, $customerRecord->lastname);
         $this->assertEquals($manufacturer->address_manufacturer->email, $customerRecord->email);
         $this->assertEquals(APP_ON, $customerRecord->active);
+        $this->assertEquals('test account holder', $manufacturer->bank_account_holder);
     }
 
     /**
