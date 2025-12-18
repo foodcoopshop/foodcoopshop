@@ -82,12 +82,17 @@ trait OrderDetailsFilterTrait
         return null;
     }
 
+    public function getDefaultTaxRate(): null
+    {
+        return null;
+    }
+
     /**
      * @param string|list<int> $categoryIds
      */
-    public function getDefaultAdditionalFiltersEnabled(int|string|null $cartType, array|string $categoryIds): bool
+    public function getDefaultAdditionalFiltersEnabled(int|string|null $cartType, array|string $categoryIds, float|string|null $taxRate): bool
     {
-        return !is_null($cartType) || (!empty($categoryIds));
+        return !is_null($cartType) || (!empty($categoryIds)) || !is_null($taxRate);
     }
 
     public function getDefaultGroupBy(): string
@@ -114,11 +119,13 @@ trait OrderDetailsFilterTrait
         float|string $deposit,
         string $groupBy,
         ?string $cartType,
+        null|float|string $taxRate,
         array|string $categoryIds = '',
     ): SelectQuery
     {
+        /** @var \App\Model\Table\OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $categoryIds);
+        $odParams = $orderDetailsTable->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $taxRate, $categoryIds);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
@@ -159,7 +166,7 @@ trait OrderDetailsFilterTrait
             contain:  $contain,
             group:  $group,
         );
-
+        
         $orderDetailsTable->getAssociation('CartProducts.Carts')->setJoinType('INNER');
         $query->contain(['CartProducts.Carts' => function ($q) use ($cartType) {
             if (in_array($cartType, array_keys(Configure::read('app.htmlHelper')->getCartTypes()))) {

@@ -823,6 +823,7 @@ class OrderDetailsTable extends AppTable
         array $pickupDay,
         int|string $orderDetailId,
         float|string $deposit,
+        float|string|null $taxRate,
         array|string $categoryIds = '',
         ): array
     {
@@ -848,6 +849,10 @@ class OrderDetailsTable extends AppTable
 
         if ($deposit != '') {
             $conditions[] = 'OrderDetails.deposit > 0';
+        }
+
+        if ($taxRate !== null) {
+            $conditions['OrderDetails.tax_rate'] = $taxRate;
         }
 
         $contain = [

@@ -70,12 +70,13 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         $productId = h($this->getRequestQuery('productId', $this->getDefaultProductId()));
         $customerId = h($this->getRequestQuery('customerId', $this->getDefaultCustomerId()));
         $cartType = h($this->getRequestQuery('cartType', $this->getDefaultCartType()));
+        $taxRate = h($this->getRequestQuery('taxRate', $this->getDefaultTaxRate()));
         $categoryIds = h($this->getRequestQuery('categoryIds', $this->getDefaultCategoryIds()));
         $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
         $sort = $this->getRequestQuery('sort');
         $direction = $this->getRequestQuery('direction', 'ASC');
 
-        $orderDetails = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $categoryIds);
+        $orderDetails = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $taxRate, $categoryIds);
         if (!is_null($sort)) {
             $orderDetails->orderBy([$sort => $direction]);
         }
