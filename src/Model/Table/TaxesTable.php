@@ -115,7 +115,7 @@ class TaxesTable extends AppTable
         $preparedTaxes = [];
         if (Configure::read('app.isZeroTaxEnabled')) {
             $preparedTaxes = [
-                $useRateAsKey ? '0.000' : 0  => '0%',
+                ($useRateAsKey ? '0.000' : 0) => '0%',
             ];
         }
         foreach ($taxes as $tax) {
