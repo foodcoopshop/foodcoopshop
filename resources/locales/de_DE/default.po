@@ -1994,6 +1994,9 @@ msgstr "Standard-Menge pro Lieferrhythmus muss eine Zahl sein."
 msgid "Field:_Default_quantity_after_sending_order_lists"
 msgstr "Feld: Standard-Menge pro Lieferrhythmus"
 
+msgid "Tax rate"
+msgstr "Steuersatz"
+
 msgid "Please_enter_a_tax_rate."
 msgstr "Bitte gib einen Steuersatz ein."
 

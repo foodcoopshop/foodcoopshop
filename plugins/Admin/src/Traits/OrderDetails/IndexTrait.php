@@ -57,7 +57,10 @@ trait IndexTrait
         $categoryIds = h($this->getRequest()->getQuery('categoryIds', $this->getDefaultCategoryIds()));
         $this->set('categoryIds', $categoryIds);
 
-        $additionalFiltersEnabled = h($this->getRequest()->getQuery('additionalFiltersEnabled', $this->getDefaultAdditionalFiltersEnabled($cartType, $categoryIds)));
+        $taxRate = h($this->getRequest()->getQuery('taxRate', $this->getDefaultTaxRate()));
+        $this->set('taxRate', $taxRate);
+
+        $additionalFiltersEnabled = h($this->getRequest()->getQuery('additionalFiltersEnabled', $this->getDefaultAdditionalFiltersEnabled($cartType, $categoryIds, $taxRate)));
         $this->set('additionalFiltersEnabled', $additionalFiltersEnabled);
 
         $groupBy = h($this->getRequestQuery('groupBy', $this->getDefaultGroupBy()));
@@ -77,8 +80,13 @@ trait IndexTrait
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());
 
-        $categoriesTable = $this->getTableLocator()->get('Categories');
-        $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
+        if ($additionalFiltersEnabled) {
+            $categoriesTable = $this->getTableLocator()->get('Categories');
+            $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
+            $taxesTable = $this->getTableLocator()->get('Taxes');
+            $taxRatesForDropdown = $taxesTable->getForDropdown(true);
+            $this->set('taxRatesForDropdown', $taxRatesForDropdown);
+        }
 
         $this->set('title_for_layout', __d('admin', 'Orders'));
 
@@ -104,7 +112,7 @@ trait IndexTrait
             }
         }
 
-        $query = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $categoryIds);
+        $query = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $taxRate, $categoryIds);
 
         $orderDetails = $this->paginate($query, [
             'sortableFields' => [

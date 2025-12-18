@@ -436,6 +436,9 @@ msgstr "Steuersatz bearbeiten"
 msgid "The_tax_rate_{0}_has_been_{1}."
 msgstr "Der Steuersatz {0} wurde {1}."
 
+msgid "Tax rate"
+msgstr "Steuersatz"
+
 msgid "Tax_rates"
 msgstr "Steuersätze"
 
