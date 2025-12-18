@@ -851,8 +851,8 @@ class OrderDetailsTable extends AppTable
             $conditions[] = 'OrderDetails.deposit > 0';
         }
 
-        if ($taxRate !== null) {
-            $conditions['OrderDetails.tax_rate'] = $taxRate;
+        if ($taxRate !== '' && $taxRate !== null) {
+            $conditions['OrderDetails.tax_rate'] = (float) $taxRate;
         }
 
         $contain = [
