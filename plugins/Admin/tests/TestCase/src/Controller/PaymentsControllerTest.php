@@ -140,10 +140,8 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddCustomerProductPaymentAsSuperadminRetailModeEnabled(): void
+    public function testAddCustomerProductPaymentAsSuperadmin(): void
     {
-        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
-
         $this->loginAsCustomer();
         $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
@@ -170,35 +168,6 @@ class PaymentsControllerTest extends AppCakeTestCase
             ]
         )->first();
         $this->assertEquals(APP_ON, $payment->approval);
-    }
-
-    public function testAddCustomerProductPaymentAsSuperadminRetailModeDisabled(): void
-    {
-
-        $this->loginAsSuperadmin();
-        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
-        $this->finishCart(1,1);
-        $this->addCustomerPaymentAndAssertIncreasedCreditBalance(
-            Configure::read('test.superadminId'),
-            '2,5',
-            Payment::TYPE_PRODUCT,
-        );
-        $this->logout();
-
-        $this->assertActionLogRecord(
-            Configure::read('test.superadminId'),
-            'payment_product_added',
-            'payments',
-            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>2,50 €'
-        );
-
-        $paymentsTable = $this->getTableLocator()->get('Payments');
-        $payment = $paymentsTable->find('all',
-            order: [
-                'Payments.id' => 'DESC' ,
-            ]
-        )->first();
-        $this->assertEquals(APP_OFF, $payment->approval);
     }
 
     public function testAddCustomerDepositPaymentDefinedWithDepositTresholdExceeded(): void

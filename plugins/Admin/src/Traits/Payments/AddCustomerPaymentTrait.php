@@ -128,7 +128,7 @@ trait AddCustomerPaymentTrait
             }
         }
 
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $type == Payment::TYPE_PRODUCT && $this->identity->isSuperadmin()) {
+        if ($type == Payment::TYPE_PRODUCT && $this->identity->isSuperadmin()) {
             $newEntity->approval = APP_ON;
         }
 
