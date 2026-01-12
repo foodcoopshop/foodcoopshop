@@ -288,14 +288,14 @@ class OrderDetailsTable extends AppTable
             $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
             $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
                 return $exp->or([
-                    $query->newExpr()->and([
+                    $query->expr()->and([
                         'Products.delivery_rhythm_type <> "individual"',
-                        $query->newExpr()->eq('Products.delivery_rhythm_send_order_list_weekday', $cronjobRunDayWeekday),
-                        $query->newExpr()->eq('OrderDetails.pickup_day', $pickupDay),
+                        $query->expr()->eq('Products.delivery_rhythm_send_order_list_weekday', $cronjobRunDayWeekday),
+                        $query->expr()->eq('OrderDetails.pickup_day', $pickupDay),
                     ]),
-                    $query->newExpr()->and([
+                    $query->expr()->and([
                         'Products.delivery_rhythm_type = "individual"',
-                        $query->newExpr()->eq('Products.delivery_rhythm_send_order_list_day', $cronjobRunDay),
+                        $query->expr()->eq('Products.delivery_rhythm_send_order_list_day', $cronjobRunDay),
                         'OrderDetails.pickup_day = Products.delivery_rhythm_first_delivery_day',
                     ]),
                 ]);

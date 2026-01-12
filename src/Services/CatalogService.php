@@ -188,8 +188,8 @@ class CatalogService
 
         $query->orderByDesc(function (QueryExpression $exp, Query $query) use ($keyword) {
             return $exp->case()
-                ->when($query->newExpr()->like('Products.name', $keyword.'%'))->then('20') //list product "Birnensaft" before "Apfel-Birnesaft" for keyword "Birnensaft"
-                ->when($query->newExpr()->like('Products.name', '%'.$keyword.'%'))->then('10')
+                ->when($query->expr()->like('Products.name', $keyword.'%'))->then('20') //list product "Birnensaft" before "Apfel-Birnesaft" for keyword "Birnensaft"
+                ->when($query->expr()->like('Products.name', '%'.$keyword.'%'))->then('10')
                 ->else('0');
             }
         );
@@ -367,8 +367,8 @@ class CatalogService
 
         $query->where(function (QueryExpression $exp, Query $q) {
             return $exp->and([
-                $q->newExpr()->eq('Manufacturers.stock_management_enabled', APP_ON),
-                $q->newExpr()->eq('Products.is_stock_product', APP_ON),
+                $q->expr()->eq('Manufacturers.stock_management_enabled', APP_ON),
+                $q->expr()->eq('Products.is_stock_product', APP_ON),
             ]);
         });
 
@@ -414,13 +414,13 @@ class CatalogService
 
         $query->where(function (QueryExpression $exp, Query $q) {
             return $exp->or([
-                $q->newExpr()->isNotNull('ProductAttribute.id_product'),
+                $q->expr()->isNotNull('ProductAttribute.id_product'),
                 $exp->or([
                     $exp->and([
-                        $q->newExpr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
-                        $q->newExpr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
+                        $q->expr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
+                        $q->expr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
                     ]),
-                    $q->newExpr()->isNotNull('PurchasePriceProducts.price'),
+                    $q->expr()->isNotNull('PurchasePriceProducts.price'),
                 ]),
             ]);
         });
@@ -430,11 +430,11 @@ class CatalogService
                 'conditions' => function(QueryExpression $exp, Query $q) {
                     return $exp->or([
                         $exp->and([
-                            $q->newExpr()->eq('UnitProductAttributes.price_per_unit_enabled', APP_ON),
-                            $q->newExpr()->isNotNull('UnitProductAttributes.purchase_price_incl_per_unit'),
+                            $q->expr()->eq('UnitProductAttributes.price_per_unit_enabled', APP_ON),
+                            $q->expr()->isNotNull('UnitProductAttributes.purchase_price_incl_per_unit'),
                         ]),
                         $exp->and([
-                            $q->newExpr()->isNotNull('PurchasePriceProductAttributes.price'),
+                            $q->expr()->isNotNull('PurchasePriceProductAttributes.price'),
                         ]),
                     ]);
                 }
@@ -472,26 +472,26 @@ class CatalogService
                 $searchValue = new StringExpression('%'.$keyword.'%', 'utf8mb4_german2_ci');
             }
             $or = [
-                $q->newExpr()->like('Products.name', $searchValue),
-                $q->newExpr()->like('Products.description_short', $searchValue),
-                $q->newExpr()->eq('Products.id_product', (int) $keyword),
+                $q->expr()->like('Products.name', $searchValue),
+                $q->expr()->like('Products.description_short', $searchValue),
+                $q->expr()->eq('Products.id_product', (int) $keyword),
             ];
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $or = array_merge($or, [
-                    $q->newExpr()->eq('BarcodeProducts.barcode', $keyword),
-                    $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
+                    $q->expr()->eq('BarcodeProducts.barcode', $keyword),
+                    $q->expr()->eq('BarcodeProductAttributes.barcode', $keyword),
                 ]);
                 // fixes https://github.com/foodcoopshop/foodcoopshop/issues/938
                 if (strlen($keyword) == 8) {
                     $or = array_merge($or, [
-                        $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
+                        $q->expr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     ]);
                 }
                 if ($this->hasABarcodeWeightPrefix($keyword)) {
                     $productBarcodeWithoutWeight = $this->getBarcodeWeightFilledWithNull($keyword);
                     $or = array_merge($or, [
-                        $q->newExpr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
-                        $q->newExpr()->eq('BarcodeProductAttributes.barcode', $productBarcodeWithoutWeight),
+                        $q->expr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
+                        $q->expr()->eq('BarcodeProductAttributes.barcode', $productBarcodeWithoutWeight),
                     ]);
 				}
             }

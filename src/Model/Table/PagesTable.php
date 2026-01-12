@@ -67,7 +67,8 @@ class PagesTable extends AppTable
             $this->flattenedArray[$page->id_page] = $separator . $page->title . $statusString;
             if (!empty($page->children)) {
                 $this->flattenNestedArrayWithChildren($page->children, str_repeat('-',
-                $this->getLevel($page) + 1) . ' ');
+                $this->getBehavior('Tree')->getLevel($page) + 1) // @phpstan-ignore-line
+                 . ' ');
             }
         }
 

@@ -103,8 +103,8 @@ class BlogPostsTable extends AppTable
                 return $exp->gte($key, $value);
             } else {
                 return $exp->or([
-                    $q->newExpr()->lt($key, $value),
-                    $q->newExpr()->isNull('BlogPosts.show_on_start_page_until'),
+                    $q->expr()->lt($key, $value),
+                    $q->expr()->isNull('BlogPosts.show_on_start_page_until'),
                 ]);
             }
         });

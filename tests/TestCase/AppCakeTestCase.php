@@ -15,7 +15,6 @@ use App\View\Helper\SlugHelper;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\View\View;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
 use Network\View\Helper\NetworkHelper;
@@ -24,6 +23,7 @@ use Cake\Http\ServerRequest;
 use App\Test\Fixture\AppFixture;
 use Cake\Datasource\ConnectionInterface;
 use App\Model\Entity\Cart;
+use App\View\AppView;
 
 require_once ROOT . '/tests/config/test.config.php';
 
@@ -68,12 +68,12 @@ abstract class AppCakeTestCase extends TestCase
         $this->resetLogs();
         $this->getTableLocator()->get('Configurations')->loadConfigurations();
 
-        $View = new View();
-        $this->Slug = new SlugHelper($View);
-        $this->Html = new MyHtmlHelper($View);
-        $this->Time = new MyTimeHelper($View);
-        $this->Network = new NetworkHelper($View);
-        $this->PricePerUnit = new PricePerUnitHelper($View);
+        $AppView = new AppView();
+        $this->Slug = new SlugHelper($AppView);
+        $this->Html = new MyHtmlHelper($AppView);
+        $this->Time = new MyTimeHelper($AppView);
+        $this->Network = new NetworkHelper($AppView);
+        $this->PricePerUnit = new PricePerUnitHelper($AppView);
 
         $this->enableSecurityToken();
         $this->enableCsrfToken();

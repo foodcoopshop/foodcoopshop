@@ -38,7 +38,6 @@ use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
 use Cake\View\View;
-use function Cake\Core\h;
 use function Cake\I18n\__;
 
 /**
@@ -114,12 +113,12 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
     /**
      * Constructor. Overridden to merge passed args with URL options.
      *
-     * @param \Cake\View\View $view The View this helper is being attached to.
+     * @param View<\App\View\AppView> $View
      * @param array<string, mixed> $config Configuration settings for the helper.
      */
-    public function __construct(View $view, array $config = [])
+    public function __construct(View $View, array $config = [])
     {
-        parent::__construct($view, $config);
+        parent::__construct($View, $config);
 
         $query = $this->_View->getRequest()->getQueryParams();
         unset($query['page'], $query['limit'], $query['sort'], $query['direction']);
