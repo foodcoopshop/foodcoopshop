@@ -95,7 +95,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
             $this->table .= '<tr style="font-weight:normal;">';
             $this->renderTableRow(
                 [
-                    $result->ordered_deposit['deposit_amount'] . 'x',
+                    $result->ordered_deposit['deposit_amount'],
                     '',
                     __('Delivered_deposit'),
                     '',
@@ -103,7 +103,24 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
                     Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate) . '%',
                     '',
                 ]
-                );
+            );
+            $this->table .= '</tr>';
+        }
+
+        // returned deposit
+        if ($result->returned_deposit['deposit_incl'] != 0) {
+            $this->table .= '<tr style="font-weight:normal;">';
+            $this->renderTableRow(
+                [
+                    $result->returned_deposit['deposit_amount'],
+                    '',
+                    __('Delivered deposit'),
+                    '',
+                    Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']),
+                    Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate) . '%',
+                    '',
+                ]
+            );
             $this->table .= '</tr>';
         }
 

@@ -298,12 +298,19 @@ class InvoicesTable extends AppTable
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
+
         foreach($orderDetails as $orderDetail) {
-            if ($orderDetail->deposit != 0) {
+            if ($orderDetail->deposit > 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
                 $orderedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
                 $orderedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
+            }
+            if ($orderDetail->deposit < 0) {
+                $returnedDeposit['deposit_incl'] += $orderDetail->deposit;
+                $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $returnedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
 
