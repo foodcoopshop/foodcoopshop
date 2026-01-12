@@ -95,7 +95,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
             $this->table .= '<tr style="font-weight:normal;">';
             $this->renderTableRow(
                 [
-                    $result->ordered_deposit['deposit_amount'],
+                    $result->ordered_deposit['deposit_amount'] . 'x',
                     '',
                     __('Delivered_deposit'),
                     '',
@@ -112,7 +112,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
             $this->table .= '<tr style="font-weight:normal;">';
             $this->renderTableRow(
                 [
-                    $result->returned_deposit['deposit_amount'],
+                    $result->returned_deposit['deposit_amount'] . 'x',
                     '',
                     __('Delivered deposit'),
                     '',
