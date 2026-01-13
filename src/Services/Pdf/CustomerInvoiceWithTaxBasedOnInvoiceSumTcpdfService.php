@@ -82,8 +82,8 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
                     Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl),
                     Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate) . '%',
                     $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
-                ]
-                );
+                ],
+            );
             $this->table .= '</tr>';
 
         }
@@ -102,7 +102,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
                     Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']),
                     Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate) . '%',
                     '',
-                ]
+                ],
             );
             $this->table .= '</tr>';
         }
@@ -114,12 +114,12 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
                 [
                     $result->returned_deposit['deposit_amount'] . 'x',
                     '',
-                    __('Delivered deposit'),
+                    __('Returned deposit'),
                     '',
                     Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']),
                     Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate) . '%',
                     '',
-                ]
+                ],
             );
             $this->table .= '</tr>';
         }

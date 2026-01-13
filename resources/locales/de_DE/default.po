@@ -2192,7 +2192,7 @@ msgstr "Lieferschein"
 msgid "Delivered_deposit"
 msgstr "Pfand geliefert"
 
-msgid "Delivered deposit"
+msgid "Returned deposit"
 msgstr "Pfand zurückgebracht"
 
 msgid "Payment_type_deposit_return"

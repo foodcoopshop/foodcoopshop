@@ -112,7 +112,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $productsTable->updateAll(['id_tax' => 2], ['active' => APP_ON]);
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetailsTable->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
-        $orderDetailsTable->updateAll(['deposit' => -0.5], ['id_order_detail' => 3]); // deposit can also be retured with a negative deposit of an order detail
+        $orderDetailsTable->updateAll(['deposit' => -0.5], ['id_order_detail' => 3]); // deposit can also be returned with a negative deposit of an order detail
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
