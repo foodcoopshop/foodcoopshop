@@ -15,6 +15,7 @@ use Cake\View\JsonView;
 use Cake\I18n\DateTime;
 use Cake\Http\Response;
 use Cake\ORM\Query\SelectQuery;
+use App\Model\Table\InvoicesTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -206,6 +207,7 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
+        /** @var InvoicesTable $invoicesTable */
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoiceData = $invoicesTable->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
