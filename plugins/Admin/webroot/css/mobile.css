@@ -68,6 +68,7 @@ body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
     background: #fff;
     width: 34px;
     text-align: center;
+    margin-right: 5px;
 }
 .sb-toggle-left i {
     width: auto;

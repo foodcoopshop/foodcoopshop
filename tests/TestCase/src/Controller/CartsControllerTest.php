@@ -26,6 +26,7 @@ use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
 use Cake\ORM\TableRegistry;
+use App\Test\Fixture\ProductsFixture;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -34,12 +35,12 @@ class CartsControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    // artischocke, 0,5 deposit, manufacturerId 5
-    public string $productId1 = '346';
-    // milk with attribute 0,5 l, 0,5 deposit, manufacturerId 15
-    public string $productId2 = '60-10';
-    // knoblauch, 0% tax, , manufacturerId 5
-    public string $productId3 = '344';
+    // 0,5 deposit, manufacturerId 5
+    public string|int $productId1 = ProductsFixture::ID_ARTICHOKE;
+    // 0,5 deposit, manufacturerId 15
+    public string|int $productId2 = ProductsFixture::ID_MILK_0_5L;
+    // 0% tax, , manufacturerId 5
+    public string|int $productId3 = ProductsFixture::ID_GARLIC;
 
     public function testAddLoggedOut(): void
     {
@@ -128,7 +129,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
         // test product with attribute and NO deposit
         $errorMessage = 'Das Produkt um <b>10,00 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenwert und Pfand beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
-        $response = $this->addProductToCart('348-11', 1);
+        $response = $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 1);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
     }
@@ -139,12 +140,12 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         // test product without attribute
-        $response = $this->addProductToCart(347, 1);
+        $response = $this->addProductToCart(ProductsFixture::ID_TROUT, 1);
         $errorMessage = 'Das Produkt um <b>5,25 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenwert und Pfand beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
         $errorMessage = 'Das Produkt um <b>10,00 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenwert und Pfand beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
-        $response = $this->addProductToCart('348-11', 1);
+        $response = $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 1);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
     }
@@ -158,7 +159,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         // test product without attribute
-        $this->addProductToCart(347, 1);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 1);
         $this->assertJsonOk();
     }
 
@@ -276,8 +277,8 @@ class CartsControllerTest extends AppCakeTestCase
         ]]]);
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId1, 1);
-        $this->addProductToCart('348-12', 5);
-        $this->finishCart();
+        $this->addProductToCart(ProductsFixture::ID_BEEF_1KG, 5);
+          $this->finishCart();
         $this->checkStockAvailable($this->productId1, 5);
     }
 
@@ -307,7 +308,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Produkt ' . ProductsFixture::ID_ARTICHOKE . ' war nicht in Warenkorb vorhanden.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -590,12 +591,12 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
 
-        $this->addProductToCart('350-14', 1); // add lagerprodukt mit variante
-        $this->addProductToCart(340, 1); // add beuschl
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_1KG, 1);
+        $this->addProductToCart(ProductsFixture::ID_LUNG_STEW, 1);
         $unitsTable = TableRegistry::getTableLocator()->get('Units');
         $unitsTable = $this->getTableLocator()->get('Units');
-        $unitsTable->saveUnits(346, 12, false, 1, 'kg', 1, 0.4, 0); // artischocke
-        $unitsTable->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
+        $unitsTable->saveUnits(ProductsFixture::ID_ARTICHOKE, 12, false, 1, 'kg', 1, 0.4, 0);
+        $unitsTable->saveUnits(ProductsFixture::ID_TROUT, 0, false, 1, 'kg', 1, 0.4, 0);
 
         $this->addAllDifferentProductTypesToCart();
         $this->finishCart();
@@ -633,19 +634,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsAdmin();
         $this->addAllDifferentProductTypesToCart();
 
-        $productId = 340;
         $purchasePriceProductsTable = TableRegistry::getTableLocator()->get('PurchasePriceProducts');
         $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $entity = $purchasePriceProductsTable->newEntity(
             [
-                'product_id' => $productId,
+                'product_id' => ProductsFixture::ID_LUNG_STEW,
                 'tax_id' => 2,
                 'price' => 1.072727,
             ],
         );
         $purchasePriceProductsTable->save($entity);
-        $this->addProductToCart($productId, 2);
-        $this->addProductToCart(163, 1); //mangold
+        $this->addProductToCart(ProductsFixture::ID_LUNG_STEW, 2);
+        $this->addProductToCart(ProductsFixture::ID_CHARD, 1);
         $this->finishCart();
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -705,12 +705,11 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testDecreaseStockAvailableForMultipleAttributesOfOneProduct(): void
     {
-        $productA = '350-13';
         $this->loginAsSuperadmin();
-        $this->addProductToCart($productA, 1);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_UNIT, 1);
         $this->finishCart();
-        $this->checkStockAvailable($productA, 4);
-        $this->checkStockAvailable('350-14', 999); // must be same as before fnishing order
+        $this->checkStockAvailable(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_UNIT, 4);
+        $this->checkStockAvailable(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_1KG, 999); // must be same as before fnishing order
     }
 
     public function testIsSubscribeNewsletterLinkAddedToMail(): void
@@ -766,7 +765,7 @@ class CartsControllerTest extends AppCakeTestCase
         // check new (empty) cart
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
-        $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']->id_cart, 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
         $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
@@ -788,7 +787,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
         $this->loginAsCustomer();
-        $this->addProductToCart(349, 8);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_A, 8);
         $this->assertJsonOk();
     }
 
@@ -796,17 +795,15 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
         $this->loginAsCustomer();
-        $response = $this->addProductToCart(349, 11);
+        $response = $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_A, 11);
         $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
         $this->assertJsonError();
     }
 
     private function placeOrderWithStockProducts(): void
     {
-        $stockProductId = 349;
-        $stockProductAttributeId = '350-13';
-        $this->addProductToCart($stockProductId, 6);
-        $this->addProductToCart($stockProductAttributeId, 5);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_A, 6);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_UNIT, 5);
         $this->finishCart();
     }
 
@@ -814,13 +811,10 @@ class CartsControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-        $productIdA = 346;
-        $productIdB = 347;
-        $productIdC = '60-10';
-        $this->changeProductDeliveryRhythm($productIdA, '0-individual', '28.09.2018');
-        $this->addProductToCart($productIdA, 3);
-        $this->addProductToCart($productIdB, 2);
-        $this->addProductToCart($productIdC, 1);
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '28.09.2018');
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 3);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 1);
         $this->finishCart();
 
         $this->assertMailCount(1);
@@ -831,11 +825,11 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/products/editIsStockProduct', [
-            'productId' => 350,
+            'productId' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'isStockProduct' => 0
         ]);
         $this->ajaxPost('/admin/products/editIsStockProduct', [
-            'productId' => 349,
+            'productId' => ProductsFixture::ID_STOCK_PRODUCT_A,
             'isStockProduct' => 0
         ]);
         $this->placeOrderWithStockProducts();
@@ -897,11 +891,8 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $productIdA = 347; // forelle
-        $productIdB = '348-11'; // rindfleisch, 0,5 kg
-
-        $this->addProductToCart($productIdA, 2);
-        $this->addProductToCart($productIdB, 3);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
+        $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 3);
 
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -949,8 +940,6 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $productIdA = 347; // forelle
-        $productIdB = '348-11'; // rindfleisch, 0,5 kg
         $productIdC = 351; // stock product
 
         $unitsTable = $this->getTableLocator()->get('Units');
@@ -962,8 +951,8 @@ class CartsControllerTest extends AppCakeTestCase
         $unitEntityC->use_weight_as_amount = 1;
         $unitsTable->saveMany([$unitEntityA, $unitEntityB, $unitEntityC]);
 
-        $this->addProductToCart($productIdA, 2);
-        $this->addProductToCart($productIdB, 3);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
+        $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 3);
         $this->addProductToCart($productIdC, 3);
 
         $this->finishCart();
@@ -1144,7 +1133,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.');
 
         $this->addProductToCart($this->productId2, 3); // attribute
-        $this->addProductToCart(349, 1); // stock product - no notification!
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_A, 1); // stock product - no notification!
 
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->find()->where(
@@ -1271,9 +1260,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testLastOrders(): void
      {
         $this->loginAsSuperadmin();
-        $productId = '346'; // artischocke
-
-        $this->addProductToCart($productId, 3);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 3);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
@@ -1298,10 +1285,10 @@ class CartsControllerTest extends AppCakeTestCase
 
     protected function addAllDifferentProductTypesToCart(): void
     {
-        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
-        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
-        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
-        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 2);  // main product with normal price
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 3);      // main product with price per unit
+        $this->addProductToCart(ProductsFixture::ID_BEEF_1KG, 3);   // attribute with price per unit
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 1);  // attribute with normal price
     }
 
     private function fillCart(): void
@@ -1318,8 +1305,8 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $cart = $cartsTable->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
-        $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
-        $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']->status, 1, 'cake cart status wrong');
+        $this->assertEquals($cart['Cart']->id_cart, 2, 'cake cart id wrong');
     }
 
     /**

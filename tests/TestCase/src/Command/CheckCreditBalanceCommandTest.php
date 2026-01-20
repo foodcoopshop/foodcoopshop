@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\I18n\DateTime;
 use App\Model\Entity\Configuration;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -41,7 +42,7 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
     {
 
         $this->loginAsCustomer();
-        $this->addProductToCart(346, 20);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 20);
         $this->finishCart();
         $this->logout();
 
@@ -62,7 +63,7 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
     {
         $this->changeCustomer(Configure::read('test.customerId'), 'check_credit_reminder_enabled', 0);
         $this->loginAsCustomer();
-        $this->addProductToCart(346, 20);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 20);
         $this->finishCart();
         $this->logout();
         $this->resetCustomerCreditBalance();
@@ -75,7 +76,7 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
     {
 
         $this->loginAsCustomer();
-        $this->addProductToCart(346, 20);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 20);
         $this->finishCart();
         $this->logout();
 

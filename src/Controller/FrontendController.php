@@ -10,6 +10,7 @@ use App\Services\OrderCustomerService;
 use Cake\Routing\Router;
 use Cake\Cache\Cache;
 use App\Model\Entity\Cart;
+use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,6 +29,8 @@ class FrontendController extends AppController
 {
 
     public bool $protectEmailAddresses = true;
+    
+    protected ?CartService $cartService = null;
 
     protected function resetOriginalLoggedCustomer(): void
     {
@@ -170,6 +173,7 @@ class FrontendController extends AppController
     {
         parent::beforeFilter($event);
 
+
         /*
          * changes the identity to the desired orderCustomer
          * but only in controller beforeFilter()
@@ -200,6 +204,7 @@ class FrontendController extends AppController
             $this->set('futureOrderDetails', $futureOrderDetails);
 
             $this->identity->setCart($this->identity->getCart());
+            $this->cartService = new CartService($this);
 
         }
 

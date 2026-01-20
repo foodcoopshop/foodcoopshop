@@ -19,6 +19,8 @@ use Cake\Validation\Validator;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\BarcodeProduct>
  */
 class BarcodeProductsTable extends AppTable
 {
@@ -36,7 +38,8 @@ class BarcodeProductsTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->allowEmptyString('barcode');
-        $validator->lengthBetween('barcode', [13, 13], __('The_length_of_the_barcode_needs_to_be_exactly_{0}.', [13]));
+        $validRange = [12, 13];
+        $validator->lengthBetween('barcode', $validRange, __('The_length_of_the_barcode_needs_to_be_{0}_or_{1}.', $validRange));
         return $validator;
     }
 

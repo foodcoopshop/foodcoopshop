@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use App\Test\Fixture\ProductsFixture;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
@@ -27,7 +28,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->addProductToCart(346, 3);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 3);
         $this->finishCart();
         $orderDetailId = 4;
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);

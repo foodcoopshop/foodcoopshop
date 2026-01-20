@@ -25,6 +25,8 @@ use App\Model\Entity\Customer;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\Payment>
  */
 class PaymentsTable extends AppTable
 {
@@ -82,6 +84,13 @@ class PaymentsTable extends AppTable
             'message' => __('The date has a wrong format is in the past.'),
         ]);
 
+        return $validator;
+    }
+
+    public function validationAddSuperadmin(Validator $validator): Validator
+    {
+        $validator = $this->validationAdd($validator);
+        $validator->remove('amount', 'greaterThanOrEqual');
         return $validator;
     }
 

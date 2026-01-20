@@ -40,8 +40,9 @@ class OrderDetailsPdfWriterService extends PdfWriterService
     public function prepareAndSetData(array $pickupDay, ?string $order): void
     {
 
+        /** @var \App\Model\Table\OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $orderDetailsTable->getOrderDetailParams('', '', '', $pickupDay, '', '');
+        $odParams = $orderDetailsTable->getOrderDetailParams('', '', '', $pickupDay, '', '', null);
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $orderDetailsTable->getAssociation('PickupDayEntities')->setConditions([

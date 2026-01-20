@@ -19,6 +19,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use App\Test\Fixture\ProductsFixture;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
@@ -90,28 +91,25 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilOver(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $this->changeProductDeliveryRhythm($productId, '0-individual', '31.08.2018', '28.08.2018');
-        $this->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '31.08.2018', '28.08.2018');
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_ARTICHOKE, 'Demo Product'));
         $this->assertResponseCode(404);
     }
 
     public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilNotOver(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $this->changeProductDeliveryRhythm($productId, '0-individual', date('Y-m-d', strtotime('next friday')), date('Y-m-d'));
-        $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', date('Y-m-d', strtotime('next friday')), date('Y-m-d'));
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_ARTICHOKE, 'Artischocke'));
         $this->assertResponseCode(200);
     }
 
     public function testProductDetailDeliveryBreakActive(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 346;
         $manufacturerId = 5;
         $this->changeManufacturerNoDeliveryDays($manufacturerId, (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
-        $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_ARTICHOKE, 'Artischocke'));
         $this->assertResponseContains('<i class="fas fa-fw fa-lg fa-times"></i> Lieferpause!');
     }
 
@@ -119,8 +117,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $productId = 340;
-        $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_LUNG_STEW, 'Beuschl'));
         $this->assertResponseCode(404);
     }
 
@@ -128,10 +125,9 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $productId = 340;
         $unitsTable = $this->getTableLocator()->get('Units');
-        $unitsTable->saveUnits($productId, 0, true, 1, 'kg', 1, 0.4, 0);
-        $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
+        $unitsTable->saveUnits(ProductsFixture::ID_LUNG_STEW, 0, true, 1, 'kg', 1, 0.4, 0);
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_LUNG_STEW, 'Beuschl'));
         $this->assertResponseCode(404);
     }
 
@@ -139,8 +135,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $productId = 350;
-        $this->get($this->Slug->getProductDetail($productId, 'Lagerprodukt-mit-Varianten'));
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES, 'Lagerprodukt-mit-Varianten'));
         $this->assertResponseNotContains('1 kg');
         $this->assertResponseContains('0,5 kg');
         $this->assertResponseContains('ca. 0,5 kg');

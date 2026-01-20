@@ -17,6 +17,7 @@ use App\Controller\Traits\RenewAuthSessionTrait;
 use App\Services\SanitizeService;
 use App\Model\Entity\Customer;
 use Cake\Http\Response;
+use App\Model\Table\CartsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -310,7 +311,7 @@ class CustomersController extends FrontendController
         $enableSelfServiceLoginAsCustomerButton = false;
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && (OrderCustomerService::isSelfServiceModeByUrl() || OrderCustomerService::isSelfServiceModeByReferer())
+            && (OrderCustomerService::isSelfServiceMode())
             ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
@@ -484,8 +485,37 @@ class CustomersController extends FrontendController
         $this->set('blogPosts', $blogPosts);
     }
 
+    private function emptyCartOnSelfServiceLogout(): void
+    {
+
+        if ($this->identity !== null && $this->identity->isSelfServiceLoginCustomer() && OrderCustomerService::isSelfServiceModeByUrl()) {
+            $cart = $this->identity->getCart();
+
+            /** @var CartsTable $cartsTable */
+            $cartsTable = $this->getTableLocator()->get('Carts');
+            $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart);
+            if (!empty($cart['CartProducts'])) {
+                $email = new AppMailer();
+                $email->viewBuilder()->setTemplate('self_service_cart_emptied');
+                $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
+                    ->setSubject(__('User logged out and cart was emptied'))
+                    ->setViewVars([
+                        'cart' => $cartGroupedByPickupDay,
+                        'identity' => $this->identity,
+                    ]);
+                $email->addToQueue();
+            }
+
+            $this->cartService->doEmptyCart();
+        }
+
+    }
+
     public function logout(): Response
     {
+
+        $this->emptyCartOnSelfServiceLogout();
+
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));
 

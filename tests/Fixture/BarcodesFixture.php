@@ -21,35 +21,41 @@ class BarcodesFixture extends AppFixture
 {
     public string $table = 'fcs_barcodes';
 
-    /**
-     * @var array<int, array<string, mixed>>
-     */
-    public array $records = [
-        [
-            'id' => 1,
-            'product_id' => 349,
-            'product_attribute_id' => 0,
-            'barcode' => '1234567890123',
-        ],
-        [
-            'id' => 2,
-            'product_id' => 0,
-            'product_attribute_id' => 13,
-            'barcode' => '2145678901234',
-        ],
-        [
-            'id' => 3,
-            'product_id' => 352,
-            'product_attribute_id' => 0,
-            'barcode' => '2712345000000',
-        ],
-        [
-            'id' => 4,
-            'product_id' => 0,
-            'product_attribute_id' => 15,
-            'barcode' => '2112345000000',
-        ]
+    public const array BARCODE_PRODUCT_A = [
+        'id' => 1,
+        'product_id' => ProductsFixture::ID_STOCK_PRODUCT_A,
+        'product_attribute_id' => 0,
+        'barcode' => '234567890123', // 12 digits
     ];
+    public const array BARCODE_ATTRIBUTE_A = [
+        'id' => 2,
+        'product_id' => 0,
+        'product_attribute_id' => 13,
+        'barcode' => '2145678901234', // 13 digits
+    ];
+    public const array BARCODE_PRODUCT_B = [
+        'id' => 3,
+        'product_id' => ProductsFixture::ID_STOCK_PRODUCT_WITH_WEIGHT_BARCODE,
+        'product_attribute_id' => 0,
+        'barcode' => '2712345000000',
+    ];
+    public const array BARCODE_ATTRIBUTE_B = [
+        'id' => 4,
+        'product_id' => 0,
+        'product_attribute_id' => 15,
+        'barcode' => '2112345000000',
+    ];
+
+    public function init(): void
+    {
+        $this->records = [
+            self::BARCODE_PRODUCT_A,
+            self::BARCODE_ATTRIBUTE_A,
+            self::BARCODE_PRODUCT_B,
+            self::BARCODE_ATTRIBUTE_B,
+        ];
+        parent::init();
+    }
 
 }
 ?>

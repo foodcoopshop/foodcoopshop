@@ -25,7 +25,7 @@ class AppMarshaller extends Marshaller
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
-    protected function _validate(array $data, string|bool $validator, bool $isNew): array
+    protected function _validate(array $data, string|bool $validator, bool $isNew, array $context = []): array
     {
         $errors = parent::_validate($data, $validator, $isNew);
         if (!empty($errors) && !(PHP_SAPI == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {

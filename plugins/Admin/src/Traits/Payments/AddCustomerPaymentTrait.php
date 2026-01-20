@@ -64,7 +64,9 @@ trait AddCustomerPaymentTrait
             if ($this->identity->isSuperadmin() && in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
                 $paymentData['approval_comment'] = $this->getRequest()->getData('approval_comment');
             }
-            $newEntity = $paymentsTable->newEntity($paymentData, ['validate' => 'add']);
+            $newEntity = $paymentsTable->newEntity($paymentData, 
+                ['validate' => $this->identity->isSuperadmin() && in_array($type, [Payment::TYPE_DEPOSIT]) ? 'addSuperadmin' : 'add'],
+            );
             if ($newEntity->hasErrors()) {
                 throw new \Exception($paymentsTable->getAllValidationErrors($newEntity)[0]);
             }
@@ -126,7 +128,7 @@ trait AddCustomerPaymentTrait
             }
         }
 
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $type == Payment::TYPE_PRODUCT && $this->identity->isSuperadmin()) {
+        if ($type == Payment::TYPE_PRODUCT && $this->identity->isSuperadmin()) {
             $newEntity->approval = APP_ON;
         }
 

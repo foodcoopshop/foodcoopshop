@@ -25,6 +25,10 @@ echo '<h2>'.__d('admin', 'Bank_account_data').' <span>'.__d('admin', 'are_not_vi
 echo $this->Form->control('Manufacturers.bank_name', [
     'label' => __d('admin', 'Bank'),
 ]);
+echo $this->Form->control('Manufacturers.bank_account_holder', [
+    'label' => __d('admin', 'Account holder') . '<br /><span class="small">'.__d('admin', 'exact wording').'</span>',
+    'escape' => false,
+]);
 echo $this->Form->control('Manufacturers.iban', [
     'label' => __d('admin', 'IBAN'),
     'maxLength' => '',

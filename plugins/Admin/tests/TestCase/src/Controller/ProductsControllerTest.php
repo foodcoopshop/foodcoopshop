@@ -24,6 +24,7 @@ use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Product;
+use App\Test\Fixture\ProductsFixture;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -41,7 +42,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $this->post('/admin/products/export', [
-            'productIds' => '351,102',
+            'productIds' => join(',', ['351', ProductsFixture::ID_FRANKFURTERS]),
             'onlyStockProducts' => 1,
         ]);
 
@@ -61,7 +62,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $this->post('/admin/products/export', [
-            'productIds' => '351,102',
+            'productIds' => join(',', ['351', ProductsFixture::ID_FRANKFURTERS]),
             'onlyStockProducts' => 0,
         ]);
 
@@ -70,6 +71,26 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;;kg;15,000000;"1 kg";15,00;;14.985,00');
         $this->assertResponseContains('102;Frankfurter;"Demo Fleisch-Hersteller";1;2.996;;;0,000000;;0,00;;0,00');
         $this->assertResponseContains(';;;;;;;;;;;14.985,00');
+    }
+
+    public function testEditProductNewStatusOnBulk(): void
+    {
+        $this->loginAsSuperadmin();
+        $productIds = [ProductsFixture::ID_MILK, ProductsFixture::ID_FRANKFURTERS];
+        $status = APP_ON;
+        $this->ajaxPost('/admin/products/editNewStatusBulk', [
+            'productIds' => $productIds,
+            'status' => $status,
+        ]);
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $products = $productsTable->find('all',
+            conditions: [
+                'Products.id_product IN' => $productIds,
+            ]
+        )->toArray();
+        foreach ($products as $product) {
+            $this->assertTrue($product->new->isToday());
+        }
     }
 
     public function testEditProductNewStatusOn(): void
@@ -120,7 +141,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditProductStatusBulkAsSuperadmin(): void
     {
         $this->loginAsSuperadmin();
-        $productIds = [60, 102, 103];
+        $productIds = [ProductsFixture::ID_MILK, ProductsFixture::ID_FRANKFURTERS, ProductsFixture::ID_BRATWURST];
         $status = APP_OFF;
         $this->ajaxPost('/admin/products/editStatusBulk', [
             'productIds' => $productIds,
@@ -140,7 +161,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditProductStatusBulkAsManufacturerPermisionsNotOk(): void
     {
         $this->loginAsMeatManufacturer();
-        $productIds = [60, 102, 103];
+        $productIds = [ProductsFixture::ID_MILK, ProductsFixture::ID_FRANKFURTERS, ProductsFixture::ID_BRATWURST];
         $status = APP_OFF;
         $this->ajaxPost('/admin/products/editStatusBulk', [
             'productIds' => $productIds,
@@ -196,7 +217,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
-        $this->changeProductPrice(346, $price);
+        $this->changeProductPrice(ProductsFixture::ID_ARTICHOKE, $price);
         $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
         $this->assertJsonError();
@@ -213,8 +234,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditSellingPriceOfMeatManufactuerProductAsVegatableManufacturer(): void
     {
         $this->loginAsVegetableManufacturer();
-        $productId = 102;
-        $this->changeProductPrice($productId, '0,15');
+        $this->changeProductPrice(ProductsFixture::ID_FRANKFURTERS, '0,15');
         $this->assertAccessDeniedFlashMessage();
     }
 
@@ -222,29 +242,26 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsMeatManufacturer();
-        $productId = 102;
-        $this->changeProductPrice($productId, '0,15');
+        $this->changeProductPrice(ProductsFixture::ID_FRANKFURTERS, '0,15');
         $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditSellingPriceOfProductAsSuperadminToZero(): void
     {
         $this->loginAsSuperadmin();
-        $this->assertSellingPriceChange(346, '0', '0,00', '10');
+        $this->assertSellingPriceChange(ProductsFixture::ID_ARTICHOKE, '0', '0,00', '10');
     }
 
     public function testEditSellingPriceOfProductAsSuperadmin(): void
     {
         $this->loginAsSuperadmin();
-        $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
+        $this->assertSellingPriceChange(ProductsFixture::ID_ARTICHOKE, '2,20', '2,00', '10');
     }
 
     public function testEditSellingPriceOfProductAsSuperadminWithChangeOpenOrderDetails(): void
     {
         $this->loginAsSuperadmin();
-
-        $productId = 346;
-        $this->addProductToCart($productId, 5);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 5);
         $this->finishCart();
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -257,11 +274,11 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
 
-        $this->assertSellingPriceChange($productId, '2,10', '1,909091', '10', changeOpenOrderDetails: true);
+        $this->assertSellingPriceChange(ProductsFixture::ID_ARTICHOKE, '2,10', '1,909091', '10', changeOpenOrderDetails: true);
 
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
-                $orderDetailsTable->aliasField('product_id') => $productId,
+                $orderDetailsTable->aliasField('product_id') => ProductsFixture::ID_ARTICHOKE,
             ])->toArray();
 
         // order was billed => no price change
@@ -283,12 +300,11 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditSellingPricePerUnitOfProductAsSuperadmin(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
+        $this->assertSellingPriceChange(ProductsFixture::ID_ARTICHOKE, 0, 0, 10, true, 15, 'g', 100, 50);
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE
             ],
             contain: [
                 'UnitProducts'
@@ -300,15 +316,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditSellingPricePerUnitOfProductAsSuperadminChangeOpenOrderDetails(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 347;
 
-        $this->addProductToCart($productId, 5);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 5);
         $this->finishCart();
 
-        $this->addProductToCart($productId, 2);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
         $this->finishCart();
 
-        $this->addProductToCart($productId, 1);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 1);
         $this->finishCart();
 
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -321,11 +336,11 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
 
-        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 150, 'kg', 1, 350, changeOpenOrderDetails: true);
+        $this->assertSellingPriceChange(ProductsFixture::ID_TROUT, 0, 0, 10, true, 150, 'kg', 1, 350, changeOpenOrderDetails: true);
 
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
-                $orderDetailsTable->aliasField('product_id') => $productId,
+                $orderDetailsTable->aliasField('product_id') => ProductsFixture::ID_TROUT,
             ],
             contain: [
                 'OrderDetailUnits',
@@ -352,7 +367,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditSellingPriceOfAttributeAsSuperadmin(): void
     {
         $this->loginAsSuperadmin();
-        $this->assertSellingPriceChange('60-10', '1,25', '1,106195', '13');
+        $this->assertSellingPriceChange(ProductsFixture::ID_MILK_0_5L, '1,25', '1,106195', '13');
     }
 
     public function testEditSellingPriceWith0PercentTax(): void
@@ -374,7 +389,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->doPurchasePriceChange(346, '-1');
+        $this->doPurchasePriceChange(ProductsFixture::ID_ARTICHOKE, '-1');
         $this->assertJsonError();
         $this->assertRegExpWithUnquotedString('Der Preis muss eine positive Zahl sein.', $this->getJsonDecodedContent()->msg);
     }
@@ -383,7 +398,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->doPurchasePriceChange(346, '2,20');
+        $product = $this->doPurchasePriceChange(ProductsFixture::ID_ARTICHOKE, '2,20');
         $this->assertJsonOk();
         $this->assertEquals(1.833333, $product->purchase_price_product->price);
     }
@@ -400,7 +415,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->doPurchasePriceChange(347, '1,00');
+        $product = $this->doPurchasePriceChange(ProductsFixture::ID_TROUT, '1,00');
         $this->assertJsonOk();
         $this->assertEquals(1.00, $product->unit_product->purchase_price_incl_per_unit);
     }
@@ -409,7 +424,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->doPurchasePriceChange('60-10', '2,20');
+        $product = $this->doPurchasePriceChange(ProductsFixture::ID_MILK_0_5L, '2,20');
         $this->assertJsonOk();
         $this->assertEquals(2, $product->product_attributes[0]->purchase_price_product_attribute->price);
     }
@@ -418,7 +433,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->doPurchasePriceChange('348-11', '13,30');
+        $product = $this->doPurchasePriceChange(ProductsFixture::ID_BEEF_0_5KG, '13,30');
         $this->assertJsonOk();
         $this->assertEquals(13.30, $product->product_attributes[0]->unit_product_attribute->purchase_price_incl_per_unit);
     }
@@ -427,42 +442,42 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsVegetableManufacturer();
-        $this->assertTaxChange(346, 1, 2);
+        $this->assertTaxChange(ProductsFixture::ID_ARTICHOKE, 1, 2);
         $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditTaxSellingPriceInvalid(): void
     {
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(346, 5, 2);
+        $product = $this->assertTaxChange(ProductsFixture::ID_ARTICHOKE, 5, 2);
         $this->assertEquals($product->price, 1.652893);
     }
 
     public function testEditTaxSellingPriceValidA(): void
     {
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(346, 1, 1);
+        $product = $this->assertTaxChange(ProductsFixture::ID_ARTICHOKE, 1, 1);
         $this->assertEquals($product->price, 1.515152);
     }
 
     public function testEditTaxSellingPriceValidZero(): void
     {
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(346, 0, 0);
+        $product = $this->assertTaxChange(ProductsFixture::ID_ARTICHOKE, 0, 0);
         $this->assertEquals($product->price, 1.818182);
     }
 
     public function testEditTaxSellingPriceWithAttributesValidZero(): void
     {
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(60, 0, 0);
+        $product = $this->assertTaxChange(ProductsFixture::ID_MILK, 0, 0);
         $this->assertEquals($product->product_attributes[0]->price, 0.616364);
     }
 
     public function testEditTaxSellingPriceWithAttributesValidA(): void
     {
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(60, 2, 2);
+        $product = $this->assertTaxChange(ProductsFixture::ID_MILK, 2, 2);
         $this->assertEquals($product->product_attributes[0]->price, 0.560331);
     }
 
@@ -470,14 +485,14 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->assertTaxChange(344, 0, 0, 5, 'empty');
+        $this->assertTaxChange(ProductsFixture::ID_GARLIC, 0, 0, 5, 'empty');
     }
 
     public function testEditTaxPurchasePriceValidA(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(346, 0, 0, 3, 3);
+        $product = $this->assertTaxChange(ProductsFixture::ID_ARTICHOKE, 0, 0, 3, 3);
         $this->assertEquals($product->purchase_price_product->price, 1.274336);
     }
 
@@ -485,7 +500,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(350, 0, 0, 3, 3);
+        $product = $this->assertTaxChange(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES, 0, 0, 3, 3);
         $this->assertEquals($product->product_attributes[0]->purchase_price_product_attribute->price, 1.238938);
     }
 
@@ -493,14 +508,14 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $product = $this->assertTaxChange(346, 0, 0, 0, 0);
+        $product = $this->assertTaxChange(ProductsFixture::ID_ARTICHOKE, 0, 0, 0, 0);
         $this->assertEquals($product->purchase_price_product->price, 1.44);
     }
 
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '5-week');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '5-week');
         $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
@@ -508,7 +523,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidDeliveryRhythmB(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-week', '31.08.2018');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-week', '31.08.2018');
         $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
@@ -516,7 +531,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidFirstDeliveryDay(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '1-week', '30.08.2018');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '1-week', '30.08.2018');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -524,24 +539,22 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOk1Week(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '1-week');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '1-week');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalid2WeekWithoutDate(): void
     {
-        $productId = 346;
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm($productId, '2-week');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '2-week');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
         $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmInvalid3WeekWithoutDate(): void
     {
-        $productId = 346;
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm($productId, '3-week');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '3-week');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -549,14 +562,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOkFirstOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '1-month', '03.08.2018');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '1-month', '03.08.2018');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidFirstOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '1-month', '10.08.2018');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '1-month', '10.08.2018');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein erster Freitag im Monat sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -564,14 +577,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOkSecondOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '2-month', '08.01.2021');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '2-month', '08.01.2021');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidSecondOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '2-month', '19.03.2021');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '2-month', '19.03.2021');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein zweiter Freitag im Monat sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -579,14 +592,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOkThirdOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '3-month', '15.01.2021');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '3-month', '15.01.2021');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidThirdOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '3-month', '08.01.2021');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '3-month', '08.01.2021');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein dritter Freitag im Monat sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -594,14 +607,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOkFourthOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '4-month', '22.01.2021');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '4-month', '22.01.2021');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidFourthOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '4-month', '15.01.2021');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '4-month', '15.01.2021');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein vierter Freitag im Monat sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -609,14 +622,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOkLastOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '0-month', '31.08.2018');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-month', '31.08.2018');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidLastOfMonth(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-month', '10.08.2018');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-month', '10.08.2018');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein letzter Freitag im Monat sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -624,7 +637,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidIndividualWithoutDeliveryDay(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-individual');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
@@ -632,7 +645,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidIndividualWithEmptyOrderPossibleUntil(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '2018-08-31', '');
         $this->assertRegExpWithUnquotedString('Das Bestellbar-bis-Datum ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
@@ -640,7 +653,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmInvalidIndividualWithWrongOrderPossibleUntil(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-09-30');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '2018-08-31', '2018-09-30');
         $this->assertRegExpWithUnquotedString('Das Bestellbar-bis-Datum muss kleiner als der Liefertag sein.', $response->msg);
         $this->assertJsonError();
     }
@@ -648,28 +661,27 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmOkIndividual(): void
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '2018-08-31', '2018-08-28');
         $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmIndividualInvalidSendOrderListDay(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28', '2', '2019-01-01');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '2018-08-31', '2018-08-28', '2', '2019-01-01');
         $this->assertRegExpWithUnquotedString('Das Datum für den Bestellisten-Versand muss zwischen Bestellbar-bis-Datum und dem Liefertag liegen.', $response->msg);
         $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmOkWithDatabaseAsserts(): void
     {
-        $productId = 346;
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm($productId, '1-month', '03.08.2018');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '1-month', '03.08.2018');
         $this->assertJsonOk();
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ]
         )->first();
         $this->assertEquals($product->delivery_rhythm_type, 'month');
@@ -680,7 +692,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmWeeklyInvalidSendOrderListsWeekday(): void
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '1-week', '', '', '15');
+        $response = $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '1-week', '', '', '15');
         $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 0 und 6 an.', $response->msg);
         $this->assertJsonError();
     }
@@ -688,8 +700,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testDeleteProductOk(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 102;
-        $product = $this->deleteProduct($productId);
+        $product = $this->deleteProduct(ProductsFixture::ID_FRANKFURTERS);
         $this->assertJsonOk();
         $this->assertEquals($product->active, APP_DEL);
     }
@@ -697,8 +708,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testDeleteProductWithOpenOrdersWithoutInvoiceingEnabled(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $product = $this->deleteProduct($productId);
+        $product = $this->deleteProduct(ProductsFixture::ID_ARTICHOKE);
         $this->assertEquals($product->active, APP_DEL);
     }
 
@@ -719,8 +729,7 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $product = $this->deleteProduct($productId);
+        $product = $this->deleteProduct(ProductsFixture::ID_ARTICHOKE);
         $this->assertEquals($product->active, APP_ON);
     }
 
@@ -732,9 +741,8 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testDeleteProductAccessLoggedInAsWrongManufacturer(): void
     {
-        $productId = 346;
         $this->loginAsMeatManufacturer();
-        $product = $this->deleteProduct($productId);
+        $product = $this->deleteProduct(ProductsFixture::ID_ARTICHOKE);
         // active must not be changed!
         $this->assertEquals($product->active, APP_ON);
     }
@@ -743,7 +751,6 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $productId = 349;
         $associations = [
             'DepositProducts',
             'UnitProducts',
@@ -754,14 +761,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $srcProduct = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('id_product') => $productId,
+                $productsTable->aliasField('id_product') => ProductsFixture::ID_STOCK_PRODUCT_A,
             ],
             contain: $associations,
         )->first();
 
         $this->ajaxPost('/admin/products/duplicate',
             [
-                'productIds' => [$productId],
+                'productIds' => [ProductsFixture::ID_STOCK_PRODUCT_A],
                 'copyAmount' => 2,
             ],
         );
@@ -795,7 +802,6 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
 
-        $productId = 349;
         $associations = [
             'DepositProducts',
             'UnitProducts',
@@ -807,7 +813,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $purchasePriceProductsTable = $this->getTableLocator()->get('PurchasePriceProducts');
         $entity = $purchasePriceProductsTable->newEntity(
             [
-                'product_id' => $productId,
+                'product_id' => ProductsFixture::ID_STOCK_PRODUCT_A,
                 'tax_id' => 1,
                 'price' => 64.03434,
             ],
@@ -817,14 +823,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $srcProduct = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('id_product') => $productId,
+                $productsTable->aliasField('id_product') => ProductsFixture::ID_STOCK_PRODUCT_A,
             ],
             contain: $associations,
         )->first();
 
         $this->ajaxPost('/admin/products/duplicate',
             [
-                'productIds' => [$productId],
+                'productIds' => [ProductsFixture::ID_STOCK_PRODUCT_A],
                 'copyAmount' => 2,
             ],
         );
@@ -851,7 +857,6 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $productId = 348;
         $associations = [
             'DepositProducts',
             'UnitProducts',
@@ -862,14 +867,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $srcProduct = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('id_product') => $productId,
+                $productsTable->aliasField('id_product') => ProductsFixture::ID_BEEF,
             ],
             contain: $associations,
         )->first();
 
         $this->ajaxPost('/admin/products/duplicate',
             [
-                'productIds' => [$productId],
+                'productIds' => [ProductsFixture::ID_BEEF],
                 'copyAmount' => 2,
             ],
         );
@@ -975,10 +980,9 @@ class ProductsControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-        $productId = 346;
 
         $this->ajaxPost('/admin/products/editQuantity', [
-            'productId' => $productId,
+            'productId' => ProductsFixture::ID_ARTICHOKE,
             'alwaysAvailable' => 0,
             'quantity' => 10,
             'quantityLimit' => -5,
@@ -989,7 +993,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'StockAvailables',
@@ -1010,10 +1014,9 @@ class ProductsControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-        $productId = 346;
 
         $this->ajaxPost('/admin/products/editName', [
-            'productId' => $productId,
+            'productId' => ProductsFixture::ID_ARTICHOKE,
             'name' => 'new name',
             'description' => 'new description',
             'descriptionShort' => 'new description short',
@@ -1026,7 +1029,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId,
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'BarcodeProducts',
@@ -1168,14 +1171,12 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->loginAsAdmin();
 
-        $productId = 340;
         $filename = 'img/tests/test-image.jpg';
-
         $imagesTable = TableRegistry::getTableLocator()->get('Images');
 
         // START upload image
         $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
-            'objectId' => $productId,
+            'objectId' => ProductsFixture::ID_LUNG_STEW,
             'filename' => $filename,
         ]);
 
@@ -1201,7 +1202,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertNotEmpty($image);
 
         // START delete image
-        $this->get('/admin/products/deleteImage/' . $productId);
+        $this->get('/admin/products/deleteImage/' . ProductsFixture::ID_LUNG_STEW);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';

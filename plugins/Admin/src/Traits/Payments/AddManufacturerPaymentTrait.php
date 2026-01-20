@@ -81,7 +81,7 @@ trait AddManufacturerPaymentTrait
                     'date_add' => $dateAddForEntity,
                     'text' => $text,
                 ],
-                ['validate' => 'add']
+                ['validate' => $this->identity->isSuperadmin() ? 'addSuperadmin' : 'add'],
             );
             if ($newEntity->hasErrors()) {
                 throw new \Exception($paymentsTable->getAllValidationErrors($newEntity)[0]);
@@ -128,14 +128,12 @@ trait AddManufacturerPaymentTrait
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
 
-        if ($type == Payment::TYPE_DEPOSIT) {
-            $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
-            $message .= ' ' . __d('admin', 'for') . ' ' . $manufacturer->name;
-        }
+        $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
+        $message .= ' ' . __d('admin', 'for') . ' ' . $manufacturer->name;
 
         $newPayment = $paymentsTable->save($newEntity);
         $paymentPastDateMessage = '';
-        if ($type == Payment::TYPE_DEPOSIT && $paymentPastDate) {
+        if ($paymentPastDate) {
             $paymentPastDateMessage = ' ' . __d('admin', 'for_the') . ' <b>' . $dateAddForEntity->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</b>';
         }
         $message .= ' ' . __d('admin', 'was_added_successfully_{0}:_{1}', [
@@ -144,17 +142,12 @@ trait AddManufacturerPaymentTrait
         ]);
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogType = 'payment_' . $type . '_added';
-        if ($type == Payment::TYPE_DEPOSIT) {
-            $actionLogType = 'payment_deposit_manufacturer_added';
-        }
+        $actionLogType = 'payment_deposit_manufacturer_added';
 
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $newPayment->id, 'payments', $message);
 
-        if ($type == Payment::TYPE_DEPOSIT) {
-            $message .= '. ';
-            $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
-        }
+        $message .= '. ';
+        $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
 
         $this->Flash->success($message);
 

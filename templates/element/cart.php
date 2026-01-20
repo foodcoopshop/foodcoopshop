@@ -96,7 +96,7 @@ if ($this->name == 'Carts' && in_array($this->request->getParam('action'), ['fin
             }
         }
 
-        if ($identity !== null && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
+        if ($identity && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
                 $class[] = 'negative';

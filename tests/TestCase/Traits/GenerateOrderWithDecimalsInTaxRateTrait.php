@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Traits;
 
+use App\Test\Fixture\ProductsFixture;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -30,13 +32,12 @@ trait GenerateOrderWithDecimalsInTaxRateTrait
             )
         );
 
-        $productToAdd = 340; // beuschl, no deposit
         $productsTable = $this->getTableLocator()->get('Products');
-        $product = $productsTable->get($productToAdd);
+        $product = $productsTable->get(ProductsFixture::ID_LUNG_STEW);
         $product->id_tax = $newTax->id_tax;
         $productsTable->save($product);
 
-        $this->addProductToCart($productToAdd, 3);
+        $this->addProductToCart(ProductsFixture::ID_LUNG_STEW, 3);
         $this->finishCart();
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');

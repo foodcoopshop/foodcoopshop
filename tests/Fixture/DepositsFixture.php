@@ -28,7 +28,7 @@ class DepositsFixture extends AppFixture
     public array $records = [
         [
             'id' => 1,
-            'id_product' => 346,
+            'id_product' => ProductsFixture::ID_ARTICHOKE,
             'id_product_attribute' => 0,
             'deposit' => 0.5
         ],

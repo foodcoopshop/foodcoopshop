@@ -114,6 +114,9 @@ use App\Model\Entity\OrderDetail;
                             'default' => isset($categoryIds) ? $categoryIds : ''
                         ]);
                     echo '</span>';
+                    echo '<span style="margin-left: 3px;">';
+                        echo $this->Form->control('taxRate', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'Tax rate'), 'options' => $taxRatesForDropdown, 'default' => $taxRate]);
+                    echo '</span>';
                 }
             ?>
         <?php echo $this->Form->end(); ?>

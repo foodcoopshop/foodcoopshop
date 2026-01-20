@@ -28,6 +28,8 @@ use App\Model\Entity\Customer;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\OrderDetail>
  */
 class OrderDetailsTable extends AppTable
 {
@@ -246,7 +248,7 @@ class OrderDetailsTable extends AppTable
                 'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
             ];
             $query = $this->find('all', conditions: $conditions);
-            if ($year != '') {
+            if ($year !== 0) {
                 $query->where(function (QueryExpression $exp) use ($year) {
                     return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
                 });
@@ -286,14 +288,14 @@ class OrderDetailsTable extends AppTable
             $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
             $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
                 return $exp->or([
-                    $query->newExpr()->and([
+                    $query->expr()->and([
                         'Products.delivery_rhythm_type <> "individual"',
-                        $query->newExpr()->eq('Products.delivery_rhythm_send_order_list_weekday', $cronjobRunDayWeekday),
-                        $query->newExpr()->eq('OrderDetails.pickup_day', $pickupDay),
+                        $query->expr()->eq('Products.delivery_rhythm_send_order_list_weekday', $cronjobRunDayWeekday),
+                        $query->expr()->eq('OrderDetails.pickup_day', $pickupDay),
                     ]),
-                    $query->newExpr()->and([
+                    $query->expr()->and([
                         'Products.delivery_rhythm_type = "individual"',
-                        $query->newExpr()->eq('Products.delivery_rhythm_send_order_list_day', $cronjobRunDay),
+                        $query->expr()->eq('Products.delivery_rhythm_send_order_list_day', $cronjobRunDay),
                         'OrderDetails.pickup_day = Products.delivery_rhythm_first_delivery_day',
                     ]),
                 ]);
@@ -821,6 +823,7 @@ class OrderDetailsTable extends AppTable
         array $pickupDay,
         int|string $orderDetailId,
         float|string $deposit,
+        float|string|null $taxRate,
         array|string $categoryIds = '',
         ): array
     {
@@ -846,6 +849,10 @@ class OrderDetailsTable extends AppTable
 
         if ($deposit != '') {
             $conditions[] = 'OrderDetails.deposit > 0';
+        }
+
+        if ($taxRate !== '' && $taxRate !== null) {
+            $conditions['OrderDetails.tax_rate'] = (float) $taxRate;
         }
 
         $contain = [

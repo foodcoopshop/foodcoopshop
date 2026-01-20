@@ -21,6 +21,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
+use App\Test\Fixture\ProductsFixture;
 
 class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 {
@@ -157,8 +158,8 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         // add new orders
-        $this->addProductToCart(346, 1);
-        $this->addProductToCart(346, 1);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
         $this->finishCart();
     }
 

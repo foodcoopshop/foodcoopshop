@@ -58,7 +58,11 @@ foreach ($payments as $payment) {
             echo $this->Html->getManufacturerDepositPaymentText($payment->text);
         echo '</td>';
 
-        echo '<td style="text-align:right;" class="negative">';
+        $classes = ['right'];
+        if ($payment->amount > 0) {
+            $classes[] = 'negative';
+        }
+        echo '<td style="text-align:right;" class="'.implode(' ', $classes).'">';
             echo $this->Number->formatAsCurrency($payment->amount * -1);
         echo '</td>';
 
@@ -80,7 +84,11 @@ foreach ($payments as $payment) {
     echo '<tr>';
         echo '<td></td>';
         echo '<td>Summe</td>';
-        echo '<td class="right negative">';
+        $classes = ['right'];
+        if ($sum > 0) {
+            $classes[] = 'negative';
+        }
+        echo '<td class="'.implode(' ', $classes).'">';
             echo '<b style="font-size: 16px;">'.$this->Number->formatAsCurrency($sum * -1).'</b>';
         echo '</td>';
         echo '<td></td>';

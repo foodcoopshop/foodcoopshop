@@ -23,6 +23,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Cart;
+use App\Test\Fixture\ProductsFixture;
 
 abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 {
@@ -31,9 +32,9 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public int|string $productIdA = 346;
-    public int|string $productIdB = 340;
-    public int|string $productIdC = '60-10';
+    public int|string $productIdA = ProductsFixture::ID_ARTICHOKE;
+    public int|string $productIdB = ProductsFixture::ID_LUNG_STEW;
+    public int|string $productIdC = ProductsFixture::ID_MILK_0_5L;
 
     public int $orderDetailIdA = 1;
     public int $orderDetailIdB = 2;

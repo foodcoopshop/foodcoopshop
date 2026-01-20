@@ -10,11 +10,9 @@ use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
-use App\Services\CartService;
 use Cake\View\JsonView;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +29,6 @@ use Cake\Log\Log;
  */
 class CartsController extends FrontendController
 {
-
-    protected CartService $cartService;
 
     public function initialize(): void
     {
@@ -52,8 +48,6 @@ class CartsController extends FrontendController
             'ajaxRemove',
             'ajaxDeleteOrderForDifferentCustomer',
         ]);
-
-        $this->cartService = new CartService($this);
     }
 
     /**
@@ -220,7 +214,7 @@ class CartsController extends FrontendController
         }
 
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']['id_cart']);
+        $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']->id_cart);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -240,18 +234,10 @@ class CartsController extends FrontendController
 
     public function emptyCart(): Response
     {
-        $this->doEmptyCart();
+        $this->cartService->doEmptyCart();
         $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
         $this->Flash->success($message);
         return $this->redirect($this->referer());
-    }
-
-    private function doEmptyCart(): void
-    {
-        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductsTable->removeAll($this->identity->getCartId(), $this->identity->getId());
-        $this->identity->setCart($this->identity->getCart());
     }
 
     public function addOrderToCart(): Response
@@ -264,7 +250,7 @@ class CartsController extends FrontendController
     private function doAddOrderToCart(string $deliveryDate): void
     {
 
-        $this->doEmptyCart();
+        $this->cartService->doEmptyCart();
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
 
         $formattedDeliveryDate = strtotime($deliveryDate);

@@ -22,6 +22,7 @@ if (!empty($products)) {
     $buttons[] = $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
     $buttons[] = $this->element('productList/button/generateProductCardsOfSelectedProducts');
     $buttons[] = $this->element('productList/button/editStatusForSelectedProducts');
+    $buttons[] = $this->element('productList/button/editNewStatusForSelectedProducts');
     $buttons[] = $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
     $buttons[] = $this->element('productList/button/duplicateSelectedProduct');
     $buttons[] = $this->element('productList/button/deleteSelectedProducts');

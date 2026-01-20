@@ -27,37 +27,37 @@ class ProductAttributesFixture extends AppFixture
     public array $records = [
         [
             'id_product_attribute' => 10,
-            'id_product' => 60,
+            'id_product' => ProductsFixture::ID_MILK,
             'price' => 0.545455,
             'default_on' => 0,
         ],
         [
             'id_product_attribute' => 11,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
             'price' => 0.000000,
             'default_on' => 1,
         ],
         [
             'id_product_attribute' => 12,
-            'id_product' => 348,
+            'id_product' => ProductsFixture::ID_BEEF,
             'price' => 0.000000,
             'default_on' => 0,
         ],
         [
             'id_product_attribute' => 13,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'price' => 1.818182,
             'default_on' => 1,
         ],
         [
             'id_product_attribute' => 14,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'price' => 3.636364,
             'default_on' => 0,
         ],
         [
             'id_product_attribute' => 15,
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'price' => 0.000000,
             'default_on' => 0,
         ]

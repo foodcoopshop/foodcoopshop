@@ -19,6 +19,8 @@ use Cake\ORM\TableRegistry;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\Tax>
  */
 class TaxesTable extends AppTable
 {
@@ -104,16 +106,16 @@ class TaxesTable extends AppTable
     {
         $taxes = $this->find('all',
         conditions: [
-            'Taxes.active' => APP_ON
+            'Taxes.active' => APP_ON,
         ],
         order: [
-            'Taxes.rate' => 'ASC'
+            'Taxes.rate' => 'ASC',
         ]);
 
         $preparedTaxes = [];
         if (Configure::read('app.isZeroTaxEnabled')) {
             $preparedTaxes = [
-                0 => '0%'
+                ($useRateAsKey ? '0.000' : 0) => '0%',
             ];
         }
         foreach ($taxes as $tax) {

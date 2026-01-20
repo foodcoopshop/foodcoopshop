@@ -20,6 +20,8 @@ use Cake\ORM\Query\SelectQuery;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\BlogPost>
  */
 class BlogPostsTable extends AppTable
 {
@@ -101,8 +103,8 @@ class BlogPostsTable extends AppTable
                 return $exp->gte($key, $value);
             } else {
                 return $exp->or([
-                    $q->newExpr()->lt($key, $value),
-                    $q->newExpr()->isNull('BlogPosts.show_on_start_page_until'),
+                    $q->expr()->lt($key, $value),
+                    $q->expr()->isNull('BlogPosts.show_on_start_page_until'),
                 ]);
             }
         });

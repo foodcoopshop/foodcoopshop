@@ -5,6 +5,7 @@ namespace App\Test\TestCase\Traits;
 
 use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,12 +32,8 @@ trait PrepareAndTestInvoiceDataTrait
     {
 
         $pickupDay = '2018-02-02';
-
-        // add product with price pre unit
-        $productIdA = 347; // forelle
-        $productIdB = '348-11'; // rindfleisch + attribute
-        $this->addProductToCart($productIdA, 1);
-        $this->addProductToCart($productIdB, 3);
+        $this->addProductToCart(ProductsFixture::ID_TROUT, 1);
+        $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 3);
         $this->finishCart(1, 1, '', $pickupDay);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');

@@ -29,6 +29,8 @@ use App\Services\FormatterService;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\Manufacturer>
  */
 
 class ManufacturersTable extends AppTable

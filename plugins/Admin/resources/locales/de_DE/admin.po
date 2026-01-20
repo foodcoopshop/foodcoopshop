@@ -436,6 +436,9 @@ msgstr "Steuersatz bearbeiten"
 msgid "The_tax_rate_{0}_has_been_{1}."
 msgstr "Der Steuersatz {0} wurde {1}."
 
+msgid "Tax rate"
+msgstr "Steuersatz"
+
 msgid "Tax_rates"
 msgstr "Steuersätze"
 
@@ -729,6 +732,12 @@ msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} deaktiviert."
 
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
 msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} aktiviert."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_marked_as_new."
+msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} als neu markiert."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_unmarked_as_new."
+msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} als nicht mehr neu markiert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
@@ -1213,8 +1222,8 @@ msgstr "Komm."
 msgid "Newbie_has_{0}_orders."
 msgstr "Neuling: Hat erst {0}x bestellt."
 
-msgid "Show_all_orders_from_{0}"
-msgstr "Alle Bestellungen von {0} anzeigen"
+msgid "Show_orders_from_{0}"
+msgstr "Bestellungen von {0} anzeigen"
 
 msgid "Change_group"
 msgstr "Gruppe ändern"
@@ -2014,6 +2023,9 @@ msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurü
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
 msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
 
+msgid "You can enter a negative amount if the manufacturer needs to pay money back to the initiative."
+msgstr "Du kannst auch einen negativen Betrag eintragen, wenn der Hersteller Geld an die Initiative zurückzahlen muss."
+
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 
@@ -2052,6 +2064,12 @@ msgstr "Bankdaten"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr "werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet."
+
+msgid "Account holder"
+msgstr "Kontoinhaber"
+
+msgid "exact wording"
+msgstr "exakter Wortlaut"
 
 msgid "Bank"
 msgstr "Bank"
@@ -2205,6 +2223,9 @@ msgstr "Lieferrhythmus ändern"
 
 msgid "Edit_status"
 msgstr "Status ändern"
+
+msgid "Edit_new_status"
+msgstr "Neu-Status ändern"
 
 msgid "Generate_product_cards"
 msgstr "Produktkarten generieren"

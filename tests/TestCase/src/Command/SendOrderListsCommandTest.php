@@ -12,6 +12,7 @@ use Cake\I18n\Date;
 use App\Model\Entity\OrderDetail;
 use App\View\Helper\MyTimeHelper;
 use Cake\Utility\Hash;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -55,9 +56,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->changeManufacturer(5, 'anonymize_customers', 1);
 
         $this->loginAsSuperadmin();
-        $productId = '346'; // artischocke
-
-        $this->addProductToCart($productId, 1);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
@@ -168,7 +167,6 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsWithIndividualSendOrderListWeekdayTuesday(): void
     {
         $cronjobRunDay = '2018-01-30';
-        $productId = 346;
         $orderDetailId = 1;
         $this->changeManufacturer(5, 'anonymize_customers', 1);
 
@@ -183,7 +181,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->save(
             $productsTable->patchEntity(
-                $productsTable->get($productId),
+                $productsTable->get(ProductsFixture::ID_ARTICHOKE),
                 [
                         'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::TUESDAY,
                 ]
@@ -213,7 +211,6 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsWithIndividualSendOrderListWeekdayThursday(): void
     {
         $cronjobRunDay = '2018-02-01';
-        $productId = 346;
         $orderDetailId = 1;
 
         // 1) run cronjob on thursday and assert no changings
@@ -227,7 +224,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->save(
             $productsTable->patchEntity(
-                $productsTable->get($productId),
+                $productsTable->get(ProductsFixture::ID_ARTICHOKE),
                 [
                         'delivery_rhythm_send_order_list_weekday' => MyTimeHelper::THURSDAY,
                 ]
@@ -259,7 +256,6 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
-        $productId = 346;
         $orderDetailIdIndividualDate = 1;
         $deliveryDay = '2019-10-11';
         $cronjobRunDay = '2019-10-02';
@@ -273,10 +269,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->changeProductDeliveryRhythm($productId, '0-individual', $deliveryDay, '2019-10-01', '', $cronjobRunDay);
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', $deliveryDay, '2019-10-01', '', $cronjobRunDay);
 
-        $this->addProductToCart(344, 1); //knoblauch
-        $this->addProductToCart(163, 1); //mangold
+        $this->addProductToCart(ProductsFixture::ID_GARLIC, 1);
+        $this->addProductToCart(ProductsFixture::ID_CHARD, 1);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
@@ -342,8 +338,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsWithEmptyIndividualSendOrderListDay(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $this->changeProductDeliveryRhythm($productId, '0-individual', '2018-01-12', '2018-01-01', '', '');
+        $this->changeProductDeliveryRhythm(ProductsFixture::ID_ARTICHOKE, '0-individual', '2018-01-12', '2018-01-01', '', '');
 
         $cronjobRunDay = '2018-01-30';
         $orderDetailId = 1;
@@ -358,18 +353,15 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     public function testSendOrderListAndResetQuantity(): void
     {
-        $productId1 = 346;
-        $productId2 = '60-10';
         $defaultQuantity = 20;
-
         $newProductData = [
             'default_quantity_after_sending_order_lists' => $defaultQuantity,
             'quantity' => 10,
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeQuantity([
-            [$productId1 => $newProductData],
-            [$productId2 => $newProductData]
+            [ProductsFixture::ID_ARTICHOKE => $newProductData],
+            [ProductsFixture::ID_MILK_0_5L => $newProductData]
         ]);
         $cronjobRunDay = '2018-01-31';
         $this->exec('send_order_lists ' . $cronjobRunDay);
@@ -377,7 +369,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $product1 = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId1,
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'StockAvailables',
@@ -388,7 +380,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $product2 = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productsTable->getProductIdAndAttributeId($productId2)['productId'],
+                'Products.id_product' => $productsTable->getProductIdAndAttributeId(ProductsFixture::ID_MILK_0_5L)['productId'],
             ],
             contain: [
                 'ProductAttributes.StockAvailables',
@@ -401,11 +393,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListWithoutStockProducts(): void
     {
 
-        $stockProductId = 346;
         $productsTable = $this->getTableLocator()->get('Products');
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
         $this->changeManufacturer(5, 'include_stock_products_in_order_lists', 0);
-        $productsTable->changeIsStockProduct([[$stockProductId => true]]);
+        $productsTable->changeIsStockProduct([[ProductsFixture::ID_ARTICHOKE => true]]);
 
         $cronjobRunDay = '2018-01-31';
         $this->exec('send_order_lists ' . $cronjobRunDay);
@@ -496,23 +487,18 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     public function testContentOfOrderListWithPricePerUnit(): void
     {
-
-        $productIdA = '351';
-        $productIdB = '350-15';
-        $productIdC = '346';
-
         $this->loginAsCustomer();
-        $this->addProductToCart($productIdA, 1);
-        $this->addProductToCart($productIdB, 1);
-        $this->addProductToCart($productIdC, 2);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_B, 1);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 2);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cartA = $this->getCartById($cartId);
 
         $this->loginAsSuperadmin();
-        $this->addProductToCart($productIdA, 2);
-        $this->addProductToCart($productIdB, 5);
-        $this->addProductToCart($productIdC, 1);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_B, 2);
+        $this->addProductToCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 5);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cartB = $this->getCartById($cartId);
@@ -552,8 +538,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->changeManufacturer(5, 'min_order_value', 50);
         $this->loginAsSuperadmin();
 
-        $this->addProductToCart(346, 10); // artischocke
-        $this->addProductToCart(163, 10); // mangold
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 10);
+        $this->addProductToCart(ProductsFixture::ID_CHARD, 10);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);

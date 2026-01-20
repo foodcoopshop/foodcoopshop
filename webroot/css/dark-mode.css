@@ -249,4 +249,15 @@ body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):
 body.dark.admin table.list tr.selected {
     background-color: #43464B ! important;
 }
+body.dark .password-toggle-icon {
+    background-color: var(--dark-mode-2nd-bg-color);
+    border-color: var(--dark-mode-main-border-color);
+    color: var(--dark-mode-main-font-color);
+}
+body.dark .password-toggle-icon:hover {
+    background-color: #2a2a2a;
+    border-color: #888;
+    color: var(--dark-mode-2nd-font-color);
+}
+
 

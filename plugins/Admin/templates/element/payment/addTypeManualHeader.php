@@ -68,16 +68,19 @@ if ($paymentType == Payment::TYPE_PRODUCT && $identity->isSuperadmin()) {
     ]);
 
     $i = 0;
-    foreach ($this->Html->getSuperadminProductPaymentTexts() as $paymentTextKey => $paymentText) {
-        echo '<div class="radio-wrapper">';
-            $checked = '';
-        if ($i == 0) {
-            $checked = 'checked="checked"';
+    echo '<div class="radio-group" style="margin-top:10px;">';
+        foreach ($this->Html->getSuperadminProductPaymentTexts() as $paymentTextKey => $paymentText) {
+            echo '<div class="radio-wrapper">';
+                $checked = '';
+                if ($i == 0) {
+                    $checked = 'checked="checked"';
+                }
+                echo '<input '.$checked.' id="type-'.$paymentTextKey.'"type="radio" name="type" value="'.$paymentTextKey.'"/>';
+                echo '<label for="type-'.$paymentTextKey.'">'.$paymentText.'</label>';
+            echo '</div>';
+            $i++;
         }
-            echo '<label for="type-'.$paymentTextKey.'">'.$paymentText.'</label><input '.$checked.' id="type-'.$paymentTextKey.'"type="radio" name="type" value="'.$paymentTextKey.'"/>';
-        echo '</div>';
-        $i++;
-    }
+    echo '</div>';
 } else {
     echo $this->Form->hidden('Payments.type', [
         'value' => $paymentType

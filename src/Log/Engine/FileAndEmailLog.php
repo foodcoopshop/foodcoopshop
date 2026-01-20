@@ -103,6 +103,8 @@ class FileAndEmailLog extends FileLog
             '{"postcode":{"validFormat"',
             '{"value":{"noDeliveryDaysOrdersExist"',
             'Undefined variable \$isMobile', //mostly caused by bots
+            'MySQL server has gone away',
+            'Connection to Mysql could not be established',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {

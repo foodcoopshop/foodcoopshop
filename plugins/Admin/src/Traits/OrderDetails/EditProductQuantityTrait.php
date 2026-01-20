@@ -36,11 +36,8 @@ trait EditProductQuantityTrait
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
-        if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
+        if (!$productQuantity || $productQuantity < 0) {
             $message = __d('admin', 'The_delivered_quantity_is_not_valid.');
-            if (! is_numeric($orderDetailId)) {
-                $message = 'input format wrong';
-            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,

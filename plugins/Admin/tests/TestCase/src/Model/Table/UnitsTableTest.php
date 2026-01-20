@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Model\Entity\Unit;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +21,7 @@ use App\Model\Entity\Unit;
 class UnitsTableTest extends AppCakeTestCase
 {
 
-    public int $productId = 346;
+    public int $productId = ProductsFixture::ID_ARTICHOKE;
     public int $productAttributeId = 0;
     public bool $pricePerUnitEnabled = true;
     public float|string $priceInclPerUnit = 12.44;

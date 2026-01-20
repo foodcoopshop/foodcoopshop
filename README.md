@@ -40,12 +40,12 @@
 </h3>
 
 ## 🤖 Self-hosting / developing
-* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/dev/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/dev/installation-guide)
+* 🐳 [Docker Dev](https://foodcoopshop.github.io/dev/docker-dev-environment) and [Prod Environment](https://github.com/foodcoopshop/foodcoopshop-docker) / 🔧 [Installation guide](https://foodcoopshop.github.io/dev/installation-guide)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
-* Gitpod: When all containers are up and running (takes about 1 minute), open your Bash-terminal (not in the Docker-terminal) and run
+[![Run in Ona](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
+* Ona (formerly Gitpod): When all containers are up and running (takes about 1 minute), open your Bash-terminal (not in the Docker-terminal) and run
 * `bash ./devtools/init-dev-setup.sh`
-* In your custom_config.php, change `App.fullBaseUrl` to your Gitpod-Domain (BE AWARE: NO TRAILING SLASH!).
+* In your custom_config.php, change `App.fullBaseUrl` to your Ona-Domain (BE AWARE: NO TRAILING SLASH!).
 
 ## ✨ Features
 * user-friendly web shop optimized for selling food from different producers

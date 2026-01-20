@@ -16,8 +16,8 @@ declare(strict_types=1);
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\View\Helper\MyHtmlHelper;
-use Cake\View\View;
 use PHPUnit\Framework\Attributes\DataProvider;
+use App\View\AppView;
 
 class MyHtmlHelperTest extends AppCakeTestCase
 {
@@ -27,7 +27,7 @@ class MyHtmlHelperTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->MyHtmlHelper = new MyHtmlHelper(new View());
+        $this->MyHtmlHelper = new MyHtmlHelper(new AppView());
     }
 
     public function testAnonymizeCustomerNameNormal(): void

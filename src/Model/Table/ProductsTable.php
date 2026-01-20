@@ -31,6 +31,8 @@ use App\Services\CalculationService;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\Product>
  */
 class ProductsTable extends AppTable
 {
@@ -286,6 +288,46 @@ class ProductsTable extends AppTable
                 $products2save[] = [
                     'id_product' => $ids['productId'],
                     'active' => $status
+                ];
+            }
+        }
+
+        $success = false;
+        if (!empty($products2save)) {
+            $entities = $this->newEntities($products2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param array<int, array<int|string, mixed>> $products
+     */
+    public function changeNewStatus(array $products): bool
+    {
+
+        $products2save = [];
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new \Exception('change new status is not allowed for product attributes');
+            }
+            $status = $product[$ids['productId']];
+            $allowed = [APP_OFF, APP_ON];
+            if (!in_array($status, $allowed, true)) { // last param for type check
+                throw new \Exception('Products.new for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
+            } else {
+                $newDate = Date::now();
+                if ($status === APP_OFF) {
+                    $newDate = Date::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+                }
+                $products2save[] = [
+                    'id_product' => $ids['productId'],
+                    'new' => $newDate,
                 ];
             }
         }

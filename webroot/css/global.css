@@ -484,6 +484,38 @@ input[type="checkbox"] {
     float: left;
     width: 100%;
 }
+.password-toggle-wrapper {
+    position: relative;
+    display: inline-block;
+}
+.password-toggle-wrapper input[type="password"],
+.password-toggle-wrapper input[type="text"] {
+    padding-right: 30px !important;
+}
+.password-toggle-icon {
+    position: absolute;
+    right: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    font-size: 14px;
+    user-select: none;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-left: 1px solid #ddd;
+    transition: all 0.2s ease;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.password-toggle-icon:hover {
+    color: #333;
+    background-color: #e8e8e8;
+    border-color: #bbb;
+}
 span.new {
     font-size:10px;
     font-weight:bold;

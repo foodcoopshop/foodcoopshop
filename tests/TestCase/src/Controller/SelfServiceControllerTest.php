@@ -25,7 +25,9 @@ use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
 use App\Test\TestCase\Traits\SelfServiceCartTrait;
 use App\Model\Entity\Cart;
+use App\Test\Fixture\BarcodesFixture;
 use Cake\ORM\TableRegistry;
+use App\Test\Fixture\ProductsFixture;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -100,15 +102,14 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         Configure::write('app.selfServiceIsAmountValidationEnabled', false);
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $this->addProductToSelfServiceCart($productId, 98);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_ARTICHOKE, 98);
         $this->assertJsonOk();
     }
 
     public function testSelfServiceAddAttributePricePerUnitWrong(): void
     {
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart('350-15', 1, 'bla bla');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, 'bla bla');
         $response = $this->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
@@ -123,11 +124,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $unitsTable->save($unitEntity);
 
         $this->loginAsSuperadmin();
-        $productId = 350;
         $attributeId = 15;
         $stockAvailablesTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailableObject = $stockAvailablesTable->find('all')->where([
-            'id_product' => $productId,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_product_attribute' => $attributeId,
         ])->first();
         $patchedEntity = $stockAvailablesTable->patchEntity(
@@ -138,7 +138,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         );
         $stockAvailablesTable->save($patchedEntity);
 
-        $this->addProductToSelfServiceCart('350-15', 1, '1,3');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, '1,3');
         $response = $this->getJsonDecodedContent();
         $expectedErrorMessage = 'Die gewünschte Menge <b>1,3 kg</b> der Variante <b>0,5 kg</b> des Produktes <b>Lagerprodukt mit Varianten</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 1,1 kg';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
@@ -148,7 +148,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithoutCheckboxes(): void
     {
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart(349, 1);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_A, 1);
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseContains('Bitte akzeptiere die AGB.');
         $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
@@ -158,7 +158,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         Configure::write('app.selfServiceEasyModeEnabled', true);
         $this->loginAsCustomer();
-        $this->addProductToSelfServiceCart(344, 1);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_GARLIC, 1);
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
@@ -190,7 +190,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             ],
         ]);
         $this->loginAsCustomer();
-        $this->addProductToSelfServiceCart(344, 1);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_GARLIC, 1);
         $this->finishSelfServiceCart(0, 0);
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
@@ -220,7 +220,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithoutPricePerUnit(): void
     {
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart(346, 1, 0);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_ARTICHOKE, 1, 0);
         $this->finishSelfServiceCart(1, 1);
 
         $cartsTable = $this->getTableLocator()->get('Carts');
@@ -248,7 +248,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithPricePerUnit(): void
     {
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart('350-15', 1, '1,5');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, '1,5');
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->finishSelfServiceCart(1, 1);
 
@@ -287,7 +287,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $unitsTable->saveMany([$unitEntityA, $unitEntityB]);
 
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart('350-15', 1, '1,999');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, '1,999');
         $this->addProductToSelfServiceCart(351, 1, '0,51');
         $this->finishSelfServiceCart(1, 1);
 
@@ -308,7 +308,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $stockAvailableTable = TableRegistry::getTableLocator()->get('StockAvailables');
         $stockAvailable = $stockAvailableTable->find('all')->where([
-            'id_product' => 350,
+            'id_product' => ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES,
             'id_product_attribute' => 15,
         ])->first();
         $this->assertEquals(997.001, $stockAvailable->quantity);
@@ -334,8 +334,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart(347, 1, '500');
-        $this->addProductToSelfServiceCart('348-12', 1, '250');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_TROUT, 1, '500');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_BEEF_1KG, 1, '250');
         $this->finishSelfServiceCart(1, 1);
 
         $cartsTable = $this->getTableLocator()->get('Carts');
@@ -359,7 +359,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart('350-15', 1, '1,5');
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $actionLogsTable->find('all')->toArray();
@@ -369,8 +369,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSearchByCustomProductBarcode(): void
     {
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '1234567890123';
-        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->get($this->Slug->getSelfService(BarcodesFixture::BARCODE_PRODUCT_A['barcode']));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
@@ -378,8 +377,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSearchByCustomProductAttributeBarcode(): void
     {
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '2145678901234';
-        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->get($this->Slug->getSelfService(BarcodesFixture::BARCODE_ATTRIBUTE_A['barcode']));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
@@ -387,8 +385,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSearchByCustomProductBarcodeWithWeight(): void
     {
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '2712345000235';
-        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $barcode = '2712345000235';
+        $this->get($this->Slug->getSelfService($barcode));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
 
@@ -437,7 +435,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->get('/admin/customers/changeStatus/' . Configure::read('test.selfServiceCustomerId'). '/1/0');
         $this->loginAsSelfServiceCustomer();
-        $this->addProductToSelfServiceCart(346, 1, 0);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_ARTICHOKE, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
 
         $cartsTable = $this->getTableLocator()->get('Carts');
@@ -457,7 +455,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->get('/admin/customers/changeStatus/' . Configure::read('test.selfServiceCustomerId'). '/1/0');
         $this->loginAsSelfServiceCustomer();
-        $this->addProductToSelfServiceCart(346, 1, 0);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_ARTICHOKE, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
 
         $cartsTable = $this->getTableLocator()->get('Carts');
@@ -495,7 +493,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         // add a product to the "normal" cart (Cart::TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
-        $this->addProductToCart(346, 5);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 5);
         $this->logout();
 
         $this->loginAsSuperadmin();
@@ -510,8 +508,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->get($this->_response->getHeaderLine('Location'));
         $this->assertResponseContains('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.');
 
-        $this->addProductToSelfServiceCart(349, 1);
-        $this->addProductToSelfServiceCart('350-13', 2, 1);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_A, 1);
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_UNIT, 2, 1);
 
         $cartsTable = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1);
@@ -554,8 +552,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testProductDetailHtmlProductCatalogSelfServiceOrder(): void
     {
         $this->loginAsSuperadmin();
-        $productId = 349;
-        $this->get($this->Slug->getSelfService($productId));
+        $this->get($this->Slug->getSelfService(ProductsFixture::ID_STOCK_PRODUCT_A));
         $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
@@ -563,7 +560,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testAutoLoginAsSelfServiceCustomerOk(): void
     {
-        $selfServiceCustomerId = 93;
+        $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
         Configure::write('app.selfServiceLoginCustomers', [
             [
@@ -577,9 +574,44 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
+    public function testEmptyCartOnLogoutSelfServiceCustomer(): void
+    {
+        $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
+        Configure::write('app.selfServiceLoginCustomers', [
+            [
+                'id' => 1,
+                'label' => 'SB-Kunde',
+                'customerId' => $selfServiceCustomerId,
+            ],
+        ]);
+        $this->changeCustomer($selfServiceCustomerId, 'active', 1);
+        $this->loginAsSelfServiceCustomer();
+        $this->addProductToSelfServiceCart(ProductsFixture::ID_ARTICHOKE, 1);
+        $this->logoutSelfService();
+        $this->loginAsSelfServiceCustomer();
+        $this->runAndAssertQueue();
+
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
+            conditions: [
+                'Carts.id_customer' => $selfServiceCustomerId,
+                'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
+                'Carts.status' => APP_ON,
+            ],
+            contain: [
+                'CartProducts',
+            ],
+        )->first();
+
+        $this->assertEmpty($cart->cart_products);
+        $this->assertMailSubjectContainsAt(0, 'Benutzer abgemeldet und Warenkorb geleert');
+        $this->assertMailContainsAt(0, 'Artischocke : Stück');
+        $this->assertMailContainsAt(0, '2,32 €');
+    }
+
     public function testAutoLoginAsSelfServiceCustomerNotOk(): void
     {
-        $selfServiceCustomerId = 93;
+        $selfServiceCustomerId = Configure::read('test.selfServiceCustomerId');
         Configure::write('app.selfServiceLoginCustomers', [
             [
                 'id' => 1,

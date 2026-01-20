@@ -47,8 +47,6 @@ trait IndexTrait
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
         $firstOrderYear = $orderDetailsTable->getFirstOrderYear();
-        $this->set('firstOrderYear', $firstOrderYear);
-
         $lastOrderYear = $orderDetailsTable->getLastOrderYear();
         $this->set('lastOrderYear', $lastOrderYear);
 

@@ -27,7 +27,7 @@ class OrderDetailsFixture extends AppFixture
     public array $records = [
         [
             'id_order_detail' => 1,
-            'product_id' => 346,
+            'product_id' => ProductsFixture::ID_ARTICHOKE,
             'product_attribute_id' => 0,
             'product_name' => 'Artischocke : Stück',
             'product_amount' => 1,
@@ -48,7 +48,7 @@ class OrderDetailsFixture extends AppFixture
         ],
         [
             'id_order_detail' => 2,
-            'product_id' => 340,
+            'product_id' => ProductsFixture::ID_LUNG_STEW,
             'product_attribute_id' => 0,
             'product_name' => 'Beuschl',
             'product_amount' => 1,
@@ -69,7 +69,7 @@ class OrderDetailsFixture extends AppFixture
         ],
         [
             'id_order_detail' => 3,
-            'product_id' => 60,
+            'product_id' => ProductsFixture::ID_MILK,
             'product_attribute_id' => 10,
             'product_name' => 'Milch : 0,5l',
             'product_amount' => 1,

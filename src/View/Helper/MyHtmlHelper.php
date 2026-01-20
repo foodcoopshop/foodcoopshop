@@ -37,6 +37,9 @@ use Authorization\IdentityInterface;
 class MyHtmlHelper extends HtmlHelper
 {
 
+    /**
+     * @param View<\App\View\AppView> $View
+     */
     public function __construct(View $View, array $config = [])
     {
         $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";

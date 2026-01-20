@@ -22,7 +22,7 @@ use Cake\ORM\TableRegistry;
 $pageTable = TableRegistry::getTableLocator()->get('Pages');
 
 foreach ($pages as $page) {
-    $level = $pageTable->getLevel($page);
+    $level = $pageTable->getBehavior('Tree')->getLevel($page); // @phpstan-ignore-line
 
     $rowClass = [
         'data'

@@ -7,6 +7,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
 use App\Model\Entity\Customer;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -155,8 +156,8 @@ class ListsControllerTest extends AppCakeTestCase
     public function testAccessManufacturerInvoicesPageAndDownloadableFile(): void
     {
         $this->loginAsSuperadmin();
-        $this->addProductToCart(346, 1);
-        $this->addProductToCart(346, 1);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
         $this->finishCart();
         $this->logout();
 

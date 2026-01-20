@@ -1573,8 +1573,8 @@ msgstr "Пожалуйста введите название."
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "Вариант с таким же названием уже существует."
 
-msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
-msgstr "Длина штрих кода должна быть точной {0}."
+msgid "The_length_of_the_barcode_needs_to_be_{0}_or_{1}."
+msgstr "Длина штрих кода должна быть {0} или {1}."
 
 msgid "Please_enter_a_title."
 msgstr "Пожалуйста, введите заголовок."

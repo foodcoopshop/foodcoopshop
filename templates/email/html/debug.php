@@ -25,30 +25,30 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
 
 echo '<b>Message</b><br />';
 echo '<pre>';
-    print_r($message);
+    print_r($message); // @phpstan-ignore-line
 echo '</pre>';
 echo '<br /><br />';
 
 echo '<b>Request</b><br />';
 echo '<pre>';
-    print_r($_REQUEST);
+    print_r($_REQUEST); // @phpstan-ignore-line
 echo '</pre>';
 echo '<br /><br />';
 
 echo '<b>User</b><br />';
 echo '<pre>';
-    print_r($identity);
+    print_r($identity); // @phpstan-ignore-line
 echo '</pre>';
 echo '<br /><br />';
 
 echo '<b>Server</b><br />';
 echo '<pre>';
-    print_r($_SERVER);
+    print_r($_SERVER); // @phpstan-ignore-line
 echo '</pre>';
 echo '<br /><br />';
 
 echo '<b>Files</b><br />';
 echo '<pre>';
-    print_r($_FILES);
+    print_r($_FILES); // @phpstan-ignore-line
 echo '</pre>';
 echo '<br /><br />';

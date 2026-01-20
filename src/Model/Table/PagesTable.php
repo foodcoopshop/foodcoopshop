@@ -6,7 +6,20 @@ namespace App\Model\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\Query\SelectQuery;
 /**
+ /**
  * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.0.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ *
+ * @extends \App\Model\Table\AppTable<\App\Model\Entity\Page>
  * @mixin \Cake\ORM\Behavior\TreeBehavior
  */
 class PagesTable extends AppTable
@@ -48,13 +61,14 @@ class PagesTable extends AppTable
     {
         foreach ($pages as $page) {
             $statusString = '';
-            if (! $page->active) {
+            if (!$page->active) {
                 $statusString = ' ('.__('offline').')';
             }
             $this->flattenedArray[$page->id_page] = $separator . $page->title . $statusString;
-            if (! empty($page['children'])) {
+            if (!empty($page->children)) {
                 $this->flattenNestedArrayWithChildren($page->children, str_repeat('-',
-                $this->getLevel($page) + 1) . ' ');
+                $this->getBehavior('Tree')->getLevel($page) + 1) // @phpstan-ignore-line
+                 . ' ');
             }
         }
 

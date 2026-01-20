@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use App\Test\Fixture\ProductsFixture;
 
 class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCase
 {
@@ -57,8 +58,8 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
 
-        $this->addProductToCart(346, 3);
-        $this->addProductToCart('348-12', 5);
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 3);
+        $this->addProductToCart(ProductsFixture::ID_BEEF_1KG, 5);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);

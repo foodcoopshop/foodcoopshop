@@ -5,6 +5,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\Fixture\ProductsFixture;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,18 +30,16 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeImageValidImageAndDeleteImage(): void
     {
-
         // add image
-        $productId = 346;
         $products = [
-            [$productId => WWW_ROOT . 'img/tests/test-image.jpg']
+            [ProductsFixture::ID_ARTICHOKE => WWW_ROOT . 'img/tests/test-image.jpg']
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeImage($products);
 
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'Images'
@@ -58,13 +57,13 @@ class ProductsTableTest extends AppCakeTestCase
 
         // delete image
         $products = [
-            [$productId => 'no-image']
+            [ProductsFixture::ID_ARTICHOKE => 'no-image']
         ];
         $productsTable->changeImage($products);
 
         $product = $productsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
             ],
             contain: [
                 'Images'
@@ -83,9 +82,8 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeImageInvalidImage(): void
     {
         $file = WWW_ROOT . '/css/global.css';
-        $productId = 346;
         $products = [
-            [$productId => $file]
+            [ProductsFixture::ID_ARTICHOKE => $file]
         ];
 
         try {
@@ -98,9 +96,8 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeImageInvalidDomain(): void
     {
-        $productId = 346;
         $products = [
-            [$productId => 'https://localhost:8080/img/tests/test-image.jpg']
+            [ProductsFixture::ID_ARTICHOKE => 'https://localhost:8080/img/tests/test-image.jpg']
         ];
 
         try {
@@ -113,9 +110,8 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeImageNonExistingFile(): void
     {
-        $productId = 346;
         $products = [
-            [$productId => Configure::read('App.fullBaseUrl') . '/img/tests/non-existing-file.jpg']
+            [ProductsFixture::ID_ARTICHOKE => Configure::read('App.fullBaseUrl') . '/img/tests/non-existing-file.jpg']
         ];
         $exceptionThrown = false;
 
@@ -249,7 +245,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithOneProductAndInvalidStringQuantity(): void
     {
         $products = [
-            [346 => [
+            [ProductsFixture::ID_ARTICHOKE => [
                 'quantity' => 'invalid-quantity'
             ]]
         ];
@@ -270,7 +266,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithOneProductAndNegativeQuantity(): void
     {
         $products = [
-            [346 => [
+            [ProductsFixture::ID_ARTICHOKE => [
                 'quantity' => -50
             ]]
         ];
@@ -282,7 +278,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithOneProduct(): void
     {
         $products = [
-            [102 => [
+            [ProductsFixture::ID_FRANKFURTERS => [
                 'quantity' => '5'
             ]]
         ];
@@ -294,7 +290,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithOneProductAttribute(): void
     {
         $products = [
-            ['60-10' => [
+            [ProductsFixture::ID_MILK_0_5L => [
                 'quantity' => '5'
             ]]
         ];
@@ -306,13 +302,13 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithMultipleProductsAndAttributes(): void
     {
         $products = [
-            [102 => [
+            [ProductsFixture::ID_FRANKFURTERS => [
                 'quantity' => '5'
             ]],
-            [346 => [
+            [ProductsFixture::ID_ARTICHOKE => [
                 'quantity' => '1'
             ]],
-            ['60-10' => [
+            [ProductsFixture::ID_MILK_0_5L => [
                 'quantity' => '90'
             ]]
         ];
@@ -328,7 +324,7 @@ class ProductsTableTest extends AppCakeTestCase
     {
 
         $products = [
-            [346 => ['gross_price' => '-1']]
+            [ProductsFixture::ID_ARTICHOKE => ['gross_price' => '-1']]
         ];
 
         $exceptionThrown = false;
@@ -347,7 +343,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangePriceOneProductAndInvalidStringPrice(): void
     {
         $products = [
-            [346 => ['gross_price' => 'invalid-price']]
+            [ProductsFixture::ID_ARTICHOKE => ['gross_price' => 'invalid-price']]
         ];
 
         $exceptionThrown = false;
@@ -366,7 +362,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangePriceWithOneProduct(): void
     {
         $products = [
-            [102 => ['gross_price' => '5,22']]
+            [ProductsFixture::ID_FRANKFURTERS => ['gross_price' => '5,22']]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $success = $productsTable->changePrice($products);
@@ -377,7 +373,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangePriceWithOneProductAttribute(): void
     {
         $products = [
-            ['60-10' => ['gross_price' => '3,22']]
+            [ProductsFixture::ID_MILK_0_5L => ['gross_price' => '3,22']]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $success = $productsTable->changePrice($products);
@@ -388,9 +384,9 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangePriceWithMultipleProductsAndAttributes(): void
     {
         $products = [
-            [102 => ['gross_price' => '5,22']],
-            [346 => ['gross_price' => '1,00']],
-            ['60-10' => ['gross_price' => '2,98']]
+            [ProductsFixture::ID_FRANKFURTERS => ['gross_price' => '5,22']],
+            [ProductsFixture::ID_ARTICHOKE => ['gross_price' => '1,00']],
+            [ProductsFixture::ID_MILK_0_5L => ['gross_price' => '2,98']]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $success = $productsTable->changePrice($products);
@@ -404,9 +400,9 @@ class ProductsTableTest extends AppCakeTestCase
         // 1) change prices to same price to be able to test if the price has not changed
         $samePrice = '2,55';
         $products = [
-            [346 => ['gross_price' => $samePrice]],
-            [102 => ['gross_price' => $samePrice]],
-            [103 => ['gross_price' => $samePrice]]
+            [ProductsFixture::ID_ARTICHOKE => ['gross_price' => $samePrice]],
+            [ProductsFixture::ID_FRANKFURTERS => ['gross_price' => $samePrice]],
+            [ProductsFixture::ID_BRATWURST => ['gross_price' => $samePrice]]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $success = $productsTable->changePrice($products);
@@ -415,9 +411,9 @@ class ProductsTableTest extends AppCakeTestCase
 
         // try to change prices, but include one invalid price
         $products = [
-            [346 => ['gross_price' => '-1']], // invalid price
-            [102 => ['gross_price' => '2,58']],
-            [103 => ['gross_price' => '1,01']]
+            [ProductsFixture::ID_ARTICHOKE => ['gross_price' => '-1']], // invalid price
+            [ProductsFixture::ID_FRANKFURTERS => ['gross_price' => '2,58']],
+            [ProductsFixture::ID_BRATWURST => ['gross_price' => '1,01']]
         ];
 
         $exceptionThrown = false;
@@ -439,7 +435,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeDepositWithOneProduct(): void
     {
         $products = [
-            [102 => '1,00']
+            [ProductsFixture::ID_FRANKFURTERS => '1,00']
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeDeposit($products);
@@ -449,7 +445,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeDepositNegativeWithOneProduct(): void
     {
         $products = [
-            [102 => '-1,00']
+            [ProductsFixture::ID_FRANKFURTERS => '-1,00']
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeDeposit($products);
@@ -459,7 +455,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeDepositWithOneProductAttribute(): void
     {
         $products = [
-            ['60-10' => '1,00']
+            [ProductsFixture::ID_MILK_0_5L => '1,00']
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeDeposit($products);
@@ -472,9 +468,9 @@ class ProductsTableTest extends AppCakeTestCase
         // 1) change deposits to same deposit to be able to test if the price has not changed
         $sameDeposit = '1,00';
         $products = [
-            [346 => $sameDeposit],
-            [102 => $sameDeposit],
-            [103 => $sameDeposit]
+            [ProductsFixture::ID_ARTICHOKE => $sameDeposit],
+            [ProductsFixture::ID_FRANKFURTERS => $sameDeposit],
+            [ProductsFixture::ID_BRATWURST => $sameDeposit]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeDeposit($products);
@@ -482,9 +478,9 @@ class ProductsTableTest extends AppCakeTestCase
 
         // try to change deposits, but include one invalid deposit
         $products = [
-            [346 => 'adsf'], // invalid deposit
-            [102 => '2,30'],
-            [103 => '1,00']
+            [ProductsFixture::ID_ARTICHOKE => 'adsf'], // invalid deposit
+            [ProductsFixture::ID_FRANKFURTERS => '2,30'],
+            [ProductsFixture::ID_BRATWURST => '1,00']
         ];
 
         $exceptionThrown = false;
@@ -506,7 +502,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusWithStringStatus(): void
     {
         $products = [
-            [102 => 'invalid parameter']
+            [ProductsFixture::ID_FRANKFURTERS => 'invalid parameter']
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
@@ -517,7 +513,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusWithInvalidIntegerStatus(): void
     {
         $products = [
-            [102 => 5] // invalid status
+            [ProductsFixture::ID_FRANKFURTERS => 5] // invalid status
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
@@ -528,7 +524,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusForProductAttribute(): void
     {
         $products = [
-            ['60-10' => 0]
+            [ProductsFixture::ID_MILK_0_5L => 0]
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('change status is not allowed for product attributes');
@@ -539,7 +535,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusDisableWithOneProduct(): void
     {
         $products = [
-            [102 => 0]
+            [ProductsFixture::ID_FRANKFURTERS => 0]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $response = $productsTable->changeStatus($products);
@@ -550,7 +546,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusEnableWithOneProduct(): void
     {
         $products = [
-            [102 => 1]
+            [ProductsFixture::ID_FRANKFURTERS => 1]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $response = $productsTable->changeStatus($products);
@@ -561,9 +557,9 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusWithMultipleProductsAndDifferentStati(): void
     {
         $products = [
-            [102 => 1],
-            [340 => 1],
-            [346 => 0]
+            [ProductsFixture::ID_FRANKFURTERS => 1],
+            [ProductsFixture::ID_LUNG_STEW => 1],
+            [ProductsFixture::ID_ARTICHOKE => 0]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $response = $productsTable->changeStatus($products);
@@ -574,7 +570,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusWithOneProductAndInvalidStatus(): void
     {
         $products = [
-            [102 => 5] // invalid status
+            [ProductsFixture::ID_FRANKFURTERS => 5] // invalid status
         ];
 
         $exceptionThrown = false;
@@ -593,9 +589,9 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeStatusWithMultipleProductsAndOneWithInvalidStatus(): void
     {
         $products = [
-            [346 => 0],  // pass correct but different to current status
-            [102 => -1], // invalid status
-            [103 => 0]   // pass correct but different to current status
+            [ProductsFixture::ID_ARTICHOKE => 0],  // pass correct but different to current status
+            [ProductsFixture::ID_FRANKFURTERS => -1], // invalid status
+            [ProductsFixture::ID_BRATWURST => 0]   // pass correct but different to current status
         ];
 
         $exceptionThrown = false;
@@ -614,7 +610,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeNameWithOneProductAndInvalidStringName(): void
     {
         $products = [
-            [346 => [
+            [ProductsFixture::ID_ARTICHOKE => [
                 'name' => 'a', // at least 2 chars needed
                 'unity' => '',
                 'description' => 'Beschreibung',
@@ -639,7 +635,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeNameForProductAttribute(): void
     {
         $products = [
-            ['60-10' => 0]
+            [ProductsFixture::ID_MILK_0_5L => 0]
         ];
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('change name is not allowed for product attributes');
@@ -659,8 +655,8 @@ class ProductsTableTest extends AppCakeTestCase
         ];
 
         $products = [
-            [102 => $parameters],
-            [346 => $parameters]
+            [ProductsFixture::ID_FRANKFURTERS => $parameters],
+            [ProductsFixture::ID_ARTICHOKE => $parameters]
         ];
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->changeName($products);
