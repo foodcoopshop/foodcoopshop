@@ -1886,6 +1886,9 @@ msgstr "Bitte gib zwischen {0} und {1} Zeichen ein."
 msgid "deactivated"
 msgstr "deaktiviert"
 
+msgid "Account holder"
+msgstr "Kontoinhaber"
+
 msgid "Please_enter_a_valid_IBAN."
 msgstr "Bitte gib einen gültigen IBAN ein."
 

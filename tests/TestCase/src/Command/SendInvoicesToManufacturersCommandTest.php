@@ -81,6 +81,8 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
         $this->assertResponseContains('0,62 €</b>');
         $this->assertResponseContains('11.03.2018 10:20:30');
         $this->assertResponseContains('<td>0001</td><td></td>');
+        $this->assertResponseContains('<td>Demo Milch-Hersteller</td>');
+        $this->assertResponseContains('<td>Demo Fleisch-Hersteller<br /><i>' . __('Account holder') . ': Fleisch GmbH</i></td>');
 
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId='.$meatManufacturerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'manufacturerInvoiceWithVariableMemberFee.html');

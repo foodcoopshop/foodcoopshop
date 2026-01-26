@@ -197,7 +197,11 @@ class SendInvoicesToManufacturersCommand extends AppCommand
                 }
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $tableData .= '<tr>';
-                $tableData .= '<td>' . $manufacturer->decoded_name . '</td>';
+                $tableData .= '<td>' . $manufacturer->decoded_name;
+                if ($manufacturer->decoded_bank_account_holder != '') {
+                    $tableData .= '<br /><i>' . __('Account holder') . ': ' . $manufacturer->decoded_bank_account_holder . '</i>';
+                }
+                $tableData .= '</td>';
                 $tableData .= '<td>' . $manufacturer->invoiceNumber . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? '<i class="fas fa-envelope not-ok" data-identifier="send-invoice-'.$identifier.'"></i>' : '') . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';

@@ -24,4 +24,9 @@ namespace App\Model\Entity;
         return html_entity_decode($this->name);
     }
 
+    protected function _getDecodedBankAccountHolder(): string
+    {
+        return html_entity_decode($this->bank_account_holder);
+    }
+
 }
