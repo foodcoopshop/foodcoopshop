@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractSeed;
+use Migrations\BaseSeed;
 
-class AddTaxesGermanySeed extends AbstractSeed
+class AddTaxesGermanySeed extends BaseSeed
 {
     public function run(): void
     {

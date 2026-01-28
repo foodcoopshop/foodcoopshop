@@ -31,6 +31,9 @@ define('HTTPS_REGEX', '/^https\:\/\//');
 define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
 
 return [
+    'Migrations' => [
+        'legacyTables' => true,
+    ],
     'Email' => [
         'default' => [
             'emailFormat' => 'html',

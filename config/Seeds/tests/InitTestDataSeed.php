@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractSeed;
+use Migrations\BaseSeed;
 use Cake\TestSuite\Fixture\FixtureHelper;
 use App\Test\Fixture\AppFixture;
 
-class InitTestDataSeed extends AbstractSeed
+class InitTestDataSeed extends BaseSeed
 {
     public function run(): void
     {
