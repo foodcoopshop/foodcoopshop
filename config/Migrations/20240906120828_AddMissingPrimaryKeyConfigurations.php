@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 
-class AddMissingPrimaryKeyConfigurations extends AbstractMigration
+class AddMissingPrimaryKeyConfigurations extends BaseMigration
 {
 
     public function change(): void

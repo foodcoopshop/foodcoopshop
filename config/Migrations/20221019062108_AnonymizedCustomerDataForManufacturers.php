@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 
-class AnonymizedCustomerDataForManufacturers extends AbstractMigration
+class AnonymizedCustomerDataForManufacturers extends BaseMigration
 {
     public function change(): void
     {

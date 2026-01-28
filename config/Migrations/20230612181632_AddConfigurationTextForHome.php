@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 use Cake\I18n\I18n;
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 
-class AddConfigurationTextForHome extends AbstractMigration
+class AddConfigurationTextForHome extends BaseMigration
 {
     public function change(): void
     {

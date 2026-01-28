@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 use Cake\ORM\TableRegistry;
 
-class ProductsAddFieldForNew extends AbstractMigration
+class ProductsAddFieldForNew extends BaseMigration
 {
     public function change(): void
     {

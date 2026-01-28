@@ -1,20 +1,21 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 
-class AvailableAmountBasedOnUnits extends AbstractMigration
+class AvailableAmountBasedOnUnits extends BaseMigration
 {
     public function change(): void
     {
         $table = $this->table('fcs_stock_available');
-        $decimalOptions = [
+        $options = [
             'precision' => 10,
             'scale' => 3,
+            'null' => true,
         ];
-        $table->changeColumn('quantity', 'decimal', $decimalOptions);
-        $table->changeColumn('quantity_limit', 'decimal', $decimalOptions);
-        $table->changeColumn('sold_out_limit', 'decimal', $decimalOptions);
+        $table->changeColumn('quantity', 'decimal', $options);
+        $table->changeColumn('quantity_limit', 'decimal', $options);
+        $table->changeColumn('sold_out_limit', 'decimal', $options);
         $table->update();
 
         $table = $this->table('fcs_units');
