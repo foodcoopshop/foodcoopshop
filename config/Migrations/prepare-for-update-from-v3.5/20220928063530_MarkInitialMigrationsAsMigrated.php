@@ -11,7 +11,7 @@ class MarkInitialMigrationsAsMigrated extends BaseMigration
         $this->execute("TRUNCATE phinxlog");
 
         $table = $this->table('phinxlog');
-        $table->setData([
+        $table->insert([
             [
                 'version' => 20220928063531,
                 'migration_name' => 'Initial',
