@@ -45,7 +45,7 @@ use DateTime;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Utility\Security;
 use App\Controller\Component\StringComponent;
-use Authentication\Identifier\AbstractIdentifier;
+use Authentication\Identifier\PasswordIdentifier;
 
 /**
  * Application setup class.
@@ -228,8 +228,8 @@ class Application extends BaseApplication
         $service = new AuthenticationService();
 
         $fields = [
-            AbstractIdentifier::CREDENTIAL_USERNAME => 'email',
-            AbstractIdentifier::CREDENTIAL_PASSWORD => 'passwd',
+            PasswordIdentifier::CREDENTIAL_USERNAME => 'email',
+            PasswordIdentifier::CREDENTIAL_PASSWORD => 'passwd',
         ];
 
         $ormResolver = [
@@ -243,10 +243,9 @@ class Application extends BaseApplication
         ]);
 
         $passwordIdentifier = [
-            'Authentication.Password' => [
-                'resolver' => $ormResolver,
-                'fields' => $fields,
-            ],
+            'className' => 'Authentication.Password',
+            'resolver' => $ormResolver,
+            'fields' => $fields,
         ];
 
         $isApiRequest = in_array($request->getUri()->getPath(), $this->getApiUrls());
@@ -271,11 +270,10 @@ class Application extends BaseApplication
         }
 
         $sessionIdentifier = [
-            'Authentication.Token' => [
-                'resolver' => $ormResolver,
-                'dataField' => 'key',
-                'tokenField' => 'Customers.id_customer',
-            ],
+            'className' => 'Authentication.Token',
+            'resolver' => $ormResolver,
+            'dataField' => 'key',
+            'tokenField' => 'Customers.id_customer',
         ];
 
         $service->loadAuthenticator('Authentication.PrimaryKeySession', [
@@ -292,9 +290,8 @@ class Application extends BaseApplication
             $service->loadAuthenticator('App.AppBarCodeForm', [
                 'loginUrl' => Configure::read('app.slugHelper')->getLogin(),
                 'identifier' => [
-                   'App.BarCode' => [
-                        'resolver' => $ormResolver,
-                    ],
+                    'className' => 'App.BarCode',
+                    'resolver' => $ormResolver,
                 ],
             ]);
         }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2889bb811a8c0c32c95866b66913a45d",
+    "content-hash": "23723851253e9b012d421502c23e2ef0",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -57,20 +57,21 @@
         },
         {
             "name": "cakephp/authentication",
-            "version": "3.3.5",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/authentication.git",
-                "reference": "9a12edc97de43f95eb4fecf033b623d5b17b436c"
+                "reference": "8faadabacd15c3e9dc3f5e95c7b32a2bfc153a8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/authentication/zipball/9a12edc97de43f95eb4fecf033b623d5b17b436c",
-                "reference": "9a12edc97de43f95eb4fecf033b623d5b17b436c",
+                "url": "https://api.github.com/repos/cakephp/authentication/zipball/8faadabacd15c3e9dc3f5e95c7b32a2bfc153a8a",
+                "reference": "8faadabacd15c3e9dc3f5e95c7b32a2bfc153a8a",
                 "shasum": ""
             },
             "require": {
                 "cakephp/http": "^5.0",
+                "cakephp/utility": "^5.0",
                 "laminas/laminas-diactoros": "^3.0",
                 "php": ">=8.1",
                 "psr/http-client": "^1.0",
@@ -81,7 +82,7 @@
             "require-dev": {
                 "cakephp/cakephp": "^5.1.0",
                 "cakephp/cakephp-codesniffer": "^5.0",
-                "firebase/php-jwt": "^6.2",
+                "firebase/php-jwt": "^7.0",
                 "phpunit/phpunit": "^10.5.58 || ^11.5.3 || ^12.4"
             },
             "suggest": {
@@ -116,25 +117,25 @@
                 "middleware"
             ],
             "support": {
-                "docs": "https://book.cakephp.org/authentication/3/en/",
+                "docs": "https://book.cakephp.org/authentication/4/en/",
                 "forum": "https://discourse.cakephp.org/",
                 "issues": "https://github.com/cakephp/authentication/issues",
                 "source": "https://github.com/cakephp/authentication"
             },
-            "time": "2026-01-31T00:28:31+00:00"
+            "time": "2026-02-01T08:09:07+00:00"
         },
         {
             "name": "cakephp/authorization",
-            "version": "3.4.2",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/authorization.git",
-                "reference": "6395003b7ff3928d58ad91e55d23031499a329f0"
+                "reference": "880c07b67e6c252bd24adbfec9930bd9e5b9a06b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/authorization/zipball/6395003b7ff3928d58ad91e55d23031499a329f0",
-                "reference": "6395003b7ff3928d58ad91e55d23031499a329f0",
+                "url": "https://api.github.com/repos/cakephp/authorization/zipball/880c07b67e6c252bd24adbfec9930bd9e5b9a06b",
+                "reference": "880c07b67e6c252bd24adbfec9930bd9e5b9a06b",
                 "shasum": ""
             },
             "require": {
@@ -146,11 +147,11 @@
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
-                "cakephp/authentication": "^3.0",
+                "cakephp/authentication": "^3.0 || ^4.0",
                 "cakephp/bake": "^3.2",
                 "cakephp/cakephp": "^5.1",
                 "cakephp/cakephp-codesniffer": "^5.1",
-                "phpunit/phpunit": "^10.5.5 || ^11.1.3"
+                "phpunit/phpunit": "^10.5.58 || ^11.5.3 || ^12.4 || ^13.0"
             },
             "suggest": {
                 "cakephp/http": "To use \"RequestPolicyInterface\" (Not needed separately if using full CakePHP framework).",
@@ -186,7 +187,7 @@
                 "issues": "https://github.com/cakephp/authorization/issues",
                 "source": "https://github.com/cakephp/authorization"
             },
-            "time": "2025-07-29T14:41:00+00:00"
+            "time": "2026-02-14T19:54:38+00:00"
         },
         {
             "name": "cakephp/cakephp",
@@ -3065,16 +3066,16 @@
         },
         {
             "name": "cakephp/bake",
-            "version": "3.6.0",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "c8dc9c6cce30b067adda5baa6d19f82481b12453"
+                "reference": "40a6208109a6d3922fb10c0446a00b50c1b098f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/c8dc9c6cce30b067adda5baa6d19f82481b12453",
-                "reference": "c8dc9c6cce30b067adda5baa6d19f82481b12453",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/40a6208109a6d3922fb10c0446a00b50c1b098f6",
+                "reference": "40a6208109a6d3922fb10c0446a00b50c1b098f6",
                 "shasum": ""
             },
             "require": {
@@ -3118,7 +3119,7 @@
                 "issues": "https://github.com/cakephp/bake/issues",
                 "source": "https://github.com/cakephp/bake"
             },
-            "time": "2026-01-12T00:13:14+00:00"
+            "time": "2026-02-13T12:33:29+00:00"
         },
         {
             "name": "cakephp/cakephp-codesniffer",
@@ -4126,16 +4127,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.6.4",
+            "version": "v6.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "2eeb75d21cf73211335888e7f5e6fd7440723ec7"
+                "reference": "cd3137ab4ad45033230f530ab7d5618d583c17be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/2eeb75d21cf73211335888e7f5e6fd7440723ec7",
-                "reference": "2eeb75d21cf73211335888e7f5e6fd7440723ec7",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/cd3137ab4ad45033230f530ab7d5618d583c17be",
+                "reference": "cd3137ab4ad45033230f530ab7d5618d583c17be",
                 "shasum": ""
             },
             "require": {
@@ -4195,9 +4196,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.6.4"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/v6.7.1"
             },
-            "time": "2025-12-19T15:01:32+00:00"
+            "time": "2026-02-13T16:16:54+00:00"
         },
         {
             "name": "marc-mabe/php-enum",

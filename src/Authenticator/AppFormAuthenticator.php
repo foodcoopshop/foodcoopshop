@@ -5,7 +5,7 @@ namespace App\Authenticator;
 
 use Authentication\Authenticator\FormAuthenticator;
 use Psr\Http\Message\ServerRequestInterface;
-use Authentication\Identifier\AbstractIdentifier;
+use Authentication\Identifier\PasswordIdentifier;
 use Authentication\Identifier\TokenIdentifier;
 
 /**
@@ -30,8 +30,8 @@ class AppFormAuthenticator extends FormAuthenticator
     protected array $_defaultConfig = [
         'urlChecker' => 'Authentication.Default',
         'fields' => [
-            AbstractIdentifier::CREDENTIAL_USERNAME => 'email',
-            AbstractIdentifier::CREDENTIAL_PASSWORD => 'passwd',
+            PasswordIdentifier::CREDENTIAL_USERNAME => 'email',
+            PasswordIdentifier::CREDENTIAL_PASSWORD => 'passwd',
             TokenIdentifier::CREDENTIAL_TOKEN => 'barcode',
         ],
     ];
