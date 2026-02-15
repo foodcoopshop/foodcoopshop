@@ -22,7 +22,7 @@ trait LoginTrait
 {
 
     /**
-     * @return array{Auth: array<string, mixed>}
+     * @return array{Auth: int}
      */
     private function login(int $customerId): array
     {
@@ -43,7 +43,7 @@ trait LoginTrait
         }
 
         return [
-            'Auth' => $identity->toArray(),
+            'Auth' => $customerId,
         ];
     }
 
@@ -126,9 +126,21 @@ trait LoginTrait
      */
     public function getUser(): array
     {
-        if (empty($this->_session)) {
+        if (empty($this->_session) || !isset($this->_session['Auth'])) {
             return [];
         }
-        return $this->_session['Auth'];
+        $customerId = $this->_session['Auth'];
+        if (is_int($customerId)) {
+            $customerTable = $this->getTableLocator()->get('Customers');
+            return $customerTable->find('all',
+                conditions: [
+                    'Customers.id_customer' => $customerId,
+                ],
+                contain: [
+                    'AddressCustomers',
+                ],
+            )->first()->toArray();
+        }
+        return $customerId;
     }
 }

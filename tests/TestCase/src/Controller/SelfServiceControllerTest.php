@@ -56,7 +56,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testBarCodeLoginAsSuperadminValid(): void
     {
         $this->doBarCodeLogin();
-        $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
+        $this->assertSession(Configure::read('test.superadminId'), 'Auth');
     }
 
     public function testSelfServiceAddProductPricePerUnitWrong(): void
@@ -570,7 +570,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             ],
         ]);
         $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
-        $this->assertSession($selfServiceCustomerId, 'Auth.id_customer');
+        $this->assertSession($selfServiceCustomerId, 'Auth');
         $this->assertRedirect($this->Slug->getSelfService());
     }
 

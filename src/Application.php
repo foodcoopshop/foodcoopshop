@@ -270,10 +270,17 @@ class Application extends BaseApplication
             return $service;
         }
 
-        $service->loadAuthenticator('Authentication.Session', [
-            'fields' => [AbstractIdentifier::CREDENTIAL_USERNAME => 'email'],
-            'identify' => true,
-            'identifier' => $passwordIdentifier,
+        $sessionIdentifier = [
+            'Authentication.Token' => [
+                'resolver' => $ormResolver,
+                'dataField' => 'key',
+                'tokenField' => 'Customers.id_customer',
+            ],
+        ];
+
+        $service->loadAuthenticator('Authentication.PrimaryKeySession', [
+            'identifier' => $sessionIdentifier,
+            'idField' => 'id_customer',
         ]);
 
         $service->loadAuthenticator('App.AppForm', [
