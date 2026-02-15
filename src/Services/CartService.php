@@ -89,14 +89,6 @@ class CartService
 
     /**
      * @param array<string, mixed> $cart
-     * @param array<array<string, mixed>> $orderDetails2save
-     * @param array<array<string, mixed>> $stockAvailable2saveData
-     * @param array<array<string, mixed>> $stockAvailable2saveConditions
-     * @param string|null $customerSelectedPickupDay
-     * @param \App\Model\Entity\Product[] $products
-     */
-    /**
-     * @param array<string, mixed> $cart
      * @param list<array<string, mixed>> $orderDetails2save
      * @param list<array<string, mixed>> $stockAvailable2saveData
      * @param list<array<string, mixed>> $stockAvailable2saveConditions
@@ -137,14 +129,14 @@ class CartService
 
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         switch($cartType) {
-            case Cart::TYPE_WEEKLY_RHYTHM;
+            case Cart::TYPE_WEEKLY_RHYTHM:
                 $actionLogType = 'customer_order_finished';
                 $message = __('Your_order_has_been_placed_succesfully.');
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
                 $cartGroupedByPickupDay = $cartsTable->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
                 $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                 break;
-            case Cart::TYPE_INSTANT_ORDER;
+            case Cart::TYPE_INSTANT_ORDER:
                 $actionLogType = 'instant_order_added';
                 $userIdForActionLog = $this->request->getSession()->read('OriginalIdentity')['id_customer'];
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
@@ -166,7 +158,7 @@ class CartService
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                 }
                 break;
-            case Cart::TYPE_SELF_SERVICE;
+            case Cart::TYPE_SELF_SERVICE:
 
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
                     $invoicesTable = TableRegistry::getTableLocator()->get('Invoices');
@@ -659,9 +651,6 @@ class CartService
         );
     }
 
-    /**
-     * @param array<array<string, mixed>> $cartProducts
-     */
     /**
      * @param list<array<string, mixed>> $cartProducts
      * @return list<string>
