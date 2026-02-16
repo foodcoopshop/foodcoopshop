@@ -276,7 +276,7 @@ class Application extends BaseApplication
             'tokenField' => 'Customers.id_customer',
         ];
 
-        $service->loadAuthenticator('Authentication.PrimaryKeySession', [
+        $service->loadAuthenticator('App.AppPrimaryKeySession', [
             'identifier' => $sessionIdentifier,
             'idField' => 'id_customer',
         ]);
