@@ -269,15 +269,13 @@ class Application extends BaseApplication
             return $service;
         }
 
-        $sessionIdentifier = [
-            'className' => 'Authentication.Token',
-            'resolver' => $ormResolver,
-            'dataField' => 'key',
-            'tokenField' => 'Customers.id_customer',
-        ];
-
         $service->loadAuthenticator('App.AppPrimaryKeySession', [
-            'identifier' => $sessionIdentifier,
+            'identifier' => [
+                'className' => 'Authentication.Token',
+                'resolver' => $ormResolver,
+                'dataField' => 'key',
+                'tokenField' => 'Customers.id_customer',
+            ],
             'idField' => 'id_customer',
         ]);
 
