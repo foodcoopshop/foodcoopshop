@@ -25,6 +25,7 @@ class BankingReaderServiceFactory {
 		'Sparkasse'       => SparkasseBankingReaderService::class,
 		'Volksbank'       => VolksbankBankingReaderService::class,
 		'BankBurgenland'  => BankBurgenlandBankingReaderService::class,
+		'SparkasseDe'     => SparkasseDeBankingReaderService::class,
 	];
 
 	public static function get(string $alias): string
