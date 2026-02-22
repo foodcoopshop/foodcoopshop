@@ -9,7 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## unreleased
 
 ### Neue Funktionen / Verbesserungen
-- Der CSV-Import de runterstützt. [I#1226](https://github.com/foodcoopshop/foodcoopshop/issues/1226) / [PR#1230](https://github.com/foodcoopshop/foodcoopshop/pull/1230) <a href="https://github.com/dartmann"><img src="https://github.com/dartmann.png" width="20"></a>
+- Der automatische Kontoabgleich unterstützt jetzt auch die deutsche Sparkasse. [I#1226](https://github.com/foodcoopshop/foodcoopshop/issues/1226) / [PR#1230](https://github.com/foodcoopshop/foodcoopshop/pull/1230) <a href="https://github.com/dartmann"><img src="https://github.com/dartmann.png" width="20"></a>
 - Bestellungen können jetzt auch nach Steuersatz gefiltert werden (Aktionen - Zusätzliche Filter anzeigen) und im CSV-Export der Bestellungen wird der Steuersatz jetzt auch angezeigt. [I#1222](https://github.com/foodcoopshop/foodcoopshop/issues/1222) / [PR#1223](https://github.com/foodcoopshop/foodcoopshop/pull/1223) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Beim Herstellers kann jetzt auch der Kontoinhaber des Bankkontos angegeben werden. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/93d1511253bf5de49b899c3f8f0bc7f7a3f2fa27) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Es können jetzt mehrere markierte Produkte gleichzeitig "Als neu markiert" bzw. "Nicht mehr als neu markiert" werden. [I#1215](https://github.com/foodcoopshop/foodcoopshop/issues/1215) / [PR#1219](https://github.com/foodcoopshop/foodcoopshop/pull/1219) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
