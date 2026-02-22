@@ -58,6 +58,9 @@ abstract class AppCakeTestCase extends TestCase
     public NetworkHelper $Network;
     public PricePerUnitHelper $PricePerUnit;
 
+    public const string BANKING_READER_CSV_FILE_PATH = TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS;
+    public const string PRODUCT_READER_CSV_FILE_PATH = TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS;
+
     public function setUp(): void
     {
 

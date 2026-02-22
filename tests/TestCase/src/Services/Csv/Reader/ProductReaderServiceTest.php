@@ -24,7 +24,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
 
     public function testReadCsv(): void
     {
-        $this->reader = ProductReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
+        $this->reader = ProductReaderService::from(self::PRODUCT_READER_CSV_FILE_PATH . 'test-products-valid.csv');
         $this->reader->configureType();
         $records = $this->reader->getPreparedRecords();
 
@@ -48,7 +48,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
     public function testImportWithErrors(): void
     {
 
-        $this->reader = ProductReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
+        $this->reader = ProductReaderService::from(self::PRODUCT_READER_CSV_FILE_PATH . 'test-products-invalid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
@@ -80,7 +80,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
     public function testImportSuccessful(): void
     {
 
-        $this->reader = ProductReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
+        $this->reader = ProductReaderService::from(self::PRODUCT_READER_CSV_FILE_PATH . 'test-products-valid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);

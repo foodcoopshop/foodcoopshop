@@ -23,7 +23,7 @@ class RaiffeisenBankingReaderServiceTest extends AppCakeTestCase
 
     public function testRead(): void
     {
-        $reader = RaiffeisenBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');
+        $reader = RaiffeisenBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'raiffeisen.csv');
         $records = $reader->getPreparedRecords();
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
@@ -39,13 +39,13 @@ class RaiffeisenBankingReaderServiceTest extends AppCakeTestCase
 
     public function testCheckStructureNotOk(): void
     {
-        $reader = RaiffeisenBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen-wrong-structure.csv');
+        $reader = RaiffeisenBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'raiffeisen-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
     public function testCheckStructureOk(): void
     {
-        $reader = RaiffeisenBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');
+        $reader = RaiffeisenBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'raiffeisen.csv');
         $this->assertTrue($reader->checkStructure());
     }
 

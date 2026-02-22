@@ -23,7 +23,7 @@ class SparkasseDeBankingReaderServiceTest extends AppCakeTestCase
 
     public function testRead(): void
     {
-        $reader = SparkasseDeBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-de.csv');
+        $reader = SparkasseDeBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'sparkasse-de.csv');
         $records = $reader->getPreparedRecords();
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
@@ -38,13 +38,13 @@ class SparkasseDeBankingReaderServiceTest extends AppCakeTestCase
 
     public function testCheckStructureNotOk(): void
     {
-        $reader = SparkasseDeBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-de-wrong-structure.csv');
+        $reader = SparkasseDeBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'sparkasse-de-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
     public function testCheckStructureOk(): void
     {
-        $reader = SparkasseDeBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-de.csv');
+        $reader = SparkasseDeBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'sparkasse-de.csv');
         $this->assertTrue($reader->checkStructure());
     }
 
@@ -74,7 +74,7 @@ class SparkasseDeBankingReaderServiceTest extends AppCakeTestCase
 
     public function testDateNormalization(): void
     {
-        $reader = SparkasseDeBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-de.csv');
+        $reader = SparkasseDeBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'sparkasse-de.csv');
         $records = $reader->getPreparedRecords();
 
         $this->assertEquals(
@@ -85,7 +85,7 @@ class SparkasseDeBankingReaderServiceTest extends AppCakeTestCase
 
     public function testContentBuilding(): void
     {
-        $reader = SparkasseDeBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-de.csv');
+        $reader = SparkasseDeBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'sparkasse-de.csv');
         $records = $reader->getPreparedRecords();
         $content = $records[0]['content'];
 
@@ -100,7 +100,7 @@ class SparkasseDeBankingReaderServiceTest extends AppCakeTestCase
 
     public function testEmptyContentFieldsAreIgnored(): void
     {
-        $reader = SparkasseDeBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-de-empty-fields.csv');
+        $reader = SparkasseDeBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'sparkasse-de-empty-fields.csv');
         $records = $reader->getPreparedRecords();
         $content = $records[0]['content'];
 

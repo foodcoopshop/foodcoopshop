@@ -23,7 +23,7 @@ class GlsBankBankingReaderServiceTest extends AppCakeTestCase
 
     public function testRead(): void
     {
-        $reader = GlsBankBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
+        $reader = GlsBankBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'glsbank.csv');
         $records = $reader->getPreparedRecords();
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
@@ -38,13 +38,13 @@ class GlsBankBankingReaderServiceTest extends AppCakeTestCase
 
     public function testCheckStructureNotOk(): void
     {
-        $reader = GlsBankBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank-wrong-structure.csv');
+        $reader = GlsBankBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'glsbank-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
     public function testCheckStructureOk(): void
     {
-        $reader = GlsBankBankingReaderService::from(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
+        $reader = GlsBankBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'glsbank.csv');
         $this->assertTrue($reader->checkStructure());
     }
 
