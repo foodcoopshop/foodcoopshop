@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Services\Csv\Reader\Banking;
 
+use Cake\I18n\DateTime;
 use Cake\Core\Configure;
 
 class SparkasseDeBankingReaderService extends BankingReaderService {
@@ -42,8 +43,10 @@ class SparkasseDeBankingReaderService extends BankingReaderService {
             }
         }
 
-        // Check if date is in correct format (dd.mm.yyyy)
-        if (!preg_match('/^\d{2}\.\d{2}\.\d{4}$/', $record['Buchungstag'])) { return false; }
+        $date = DateTime::createFromFormat('d.m.Y', $record['Buchungstag']);
+        if (!$date) {
+            return false;
+        }
 
         // Check if amount is numeric 
         $amount = Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag']); 
@@ -78,14 +81,6 @@ class SparkasseDeBankingReaderService extends BankingReaderService {
                 $record['Kontonummer/IBAN'],
                 $record['BIC (SWIFT-Code)'],
             ];
-
-            /*
-            $contentFields = array_filter($contentFields);
-
-            $record['content'] = join('<br />', $contentFields);
-            $record['amount'] = $record['Betrag'];
-            $record['date'] =  $record['Buchungstag'];
-            */
 
             // Only remove empty content (no removal of fields)
             $contentFields = array_filter($contentFields, fn($v) => trim((string)$v) !== '');
