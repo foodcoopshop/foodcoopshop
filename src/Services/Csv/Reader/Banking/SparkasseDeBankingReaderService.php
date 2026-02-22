@@ -43,8 +43,9 @@ class SparkasseDeBankingReaderService extends BankingReaderService {
             }
         }
 
-        $date = DateTime::createFromFormat('d.m.Y', $record['Buchungstag']);
-        if (!$date) {
+        try {
+            DateTime::createFromFormat('d.m.Y', $record['Buchungstag']);
+        } catch (\Exception) {
             return false;
         }
 
