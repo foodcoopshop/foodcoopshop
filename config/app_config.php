@@ -32,7 +32,7 @@ define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-
 
 return [
     'Migrations' => [
-        'legacyTables' => null,
+        'legacyTables' => false,
     ],
     'Email' => [
         'default' => [
