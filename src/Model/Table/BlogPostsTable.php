@@ -86,13 +86,15 @@ class BlogPostsTable extends AppTable
                 'Manufacturers',
             ],
         );
+        /** @var SelectQuery<\App\Model\Entity\BlogPost> $blogPosts */
 
         return $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\BlogPost> $query
-     * @return SelectQuery<\App\Model\Entity\BlogPost>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     public function getConditionShowOnStartPage(SelectQuery $query, bool $showOnStartPage): SelectQuery
     {

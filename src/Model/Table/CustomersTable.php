@@ -230,7 +230,8 @@ class CustomersTable extends AppTable
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Customer> $query
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
      */
     public function sortByVirtualField(SelectQuery $query, string $name): object
     {
@@ -269,8 +270,9 @@ class CustomersTable extends AppTable
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Customer> $query
-     * @return SelectQuery<\App\Model\Entity\Customer>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     public function addCustomersNameForOrderSelect(SelectQuery $query): SelectQuery
     {

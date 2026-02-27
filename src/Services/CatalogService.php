@@ -175,13 +175,15 @@ class CatalogService
         $query = $this->addNewProductsFilter($query, $filterByNewProducts);
         $query = $this->addKeywordFilter($query, $keyword);
 
+        /** @var SelectQuery<\App\Model\Entity\Product> $query */
         return $query;
 
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addOrderKeyword(SelectQuery $query, string $keyword): SelectQuery
     {
@@ -203,8 +205,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addOrder(SelectQuery $query): SelectQuery
     {
@@ -216,8 +219,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addOrderByRand(SelectQuery $query): SelectQuery
     {
@@ -226,8 +230,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addSelectFields(SelectQuery $query): SelectQuery
     {
@@ -252,8 +257,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addContains(SelectQuery $query): SelectQuery
     {
@@ -282,8 +288,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addDefaultConditions(SelectQuery $query): SelectQuery
     {
@@ -302,8 +309,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addManufacturerIdFilter(SelectQuery $query, int $manufacturerId): SelectQuery
     {
@@ -320,8 +328,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addProductIdFilter(SelectQuery $query, int $productId): SelectQuery
     {
@@ -338,8 +347,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addCategoryIdFilter(SelectQuery $query, int|string $categoryId): SelectQuery
     {
@@ -356,8 +366,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addGetOnlyStockProductsFilter(SelectQuery $query, bool $getOnlyStockProducts): SelectQuery
     {
@@ -377,8 +388,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addNewProductsFilter(SelectQuery $query, bool $filterByNewProducts): SelectQuery
     {
@@ -394,8 +406,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addPurchasePriceIsSetFilter(SelectQuery $query): SelectQuery
     {
@@ -446,8 +459,9 @@ class CatalogService
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\Product> $query
-     * @return SelectQuery<\App\Model\Entity\Product>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function addKeywordFilter(SelectQuery $query, string $keyword): SelectQuery
     {

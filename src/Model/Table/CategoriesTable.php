@@ -142,6 +142,7 @@ class CategoriesTable extends AppTable
                 $this->aliasField('name') => 'ASC',
             ],
         );
+        /** @var SelectQuery<\App\Model\Entity\Category> $categories */
         return $categories;
     }
 

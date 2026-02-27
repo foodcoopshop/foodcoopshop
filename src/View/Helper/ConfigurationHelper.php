@@ -22,6 +22,7 @@ use App\Model\Entity\Configuration;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class ConfigurationHelper extends Helper
 {

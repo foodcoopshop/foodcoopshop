@@ -159,6 +159,7 @@ class PaymentsTable extends AppTable
         order: [
             'Payments.date_add' => 'DESC',
         ]);
+        /** @var SelectQuery<\App\Model\Entity\Payment> $paymentSum */
         $paymentSum->where(function (QueryExpression $exp) use ($monthAndYear) {
             return $exp->eq('DATE_FORMAT(Payments.date_add, \'%Y-%c\')', $monthAndYear);
         });

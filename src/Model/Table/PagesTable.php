@@ -92,6 +92,7 @@ class PagesTable extends AppTable
         contain: [
             'Customers',
         ]);
+        /** @var SelectQuery<\App\Model\Entity\Page> $pages */
         return $pages;
     }
 

@@ -217,6 +217,7 @@ trait OrderDetailsFilterTrait
                 break;
         }
 
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
         return $query;
     }
 
@@ -260,8 +261,9 @@ trait OrderDetailsFilterTrait
     }
 
     /**
-     * @param SelectQuery<\App\Model\Entity\OrderDetail> $query
-     * @return SelectQuery<\App\Model\Entity\OrderDetail>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     private function addSelectGroupFields(SelectQuery $query): SelectQuery
     {

@@ -37,12 +37,16 @@ class SyncProductsTable extends AppTable
     }
 
     /**
-     * @param SelectQuery<\Network\Model\Entity\SyncProduct> $syncProducts
-     * @return SelectQuery<\Network\Model\Entity\SyncProduct>
+     * @template T of array|\Cake\Datasource\EntityInterface
+     * @param SelectQuery<T> $syncProducts
+     * @return SelectQuery<T>
      */
     public function addDashSeparatedProductIds(SelectQuery $syncProducts): SelectQuery
     {
         foreach ($syncProducts as $syncProduct) {
+            if (!$syncProduct instanceof \Network\Model\Entity\SyncProduct) {
+                continue;
+            }
             $remoteProductId = $syncProduct->remote_product_id;
             if ($syncProduct->remote_product_attribute_id > 0) {
                 $remoteProductId = $remoteProductId . '-' . $syncProduct->remote_product_attribute_id;
@@ -74,6 +78,7 @@ class SyncProductsTable extends AppTable
             'Products'
         ]);
         $syncProducts = $this->addDashSeparatedProductIds($syncProducts);
+        /** @var SelectQuery<\Network\Model\Entity\SyncProduct> $syncProducts */
         return $syncProducts;
     }
 

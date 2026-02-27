@@ -515,9 +515,10 @@ class InvoicesController extends AdminAppController
     }
 
     /**
+     * @template T of array|\Cake\Datasource\EntityInterface
      * @param array<int|string> $customerIds
-     * @param SelectQuery<\App\Model\Entity\Invoice> $query
-     * @return SelectQuery<\App\Model\Entity\Invoice>
+     * @param SelectQuery<T> $query
+     * @return SelectQuery<T>
      */
     protected function setInvoiceConditions(SelectQuery $query, string $dateFrom, string $dateTo, array $customerIds): SelectQuery
     {

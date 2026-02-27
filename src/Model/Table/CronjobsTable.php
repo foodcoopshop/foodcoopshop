@@ -257,6 +257,10 @@ class CronjobsTable extends AppTable
 
         foreach($cronjobs as $cronjob) {
 
+            if (!$cronjob instanceof Cronjob) {
+                continue;
+            }
+
             $cronjobRunDayObject = new DateTime($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');

@@ -242,6 +242,7 @@ class ConfigurationsTable extends AppTable
                 $this->aliasField('position') => 'ASC',
             ],
         );
+        /** @var SelectQuery<\App\Model\Entity\Configuration> $configurations */
         return $configurations;
     }
 

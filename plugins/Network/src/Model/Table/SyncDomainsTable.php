@@ -54,6 +54,7 @@ class SyncDomainsTable extends AppTable
         $syncDomains = $this->find('all', conditions: [
             $this->aliasField('active >=') => $minStatus,
         ]);
+        /** @var SelectQuery<\Network\Model\Entity\SyncDomain> $syncDomains */
         return $syncDomains;
     }
 

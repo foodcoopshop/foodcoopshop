@@ -23,7 +23,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "clipboard": "^2.0.11",
     "cookies-eu-banner": "^2.0.1",
-    "jodit": "^4.9.6",
+    "jodit": "^4.9.14",
     "jquery": "^3.7.1",
     "jquery-backstretch": "^2.1.18",
     "jquery-knob": "~1.2.11",
@@ -35,9 +35,9 @@
     "mathjs": "^15.1.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "12.1.1",
+    "swiper": "12.1.2",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.19.3",
-    "webrtc-adapter": "^9.0.3"
+    "webrtc-adapter": "^9.0.4"
   }
 }

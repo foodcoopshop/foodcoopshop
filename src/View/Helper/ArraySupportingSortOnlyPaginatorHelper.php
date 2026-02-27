@@ -50,6 +50,7 @@ use function Cake\I18n\__;
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\FormHelper $Form
  * @link https://book.cakephp.org/4/en/views/helpers/paginator.html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class ArraySupportingSortOnlyPaginatorHelper extends Helper
 {
@@ -113,7 +114,7 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
     /**
      * Constructor. Overridden to merge passed args with URL options.
      *
-     * @param View<\App\View\AppView> $View
+     * @param View $View
      * @param array<string, mixed> $config Configuration settings for the helper.
      */
     public function __construct(View $View, array $config = [])

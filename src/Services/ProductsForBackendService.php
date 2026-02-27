@@ -264,6 +264,7 @@ class ProductsForBackendService
                 'Products.name' => 'ASC'
             ],
         );
+        /** @var SelectQuery<\App\Model\Entity\Product> $query */
 
         if ($categoryId != '') {
             $query->matching('CategoryProducts', function ($q) use ($categoryId) {

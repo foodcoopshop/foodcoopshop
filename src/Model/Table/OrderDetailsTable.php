@@ -102,6 +102,7 @@ class OrderDetailsTable extends AppTable
         order: [
             'ProductName' => 'ASC',
         ]);
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
             $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
@@ -233,6 +234,7 @@ class OrderDetailsTable extends AppTable
         contain: [
             'Products',
         ]);
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
         return $query;
     }
 
@@ -279,6 +281,7 @@ class OrderDetailsTable extends AppTable
             'Products.StockAvailables',
             'ProductAttributes.StockAvailables'
         ]);
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
         $query->where(['OrderDetails.order_state' => OrderDetail::STATE_OPEN]);
         $query->where(['IF(Manufacturers.include_stock_products_in_order_lists = 0, (Products.is_stock_product = 0 OR Manufacturers.stock_management_enabled = 0), 1)']);
 
@@ -406,6 +409,7 @@ class OrderDetailsTable extends AppTable
             'OrderDetails.product_id' => 'ASC',
             'OrderDetails.pickup_day' => 'ASC',
         ]);
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $futureOrders */
         return $futureOrders;
     }
 
@@ -594,6 +598,7 @@ class OrderDetailsTable extends AppTable
         ->where(function (QueryExpression $exp) {
             return $exp->in('OrderDetails.order_state', OrderDetail::ORDER_STATES_CASHLESS);
         });
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
         return $query;
     }
 
@@ -649,6 +654,7 @@ class OrderDetailsTable extends AppTable
         contain: [
             'Products',
         ]);
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
 
         if ($year != '') {
             $query->where(function (QueryExpression $exp) use ($year) {

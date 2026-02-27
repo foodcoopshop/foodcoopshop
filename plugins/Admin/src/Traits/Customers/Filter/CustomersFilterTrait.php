@@ -6,6 +6,7 @@ namespace Admin\Traits\Customers\Filter;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -75,6 +76,7 @@ trait CustomersFilterTrait
         conditions: $conditions,
         contain: $contain);
         $query = $customersTable->addCustomersNameForOrderSelect($query);
+        /** @var SelectQuery<\Cake\Datasource\EntityInterface> $query */
         $query->select($customersTable);
         $query->select($addressCustomersTable);
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {

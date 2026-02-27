@@ -49,6 +49,7 @@ trait MemberCardDataTrait
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         );
+        /** @var SelectQuery<\App\Model\Entity\Customer> $customers */
         $customers = $customersTable->addCustomersNameForOrderSelect($customers);
         $customers->select($customersTable);
         $customers->select($addressCustomersTable);

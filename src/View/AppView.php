@@ -16,9 +16,6 @@ namespace App\View;
 
 use Cake\View\View;
 
-/**
- * @extends View<\App\View\AppView>
- */
 class AppView extends View
 {
 

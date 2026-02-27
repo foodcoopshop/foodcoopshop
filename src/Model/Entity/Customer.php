@@ -208,6 +208,7 @@ class Customer extends AppEntity implements IdentityInterface
         /** @var \App\Model\Table\OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
+        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $futureOrderDetails */
         return $futureOrderDetails;
     }
 

@@ -61,6 +61,7 @@ class SlidersTable extends AppTable
         order: [
             'Sliders.position' => 'ASC'
         ]);
+        /** @var SelectQuery<\App\Model\Entity\Slider> $slides */
 
         return $slides;
 

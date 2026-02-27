@@ -38,7 +38,7 @@ class MyHtmlHelper extends HtmlHelper
 {
 
     /**
-     * @param View<\App\View\AppView> $View
+     * @param View $View
      */
     public function __construct(View $View, array $config = [])
     {

@@ -41,6 +41,7 @@ class ChangeSellingPriceService
             contain: [
                 'OrderDetailUnits',
             ]);
+            /** @var SelectQuery<\App\Model\Entity\OrderDetail> $openOrderDetails */
 
             return $openOrderDetails;
 
