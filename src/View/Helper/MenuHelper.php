@@ -46,9 +46,6 @@ class MenuHelper extends Helper
     }
 
     /**
-     * @param array<string, mixed> $pages
-     */
-    /**
      * @param list<object> $pages
      * @return list<array{name:string, slug:string, children:list<array{name:string, slug:string}>}>
      */

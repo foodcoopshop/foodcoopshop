@@ -160,9 +160,6 @@ class SendOrderListsCommand extends AppCommand
      * prepare action log string is complicated because of
      * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
      * @param \App\Model\Entity\Manufacturer[] $manufacturers
-     */
-    /**
-     * @param \App\Model\Entity\Manufacturer[] $manufacturers
      * @param SelectQuery<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<string>
      */

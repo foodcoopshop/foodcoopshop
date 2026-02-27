@@ -651,10 +651,6 @@ class CustomersTable extends AppTable
         return FormatterService::assureCorrectFloat($creditBalance);
     }
 
-
-    /**
-     * @param array<string, mixed> $conditions
-     */
     /**
      * @param array<string, mixed> $conditions
      * @return array<string, array<int, string>>

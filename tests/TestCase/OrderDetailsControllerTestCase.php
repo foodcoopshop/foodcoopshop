@@ -84,9 +84,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     }
 
     /**
-     * @param array<int> $orderDetailIds
-     */
-    /**
      * @param list<int> $orderDetailIds
      * @return list<\App\Model\Entity\OrderDetail>
      */

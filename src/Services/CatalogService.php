@@ -517,9 +517,6 @@ class CatalogService
     }
 
     /**
-     * @param \App\Model\Entity\Product[] $products
-     */
-    /**
      * @param list<\App\Model\Entity\Product> $products
      * @return list<\App\Model\Entity\Product>
      */
@@ -560,8 +557,6 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
-     */
-    /**
      * @param list<\App\Model\Entity\Product> $products
      * @return list<\App\Model\Entity\Product>
      */
@@ -590,8 +585,6 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
-     */
-    /**
      * @param list<\App\Model\Entity\Product> $products
      * @return list<\App\Model\Entity\Product>
      */
@@ -622,8 +615,6 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
-     */
-    /**
      * @param list<\App\Model\Entity\Product> $products
      * @return list<\App\Model\Entity\Product>
      */
@@ -682,8 +673,6 @@ class CatalogService
 
     /**
      * @param \App\Model\Entity\Product[] $products
-     */
-    /**
      * @param list<\App\Model\Entity\Product> $products
      * @return list<\App\Model\Entity\Product>
      */

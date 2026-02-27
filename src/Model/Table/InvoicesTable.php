@@ -112,9 +112,6 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param \App\Model\Entity\Invoice[] $invoices
-     */
-    /**
      * @param list<\App\Model\Entity\Invoice> $invoices
      * @return array{
      *   taxRates: array<string, array<float|int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
@@ -235,10 +232,6 @@ class InvoicesTable extends AppTable
 
     }
 
-    /**
-     * @param \App\Model\Entity\OrderDetail[] $orderDetails
-     * @param array<int, mixed> $returnedDeposits
-     */
     /**
      * @param list<\App\Model\Entity\OrderDetail> $orderDetails
      * @param list<mixed> $returnedDeposits

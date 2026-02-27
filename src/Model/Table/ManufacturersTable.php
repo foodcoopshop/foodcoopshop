@@ -357,9 +357,6 @@ class ManufacturersTable extends AppTable
     }
 
     /**
-     * @param array<int, mixed> $results
-     */
-    /**
      * @param list<array<string, mixed>> $results
      * @return list<array<string, mixed>>
      */
@@ -382,10 +379,6 @@ class ManufacturersTable extends AppTable
         return FormatterService::assureCorrectFloat($depositBalance);
     }
 
-    /**
-     * @param list<int> $orderStates
-     * @param list<int> $orderDetailIds
-     */
     /**
      * @param list<int> $orderStates
      * @param list<int> $orderDetailIds
