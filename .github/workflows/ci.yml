@@ -14,21 +14,21 @@ jobs:
     name: FoodCoopShop CI
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cache Docker images
-        uses: ScribeMD/docker-cache@0.3.7
+        uses: ScribeMD/docker-cache@0.5.0
         with:
           key: docker-images-${{ hashFiles('./docker-compose.yml') }}-${{ hashFiles('./Dockerfile') }}
 
       - name: Cache Node Modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ./webroot/node_modules
           key: node-modules-${{ hashFiles('./webroot/package.json') }}-${{ hashFiles('./webroot/package-lock.json') }}
 
       - name: Cache Composer Dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ./vendor
           key: composer-${{ hashFiles('./composer.json') }}-${{ hashFiles('./comopser.lock') }}
@@ -51,7 +51,7 @@ jobs:
 
       - name: Upload files to server
         if: ${{github.event_name == 'push'}}
-        uses: up9cloud/action-rsync@master
+        uses: up9cloud/action-rsync@v1.4
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
           USER: ${{secrets.DEPLOY_USER}}
