@@ -63,6 +63,7 @@
 * PHP >= 8.4.1
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP Imagick and GD extension
+* PHP mbstring and curl
 * PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
