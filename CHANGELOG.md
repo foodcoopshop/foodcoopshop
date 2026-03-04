@@ -6,6 +6,8 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## unreleased
+
 ## v4.2
 
 ### Neue Funktionen / Verbesserungen
