@@ -17,10 +17,6 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$paginator = $this->loadHelper('Paginator', [
-    'className' => 'ArraySupportingSortOnlyPaginator',
-]);
-
 echo '<th>';
 echo __d('admin', 'Member');
 echo '</th>';
@@ -29,7 +25,7 @@ echo '<th>';
 echo '</th>';
 
 echo '<th class="right">';
-echo $paginator->sort('sum_price', __d('admin', 'Price'));
+echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless()) {

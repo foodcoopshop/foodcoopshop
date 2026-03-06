@@ -17,34 +17,30 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$paginator = $this->loadHelper('Paginator', [
-    'className' => 'ArraySupportingSortOnlyPaginator',
-]);
-
 echo '<th class="right">';
-    echo $paginator->sort('sum_amount', __d('admin', 'Amount'));
+    echo $this->Paginator->sort('sum_amount', __d('admin', 'Amount'));
 echo '</th>';
 
 echo '<th>';
-    echo $paginator->sort('Products.name', __d('admin', 'Product'));
+    echo $this->Paginator->sort('Products.name', __d('admin', 'Product'));
 echo '</th>';
 
 echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
-    echo $paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
+    echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 
 echo '<th class="right">';
-    echo $paginator->sort('sum_price', __d('admin', 'Price'));
+    echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled')) {
     echo '<th class="right">';
-        echo $paginator->sort('sum_deposit', __d('admin', 'Deposit'));
+        echo $this->Paginator->sort('sum_deposit', __d('admin', 'Deposit'));
     echo '</th>';
 }
 
 echo '<th class="right">';
-    echo $paginator->sort('sum_units', __d('admin', 'Weight'));
+    echo $this->Paginator->sort('sum_units', __d('admin', 'Weight'));
 echo '</th>';
 
 ?>
