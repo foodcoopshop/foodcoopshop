@@ -14,9 +14,15 @@
 
 foodcoopshop.ColorMode = {
 
+    COLOR_MODE_DARK: 'dark',
+    COLOR_MODE_LIGHT: 'light',
+
     init: function() {
         var colorMode = localStorage.getItem('color-mode');
-        if (colorMode === 'dark') {
+        if (colorMode === null) {
+            colorMode = this.getSystemColorMode();
+        }
+        if (colorMode === this.COLOR_MODE_DARK) {
             this.enableDarkMode();
         } else {
             this.enableLightMode();
@@ -36,7 +42,7 @@ foodcoopshop.ColorMode = {
      */
     setBackgroundColor: function(colorMode) {
         let backgroundColor = '#0f0f0f';
-        if (colorMode == 'light') {
+        if (colorMode == this.COLOR_MODE_LIGHT) {
             backgroundColor = '#e6e6e6';
         }
         $('body').css('background-color', backgroundColor);
@@ -45,10 +51,10 @@ foodcoopshop.ColorMode = {
     initToggle: function() {
         $('.color-mode-toggle').on('click', function() {
             if ($('body').hasClass('dark')) {
-                localStorage.setItem('color-mode', 'light');
+                localStorage.setItem('color-mode', foodcoopshop.ColorMode.COLOR_MODE_LIGHT);
                 foodcoopshop.ColorMode.enableLightMode();
             } else {
-                localStorage.setItem('color-mode', 'dark');
+                localStorage.setItem('color-mode', foodcoopshop.ColorMode.COLOR_MODE_DARK);
                 foodcoopshop.ColorMode.enableDarkMode();
             }
             foodcoopshop.ColorMode.setBackgroundImage();
@@ -69,8 +75,15 @@ foodcoopshop.ColorMode = {
         icon.addClass('fa-moon');
     },
 
+    getSystemColorMode: function() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return this.COLOR_MODE_DARK;
+        }
+        return this.COLOR_MODE_LIGHT;
+    },
+
     getColorMode: function() {
-        return $('body').hasClass('dark') ? 'dark' : 'light';
+        return $('body').hasClass('dark') ? this.COLOR_MODE_DARK : this.COLOR_MODE_LIGHT;
     }
 
 };
