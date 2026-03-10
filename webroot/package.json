@@ -23,7 +23,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "clipboard": "^2.0.11",
     "cookies-eu-banner": "^2.0.1",
-    "jodit": "^4.9.14",
+    "jodit": "^4.11.6",
     "jquery": "^3.7.1",
     "jquery-backstretch": "^2.1.18",
     "jquery-knob": "~1.2.11",
