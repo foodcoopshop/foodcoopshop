@@ -22,12 +22,13 @@ use Cake\Core\Configure;
 
         <?php
         $isPaginatedResultAvailable = isset($paginatedResult);
-        $sortOrLabel = function (string $field, string $label) use ($isPaginatedResultAvailable): string {
+        $paginator = $this->Paginator;
+        $sortOrLabel = function (string $field, string $label) use ($isPaginatedResultAvailable, $paginator): string {
             if (!$isPaginatedResultAvailable) {
                 return $label;
             }
 
-            return $this->Paginator->sort($field, $label);
+            return $paginator->sort($field, $label);
         };
         ?>
 
