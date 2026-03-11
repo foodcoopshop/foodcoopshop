@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Paging\PaginatedInterface;
+use Cake\Datasource\QueryInterface;
+use Cake\Datasource\RepositoryInterface;
 use Cake\Event\EventInterface;
 
 /**
@@ -35,6 +38,18 @@ class AdminAppController extends AppController
     public function setReferer(): void
     {
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
+    }
+
+    /**
+     * allows passing arrays to the view for pagination results
+     */
+    public function paginate(
+        RepositoryInterface|QueryInterface|string|null $object = null,
+        array $settings = [],
+    ): PaginatedInterface {
+        $result = parent::paginate($object, $settings);
+        $this->set('paginatedResult', $result);
+        return $result;
     }
 
 }

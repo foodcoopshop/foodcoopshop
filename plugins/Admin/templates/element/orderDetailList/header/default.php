@@ -17,43 +17,39 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$paginator = $this->loadHelper('Paginator', [
-    'className' => 'ArraySupportingSortOnlyPaginator',
-]);
-
 echo '<th class="right">';
-    echo $paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount'));
+    echo $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount'));
 echo '</th>';
 
 echo '<th>';
-    echo $paginator->sort('OrderDetails.product_name', __d('admin', 'Product'));
+    echo $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product'));
 echo '</th>';
 
 echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
-    echo $paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
+    echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 
 echo '<th class="right">';
-    echo $paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
+    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled')) {
     echo '<th class="right">';
-        echo $paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
+        echo $this->Paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
     echo '</th>';
 }
 
 echo '<th class="right">';
-    echo $paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
+    echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
 echo '</th>';
 
-echo '<th>'.$paginator->sort('CustomerNameForOrder', __d('admin', 'Member')).'</th>';
+echo '<th>'.$this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Member')).'</th>';
 
 if (count($pickupDay) == 2) {
-    echo '<th>'.$paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
+    echo '<th>'.$this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
 }
 
-echo '<th>'.$paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
+echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
 echo '<th style="width:25px;"></th>';
 
 

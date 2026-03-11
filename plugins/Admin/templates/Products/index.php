@@ -17,12 +17,20 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$paginator = $this->loadHelper('Paginator', [
-    'className' => 'ArraySupportingSortOnlyPaginator',
-]);
-
 ?>
 <div id="products" class="product-list">
+
+        <?php
+        $isPaginatedResultAvailable = isset($paginatedResult);
+        $paginator = $this->Paginator;
+        $sortOrLabel = function (string $field, string $label) use ($isPaginatedResultAvailable, $paginator): string {
+            if (!$isPaginatedResultAvailable) {
+                return $label;
+            }
+
+            return $paginator->sort($field, $label);
+        };
+        ?>
 
         <?php
         $this->element('addScript', [
@@ -188,13 +196,13 @@ $paginator = $this->loadHelper('Paginator', [
         ]);
         echo '<th class="hide">ID</th>';
         echo '<th>'.__d('admin', 'Attribute').'</th>';
-        echo '<th>' . $paginator->sort('Images.id_image', __d('admin', 'Image')) . '</th>';
-        echo '<th>' . $paginator->sort('Products.name', __d('admin', 'Name_and_categories')) . '<span class="product-declaration-header">' . $paginator->sort('Products.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
+        echo '<th>' . $sortOrLabel('Images.id_image', __d('admin', 'Image')) . '</th>';
+        echo '<th>' . $sortOrLabel('Products.name', __d('admin', 'Name_and_categories')) . '<span class="product-declaration-header">' . $sortOrLabel('Products.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
         if ($manufacturerId == 'all') {
-            echo '<th>' . $paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
+            echo '<th>' . $sortOrLabel('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
         }
         if ($advancedStockManagementEnabled) {
-            echo '<th>' . $paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
+            echo '<th>' . $sortOrLabel('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
         echo '<th style="width:65px;">'.__d('admin', 'Amount').'</th>';
 
@@ -231,14 +239,14 @@ $paginator = $this->loadHelper('Paginator', [
             $taxWidth = 106;
         }
         if ($showSellingPriceTax || $showPurchasePrice) {
-            echo '<th style="width:'.$taxWidth.'px;">' . $paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+            echo '<th style="width:'.$taxWidth.'px;">' . $sortOrLabel('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
         }
-        echo '<th class="center" style="width:69px;">' . $paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
+        echo '<th class="center" style="width:69px;">' . $sortOrLabel('Products.created', __d('admin', 'New?')) . '</th>';
         if (Configure::read('app.isDepositEnabled') && $showSellingPriceAndDeposit) {
             echo '<th>'.__d('admin', 'Deposit').'</th>';
         }
-        echo '<th>' . $paginator->sort('Products.delivery_rhythm_type', __d('admin', 'Delivery_rhythm')) . '</th>';
-        echo '<th>' . $paginator->sort('Products.active', __d('admin', 'Status')) . '</th>';
+        echo '<th>' . $sortOrLabel('Products.delivery_rhythm_type', __d('admin', 'Delivery_rhythm')) . '</th>';
+        echo '<th>' . $sortOrLabel('Products.active', __d('admin', 'Status')) . '</th>';
         echo '<th style="width:29px;"></th>';
     echo '</tr>';
 
