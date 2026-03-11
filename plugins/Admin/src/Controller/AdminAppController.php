@@ -40,6 +40,9 @@ class AdminAppController extends AppController
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }
 
+    /**
+     * allows passing arrays to the view for pagination results
+     */
     public function paginate(
         RepositoryInterface|QueryInterface|string|null $object = null,
         array $settings = [],
