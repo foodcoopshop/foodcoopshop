@@ -5,8 +5,6 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use App\Controller\Component\StringComponent;
-use Cake\ORM\Query\SelectQuery;
 use Admin\Traits\OrderDetails\Filter\OrderDetailsFilterTrait;
 use Admin\Traits\QueryFilterTrait;
 
