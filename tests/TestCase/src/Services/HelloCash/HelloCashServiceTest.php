@@ -44,6 +44,21 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->HelloCashService = new HelloCashService();
     }
 
+    public function testGetUsers(): void
+    {
+        $this->HelloCashService = new HelloCashService();
+        $response = $this->HelloCashService->getRestClient()->get(
+            '/users?limit=1',
+            [],
+            $this->HelloCashService->getOptions(),
+        );
+        $responseObject = $this->HelloCashService->decodeApiResponseAndCheckForErrors($response);
+        $this->assertIsObject($responseObject);
+        $this->assertNotEmpty($responseObject->users);
+        $this->assertObjectHasProperty('user_id', $responseObject->users[0]);
+        $this->assertObjectHasProperty('user_email', $responseObject->users[0]);
+    }
+
     public function testGenerateReceiptForCustomer(): void
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
