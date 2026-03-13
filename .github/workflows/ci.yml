@@ -76,7 +76,7 @@ jobs:
           
       - name: PHPUnit Tests
         if: always()
-        run: docker exec -w /app fcs.php php ./vendor/bin/phpunit --coverage-clover ./coverage.xml
+        run: docker exec -w /app fcs.php php -d default_socket_timeout=60 ./vendor/bin/phpunit --coverage-clover ./coverage.xml
 
       - name: Codecov
         uses: codecov/codecov-action@v5
