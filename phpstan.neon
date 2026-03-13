@@ -1,7 +1,7 @@
 parameters:
     parallel:
         maximumNumberOfProcesses: 2
-    level: 6
+    level: 7
     bootstrapFiles:
         - config/bootstrap.php
     fileExtensions:
@@ -31,6 +31,21 @@ parameters:
           paths:
             - src/Services/HelloCash/HelloCashService.php
             - plugins/Admin/src/Controller/HelloCashController.php
+        # START LEVEL 7 ERRORS
+        - identifier: argument.type
+        - identifier: return.type
+        - identifier: binaryOp.invalid
+        - identifier: method.notFound
+        - identifier: offsetAccess.nonOffsetAccessible
+        - identifier: offsetAccess.invalidOffset
+        - identifier: method.nonObject
+        - identifier: offsetAccess.notFound
+        - identifier: foreach.nonIterable
+        - identifier: assign.propertyType
+        - identifier: array.invalidKey
+        - identifier: classConstant.notFound
+        - identifier: cast.int
+        # END LEVEL 7 ERRORS
 
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
