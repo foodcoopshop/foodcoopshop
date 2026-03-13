@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Log\Log;
 use Cake\I18n\I18n;
-use Cake\ORM\Query;
+use Cake\I18n\DateTime;
+use Cake\Core\Configure;
+use App\Command\AppCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
-use Cake\Core\Configure;
-use Cake\Validation\Validator;
-use Cake\Database\Expression\QueryExpression;
-use Cake\I18n\DateTime;
-use App\Command\CronCommandFactory;
-use App\Model\Entity\Cronjob;
 use Cake\ORM\TableRegistry;
-use App\Model\Entity\CronjobLog;
+use App\Model\Entity\Cronjob;
+use Cake\Validation\Validator;
 use Cake\ORM\Query\SelectQuery;
-use Cake\Log\Log;
+use App\Model\Entity\CronjobLog;
+use App\Command\CronCommandFactory;
+use Cake\Database\Expression\QueryExpression;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -337,6 +337,7 @@ class CronjobsTable extends AppTable
             throw new \Exception('command not found: ' . $commandName);
         }
 
+        /** @var AppCommand $command */
         $command = new $commandClass();
 
         $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(

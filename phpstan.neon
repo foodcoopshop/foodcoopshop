@@ -43,7 +43,6 @@ parameters:
         - identifier: foreach.nonIterable
         - identifier: assign.propertyType
         - identifier: array.invalidKey
-        - identifier: classConstant.notFound
         # END LEVEL 7 ERRORS
 
 rules:
