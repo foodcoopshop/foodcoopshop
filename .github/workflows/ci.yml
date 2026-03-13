@@ -70,6 +70,19 @@ jobs:
       - name: ESLint
         run: docker exec -w /app fcs.php bash ./devtools/eslint.sh
           
+      - name: Warm up HelloCash API connection
+        env:
+          HELLO_CASH_TOKEN: ${{secrets.HELLO_CASH_TOKEN}}
+        run: |
+          docker exec -w /app -e HELLO_CASH_TOKEN fcs.php php -r '
+            $ch = curl_init("https://api.hellocash.business/api/v1/users?limit=1");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . getenv("HELLO_CASH_TOKEN")]);
+            curl_exec($ch);
+            curl_close($ch);
+          ' || true
+
       - name: PHPUnit Tests
         if: always()
         run: docker exec -w /app fcs.php php ./vendor/bin/phpunit --coverage-clover ./coverage.xml
