@@ -28,10 +28,13 @@ class CronjobLogsTable extends AppTable
     public function deleteOldLogs(DateTime|string|int $timestamp): void
     {
 
-        if (is_object($timestamp) && get_class($timestamp)  == DateTime::class) {
+        if ($timestamp instanceof DateTime) {
             $timestamp = $timestamp->getTimestamp();
+        } elseif (is_string($timestamp)) {
+            $parsedTimestamp = strtotime($timestamp);
+            $timestamp = $parsedTimestamp === false ? 0 : $parsedTimestamp;
         }
-        $timestamp = (int) $timestamp;
+
         if ($timestamp <= 0) {
             throw new \Exception('invalid timestamp: ' . $timestamp);
         }

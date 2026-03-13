@@ -44,7 +44,6 @@ parameters:
         - identifier: assign.propertyType
         - identifier: array.invalidKey
         - identifier: classConstant.notFound
-        - identifier: cast.int
         # END LEVEL 7 ERRORS
 
 rules:
