@@ -70,6 +70,9 @@ jobs:
       - name: ESLint
         run: docker exec -w /app fcs.php bash ./devtools/eslint.sh
           
+      - name: Warm up HelloCash API connection
+        run: docker exec -w /app fcs.php php ./vendor/bin/phpunit --filter HelloCashServiceTest::testGetUsers || true
+
       - name: PHPUnit Tests
         if: always()
         run: docker exec -w /app fcs.php php ./vendor/bin/phpunit --coverage-clover ./coverage.xml
