@@ -41,8 +41,14 @@ foodcoopshop.ModalElfinder = {
                         editor.create.fromHTML('<img src="' + file.url + '">')
                     );
                 } else {
-                    foodcoopshop.Helper.copyToClipboard(fm.convAbsUrl(file.url));
-                    foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheFileHasBeenCopiedToYourClipboard);
+                    foodcoopshop.Helper.copyToClipboard(fm.convAbsUrl(file.url)).then(
+                        ()  => {
+                            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheFileHasBeenCopiedToYourClipboard);
+                        },
+                        (error) => {
+                            foodcoopshop.Helper.showErrorMessage('Clipboard copy failed. Use HTTPS or localhost.');
+                        }
+                    );
                 }
             }
         };
