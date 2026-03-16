@@ -111,7 +111,7 @@ class HelloCashService
 
         foreach($data->active_order_details as $orderDetail) {
             $items[] = [
-                'item_name' => StringComponent::removeEmojis($orderDetail->product_name),
+                'item_name' => StringComponent::cleanForPdfGeneration($orderDetail->product_name),
                 'item_quantity' => $orderDetail->product_amount,
                 'item_price' => $orderDetail->total_price_tax_incl / $orderDetail->product_amount,
                 'item_taxRate' => $orderDetail->tax_rate,

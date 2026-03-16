@@ -43,7 +43,7 @@ abstract class AppTcpdfService extends TCPDF
     public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align=''): void
     {
 
-        $html = StringComponent::removeEmojis($html);
+        $html = StringComponent::cleanForPdfGeneration($html);
 
         if (Configure::check('app.outputStringReplacements')) {
             $html = OutputFilterService::replace($html, Configure::read('app.outputStringReplacements'));

@@ -25,21 +25,37 @@ class StringComponentTest extends AppCakeTestCase
         // do not import database - no database needed for this test
     }
 
-    public function testRemoveEmojis(): void
+    public function testCleanForPdfGeneration(): void
     {
         $tests = [
             [
                 'text' => 'Test ❤ hello',
-                'expected' => 'Test  hello'
+                'expected' => 'Test  hello',
             ],
             [
                 'text' => 'Test 🎃 hello',
-                'expected' => 'Test  hello'
+                'expected' => 'Test  hello',
+            ],
+            [
+                'text' => 'Simple text without emoji',
+                'expected' => 'Simple text without emoji',
+            ],
+            [
+                'text' => 'A 😀🇦🇹❤ B',
+                'expected' => 'A  B',
+            ],
+            [
+                'text' => '🎃❤🇦🇹',
+                'expected' => '',
+            ],
+            [
+                'text' => 'Price is 10€',
+                'expected' => 'Price is 10€',
             ],
         ];
 
         foreach ($tests as $test) {
-            $result = StringComponent::removeEmojis($test['text']);
+            $result = StringComponent::cleanForPdfGeneration($test['text']);
             $this->assertEquals($test['expected'], $result);
         }
     }
@@ -49,35 +65,43 @@ class StringComponentTest extends AppCakeTestCase
         $tests = [
             [
                 'name' => 'Getränke alkoholisch',
-                'slug' => 'Getraenke-alkoholisch'
+                'slug' => 'Getraenke-alkoholisch',
             ],
             [
                 'name' => 'Die Äpfel der letzten Saison',
-                'slug' => 'Die-Aepfel-der-letzten-Saison'
+                'slug' => 'Die-Aepfel-der-letzten-Saison',
             ],
             [
                 'name' => 'Champs-Élysées',
-                'slug' => 'Champs-Elysees'
+                'slug' => 'Champs-Elysees',
             ],
             [
                 'name' => 'Öle und Essig',
-                'slug' => 'Oele-und-Essig'
+                'slug' => 'Oele-und-Essig',
             ],
             [
                 'name' => 'Smith &amp; Sons',
-                'slug' => 'Smith-Sons'
+                'slug' => 'Smith-Sons',
             ],
             [
                 'name' => 'Smith &gt; Sons',
-                'slug' => 'Smith-Sons'
+                'slug' => 'Smith-Sons',
             ],
             [
                 'name' => 'Smith &lt; Sons',
-                'slug' => 'Smith-Sons'
+                'slug' => 'Smith-Sons',
             ],
             [
                 'name' => 'Manufacturer "Name"',
-                'slug' => 'Manufacturer-Name'
+                'slug' => 'Manufacturer-Name',
+            ],
+            [
+                'name' => 'Straße 123',
+                'slug' => 'Strasse-123',
+            ],
+            [
+                'name' => 'Ärger & Spaß',
+                'slug' => 'Aerger-Spass',
             ],
         ];
 
@@ -92,20 +116,28 @@ class StringComponentTest extends AppCakeTestCase
         $tests = [
             [
                 'value' => '',
-                'expected' => ''
+                'expected' => '',
+            ],
+            [
+                'value' => null,
+                'expected' => '',
             ],
             [
                 'value' => 'http://www.orf.at',
-                'expected' => 'http://www.orf.at'
+                'expected' => 'http://www.orf.at',
             ],
             [
                 'value' => 'www.orf.at',
-                'expected' => 'https://www.orf.at'
+                'expected' => 'https://www.orf.at',
             ],
             [
                 'value' => 'https://www.orf.at',
-                'expected' => 'https://www.orf.at'
-            ]
+                'expected' => 'https://www.orf.at',
+            ],
+            [
+                'value' => 'shop.foodcoop.at/order-list?tab=current',
+                'expected' => 'https://shop.foodcoop.at/order-list?tab=current',
+            ],
         ];
 
         foreach ($tests as $test) {
@@ -119,16 +151,24 @@ class StringComponentTest extends AppCakeTestCase
         $tests = [
             [
                 'url' => '1-bla-bla-bla',
-                'slug' => 'bla-bla-bla'
+                'slug' => 'bla-bla-bla',
             ],
             [
                 'url' => '25-Getraenke-alkoholisch',
-                'slug' => 'Getraenke-alkoholisch'
+                'slug' => 'Getraenke-alkoholisch',
             ],
             [
                 'url' => '29-heilmassage-mittermeier',
-                'slug' => 'heilmassage-mittermeier'
-            ]
+                'slug' => 'heilmassage-mittermeier',
+            ],
+            [
+                'url' => 'no-leading-id',
+                'slug' => 'no-leading-id',
+            ],
+            [
+                'url' => '123-',
+                'slug' => '',
+            ],
         ];
 
         foreach ($tests as $test) {
