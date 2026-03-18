@@ -32,8 +32,6 @@ Thumbs.db
 .idea/*
 # NetBeans
 nbproject/*
-# Visual Studio Code
-.vscode
 .history/
 *.code-search
 # Sass preprocessor
