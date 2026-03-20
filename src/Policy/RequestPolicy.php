@@ -43,6 +43,11 @@ class RequestPolicy implements RequestPolicyInterface
             $policy = 'Network\\Policy\\' . $controller . 'Policy';
         }
 
+        // handle special case /request (bots) => 404
+        if ($policy === self::class) {
+            return true;
+        }
+
         if (class_exists($policy)) {
             return (new $policy())->canAccess($identity, $request);
         }
