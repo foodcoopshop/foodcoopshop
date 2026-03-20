@@ -305,6 +305,6 @@ class PaymentsTable extends AppTable
         $query->select(
             ['SumAmount' => $query->func()->sum($this->aliasField('amount'))]
         );
-        return (float) $query->toArray()[0]['SumAmount'];
+        return (float) $query->toArray()[0]->SumAmount;
     }
 }

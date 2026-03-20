@@ -610,7 +610,7 @@ class OrderDetailsTable extends AppTable
         $query->select([
             'different_pickup_day_count' => $query->func()->count('DISTINCT(OrderDetails.pickup_day)'),
         ]);
-        return $query->toArray()[0]['different_pickup_day_count'];
+        return $query->toArray()[0]->different_pickup_day_count;
     }
 
     public function getCountByCustomerId(int|string $customerId): int
@@ -676,7 +676,7 @@ class OrderDetailsTable extends AppTable
         $query->select(
             ['SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl')]
         );
-        return (float) $query->toArray()[0]['SumTotalPaid'];
+        return (float) $query->toArray()[0]->SumTotalPaid;
     }
 
     public function getSumDeposit(int $customerId): float
@@ -691,7 +691,7 @@ class OrderDetailsTable extends AppTable
         $query->select(
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
         );
-        return (float) $query->toArray()[0]['SumTotalDeposit'];
+        return (float) $query->toArray()[0]->SumTotalDeposit;
     }
 
     public function getVariableMemberFeeReducedPrice(float $price, int $variableMemberFee): float
