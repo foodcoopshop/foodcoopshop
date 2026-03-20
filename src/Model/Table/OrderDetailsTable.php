@@ -613,14 +613,6 @@ class OrderDetailsTable extends AppTable
         return $query->toArray()[0]->different_pickup_day_count;
     }
 
-    public function getCountByCustomerId(int|string $customerId): int
-    {
-        $query = $this->find('all', conditions: [
-            'OrderDetails.id_customer' => $customerId,
-        ]);
-        return $query->count();
-    }
-
     /**
      * @return list<array{SumTotalPaid: float|int|string, SumDeposit: float|int|string, MonthAndYear: string}>
      */
