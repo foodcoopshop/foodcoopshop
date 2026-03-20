@@ -21,15 +21,7 @@ use Cake\Core\Configure;
 <div id="products" class="product-list">
 
         <?php
-        $isPaginatedResultAvailable = isset($paginatedResult);
-        $paginator = $this->Paginator;
-        $sortOrLabel = function (string $field, string $label) use ($isPaginatedResultAvailable, $paginator): string {
-            if (!$isPaginatedResultAvailable) {
-                return $label;
-            }
-
-            return $paginator->sort($field, $label);
-        };
+        $sortOrLabel = $this->Html->getSortOrLabelCallback(isset($paginatedResult));
         ?>
 
         <?php

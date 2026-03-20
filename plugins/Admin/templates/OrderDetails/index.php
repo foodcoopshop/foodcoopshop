@@ -194,7 +194,10 @@ echo '<tr class="sort">';
     if ($groupBy != '') {
         $orderDetailTemplateElement = 'groupBy' . ucfirst($groupBy);
     }
-    echo $this->element('orderDetailList/header/'.$orderDetailTemplateElement);
+
+    echo $this->element('orderDetailList/header/'.$orderDetailTemplateElement, [
+        'sortOrLabel' =>  $this->Html->getSortOrLabelCallback(isset($paginatedResult)),
+    ]);
 
 echo '</tr>';
 

@@ -25,7 +25,7 @@ echo '<th>';
 echo '</th>';
 
 echo '<th class="right">';
-echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
+echo $sortOrLabel('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless()) {

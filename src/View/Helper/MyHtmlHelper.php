@@ -48,6 +48,17 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getSortOrLabelCallback(bool $isPaginatedResultAvailable): \Closure
+    {
+        return function (string $field, string $label) use ($isPaginatedResultAvailable): string {
+            if (!$isPaginatedResultAvailable) {
+                return $label;
+            }
+
+            return $this->getView()->Paginator->sort($field, $label);
+        };
+    }
+
     /**
      * @return array<int, string>
      */
