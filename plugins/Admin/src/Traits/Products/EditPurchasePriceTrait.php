@@ -89,13 +89,16 @@ trait EditPurchasePriceTrait
                     $oldProduct->purchase_price_product->price = $oldPrice;
                     $oldProduct->unit_product = $attribute->unit_product_attribute;
                     $purchasePriceEntity2Save = $purchasePriceProductsTable->getEntityToSaveByProductAttributeId($ids['attributeId']);
+                    /** @var \App\Model\Table\PurchasePriceProductAttributesTable $purchaseTable */
                     $purchaseTable = $this->getTableLocator()->get('PurchasePriceProductAttributes');
+                    /** @var \App\Model\Table\UnitProductAttributesTable $unitTable */
                     $unitTable = $this->getTableLocator()->get('UnitProductAttributes');
                 }
             }
 
             if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
                 $entity2Save = clone $oldProduct->unit_product;
+                /** @var \App\Model\Entity\UnitProductAttribute $patchedEntity */
                 $patchedEntity = $unitTable->patchEntity(
                     $entity2Save,
                     [

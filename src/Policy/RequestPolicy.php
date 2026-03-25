@@ -49,7 +49,9 @@ class RequestPolicy implements RequestPolicyInterface
         }
 
         if (class_exists($policy)) {
-            return (new $policy())->canAccess($identity, $request);
+            /** @var RequestPolicyInterface $newPolicy */
+            $newPolicy = new $policy();
+            return $newPolicy->canAccess($identity, $request);
         }
 
         // !sic default == true to throw correct 404Error for not available files 

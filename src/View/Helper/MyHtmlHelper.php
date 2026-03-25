@@ -83,7 +83,7 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey(Product $product, Customer|IdentityInterface|null $identity): string
+    public function buildElementProductCacheKey(Product $product, ?IdentityInterface $identity): string
     {
         $elementCacheKey = join('_', [
             'product',

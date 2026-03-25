@@ -53,8 +53,9 @@ trait AddTrait
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
+            /** @var \App\Model\Table\ProductsTable $productsTable */
             $productsTable = $this->getTableLocator()->get('Products');
-            $productEntity =$productsTable->add(
+            $productEntity = $productsTable->add(
                 $manufacturer,
                 $productName,
                 $descriptionShort,
@@ -65,7 +66,7 @@ trait AddTrait
                 $barcode,
             );
             if ($productEntity->hasErrors()) {
-                throw new \Exception(join(' ',$productsTable->getAllValidationErrors($productEntity)));
+                throw new \Exception(join(' ', $productsTable->getAllValidationErrors($productEntity)));
             }
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);

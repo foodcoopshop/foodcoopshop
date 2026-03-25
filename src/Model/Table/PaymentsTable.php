@@ -3,15 +3,16 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\Payment;
-use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Validation\Validator;
-use App\Model\Traits\NumberRangeValidatorTrait;
-use Cake\I18n\DateTime;
-use Cake\ORM\Query\SelectQuery;
 use stdClass;
+use Cake\I18n\Date;
+use Cake\I18n\DateTime;
+use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 use App\Model\Entity\Customer;
+use Cake\Validation\Validator;
+use Cake\ORM\Query\SelectQuery;
+use Cake\Database\Expression\QueryExpression;
+use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -65,7 +66,7 @@ class PaymentsTable extends AppTable
         $validator->allowEmptyDate('date_add');
         $validator->add('date_add', 'allowed-only-today-or-before', [
             'rule' => function ($value, $context) {
-                if (is_object($value)) {
+                if ($value instanceof Date) {
                     $formattedValue = $value->format(Configure::read('DateFormat.DatabaseAlt'));
                 }
                 if (is_string($value)) {

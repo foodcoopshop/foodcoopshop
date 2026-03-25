@@ -15,7 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Services\CatalogService;
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
