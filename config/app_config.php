@@ -178,6 +178,8 @@ return [
 
         'applyPaymentsOkCheckOnDeletingCustomers' => true,
 
+        'confirmNewSuperadminPayments' => true,
+
         'isCustomerAllowedToModifyOwnOrders' => true,
 
         'isCustomerAllowedToViewOwnOrders' => true,

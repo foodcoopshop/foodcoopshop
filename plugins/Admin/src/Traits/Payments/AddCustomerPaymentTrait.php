@@ -128,7 +128,7 @@ trait AddCustomerPaymentTrait
             }
         }
 
-        if ($this->identity->isSuperadmin() && in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
+        if (Configure::read('app.confirmNewSuperadminPayments') && $this->identity->isSuperadmin() && in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
             $newEntity->approval = APP_ON;
         }
 
