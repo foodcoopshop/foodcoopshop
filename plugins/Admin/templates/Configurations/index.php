@@ -435,6 +435,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.confirmNewSuperadminPayments</td>
+            <td><?php echo Configure::read('app.confirmNewSuperadminPayments') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td><?php echo __d('admin', 'Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/<?php echo Configure::read('app.logoFileName'); ?></td>
             <td><img src="/files/images/<?php echo Configure::read('app.logoFileName'); ?>" /></td>
         </tr>
