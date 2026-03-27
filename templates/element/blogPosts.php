@@ -14,10 +14,11 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
 use Cake\Utility\Text;
+use Cake\Core\Configure;
+use Cake\Datasource\ResultSetInterface;
 
-if (empty($blogPosts) || (is_object($blogPosts) && $blogPosts->count() == 0)) {
+if (empty($blogPosts) || ($blogPosts instanceof ResultSetInterface && $blogPosts->count() == 0)) {
     return;
 }
 

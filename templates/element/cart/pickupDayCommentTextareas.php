@@ -27,6 +27,7 @@ $this->element('addScript', ['script' =>
 ]);
 
 $i = 0;
+/** @var \App\Model\Entity\PickupDay $pickupDay */
 foreach($cart->pickup_day_entities as $pickupDay) {
 
     // pickup_day is empty when set to delivery-rhythm-triggered-delivery-break

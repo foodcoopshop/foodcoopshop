@@ -943,7 +943,7 @@ class ProductsTable extends AppTable
         int|string $isDeclarationOk,
         int|string $idStorageLocation,
         string $barcode,
-        ): object
+        ): Product
     {
         $defaultQuantity = 0;
 

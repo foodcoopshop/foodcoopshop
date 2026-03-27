@@ -60,6 +60,7 @@ echo '<th>' . __d('admin', 'Last_run') . '</th>';
 echo '</tr>';
 
 $i = 0;
+/** @var \App\Model\Entity\Cronjob $cronjob */
 foreach ($cronjobs as $cronjob) {
     $i++;
     $rowClass = [

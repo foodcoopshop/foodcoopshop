@@ -83,14 +83,14 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey(Product $product, Customer|IdentityInterface|null $identity): string
+    public function buildElementProductCacheKey(Product $product, IdentityInterface|Customer|null $identity): string
     {
         $elementCacheKey = join('_', [
             'product',
             'productId' => $product->id_product,
             'isLoggedIn-' . ($identity !== null ? 0 : 1),
-            'isManufacturer-' . ($identity !== null && $identity->isManufacturer() ? 1 : 0),
-            'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0),
+            'isManufacturer-' . ($identity !== null && $identity->isManufacturer() ? 1 : 0), /** @phpstan-ignore-line */
+            'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0), /** @phpstan-ignore-line */
             'isSelfServiceModeByUrl-' . (OrderCustomerService::isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . (OrderCustomerService::isOrderForDifferentCustomerMode() ? 1 : 0),
             ($identity != null ? $identity->shopping_price : Customer::SELLING_PRICE),
