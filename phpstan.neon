@@ -37,7 +37,6 @@ parameters:
         - identifier: binaryOp.invalid
         - identifier: method.nonObject
         - identifier: foreach.nonIterable
-        - identifier: assign.propertyType
         - identifier: array.invalidKey
         # END LEVEL 7 ERRORS
 

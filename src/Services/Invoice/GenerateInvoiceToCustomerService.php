@@ -42,7 +42,7 @@ class GenerateInvoiceToCustomerService
             throw new \Exception('safety check if data available - should always be checked before triggering this queue');
         }
 
-        $invoiceDate = (new Date($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        $invoiceDate = (string) (new Date($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
 
         $year = Configure::read('app.timeHelper')->getYearFromDbDate($currentDay);
         $invoiceNumber = $invoicesTable->getNextInvoiceNumberForCustomer($year, $invoicesTable->getLastInvoiceForCustomer());

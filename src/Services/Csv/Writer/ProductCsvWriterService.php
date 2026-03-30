@@ -53,13 +53,13 @@ class ProductCsvWriterService extends BaseCsvWriterService
         ->contain([
             'Manufacturers',
         ])
-        ->all()->extract('id_product')->toArray();
+        ->all()->extract('id_product')->toList();
 
         if (empty($productIds)) {
             throw new InvalidParameterException('no products found');
         }
 
-        $this->productIds = $productIds;
+        $this->productIds = array_values($productIds);
     }
 
     /**
