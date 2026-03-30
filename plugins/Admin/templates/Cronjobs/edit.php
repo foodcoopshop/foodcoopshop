@@ -89,10 +89,12 @@ echo $this->Form->control('Cronjobs.active', [
 
 if ($cronjob->id == Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID && Configure::read('app.extraBillingDayForManufacturers') != '') {
     $date = DateTime::createFromFormat('m-d', Configure::read('app.extraBillingDayForManufacturers'));
-    echo '<h2 class="info" style="margin-bottom: 10px;">';
-        echo __d('admin', 'Extra billing') . ': ';
-        echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
-    echo '</h2>';
+    if ($date !== false) {
+        echo '<h2 class="info" style="margin-bottom: 10px;">';
+            echo __d('admin', 'Extra billing') . ': ';
+            echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
+        echo '</h2>';
+    }
 }
 
 
