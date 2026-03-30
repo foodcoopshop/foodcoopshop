@@ -232,14 +232,15 @@ class CustomersTable extends AppTable
     /**
      * @template T of array|\Cake\Datasource\EntityInterface
      * @param SelectQuery<T> $query
+        * @return array<int, T>
      */
-    public function sortByVirtualField(SelectQuery $query, string $name): object
+    public function sortByVirtualField(SelectQuery $query, string $name): array
     {
-        $sortedObject = (object) Hash::sort($query->toArray(), '{n}.' . $name, 'ASC', [
+        $sortedResults = Hash::sort($query->toArray(), '{n}.' . $name, 'ASC', [
             'type' => 'locale',
             'ignoreCase' => true,
         ]);
-        return $sortedObject;
+        return array_values($sortedResults);
     }
 
     public function __construct(array $config = [])

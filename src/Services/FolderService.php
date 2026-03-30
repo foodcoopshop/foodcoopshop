@@ -23,6 +23,9 @@ class FolderService
     {
         $dir = rtrim($dir, '/'); // remove last slash if there is one
         $files = glob($dir . '/*'); // get all file names
+        if ($files === false) {
+            return;
+        }
         foreach($files as $file) {
             if (is_file($file)) {
                 unlink($file);

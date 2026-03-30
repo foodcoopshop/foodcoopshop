@@ -36,8 +36,6 @@ parameters:
         - identifier: return.type
         - identifier: binaryOp.invalid
         - identifier: method.nonObject
-        - identifier: foreach.nonIterable
-        - identifier: array.invalidKey
         # END LEVEL 7 ERRORS
 
 rules:
