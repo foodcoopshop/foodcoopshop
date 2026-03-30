@@ -132,9 +132,14 @@ trait DuplicateTrait
     public function checkPurchasePrices(Product $srcProduct, EntityInterface $copy): void
     {
         $purchasePriceProductTable = $this->getTableLocator()->get('PurchasePriceProducts');
+        $purchasePricePrimaryKey = $purchasePriceProductTable->getPrimaryKey();
+        if (is_array($purchasePricePrimaryKey)) {
+            return;
+        }
+
         $srcPurchasePrice = $purchasePriceProductTable->find('all',
             conditions: [
-                $purchasePriceProductTable->getPrimaryKey() => $srcProduct->toArray()['id_product']
+                $purchasePricePrimaryKey => $srcProduct->toArray()['id_product']
             ],
         )->first();
 
@@ -145,7 +150,7 @@ trait DuplicateTrait
         $copyPurchasePriceData = $srcPurchasePrice->toArray();
 
         unset($copyPurchasePriceData[PurchasePriceProductsTable::ORIGINAL_PRIMARY_KEY]);
-        $copyPurchasePriceData[$purchasePriceProductTable->getPrimaryKey()] = $copy->id_product;
+    $copyPurchasePriceData[$purchasePricePrimaryKey] = $copy->id_product;
 
         $purchasePriceCopy = new Entity(
             $copyPurchasePriceData,
@@ -163,9 +168,12 @@ trait DuplicateTrait
     function deepCopyProduct(Product $srcProduct, array $associations, int $copyIndex): EntityInterface
     {
         $productsTable = $this->getTableLocator()->get('Products');
+        $productPrimaryKey = $productsTable->getPrimaryKey();
 
         $product = $srcProduct->toArray();
-        unset($product[$productsTable->getPrimaryKey()]);
+        if (is_string($productPrimaryKey)) {
+            unset($product[$productPrimaryKey]);
+        }
 
         $product = $this->removeAssociationKeysFromProduct($associations, $product);
 

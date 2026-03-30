@@ -42,23 +42,24 @@ class ListTcpdfService extends AppTcpdfService
 
     /**
      * @param list<array{TaxRate: float|int|string, OrderDetailPriceExcl: float|int|string, OrderDetailTaxAmount: float|int|string, OrderDetailPriceIncl: float|int|string}> $results
-     * @return array<string|float|int, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>|false
+     * @return array<string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>|false
      */
     public function prepareTaxSumData(array $results): array|false
     {
 
         $taxRates = [];
         foreach($results as $result) {
-            if (!isset($taxRates[$result['TaxRate']])) {
-                $taxRates[$result['TaxRate']] = [
+            $taxRateKey = (string) $result['TaxRate'];
+            if (!isset($taxRates[$taxRateKey])) {
+                $taxRates[$taxRateKey] = [
                     'sum_price_excl' => 0,
                     'sum_tax' => 0,
                     'sum_price_incl' => 0,
                 ];
             }
-            $taxRates[$result['TaxRate']]['sum_price_excl'] += $result['OrderDetailPriceExcl'];
-            $taxRates[$result['TaxRate']]['sum_tax'] += $result['OrderDetailTaxAmount'];
-            $taxRates[$result['TaxRate']]['sum_price_incl'] += $result['OrderDetailPriceIncl'];
+            $taxRates[$taxRateKey]['sum_price_excl'] += $result['OrderDetailPriceExcl'];
+            $taxRates[$taxRateKey]['sum_tax'] += $result['OrderDetailTaxAmount'];
+            $taxRates[$taxRateKey]['sum_price_incl'] += $result['OrderDetailPriceIncl'];
         }
 
         if (count($taxRates) == 1) {
