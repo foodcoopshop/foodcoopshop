@@ -134,7 +134,10 @@ class DepositsController extends AdminAppController
 
         $depositsDeliveredSum = 0;
         foreach($depositsDeliveredByYear as $depositDelivered) {
-            $year = $depositDelivered['Year'];
+            $year = $depositDelivered['Year'] ?? null;
+            if ($year === null) {
+                continue;
+            }
             if (!isset($yearlyDepositsDelivered[$year])) {
                 $yearlyDepositsDelivered[$year] = 0;
             }
@@ -231,7 +234,8 @@ class DepositsController extends AdminAppController
         foreach ($monthsAndYear as $monthAndYear => $monthAndYearAsString) {
             $recordFound = false;
             foreach ($depositsDelivered as $depositDelivered) {
-                if ($depositDelivered['monthAndYear'] == $monthAndYear) {
+                $depositDeliveredMonthAndYear = $depositDelivered['monthAndYear'] ?? null;
+                if ($depositDeliveredMonthAndYear == $monthAndYear) {
                     $deliveredValue = $depositDelivered['sumDepositDelivered'];
                     if ($deliveredValue > 0) {
                         $deposits[$monthAndYear]['delivered'] = $deliveredValue;
@@ -242,7 +246,8 @@ class DepositsController extends AdminAppController
                 }
             }
             foreach ($depositsReturned as $depositReturned) {
-                if ($depositReturned['monthAndYear'] == $monthAndYear) {
+                $depositReturnedMonthAndYear = $depositReturned['monthAndYear'] ?? null;
+                if ($depositReturnedMonthAndYear == $monthAndYear) {
                     $returnValue = $depositReturned['sumDepositReturned'] * -1;
                     $deposits[$monthAndYear]['returned'] = $returnValue;
                     $sumDepositsReturned += $returnValue;

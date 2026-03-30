@@ -35,13 +35,6 @@ parameters:
         - identifier: argument.type
         - identifier: return.type
         - identifier: binaryOp.invalid
-        - identifier: offsetAccess.nonOffsetAccessible
-        - identifier: offsetAccess.invalidOffset
-        - identifier: method.nonObject
-        - identifier: offsetAccess.notFound
-        - identifier: foreach.nonIterable
-        - identifier: assign.propertyType
-        - identifier: array.invalidKey
         # END LEVEL 7 ERRORS
 
 rules:

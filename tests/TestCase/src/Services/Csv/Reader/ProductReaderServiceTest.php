@@ -53,6 +53,9 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
 
+        $this->assertNotFalse($productEntities[0]);
+        $this->assertNotFalse($productEntities[1]);
+
         $errorsA = $productEntities[0]->getErrors();
         $productNameErrorMessage = 'Der Name des Produktes muss aus mindestens 2 Zeichen bestehen.';
         $productActiveErrorMessage = 'Folgende Werte sind gültig: 0, 1';
@@ -85,6 +88,8 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
         $this->assertCount(2, $productEntities);
+        $this->assertNotFalse($productEntities[0]);
+        $this->assertNotFalse($productEntities[1]);
 
         $productsTable = $this->getTableLocator()->get('Products');
         $this->assertCount(16, $productsTable->find('all'));

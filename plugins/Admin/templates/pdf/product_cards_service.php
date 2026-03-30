@@ -63,13 +63,18 @@ foreach($products as $product) {
         if ($largeImageExists) {
             $productImage = WWW_ROOT . $srcProductImage;
             $fileinfos = getimagesize($productImage);
-            $ratio = $fileinfos[1] / $fileinfos[0];
-            $productImageBase64Encoded = base64_encode(file_get_contents($productImage));
-            $height = 100;
-            $width = $height / $ratio;
-            // move image to bottom
-            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:12px;"></td></tr></table>';
-            $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $productImageBase64Encoded) . '">';
+            if ($fileinfos !== false) {
+                $ratio = $fileinfos[1] / $fileinfos[0];
+                $productImageContents = file_get_contents($productImage);
+                if ($productImageContents !== false) {
+                    $productImageBase64Encoded = base64_encode($productImageContents);
+                    $height = 100;
+                    $width = $height / $ratio;
+                    // move image to bottom
+                    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:12px;"></td></tr></table>';
+                    $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $productImageBase64Encoded) . '">';
+                }
+            }
         }
     }
     $pdf->table .= '</td>';

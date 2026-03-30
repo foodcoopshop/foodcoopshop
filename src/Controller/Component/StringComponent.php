@@ -130,7 +130,12 @@ class StringComponent extends Component
         $cipher_text = '';
         $id = 'e' . rand(1, 999999999);
         for ($i = 0; $i < strlen($email); $i += 1) {
-            $cipher_text .= $key[strpos($character_set, $email[$i])];
+            $keyIndex = strpos($character_set, $email[$i]);
+            if ($keyIndex === false) {
+                continue;
+            }
+
+            $cipher_text .= $key[$keyIndex];
         }
 
         $script = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';

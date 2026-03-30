@@ -55,12 +55,18 @@ trait EditPickupDayTrait
                 throw new \Exception('error - order details wrong');
             }
 
-            $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($orderDetails->toArray()[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
+            $orderDetailsList = $orderDetails->toArray();
+            $firstOrderDetail = $orderDetailsList[0] ?? null;
+            if (!$firstOrderDetail instanceof OrderDetail) {
+                throw new \Exception('error - no order detail found');
+            }
+
+            $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($firstOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
             $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
 
             // validate only once for the first order detail
             $entity = $orderDetailsTable->patchEntity(
-                $orderDetails->toArray()[0],
+                $firstOrderDetail,
                 [
                     'pickup_day' => $pickupDay,
                 ],
@@ -76,7 +82,7 @@ trait EditPickupDayTrait
             }
 
             $customers = [];
-            foreach ($orderDetails as $orderDetail) {
+            foreach ($orderDetailsList as $orderDetail) {
 
                 $data = [
                     'pickup_day' => $pickupDay,

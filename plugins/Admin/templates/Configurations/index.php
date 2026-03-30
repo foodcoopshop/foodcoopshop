@@ -429,7 +429,9 @@ $this->element('addScript', [
             <td><?php 
                 if (Configure::read('app.extraBillingDayForManufacturers') != '') {
                     $date = DateTime::createFromFormat('m-d', Configure::read('app.extraBillingDayForManufacturers'));
-                    echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
+                    if ($date !== false) {
+                        echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
+                    }
                 }
             ?></td>
         </tr>

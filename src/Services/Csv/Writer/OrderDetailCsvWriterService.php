@@ -78,7 +78,7 @@ class OrderDetailCsvWriterService extends BaseCsvWriterService
         $direction = $this->getRequestQuery('direction', 'ASC');
 
         $orderDetails = $this->getOrderDetails($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit, $groupBy, $cartType, $taxRate, $categoryIds);
-        if (!is_null($sort)) {
+        if (is_string($sort) && is_string($direction)) {
             $orderDetails->orderBy([$sort => $direction]);
         }
         $orderDetails = $this->applyUngroupedDefaultSort($orderDetails->toArray());
