@@ -32,7 +32,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     use LoginTrait;
 
     /**
-     * @var array<string, array<string, mixed>|int>
+     * @var array<string, mixed>
      */
     protected array $registrationDataEmpty = [
         'Customers' => [
@@ -178,12 +178,102 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    private function &getRegistrationCustomerData(): array
+    {
+        if (!isset($this->registrationDataEmpty['Customers']) || !is_array($this->registrationDataEmpty['Customers'])) {
+            $this->registrationDataEmpty['Customers'] = [];
+        }
+
+        /** @var array<string, mixed> $customerData */
+        $customerData =& $this->registrationDataEmpty['Customers'];
+        return $customerData;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function &getRegistrationAddressCustomerData(): array
+    {
+        $customerData =& $this->getRegistrationCustomerData();
+        if (!isset($customerData['address_customer']) || !is_array($customerData['address_customer'])) {
+            $customerData['address_customer'] = [];
+        }
+
+        /** @var array<string, mixed> $addressCustomerData */
+        $addressCustomerData =& $customerData['address_customer'];
+        return $addressCustomerData;
+    }
+
+    private function setRegistrationCustomerField(string $field, mixed $value): void
+    {
+        $customerData =& $this->getRegistrationCustomerData();
+        $customerData[$field] = $value;
+    }
+
+    private function setRegistrationAddressCustomerField(string $field, mixed $value): void
+    {
+        $addressCustomerData =& $this->getRegistrationAddressCustomerData();
+        $addressCustomerData[$field] = $value;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    private function &getCustomerData(array &$data): array
+    {
+        if (!isset($data['Customers']) || !is_array($data['Customers'])) {
+            $data['Customers'] = [];
+        }
+
+        /** @var array<string, mixed> $customerData */
+        $customerData =& $data['Customers'];
+        return $customerData;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    private function &getAddressCustomerData(array &$data): array
+    {
+        $customerData =& $this->getCustomerData($data);
+        if (!isset($customerData['address_customer']) || !is_array($customerData['address_customer'])) {
+            $customerData['address_customer'] = [];
+        }
+
+        /** @var array<string, mixed> $addressCustomerData */
+        $addressCustomerData =& $customerData['address_customer'];
+        return $addressCustomerData;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function setCustomerField(array &$data, string $field, mixed $value): void
+    {
+        $customerData =& $this->getCustomerData($data);
+        $customerData[$field] = $value;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function setAddressCustomerField(array &$data, string $field, mixed $value): void
+    {
+        $addressCustomerData =& $this->getAddressCustomerData($data);
+        $addressCustomerData[$field] = $value;
+    }
+
     private function addValidRegistrationData(): void
     {
-        $this->registrationDataEmpty['Customers']['address_customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
-        $this->registrationDataEmpty['Customers']['address_customer']['postcode'] = 'ABCDEF';
-        $this->registrationDataEmpty['Customers']['address_customer']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
-        $this->registrationDataEmpty['Customers']['address_customer']['phone'] = '897++asdf+d';
+        $this->setRegistrationAddressCustomerField('email', 'fcs-demo-mitglied@mailinator.com');
+        $this->setRegistrationAddressCustomerField('postcode', 'ABCDEF');
+        $this->setRegistrationAddressCustomerField('phone_mobile', 'adsfkjasfasfdasfajaaa');
+        $this->setRegistrationAddressCustomerField('phone', '897++asdf+d');
     }
 
     public function testRegistrationSpamProtection(): void
@@ -218,7 +308,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     public function testRegistrationValidationWithCompanyWrongDataA(): void
     {
-        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $this->setRegistrationCustomerField('is_company', true);
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addValidRegistrationData();
         $this->addCustomer($this->registrationDataEmpty);
@@ -235,7 +325,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
         $this->addValidRegistrationData();
-        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $this->setRegistrationCustomerField('is_company', true);
         $email = 'new-foodcoopshop-member-1@mailinator.com';
         $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -323,7 +413,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      */
     private function saveAndCheckValidCustomer(array $data, string $email): Customer
     {
@@ -338,16 +428,16 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $customerPhoneMobile = '+436989898';
         $customerPhone = '07659856565';
 
-        $data['Customers']['firstname'] = $customerFirstname;
-        $data['Customers']['lastname'] = $customerLastname;
-        $data['Customers']['terms_of_use_accepted_date_checkbox'] = 1;
-        $data['Customers']['address_customer']['email'] = $customerAddressEmail;
-        $data['Customers']['address_customer']['city'] = $customerCity;
-        $data['Customers']['address_customer']['address1'] = $customerAddress1;
-        $data['Customers']['address_customer']['address2'] = $customerAddress2;
-        $data['Customers']['address_customer']['postcode'] = $customerPostcode;
-        $data['Customers']['address_customer']['phone_mobile'] = $customerPhoneMobile;
-        $data['Customers']['address_customer']['phone'] = $customerPhone;
+        $this->setCustomerField($data, 'firstname', $customerFirstname);
+        $this->setCustomerField($data, 'lastname', $customerLastname);
+        $this->setCustomerField($data, 'terms_of_use_accepted_date_checkbox', 1);
+        $this->setAddressCustomerField($data, 'email', $customerAddressEmail);
+        $this->setAddressCustomerField($data, 'city', $customerCity);
+        $this->setAddressCustomerField($data, 'address1', $customerAddress1);
+        $this->setAddressCustomerField($data, 'address2', $customerAddress2);
+        $this->setAddressCustomerField($data, 'postcode', $customerPostcode);
+        $this->setAddressCustomerField($data, 'phone_mobile', $customerPhoneMobile);
+        $this->setAddressCustomerField($data, 'phone', $customerPhone);
 
         $this->addCustomer($data);
 
@@ -466,8 +556,8 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     }
 
     /**
-    * @param array<mixed> $data
-    */
+     * @param array<string, mixed> $data
+     */
     private function addCustomer(array $data): ResponseInterface
     {
         $this->post($this->Slug->getRegistration(), $data);

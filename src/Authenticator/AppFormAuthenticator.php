@@ -44,6 +44,9 @@ class AppFormAuthenticator extends FormAuthenticator
         $fields = $this->_config['fields'];
 
         $body = $request->getParsedBody();
+        if (!is_array($body)) {
+            $body = [];
+        }
 
         /** @var array<string, mixed> $data */
         $data = [];
