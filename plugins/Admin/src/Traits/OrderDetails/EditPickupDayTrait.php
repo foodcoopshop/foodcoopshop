@@ -55,7 +55,8 @@ trait EditPickupDayTrait
                 throw new \Exception('error - order details wrong');
             }
 
-            $firstOrderDetail = $orderDetails->first();
+            $orderDetailsList = $orderDetails->toArray();
+            $firstOrderDetail = $orderDetailsList[0] ?? null;
             if (!$firstOrderDetail instanceof OrderDetail) {
                 throw new \Exception('error - no order detail found');
             }
@@ -81,7 +82,7 @@ trait EditPickupDayTrait
             }
 
             $customers = [];
-            foreach ($orderDetails as $orderDetail) {
+            foreach ($orderDetailsList as $orderDetail) {
 
                 $data = [
                     'pickup_day' => $pickupDay,
