@@ -36,7 +36,6 @@ parameters:
         - identifier: return.type
         - identifier: binaryOp.invalid
         - identifier: method.nonObject
-        - identifier: offsetAccess.notFound
         - identifier: foreach.nonIterable
         - identifier: assign.propertyType
         - identifier: array.invalidKey
