@@ -94,10 +94,9 @@ class ToolsController extends AdminAppController
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
 
         $manager = new ImageManager(new Driver());
-        $manager->read(WWW_ROOT . $filenameWithPath)
+        $manager->decodePath(WWW_ROOT . $filenameWithPath)
             ->scaleDown($this->getMaxTmpUploadFileSize())
-            ->encodeByMediaType(quality: 100)
-            ->save(WWW_ROOT . $filenameWithPath);
+            ->save(WWW_ROOT . $filenameWithPath, quality: 100);
 
         $this->set([
             'status' => 1,
@@ -146,10 +145,9 @@ class ToolsController extends AdminAppController
         }
 
         $manager = new ImageManager(new Driver());
-        $manager->read($uploadedFile)
+        $manager->decodePath($uploadedFile)
             ->rotate($directionInDegrees)
-            ->encodeByMediaType(quality: 100)
-            ->save($uploadedFile);
+            ->save($uploadedFile, quality: 100);
 
         $rotatedImageSrc = $this->getRequest()->getData('filename') . '?' . StringComponent::createRandomString(3);
 

@@ -70,7 +70,7 @@ trait SaveUploadedImageTrait
         $manager = new ImageManager(new Driver());
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
 
-            $physicalImage = $manager->read(WWW_ROOT . $filename);
+            $physicalImage = $manager->decodePath(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($physicalImage->height() > $physicalImage->width()) {
                 $thumbSize = (int) round($thumbSize * ($physicalImage->width() / $physicalImage->height()), 0);
@@ -78,8 +78,7 @@ trait SaveUploadedImageTrait
             $physicalImage->scale($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
             $physicalImage
-                ->encodeByMediaType(quality: 100)
-                ->save($thumbsFileName);
+                ->save($thumbsFileName, quality: 100);
         }
 
         $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [

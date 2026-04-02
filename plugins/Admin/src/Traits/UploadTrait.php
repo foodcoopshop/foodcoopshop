@@ -53,16 +53,14 @@ trait UploadTrait
         $manager = new ImageManager(new Driver());
 
         foreach ($imageSizes as $thumbSize => $options) {
-            $image = $manager->read(WWW_ROOT . $filename);
+            $image = $manager->decodePath(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($image->height() > $image->width()) {
                 $thumbSize = (int) round((int) $thumbSize * ($image->width() / $image->height()), 0);
             }
             $image->scale($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image
-                ->encodeByMediaType(quality: 100)
-                ->save($thumbsFileName);
+            $image->save($thumbsFileName, quality: 100);
         }
 
         if (isset($options)) {
