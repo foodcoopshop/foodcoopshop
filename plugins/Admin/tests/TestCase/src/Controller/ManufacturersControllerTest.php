@@ -426,6 +426,31 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
+    public function testGetDeliveryNoteAsSuperadmin(): void
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+
+        $manufacturerId = 15; // Demo Milch-Hersteller
+        $dateFrom = '01.02.2018';
+        $dateTo = '02.02.2018';
+
+        $this->get('/admin/manufacturers/getDeliveryNote.xlsx?manufacturerId=' . $manufacturerId . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo);
+
+        $this->assertResponseOk();
+        $this->assertContentType('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $this->assertHeaderContains('Content-Disposition', 'Lieferschein-' . $dateFrom . '-' . $dateTo . '-Demo-Milch-Hersteller-FoodCoop-Test.xlsx');
+    }
+
+    public function testGetDeliveryNoteNotAllowedWithPurchasePriceDisabled(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $this->get('/admin/manufacturers/getDeliveryNote.xlsx?manufacturerId=15&dateFrom=01.02.2018&dateTo=02.02.2018');
+
+        $this->assertRedirectToLoginPage();
+    }
+
     private function doTestCustomerRecord(Manufacturer $manufacturer): void
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
