@@ -73,6 +73,107 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains(';;;;;;;;;;;14.985,00');
     }
 
+    public function testAddWithWrongBarcode(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $productName = 'Test product invalid barcode';
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
+        $productCountBefore = $productsTable->find('all',
+            conditions: [
+                'Products.name' => $productName,
+            ],
+        )->count();
+        $actionLogCountBefore = $actionLogsTable->find('all',
+            conditions: [
+                'ActionLogs.type' => 'product_added',
+                'ActionLogs.text LIKE' => '%' . $productName . '%',
+            ],
+        )->count();
+
+        $this->addProduct([
+            'manufacturerId' => 5,
+            'name' => $productName,
+            'descriptionShort' => 'short description',
+            'description' => 'full description',
+            'unity' => 'piece',
+            'isDeclarationOk' => 1,
+            'idStorageLocation' => 1,
+            'barcode' => '12345',
+        ]);
+
+        $this->assertResponseCode(500);
+        $this->assertSessionNotHasKey('highlightedRowId');
+
+        $productCountAfter = $productsTable->find('all',
+            conditions: [
+                'Products.name' => $productName,
+            ],
+        )->count();
+        $actionLogCountAfter = $actionLogsTable->find('all',
+            conditions: [
+                'ActionLogs.type' => 'product_added',
+                'ActionLogs.text LIKE' => '%' . $productName . '%',
+            ],
+        )->count();
+        $this->assertSame($productCountBefore, $productCountAfter);
+        $this->assertSame($actionLogCountBefore, $actionLogCountAfter);
+    }
+
+    public function testAddOk(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $productName = 'Test product added';
+
+        $this->addProduct([
+            'manufacturerId' => 5,
+            'name' => $productName,
+            'descriptionShort' => 'short description',
+            'description' => 'full description',
+            'unity' => 'piece',
+            'isDeclarationOk' => 1,
+            'idStorageLocation' => 1,
+            'barcode' => '123456789012',
+        ]);
+
+        $this->assertJsonOk();
+        $this->assertFlashMessage('Das Produkt <b>' . $productName . '</b> wurde erfolgreich für <b>Demo Gemüse-Hersteller</b> erstellt.');
+
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
+            conditions: [
+                'Products.name' => $productName,
+                'Products.id_manufacturer' => 5,
+            ],
+            contain: [
+                'BarcodeProducts',
+            ],
+        )->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertEquals('short description', $product->description_short);
+        $this->assertEquals('full description', $product->description);
+        $this->assertEquals('piece', $product->unity);
+        $this->assertEquals(1, $product->is_declaration_ok);
+        $this->assertEquals(1, $product->id_storage_location);
+        $this->assertEquals('123456789012', $product->barcode_product->barcode);
+        $this->assertSession($product->id_product, 'highlightedRowId');
+
+        $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLog = $actionLogsTable->find('all',
+            conditions: [
+                'ActionLogs.type' => 'product_added',
+                'ActionLogs.object_id' => $product->id_product,
+                'ActionLogs.object_type' => 'products',
+            ],
+        )->first();
+
+        $this->assertNotEmpty($actionLog);
+        $this->assertEquals('Das Produkt <b>' . $productName . '</b> wurde erfolgreich für <b>Demo Gemüse-Hersteller</b> erstellt.', $actionLog->text);
+    }
+
     public function testEditProductNewStatusOnBulk(): void
     {
         $this->loginAsSuperadmin();
@@ -1216,6 +1317,14 @@ class ProductsControllerTest extends AppCakeTestCase
         )->first();
         $this->assertEmpty($image);
 
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function addProduct(array $data): void
+    {
+        $this->ajaxPost('/admin/products/add', $data);
     }
 
 }

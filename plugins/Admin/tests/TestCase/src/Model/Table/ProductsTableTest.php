@@ -239,6 +239,39 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->barcode_product->barcode, $barcode);
     }
 
+    public function testAddProductWithWrongBarcode(): void
+    {
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $productsTable = $this->getTableLocator()->get('Products');
+
+        $manufacturerId = $customersTable->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $manufacturer = $manufacturersTable->find('all',
+            conditions: [
+                'Manufacturers.id_manufacturer' => $manufacturerId,
+            ]
+        )->first();
+
+        $productEntity = $productsTable->add(
+            $manufacturer,
+            'New product invalid barcode',
+            'description short',
+            'description',
+            'piece',
+            0,
+            1,
+            '12345',
+        );
+
+        $this->assertInstanceOf(\App\Model\Entity\Product::class, $productEntity);
+        $this->assertTrue($productEntity->hasErrors());
+        $this->assertEquals(
+            'Die Länge des Barcodes muss 12 oder 13 Zeichen betragen.',
+            $productsTable->getAllValidationErrors($productEntity)[0],
+        );
+        $this->assertEmpty($productEntity->id_product);
+    }
+
     /**
      * START tests change quantity
      */

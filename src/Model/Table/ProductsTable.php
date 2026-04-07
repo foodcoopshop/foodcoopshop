@@ -977,7 +977,8 @@ class ProductsTable extends AppTable
                 'barcode' => $barcode,
             ], ['validate' => true]);
             if ($barcodeEntity2Save->hasErrors()) {
-                return $barcodeEntity2Save;
+                $productEntity->setErrors($barcodeEntity2Save->getErrors());
+                return $productEntity;
             }
         }
 
