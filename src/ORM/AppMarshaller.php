@@ -16,9 +16,14 @@ declare(strict_types=1);
  */
 namespace App\ORM;
 
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Marshaller;
 use Cake\Log\Log;
 
+/**
+ * @template TEntity of EntityInterface
+ * @extends Marshaller<TEntity>
+ */
 class AppMarshaller extends Marshaller
 {
     /**
