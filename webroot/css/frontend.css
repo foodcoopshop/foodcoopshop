@@ -11,9 +11,6 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-:root {
-    --sidebar-width: 250px;
-}
 body {
     font-size: 14px;
 }
