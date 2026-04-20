@@ -271,7 +271,6 @@ body.categories div.description-wrapper {
 }
 #login-form {
     width: 440px;
-    margin: 0 auto;
     text-align: center;
 }
 #login-form h1 {
@@ -282,7 +281,7 @@ body.categories div.description-wrapper {
 #inner-content #login-form form,
 body.customers.new_password_request #inner-content form {
     border-top: none;
-    float: left;
+    display: inline-block;
     padding: 10px;
 }
 body.customers.new_password_request #inner-content form {
