@@ -24,14 +24,6 @@ echo $this->element('layout/header');
 
     <div id="header">
         <?php echo $this->element('logo'); ?>
-        <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) { ?>
-            <?php echo $this->element('productSearch', [
-                'action' => __('route_search'),
-                'placeholder' =>  __('Search'),
-                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts(),
-                'includeCategoriesDropdown' => false
-            ]); ?>
-        <?php } ?>
         <?php echo $this->element('userMenu'); ?>
         <?php echo $this->element('mainMenu'); ?>
     </div>

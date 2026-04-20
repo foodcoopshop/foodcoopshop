@@ -187,9 +187,9 @@ foodcoopshop.Mobile = {
 
         var menuItems = [];
 
-        var ps = $('.product-search-form-wrapper');
+        var ps = $('#user-menu > li.user-menu-search');
         if (ps.length > 0) {
-            menuItems.push(ps.wrap('<li>').parent());
+            menuItems.push(ps);
         }
 
         let homeMenuItemA = $('<a/>').attr('href', '/').html('<i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home);
@@ -197,6 +197,9 @@ foodcoopshop.Mobile = {
 
         $('#user-menu > li').each(function () {
             var item = $(this);
+            if (item.hasClass('user-menu-search')) {
+                return;
+            }
             let anchor = item.find('a');
             if (!anchor.hasClass('open-with-modal') && anchor.length > 0) {
                 anchor.removeClass('btn');

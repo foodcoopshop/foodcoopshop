@@ -32,6 +32,24 @@ if ($identity !== null && $identity->isManufacturer()) {
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
 ]);
+
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
+    $menu[] = [
+        'slug' => '',
+        'name' => '',
+        'options' => [
+            'class' => ['user-menu-search'],
+            'content' => $this->element('productSearch', [
+                'action' => __('route_search'),
+                'placeholder' => __('Search'),
+                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts(),
+                'includeCategoriesDropdown' => false,
+                'placement' => 'user-menu',
+            ]),
+        ],
+    ];
+}
+
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-moon', 'class' => ['color-mode-toggle']]];
 
 $infoBoxContent = $this->element('globalNoDeliveryDayBox') . $this->element('infoBox');
@@ -44,6 +62,7 @@ if ($hasInfoBoxContent) {
     $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Info', 'options' => ['fa-icon' => 'ok fa-fw fas fa-info-circle', 'class' => ['open-with-modal'], 'data-content' => $infoBoxContent]];
 }
 
+$loginMenuIndex = count($menu);
 if ($identity !== null) {
     if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
@@ -52,14 +71,10 @@ if ($identity !== null) {
     }
 }
 
-$indexForLoginButton = 1;
-if ($hasInfoBoxContent) {
-    $indexForLoginButton = 2;
-}
 if ($identity !== null && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
-    $menu[$indexForLoginButton]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
+    $menu[$loginMenuIndex]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
     if ($identity->isCustomer()) {
-        $menu[$indexForLoginButton]['children'] = array_merge($menu[$indexForLoginButton]['children'], $this->Menu->getCustomerMenuElements($identity));
+        $menu[$loginMenuIndex]['children'] = array_merge($menu[$loginMenuIndex]['children'], $this->Menu->getCustomerMenuElements($identity));
     }
 }
 
@@ -79,13 +94,14 @@ if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
     $authMenuElement = $this->Menu->getAuthMenuElement($identity);
     if ($identity !== null) {
         if (!is_null($selfServiceMenuElement)) {
-            $menu[$indexForLoginButton]['children'][] = $selfServiceMenuElement;
+            $menu[$loginMenuIndex]['children'][] = $selfServiceMenuElement;
         }
-        $menu[$indexForLoginButton]['children'][] = $authMenuElement;
+        $menu[$loginMenuIndex]['children'][] = $authMenuElement;
     } else {
+        $loginMenuIndex = count($menu);
         $menu[] = $authMenuElement;
         if (!is_null($selfServiceMenuElement)) {
-            $menu[$indexForLoginButton]['children'][] = $selfServiceMenuElement;
+            $menu[$loginMenuIndex]['children'][] = $selfServiceMenuElement;
         }
     }
 

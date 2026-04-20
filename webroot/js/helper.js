@@ -457,9 +457,8 @@ foodcoopshop.Helper = {
                 form.submit();
             }
         });
-        $('.product-search-form-wrapper a.btn').on('click', function () {
-            console.log('click');
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-backspace');
+        $('.product-search-form-wrapper a.reset').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), $(this).find('.fa-times-circle').length ? 'fa-times-circle' : 'fa-backspace');
             foodcoopshop.Helper.disableButton($(this));
         });
     },

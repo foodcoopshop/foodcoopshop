@@ -235,12 +235,51 @@ body.categories div.description-wrapper {
     margin-right: 10px;
 }
 #user-menu > li {
-    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+    min-height: 34px;
+    padding-bottom: 0;
+}
+#user-menu > li > a {
+    float: none;
+    display: flex;
+    align-items: center;
+    min-height: 34px;
+}
+#user-menu > li.user-menu-search {
+    float: left;
+    margin-right: 10px;
+    padding-bottom: 0;
+}
+#user-menu .user-menu-search-form-wrapper {
+    position: static;
+    display: flex;
+    align-items: center;
+}
+#user-menu .user-menu-search-form-wrapper form {
+    display: flex;
+    float: none;
+}
+#user-menu .user-menu-search-form-wrapper .product-search-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+#user-menu .user-menu-search-form-wrapper a.reset:not(.btn) {
+    margin-right: 0;
+}
+#user-menu .user-menu-search-form-wrapper a.reset:not(.btn) i {
+    padding-right: 0;
+}
+#user-menu .user-menu-search-form-wrapper .btn {
+    float: none;
+}
+#user-menu > li.user-menu-search {
+    min-height: 26px;
 }
 #user-menu li ul {
     position: absolute;
     right: -11px;
-    top: 25px;
+    top: 34px;
     width: 170px;
     border: 1px solid #d6d4d4;
     background: #fff;
@@ -1182,13 +1221,36 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
 .product-search-form-wrapper form {
     float: left;
 }
+.product-search-input-wrapper {
+    position: relative;
+    float: left;
+}
 .product-search-form-wrapper input {
     width: 190px;
     padding: 6px;
     background: #fbfbfb;
     line-height: 1.5;
+    box-sizing: border-box;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
+}
+.product-search-input-wrapper.has-reset input {
+    padding-right: 38px;
+}
+.product-search-form-wrapper a.reset:not(.btn) {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    color: #bbb;
+    line-height: 1;
+}
+.product-search-form-wrapper a.reset:not(.btn):hover {
+    color: #999;
+}
+.product-search-form-wrapper a.reset:not(.btn) i {
+    padding-right: 0;
+    font-size: 16px;
 }
 .product-search-form-wrapper .btn {
     padding: 6px 10px;
