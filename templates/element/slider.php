@@ -16,8 +16,10 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+
 return;
 
+/* @phpstan-ignore-next-line deadCode.unreachable */
 if (!empty($sliders)) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Helper.initSlider();"
