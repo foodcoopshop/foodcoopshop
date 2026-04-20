@@ -11,6 +11,9 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+:root {
+    --sidebar-width: 250px;
+}
 body {
     font-size: 14px;
 }
@@ -34,7 +37,7 @@ body {
 }
 #inner-content {
     float: left;
-    width: calc(100% - 190px);
+    width: calc(100% - var(--sidebar-width));
     background: #fff;
     margin-top: 20px;
     padding-right: 10px;
@@ -80,7 +83,8 @@ body {
     padding-right: 10px;
     background: #fff;
     padding-top: 15px;
-    width: 190px;
+    width: var(--sidebar-width);
+    box-sizing: border-box;
 }
 .sidebar.empty {
     width: 100px;
@@ -125,7 +129,7 @@ body.categories div.description-wrapper {
     float: left;
     margin-bottom: 10px;
     clear: both;
-    width: 180px;
+    width: 100%;
 }
 .vertical.menu li.header {
     padding: 8px 10px;
