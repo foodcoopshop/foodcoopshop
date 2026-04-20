@@ -1323,7 +1323,7 @@ body.manufacturers.detail .blog-wrapper {
     height: 330px;
     padding-top: 10px;
     overflow-y: auto;
-    width: 736px;
+    width: 100%;
     margin-top: -15px;
 }
 body.blog_posts.detail #inner-content .content h2,

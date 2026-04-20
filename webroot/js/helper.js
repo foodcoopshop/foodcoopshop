@@ -383,37 +383,50 @@ foodcoopshop.Helper = {
         });
     },
 
+    getMaxVisibleBlogPosts: function () {
+        var containerWidth = $('.blog-wrapper').width() || $(window).width();
+        var slideWidth = 249; // 229px width + 2*10px padding
+        var gap = 16;
+        return Math.floor((containerWidth + gap) / (slideWidth + gap));
+    },
+
     initBlogPostCarousel: function () {
 
         var selector = '.blog-wrapper';
         $(selector).addClass('swiper');
 
         var slides = $(selector).find('.blog-post-wrapper');
-        if (slides.length > 3) {
+        var maxVisible = this.getMaxVisibleBlogPosts();
+
+        if (slides.length > maxVisible) {
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
         }
         $(selector).append('<div class="swiper-wrapper"></div>');
         $(selector).find('.swiper-wrapper').append(slides);
 
-        new Swiper(selector, {
+        var swiperInstance = new Swiper(selector, {
             loop: false,
             speed: 300,
-            centeredSlides: true,
-            slidesPerView: 2,
+            centeredSlides: false,
+            slidesPerView: maxVisible,
             spaceBetween: 16,
             navigation: {
                 nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
+                prevEl: '.swiper-button-prev',
             },
-            breakpoints: {
-                768: {
-                    speed: 1000,
-                    centeredSlides: true,
-                    slidesPerView: 1,
-                    initialSlide: 0,
-                    spaceBetween: 16
-                }
+        });
+
+        var self = this;
+        $(window).on('resize', function () {
+            var newMaxVisible = self.getMaxVisibleBlogPosts();
+            swiperInstance.params.slidesPerView = newMaxVisible;
+            swiperInstance.update();
+
+            if (slides.length > newMaxVisible) {
+                $(selector).find('.swiper-button-prev, .swiper-button-next').show();
+            } else {
+                $(selector).find('.swiper-button-prev, .swiper-button-next').hide();
             }
         });
 
