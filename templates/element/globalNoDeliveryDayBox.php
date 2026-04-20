@@ -28,8 +28,8 @@ if (OrderCustomerService::isOrderForDifferentCustomerMode() || OrderCustomerServ
 
 $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
 if ($globalNoDeliveryDaysString != '') {
-    echo '<div id="global-no-delivery-day-box" class="box">';
-        echo '<h3>' . __('Attention_delivery_break!') . '</h3>';
+    echo '<div id="global-no-delivery-day-box">';
+        echo '<h1>' . __('Attention_delivery_break!') . '</h1>';
         echo '<p>' . $globalNoDeliveryDaysString . '</p>';
     echo '</div>';
 }

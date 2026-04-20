@@ -43,11 +43,17 @@ foodcoopshop.ModalText = {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);
         });
 
-        var elementSelector = button.data('element-selector');
-        var heading = $(elementSelector).find('h1').first();
+        var dataContent = button.attr('data-content');
+        if (dataContent) {
+            var contentWrapper = $('<div/>').html(dataContent);
+        } else {
+            var elementSelector = button.data('element-selector');
+            var contentWrapper = $(elementSelector).clone();
+        }
+        var heading = contentWrapper.find('h1, h3').first();
         $(modalSelector + ' .modal-title').html(heading.html());
-        heading.hide();
-        $(modalSelector + ' .modal-body').append($(elementSelector).html());
+        heading.remove();
+        $(modalSelector + ' .modal-body').append(contentWrapper.html());
     }
 
 };

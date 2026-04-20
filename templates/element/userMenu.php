@@ -33,6 +33,17 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
 ]);
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-moon', 'class' => ['color-mode-toggle']]];
+
+$infoBoxContent = $this->element('globalNoDeliveryDayBox') . $this->element('infoBox');
+$infoBoxContent = str_replace('<h3', '<h1', $infoBoxContent);
+$hasInfoBoxContent = $infoBoxContent != '';
+if ($hasInfoBoxContent) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".ModalText.init('#user-menu a.open-with-modal');"
+    ]);
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Info', 'options' => ['fa-icon' => 'ok fa-fw fas fa-info-circle', 'class' => ['open-with-modal'], 'data-content' => $infoBoxContent]];
+}
+
 if ($identity !== null) {
     if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
@@ -41,10 +52,14 @@ if ($identity !== null) {
     }
 }
 
+$indexForLoginButton = 1;
+if ($hasInfoBoxContent) {
+    $indexForLoginButton = 2;
+}
 if ($identity !== null && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
-    $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
+    $menu[$indexForLoginButton]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
     if ($identity->isCustomer()) {
-        $menu[1]['children'] = array_merge($menu[1]['children'], $this->Menu->getCustomerMenuElements($identity));
+        $menu[$indexForLoginButton]['children'] = array_merge($menu[$indexForLoginButton]['children'], $this->Menu->getCustomerMenuElements($identity));
     }
 }
 
@@ -64,16 +79,17 @@ if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
     $authMenuElement = $this->Menu->getAuthMenuElement($identity);
     if ($identity !== null) {
         if (!is_null($selfServiceMenuElement)) {
-            $menu[1]['children'][] = $selfServiceMenuElement;
+            $menu[$indexForLoginButton]['children'][] = $selfServiceMenuElement;
         }
-        $menu[1]['children'][] = $authMenuElement;
+        $menu[$indexForLoginButton]['children'][] = $authMenuElement;
     } else {
         $menu[] = $authMenuElement;
         if (!is_null($selfServiceMenuElement)) {
-            $menu[1]['children'][] = $selfServiceMenuElement;
+            $menu[$indexForLoginButton]['children'][] = $selfServiceMenuElement;
         }
     }
 
 }
+
 
 echo $this->Menu->render($menu, ['id' => 'user-menu', 'class' => 'horizontal menu']);

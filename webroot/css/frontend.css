@@ -230,14 +230,12 @@ body.categories div.description-wrapper {
 #user-menu li > a {
     color: #333;
 }
-#user-menu i.fa-user,
-.color-mode-toggle i {
+#user-menu a > i {
     padding-right: 5px;
 }
-.color-mode-toggle {
-    margin-top: 1px;
-    margin-right: 10px;
+#user-menu a {
     float: left;
+    margin-right: 10px;
 }
 #user-menu > li {
     padding-bottom: 5px;

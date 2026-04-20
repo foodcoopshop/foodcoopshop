@@ -197,9 +197,10 @@ foodcoopshop.Mobile = {
 
         $('#user-menu > li').each(function () {
             var item = $(this);
-            if (item.find('a').length > 0) {
-                item.find('a').removeClass('btn');
-                item.find('a').removeClass('btn-success');
+            let anchor = item.find('a');
+            if (!anchor.hasClass('open-with-modal') && anchor.length > 0) {
+                anchor.removeClass('btn');
+                anchor.removeClass('btn-success');
                 menuItems.push(item);
             }
         });
@@ -246,27 +247,16 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
-        // START info box as modal
-        var noGlobalDeliveryBreakHtml = '';
-        var noGlobalDeliveryBreakElement = $('#global-no-delivery-day-box');
-        if (noGlobalDeliveryBreakElement.length > 0) {
-            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
-        }
-        var infoBoxContent = (noGlobalDeliveryBreakHtml + $('#info-box').html()).trim();
-        if (infoBoxContent != '') {
-            var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + infoBoxContent + '</div>';
-            infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
-            $('#container').append(infoBoxHtml);
-
-            var infoButton = $('<a/>');
-            infoButton.addClass('open-with-modal');
-            infoButton.attr('href', 'javascript:void(0);');
-            infoButton.data('element-selector', '#right-info-box-text');
-            infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
-            $('#' + headerId).append(infoButton);
-            foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
-        }
-        // END info box as modal
+        $('#user-menu > li').each(function () {
+            if ($(this).find('a').hasClass('open-with-modal')) {
+                let anchor = $(this).find('a');
+                let icon = anchor.find('i');
+                icon.addClass('fa-2x');
+                anchor.html(icon);
+                $('#' + headerId).append($(this));
+               foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+            }
+        });
 
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');

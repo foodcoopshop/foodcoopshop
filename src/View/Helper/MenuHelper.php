@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
-use Cake\Core\Configure;
+use Cake\View\View;
 use Cake\View\Helper;
+use Cake\Core\Configure;
 use App\Model\Entity\Customer;
 use Authentication\IdentityInterface;
 
@@ -24,6 +25,15 @@ use Authentication\IdentityInterface;
  */
 class MenuHelper extends Helper
 {
+
+    /**
+     * @param View $View
+     */
+    public function __construct(View $View, array $config = [])
+    {
+        $this->helpers[] = 'MyHtml';
+        parent::__construct($View, $config);
+    }
 
     /**
      * @param array<string, mixed> $array
@@ -100,7 +110,8 @@ class MenuHelper extends Helper
                 $item['name'],
                 $item['options']['style'] ?? '',
                 $item['options']['class'] ?? [],
-                $item['options']['fa-icon'] ?? ''
+                $item['options']['fa-icon'] ?? '',
+                $item['options']['data-content'] ?? '',
             );
 
             if (!empty($item['children'])) {
@@ -119,7 +130,7 @@ class MenuHelper extends Helper
     /**
      * @param list<string> $class
      */
-    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = ''): string
+    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataContent = ''): string
     {
 
         if ($style != '') {
@@ -154,12 +165,17 @@ class MenuHelper extends Helper
             $fontAwesomeIconString = str_replace('fas ', 'far ', $fontAwesomeIconString);
         }
 
-        $classString = '';
-        if (!empty($class)) {
-            $classString = ' class="' . join(' ', $class). '" ';
-        }
-
-        $naviElement = '<a' . $classString . $style.' href="'.$slug.'" title="'.h(strip_tags($name)).'">'.$fontAwesomeIconString.$name.'</a>';
+        $naviElement = $this->MyHtml->link(
+            $fontAwesomeIconString . $name,
+            $slug,
+            [
+                'class' => $class,
+                'escape' => false,
+                'title' => h(strip_tags($name)),
+                'style' => $style !== '' ? $style : null,
+                'data-content' => $dataContent !== '' ? h($dataContent) : null,
+            ],
+        );
 
         return $naviElement;
     }
