@@ -173,8 +173,10 @@ class MenuHelper extends Helper
             $fontAwesomeIconString = str_replace('fas ', 'far ', $fontAwesomeIconString);
         }
 
+        $labelString = $name !== '' ? '<span class="menu-item-label">' . $name . '</span>' : '';
+
         $naviElement = $this->MyHtml->link(
-            $fontAwesomeIconString . $name,
+            $fontAwesomeIconString . $labelString,
             $slug,
             [
                 'class' => $class,

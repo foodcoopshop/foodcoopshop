@@ -155,8 +155,13 @@
     .sb-left .product-search-form-wrapper input {
         padding-left: 8px ! important;
         width: 100% ! important;
-        padding-right: 14%;
+        padding-right: 10px;
     }
+    .sb-left .product-search-form-wrapper a.reset {
+        color: var(--light-grey) ! important;
+        border: none;
+    }
+    
     .sb-left .product-search-form-wrapper .btn-success {
         border-color: transparent ! important;
     }

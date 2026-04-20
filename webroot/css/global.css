@@ -21,6 +21,7 @@
     --not-ok-red: #dc143c;
     --warning-yellow: #FDB813;
     --sidebar-width: 250px;
+    --light-grey: #bbb;
 }
 
 @media print {
@@ -511,7 +512,7 @@ input[type="checkbox"] {
 .password-toggle-icon:hover {
     color: #333;
     background-color: #e8e8e8;
-    border-color: #bbb;
+    border-color: var(--light-grey);
 }
 span.new {
     font-size:10px;

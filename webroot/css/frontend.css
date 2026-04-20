@@ -230,6 +230,17 @@ body.categories div.description-wrapper {
 #user-menu a > i {
     padding-right: 5px;
 }
+#user-menu > li > a.has-icon:hover > i {
+    opacity: 0.7;
+}
+#user-menu a:hover,
+#user-menu a.active {
+    text-decoration: none ! important;
+}
+#user-menu a:hover .menu-item-label,
+#user-menu a.active .menu-item-label {
+    text-decoration: underline ! important;
+}
 #user-menu a {
     float: left;
     margin-right: 10px;
@@ -1242,7 +1253,7 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     top: 50%;
     right: 5px;
     transform: translateY(-50%);
-    color: #bbb;
+    color: var(--light-grey);
     line-height: 1;
 }
 .product-search-form-wrapper a.reset:not(.btn):hover {
