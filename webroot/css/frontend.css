@@ -34,7 +34,7 @@ body {
 }
 #inner-content {
     float: left;
-    width: calc(100% - 260px);
+    width: calc(100% - 190px);
     background: #fff;
     margin-top: 20px;
     padding-right: 10px;
