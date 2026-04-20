@@ -14,6 +14,28 @@
 
 foodcoopshop.Modal = {
 
+    /**
+     * avoids that userMenu items jump when modal with little content is opened
+     */
+    syncHeaderWidth: function(scrollbarWidth = null) {
+        var header = $('#header');
+        if (header.length === 0) {
+            return;
+        }
+        if (scrollbarWidth === null) {
+            scrollbarWidth = parseInt($('body').css('padding-right'), 10) || 0;
+        }
+        header.css('width', 'calc(100% - ' + scrollbarWidth + 'px)');
+    },
+
+    resetHeaderWidth: function() {
+        var header = $('#header');
+        if (header.length === 0) {
+            return;
+        }
+        header.css('width', '');
+    },
+
     getSuccessButton : function(selector) {
         return $(selector + ' .modal-footer .btn-success:not(.no-auto-bind');
     },
@@ -100,6 +122,14 @@ foodcoopshop.Modal = {
         html += '</div>';
 
         $('body').append(html);
+
+        $(elementId).on('shown.bs.modal', function() {
+            foodcoopshop.Modal.syncHeaderWidth();
+        });
+
+        $(elementId).on('hidden.bs.modal', function() {
+            foodcoopshop.Modal.resetHeaderWidth();
+        });
 
         this.makeDraggable(elementId);
     },
