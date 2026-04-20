@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+return;
 
 if (!empty($sliders)) {
     $this->element('addScript', ['script' =>
