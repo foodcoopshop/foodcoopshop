@@ -16,31 +16,33 @@ body {
 }
 
 #container {
-    width: 1234px;
+    width: 100%;
     float: left;
     display: none;
 }
 #content {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
-    width: 928px;
+    width: 100%;
     float: left;
     background: #fff;
     z-index: 100;
     margin-right: 0px;
     border-right: 1px solid #d6d4d4;
     padding-top: 148px;
+    box-sizing: border-box;
 }
 #inner-content {
     float: left;
-    width: 736px;
+    width: calc(100% - 260px);
     background: #fff;
     margin-top: 20px;
     padding-right: 10px;
     padding-bottom: 15px;
+    box-sizing: border-box;
 }
 #header {
-    width: 928px;
+    width: 100%;
     background: #fff;
     padding-top: 5px;
     float: left;
@@ -676,10 +678,11 @@ body.manufacturers.index h2.info {
 }
 #footer {
     background-color: #dfdfdf;
-    width: 928px;
+    width: 100%;
     min-height: 172px;
     float: left;
     border-right: 1px solid #d6d4d4;
+    box-sizing: border-box;
 }
 #footer .inner-footer {
     padding: 20px;
@@ -756,6 +759,7 @@ body.manufacturers.index h2.info {
 }
 #right {
     float: left;
+    display: none;
 }
 #right .inner-right {
     position: fixed;
