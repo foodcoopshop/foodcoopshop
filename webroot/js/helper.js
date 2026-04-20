@@ -29,7 +29,6 @@ foodcoopshop.Helper = {
             this.initWindowResize();
             this.initScrolltopButton();
             this.initMenuAutoHide();
-            this.adaptionsForHorizontalScrolling();
             this.showContent();
         }
     },
@@ -593,11 +592,6 @@ foodcoopshop.Helper = {
             return false;
         });
 
-    },
-
-    adaptionsForHorizontalScrolling : function() {
-        $('#header').scrollToFixed({'offsetLeft': 2});
-        $('.inner-right').scrollToFixed();
     },
 
     initWindowResize: function () {
