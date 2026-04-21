@@ -106,14 +106,18 @@ class MenuHelper extends Helper
         }
         $tmpMenuItem = '<li' . (!empty($liClass) ? ' class="' . join(' ', $liClass).'"' : '').'>';
 
-        $tmpMenuItem .= $this->renderMenuElement(
-                $item['slug'],
-                $item['name'],
-                $item['options']['style'] ?? '',
-                $item['options']['class'] ?? [],
-                $item['options']['fa-icon'] ?? '',
-                $item['options']['data-element-selector'] ?? ''
-            );
+        if (!empty($item['options']['content'])) {
+                $tmpMenuItem .= $item['options']['content'];
+            } else {
+                $tmpMenuItem .= $this->renderMenuElement(
+                    $item['slug'],
+                    $item['name'],
+                    $item['options']['style'] ?? '',
+                    $item['options']['class'] ?? [],
+                    $item['options']['fa-icon'] ?? '',
+                    $item['options']['data-content'] ?? '',
+                );
+            }
 
             if (!empty($item['children'])) {
                 $tmpMenuItem .= '<ul>';
@@ -131,7 +135,7 @@ class MenuHelper extends Helper
     /**
      * @param list<string> $class
      */
-    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataElementSelector = ''): string
+    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataElementSelector = '', string $content = ''): string
     {
 
         if ($style != '') {
