@@ -59,7 +59,6 @@ echo $this->element('layout/header');
                     'showFutureOrderDetails' => true,
                     'icon' => 'fa-shopping-cart',
                     'name' => __('Cart'),
-                    'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
                     'cartButtonIcon' => 'fa-cart-plus',
                     'cartEmptyMessage' => __('Your_cart_is_empty.'),
                 ]);

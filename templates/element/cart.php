@@ -54,11 +54,6 @@ if ($identity->getProducts() !== null) {
     <h3>
         <i class="fas <?php echo $icon; ?>"></i>
         <?php echo $name; ?>
-        <?php
-        if (!(Configure::read('app.selfServiceEasyModeEnabled') && OrderCustomerService::isSelfServiceMode())){
-        ?>
-            <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
-        <?php } ?>
     </h3>
     <div class="inner">
 

@@ -137,7 +137,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         'showFutureOrderDetails' => false,
         'icon' => 'fa-shopping-bag',
         'name' => __('Shopping_bag'),
-        'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service')),
         'cartButtonIcon' => 'fa-shopping-bag',
         'cartEmptyMessage' => __('Your_shopping_bag_is_empty.')
     ]); ?>
