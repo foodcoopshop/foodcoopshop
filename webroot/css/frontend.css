@@ -887,19 +887,19 @@ body.manufacturers.index h2.info {
 #cart a.question i {
     padding-right: 0;
 }
-p.pickup-day-header {
+.pickup-day-header {
     width: 100%;
 }
-body.carts p.pickup-day-header {
+body.carts .pickup-day-header {
     margin-top: 15px;
     float: left;
 }
-#cart p.pickup-day-header {
+#cart .pickup-day-header {
     margin-top: 5px;
     padding: 0;
     float: left;
 }
-#cart p.pickup-day-header .label {
+#cart .pickup-day-header .label {
     width: 100%;
     display: block;
     margin-bottom: 10px;
@@ -909,7 +909,7 @@ body.carts p.pickup-day-header {
     display: block;
     float: left;
 }
-#cart p.pickup-day-header:first-of-type {
+#cart .pickup-day-header:first-of-type {
     margin-top: -5px;
 }
 #cart .cart-extra-info,
@@ -930,7 +930,7 @@ body.carts .cart-extra-info a {
 body.carts .cart-extra-info:not(:first-child) {
     border-top: 1px solid #d6d4d4;
 }
-#cart p.products span.product span:not(:first-of-type) {
+#cart .products span.product span:not(:first-of-type) {
     margin-right: 3px;
 }
 body.carts #load-last-order-details,
@@ -943,12 +943,12 @@ body.carts #load-last-order-details,
     margin-bottom: 20px;
     padding-bottom: 3px;
 }
-.cart p.products {
+.cart .products {
     display: none;
     margin-bottom: 5px;
     margin-top: 5px;
 }
-.cart p.products span.product {
+.cart .products span.product {
     width: 100%;
     float: left;
 }
@@ -976,8 +976,8 @@ body.carts #load-last-order-details,
     float: right;
     margin-right: 23px;
 }
-.cart p.products span.product span.delete,
-.cart p.products span.product span.price {
+.cart .products span.product span.delete,
+.cart .products span.product span.price {
     float: right;
 }
 .cart span.product-name,

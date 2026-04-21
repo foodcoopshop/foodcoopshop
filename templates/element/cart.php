@@ -95,7 +95,7 @@ if ($identity->getProducts() !== null) {
         ?>
 
         <p class="no-products"><?php echo $cartEmptyMessage; ?></p>
-        <p class="products"></p>
+        <div class="products"></div>
 
         <div class="sums-wrapper">
             <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
@@ -107,7 +107,7 @@ if ($identity->getProducts() !== null) {
             <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
         </div>
 
-        <p class="tmp-wrapper"></p>
+        <div class="tmp-wrapper"></div>
 
         <div class="sc"></div>
 

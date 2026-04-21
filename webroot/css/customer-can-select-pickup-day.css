@@ -11,7 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
- #cart p.pickup-day-header:not(:first-of-type) {
+ #cart .pickup-day-header:not(:first-of-type) {
     margin-top: 0 ! important;
 }
 .pickup-day-header span.label {
