@@ -119,6 +119,7 @@ class MenuHelper extends Helper
                     $item['options']['class'] ?? [],
                     $item['options']['fa-icon'] ?? '',
                     $item['options']['data-content'] ?? '',
+                    $item['options']['data-element-selector'] ?? '',
                 );
             }
 
@@ -138,7 +139,7 @@ class MenuHelper extends Helper
     /**
      * @param list<string> $class
      */
-    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataContent = ''): string
+    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataContent = '', string $dataElementSelector = ''): string
     {
 
         if ($style != '') {
@@ -184,6 +185,7 @@ class MenuHelper extends Helper
                 'title' => h(strip_tags($name)),
                 'style' => $style !== '' ? $style : null,
                 'data-content' => $dataContent !== '' ? h($dataContent) : null,
+                'data-element-selector' => $dataElementSelector !== '' ? $dataElementSelector : null,
             ],
         );
 

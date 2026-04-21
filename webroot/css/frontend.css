@@ -861,6 +861,16 @@ body.carts p.pickup-day-header {
     padding: 0;
     float: left;
 }
+#cart p.pickup-day-header .label {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+#cart .product {
+    width: 100%;
+    display: block;
+    float: left;
+}
 #cart p.pickup-day-header:first-of-type {
     margin-top: -5px;
 }
@@ -899,9 +909,6 @@ body.carts #load-last-order-details,
     display: none;
     margin-bottom: 5px;
     margin-top: 5px;
-    max-height: 410px;
-    min-height: 34px;
-    overflow-y: auto;
 }
 .cart p.products span.product {
     width: 100%;
@@ -958,7 +965,7 @@ body.carts #load-last-order-details,
 }
 .cart span.product-name-wrapper {
     float: left;
-    width: 185px; /* consider scrollbar! */
+    width: 80%;
 }
 .cart span.product-name-wrapper a {
     word-wrap: break-word;
@@ -989,6 +996,11 @@ body.carts #load-last-order-details,
 }
 #cart .btn-success {
     font-size: 14px;
+}
+#cart .delete a.btn {
+    width: 22px;
+    float: right;
+    margin-top: -6px;
 }
 .cart .delete a.btn {
     padding: 0;

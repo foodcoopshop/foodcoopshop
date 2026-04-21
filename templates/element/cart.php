@@ -50,7 +50,7 @@ if ($identity->getProducts() !== null) {
 }
 ?>
 
-<div id="cart" class="box cart">
+<div id="cart" class="cart">
     <h3>
         <i class="fas <?php echo $icon; ?>"></i>
         <?php echo $name; ?>
@@ -64,9 +64,6 @@ if ($identity->getProducts() !== null) {
 
         <?php
         if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
-            $this->element('addScript', ['script' =>
-                Configure::read('app.jsNamespace').".ModalOrderForDifferentCustomerCancel.init();"
-            ]);
             echo '<p class="cart-extra-info order-for-different-customer-info">';
                 echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$identity->name.'</b>']);
                 if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
@@ -86,9 +83,6 @@ if ($identity->getProducts() !== null) {
             $lastOrderDetails = $identity->getLastOrderDetailsForDropdown();
             if (!empty($lastOrderDetails)) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
-                $this->element('addScript', ['script' =>
-                    Configure::read('app.jsNamespace') . ".ModalLoadLastOrderDetails.init();"
-                ]);
                 echo $this->Form->control('load-last-order-details', [
                     'label' => '',
                     'type' => 'select',

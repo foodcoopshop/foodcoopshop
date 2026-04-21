@@ -72,7 +72,6 @@ foodcoopshop.Cart = {
         $('.cart p.products').show();
 
         foodcoopshop.ModalImage.init('.cart .products a.image');
-        foodcoopshop.Helper.onWindowResize();
 
     },
 
@@ -331,7 +330,6 @@ foodcoopshop.Cart = {
                         if (data.callback) {
                             eval(data.callback);
                         }
-                        foodcoopshop.Helper.onWindowResize();
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
@@ -343,7 +341,6 @@ foodcoopshop.Cart = {
                         if (data.callback) {
                             eval(data.callback);
                         }
-                        foodcoopshop.Helper.onWindowResize();
                     }
                 }
             );

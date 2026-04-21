@@ -36,14 +36,13 @@ foodcoopshop.ModalText = {
             [foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)]
         );
 
-
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);
         });
 
-        var dataContent = button.attr('data-content');
+        var dataContent = button.data('content');
         if (dataContent) {
             var contentWrapper = $('<div/>').html(dataContent);
         } else {
@@ -54,6 +53,13 @@ foodcoopshop.ModalText = {
         $(modalSelector + ' .modal-title').html(heading.html());
         heading.remove();
         $(modalSelector + ' .modal-body').append(contentWrapper.html());
+
+        if (elementSelector && elementSelector === '#modal-cart-wrapper') {
+            foodcoopshop.Cart.initRemoveFromCartLinks();
+            foodcoopshop.ModalLoadLastOrderDetails.init();
+            foodcoopshop.ModalOrderForDifferentCustomerCancel.init();
+        }
+
     }
 
 };

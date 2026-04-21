@@ -41,26 +41,28 @@ echo $this->element('layout/header');
         </div>
     </div>
 
-    <div id="right">
-        <div class="inner-right">
-            <?php echo $this->element('cart', [
-                'selfServiceModeEnabled' => false,
-                'showLoadLastOrderDetailsDropdown' => true,
-                'showCartDetailButton' => true,
-                'showFutureOrderDetails' => true,
-                'icon' => 'fa-shopping-cart',
-                'name' => __('Cart'),
-                'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
-                'cartButtonIcon' => 'fa-cart-plus',
-                'cartEmptyMessage' => __('Your_cart_is_empty.'),
-            ]); ?>
-        </div>
-    </div>
-
     <div id="footer">
         <div class="inner-footer">
             <?php
                 echo $this->element('footer');
+            ?>
+        </div>
+    </div>
+
+    <div class="hide">
+        <div id="modal-cart-wrapper">
+            <?php
+                echo $this->element('cart', [
+                    'selfServiceModeEnabled' => false,
+                    'showLoadLastOrderDetailsDropdown' => true,
+                    'showCartDetailButton' => true,
+                    'showFutureOrderDetails' => true,
+                    'icon' => 'fa-shopping-cart',
+                    'name' => __('Cart'),
+                    'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
+                    'cartButtonIcon' => 'fa-cart-plus',
+                    'cartEmptyMessage' => __('Your_cart_is_empty.'),
+                ]);
             ?>
         </div>
     </div>

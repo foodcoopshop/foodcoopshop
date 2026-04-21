@@ -62,6 +62,13 @@ if ($hasInfoBoxContent) {
     $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Info', 'options' => ['fa-icon' => 'ok fa-fw fas fa-info-circle', 'class' => ['open-with-modal'], 'data-content' => $infoBoxContent]];
 }
 
+if ($identity !== null && !$identity->isManufacturer()) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace').".ModalText.init('#user-menu a.cart-modal-link');"
+    ]);
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Warenkorb', 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['cart-modal-link'], 'data-element-selector' => '#modal-cart-wrapper']];
+}
+
 $loginMenuIndex = count($menu);
 if ($identity !== null) {
     if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {

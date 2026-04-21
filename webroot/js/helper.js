@@ -26,7 +26,6 @@ foodcoopshop.Helper = {
         this.initCookieBanner();
         foodcoopshop.ColorMode.init();
         if (!this.isMobile()) {
-            this.initWindowResize();
             this.initScrolltopButton();
             this.initMenuAutoHide();
             this.showContent();
@@ -590,56 +589,6 @@ foodcoopshop.Helper = {
             }, 400);
             return false;
         });
-
-    },
-
-    initWindowResize: function () {
-        $(window).on('resize', function () {
-            foodcoopshop.Helper.onWindowResize();
-        });
-        foodcoopshop.Helper.onWindowResize();
-    },
-
-    onWindowResize: function () {
-
-        if ($('body').hasClass('self_services')) {
-            return;
-        }
-
-        var difference = 0;
-        var shoppingPriceElement;
-
-        // whole page is called in iframe in order-for-different-customer-mode
-        var orderForDifferentCustomerIframe = window.parent.$('#order-for-different-customer-add .modal-body iframe');
-
-        if (orderForDifferentCustomerIframe.length > 0) {
-            difference = 130;
-            difference += $('.order-for-different-customer-info').height();
-            shoppingPriceElement = $('.shopping-price-info');
-            if (shoppingPriceElement.length > 0) {
-                difference += shoppingPriceElement.height() + 8;
-            }
-            newCartHeight = orderForDifferentCustomerIframe.height();
-        } else {
-            difference = 120;
-            var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
-            if (loadLastOrderDetailsDropdown.length > 0) {
-                difference += loadLastOrderDetailsDropdown.closest('.input').height();
-            }
-            var globalNoDeliveryDayBox = $('#global-no-delivery-day-box');
-            if (globalNoDeliveryDayBox.length > 0) {
-                difference += globalNoDeliveryDayBox.height();
-            }
-            shoppingPriceElement = $('.shopping-price-info');
-            if (shoppingPriceElement.length > 0) {
-                difference += shoppingPriceElement.height() + 8;
-            }
-            var newCartHeight = $(window).height();
-        }
-
-        var sumsWrapperHeight = $('#cart .sums-wrapper').height();
-        var newMaxHeight = parseInt(newCartHeight) - difference - sumsWrapperHeight;
-        $('#cart .products').css('max-height', newMaxHeight);
 
     },
 
