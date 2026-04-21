@@ -16,9 +16,9 @@ declare(strict_types=1);
  */
 use Cake\Utility\Text;
 use Cake\Core\Configure;
-use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Query\SelectQuery;
 
-if (empty($blogPosts) || ($blogPosts instanceof ResultSetInterface && $blogPosts->count() == 0)) {
+if (empty($blogPosts) || ($blogPosts instanceof SelectQuery && $blogPosts->count() == 0)) {
     return;
 }
 
