@@ -193,7 +193,7 @@ foodcoopshop.Mobile = {
         }
 
         let homeMenuItemA = $('<a/>').attr('href', '/').html('<i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home);
-        menuItems.push('<li class="home">' + $('<div>').append(homeMenuItemA.clone()).html()  + $('<div>').append($('.color-mode-toggle')).html() + '</li>');
+        menuItems.push('<li class="home">' + $('<div>').append(homeMenuItemA.clone()).html() + $('<div>').append($('a.color-mode-toggle')).html() + '</li>');
 
         $('#user-menu > li').each(function () {
             var item = $(this);
@@ -201,7 +201,7 @@ foodcoopshop.Mobile = {
                 return;
             }
             let anchor = item.find('a');
-            if (!anchor.hasClass('open-with-modal') && anchor.length > 0) {
+            if (!anchor.hasClass('modal-link-info-box') && !anchor.hasClass('modal-link-cart') && !anchor.hasClass('color-mode-toggle') && anchor.length > 0) {
                 anchor.removeClass('btn');
                 anchor.removeClass('btn-success');
                 menuItems.push(item);
@@ -251,13 +251,14 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
         $('#user-menu > li').each(function () {
-            if ($(this).find('a').hasClass('open-with-modal')) {
+            if ($(this).find('a').hasClass('modal-link-info-box')) {
                 let anchor = $(this).find('a');
                 let icon = anchor.find('i');
                 icon.addClass('fa-2x');
+                icon.removeClass('ok');
                 anchor.html(icon);
                 $('#' + headerId).append($(this));
-               foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+               foodcoopshop.ModalText.init('#' + headerId + ' a.modal-link-info-box');
             }
         });
 

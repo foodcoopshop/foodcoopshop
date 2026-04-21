@@ -229,9 +229,9 @@
         text-align: center;
         width: 32px;
     }
-    #responsive-header .open-with-modal {
+    #responsive-header .modal-link-info-box {
         float: right ! important;
-        margin: 13px 5px 5px 3px ! important;
+        margin: 6px 5px 5px 3px ! important;
     }
     #slider {
         margin-left: 0 ! important;
