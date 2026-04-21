@@ -382,7 +382,7 @@ foodcoopshop.Helper = {
     },
 
     getMaxVisibleBlogPosts: function () {
-        var containerWidth = $('.blog-wrapper').width() || $(window).width();
+        var containerWidth = $('.blog-wrapper').width() || $('#inner-content').width();
         var slideWidth = 249; // 229px width + 2*10px padding
         var gap = 16;
         return Math.floor((containerWidth + gap) / (slideWidth + gap));
