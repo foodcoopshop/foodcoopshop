@@ -262,8 +262,12 @@ foodcoopshop.Mobile = {
             }
             if ($(this).find('a').hasClass('modal-link-cart')) {
                 let modifiedCartButton = $(this).clone();
-                modifiedCartButton.find('a').attr('href', foodcoopshop.LocalizedJs.admin.routeCartShow);
-                modifiedCartButton.find('a').addClass('responsive-cart fa-2x');
+                let anchor = modifiedCartButton.find('a');
+                let icon = anchor.find('i');
+                anchor.attr('href', foodcoopshop.LocalizedJs.admin.routeCartShow);
+                anchor.addClass('responsive-cart');
+                icon.addClass('fa-2x');
+                icon.removeClass('ok');
                 $('#' + headerId).append(modifiedCartButton);
             }
         });
