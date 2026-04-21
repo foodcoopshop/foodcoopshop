@@ -258,15 +258,15 @@ foodcoopshop.Mobile = {
                 icon.removeClass('ok');
                 anchor.html(icon);
                 $('#' + headerId).append($(this));
-               foodcoopshop.ModalText.init('#' + headerId + ' a.modal-link-info-box');
+                foodcoopshop.ModalText.init('#' + headerId + ' a.modal-link-info-box');
+            }
+            if ($(this).find('a').hasClass('modal-link-cart')) {
+                let modifiedCartButton = $(this).clone();
+                modifiedCartButton.find('a').attr('href', foodcoopshop.LocalizedJs.admin.routeCartShow);
+                modifiedCartButton.find('a').addClass('responsive-cart fa-2x');
+                $('#' + headerId).append(modifiedCartButton);
             }
         });
-
-        var cartButton = $('#cart .inner .btn-success');
-        cartButton.addClass('responsive-cart');
-        cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x fa-fw"></i>');
-        $('#' + headerId).append(cartButton);
 
         $('#' + headerId).append($('#header .logo-wrapper'));
 
