@@ -323,7 +323,7 @@ body.categories div.description-wrapper {
 }
 #user-menu li ul {
     position: absolute;
-    right: -11px;
+    right: 0;
     top: 34px;
     width: 170px;
     border: 1px solid #d6d4d4;
@@ -341,6 +341,7 @@ body.categories div.description-wrapper {
 #user-menu li ul li a {
     display: block;
     width: 100%;
+    padding: 3px;
 }
 #user-menu li ul li a.has-icon i {
     padding-right: 20px;
