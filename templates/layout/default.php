@@ -23,16 +23,16 @@ echo $this->element('layout/header');
 <div id="container">
 
     <div id="header">
+        <?php
+            echo $this->Flash->render();
+            echo $this->Flash->render('auth');
+        ?>
         <?php echo $this->element('logo'); ?>
         <?php echo $this->element('userMenu'); ?>
         <?php echo $this->element('mainMenu'); ?>
     </div>
 
     <div id="content">
-        <?php
-            echo $this->Flash->render();
-            echo $this->Flash->render('auth');
-        ?>
         <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>
         <?php echo $this->element('sidebar'); ?>
         <div id="inner-content">

@@ -293,7 +293,7 @@ body.categories div.description-wrapper {
     border: 1px solid #d6d4d4;
     background: #fff;
     padding: 5px;
-    z-index: 1000;
+    z-index: 100001;
     display: none;
 }
 #user-menu li ul li {
