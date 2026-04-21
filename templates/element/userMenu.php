@@ -29,10 +29,6 @@ if ($identity !== null && $identity->isManufacturer()) {
     $adminName = __('Manufacturer_area');
 }
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
-]);
-
 if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
     $menu[] = [
         'slug' => '',
@@ -50,7 +46,11 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null)
     ];
 }
 
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
+]);
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-moon', 'class' => ['color-mode-toggle']]];
+
 $infoBoxContent = $this->element('globalNoDeliveryDayBox') . $this->element('infoBox');
 if (!empty($infoBoxContent)) {
     $this->element('addScript', [
