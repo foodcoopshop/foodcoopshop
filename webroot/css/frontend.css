@@ -226,6 +226,7 @@ body.categories div.description-wrapper {
     top: 5px;
 }
 #user-menu li > a {
+    font-size: 16px;
     color: #333;
 }
 #user-menu a > i {
