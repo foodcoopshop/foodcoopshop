@@ -42,19 +42,20 @@ foodcoopshop.ModalText = {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);
         });
 
-        var dataContent = button.data('content');
-        if (dataContent) {
-            var contentWrapper = $('<div/>').html(dataContent);
-        } else {
-            var elementSelector = button.data('element-selector');
-            var contentWrapper = $(elementSelector).clone();
-        }
-        var heading = contentWrapper.find('h1, h3').first();
-        $(modalSelector + ' .modal-title').html(heading.html());
-        heading.remove();
-        $(modalSelector + ' .modal-body').append(contentWrapper.html());
+        var elementSelector = button.data('element-selector');
+        var contentWrapper = $(elementSelector).clone();
+        let headingHtml = contentWrapper.find('h1, h3').first().html();
 
-        if (elementSelector && elementSelector === '#modal-cart-wrapper') {
+        let contentHtml = contentWrapper.html();
+        if (elementSelector === '#modal-info-box-wrapper') {
+            headingHtml = 'Infos';
+            contentHtml = contentHtml.replace(/h3/g, 'h1');
+        }
+
+        $(modalSelector + ' .modal-title').html(headingHtml);
+        $(modalSelector + ' .modal-body').append(contentHtml);
+
+        if (elementSelector === '#modal-cart-wrapper') {
             foodcoopshop.Cart.initRemoveFromCartLinks();
             foodcoopshop.ModalLoadLastOrderDetails.init();
             foodcoopshop.ModalOrderForDifferentCustomerCancel.init();

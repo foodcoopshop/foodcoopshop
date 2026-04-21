@@ -65,6 +65,11 @@ echo $this->element('layout/header');
                 ]);
             ?>
         </div>
+        <div id="modal-info-box-wrapper">
+            <?php
+                echo $this->element('globalNoDeliveryDayBox');
+                echo $this->element('infoBox');
+            ?>
     </div>
 
 </div>

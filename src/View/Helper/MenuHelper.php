@@ -99,29 +99,21 @@ class MenuHelper extends Helper
     {
 
         $liClass = [];
-        if (!empty($item['options']['content'])) {
-            $liClass = $item['options']['class'] ?? [];
-        }
+        $liClass = $item['options']['class'] ?? [];
         if (!empty($item['children'])) {
             $liClass[] = 'has-children';
             $liClass[] = 'has-icon';
         }
         $tmpMenuItem = '<li' . (!empty($liClass) ? ' class="' . join(' ', $liClass).'"' : '').'>';
 
-            if (!empty($item['options']['content'])) {
-                $tmpMenuItem .= $item['options']['content'];
-            } else {
-
-                $tmpMenuItem .= $this->renderMenuElement(
-                    $item['slug'],
-                    $item['name'],
-                    $item['options']['style'] ?? '',
-                    $item['options']['class'] ?? [],
-                    $item['options']['fa-icon'] ?? '',
-                    $item['options']['data-content'] ?? '',
-                    $item['options']['data-element-selector'] ?? '',
-                );
-            }
+        $tmpMenuItem .= $this->renderMenuElement(
+                $item['slug'],
+                $item['name'],
+                $item['options']['style'] ?? '',
+                $item['options']['class'] ?? [],
+                $item['options']['fa-icon'] ?? '',
+                $item['options']['data-element-selector'] ?? ''
+            );
 
             if (!empty($item['children'])) {
                 $tmpMenuItem .= '<ul>';
@@ -139,7 +131,7 @@ class MenuHelper extends Helper
     /**
      * @param list<string> $class
      */
-    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataContent = '', string $dataElementSelector = ''): string
+    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataElementSelector = ''): string
     {
 
         if ($style != '') {
@@ -184,7 +176,6 @@ class MenuHelper extends Helper
                 'escape' => false,
                 'title' => h(strip_tags($name)),
                 'style' => $style !== '' ? $style : null,
-                'data-content' => $dataContent !== '' ? h($dataContent) : null,
                 'data-element-selector' => $dataElementSelector !== '' ? $dataElementSelector : null,
             ],
         );

@@ -51,22 +51,19 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null)
 }
 
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-moon', 'class' => ['color-mode-toggle']]];
-
 $infoBoxContent = $this->element('globalNoDeliveryDayBox') . $this->element('infoBox');
-$infoBoxContent = str_replace('<h3', '<h1', $infoBoxContent);
-$hasInfoBoxContent = $infoBoxContent != '';
-if ($hasInfoBoxContent) {
+if (!empty($infoBoxContent)) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".ModalText.init('#user-menu a.open-with-modal');"
+        'script' => Configure::read('app.jsNamespace') . ".ModalText.init('#user-menu a.modal-link-info-box');"
     ]);
-    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Info', 'options' => ['fa-icon' => 'ok fa-fw fas fa-info-circle', 'class' => ['open-with-modal'], 'data-content' => $infoBoxContent]];
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Infos', 'options' => ['fa-icon' => 'ok fa-fw fas fa-info-circle', 'class' => ['modal-link-info-box'], 'data-element-selector' => '#modal-info-box-wrapper']];
 }
 
 if ($identity !== null && !$identity->isManufacturer()) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".ModalText.init('#user-menu a.cart-modal-link');"
+        'script' => Configure::read('app.jsNamespace').".ModalText.init('#user-menu a.modal-link-cart');"
     ]);
-    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Warenkorb', 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['cart-modal-link'], 'data-element-selector' => '#modal-cart-wrapper']];
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Warenkorb', 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['modal-link-cart'], 'data-element-selector' => '#modal-cart-wrapper']];
 }
 
 $loginMenuIndex = count($menu);
