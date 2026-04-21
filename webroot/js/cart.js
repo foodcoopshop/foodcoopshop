@@ -543,6 +543,12 @@ foodcoopshop.Cart = {
             $('.responsive-cart span.sum').html(newCartTotalSumHtml);
         }
 
+        var userNaviLink = $('#user-menu a.modal-link-cart');
+        if (userNaviLink.length > 0) {
+            userNaviLink.find('.menu-item-label').html(newCartTotalSumHtml);
+            userNaviLink.attr('title', newCartTotalSumHtml);
+        }
+
     },
 
     updateCartDepositSum: function (amount) {
