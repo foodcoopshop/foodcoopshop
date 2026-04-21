@@ -27,7 +27,6 @@ foodcoopshop.ColorMode = {
         } else {
             this.enableLightMode();
         }
-        this.setBackgroundImage();
     },
 
     setBackgroundImage: function() {

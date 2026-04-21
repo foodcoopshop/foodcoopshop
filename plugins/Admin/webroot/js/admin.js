@@ -17,6 +17,7 @@ foodcoopshop.Admin = {
         this.initFilter();
         this.improveTableLayout();
         foodcoopshop.ColorMode.init();
+        foodcoopshop.ColorMode.setBackgroundImage();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();
