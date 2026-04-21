@@ -49,7 +49,9 @@ foodcoopshop.ColorMode = {
     },
 
     initToggle: function() {
-        $('.color-mode-toggle').on('click', function() {
+        $('.color-mode-toggle').on('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
             if ($('body').hasClass('dark')) {
                 localStorage.setItem('color-mode', foodcoopshop.ColorMode.COLOR_MODE_LIGHT);
                 foodcoopshop.ColorMode.enableLightMode();
