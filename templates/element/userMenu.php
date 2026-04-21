@@ -38,7 +38,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null)
             'content' => $this->element('productSearch', [
                 'action' => __('route_search'),
                 'placeholder' => __('Search'),
-                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts(),
+                'resetSearchUrl' => $this->Slug->getAllProducts(),
                 'includeCategoriesDropdown' => false,
                 'placement' => 'user-menu',
             ]),
