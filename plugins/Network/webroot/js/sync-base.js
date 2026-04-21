@@ -17,7 +17,6 @@ foodcoopshop.SyncBase = {
 
     init : function () {
         foodcoopshop.ColorMode.init();
-        foodcoopshop.ColorMode.setBackgroundImage();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();
