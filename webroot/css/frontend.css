@@ -161,7 +161,7 @@ body.categories div.description-wrapper {
     float: left;
 }
 #main-menu > li {
-    margin-right: 18px;
+    margin-right: 5px;
 }
 #main-menu li > a {
     color: #333;
@@ -187,6 +187,9 @@ body.categories div.description-wrapper {
 }
 #main-menu li ul ul {
     display: none ! important; /* never show third level */
+}
+#main-menu .menu-item-label {
+    padding-right: 15px;
 }
 #main-menu li ul li a {
     line-height: 16px;
