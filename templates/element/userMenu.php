@@ -63,7 +63,7 @@ if ($identity !== null && !$identity->isManufacturer()) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".ModalText.init('#user-menu a.modal-link-cart');"
     ]);
-    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Warenkorb', 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['modal-link-cart'], 'data-element-selector' => '#modal-cart-wrapper']];
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => $this->MyNumber->formatAsCurrency($identity->getProductAndDepositSum()), 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['modal-link-cart'], 'data-element-selector' => '#modal-cart-wrapper']];
 }
 
 $loginMenuIndex = count($menu);
@@ -110,6 +110,5 @@ if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
     }
 
 }
-
 
 echo $this->Menu->render($menu, ['id' => 'user-menu', 'class' => 'horizontal menu']);
