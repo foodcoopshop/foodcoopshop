@@ -24,22 +24,27 @@ body {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
     width: 100%;
-    float: left;
     background: #fff;
     z-index: 100;
     margin-right: 0px;
     border-right: 1px solid #d6d4d4;
     padding-top: 148px;
     box-sizing: border-box;
+    display: flex;
 }
 #inner-content {
-    float: left;
-    width: calc(100% - var(--sidebar-width));
+    max-width: var(--content-max-width);
     background: #fff;
     margin-top: 20px;
     padding-right: 10px;
     padding-bottom: 15px;
-    box-sizing: border-box;
+    padding-left: 10px;
+    flex-grow: 1;
+    margin-left: auto;
+    margin-right: auto;
+}
+#inner-content.without-sidebar {
+    width: 100%;
 }
 #header {
     width: 100%;
@@ -76,15 +81,11 @@ body {
     display: block;
 }
 .sidebar {
-    float: left;
-    padding-right: 10px;
+    padding-right: 0;
     background: #fff;
     padding-top: 15px;
-    width: var(--sidebar-width);
-    box-sizing: border-box;
-}
-.sidebar.empty {
-    width: 100px;
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
 }
 body.categories.detail div.img-wrapper {
     width: 100%;

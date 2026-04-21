@@ -35,7 +35,7 @@ echo $this->element('layout/header');
     <div id="content">
         <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>
         <?php echo $this->element('sidebar'); ?>
-        <div id="inner-content">
+        <div id="inner-content" class="<?php echo empty($categoriesForMenu) && empty($manufacturersForMenu) ? 'without-sidebar' : ''; ?>">
             <?php echo $this->fetch('content'); ?>
             <div class="sc"></div>
         </div>

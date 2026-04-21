@@ -22,6 +22,7 @@
     --warning-yellow: #FDB813;
     --sidebar-width: 250px;
     --light-grey: #bbb;
+    --content-max-width: 1800px;
 }
 
 @media print {
