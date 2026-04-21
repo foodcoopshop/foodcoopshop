@@ -208,7 +208,7 @@ class MenuHelper extends Helper
             }
         } else {
             if ($this->getView()->getPlugin() == '') {
-                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in')];
+                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
             }
         }
         return $menuElement;
