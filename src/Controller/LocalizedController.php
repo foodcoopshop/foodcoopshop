@@ -110,6 +110,8 @@ class LocalizedController extends Controller
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
+                'YourCart' => __('Your_cart'),
+                'ShowCartButton' => __('Show_cart_button'),
                 'emptyCart' => __('Empty_cart'),
                 'deposit' => __('deposit'),
                 'reallyEmptyCart' => __('Really_empty_cart?'),
@@ -136,6 +138,7 @@ class LocalizedController extends Controller
             ],
             'admin' => [
                 'routeCartFinished' => '/' . __('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
+                'routeCartShow' => '/' . __('route_cart') . '/' . __('route_cart_show'),
                 'PlaceOrderFor' => __('Place_order_for'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),

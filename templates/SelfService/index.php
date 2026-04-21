@@ -133,7 +133,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     <?php echo $this->element('cart', [
         'selfServiceModeEnabled' => true,
         'showLoadLastOrderDetailsDropdown' => false,
-        'showCartDetailButton' => false,
         'showFutureOrderDetails' => false,
         'icon' => 'fa-shopping-bag',
         'name' => __('Shopping_bag'),

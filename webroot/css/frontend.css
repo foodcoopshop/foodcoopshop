@@ -873,6 +873,7 @@ body.manufacturers.index h2.info {
 }
 #cart {
     min-height: 140px;
+    font-size: 16px;
 }
 #cart a.self-service {
     color: #fff;

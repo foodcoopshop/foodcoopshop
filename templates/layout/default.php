@@ -55,7 +55,6 @@ echo $this->element('layout/header');
                 echo $this->element('cart', [
                     'selfServiceModeEnabled' => false,
                     'showLoadLastOrderDetailsDropdown' => true,
-                    'showCartDetailButton' => true,
                     'showFutureOrderDetails' => true,
                     'icon' => 'fa-shopping-cart',
                     'name' => __('Cart'),

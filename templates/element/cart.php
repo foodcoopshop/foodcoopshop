@@ -51,13 +51,9 @@ if ($identity->getProducts() !== null) {
 ?>
 
 <div id="cart" class="cart">
-    <h3>
-        <i class="fas <?php echo $icon; ?>"></i>
-        <?php echo $name; ?>
-    </h3>
     <div class="inner">
 
-        <?php
+    <?php
         if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
             echo '<p class="cart-extra-info order-for-different-customer-info">';
                 echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$identity->name.'</b>']);
@@ -114,21 +110,6 @@ if ($identity->getProducts() !== null) {
         <p class="tmp-wrapper"></p>
 
         <div class="sc"></div>
-
-        <?php
-            if ($showCartDetailButton) {
-                $this->element('addScript', ['script' => "
-                    $('.btn-cart-detail').on('click', function () {
-                        foodcoopshop.Helper.disableButton($(this));
-                        foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-shopping-cart');
-                    });"
-                ]);
-        ?>
-
-        <p><a class="btn btn-success btn-cart-detail" href="<?php echo $this->Slug->getCartDetail(); ?>">
-            <i class="fas fa-shopping-cart fa-lg fa-fw"></i> <?php echo __('Show_cart_button'); ?>
-        </a></p>
-        <?php } ?>
 
         <?php
             if ($showFutureOrderDetails && !empty($futureOrderDetails)) {

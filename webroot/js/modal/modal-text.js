@@ -29,11 +29,23 @@ foodcoopshop.ModalText = {
 
     getOpenHandler : function(modalSelector, button) {
 
+        const elementSelector = button.data('element-selector');
+        let buttons = [
+            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true),
+        ];
+
+        if (elementSelector === '#modal-cart-wrapper') {
+            buttons = [
+                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.ShowCartButton, 'fa-fw fas fa-shopping-cart', false),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)
+            ];
+        }
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             '',
             '',
-            [foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)]
+            buttons,
         );
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
@@ -42,7 +54,6 @@ foodcoopshop.ModalText = {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);
         });
 
-        var elementSelector = button.data('element-selector');
         var contentWrapper = $(elementSelector).clone();
         let headingHtml = contentWrapper.find('h1, h3').first().html();
 
@@ -52,14 +63,19 @@ foodcoopshop.ModalText = {
             contentHtml = contentHtml.replace(/h3/g, 'h1');
         }
 
-        $(modalSelector + ' .modal-title').html(headingHtml);
         $(modalSelector + ' .modal-body').append(contentHtml);
 
         if (elementSelector === '#modal-cart-wrapper') {
+            headingHtml = foodcoopshop.LocalizedJs.cart.YourCart;
             foodcoopshop.Cart.initRemoveFromCartLinks();
             foodcoopshop.ModalLoadLastOrderDetails.init();
             foodcoopshop.ModalOrderForDifferentCustomerCancel.init();
+            foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+                document.location.href = foodcoopshop.LocalizedJs.admin.routeCartShow;
+            });
         }
+
+        $(modalSelector + ' .modal-title').html(headingHtml);
 
     }
 
