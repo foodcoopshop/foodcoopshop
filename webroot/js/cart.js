@@ -17,6 +17,8 @@ foodcoopshop.Cart = {
 
     disabledButtonsDuringUpdateCartRequest: '.btn-cart-detail, .btn-order, .btn-cart:not(.disabled), .delete .btn, .amount .btn',
 
+    userNaviLink: 'a.modal-link-cart',
+
     cartButtonIcon : '',
 
     getPickupDayHeaderSelector : function(pickupDay) {
@@ -371,9 +373,12 @@ foodcoopshop.Cart = {
         $('#cart p.amount-sum-wrapper span.sum').html(tmpCartAmountSum.html());
         $('#cart p.total-sum-wrapper > span.sum').html(tmpCartTotalSum.html());
 
-        if (foodcoopshop.Helper.isMobile()) {
-            $('.responsive-cart span.sum').html(tmpCartTotalSum.html());
+        var userNaviLink = $(foodcoopshop.Cart.userNaviLink);
+        if (userNaviLink.length > 0) {
+            userNaviLink.find('.menu-item-label').html(tmpCartTotalSum.html());
+            userNaviLink.attr('title', tmpCartTotalSum.html());
         }
+        
         foodcoopshop.Helper.showErrorMessage(msg);
     },
 
@@ -539,7 +544,7 @@ foodcoopshop.Cart = {
 
         cartTotalSum.html(newCartTotalSumHtml);
 
-        var userNaviLink = $('a.modal-link-cart');
+        var userNaviLink = $(foodcoopshop.Cart.userNaviLink);
         if (userNaviLink.length > 0) {
             userNaviLink.find('.menu-item-label').html(newCartTotalSumHtml);
             userNaviLink.attr('title', newCartTotalSumHtml);
