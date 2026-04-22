@@ -31,7 +31,7 @@ foodcoopshop.ModalCart = {
 
         const elementSelector = button.data('element-selector');
         let buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.FinishCart, 'fa-fw fas fa-shopping-cart', false),
+            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.ContinueToFinishCart, 'fa-fw fas fa-shopping-cart', false),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)
         ];
 
@@ -57,7 +57,7 @@ foodcoopshop.ModalCart = {
         foodcoopshop.Cart.initRemoveFromCartLinks();
         foodcoopshop.ModalLoadLastOrderDetails.init();
         foodcoopshop.ModalOrderForDifferentCustomerCancel.init();
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             document.location.href = foodcoopshop.LocalizedJs.admin.routeCartShow;
         });

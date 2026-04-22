@@ -2477,6 +2477,9 @@ msgstr "Bearbeiten"
 msgid "Further_news"
 msgstr "Weitere Beiträge"
 
+msgid "Continue_to_finish_cart"
+msgstr "Zur Seite \"Warenkorb abschließen\""
+
 msgid "of_{0}"
 msgstr "von {0}"
 

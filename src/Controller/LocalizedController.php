@@ -111,7 +111,7 @@ class LocalizedController extends Controller
             'cart' => [
                 'routeCart' => __('route_cart'),
                 'YourCart' => __('Your_cart'),
-                'FinishCart' => __('Finish_cart'),
+                'ContinueToFinishCart' => __('Continue_to_finish_cart'),
                 'emptyCart' => __('Empty_cart'),
                 'deposit' => __('deposit'),
                 'reallyEmptyCart' => __('Really_empty_cart?'),
