@@ -154,7 +154,7 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append($('.footer .right-wrapper .btn-add-deposit'));
         $('.footer .left-wrapper').remove();
 
-        var cartButtonHtml = '<a href="javascript:void(0);" class="responsive-cart"><span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-bag fa-2x"></i></a>';
+        var cartButtonHtml = '<a href="javascript:void(0);" class="responsive-cart modal-link-cart"><i class="fas fa-shopping-bag fa-2x"></i><span class="menu-item-label">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span></a>';
         $('#' + headerId).append(cartButtonHtml);
         $('#' + headerId).find('.responsive-cart').on('click', function() {
             if ($('.right-box').css('display') == 'block') {

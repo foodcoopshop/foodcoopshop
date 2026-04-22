@@ -50,7 +50,15 @@ if ($identity->getProducts() !== null) {
 }
 ?>
 
-<div id="cart" class="cart">
+<div id="cart" class="<?php echo $additionalClassForCart ?? ''; ?> cart">
+
+    <?php if (OrderCustomerService::isSelfServiceMode()) { ?>
+        <h3>
+            <i class="fas <?php echo $icon; ?>"></i>
+            <?php echo $name; ?>
+        </h3>
+    <?php } ?>
+
     <div class="inner">
 
     <?php

@@ -134,6 +134,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         'selfServiceModeEnabled' => true,
         'showLoadLastOrderDetailsDropdown' => false,
         'showFutureOrderDetails' => false,
+        'additionalClassForCart' => 'box',
         'icon' => 'fa-shopping-bag',
         'name' => __('Shopping_bag'),
         'cartButtonIcon' => 'fa-shopping-bag',

@@ -219,14 +219,24 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service #cart {
     position: static;
-    padding-bottom: 3px;
     border: 1px solid #ccc;
     border-top: none;
     border-right: none;
     width: 100%;
+    font-size: 14px;
+    padding: 5px;
+}
+.self-service #cart span.right {
+    float: none;
+}
+.self-service #cart .delete a.btn {
+    margin-top: 0;
+}
+.self-service #cart .pickup-day-header:first-of-type {
+    margin-top: 5px;
 }
 .self-service .cart span.product-name-wrapper {
-    width: 270px;
+    width: 265px;
 }
 .self-service .pw .pickup-day {
     display: none;
