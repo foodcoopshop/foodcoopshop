@@ -37,7 +37,7 @@ foodcoopshop.Editor = {
             theme: foodcoopshop.ColorMode.getColorMode(),
             enter: 'br',
             hidePoweredByJodit: true,
-            language: foodcoopshop.LocalizedJs.helper.defaultLocaleShort,
+            language: foodcoopshop.config.helper_defaultLocaleShort,
             toolbarAdaptive: false,
             showPlaceholder: false,
             showCharsCounter: false,
@@ -52,7 +52,7 @@ foodcoopshop.Editor = {
             name: ':-)',
             tooltip: 'Emoji',
             exec: () => {
-                alert(foodcoopshop.LocalizedJs.admin.EmojiExplanationText);
+                alert(__('Emoji_explanation_text'));
             }
         };
         return button;
@@ -61,7 +61,7 @@ foodcoopshop.Editor = {
     getUploadButton: function() {
         var button = {
             name: 'Upload',
-            tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
+            tooltip: __('Upload_image_or_file'),
             exec: (editor) => {
                 foodcoopshop.ModalElfinder.init(editor);
             }

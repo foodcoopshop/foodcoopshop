@@ -44,16 +44,16 @@ foodcoopshop.SyncProduct = {
         if (!isStockProduct) {
             if (type == 'individual') {
                 if (orderPossibleUntil !== null) {
-                    elements.push(new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
+                    elements.push(new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47));
                 }
                 if (sendOrderListDay !== null) {
-                    elements.push(new Date(sendOrderListDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
+                    elements.push(new Date(sendOrderListDay).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47));
                 }
             } else {
                 elements.push(lastOrderWeekday);
             }
             if (firstDeliveryDay !== null) {
-                elements.push(new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
+                elements.push(new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47));
             }
         }
 
@@ -65,12 +65,12 @@ foodcoopshop.SyncProduct = {
         priceInclPerUnit = parseFloat(priceInclPerUnit);
         unitQuantityInUnits = parseFloat(unitQuantityInUnits);
         unitQuantityInUnits = unitQuantityInUnits.toLocaleString(
-            foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
+            foodcoopshop.config.helper_defaultLocaleInBCP47,
             {
                 minimumSignificantDigits: 1 // converts 1,00 to 1 but leaves 3,22 as it is
             }
         );
-        return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ' + foodcoopshop.LocalizedJs.cart.approx + ' ' + unitQuantityInUnits + ' ' + unitName;
+        return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ' + __('approx.') + ' ' + unitQuantityInUnits + ' ' + unitName;
     },
 
     getIsStockProductString: function(isStockProduct) {
@@ -87,10 +87,10 @@ foodcoopshop.SyncProduct = {
             result += quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
         } else {
             if (alwaysAvailable === undefined) {
-                return foodcoopshop.LocalizedJs.syncProducts.UpdateSoftwareNotification;
+                return __('Please_update_FoodCoopShop.');
             }
             if (alwaysAvailable) {
-                return '<i class="fas fa-infinity ok" title="' + foodcoopshop.LocalizedJs.syncProducts.ThisProductIsAlwaysAvailable + '"></i>';
+                return '<i class="fas fa-infinity ok" title="' + __('This_product_is_always_available.') + '"></i>';
             }
             result += quantity;
             if (defaultQuantityAfterSendingOrderLists) {

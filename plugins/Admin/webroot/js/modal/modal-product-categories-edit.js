@@ -20,7 +20,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $('.product-categories-edit-button').on('click', function() {
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ChangeCategories,
+                __('Change_categories'),
                 ''
             );
 

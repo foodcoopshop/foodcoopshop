@@ -33,7 +33,7 @@ foodcoopshop.Calculator = {
             try {
                 let calculatorOutput = $(this).closest(container).find('.calculator-output');
                 let inputVal = $(this).val();
-                if (foodcoopshop.LocalizedJs.helper.defaultLocale != 'en_US') {
+                if (foodcoopshop.config.helper_defaultLocale != 'en_US') {
                     inputVal = inputVal.replace(/,/g, '.');
                 }
                 let newValue = math.evaluate(inputVal);

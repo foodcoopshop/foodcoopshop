@@ -40,15 +40,15 @@ foodcoopshop.ModalProductDuplicate = {
                     productNames.push($('tr#product-' + productId + ' span.product-name').html());
                 }
             }
-            var title = foodcoopshop.LocalizedJs.admin.CopyProduct;
+            var title = __('Copy product?');
 
             var html='';
             if (productNames.length > 0) {
                 html += '<p style="margin-bottom:0px;">';
                 if (productNames.length > 1) {
-                    html += foodcoopshop.LocalizedJs.admin.ReallyCopyProductX;
+                    html += __('Really copy products?');
                 } else {
-                    html += foodcoopshop.LocalizedJs.admin.ReallyCopyProduct1;
+                    html += __('Really copy product?');
                 }
                 html += '</p>';
 
@@ -59,17 +59,17 @@ foodcoopshop.ModalProductDuplicate = {
                 html += '</ul>';
             }
 
-            html += '<p style="margin-top:15px;margin-bottom:0;">' + foodcoopshop.LocalizedJs.admin.DataNotCopyInfo + '</p>';
+            html += '<p style="margin-top:15px;margin-bottom:0;">' + __('The following data <b>won\'t</b> be copied:') + '</p>';
             html += '<ul>';
-            html += '<li>' + foodcoopshop.LocalizedJs.admin.NotCopiedData + '</li>';
+            html += '<li>' + __('Image') + '</li>';
             html += '</ul>';
 
             html += '<p style="margin-top:15px;">';
-            html += foodcoopshop.LocalizedJs.admin.CopyStatus;
+            html += __('Status of copy(s): <b>deactivated</b>');
             html += '</p>';
 
             html += '<div class="field-wrapper">';
-            html += '<label class="dynamic-element default" style="width: 140px;" for="copy-amount">' + foodcoopshop.LocalizedJs.admin.AmountOfCopies + '</label>';
+            html += '<label class="dynamic-element default" style="width: 140px;" for="copy-amount">' + __('Amount of copies:') + '</label>';
             html += '<select id="copy-amount" name="copy-amount" style="margin-top: 5px;">';
 
             const maxAmount = 10;
@@ -82,10 +82,10 @@ foodcoopshop.ModalProductDuplicate = {
             var buttons = [
                 foodcoopshop.Modal.createButton(
                     productNames.length === 0 ? ['btn-success', 'disabled'] : ['btn-success'],
-                    foodcoopshop.LocalizedJs.admin.Copy,
+                    __('Copy'),
                     'fas fa-check'
                 ),
-                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+                foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
             ];
 
             foodcoopshop.Modal.appendModalToDom(
@@ -96,7 +96,7 @@ foodcoopshop.ModalProductDuplicate = {
             );
 
             if (productNamesWithAttributes.length > 0) {
-                let warning = '<p>' + foodcoopshop.LocalizedJs.admin.AttributeInfo + '</p>';
+                let warning = '<p>' + __('Products with attributes cannot be copied yet: ') + '</p>';
 
                 warning += '<ul>';
                 for (const name in productNamesWithAttributes) {
@@ -138,7 +138,7 @@ foodcoopshop.ModalProductDuplicate = {
                 onError: function (data) {
                     var message = '<p>';
 
-                    message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductWasCopied;
+                    message += __('Errors occurred while product was copied');
 
                     message += ':</p>';
                     message = message + data.msg;

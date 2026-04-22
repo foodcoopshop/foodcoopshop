@@ -29,21 +29,22 @@ foodcoopshop.ModalProductStatusEdit = {
                 previousProductId = previousProductId[previousProductId.length - 1];
             }
 
+            var dataRow = $('#product-status-edit-' + productId).closest('tr');
+            var name = '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>';
+
             var newState = 1;
-            var newStateText = foodcoopshop.LocalizedJs.admin.ActivateProduct;
-            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
+            var newStateText = __('Activate_product');
+            var reallyNewStateText = __('Really_activate_product_{0}_?', name);
             if ($(this).hasClass('set-status-to-inactive')) {
                 newState = 0;
-                newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
-                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
+                newStateText = __('Deactivate_product');
+                reallyNewStateText = __('Really_deactivate_product_{0}?', name);
             }
-
-            var dataRow = $('#product-status-edit-' + productId).closest('tr');
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 newStateText,
-                '<p>' + reallyNewStateText.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>')
+                '<p>' + reallyNewStateText + '</p>',
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

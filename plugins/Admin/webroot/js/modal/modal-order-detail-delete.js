@@ -29,11 +29,11 @@ foodcoopshop.ModalOrderDetailDelete = {
             var infoText = '<p>';
             var textareaLabel = '';
             if (orderDetailIds.length == 1) {
-                infoText += foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
-                textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
+                infoText += __('You_selected_1_product.');
+                textareaLabel = __('Why_is_product_cancelled_(mandatory_field)?');
             } else {
-                infoText += foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
-                textareaLabel = foodcoopshop.LocalizedJs.admin.WhyAreProductsCancelled;
+                infoText += __('You_selected_{0}_products.', '<b>' + orderDetailIds.length + '</b>');
+                textareaLabel = __('Why_are_products_cancelled_(mandatory_field)?');
             }
 
             infoText += ':</p>';
@@ -47,13 +47,13 @@ foodcoopshop.ModalOrderDetailDelete = {
             var modalSelector = '#order-detail-delete';
 
             var buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fas fa-check'),
-                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+                foodcoopshop.Modal.createButton(['btn-success'], __('Yes_do_cancel_button!'), 'fas fa-check'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
             ];
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ProductCancellation,
+                __('Product_cancellation'),
                 '',
                 buttons
             );
@@ -82,23 +82,23 @@ foodcoopshop.ModalOrderDetailDelete = {
             var manufacturerName = dataRow.find('td:nth-child(5) a').html();
 
             if (foodcoopshop.Helper.isManufacturer) {
-                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + productName + '</b>') + '</p>';
+                infoText = '<p>' + __('Do_you_really_want_to_cancel_product_{0}?', '<b>' + productName + '</b>') + '</p>';
             } else {
-                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0From1.replace(/\{0\}/, '<b>' + productName + '</b>').replace(/\{1\}/, '<b>' + manufacturerName + '</b>') + '</p>';
+                infoText = '<p>' + __('Do_you_really_want_to_cancel_product_{0}_from_{1}?', '<b>' + productName + '</b>', '<b>' + manufacturerName + '</b>') + '</p>';
             }
 
-            var textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
+            var textareaLabel = __('Why_is_product_cancelled_(mandatory_field)?');
 
             var modalSelector = '#order-detail-delete';
 
             var buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fas fa-check'),
-                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+                foodcoopshop.Modal.createButton(['btn-success'], __('Yes_do_cancel_button!'), 'fas fa-check'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
             ];
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ProductCancellation,
+                __('Product_cancellation'),
                 '',
                 buttons
             );
@@ -123,7 +123,7 @@ foodcoopshop.ModalOrderDetailDelete = {
         var modalHtml = infoText;
 
         if (!foodcoopshop.Helper.isManufacturer) {
-            modalHtml += '<p class="overlay-info">' + foodcoopshop.LocalizedJs.admin.PleaseOnlyCancelIfOkForManufacturer + '</p>';
+            modalHtml += '<p class="overlay-info">' + __('Please_only_cancel_if_ok_for_manufacturer!') + '</p>';
         }
 
         modalHtml += '<div class="textarea-wrapper">';
@@ -145,7 +145,7 @@ foodcoopshop.ModalOrderDetailDelete = {
 
         var editorData = $('#dialogCancellationReason').val();
         if (editorData == '') {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.CancellationReasonIsMandatory);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('Cancellation_reason_is_mandatory.'));
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }

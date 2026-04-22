@@ -27,8 +27,8 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             var modalSelector = '#order-detail-pickup-day-edit';
             var orderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
 
-            var title = foodcoopshop.LocalizedJs.admin.ChangePickupDay + ': ' + orderDetailIds.length + ' ' + (
-                orderDetailIds.length == 1 ? foodcoopshop.LocalizedJs.admin.product : foodcoopshop.LocalizedJs.admin.products
+            var title = __('Change_pickup_day') + ': ' + orderDetailIds.length + ' ' + (
+                orderDetailIds.length == 1 ? __('product') : __('products')
             );
 
             foodcoopshop.Modal.appendModalToDom(
@@ -54,21 +54,21 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
     getHtml : function() {
         var html = '';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
+        html += '<label>' + __('New_pickup_day') + '</label>';
         html += '<input class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
         html += '</div>';
-        html += '<p class="small">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
+        html += '<p class="small">' + __('Change_pickup_day_invoices_info_text') + '</p>';
         html += '<div class="textarea-wrapper">';
-        html += '<label for="dialogEditPickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
+        html += '<label for="dialogEditPickupDayReason">' + __('Why_is_pickup_day_changed_(optional_field)?') +'</label>';
         html += '<textarea name="dialogEditPickupDayReason" id="dialogEditPickupDayReason"></textarea>';
         html += '</div>';
         html += '<label class="checkbox" style="margin-bottom:10px;">';
         html += '<input type="checkbox" name="dialogEditPickupdaySendEmail" id="dialogEditPickupdaySendEmail" value="" />';
-        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToMember + '</span>';
+        html += '<span style="font-weight:normal;">' + __('Send_email_to_member') + '</span>';
         html += '</label>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditPickupdayResetOrderState" id="dialogEditPickupdayResetOrderState" value="" checked="checked" />';
-        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayResetOrderStateInfoText + '</span>';
+        html += '<span style="font-weight:normal;">' + __('Change_pickup_day_invoices_reset_order_state_info_text') + '</span>';
         html += '</label>';
         return html;
     },

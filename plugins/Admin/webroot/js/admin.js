@@ -313,7 +313,7 @@ foodcoopshop.Admin = {
         );
 
         clipboard.on('success', function(e) {
-            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.SuccessfullyCopiedTableContentToClipboard);
+            foodcoopshop.Helper.showSuccessMessage(__('The_table_content_was_copied_successfully_to_your_clipboard.'));
             e.clearSelection();
         });
 
@@ -346,9 +346,9 @@ foodcoopshop.Admin = {
 
         clipboard.on('success', function(e) {
             var emailAddressesCount = e.text.split(',').length;
-            var response = foodcoopshop.LocalizedJs.admin.EmailAddressesSuccessfullyCopiedToClipboard.replaceI18n(0, emailAddressesCount);
+            var response = __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.', emailAddressesCount);
             if (emailAddressesCount == 1) {
-                response = foodcoopshop.LocalizedJs.admin.OneEmailAddressSuccessfullyCopiedToClipboard;
+                response = __('1_email_address_has_been_copied_successfully_to_your_clipboard.');
             }
             foodcoopshop.Helper.showSuccessMessage(response);
         });
@@ -359,9 +359,9 @@ foodcoopshop.Admin = {
         var clipboard = new ClipboardJS('.btn-clipboard');
         clipboard.on('success', function(e) {
             var emailAddressesCount = e.text.split(',').length;
-            var response = foodcoopshop.LocalizedJs.admin.EmailAddressesSuccessfullyCopiedToClipboard.replaceI18n(0, emailAddressesCount);
+            var response = __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.', emailAddressesCount);
             if (emailAddressesCount == 1) {
-                response = foodcoopshop.LocalizedJs.admin.OneEmailAddressSuccessfullyCopiedToClipboard;
+                response = __('1_email_address_has_been_copied_successfully_to_your_clipboard.');
             }
             foodcoopshop.Helper.showSuccessMessage(response);
         });
@@ -651,7 +651,7 @@ foodcoopshop.Admin = {
         $(selector).selectpicker({
             liveSearch: true,
             size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseSelectAMember,
+            title: __('Please_select_a_member.'),
         });
     },
 

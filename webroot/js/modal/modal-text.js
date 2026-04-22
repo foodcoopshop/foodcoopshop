@@ -33,7 +33,7 @@ foodcoopshop.ModalText = {
             modalSelector,
             '',
             '',
-            [foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)]
+            [foodcoopshop.Modal.createButton(['btn-outline-light'], __('Close'), null, true)]
         );
 
 

@@ -32,27 +32,28 @@ foodcoopshop.ModalCustomerStatusEdit = {
         var customerId = button.attr('id').split('-');
         customerId = customerId[customerId.length - 1];
 
+        var dataRow = $('#change-active-state-' + customerId).closest('tr');
+        var name = '<b>' + dataRow.find('td:nth-child(3) span.name a').text() + '</b>';
+        
         var newState = 1;
-        var newStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateMember0;
-        var newStateTextShort = foodcoopshop.LocalizedJs.admin.ActivateMember;
-        var yesButtonText = foodcoopshop.LocalizedJs.admin.YesInfoMailWillBeSent;
+        var newStateText = __('Really_activate_member_{0}_?', name);
+        var newStateTextShort = __('Activate_member?');
+        var yesButtonText = __('Yes_info_mail_will_be_sent');
         var sendMail = 1;
         if (button.hasClass('set-state-to-inactive')) {
             newState = 0;
             sendMail = 0;
-            newStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateMember0;
-            newStateTextShort = foodcoopshop.LocalizedJs.admin.DeactivateMember;
-            yesButtonText = foodcoopshop.LocalizedJs.helper.yes;
+            newStateText = __('Really_deactivate_member_{0}?', name);
+            newStateTextShort = __('Deactivate_member?');
+            yesButtonText = __('Yes');
         }
-
-        var dataRow = $('#change-active-state-' + customerId).closest('tr');
 
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], yesButtonText, 'fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('No'), null, true)
         ];
 
-        var html = '<p>' + newStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(3) span.name a').text() + '</b>') + '</p>';
+        var html = '<p>' + newStateText + '</p>';
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,

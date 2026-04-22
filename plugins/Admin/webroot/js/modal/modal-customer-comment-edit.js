@@ -19,7 +19,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.modalCustomer.ChangeMemberComment,
+            __('Change_member_comment'),
             foodcoopshop.ModalCustomerCommentEdit.getHtml()
         );
 
@@ -38,7 +38,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
     },
 
     getHtml : function() {
-        var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
+        var html = '<label>' + __('Member') + ': <b></b></label>';
         html += '<div class="textarea-wrapper">';
         html += '<textarea name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
         html += '</div>';
@@ -83,7 +83,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
         var editor = foodcoopshop.Editor.initSmall('dialogCustomerComment', true);
 
         var text = button.attr('originalTitle');
-        if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
+        if (text == __('Add_comment')) {
             text = '';
         }
 

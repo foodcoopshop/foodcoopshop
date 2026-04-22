@@ -26,7 +26,7 @@ foodcoopshop.ModalProductAttributeEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.EditAttribute,
+                __('Edit_attribute'),
                 foodcoopshop.ModalProductAttributeEdit.getHtml(row)
             );
 
@@ -55,16 +55,16 @@ foodcoopshop.ModalProductAttributeEdit = {
         html += '<div class="field-wrapper">';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogProductAttributeEditDelete" id="dialogProductAttributeEditDelete" />';
-        html += ' ' + '<p>' + foodcoopshop.LocalizedJs.admin.DeleteAttribute0.replaceI18n(0, '<b>' + row.find('td.cell-name span.name-for-dialog').html() + '</b>');
+        html += ' ' + '<p>' + __('Delete_attribute_{0}?', '<b>' + row.find('td.cell-name span.name-for-dialog').html() + '</b>');
         html += '</label>';
-        html += '<p style="margin-top:-10px;float:left;" class="small">' + foodcoopshop.LocalizedJs.admin.DeleteExplanation + '</p>';
+        html += '<p style="margin-top:-10px;float:left;" class="small">' + __('Check_and_do_not_forget_to_click_save_button.') + '</p>';
         html += '</div>';
 
         if (foodcoopshop.Helper.isSelfServiceModeEnabled) {
             html += '<hr />';
             html += '<div class="field-wrapper">';
             html += '<div class="dialog-barcode-wrapper">';
-            html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + foodcoopshop.LocalizedJs.dialogProduct.BarcodeDescription + '</b></label>';
+            html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + __('EAN_13_code') + '</b></label>';
             html += '<input type="text" name="dialogBarcode" id="dialogBarcode" value="" /><br />';
             html += '</div>';
         }

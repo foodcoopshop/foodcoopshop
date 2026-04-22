@@ -16,7 +16,7 @@ foodcoopshop.Upload = {
     checkForEmptyImage : function(modalSelector) {
         var image = $(modalSelector + ' form .drop img');
         if (image.length == 0) {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.upload.PleaseUploadAnImage);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('Please_upload_an_image.'));
             foodcoopshop.Modal.resetButtons(modalSelector);
         }
         return image;
@@ -69,7 +69,7 @@ foodcoopshop.Upload = {
         $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"]').val(filename);
         var button= $('body.manufacturers a.add-general-terms-and-conditions-button');
         button.removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
-        button.find('span').text(foodcoopshop.LocalizedJs.upload.ChangeGeneralTermsAndConditions);
+        button.find('span').text(__('Change_general_terms_and_conditions'));
         foodcoopshop.Modal.destroy(modalSelector);
     },
 
@@ -264,9 +264,9 @@ foodcoopshop.Upload = {
         // bind delete button
         if (imageUploadForm.find('a.img-delete').length == 0) {
             if (imageUploadForm.find('img.existingImage').length == 1) {
-                $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fa fa-trash-alt not-ok fa-lg"></i></a>').appendTo(imageUploadForm.find('.drop'));
+                $('<a title="' + __('delete') + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fa fa-trash-alt not-ok fa-lg"></i></a>').appendTo(imageUploadForm.find('.drop'));
                 imageUploadForm.find('a.img-delete').on('click', function (e) {
-                    var result = confirm(foodcoopshop.LocalizedJs.upload.ReallyDeleteImage);
+                    var result = confirm(__('Really_delete_image?'));
                     if (result) {
                         document.location.href = '/admin/products/deleteImage/' + objectId;
                     }
@@ -312,8 +312,8 @@ foodcoopshop.Upload = {
                     container.prepend($('<img />').
                         attr('src', result.filename).
                         addClass('uploadedImage'));
-                    container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateAntiClockwise + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><i class="fas fa-undo fa-lg"></a>');
-                    container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateClockwise + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><i class="fas fa-redo fa-lg"></a>');
+                    container.append('<a title="' + __('rotate_anti_clockwise?') + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><i class="fas fa-undo fa-lg"></a>');
+                    container.append('<a title="' + __('rotate_clockwise?') + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><i class="fas fa-redo fa-lg"></a>');
 
                     container.find('.img-rotate-acw').on('click', function () {
                         foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC

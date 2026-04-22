@@ -20,7 +20,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.AdaptWeight,
+            __('Adapt_weight?'),
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getHtml()
         );
 
@@ -42,19 +42,19 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
     getHtml : function() {
         var html = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
-        html += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" class="calculator-output" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
+        html += '<br /><span class="quantity-string">' + __('Delivered_weight') + '</span>: <input type="number" class="calculator-output" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
         html += '<b></b>';
         html += '<br />';
         html += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
         html += '<ul style="margin-top:5px;margin-bottom:10px;">';
         html += '<li>';
         html += '<a id="dialogOrderDetailProductQuantityShowCalculator" class="calculator-toggle-button" href="javascript:void(0);" style="line-height:29px;">';
-        html += foodcoopshop.LocalizedJs.admin.Calculator;
+        html += __('Calculator');
         html += '</a>';
-        html += '<input id="dialogOrderDetailProductQuantityCalculator" class="calculator-input" style="margin-left:10px;width:178px;" placeholder="' + foodcoopshop.LocalizedJs.admin.ExampleGivenAbbr + ' 167+142" type="text" />';
+        html += '<input id="dialogOrderDetailProductQuantityCalculator" class="calculator-input" style="margin-left:10px;width:178px;" placeholder="' + __('Example_given_abbr') + ' 167+142" type="text" />';
         html += '</li>';
         html += '<li class="price-per-unit-base-info"></li>';
-        html += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
+        html += '<li>' + __('Price_is_automatically_adapted_after_save.') + '</li>';
         html += '</ul>';
         return html;
     },
@@ -112,14 +112,14 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         var newHtml = '';
         if (amount > 1) {
             label += '<b>' + amount + '</b>' + 'x ';
-            var regExpDeliveredWeight = new RegExp(foodcoopshop.LocalizedJs.admin.DeliveredWeight);
-            newHtml = quantityString.html().replace(regExpDeliveredWeight, foodcoopshop.LocalizedJs.admin.DeliveredTotalWeight);
+            var regExpDeliveredWeight = new RegExp(__('Delivered_weight'));
+            newHtml = quantityString.html().replace(regExpDeliveredWeight, __('Delivered_total_weight'));
         } else {
-            var regExpDeliveredTotalWeight = new RegExp(foodcoopshop.LocalizedJs.admin.DeliveredTotalWeight);
-            newHtml = quantityString.html().replace(regExpDeliveredTotalWeight, foodcoopshop.LocalizedJs.admin.DeliveredWeight);
+            var regExpDeliveredTotalWeight = new RegExp(__('Delivered_total_weight'));
+            newHtml = quantityString.html().replace(regExpDeliveredTotalWeight, __('Delivered_weight'));
         }
         quantityString.html(newHtml);
-        label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td.customer-field span.customer-name-for-dialog').html() + ')';
+        label += __('ordered_by') + ' ' + row.find('td.customer-field span.customer-name-for-dialog').html() + ')';
         $(modalSelector + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
 
         var stepValue = '0.001';
@@ -133,7 +133,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         quantityInUnitsField.attr('min', minValue);
 
         var pricePerUnitBaseInfo = row.find('td.quantity-field span.price-per-unit-base-info').html();
-        $(modalSelector + ' li.price-per-unit-base-info').html(foodcoopshop.LocalizedJs.admin.BasePrice + ': ' + pricePerUnitBaseInfo);
+        $(modalSelector + ' li.price-per-unit-base-info').html(__('Base_price') + ': ' + pricePerUnitBaseInfo);
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 

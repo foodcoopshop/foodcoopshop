@@ -70,7 +70,7 @@ foodcoopshop.ModalPaymentAdd = {
             $(customerDropdownSelector).selectpicker({
                 liveSearch: true,
                 size: 7,
-                title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
+                title: __('PleaseSelectMember'),
             });
             foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
         }
@@ -125,7 +125,7 @@ foodcoopshop.ModalPaymentAdd = {
         }
 
         if (customerIdDomElement.length > 0 && customerIdDomElement.val() === null) {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('Please_select_a_member.'));
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -138,10 +138,10 @@ foodcoopshop.ModalPaymentAdd = {
             var message;
             var isDepositForm;
             if (modalSelector == '#payment-deposit-add') {
-                message = foodcoopshop.LocalizedJs.admin.PleaseChoseTypeOfPayment;
+                message = __('Please_chose_the_type_of_your_payment.');
                 isDepositForm = true;
             } else {
-                message = foodcoopshop.LocalizedJs.admin.PleaseChoseIfPaybackOrCreditUpload;
+                message = __('Please_chose_if_it_is_a_payback_or_a_credit_upload.');
                 isDepositForm = false;
             }
 

@@ -133,31 +133,31 @@ foodcoopshop.Helper = {
             var newHtml;
             if ($(this).prop('checked')) {
                 firstnameElements.each(function() {
-                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Firstname);
-                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.CompanyName);
+                    regExp = new RegExp(__('Firstname'));
+                    newHtml = $(this).html().replace(regExp, __('Company_name'));
                     $(this).html(newHtml);
                 });
                 lastnameElements.each(function() {
-                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
-                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    regExp = new RegExp(__('Please_enter_your_lastname'));
+                    newHtml = $(this).html().replace(regExp, __('Please_enter_the_contact_person'));
                     $(this).html(newHtml);
-                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Lastname);
-                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    regExp = new RegExp(__('Lastname'));
+                    newHtml = $(this).html().replace(regExp, __('Contact_person'));
                     $(this).html(newHtml);
                 });
                 lastnameWrapper.removeClass('required');
             } else {
                 firstnameElements.each(function() {
-                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.CompanyName);
-                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Firstname);
+                    regExp = new RegExp(__('Company_name'));
+                    newHtml = $(this).html().replace(regExp, __('Firstname'));
                     $(this).html(newHtml);
                 });
                 lastnameElements.each(function() {
-                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
-                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    regExp = new RegExp(__('Please_enter_the_contact_person'));
+                    newHtml = $(this).html().replace(regExp, __('Please_enter_your_lastname'));
                     $(this).html(newHtml);
-                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.ContactPerson);
-                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Lastname);
+                    regExp = new RegExp(__('Contact_person'));
+                    newHtml = $(this).html().replace(regExp, __('Lastname'));
                     $(this).html(newHtml);
                 });
                 lastnameWrapper.addClass('required');
@@ -198,9 +198,9 @@ foodcoopshop.Helper = {
             lines = [];
             linesHtml = '';
             for(i in groupedOrderDetails[productId]) {
-                linesHtml = foodcoopshop.LocalizedJs.helper.YouHaveAlreadyOrdered01TimesFor2.replaceI18n(0, '"' + groupedOrderDetails[productId][i].product_name + '"');
+                linesHtml = __('You_have_already_ordered_{0}_{1}_times_for_{2}.', '"' + groupedOrderDetails[productId][i].product_name + '"');
                 linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
-                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
+                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
                 linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
                 lines.push(linesHtml);
             }
@@ -719,24 +719,24 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsCurrency: function (float) {
-        var currency = this.formatFloatAsString(float) + ' ' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
-        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
-            currency = foodcoopshop.LocalizedJs.helper.CurrencySymbol + this.formatFloatAsString(float);
+        var currency = this.formatFloatAsString(float) + ' ' + foodcoopshop.config.helper_CurrencySymbol;
+        if (foodcoopshop.config.helper_defaultLocaleInBCP47 == 'en-US') {
+            currency = foodcoopshop.config.helper_CurrencySymbol + this.formatFloatAsString(float);
         }
         return currency;
     },
 
     getCurrencyAsFloat: function (string) {
-        var currencyRegExp = new RegExp(' \\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
-        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
-            currencyRegExp = new RegExp('\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        var currencyRegExp = new RegExp(' \\' + foodcoopshop.config.helper_CurrencySymbol);
+        if (foodcoopshop.config.helper_defaultLocaleInBCP47 == 'en-US') {
+            currencyRegExp = new RegExp('\\' + foodcoopshop.config.helper_CurrencySymbol);
         }
         return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
 
     formatFloatAsString: function(float) {
         var floatAsString = float.toLocaleString(
-            foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
+            foodcoopshop.config.helper_defaultLocaleInBCP47,
             {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
@@ -747,7 +747,7 @@ foodcoopshop.Helper = {
 
     getStringAsFloat: function (string) {
         // en-US uses . as decimal separator and not as thousand separator
-        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 != 'en-US') {
+        if (foodcoopshop.config.helper_defaultLocaleInBCP47 != 'en-US') {
             string = string.replace(/,/, '_comma_');
             string = string.replace(/\./, '_dot_');
             string = string.replace(/_comma_/, '.');
@@ -764,12 +764,12 @@ foodcoopshop.Helper = {
             var toggleMode = elementToToggle.css('display');
 
             if (toggleMode == 'none') {
-                var showMoreRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowMore);
-                $(this).html($(this).html().replace(showMoreRegExp, foodcoopshop.LocalizedJs.helper.ShowLess));
+                var showMoreRegExp = new RegExp(__('Show_more'));
+                $(this).html($(this).html().replace(showMoreRegExp, __('Show_less')));
                 $(this).addClass('collapsed');
             } else {
-                var showLessRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowLess);
-                $(this).html($(this).html().replace(showLessRegExp, foodcoopshop.LocalizedJs.helper.ShowMore));
+                var showLessRegExp = new RegExp(__('Show_less'));
+                $(this).html($(this).html().replace(showLessRegExp, __('Show_more')));
                 $(this).removeClass('collapsed');
             }
 
@@ -872,67 +872,67 @@ foodcoopshop.Helper = {
     initDatepicker: function () {
         jQuery(function ($) {
             $.datepicker.regional = {
-                closeText: foodcoopshop.LocalizedJs.datepicker.close,
-                prevText: '&#x3c;' + foodcoopshop.LocalizedJs.datepicker.prev,
-                nextText: foodcoopshop.LocalizedJs.datepicker.next + '&#x3e;',
-                currentText: foodcoopshop.LocalizedJs.datepicker.today,
+                closeText: __('datepicker_close'),
+                prevText: '&#x3c;' + __('datepicker_prev'),
+                nextText: __('datepicker_next') + '&#x3e;',
+                currentText: __('datepicker_today'),
                 monthNames: [
-                    foodcoopshop.LocalizedJs.helper.January,
-                    foodcoopshop.LocalizedJs.helper.February,
-                    foodcoopshop.LocalizedJs.helper.March,
-                    foodcoopshop.LocalizedJs.helper.April,
-                    foodcoopshop.LocalizedJs.helper.May,
-                    foodcoopshop.LocalizedJs.helper.June,
-                    foodcoopshop.LocalizedJs.helper.July,
-                    foodcoopshop.LocalizedJs.helper.August,
-                    foodcoopshop.LocalizedJs.helper.September,
-                    foodcoopshop.LocalizedJs.helper.October,
-                    foodcoopshop.LocalizedJs.helper.November,
-                    foodcoopshop.LocalizedJs.helper.December
+                    __('January'),
+                    __('February'),
+                    __('March'),
+                    __('April'),
+                    __('May'),
+                    __('June'),
+                    __('July'),
+                    __('August'),
+                    __('September'),
+                    __('October'),
+                    __('November'),
+                    __('December')
                 ],
                 monthNamesShort: [
-                    foodcoopshop.LocalizedJs.helper.JanuaryShort,
-                    foodcoopshop.LocalizedJs.helper.FebruaryShort,
-                    foodcoopshop.LocalizedJs.helper.MarchShort,
-                    foodcoopshop.LocalizedJs.helper.AprilShort,
-                    foodcoopshop.LocalizedJs.helper.MayShort,
-                    foodcoopshop.LocalizedJs.helper.JuneShort,
-                    foodcoopshop.LocalizedJs.helper.JulyShort,
-                    foodcoopshop.LocalizedJs.helper.AugustShort,
-                    foodcoopshop.LocalizedJs.helper.SeptemberShort,
-                    foodcoopshop.LocalizedJs.helper.OctoberShort,
-                    foodcoopshop.LocalizedJs.helper.NovemberShort,
-                    foodcoopshop.LocalizedJs.helper.DecemberShort
+                    __('JanuaryShort'),
+                    __('FebruaryShort'),
+                    __('MarchShort'),
+                    __('AprilShort'),
+                    __('MayShort'),
+                    __('JuneShort'),
+                    __('JulyShort'),
+                    __('AugustShort'),
+                    __('SeptemberShort'),
+                    __('OctoberShort'),
+                    __('NovemberShort'),
+                    __('DecemberShort')
                 ],
                 dayNames: [
-                    foodcoopshop.LocalizedJs.helper.Sunday,
-                    foodcoopshop.LocalizedJs.helper.Monday,
-                    foodcoopshop.LocalizedJs.helper.Tuesday,
-                    foodcoopshop.LocalizedJs.helper.Wednesday,
-                    foodcoopshop.LocalizedJs.helper.Thursday,
-                    foodcoopshop.LocalizedJs.helper.Friday,
-                    foodcoopshop.LocalizedJs.helper.Saturday
+                    __('Sunday'),
+                    __('Monday'),
+                    __('Tuesday'),
+                    __('Wednesday'),
+                    __('Thursday'),
+                    __('Friday'),
+                    __('Saturday')
                 ],
                 dayNamesShort: [
-                    foodcoopshop.LocalizedJs.helper.SundayShort,
-                    foodcoopshop.LocalizedJs.helper.MondayShort,
-                    foodcoopshop.LocalizedJs.helper.TuesdayShort,
-                    foodcoopshop.LocalizedJs.helper.WednesdayShort,
-                    foodcoopshop.LocalizedJs.helper.ThursdayShort,
-                    foodcoopshop.LocalizedJs.helper.FridayShort,
-                    foodcoopshop.LocalizedJs.helper.SaturdayShort
+                    __('SundayShort'),
+                    __('MondayShort'),
+                    __('TuesdayShort'),
+                    __('WednesdayShort'),
+                    __('ThursdayShort'),
+                    __('FridayShort'),
+                    __('SaturdayShort')
                 ],
                 dayNamesMin: [
-                    foodcoopshop.LocalizedJs.helper.SundayShort,
-                    foodcoopshop.LocalizedJs.helper.MondayShort,
-                    foodcoopshop.LocalizedJs.helper.TuesdayShort,
-                    foodcoopshop.LocalizedJs.helper.WednesdayShort,
-                    foodcoopshop.LocalizedJs.helper.ThursdayShort,
-                    foodcoopshop.LocalizedJs.helper.FridayShort,
-                    foodcoopshop.LocalizedJs.helper.SaturdayShort
+                    __('SundayShort'),
+                    __('MondayShort'),
+                    __('TuesdayShort'),
+                    __('WednesdayShort'),
+                    __('ThursdayShort'),
+                    __('FridayShort'),
+                    __('SaturdayShort')
                 ],
-                weekHeader: foodcoopshop.LocalizedJs.datepicker.weekHeader,
-                dateFormat: foodcoopshop.LocalizedJs.datepicker.dateFormat,
+                weekHeader: __('WeekHeader'),
+                dateFormat: foodcoopshop.config.datepicker_dateFormat,
                 firstDay: 1,
                 isRTL: false,
                 showMonthAfterYear: false,
@@ -961,7 +961,7 @@ foodcoopshop.Helper = {
 
     addFlashMessageTools: function () {
 
-        $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
+        $('#flashMessage').prepend('<a class="closer" title="' + __('Close') + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
 
         $('#flashMessage .progress').remove();
 
@@ -1109,7 +1109,7 @@ foodcoopshop.Helper = {
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 data = {
                     status: 9,
-                    msg: foodcoopshop.LocalizedJs.helper.anErrorOccurred + '.',
+                    msg: __('An_error_occurred') + '.',
                     jquery: {
                         XMLHttpRequest: XMLHttpRequest,
                         textStatus: textStatus,

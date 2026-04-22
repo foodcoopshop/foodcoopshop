@@ -20,7 +20,7 @@ foodcoopshop.ModalProductTaxEdit = {
         $('.product-tax-edit-button').on('click', function() {
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ChangeTaxRate,
+                __('Change_tax_rate'),
                 ''
             );
 

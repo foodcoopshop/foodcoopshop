@@ -23,12 +23,12 @@ foodcoopshop.ModalProductStatusNewEdit = {
             productId = productId[productId.length - 1];
 
             var newState = 1;
-            var newStateText = foodcoopshop.LocalizedJs.admin.ShowProductAsNew;
-            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyShowProduct0AsNew;
+            var newStateText = __('Show_product_as_new?');
+            var reallyNewStateText = __('Really_show_product_{0}_as_new?');
             if ($(this).hasClass('product-new-status-edit-inactive')) {
                 newState = 0;
-                newStateText = foodcoopshop.LocalizedJs.admin.DoNotShowProductAsNew;
-                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDoNotShowProduct0AsNew;
+                newStateText = __('Do_not_show_product_as_new?');
+                reallyNewStateText = __('Really_do_not_show_product_{0}_as_new?');
             }
 
             var dataRow = $(this).closest('tr');

@@ -18,13 +18,13 @@ foodcoopshop.ModalOrderForDifferentCustomerCancel = {
         var modalSelector = '#order-for-different-customer-cancel';
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Yes'), 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('No'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.helper.CancelOrder,
+            __('Cancel_order?'),
             this.getHtml(),
             buttons
         );
@@ -40,12 +40,12 @@ foodcoopshop.ModalOrderForDifferentCustomerCancel = {
     },
 
     getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelOrder + '</p>';
+        return '<p>' + __('Really_cancel_order?') + '</p>';
     },
 
     getSuccessHandler : function() {
         foodcoopshop.Helper.ajaxCall(
-            '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteOrderForDifferentCustomer',
+            '/' + __('route_cart') + '/ajaxDeleteOrderForDifferentCustomer',
             {},
             {
                 onOk: function (data) {

@@ -19,7 +19,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.AdaptPrice,
+            __('Adapt_price?'),
             foodcoopshop.ModalOrderDetailProductPriceEdit.getHtml()
         );
 
@@ -40,14 +40,14 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
     getHtml : function() {
         var html = '<label for="dialogOrderDetailProductPricePrice"></label><br />';
         html += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
-        html += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b>';
+        html += '<b>' + foodcoopshop.config.helper_CurrencySymbol + '</b>';
         html += '<div class="textarea-wrapper" style="margin-top: 10px;">';
-        html += '<label for="dialogEditPriceReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPriceAdapted + '</label>';
+        html += '<label for="dialogEditPriceReason">' + __('Why_is_price_adapted_(optional_field)?') + '</label>';
         html += '<textarea name="dialogEditPriceReason" id="dialogEditPriceReason"></textarea>';
         html += '</div>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditPriceSendEmailToCustomer" id="dialogEditPriceSendEmailToCustomer" checked="checked" />';
-        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToMember + '</span>';
+        html += '<span style="font-weight:normal;">' + __('Send_email_to_member') + '</span>';
         html += '</label>';
         html += '<input type="hidden" name="dialogOrderDetailProductPriceOrderDetailId" id="dialogOrderDetailProductPriceOrderDetailId" value="" />';
         return html;
@@ -101,7 +101,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         var productPriceField = $(modalSelector + ' #dialogOrderDetailProductPricePrice');
 
         $(modalSelector + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-        $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html('<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b> <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td.customer-field span.customer-name-for-dialog').text() + ')');
+        $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html('<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b> <span style="font-weight:normal;">(' + __('ordered_by') + ' ' + row.find('td.customer-field span.customer-name-for-dialog').text() + ')');
 
         $(modalSelector + ' .price-per-unit-info-text').remove();
         productPriceField.val(price);

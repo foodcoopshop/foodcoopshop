@@ -25,21 +25,21 @@ foodcoopshop.ModalLoadLastOrderDetails = {
                 var html = '';
                 var redirectUrl = '';
                 if (selectedValue == 'remove-all-products-from-cart') {
-                    title = foodcoopshop.LocalizedJs.cart.emptyCart + '?';
-                    html = '<p>' + foodcoopshop.LocalizedJs.cart.reallyEmptyCart + '</p>';
-                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart/';
+                    title = __('Empty_cart') + '?';
+                    html = '<p>' + __('Really_empty_cart?') + '</p>';
+                    redirectUrl = '/' + __('route_cart') + '/emptyCart/';
                 } else {
-                    title = foodcoopshop.LocalizedJs.cart.loadPastOrder;
-                    html = foodcoopshop.LocalizedJs.cart.loadPastOrderDescriptionHtml;
-                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart?deliveryDate=' + selectedValue;
+                    title = __('Load_past_order');
+                    html = __('Load_past_order_dialog_description_html');
+                    redirectUrl = '/' + __('route_cart') + '/addOrderToCart?deliveryDate=' + selectedValue;
                 }
             } else {
                 return false;
             }
 
             var buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
-                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+                foodcoopshop.Modal.createButton(['btn-success'], __('Yes'), 'fa-fw fas fa-check'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
             ];
 
             foodcoopshop.Modal.appendModalToDom(

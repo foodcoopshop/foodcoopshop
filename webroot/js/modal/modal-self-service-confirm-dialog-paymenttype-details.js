@@ -21,8 +21,8 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
     getOpenHandler : function(modalSelector, paymentName, paymentText) {
         var modalSelector = '#self-service-confirm-dialog-paymenttype-details';
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.selfServiceConfirmPurchaseCompletedButton, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.cart.selfServiceDenyPurchaseButton, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Confirm_self_service_purchase_completed_button'), 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('Deny_self_service_purchase_button'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
@@ -34,7 +34,7 @@ foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
         var amount = $('p.total-sum-wrapper > span.sum').html();
         $(modalSelector + ' .modal-title').text(paymentName);
-        $(modalSelector + ' .modal-body').html('<p>' + foodcoopshop.LocalizedJs.cart.selfServiceAmountToBePaid + '<b>' + amount + '</b>' + paymentText + '</p>');
+        $(modalSelector + ' .modal-body').html('<p>' + __('Amount_to_be_paid') + '<b>' + amount + '</b>' + paymentText + '</p>');
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog.getSuccessHandler();
