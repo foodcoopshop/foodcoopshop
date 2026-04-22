@@ -26,6 +26,7 @@ foodcoopshop.Helper = {
         this.initCookieBanner();
         foodcoopshop.ColorMode.init();
         if (!this.isMobile()) {
+            this.initFixedHeaderOffset();
             this.initScrolltopButton();
             this.initMenuAutoHide();
             this.showContent();
@@ -223,6 +224,22 @@ foodcoopshop.Helper = {
         new CookiesEuBanner(function () {
             // callback when cookies are accepted
         }, true);
+    },
+
+    initFixedHeaderOffset: function () {
+        var header = document.getElementById('header');
+        if (!header) {
+            return;
+        }
+        var apply = function () {
+            document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px');
+        };
+        apply();
+        if (typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(apply).observe(header);
+        } else {
+            $(window).on('resize load', apply);
+        }
     },
 
     initMenuAutoHide : function() {

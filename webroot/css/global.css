@@ -264,7 +264,7 @@ h2.info a:not(.btn) {
 }
 #flashMessage {
     position: fixed;
-    top: 48px;
+    top: 60px;
     right: 15px;
     padding: 8px;
     width: 500px;

@@ -27,9 +27,11 @@ echo $this->element('layout/header');
             echo $this->Flash->render();
             echo $this->Flash->render('auth');
         ?>
-        <?php echo $this->element('logo'); ?>
         <?php echo $this->element('userMenu'); ?>
-        <?php echo $this->element('mainMenu'); ?>
+        <div class="header-main-row">
+            <?php echo $this->element('logo'); ?>
+            <?php echo $this->element('mainMenu'); ?>
+        </div>
     </div>
 
     <div id="content">

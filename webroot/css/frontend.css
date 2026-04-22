@@ -28,7 +28,7 @@ body {
     z-index: 100;
     margin-right: 0px;
     border-right: 1px solid #d6d4d4;
-    padding-top: 148px;
+    padding-top: var(--header-height, 148px);
     box-sizing: border-box;
     display: flex;
 }
@@ -80,36 +80,45 @@ div.products-wrapper {
 #header {
     width: 100%;
     background: #fff;
-    padding-top: 5px;
     float: left;
-    border: 1px solid #d6d4d4;
-    border-left: none;
-    border-top: none;
+    border-bottom: 1px solid #d6d4d4;
     box-sizing: border-box;
-    -webkit-transition: top 0.6s;
-    -moz-transition: top 0.6s;
-    transition: top 0.6s;
+    transition: transform 0.4s ease;
     position: fixed;
     top: 0;
-    height: 148px;
+    min-height: 148px;
     z-index: 300;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
 }
 #header.off-canvas {
-    top: -148px ! important;
+    transform: translateY(-100%);
 }
 #header.fixed {
   top: 0 ! important;
   z-index: 9999;
+  transform: none ! important;
 }
 
 #header .logo-wrapper {
-    margin: 5px 0;
-    float: left;
-    padding: 10px;
-    padding-top: 0;
+    margin: 0;
+    padding: 6px 10px;
+    float: none;
+    flex: 0 0 auto;
 }
 #header .logo-wrapper a {
     display: block;
+}
+.header-main-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 4px 16px 0 16px;
+    box-sizing: border-box;
+    gap: 24px;
+    position: relative;
+    flex: 1;
 }
 .sidebar {
     padding-right: 0;
@@ -188,33 +197,60 @@ body.categories div.description-wrapper {
 }
 
 #main-menu {
-    margin: 100px 0 20px 25px;
-    float: left;
+    margin: 0;
+    float: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1;
+    padding: 0;
+    list-style: none;
+    position: relative;
 }
 #main-menu > li {
-    margin-right: 5px;
+    margin-right: 4px;
+    float: none;
+    display: flex;
+    align-items: center;
 }
 #main-menu li > a {
     color: #333;
     font-size: 16px;
-    padding-bottom: 10px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .15s;
+}
+#main-menu > li > a:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 #main-menu ul li a.has-icon i {
     margin-right: 5px;
 }
+#main-menu li ul li a > i {
+    display: inline-block;
+    width: 18px;
+    flex: 0 0 18px;
+    margin-right: 6px;
+    text-align: center;
+}
 #main-menu li ul {
     position: absolute;
-    left: 241px;
-    top: 137px;
+    left: 0;
+    top: 100%;
     width: 670px;
-    padding: 15px 15px 0 15px;
+    padding: 15px 15px 5px 15px;
     background: #fff;
     border: 1px solid #d6d4d4;
     z-index: 1000;
     display: none;
-    border-radius: 5px;
+    border-radius: 10px;
     columns: 3;
     min-height: 49px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    list-style: none;
 }
 #main-menu li ul ul {
     display: none ! important; /* never show third level */
@@ -224,15 +260,22 @@ body.categories div.description-wrapper {
 }
 #main-menu li ul li a {
     line-height: 16px;
-    margin-left: 16px;
+    margin-left: 0;
     margin-top: 0px;
     margin-bottom: 5px;
-    float: left;
-    width: 201px;
+    float: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     max-width: 100%;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+#main-menu li ul li a:hover {
+    background: rgba(0, 0, 0, 0.04);
 }
 #main-menu li ul li::nth-last-child(1) a {
     margin-bottom: 0;
@@ -241,33 +284,33 @@ body.categories div.description-wrapper {
     display: none;
 }
 #main-menu a::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    margin-top: 3px;
-    transition: width .3s;
-    margin-left: auto;
-    margin-right: auto;
-}
-#main-menu a:hover::after,
-#main-menu a.active::after {
-    width: 100%;
+    display: none ! important;
 }
 #user-menu {
-    position: absolute;
-    right: 10px;
-    top: 5px;
+    position: static;
+    width: 100%;
+    background: var(--theme-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px 16px;
+    min-height: 48px;
+    box-sizing: border-box;
+    margin: 0;
+    list-style: none;
 }
 #user-menu li > a {
-    font-size: 16px;
-    color: #333;
+    font-size: 14px;
+    color: #fff;
 }
-#user-menu a > i {
-    padding-right: 5px;
+#user-menu > li > a > i {
+    padding-right: 0;
+    color: #fff;
 }
 #user-menu > li > a.has-icon:hover > i {
-    opacity: 0.7;
+    opacity: 1;
+    color: #fff;
 }
 #user-menu a:hover,
 #user-menu a.active {
@@ -275,38 +318,78 @@ body.categories div.description-wrapper {
 }
 #user-menu a:hover .menu-item-label,
 #user-menu a.active .menu-item-label {
-    text-decoration: underline ! important;
+    text-decoration: none ! important;
 }
 #user-menu a {
-    float: left;
-    margin-right: 10px;
+    float: none;
+    margin-right: 0;
 }
 #user-menu > li {
     display: flex;
     align-items: center;
-    min-height: 34px;
+    min-height: 32px;
     padding-bottom: 0;
+    float: none;
+    position: relative;
 }
 #user-menu > li > a {
     float: none;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    min-height: 34px;
+    gap: 6px;
+    min-height: 0;
+    line-height: 1;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.32);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: background .15s;
+}
+#user-menu > li > a:hover {
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+}
+#user-menu > li.has-children > a::after {
+    content: '\f078';
+    font-family: 'Font Awesome 7 Free';
+    font-weight: 900;
+    font-size: 10px;
+    margin-left: 4px;
+    opacity: 0.85;
 }
 #user-menu > li.user-menu-search {
-    float: left;
-    margin-right: 15px;
+    float: none;
+    margin-right: auto;
     padding-bottom: 0;
-    min-height: 26px;
+    min-height: 32px;
+    margin-left: 16px;
 }
 #user-menu .user-menu-search-form-wrapper {
     position: static;
     display: flex;
     align-items: center;
+    background: rgba(0, 0, 0, 0.32);
+    border-radius: 22px;
+    padding: 2px 2px 2px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 #user-menu .user-menu-search-form-wrapper form {
     display: flex;
     float: none;
+    margin: 0;
+}
+#user-menu .user-menu-search-form-wrapper input[type="text"] {
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-size: 14px;
+    padding: 6px 4px 6px 0;
+    width: 220px;
+}
+#user-menu .user-menu-search-form-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
 }
 #user-menu .user-menu-search-form-wrapper .product-search-input-wrapper {
     display: flex;
@@ -314,37 +397,58 @@ body.categories div.description-wrapper {
 }
 #user-menu .user-menu-search-form-wrapper a.reset:not(.btn) {
     margin-right: 0;
+    color: #fff;
 }
 #user-menu .user-menu-search-form-wrapper a.reset:not(.btn) i {
     padding-right: 0;
 }
 #user-menu .user-menu-search-form-wrapper .btn {
     float: none;
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    color: #fff;
+    border-radius: 18px;
+    padding: 6px 12px;
+}
+#user-menu .user-menu-search-form-wrapper .btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #fff;
 }
 #user-menu li ul {
     position: absolute;
     right: 0;
-    top: 34px;
-    width: 170px;
+    top: 100%;
+    width: 220px;
     border: 1px solid #d6d4d4;
     background: #fff;
-    padding: 5px;
     z-index: 100001;
     display: none;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    list-style: none;
 }
 #user-menu li ul li {
     float: left;
     line-height: 25px;
     width: 100%;
-    margin-left: 5px;
+    margin-left: 0;
 }
 #user-menu li ul li a {
     display: block;
     width: 100%;
-    padding: 3px;
+    padding: 6px 10px;
+    color: #333;
+    background: transparent;
+    border-radius: 6px;
+}
+#user-menu li ul li a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    text-decoration: none ! important;
+    color: #333;
 }
 #user-menu li ul li a.has-icon i {
-    padding-right: 20px;
+    padding-right: 12px;
+    color: #555;
 }
 #user-menu li ul ul {
     display: none ! important; /* never show third level */

@@ -258,3 +258,50 @@ body.dark .password-toggle-icon:hover {
 }
 
 
+
+body.dark #header {
+    border-bottom-color: var(--dark-mode-main-border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+body.dark #user-menu {
+    background: var(--dark-mode-2nd-bg-color);
+    border-bottom: 1px solid var(--dark-mode-main-border-color);
+}
+body.dark #user-menu li > a,
+body.dark #user-menu > li > a {
+    color: var(--dark-mode-main-font-color);
+    background: rgba(255, 255, 255, 0.06);
+}
+body.dark #user-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #user-menu .user-menu-search-form-wrapper {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+body.dark #user-menu .user-menu-search-form-wrapper input[type="text"] {
+    color: var(--dark-mode-2nd-font-color);
+    background: transparent;
+}
+body.dark #user-menu .user-menu-search-form-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+body.dark #user-menu .user-menu-search-form-wrapper .btn {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #user-menu .user-menu-search-form-wrapper .btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+}
+body.dark #user-menu li ul li a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #main-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #main-menu li ul li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
