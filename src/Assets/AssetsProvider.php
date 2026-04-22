@@ -76,6 +76,7 @@ class AssetsProvider
             'modal/modal-order-for-different-customer-cancel.js',
             'modal/modal-payment-add.js',
             'modal/modal-image.js',
+            'modal/modal-cart.js',
             'modal/modal-text.js',
             'modal/modal-self-service-confirm-dialog.js',
             'modal/modal-self-service-confirm-dialog-paymenttype-details.js',

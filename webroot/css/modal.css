@@ -153,6 +153,7 @@ body.iframe_self_service_order {
 #modal-product-add .modal-dialog,
 #modal-product-name-edit .modal-dialog,
 #modal-text .modal-dialog,
+#modal-cart .modal-dialog,
 #modal-image .modal-dialog {
     max-width: var(--modal-width-lg);
 }
