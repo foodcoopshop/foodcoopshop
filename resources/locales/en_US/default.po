@@ -2477,6 +2477,9 @@ msgstr "Additional information"
 msgid "Zip"
 msgstr "Zip"
 
+msgid "Continue_to_finish_cart"
+msgstr "Go to page \"Finish cart\""
+
 msgid "City"
 msgstr "City"
 
