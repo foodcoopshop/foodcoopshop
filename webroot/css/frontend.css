@@ -895,8 +895,10 @@ body.carts .pickup-day-header {
     float: left;
 }
 #cart .pickup-day-header {
-    margin-top: 5px;
+    margin-top: 20px;
     padding: 0;
+    padding-top: 10px;
+    border-top: 1px dotted #d6d4d4;
     float: left;
 }
 #cart .pickup-day-header .label {
@@ -910,7 +912,7 @@ body.carts .pickup-day-header {
     float: left;
 }
 #cart .pickup-day-header:first-of-type {
-    margin-top: -5px;
+    margin-top: 15px;
 }
 #cart .cart-extra-info,
 body.carts .cart-extra-info {
@@ -947,7 +949,6 @@ body.carts .load-last-order-details,
 .cart .products {
     display: none;
     margin-bottom: 5px;
-    margin-top: 5px;
 }
 .cart .products span.product {
     width: 100%;
@@ -958,6 +959,9 @@ body.carts .load-last-order-details,
 .cart p.total-sum-wrapper {
     padding-top: 0;
 }
+#cart .credit-balance-wrapper {
+    margin-top: 5px;
+}
 #cart p.product-sum-wrapper,
 #cart b.amount-sum-wrapper,
 .cart p.deposit-sum-wrapper {
@@ -966,7 +970,7 @@ body.carts .load-last-order-details,
 #cart p.product-sum-wrapper,
 #cart p.total-sum-wrapper {
     margin-top: 5px;
-    padding-top: 3px;
+    padding-top: 5px;
     border-top: 1px dotted #d6d4d4;
 }
 .cart p.product-sum-wrapper span.sum,
@@ -1185,6 +1189,10 @@ body.carts .cart:not(#cart) .sums-wrapper {
     float: right;
     margin-right: 17px;
     width: 300px;
+}
+#cart .sums-wrapper {
+    float: left;
+    width: 100%;
 }
 body.carts .cart .manufacturer-link {
     display: none;

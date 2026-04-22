@@ -91,7 +91,7 @@ if ($identity->getProducts() !== null) {
                 $class[] = 'negative';
             }
             echo '<div class="credit-balance-wrapper">';
-              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b></p>';
+              echo '<b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b>';
             echo '</div>';
         }
         ?>
