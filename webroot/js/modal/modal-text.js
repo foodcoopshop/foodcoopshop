@@ -36,7 +36,7 @@ foodcoopshop.ModalText = {
 
         if (elementSelector === '#modal-cart-wrapper') {
             buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.ShowCartButton, 'fa-fw fas fa-shopping-cart', false),
+                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.FinishCart, 'fa-fw fas fa-shopping-cart', false),
                 foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)
             ];
         }
