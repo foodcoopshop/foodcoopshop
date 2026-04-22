@@ -76,9 +76,11 @@ if ($identity->getProducts() !== null) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
                 echo $this->Form->control('load-last-order-details', [
                     'label' => '',
+                    'id' => null,
+                    'class' => 'load-last-order-details',
                     'type' => 'select',
                     'empty' => __('Load_past_orders').'...',
-                    'options' => $lastOrderDetails
+                    'options' => $lastOrderDetails,
                 ]);
             }
         }

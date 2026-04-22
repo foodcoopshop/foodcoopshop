@@ -293,9 +293,10 @@ foodcoopshop.Mobile = {
         cartPage.after($('#cart div.credit-balance-wrapper'));
         cartPage.after($('#cart p.future-orders'));
 
-        var loadLastOrderDetailsDropdown = $('#cart .inner #load-last-order-details');
+        var loadLastOrderDetailsDropdown = $('#cart .inner .load-last-order-details');
         if (loadLastOrderDetailsDropdown.length > 0) {
             cartPage.after(loadLastOrderDetailsDropdown.closest('div.input'));
+            foodcoopshop.ModalLoadLastOrderDetails.init();
         }
 
         // move flash message into header

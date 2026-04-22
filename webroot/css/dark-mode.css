@@ -215,7 +215,7 @@ body.reports.payment form#csv-upload,
 body.dark hr.dropdown-divider {
     border-color: var(--dark-mode-main-border-color);
 }
-body.dark #load-last-order-details {
+body.dark .load-last-order-details {
     border-color: var(--dark-mode-main-border-color) ! important;
 }
 body.dark .btn-outline-light:active {

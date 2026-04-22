@@ -15,7 +15,7 @@ foodcoopshop.ModalLoadLastOrderDetails = {
 
     init : function() {
 
-        $('#load-last-order-details').on('change', function() {
+        $('.load-last-order-details').on('change', function() {
 
             var modalSelector = '#modal-load-last-order-details';
 
