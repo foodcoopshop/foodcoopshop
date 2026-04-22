@@ -445,7 +445,6 @@ form div.error-message {
 .overlay-info {
     color: var(--not-ok-red);
     font-weight: 600;
-    font-size: 14px;
 }
 #labelUnity span {
     font-weight: normal;

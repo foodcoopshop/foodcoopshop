@@ -45,7 +45,7 @@
     padding: 6px 10px ! important;
 }
 .modal-dialog .modal-body {
-    font-size: 14px;
+    font-size: 16px;
 }
 .modal-header {
     cursor: move;
@@ -147,9 +147,14 @@ body.iframe_self_service_order {
     width: 100% ! important;
     float: none;
 }
+.modal-dialog {
+    max-width: var(--modal-width);
+}
 #modal-product-add .modal-dialog,
-#modal-product-name-edit .modal-dialog {
-    max-width: 900px;
+#modal-product-name-edit .modal-dialog,
+#modal-text .modal-dialog,
+#modal-image .modal-dialog {
+    max-width: var(--modal-width-lg);
 }
 .modal-dialog .block {
     width: 49%;
@@ -216,13 +221,6 @@ body.iframe_self_service_order {
     float:left;
     margin-bottom:5px;
 }
-#modal-product-status-new-edit-bulk .modal-dialog {
-    max-width: 575px;
-}
-#modal-text .modal-dialog,
-#modal-image .modal-dialog {
-    max-width: 800px;
-}
 #modal-text h2 {
     font-size: 20px;
 }
@@ -231,7 +229,7 @@ body.iframe_self_service_order {
 }
 .modal .modal-body h1 {
     font-size: 1.25rem;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 #modal-image .modal-body {
     max-height: calc(100vh - 120px);
