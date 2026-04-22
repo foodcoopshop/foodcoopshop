@@ -29,16 +29,11 @@ foodcoopshop.ModalText = {
 
     getOpenHandler : function(modalSelector, button) {
 
-        const elementSelector = button.data('element-selector');
-        let buttons = [
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true),
-        ];
-
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             '',
             '',
-            buttons,
+            [foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)],
         );
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
@@ -47,6 +42,7 @@ foodcoopshop.ModalText = {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);
         });
 
+        const elementSelector = button.data('element-selector');
         var contentWrapper = $(elementSelector).clone();
         let headingHtml = contentWrapper.find('h1, h3').first().html();
 
