@@ -214,6 +214,7 @@ body.categories div.description-wrapper {
     align-items: center;
 }
 #main-menu li > a {
+    font-weight: 500;
     color: #333;
     font-size: 16px;
     padding: 12px 14px;
@@ -434,6 +435,7 @@ body.categories div.description-wrapper {
     margin-left: 0;
 }
 #user-menu li ul li a {
+    font-weight: 500;
     display: block;
     width: 100%;
     padding: 6px 10px;
