@@ -33,20 +33,20 @@ foodcoopshop.ModalProductPriceEdit = {
         var html = '<label for="dialogPricePrice"></label><br />';
         html += '<label class="radio">';
         html += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price" checked="checked" class="price" />';
-        html += foodcoopshop.LocalizedJs.dialogProduct.PricePerUnit;
+        html += __('Price_per_unit');
         html += '</label>';
         html += '<div class="price-wrapper">';
         html += '<input type="number" step="0.01" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        html += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.gross + ')<br />';
+        html += '<b>' + foodcoopshop.config.CurrencySymbol + '</b> (' + __('gross') + ')<br />';
         html += '</div>';
         html += '<hr />';
         html += '<label class="radio">';
         html += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price-per-unit" class="price-per-unit"/>';
-        html += foodcoopshop.LocalizedJs.dialogProduct.PricePerWeightForAdaptionAfterDelivery;
+        html += __('Price_per_weight_(for_adaption_after_delivery)');
         html += '</label>';
         html += '<div class="price-per-unit-wrapper deactivated">';
         html += '<input type="number" step="0.01" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        html += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.gross + ') ' + foodcoopshop.LocalizedJs.dialogProduct.for;
+        html += '<b>' + foodcoopshop.config.CurrencySymbol + '</b> (' + __('gross') + ') ' + __('for');
         html += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
         html += '<option value="1" selected>1</option>';
         html += '<option value="10">10</option>';
@@ -62,17 +62,17 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '<option value="g">g</option>';
         html += '<option value="l">l</option>';
         html += '</select><br />';
-        html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
+        html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + __('approximate_delivery_weight_in_{0}_per_unit', '<span class="unit-name-placeholder">kg</span>');
         html += '<br /><label class="checkbox" style="margin-top:10px ! important;">';
         html += '<input ' + (!isStockProduct ? 'disabled ' : '') + 'type="checkbox" name="dialogPriceUseWeightAsAmount" id="dialogPriceUseWeightAsAmount" />';
-        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceUseWeightAsAmount + '</span>';
+        html += '<span style="font-weight:normal;">' + __('Edit_price_use_weight_as_amount') + '</span>';
         html += '</label>';
         html += '</div>';
         if (this.openOrderDetailPriceOnProductPriceChangeEnabled) {
             html += '<hr />';
             html += '<label class="checkbox" style="margin-top:10px ! important;">';
             html += '<input type="checkbox" name="dialogPriceChangeOpenOrderDetails" id="dialogPriceChangeOpenOrderDetails" value="" ' + (this.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled ? 'checked="checked"' : '') + '/>';
-            html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceChangeOpenOrderDetailsInfoText + '</span>';
+            html += '<span style="font-weight:normal;">' + __('Edit_price_change_open_order_details_info_text') + '</span>';
             html += '</label>';
         }
         html += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
@@ -91,7 +91,7 @@ foodcoopshop.ModalProductPriceEdit = {
         var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
 
         if ($('#dialogPriceProductId').val() == '') {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('An_error_occurred'));
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -129,7 +129,7 @@ foodcoopshop.ModalProductPriceEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.dialogProduct.ChangePrice,
+            __('Change_price'),
             foodcoopshop.ModalProductPriceEdit.getHtml(foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)),
         );
 

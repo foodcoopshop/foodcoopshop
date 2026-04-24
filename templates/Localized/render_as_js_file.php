@@ -14,5 +14,10 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+/** @var array<string, array<string, string>> $translations */
+/** @var array<string, mixed> $jsConfig */
 ?>
-foodcoopshop.LocalizedJs = <?php echo json_encode($localizedJs); ?>;
+window.foodcoopshop = window.foodcoopshop || {};
+foodcoopshop.translations = <?php echo json_encode($translations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
+foodcoopshop.config = <?php echo json_encode($jsConfig, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;

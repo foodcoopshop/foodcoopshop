@@ -23,12 +23,12 @@ foodcoopshop.ModalProductAttributeAdd = {
             var productId = dataRow.attr('id').replace(/product-/, '').split('-');
             productId = productId[productId.length - 1];
 
-            var html = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replaceI18n(0, '<b> ' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p>';
-            html += '<p>' + foodcoopshop.LocalizedJs.admin.AttentionAttributesAreShownInSameOrderAsAddedAndThisCannotBeChangedAfterwards + '</p>';
+            var html = '<p>' + __('Please_chose_the_new_attribute_for_product_{0}.', '<b> ' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p>';
+            html += '<p>' + __('Attention_attributes_are_shown_in_same_order_as_added_and_this_cannot_be_changed_afterwards.') + '</p>';
             var productAttributesDropdown = $('#productattributeid').clone(true);
 
             if (productAttributesDropdown.find('option').length == 0) {
-                foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.ThisFunctionCanOnlyBeUsedIfAttributesExist);
+                foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('This_function_can_only_be_used_if_attributes_exist.'));
                 return;
             }
 
@@ -38,7 +38,7 @@ foodcoopshop.ModalProductAttributeAdd = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.AddNewAttributeForProduct,
+                __('Add_new_attribute_for_product'),
                 html
             );
 

@@ -32,9 +32,9 @@ foodcoopshop.ModalProductStatusNewEditBulk = {
             var infoText = '';
 
             if (productIds.length == 1) {
-                infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
+                infoText = __('You_selected_1_product.');
             } else {
-                infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
+                infoText = __('You_selected_{0}_products.', '<b>' + productIds.length + '</b>');
             }
             infoText += '<br />';
 
@@ -45,14 +45,14 @@ foodcoopshop.ModalProductStatusNewEditBulk = {
             html += '<ul><li>' + products.join('</li><li>') + '</li></ul>';
 
             var buttons = [
-                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.MarkAsNew, 'fa-fw fas fa-check'),
-                foodcoopshop.Modal.createButton(['btn-danger'], foodcoopshop.LocalizedJs.admin.UnmarkAsNew, 'fa-fw fas fa-minus-circle'),
-                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+                foodcoopshop.Modal.createButton(['btn-success'], __('Mark_as_new'), 'fa-fw fas fa-check'),
+                foodcoopshop.Modal.createButton(['btn-danger'], __('Unmark_as_new'), 'fa-fw fas fa-minus-circle'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
             ];
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.EditNewStatus,
+                __('Edit_new_status'),
                 html,
                 buttons
             );
@@ -96,7 +96,7 @@ foodcoopshop.ModalProductStatusNewEditBulk = {
                 },
                 onError: function (data) {
                     var message = '<p>';
-                    message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductNewStatusWasChanged;
+                    message += __('Errors_occurred_while_product_new_status_was_changed');
                     message += ':</p>';
                     message = message + data.msg;
                     foodcoopshop.Modal.appendFlashMessageError(modalSelector, message);

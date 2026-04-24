@@ -60,6 +60,7 @@ class AssetsProvider
         }
 
         $result = array_merge($result, [
+            'i18n.js',
             'jquery/dist/jquery.js',
             '@popperjs/core/dist/umd/popper.js',
             'bootstrap/dist/js/bootstrap.min.js',

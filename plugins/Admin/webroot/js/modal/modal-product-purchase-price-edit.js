@@ -21,7 +21,7 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.dialogProduct.EnterPurchasePrice,
+                __('Enter_purchase_price'),
                 foodcoopshop.ModalProductPurchasePriceEdit.getHtml()
             );
 
@@ -40,7 +40,7 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
     getHtml : function() {
         var html = '<label for="dialogPurchasePricePrice"><b></b></label><br />';
         html += '<input type="number" step="0.01" name="dialogPurchasePricePrice" id="dialogPurchasePricePrice" value="" />';
-        html += '<b class="currency-symbol">' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.gross + ')';
+        html += '<b class="currency-symbol">' + foodcoopshop.config.CurrencySymbol + '</b> (' + __('gross') + ')';
         html += '<input type="hidden" name="dialogPurchasePriceProductId" id="dialogPurchasePriceProductId" value="" />';
         return html;
     },

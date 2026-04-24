@@ -17,23 +17,25 @@ foodcoopshop.ModalSyncProductData = {
 
         var modalSelector = '#modal-sync-product-data';
 
-        var preparedString = foodcoopshop.LocalizedJs.syncProductData.SynchronizeDialogInfoText;
-        preparedString = preparedString.replace(/\{0\}/, '<b>' + checkedAttributeLabels.join(', ') + '</b>');
-        preparedString = preparedString.replace(/\{1\}/, checkedProductsCount + ' ' + (checkedProductsCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.product : foodcoopshop.LocalizedJs.syncProductData.products));
-        preparedString = preparedString.replace(/\{2\}/, checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.attribute : foodcoopshop.LocalizedJs.syncProductData.attributes));
-        preparedString = preparedString.replace(/\{3\}/, '<p>' + domains2sync.join('<br />') + '</p>');
+        var preparedString = __(
+            'Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops?_{3}',
+            '<b>' + checkedAttributeLabels.join(', ') + '</b>',
+            checkedProductsCount + ' ' + (checkedProductsCount == 1 ? __('product') : __('products')),
+            checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? __('attribute') : __('attributes')),
+            '<p>' + domains2sync.join('<br />') + '</p>',
+        );
 
         var html = '<p>' + preparedString + '</p>';
-        html += '<b class="negative">' + foodcoopshop.LocalizedJs.syncProductData.ThisActionCannotBeUndone + '</b></p>';
+        html += '<b class="negative">' + __('This_action_cannot_be_undone.') + '</b></p>';
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Yes'), 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.syncProductData.ReallySynchronize,
+            __('Really_synchronize?'),
             html,
             buttons
         );

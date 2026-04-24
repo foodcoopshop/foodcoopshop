@@ -38,7 +38,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.dialogProduct.ChangeDeliveryRhythm,
+                __('Change_delivery_rhythm'),
                 foodcoopshop.ModalProductDeliveryRhythmEdit.getHtml(productIds)
             );
 
@@ -48,9 +48,9 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
 
             var infoText = '';
             if (productIds.length == 1) {
-                infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
+                infoText = __('You_selected_1_product.');
             } else {
-                infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
+                infoText = __('You_selected_{0}_products.', '<b>' + productIds.length + '</b>');
             }
             infoText += '<br />';
 
@@ -91,7 +91,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.dialogProduct.ChangeDeliveryRhythm,
+                __('Change_delivery_rhythm'),
                 foodcoopshop.ModalProductDeliveryRhythmEdit.getHtml([productId])
             );
 
@@ -158,44 +158,44 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
 
         var html = '<label for="dialogDeliveryRhythm"></label>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm + '</label>';
+        html += '<label>' + __('Delivery_rhythm') + '</label>';
 
         html += '<select name="dialogDeliveryRhythmType" id="dialogDeliveryRhythmType" /></select>';
 
-        html += '<label style="margin-top:10px;" class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.OrderPossibleUntil + '</label>';
+        html += '<label style="margin-top:10px;" class="dynamic-element individual">' + __('Order_possible_until') + '</label>';
         html += '<input style="margin-top:10px;" autocomplete="off" class="dynamic-element individual datepicker" type="text" name="dialogDeliveryRhythmOrderPossibleUntil" id="dialogDeliveryRhythmOrderPossibleUntil" /><br />';
 
-        html += '<label class="dynamic-element default">' + foodcoopshop.LocalizedJs.dialogProduct.LastOrderWeekday + '</label>';
+        html += '<label class="dynamic-element default">' + __('Last_order_weekday') + '</label>';
         html += '<select class="dynamic-element default" name="dialogDeliveryRhythmSendOrderListWeekday" id="dialogDeliveryRhythmSendOrderListWeekday" /></select><br />';
-        html += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.SendOrderListsDay + '</label>';
+        html += '<label class="dynamic-element individual">' + __('Send_order_lists_day') + '</label>';
         html += '<input autocomplete="off" class="datepicker dynamic-element individual" type="text" name="dialogDeliveryRhythmSendOrderListDay" id="dialogDeliveryRhythmSendOrderListDay" /><br />';
         html += '<div style="float:left;margin-bottom:15px;line-height:14px;">';
         html += '<span class="small dynamic-element default">';
-        html += foodcoopshop.LocalizedJs.dialogProduct.OrderListsAreSentAutomaticallyNextDayInTheMorning;
+        html += __('Order_lists_are_sent_automatically_next_day_in_the_morning.');
         html += '</span>';
         html += '<span class="small dynamic-element individual">';
-        html += foodcoopshop.LocalizedJs.dialogProduct.OrderListsAreSentAutomaticallyOnThisDay;
+        html += __('Order_lists_are_sent_automatically_on_this_day.');
         html += '</span>';
         html += '<br /></div>';
 
-        html += '<label class="dynamic-element default">' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
-        html += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryDay + '</label>';
+        html += '<label class="dynamic-element default">' + __('First_delivery_day') + '</label>';
+        html += '<label class="dynamic-element individual">' + __('Delivery_day') + '</label>';
 
         html += '<input autocomplete="off" class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
         html += '<div style="float:right;line-height:14px;"><span class="small">';
         if (productIds.length == 1) {
-            html += foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfoOneProduct;
+            html += __('First_delivery_day_info_(one_product).');
         } else {
-            html += foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfoMultipleProducts;
+            html += __('First_delivery_day_info_(multiple_products).');
         }
         html += '</span><br /></div>';
 
         html += '<div style="float:left;line-height:14px;margin-top:10px;"><span class="small">';
-        html += foodcoopshop.LocalizedJs.admin.ChangeDeliveryRhythmForMultipleProductsTip;
+        html += __('Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button.');
         html += '</span><br /></div>';
 
         html += '</div>';
-        html += '<p style="margin-top:10px;float:right;margin-bottom:0;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForDeliveryRhythm + '</a></p>';
+        html += '<p style="margin-top:10px;float:right;margin-bottom:0;"><a target="_blank" href="' + foodcoopshop.config.DocsUrlOrderHandling + '">' + __('Info_page_for_delivery_rhythm') + '</a></p>';
         html += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         return html;
     },
@@ -203,7 +203,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
     getSuccessHandler : function(modalSelector, productIds) {
 
         if (productIds.length == 0) {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('An_error_occurred'));
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }

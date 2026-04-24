@@ -28,14 +28,14 @@ foodcoopshop.SyncProductData = {
     implementedSyncAttributes : [
         {
             name: 'image',
-            label: foodcoopshop.LocalizedJs.syncProductData.Image,
+            label: __('Image'),
             data: 'image.src',
             column: 2
         },
         {
             name: 'name',
-            label: foodcoopshop.LocalizedJs.syncProductData.Name,
-            additionalInfo: foodcoopshop.LocalizedJs.syncProductData.NameAdditionalInfo,
+            label: __('Name'),
+            additionalInfo: __('Name_additional_info'),
             data: {
                 name: 'unchanged_name',
                 unity: 'unity',
@@ -47,13 +47,13 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'is_stock_product',
-            label: foodcoopshop.LocalizedJs.syncProductData.StockProduct,
+            label: __('Stock_product'),
             data: 'is_stock_product',
             column: 4
         },
         {
             name: 'quantity',
-            label: foodcoopshop.LocalizedJs.syncProductData.Quantity,
+            label: __('Amount'),
             data: {
                 'stock_available_quantity': 'stock_available.quantity',
                 'stock_available_quantity_limit': 'stock_available.quantity_limit',
@@ -65,7 +65,7 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'price',
-            label: foodcoopshop.LocalizedJs.syncProductData.Price,
+            label: __('Price'),
             data: {
                 gross_price: 'gross_price',
                 unit_product_price_incl_per_unit: 'unit.price_incl_per_unit',
@@ -79,13 +79,13 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'deposit',
-            label: foodcoopshop.LocalizedJs.syncProductData.Deposit,
+            label: __('Deposit'),
             data: 'deposit',
             column: 7
         },
         {
             name: 'delivery_rhythm',
-            label: foodcoopshop.LocalizedJs.syncProductData.DeliveryRhythm,
+            label: __('Delivery_rhythm'),
             data: {
                 delivery_rhythm_type: 'delivery_rhythm_type',
                 delivery_rhythm_count: 'delivery_rhythm_count',
@@ -98,7 +98,7 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'active',
-            label: foodcoopshop.LocalizedJs.syncProductData.Status,
+            label: __('Status'),
             data: 'active',
             column: 9
         }
@@ -123,14 +123,14 @@ foodcoopshop.SyncProductData = {
     getProductTableHeadElements : function () {
         return  [
             '<input type="checkbox" id="row-marker-all" />',
-            foodcoopshop.LocalizedJs.syncProductData.Image,
-            foodcoopshop.LocalizedJs.syncProductData.Name,
-            foodcoopshop.LocalizedJs.syncProductData.StockProduct,
-            foodcoopshop.LocalizedJs.syncProductData.Quantity,
-            foodcoopshop.LocalizedJs.syncProductData.Price,
-            foodcoopshop.LocalizedJs.syncProductData.Deposit,
-            foodcoopshop.LocalizedJs.syncProductData.DeliveryRhythm,
-            foodcoopshop.LocalizedJs.syncProductData.Status
+            __('Image'),
+            __('Name'),
+            __('Stock_product'),
+            __('Amount'),
+            __('Price'),
+            __('Deposit'),
+            __('Delivery_rhythm'),
+            __('Status')
         ];
     },
 
@@ -683,14 +683,14 @@ foodcoopshop.SyncProductData = {
             });
 
             if (checkedProductsCount == 0 && checkedAttributesCount == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductsOrAttributesSelected);
+                foodcoopshop.Helper.showOrAppendErrorMessage(__('No_products_or_attributes_selected.'));
                 verticalCheckboxes.addClass('error');
                 return;
             }
 
             checkedAttributeLabels = foodcoopshop.Helper.unique(checkedAttributeLabels);
             if (checkedAttributeLabels.length == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductDataSelected);
+                foodcoopshop.Helper.showOrAppendErrorMessage(__('No_product_data_selected.'));
                 horizontalCheckboxes.addClass('error');
                 return;
             }
@@ -703,7 +703,7 @@ foodcoopshop.SyncProductData = {
             });
 
             if (domains2sync.length == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.PleaseEnterYourCredentials);
+                foodcoopshop.Helper.showOrAppendErrorMessage(__('Please_enter_your_credentials.'));
                 return;
             }
 

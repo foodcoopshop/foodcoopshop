@@ -25,11 +25,11 @@ foodcoopshop.ModalProductAttributeSetDefault = {
             var productAttributeId = splittedProductId[1];
 
             var label = foodcoopshop.Admin.getProductNameForDialog(dataRow);
-            var html = foodcoopshop.LocalizedJs.admin.ChangingDefaultAttributeInfoText0Html.replaceI18n(0, '<b>' + label + '</b>');
+            var html = __('Changing_default_attribute_info_text_{0}_html', '<b>' + label + '</b>');
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ChangeDefaultAttribute,
+                __('Change_default_attribute'),
                 html
             );
 

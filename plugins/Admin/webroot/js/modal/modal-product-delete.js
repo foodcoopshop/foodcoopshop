@@ -27,15 +27,15 @@ foodcoopshop.ModalProductDelete = {
         button.on('click', function () {
 
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var title = productIds.length == 1 ? foodcoopshop.LocalizedJs.admin.DeleteProduct : foodcoopshop.LocalizedJs.admin.DeleteProducts;
+            var title = productIds.length == 1 ? __('Delete_product?') : __('Delete_products?');
 
             var html = '<p style="margin-top: 10px;">';
             if (productIds.length == 1) {
-                html += foodcoopshop.LocalizedJs.admin.ReallyDeleteOneProduct;
+                html += __('Really_delete_1_product?');
             } else {
-                html += foodcoopshop.LocalizedJs.admin.ReallyDelete0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
+                html += __('Really_delete_{0}_products?', '<b>' + productIds.length + '</b>');
             }
-            html += '</p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
+            html += '</p><p>' + __('Be_careful_there_is_no_way_back!') + '</p>';
 
             var products = [];
             for (var i in productIds) {
@@ -79,9 +79,9 @@ foodcoopshop.ModalProductDelete = {
                 onError: function (data) {
                     var message = '<p>';
                     if (productIds.length == 1) {
-                        message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductWasDeleted;
+                        message += __('Errors_occurred_while_product_was_deleted');
                     } else {
-                        message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted;
+                        message += __('Errors_occurred_while_products_were_deleted');
                     }
                     message += ':</p>';
                     message = message + data.msg;

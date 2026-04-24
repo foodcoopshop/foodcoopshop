@@ -21,7 +21,7 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
             }
             var customerIds = [selectedCustomer.val()];
             var customerName = selectedCustomer.text();
-            var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsPickedUp;
+            var title = __('Were_the_products_picked_up?');
             foodcoopshop.ModalOrderDetailAllProductsPickedUp.getOpenHandler(title, customerIds, customerName);
         });
     },
@@ -30,7 +30,7 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
         $('.change-products-picked-up-button').on('click', function () {
             var customerIds = [$(this).closest('tr').find('td:nth-child(2)').html()];
             var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
-            var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsPickedUp;
+            var title = __('Were_the_products_picked_up?');
             foodcoopshop.ModalOrderDetailAllProductsPickedUp.getOpenHandler(title, customerIds, customerName);
         });
     },
@@ -41,7 +41,7 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
             $('table.list tr.data').each(function() {
                 customerIds.push($(this).find('td:nth-child(2)').html());
             });
-            var title = foodcoopshop.LocalizedJs.pickupDay.AllProductsPickedUp;
+            var title = __('All_products_picked_up?');
             foodcoopshop.ModalOrderDetailAllProductsPickedUp.getOpenHandler(title, customerIds, '');
         });
     },
@@ -61,9 +61,9 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
         var modalSelector = '#modal-order-detail-pickup-day-edit';
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light no-button'], foodcoopshop.LocalizedJs.helper.no),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Yes'), 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light no-button'], __('No')),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
@@ -90,10 +90,10 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
 
         var infoMessage = $(modalSelector + ' p').html('');
         if (customerName != '') {
-            infoMessage.html(foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b>');
+            infoMessage.html(__('Member') + ': <b>' + customerName + '</b>');
         }
         if (customerName == '') {
-            infoMessage.html(foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp);
+            infoMessage.html(__('Were_the_products_of_all_members_picked_up?'));
         }
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();

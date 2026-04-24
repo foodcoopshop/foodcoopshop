@@ -39,7 +39,7 @@ foodcoopshop.ModalCustomerDelete = {
                     document.location.href = data.redirectUrl;
                 },
                 onError: function (data) {
-                    var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
+                    var message = '<p><b>' + __('Errors_occurred_while_member_was_deleted') + ':</b> </p>';
                     foodcoopshop.Modal.appendFlashMessageError(modalSelector, message + data.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
@@ -50,13 +50,13 @@ foodcoopshop.ModalCustomerDelete = {
     getOpenHandler : function(modalSelector, customerId) {
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Yes'), 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('No'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.DeleteMember,
+            __('Delete_member?'),
             '',
             buttons
         );
@@ -69,8 +69,8 @@ foodcoopshop.ModalCustomerDelete = {
             foodcoopshop.ModalCustomerDelete.getCloseHandler(modalSelector);
         });
 
-        var html = '<p style="margin-top: 10px;">' + foodcoopshop.LocalizedJs.admin.ReallyDeleteMember + '</p>';
-        html += '<p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
+        var html = '<p style="margin-top: 10px;">' + __('Really_delete_member?') + '</p>';
+        html += '<p>' + __('Be_careful_there_is_no_way_back!') + '</p>';
         $(modalSelector).find('.modal-body').html(html);
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }

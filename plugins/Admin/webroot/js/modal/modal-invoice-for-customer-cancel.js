@@ -21,7 +21,7 @@ foodcoopshop.ModalInvoiceForCustomerCancel = {
     },
 
     getHtml : function(customerName, invoiceNumber) {
-        var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyCancelInvoiceNumber0OfCustomer1.replaceI18n(0, '<b>' + invoiceNumber + '</b>').replaceI18n(1, '<b>' + customerName + '</b>') + '</p>';
+        var html = '<p>' + __('Really_cancel_invoice_number_{0}_of_{1}?', '<b>' + invoiceNumber + '</b>', '<b>' + customerName + '</b>') + '</p>';
         return html;
     },
 
@@ -57,7 +57,7 @@ foodcoopshop.ModalInvoiceForCustomerCancel = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.CancelInvoice,
+            __('Cancel_invoice'),
             foodcoopshop.ModalInvoiceForCustomerCancel.getHtml(customerName, invoiceNumber)
         );
 

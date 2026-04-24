@@ -21,7 +21,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ChangeMember,
+                __('Change_member'),
                 foodcoopshop.ModalOrderDetailProductCustomerEdit.getHtml()
             );
 
@@ -42,15 +42,15 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
     getHtml : function() {
         var html = '<label for="dialogOrderDetailEditCustomerId" style="margin-bottom:10px;"></label><br />';
         html += '<select id="dialogOrderDetailEditCustomerId">' + $('#customerid').html() + '</select>';
-        html += '<label for="dialogOrderDetailEditCustomerAmount" style="margin-top:10px;width:100%;">' + foodcoopshop.LocalizedJs.admin.AmountThatShouldBeChangedToMember + '</label><br />';
+        html += '<label for="dialogOrderDetailEditCustomerAmount" style="margin-top:10px;width:100%;">' + __('Amount_that_should_be_changed_to_member?') + '</label><br />';
         html += '<select style="width:200px;" id="dialogOrderDetailEditCustomerAmount"></select>';
         html += '<div class="textarea-wrapper" style="margin-top:10px;">';
-        html += '<label for="dialogEditCustomerReason">' + foodcoopshop.LocalizedJs.admin.WhyIsMemberEdited + '</label>';
+        html += '<label for="dialogEditCustomerReason">' + __('Why_is_the_member_edited?') + '</label>';
         html += '<textarea name="dialogEditCustomerReason" id="dialogEditCustomerReason"></textarea>';
         html += '</div>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditCustomerSendEmailToCustomers" id="dialogEditCustomerSendEmailToCustomers" />';
-        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToBothMembers + '</span>';
+        html += '<span style="font-weight:normal;">' + __('Send_email_to_both_members') + '</span>';
         html += '</label>';
         html += '<input type="hidden" name="dialogOrderDetailEditCustomerOrderDetailId" id="dialogOrderDetailEditCustomerOrderDetailId" value="" />';
         return html;
@@ -94,7 +94,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseSelectNewMember
+            title: __('Please_select_new_member.')
         });
         foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
 
@@ -102,7 +102,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         var orderDetailId = row.find('td:nth-child(2)').html();
         $(modalSelector + ' #dialogOrderDetailEditCustomerOrderDetailId').val(orderDetailId);
 
-        var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>');
+        var infoText = __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?', '<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>');
         infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td.customer-field span.customer-name-for-dialog').html() + '</b>');
         $(modalSelector + ' label[for="dialogOrderDetailEditCustomerId"]').html('<span style="font-weight:normal;">' + infoText + '</span>');
 
@@ -116,7 +116,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         for (var i = 1; i <= amount; i++) {
             var text = i;
             if (i == amount) {
-                text += ' (' + foodcoopshop.LocalizedJs.admin.all + ')';
+                text += ' (' + __('all') + ')';
             }
             select.append($('<option>', {
                 value: i,
@@ -127,7 +127,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         if (amount > 1) {
             select.prepend($('<option>', {
                 value: '',
-                text: foodcoopshop.LocalizedJs.admin.PleaseSelect
+                text: __('Please_select...')
             }));
             select.show();
             selectLabel.show();

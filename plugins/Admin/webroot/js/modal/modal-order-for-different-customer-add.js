@@ -69,7 +69,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
         // START DROPDOWN
         var customerDropdownId = 'customerDropdown';
-        var header = $('<div class="message-container"><span class="start"><span class="title">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': </span><select id="' + customerDropdownId + '" placeholder="' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '"></select></span></div>');
+        var header = $('<div class="message-container"><span class="start"><span class="title">' + __('Place_order_for') + ': </span><select id="' + customerDropdownId + '" placeholder="' + __('Please_select...') + '"></select></span></div>');
         $(modalSelector + ' .modal-title').append(header);
 
         var customerDropdownSelector = '#' + customerDropdownId;
@@ -77,7 +77,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
+            title: __('PleaseSelectMember'),
         });
 
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
@@ -115,7 +115,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
             var orderFinished = false;
             if (isInstantOrder) {
                 var currentUrl = $(this).get(0).contentWindow.document.URL;
-                var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
+                var cartFinishedRegExp = new RegExp(foodcoopshop.config.routeCartFinished);
                 if (currentUrl.match(cartFinishedRegExp)) {
                     orderFinished = true;
                 }

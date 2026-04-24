@@ -21,7 +21,7 @@ foodcoopshop.ModalPaymentDelete = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.DeletePayment,
+                __('Delete_payment'),
                 ''
             );
 
@@ -69,9 +69,9 @@ foodcoopshop.ModalPaymentDelete = {
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
-        var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeletePayment + '</p>';
-        html += '<p>' + foodcoopshop.LocalizedJs.admin.Date + ': <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
-        html += foodcoopshop.LocalizedJs.admin.AmountMoney + ': <b>' + dataRow.find('td:nth-child(4)').html();
+        var html = '<p>' + __('Really_delete_payment?') + '</p>';
+        html += '<p>' + __('Date') + ': <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
+        html += __('Amount_(Money)') + ': <b>' + dataRow.find('td:nth-child(4)').html();
         if (dataRow.find('td:nth-child(6)').length > 0) {
             html += dataRow.find('td:nth-child(6)').html();
         }

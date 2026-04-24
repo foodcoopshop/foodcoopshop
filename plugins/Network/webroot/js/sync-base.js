@@ -202,7 +202,7 @@ foodcoopshop.SyncBase = {
                         if (response.responseJSON && response.responseJSON.message) {
                             errorMessage = response.responseJSON.message;
                             if (errorMessage == 'Unauthorized') {
-                                errorMessage = foodcoopshop.LocalizedJs.syncBase.UsernameOrPasswordWrongPleaseCheckThatThereAreNoSpecialCharactersInYourPassword;
+                                errorMessage = __('Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password.');
                             }
                         }
                         foodcoopshop.Helper.showOrAppendErrorMessage(syncDomain + ': ' + errorMessage);
