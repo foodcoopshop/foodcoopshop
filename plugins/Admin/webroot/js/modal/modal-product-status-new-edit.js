@@ -36,7 +36,7 @@ foodcoopshop.ModalProductStatusNewEdit = {
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 newStateText,
-                '<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>')
+                '<p>' + __(reallyNewStateText, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>')
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

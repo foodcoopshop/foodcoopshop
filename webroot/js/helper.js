@@ -12,11 +12,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-String.prototype.replaceI18n = function(object, replace) {
-    var regExp = new RegExp('\\{' + object + '\\}', 'g');
-    return this.replace(regExp, replace);
-};
-
 foodcoopshop.Helper = {
 
     init: function () {
@@ -198,10 +193,8 @@ foodcoopshop.Helper = {
             lines = [];
             linesHtml = '';
             for(i in groupedOrderDetails[productId]) {
-                linesHtml = __('You_have_already_ordered_{0}_{1}_times_for_{2}.', '"' + groupedOrderDetails[productId][i].product_name + '"');
-                linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
                 var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.config.defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
-                linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
+                linesHtml = __('You_have_already_ordered_{0}_{1}_times_for_{2}.', '"' + groupedOrderDetails[productId][i].product_name + '"', groupedOrderDetails[productId][i].product_amount, formattedPickupDay);
                 lines.push(linesHtml);
             }
             html += lines.join('<br />');
