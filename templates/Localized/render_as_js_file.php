@@ -19,5 +19,5 @@ declare(strict_types=1);
 /** @var array<string, mixed> $jsConfig */
 ?>
 window.foodcoopshop = window.foodcoopshop || {};
-foodcoopshop.translations = <?php echo json_encode($translations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
-foodcoopshop.config = <?php echo json_encode($jsConfig, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
+foodcoopshop.translations = <?php echo json_encode($translations, JSON_UNESCAPED_SLASHES); ?>;
+foodcoopshop.config = <?php echo json_encode($jsConfig, JSON_UNESCAPED_SLASHES); ?>;
