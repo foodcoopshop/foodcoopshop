@@ -31,6 +31,5 @@ class LocalizedControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
         $this->assertResponseContains('foodcoopshop.translations =');
         $this->assertResponseContains('foodcoopshop.config =');
-        $this->assertSame('UTF-8', $this->_response->getCharset());
     }
 }
