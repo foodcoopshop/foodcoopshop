@@ -539,7 +539,6 @@ foodcoopshop.Cart = {
             return;
         }
         var newCartTotalSum = foodcoopshop.Helper.getCurrencyAsFloat(cartTotalSum.html()) + amount;
-        newCartTotalSum = newCartTotalSum + 0;
         var newCartTotalSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(newCartTotalSum);
 
         cartTotalSum.html(newCartTotalSumHtml);
@@ -572,9 +571,10 @@ foodcoopshop.Cart = {
         if (cartTaxSum.length == 0) {
             return;
         }
+        var newTaxSum = foodcoopshop.Helper.getCurrencyAsFloat(cartTaxSum.html()) + amount;
         cartTaxSum.html(
             foodcoopshop.Helper.formatFloatAsCurrency(
-                foodcoopshop.Helper.getCurrencyAsFloat(cartTaxSum.html()) + amount
+                newTaxSum
             )
         );
     },

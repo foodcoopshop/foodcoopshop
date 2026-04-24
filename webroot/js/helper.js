@@ -684,6 +684,9 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsCurrency: function (float) {
+        if (Math.abs(float) < 0.005) {
+            float = 0;
+        }
         var currency = this.formatFloatAsString(float) + ' ' + foodcoopshop.config.CurrencySymbol;
         if (foodcoopshop.config.defaultLocaleInBCP47 == 'en-US') {
             currency = foodcoopshop.config.CurrencySymbol + this.formatFloatAsString(float);
