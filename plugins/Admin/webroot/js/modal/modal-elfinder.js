@@ -24,7 +24,7 @@ foodcoopshop.ModalElfinder = {
         var opts = {
             url : '/js/elfinder/php/connector.minimal.php',
             cssAutoLoad: false,
-            lang: foodcoopshop.config.helper_defaultLocaleShort,
+            lang: foodcoopshop.config.defaultLocaleShort,
             i18nBaseUrl: '/js/elfinder/js/i18n/',
             workerBaseUrl: '/js/elfinder/js/worker/',
             soundPath: '/js/elfinder/sounds/',

@@ -67,7 +67,7 @@ foodcoopshop.ModalProductNameEdit = {
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescription"><b>' + __('Description_long') + '</b></label><br />';
         html += '<div class="declaration-wrapper">';
-        html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + __('Product_declaration_ok?') + '</label><a href="' + foodcoopshop.config.dialogProduct_DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + __('Help') + '</a><br />';
+        html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + __('Product_declaration_ok?') + '</label><a href="' + foodcoopshop.config.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + __('Help') + '</a><br />';
         html += '<textarea hide" name="dialogDescription" id="dialogDescription"></textarea>';
         html += '</div>';
         html += '</div>';

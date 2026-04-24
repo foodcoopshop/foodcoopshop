@@ -37,7 +37,7 @@ foodcoopshop.Editor = {
             theme: foodcoopshop.ColorMode.getColorMode(),
             enter: 'br',
             hidePoweredByJodit: true,
-            language: foodcoopshop.config.helper_defaultLocaleShort,
+            language: foodcoopshop.config.defaultLocaleShort,
             toolbarAdaptive: false,
             showPlaceholder: false,
             showCharsCounter: false,

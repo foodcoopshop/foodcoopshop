@@ -37,7 +37,7 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '</label>';
         html += '<div class="price-wrapper">';
         html += '<input type="number" step="0.01" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        html += '<b>' + foodcoopshop.config.helper_CurrencySymbol + '</b> (' + __('gross') + ')<br />';
+        html += '<b>' + foodcoopshop.config.CurrencySymbol + '</b> (' + __('gross') + ')<br />';
         html += '</div>';
         html += '<hr />';
         html += '<label class="radio">';
@@ -46,7 +46,7 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '</label>';
         html += '<div class="price-per-unit-wrapper deactivated">';
         html += '<input type="number" step="0.01" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        html += '<b>' + foodcoopshop.config.helper_CurrencySymbol + '</b> (' + __('gross') + ') ' + __('for');
+        html += '<b>' + foodcoopshop.config.CurrencySymbol + '</b> (' + __('gross') + ') ' + __('for');
         html += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
         html += '<option value="1" selected>1</option>';
         html += '<option value="10">10</option>';

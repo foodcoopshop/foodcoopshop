@@ -44,16 +44,16 @@ foodcoopshop.SyncProduct = {
         if (!isStockProduct) {
             if (type == 'individual') {
                 if (orderPossibleUntil !== null) {
-                    elements.push(new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47));
+                    elements.push(new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.config.defaultLocaleInBCP47));
                 }
                 if (sendOrderListDay !== null) {
-                    elements.push(new Date(sendOrderListDay).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47));
+                    elements.push(new Date(sendOrderListDay).toLocaleDateString(foodcoopshop.config.defaultLocaleInBCP47));
                 }
             } else {
                 elements.push(lastOrderWeekday);
             }
             if (firstDeliveryDay !== null) {
-                elements.push(new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47));
+                elements.push(new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.config.defaultLocaleInBCP47));
             }
         }
 
@@ -65,7 +65,7 @@ foodcoopshop.SyncProduct = {
         priceInclPerUnit = parseFloat(priceInclPerUnit);
         unitQuantityInUnits = parseFloat(unitQuantityInUnits);
         unitQuantityInUnits = unitQuantityInUnits.toLocaleString(
-            foodcoopshop.config.helper_defaultLocaleInBCP47,
+            foodcoopshop.config.defaultLocaleInBCP47,
             {
                 minimumSignificantDigits: 1 // converts 1,00 to 1 but leaves 3,22 as it is
             }

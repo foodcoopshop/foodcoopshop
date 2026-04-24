@@ -200,7 +200,7 @@ foodcoopshop.Helper = {
             for(i in groupedOrderDetails[productId]) {
                 linesHtml = __('You_have_already_ordered_{0}_{1}_times_for_{2}.', '"' + groupedOrderDetails[productId][i].product_name + '"');
                 linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
-                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.config.helper_defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
+                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.config.defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
                 linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
                 lines.push(linesHtml);
             }
@@ -719,24 +719,24 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsCurrency: function (float) {
-        var currency = this.formatFloatAsString(float) + ' ' + foodcoopshop.config.helper_CurrencySymbol;
-        if (foodcoopshop.config.helper_defaultLocaleInBCP47 == 'en-US') {
-            currency = foodcoopshop.config.helper_CurrencySymbol + this.formatFloatAsString(float);
+        var currency = this.formatFloatAsString(float) + ' ' + foodcoopshop.config.CurrencySymbol;
+        if (foodcoopshop.config.defaultLocaleInBCP47 == 'en-US') {
+            currency = foodcoopshop.config.CurrencySymbol + this.formatFloatAsString(float);
         }
         return currency;
     },
 
     getCurrencyAsFloat: function (string) {
-        var currencyRegExp = new RegExp(' \\' + foodcoopshop.config.helper_CurrencySymbol);
-        if (foodcoopshop.config.helper_defaultLocaleInBCP47 == 'en-US') {
-            currencyRegExp = new RegExp('\\' + foodcoopshop.config.helper_CurrencySymbol);
+        var currencyRegExp = new RegExp(' \\' + foodcoopshop.config.CurrencySymbol);
+        if (foodcoopshop.config.defaultLocaleInBCP47 == 'en-US') {
+            currencyRegExp = new RegExp('\\' + foodcoopshop.config.CurrencySymbol);
         }
         return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
 
     formatFloatAsString: function(float) {
         var floatAsString = float.toLocaleString(
-            foodcoopshop.config.helper_defaultLocaleInBCP47,
+            foodcoopshop.config.defaultLocaleInBCP47,
             {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
@@ -747,7 +747,7 @@ foodcoopshop.Helper = {
 
     getStringAsFloat: function (string) {
         // en-US uses . as decimal separator and not as thousand separator
-        if (foodcoopshop.config.helper_defaultLocaleInBCP47 != 'en-US') {
+        if (foodcoopshop.config.defaultLocaleInBCP47 != 'en-US') {
             string = string.replace(/,/, '_comma_');
             string = string.replace(/\./, '_dot_');
             string = string.replace(/_comma_/, '.');
@@ -932,7 +932,7 @@ foodcoopshop.Helper = {
                     __('SaturdayShort')
                 ],
                 weekHeader: __('WeekHeader'),
-                dateFormat: foodcoopshop.config.datepicker_dateFormat,
+                dateFormat: foodcoopshop.config.dateFormat,
                 firstDay: 1,
                 isRTL: false,
                 showMonthAfterYear: false,

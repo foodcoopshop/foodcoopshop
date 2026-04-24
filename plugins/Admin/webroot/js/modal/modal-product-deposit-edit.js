@@ -40,7 +40,7 @@ foodcoopshop.ModalProductDepositEdit = {
     getHtml : function() {
         var html = '<label for="dialogDepositDeposit"><b></b></label><br />';
         html += '<input type="number" step="0.01" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
-        html += '<b>' + foodcoopshop.config.helper_CurrencySymbol + '</b>';
+        html += '<b>' + foodcoopshop.config.CurrencySymbol + '</b>';
         html += '<div class="small" style="margin-top:10px;">' + __('Enter_zero_for_delete') + '</div>';
         html += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         return html;

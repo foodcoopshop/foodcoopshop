@@ -57,17 +57,17 @@ class LocalizedController extends Controller
         $defaultLocale = (string)Configure::read('appDb.FCS_DEFAULT_LOCALE');
 
         return [
-            'datepicker_dateFormat' => Configure::read('DateFormat.DateForDatepicker'),
-            'helper_defaultLocale' => $defaultLocale,
-            'helper_defaultLocaleShort' => substr($defaultLocale, 0, 2),
-            'helper_defaultLocaleInBCP47' => str_replace('_', '-', $defaultLocale),
-            'helper_CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
-            'helper_CurrencyName' => Configure::read('app.currencyName'),
-            'mobile_routeAllCategories' => Configure::read('app.slugHelper')->getAllProducts(),
-            'admin_routeCartFinished' => '/' . __('route_cart') . '/' . __('route_cart_finished'),
-            'admin_CopiedData' => __('Categories') . ', ' . __('Descriptions') . ', ' . __('Amount') . ', ' . __('Price') . ', ' . __('Tax_rate') . ', ' . __('Deposit') . ', ' . __('Delivery_rhythm') . ', ' . __('Storage_location'),
-            'dialogProduct_DocsUrlProductDeclaration' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_product_declaration')),
-            'dialogProduct_DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
+            'dateFormat' => Configure::read('DateFormat.DateForDatepicker'),
+            'defaultLocale' => $defaultLocale,
+            'defaultLocaleShort' => substr($defaultLocale, 0, 2),
+            'defaultLocaleInBCP47' => str_replace('_', '-', $defaultLocale),
+            'CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
+            'CurrencyName' => Configure::read('app.currencyName'),
+            'routeAllCategories' => Configure::read('app.slugHelper')->getAllProducts(),
+            'routeCartFinished' => '/' . __('route_cart') . '/' . __('route_cart_finished'),
+            'CopiedData' => __('Categories') . ', ' . __('Descriptions') . ', ' . __('Amount') . ', ' . __('Price') . ', ' . __('Tax_rate') . ', ' . __('Deposit') . ', ' . __('Delivery_rhythm') . ', ' . __('Storage_location'),
+            'DocsUrlProductDeclaration' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_product_declaration')),
+            'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
         ];
     }
 

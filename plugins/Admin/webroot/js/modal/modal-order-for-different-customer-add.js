@@ -115,7 +115,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
             var orderFinished = false;
             if (isInstantOrder) {
                 var currentUrl = $(this).get(0).contentWindow.document.URL;
-                var cartFinishedRegExp = new RegExp(foodcoopshop.config.admin_routeCartFinished);
+                var cartFinishedRegExp = new RegExp(foodcoopshop.config.routeCartFinished);
                 if (currentUrl.match(cartFinishedRegExp)) {
                     orderFinished = true;
                 }

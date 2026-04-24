@@ -195,7 +195,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
         html += '</span><br /></div>';
 
         html += '</div>';
-        html += '<p style="margin-top:10px;float:right;margin-bottom:0;"><a target="_blank" href="' + foodcoopshop.config.dialogProduct_DocsUrlOrderHandling + '">' + __('Info_page_for_delivery_rhythm') + '</a></p>';
+        html += '<p style="margin-top:10px;float:right;margin-bottom:0;"><a target="_blank" href="' + foodcoopshop.config.DocsUrlOrderHandling + '">' + __('Info_page_for_delivery_rhythm') + '</a></p>';
         html += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         return html;
     },

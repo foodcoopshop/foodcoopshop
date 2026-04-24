@@ -40,7 +40,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
     getHtml : function() {
         var html = '<label for="dialogOrderDetailProductPricePrice"></label><br />';
         html += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
-        html += '<b>' + foodcoopshop.config.helper_CurrencySymbol + '</b>';
+        html += '<b>' + foodcoopshop.config.CurrencySymbol + '</b>';
         html += '<div class="textarea-wrapper" style="margin-top: 10px;">';
         html += '<label for="dialogEditPriceReason">' + __('Why_is_price_adapted_(optional_field)?') + '</label>';
         html += '<textarea name="dialogEditPriceReason" id="dialogEditPriceReason"></textarea>';
