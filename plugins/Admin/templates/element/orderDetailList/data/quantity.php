@@ -25,7 +25,7 @@ declare(strict_types=1);
                     'javascript:void(0);',
                     [
                         'class' => 'btn btn-outline-light order-detail-product-quantity-edit-button',
-                        'title' => __d('admin', 'Click_to_change_weight'),
+                        'title' => __('Click_to_change_weight'),
                         'escape' => false
                     ]
                 );

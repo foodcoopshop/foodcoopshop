@@ -33,7 +33,7 @@ class StorageLocationsController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add {0}', [__d('admin', 'Storage_location')]));
+        $this->set('title_for_layout', __('Add {0}', [__('Storage_location')]));
         $this->_processForm($storageLocation, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -52,7 +52,7 @@ class StorageLocationsController extends AdminAppController
         if (empty($storageLocation)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit {0}', [__d('admin', 'Storage_location')]));
+        $this->set('title_for_layout', __('Edit {0}', [__('Storage_location')]));
 
         $productsTable = $this->getTableLocator()->get('Products');
         $productCount = $productsTable->find('all', conditions: [
@@ -81,28 +81,28 @@ class StorageLocationsController extends AdminAppController
         $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');
         $storageLocation = $storageLocationsTable->patchEntity($storageLocation, $this->getRequest()->getData());
         if ($storageLocation->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('storageLocation', $storageLocation);
             return $this->render('edit');
         } else {
             $storageLocation = $storageLocationsTable->save($storageLocation);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'storage_location_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'storage_location_changed';
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('StorageLocations.delete_storage_location')) && $productCount == 0) {
                 $storageLocationsTable->deleteAll(['id' => $storageLocation->id]);
-                $messageSuffix = __d('admin', 'deleted');
+                $messageSuffix = __('deleted_admin');
                 $actionLogType = 'storage_location_deleted';
             }
 
-            $message = __d('admin', 'The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);
+            $message = __('The storage location {0} has been {1}.', ['<b>' . $storageLocation->name . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $storageLocation->id, 'storage_locations', $message);
             $this->Flash->success($message);
 
@@ -137,6 +137,6 @@ class StorageLocationsController extends AdminAppController
         ]);
 
         $this->set('storageLocations', $storageLocations);
-        $this->set('title_for_layout', __d('admin', 'Storage locations'));
+        $this->set('title_for_layout', __('Storage locations'));
     }
 }

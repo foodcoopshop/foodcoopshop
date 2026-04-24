@@ -27,7 +27,7 @@ echo '<td class="is-stock-product">';
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light product-is-stock-product-edit-button',
-                    'title' => __d('admin', 'Is_stock_product'),
+                    'title' => __('Is_stock_product'),
                     'escape' => false
                 ]
             );

@@ -23,4 +23,4 @@ if (empty($products)) {
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ModalProductDuplicate.init();"
 ]);
-echo '<a id="duplicateSelectedProduct" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-clone"></i> ' . __d('admin', 'Copy') . '</a>';
+echo '<a id="duplicateSelectedProduct" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-clone"></i> ' . __('Copy') . '</a>';

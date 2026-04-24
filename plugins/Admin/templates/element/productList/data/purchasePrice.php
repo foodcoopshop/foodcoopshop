@@ -40,7 +40,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-purchase-price-edit-button',
-                'title' => __d('admin', 'change_price'),
+                'title' => __('change_price'),
                 'escape' => false,
             ]
         );

@@ -44,7 +44,7 @@ class ToolsController extends AdminAppController
 
         // non-pdf files will return false
         if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'application/pdf') {
-            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['PDF']);
+            $message = __('The_uploaded_file_needs_to_have_the_format:_{0}', ['PDF']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -61,7 +61,7 @@ class ToolsController extends AdminAppController
 
         $this->set([
             'status' => 1,
-            'text' => __d('admin', 'Filename_General-terms-and-conditions') . '.pdf',
+            'text' => __('Filename_General-terms-and-conditions_admin') . '.pdf',
             'filename' => $filenameWithPath,
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'text', 'filename']);
@@ -76,7 +76,7 @@ class ToolsController extends AdminAppController
 
         // non-image files will return false
         if (!in_array(mime_content_type($upload->getStream()->getMetadata('uri')), Configure::read('app.allowedImageMimeTypes'))) {
-            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
+            $message = __('The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -135,7 +135,7 @@ class ToolsController extends AdminAppController
 
         // non-image files will return false
         if ($formatInfo === false || !in_array($formatInfo['mime'], Configure::read('app.allowedImageMimeTypes'))) {
-            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
+            $message = __('The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
             $this->set([
                 'status' => 0,
                 'msg' => $message,

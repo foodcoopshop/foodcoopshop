@@ -25,11 +25,11 @@ use Cake\I18n\I18n;
 
 /**
  * Emits the JavaScript counterpart of CakePHP's i18n machinery:
- *   foodcoopshop.translations  flat msgid -> translation map per gettext domain
+ *   foodcoopshop.translations  flat msgid -> translation map for the default gettext domain
  *   foodcoopshop.config        environment-derived values (locale, currency, route prefixes, ...)
  *
- * The runtime helpers `__()` and `__d()` live in webroot/js/i18n.js and are
- * loaded via the asset pipeline.
+ * The runtime helper `__()` lives in webroot/js/i18n.js and is loaded via the
+ * asset pipeline.
  *
  * Request flow is unchanged compared to the legacy LocalizedController:
  *   /js/localized-javascript.js -> renderAsJsFile()
@@ -38,13 +38,6 @@ use Cake\I18n\I18n;
  */
 class LocalizedController extends Controller
 {
-
-    /**
-     * Gettext domains whose messages are exposed to JavaScript.
-     *
-     * @var list<string>
-     */
-    private const TRANSLATION_DOMAINS = ['default', 'admin', 'network'];
 
     /**
      * Environment-derived values that are not translations but used by JS code.
@@ -72,40 +65,36 @@ class LocalizedController extends Controller
     }
 
     /**
-     * Build the per-domain msgid -> translation maps.
+     * Build the msgid -> translation map for the default domain.
      *
-     * Loads each domain's translator (forces the underlying gettext catalog to
+     * Loads the default translator (forces the underlying gettext catalog to
      * be parsed) and flattens its message package. Plural / contextual forms
      * are reduced to a single string since current JS callers do not perform
      * plural selection.
      *
-     * @return array<string, array<string, string>>
+     * @return array<string, string>
      */
     private function getTranslations(): array
     {
         $locale = I18n::getLocale();
-        $result = [];
-        foreach (self::TRANSLATION_DOMAINS as $domain) {
-            $messages = I18n::getTranslator($domain, $locale)->getPackage()->getMessages();
-            $flat = [];
-            foreach ($messages as $msgid => $value) {
-                if (is_array($value)) {
-                    if (isset($value['_context']) && is_array($value['_context'])) {
-                        $first = reset($value['_context']);
-                        $value = is_string($first) ? $first : '';
-                    } else {
-                        $first = $value[0] ?? reset($value);
-                        $value = is_string($first) ? $first : '';
-                    }
+        $messages = I18n::getTranslator('default', $locale)->getPackage()->getMessages();
+        $flat = [];
+        foreach ($messages as $msgid => $value) {
+            if (is_array($value)) {
+                if (isset($value['_context']) && is_array($value['_context'])) {
+                    $first = reset($value['_context']);
+                    $value = is_string($first) ? $first : '';
+                } else {
+                    $first = $value[0] ?? reset($value);
+                    $value = is_string($first) ? $first : '';
                 }
-                if ($value === '') {
-                    continue;
-                }
-                $flat[(string)$msgid] = $value;
             }
-            $result[$domain] = $flat;
+            if ($value === '') {
+                continue;
+            }
+            $flat[(string)$msgid] = $value;
         }
-        return $result;
+        return $flat;
     }
 
     public function renderAsJsFile(): void

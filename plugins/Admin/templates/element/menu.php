@@ -35,21 +35,21 @@ $myInvoicesMenuElement = $this->Menu->getMyInvoicesMenuElement();
 
 $orderListsMenuElement = [
     'slug' => $this->Slug->getOrderLists(),
-    'name' => __d('admin', 'Order_lists'),
+    'name' => __('Order_lists'),
     'options' => [
         'fa-icon' => 'fa-fw ok fa-book'
     ]
 ];
 $blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
-    'name' => __d('admin', 'Blog_posts'),
+    'name' => __('Blog_posts'),
     'options' => [
         'fa-icon' => 'fa-fw ok fa-file-alt'
     ]
 ];
 $homepageAdministrationElement = [
     'slug' => $this->Slug->getPagesListAdmin(),
-    'name' => __d('admin', 'Website_administration'),
+    'name' => __('Website_administration'),
     'options' => [
         'fa-icon' => 'fa-fw ok fa-pencil-alt'
     ]
@@ -63,7 +63,7 @@ $menu[] = [
 ];
 $menu[] = [
     'slug' => $this->Slug->getHome(),
-    'name' => __d('admin', 'Home'),
+    'name' => __('Home'),
     'options' => [
         'fa-icon' => 'fa-fw ok fa-home'
     ]
@@ -80,7 +80,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
     if ($identity->isSuperadmin() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $invoicesMenuElement = [
             'slug' => Configure::read('app.slugHelper')->getInvoices(),
-            'name' => __d('admin', 'Invoices'),
+            'name' => __('Invoices'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-file-invoice',
             ],
@@ -91,14 +91,14 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $manufacturerMenu = [
         'slug' => '/admin/manufacturers',
-        'name' => __d('admin', 'Manufacturers'),
+        'name' => __('Manufacturers_admin'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-leaf'
         ]
     ];
     $manufacturerMenu['children'][] = [
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => __d('admin', 'Products'),
+        'name' => __('Products'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-tags'
         ]
@@ -107,7 +107,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getDepositList(),
-            'name' => __d('admin', 'Deposit_account'),
+            'name' => __('Deposit_account'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-recycle'
             ]
@@ -117,7 +117,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
     if ($identity->isSuperadmin() || ($identity->isAdmin() && Configure::read('app.showStatisticsForAdmins'))) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getStatistics(),
-            'name' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics'),
+            'name' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Turnover_and_profit_statistics') : __('Turnover_statistics'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-chart-line'
             ]
@@ -128,7 +128,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
 
     $menu[] = [
         'slug' => $this->Slug->getCustomerListAdmin(),
-        'name' => __d('admin', 'Members'),
+        'name' => __('Members'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-user-group'
         ]
@@ -152,7 +152,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
 
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getPagesListAdmin(),
-        'name' => __d('admin', 'Pages'),
+        'name' => __('Pages'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-pencil-alt'
         ]
@@ -160,21 +160,21 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
 
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getCategoriesList(),
-        'name' => __d('admin', 'Categories'),
+        'name' => __('Categories'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-list'
         ]
     ];
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getAttributesList(),
-        'name' => __d('admin', 'Attributes'),
+        'name' => __('Attributes'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-chevron-circle-right'
         ]
     ];
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getSlidersList(),
-        'name' => __d('admin', 'Slideshow'),
+        'name' => __('Slideshow'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-image'
         ]
@@ -197,7 +197,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
         if ($reportSlug) {
             $homepageAdministrationElement['children'][] = [
                 'slug' => $reportSlug,
-                'name' => __d('admin', 'Financial_reports'),
+                'name' => __('Financial_reports'),
                 'options' => [
                     'fa-icon' => 'fa-fw ok fa-money-bill-alt'
                 ]
@@ -205,7 +205,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
         }
         $homepageAdministrationElement['children'][] = [
             'slug' => $this->Slug->getConfigurationsList(),
-            'name' => __d('admin', 'Configurations'),
+            'name' => __('Configurations'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-cogs'
             ]
@@ -219,7 +219,7 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
 if ($identity->isManufacturer()) {
     $orderDetailsMenuElement = [
         'slug' => $this->Slug->getOrderDetailsList(),
-        'name' => __d('admin', 'Orders'),
+        'name' => __('Orders'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-shopping-cart'
         ]
@@ -229,21 +229,21 @@ if ($identity->isManufacturer()) {
     $menu[] = $orderDetailsMenuElement;
     $menu[] = [
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => __d('admin', 'My_products'),
+        'name' => __('My_products'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-tags'
         ]
     ];
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
-        'name' => __d('admin', 'My_profile'),
+        'name' => __('My_profile'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-home'
         ]
     ];
     $optionsMenu = [
         'slug' => $this->Slug->getManufacturerMyOptions(),
-        'name' => __d('admin', 'Configurations'),
+        'name' => __('Configurations'),
         'options' => [
             'fa-icon' => 'fa-fw ok fa-cogs'
         ]
@@ -254,7 +254,7 @@ if ($identity->isManufacturer()) {
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
-                'name' => __d('admin', 'Deposit_account'),
+                'name' => __('Deposit_account'),
                 'options' => [
                     'fa-icon' => 'fa-fw ok fa-recycle'
                 ]
@@ -278,7 +278,7 @@ if ($identity->isManufacturer()) {
         if ($firstOrderYear !== false) {
             $menu[] = [
                 'slug' => $this->Slug->getManufacturerInvoices(),
-                'name' => __d('admin', 'Invoices'),
+                'name' => __('Invoices'),
                 'options' => [
                     'fa-icon' => 'fa-fw ok fa-file-invoice',
                     ]
@@ -286,7 +286,7 @@ if ($identity->isManufacturer()) {
         }
         $menu[] = [
             'slug' => $this->Slug->getMyStatistics(),
-            'name' => __d('admin', 'Turnover_statistics'),
+            'name' => __('Turnover_statistics'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-chart-bar',
             ]
@@ -299,7 +299,7 @@ $menu[] = $this->Menu->getAuthMenuElement($identity);
 
 $footerHtml = '';
 if ($identity->isManufacturer() && !empty($identity->getManufacturerCustomer()) && !empty($identity->getManufacturerCustomer()['address_customer'])) {
-    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $identity->getManufacturerCustomer()['name'] . ', ' . $identity->getManufacturerCustomer()['email']. ', ' . $identity->getManufacturerCustomer()['address_customer']['phone_mobile'];
+    $footerHtml = '<b>'.__('Contact_person_admin').'</b><br />' . $identity->getManufacturerCustomer()['name'] . ', ' . $identity->getManufacturerCustomer()['email']. ', ' . $identity->getManufacturerCustomer()['address_customer']['phone_mobile'];
 }
 echo $this->Menu->render($menu, [
     'id' => 'menu',

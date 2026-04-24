@@ -67,13 +67,13 @@ trait GetOrderListTrait
 
         if (empty($orderDetailIds)) {
             // do not throw exception because no debug mails wanted
-            die(__d('admin', 'No_orders_within_the_given_time_range.'));
+            die(__('No_orders_within_the_given_time_range.'));
         }
 
         if ($type == 'product') {
-            $typeString = __d('admin', 'product');
+            $typeString = __('product');
         } else {
-            $typeString = __d('admin', 'member');
+            $typeString = __('member_admin');
         }
 
         $pdfFile = $this->getOrderListFilenameForWriteInline($manufacturerId, $manufacturer->name, $pickupDay, $typeString);

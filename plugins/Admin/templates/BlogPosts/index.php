@@ -34,14 +34,14 @@ use Cake\Core\Configure;
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <h1><?php echo $title_for_layout; ?></h1>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __('all_members'), 'options' => []]); ?>
             <?php } ?>
             <?php
             if (Configure::read('app.showManufacturerListAndDetailPage') && ($identity->isSuperadmin() || $identity->isAdmin())) {
                 echo $this->Form->control('manufacturerId', [
                     'type' => 'select',
                     'label' => '',
-                    'empty' => __d('admin', 'all_manufacturers'),
+                    'empty' => __('all_manufacturers'),
                     'options' => $manufacturersForDropdown,
                     'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
@@ -52,7 +52,7 @@ use Cake\Core\Configure;
                 echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
                 echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getBlogPostAdd(), [
                     'class' => 'btn btn-outline-light',
-                    'title' => __d('admin', 'Add_blog_post'),
+                    'title' => __('Add_blog_post'),
                     'escape' => false
                 ]);
                 echo '</div>';
@@ -68,18 +68,18 @@ $this->Paginator->setPaginated($blogPosts);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
-echo '<th>'.__d('admin', 'Image').'</th>';
+echo '<th>'.__('Image').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', __d('admin', 'Only_for_members')) . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.title', __d('admin', 'Title')) . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', __d('admin', 'Short_description')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Modified_by')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', __('Only_for_members')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.title', __('Title')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', __('Short_description')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Modified_by')) . '</th>';
 if (Configure::read('app.showManufacturerListAndDetailPage')) {
-    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __('Manufacturer')) . '</th>';
 }
-echo '<th>' . $this->Paginator->sort('BlogPosts.modified', __d('admin', 'Modified_on')) . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.show_on_start_page_until', __d('admin', 'Show_on_startpage_until')) . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.active', __d('admin', 'Active')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.modified', __('Modified_on')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.show_on_start_page_until', __('Show_on_startpage_until')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.active', __('Active')) . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -120,7 +120,7 @@ foreach ($blogPosts as $blogPost) {
             $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
             [
                 'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Edit'),
+                'title' => __('Edit'),
                 'escape' => false
             ]
         );
@@ -188,7 +188,7 @@ foreach ($blogPosts as $blogPost) {
             $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title),
             [
                 'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Show_blog_post'),
+                'title' => __('Show_blog_post'),
                 'target' => '_blank',
                 'escape' => false
             ]
@@ -200,7 +200,7 @@ foreach ($blogPosts as $blogPost) {
 }
 
 echo '<tr>';
-echo '<td colspan="11"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="11"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

@@ -150,7 +150,7 @@ class ActionLogsController extends AdminAppController
         $this->set('actionLogs', $actionLogs);
         $this->set('actionLogsTable', $actionLogsTable);
 
-        $titleForLayout = __d('admin', 'Activities');
+        $titleForLayout = __('Activities');
         $this->set('title_for_layout', $titleForLayout);
     }
 }

@@ -21,7 +21,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Editor.initSmall('payments-approval-comment');" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');" .
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Financial_reports')."');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
         $('#payments-approval').on('change', function() {
             var emailCheckbox = $('#payments-send-email');
@@ -40,8 +40,8 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
     </div>
 </div>
 
@@ -55,32 +55,32 @@ echo $this->Form->create($payment, [
 ]);
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<p><label>'.__d('admin', 'Member').'</label>' . $this->Html->getNameRespectingIsDeleted($payment->customer).'</p>';
-echo '<p><label>'.__d('admin', 'Amount').'</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
-echo '<p><label>'.__d('admin', 'Date_of_upload').'</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
-echo '<p><label>'.__d('admin', 'Date_last_modified').'</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
+echo '<p><label>'.__('Member').'</label>' . $this->Html->getNameRespectingIsDeleted($payment->customer).'</p>';
+echo '<p><label>'.__('Amount').'</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
+echo '<p><label>'.__('Date_of_upload').'</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
+echo '<p><label>'.__('Date_last_modified').'</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
 
 if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
-    echo '<p><label>'.__d('admin', 'Transaction_added_on').'</label>';
+    echo '<p><label>'.__('Transaction_added_on').'</label>';
     if ($payment->date_transaction_add) {
         echo $payment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
     }
     echo '</p>';
-    echo '<p><label>'.__d('admin', 'Transaction_text').'</label>';
+    echo '<p><label>'.__('Transaction_text').'</label>';
     if ($payment->transaction_text) {
         echo '<span>"'.$payment->transaction_text.'"</span>';
     }
     echo '</p>';
 }
 
-echo '<p><label>'.__d('admin', 'Last_editor').'</label>' . (empty($payment->changed_by_customer) ? __d('admin', 'This_payment_has_not_been_changed_yet.') : $payment->changed_by_customer->name).'</p>';
+echo '<p><label>'.__('Last_editor').'</label>' . (empty($payment->changed_by_customer) ? __('This_payment_has_not_been_changed_yet.') : $payment->changed_by_customer->name).'</p>';
 echo $this->Form->control('Payments.approval', [
     'type' => 'select',
     'label' => 'Status',
     'options' => $this->Html->getApprovalStates()
 ]);
 
-$checkboxLabel = __d('admin', 'Send_email?').' <span class="after small multiple-lines">'.__d('admin', 'If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment.').'<br /><span style="float: left;">'.__d('admin', 'Email_preview').':</span>'.
+$checkboxLabel = __('Send_email?').' <span class="after small multiple-lines">'.__('If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment.').'<br /><span style="float: left;">'.__('Email_preview').':</span>'.
     $this->Html->link(
         '<i class="fas fa-check-circle ok"></i>',
         '/admin/payments/previewEmail/'.$payment->id.'/1',
@@ -109,7 +109,7 @@ echo $this->Form->control('Payments.send_email', [
 
 echo $this->Form->control('Payments.approval_comment', [
     'type' => 'textarea',
-    'label' => __d('admin', 'Comment'),
+    'label' => __('Comment'),
 ]);
 
 echo $this->Form->end();

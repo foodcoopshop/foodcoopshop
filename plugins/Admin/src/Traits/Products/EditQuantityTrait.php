@@ -89,7 +89,7 @@ trait EditQuantityTrait
             return $this->sendAjaxError($e);
         }
 
-        $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
+        $this->Flash->success(__('The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
 
         $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
         $entity = $stockAvailablesTable->patchEntity($oldProduct->stock_available, $object2save);
@@ -116,26 +116,26 @@ trait EditQuantityTrait
 
                 switch($dirtyField) {
                     case 'quantity':
-                        $translatedFieldName = __d('admin', 'Available_quantity') . ': '
-                            . __d('admin', 'Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitName) . '</b> '
-                            . __d('admin', 'New_value');
+                        $translatedFieldName = __('Available_quantity') . ': '
+                            . __('Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitName) . '</b> '
+                            . __('New_value');
                         $newValue = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'always_available':
-                        $translatedFieldName = __d('admin', 'Always_available');
-                        $newValue = $newValue == 1 ? __d('admin', 'yes') : __d('admin', 'no');
+                        $translatedFieldName = __('Always_available');
+                        $newValue = $newValue == 1 ? __('yes') : __('no');
                         break;
                     case 'default_quantity_after_sending_order_lists':
-                        $translatedFieldName = __d('admin', 'Default_quantity_after_sending_order_lists');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
+                        $translatedFieldName = __('Default_quantity_after_sending_order_lists');
+                        $newValue = $newValue == '' ? __('empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'quantity_limit':
-                        $translatedFieldName = __d('admin', 'Quantity_limit');
+                        $translatedFieldName = __('Quantity_limit');
                         $newValue = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'sold_out_limit':
-                        $translatedFieldName = __d('admin', 'Sold_out_limit');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
+                        $translatedFieldName = __('Sold_out_limit');
+                        $newValue = $newValue == '' ? __('empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                 }
                 if (isset($translatedFieldName)) {
@@ -147,7 +147,7 @@ trait EditQuantityTrait
 
                 $changeReason = $this->getRequest()->getData('changeReason', '');
                 if ($changeReason != '') {
-                    $dirtyFieldsWithNewValues[] = __d('admin', 'Reason_for_change') . ': <b>' . $changeReason . '</b>';
+                    $dirtyFieldsWithNewValues[] = __('Reason_for_change') . ': <b>' . $changeReason . '</b>';
                 }
 
                 $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
@@ -156,7 +156,7 @@ trait EditQuantityTrait
                     $this->identity->getId(),
                     $productId,
                     'products',
-                    __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [
+                    __('The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [
                         '<b>' . $oldProduct->name . '</b>',
                         '<b>' . $oldProduct->manufacturer->name . '</b>',
                         join(', ', $dirtyFieldsWithNewValues),

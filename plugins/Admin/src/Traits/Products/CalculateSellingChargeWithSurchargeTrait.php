@@ -31,7 +31,7 @@ trait CalculateSellingChargeWithSurchargeTrait
 
         $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
         if ($surcharge < 0) {
-            throw new \Exception(__d('admin', 'Surcharge_needs_to_be_greater_than_0.'));
+            throw new \Exception(__('Surcharge_needs_to_be_greater_than_0.'));
         }
 
         try {
@@ -43,7 +43,7 @@ trait CalculateSellingChargeWithSurchargeTrait
             return $this->sendAjaxError($e);
         }
 
-        $message = __d('admin', 'The_selling_price_net_was_set_to:_{0}_of_purchase_price_net', [
+        $message = __('The_selling_price_net_was_set_to:_{0}_of_purchase_price_net', [
             '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
         ]);
         $this->Flash->success($message);

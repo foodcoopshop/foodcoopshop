@@ -31,9 +31,9 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
-        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_members'))]); ?>
     </div>
 </div>
 
@@ -51,20 +51,20 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 if ($customer->is_company) {
     echo $this->Form->control('Customers.firstname', [
-        'label' => __d('admin', 'Company_name'),
+        'label' => __('Company_name'),
         'required' => true
     ]);
     echo $this->Form->control('Customers.lastname', [
-        'label' => __d('admin', 'Contact_person') . '<span class="after small">'.__d('admin', 'Will_be_shown_on_invoices.').'</span>',
+        'label' => __('Contact_person_admin') . '<span class="after small">'.__('Will_be_shown_on_invoices.').'</span>',
         'escape' => false,
     ]);
 } else {
     echo $this->Form->control('Customers.firstname', [
-        'label' => __d('admin', 'Firstname'),
+        'label' => __('Firstname'),
         'required' => true
     ]);
     echo $this->Form->control('Customers.lastname', [
-        'label' => __d('admin', 'Lastname'),
+        'label' => __('Lastname'),
         'required' => true
     ]);
 }
@@ -77,14 +77,14 @@ if (!empty($customer->tmp_image) && $customer->tmp_image != '') {
 $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 $imageSrc = $this->Html->privateImage($imageSrc);
 echo '<div class="input">';
-echo '<label>'.__d('admin', 'Profile_image');
+echo '<label>'.__('Profile_image');
 echo '<br /><span class="small">';
 if ($imageExists) {
-    echo __d('admin', 'Click_on_profile_image_to_change_it.').'<br /><br />';
+    echo __('Click_on_profile_image_to_change_it.').'<br /><br />';
 }
-echo __d('admin', 'Only_visible_for_other_membes_in_the_member_list.');
+echo __('Only_visible_for_other_membes_in_the_member_list.');
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-    echo '<br />' . __d('admin', 'Is_shown_on_member_card.');
+    echo '<br />' . __('Is_shown_on_member_card.');
 }
 echo '</span>';
 echo '</label>';
@@ -94,7 +94,7 @@ echo $this->Html->link(
     'javascript:void(0);',
     [
         'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
-        'title' => __d('admin', 'Upload_new_profile_image_or_change_it'),
+        'title' => __('Upload_new_profile_image_or_change_it'),
         'data-object-id' => $customer->id_customer,
         'escape' => false
     ]
@@ -106,67 +106,67 @@ echo '</div>';
 
 echo '<div class="warning">';
     echo $this->Form->control('Customers.delete_image', [
-        'label' => __d('admin', 'Delete_profile_image?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'label' => __('Delete_profile_image?'). '<span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
 echo '</div>';
 
 echo $this->Form->control('Customers.address_customer.email', [
-    'label' => __d('admin', 'Email')
+    'label' => __('Email')
 ]);
 echo $this->Form->control('Customers.address_customer.address1', [
-    'label' => __d('admin', 'Street_and_number'),
+    'label' => __('Street_and_number'),
 ]);
 echo $this->Form->control('Customers.address_customer.address2', [
-    'label' => __d('admin', 'Additional_address_information'),
+    'label' => __('Additional_address_information'),
     'required' => false,
 ]);
 echo $this->Form->control('Customers.address_customer.postcode', [
-    'label' => __d('admin', 'Zip')
+    'label' => __('Zip')
 ]);
 echo $this->Form->control('Customers.address_customer.city', [
-    'label' => __d('admin', 'City')
+    'label' => __('City')
 ]);
 echo $this->Form->control('Customers.address_customer.phone_mobile', [
-    'label' => __d('admin', 'Mobile')
+    'label' => __('Mobile')
 ]);
 echo $this->Form->control('Customers.address_customer.phone', [
-    'label' => __d('admin', 'Phone')
+    'label' => __('Phone')
 ]);
 
 echo '<div class="sc"></div>';
-echo '<h2 style="margin-top:20px;">'.__d('admin', 'Notifications').'</h2>';
+echo '<h2 style="margin-top:20px;">'.__('Notifications').'</h2>';
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo $this->Form->control('Customers.email_order_reminder_enabled', [
-        'label' => __d('admin', 'Order_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_order_reminder_emails?').'</span>',
+        'label' => __('Order_reminder').'<span class="after small">'.__('Want_to_receive_order_reminder_emails?').'</span>',
         'type' => 'checkbox',
         'escape' => false,
     ]);
 }
 
 echo $this->Form->control('Customers.pickup_day_reminder_enabled', [
-    'label' => __d('admin', 'Pickup_day_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_pickup_day_reminder_emails?').'</span>',
+    'label' => __('Pickup_day_reminder').'<span class="after small">'.__('Want_to_receive_pickup_day_reminder_emails?').'</span>',
     'type' => 'checkbox',
     'escape' => false,
 ]);
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo $this->Form->control('Customers.invoices_per_email_enabled', [
-        'label' => __d('admin', 'Invoices_per_email').'<span class="after small">'.__d('admin', 'Want_to_receive_invoices_per_email?').'</span>',
+        'label' => __('Invoices_per_email').'<span class="after small">'.__('Want_to_receive_invoices_per_email?').'</span>',
         'type' => 'checkbox',
         'escape' => false,
     ]);
 }
 echo $this->Form->control('Customers.send_cancellation_email', [
-    'label' => __d('admin', 'Cancellations').'<span class="after small">'.__d('admin', 'I want to receive an email on every cancellation.').'</span>',
+    'label' => __('Cancellations').'<span class="after small">'.__('I want to receive an email on every cancellation.').'</span>',
     'type' => 'checkbox',
     'escape' => false,
 ]);
 
 if ($this->Html->paymentIsCashless()) {
     echo $this->Form->control('Customers.check_credit_reminder_enabled', [
-        'label' => __d('admin', 'Check_credit_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?', [
+        'label' => __('Check_credit_reminder').'<span class="after small">'.__('Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?', [
             $this->Number->formatAsCurrency(Configure::read('appDb.FCS_CHECK_CREDIT_BALANCE_LIMIT')),
         ]).'</span>',
         'type' => 'checkbox',
@@ -174,7 +174,7 @@ if ($this->Html->paymentIsCashless()) {
     ]);
     if (!$this->Configuration->isCashlessPaymentTypeManual()) {
         echo $this->Form->control('Customers.credit_upload_reminder_enabled', [
-            'label' => __d('admin', 'Credit_upload_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_credit_upload_reminder?').'</span>',
+            'label' => __('Credit_upload_reminder').'<span class="after small">'.__('Want_to_receive_credit_upload_reminder?').'</span>',
             'type' => 'checkbox',
             'escape' => false,
         ]);
@@ -183,7 +183,7 @@ if ($this->Html->paymentIsCashless()) {
 
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo $this->Form->control('Customers.newsletter_enabled', [
-        'label' => __d('admin', 'Newsletter').'<span class="after small">'.__d('admin', 'Want_to_receive_the_newsletter_per_email?').'</span>',
+        'label' => __('Newsletter').'<span class="after small">'.__('Want_to_receive_the_newsletter_per_email?').'</span>',
         'type' => 'checkbox',
         'escape' => false,
     ]);
@@ -194,12 +194,12 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
         !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $identity->isSuperadmin())
     ) {
     echo '<div class="sc"></div>';
-    echo '<h2 style="margin-top:20px;">' . __d('admin', 'Self_service_mode') . '</h2>';
+    echo '<h2 style="margin-top:20px;">' . __('Self_service_mode') . '</h2>';
     if ($isOwnProfile) {
-        echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_my_member_card') . '</a>';
+        echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __('Generate_my_member_card') . '</a>';
     }
     echo $this->Form->control('Customers.use_camera_for_barcode_scanning', [
-        'label' => __d('admin', 'I_want_to_use_my_smartphones_camera_for_barcode_scanning.'),
+        'label' => __('I_want_to_use_my_smartphones_camera_for_barcode_scanning.'),
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -208,17 +208,17 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
 if ($identity->isSuperadmin()) {
 
     echo '<div class="sc"></div>';
-    echo '<h2>'.__d('admin', 'Superadmin_functions').'</h2>';
+    echo '<h2>'.__('Superadmin_functions').'</h2>';
 
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo $this->Form->control('Customers.shopping_price', [
             'type' => 'select',
-            'label' => __d('admin', 'Prices'),
+            'label' => __('Prices'),
             'options' => $this->Html->getShoppingPricesForDropdown(),
             'escape' => false,
         ]);
     }
-    echo '<a class="delete-customer-button btn btn-danger" href="javascript:void(0);">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
+    echo '<a class="delete-customer-button btn btn-danger" href="javascript:void(0);">'.__('Delete_member_irrevocably?').'</a>';
 }
 
 echo $this->Form->end(); ?>

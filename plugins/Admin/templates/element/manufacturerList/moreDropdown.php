@@ -23,7 +23,7 @@ $buttons[] = $this->element('manufacturerList/button/exportManufacturers');
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
     'buttons' => $buttons,
-    'label' => __d('admin', 'Actions') . '...',
+    'label' => __('Actions') . '...',
 ]);
 
 ?>

@@ -42,7 +42,7 @@ class DepositsController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
+        $this->set('title_for_layout', __('Deposit_overview'));
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $manufacturerDepositSumEmptyGlassesByCalendarWeek = $paymentsTable->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_EMPTY_GLASSES);
@@ -207,7 +207,7 @@ class DepositsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
-            $this->set('title_for_layout', __d('admin', 'Deposit_account'));
+            $this->set('title_for_layout', __('Deposit_account'));
             return;
         }
 
@@ -273,7 +273,7 @@ class DepositsController extends AdminAppController
         $this->set('sumDepositsReturned', $sumDepositsReturned);
         $this->set('deposits', $deposits);
 
-        $title = __d('admin', 'Deposit_account') . ' ' . __d('admin', 'for') . ' ';
+        $title = __('Deposit_account') . ' ' . __('for') . ' ';
         if ($this->identity->isManufacturer()) {
             $title .= $manufacturer->name;
         }
@@ -306,6 +306,6 @@ class DepositsController extends AdminAppController
         $month = (int) $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
-        $this->set('title_for_layout', __d('admin', 'Deposit_take_back_detail_for') . ' ' . $manufacturer->name);
+        $this->set('title_for_layout', __('Deposit_take_back_detail_for') . ' ' . $manufacturer->name);
     }
 }

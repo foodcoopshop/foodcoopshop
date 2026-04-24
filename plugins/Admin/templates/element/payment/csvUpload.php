@@ -28,7 +28,7 @@ if (empty($csvRecords)) {
         'type' => 'file',
         'accept' => '.csv',
         'onchange' => 'form.submit()',
-        'label' => __d('admin', 'Upload_CSV_file_with_bank_transactions') . ': ',
+        'label' => __('Upload_CSV_file_with_bank_transactions') . ': ',
     ]);
     echo $this->Form->end();
 }
@@ -51,11 +51,11 @@ $this->element('addScript', [
 ]);
 echo '<table class="list no-clone-last-row">';
 
-echo '<th style="text-align:center;">'.__d('admin', 'Save').'?</th>';
-echo '<th>' . __d('admin', 'Member'). '</th>';
-echo '<th>' . __d('admin', 'Transaction_text'). '</th>';
+echo '<th style="text-align:center;">'.__('Save').'?</th>';
+echo '<th>' . __('Member'). '</th>';
+echo '<th>' . __('Transaction_text'). '</th>';
 echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
-echo '<th style="text-align:right;">' . __d('admin', 'Transaction_added_on'). '</th>';
+echo '<th style="text-align:right;">' . __('Transaction_added_on'). '</th>';
 
 $i = 0;
 foreach($csvPayments as $csvPayment) {
@@ -85,7 +85,7 @@ foreach($csvPayments as $csvPayment) {
         echo $this->Form->control('Payments.'.$i.'.id_customer', [
             'type' => 'select',
             'label' => '',
-            'empty' => __d('admin', 'Please_select_a_member.'),
+            'empty' => __('Please_select_a_member.'),
             'class' => 'select-member',
             'options' => $customersForDropdown,
             'value' => $csvPayment->id_customer,
@@ -95,7 +95,7 @@ foreach($csvPayments as $csvPayment) {
 
     echo '<td style="text-align:center;">';
     if ($csvPayment->already_imported) {
-        echo '<span style="color:red;float:left;"">'.__d('admin', 'This_transaction_was_already_imported.') . '</span>';
+        echo '<span style="color:red;float:left;"">'.__('This_transaction_was_already_imported.') . '</span>';
     }
     echo '<i class="fa fa-info-circle transaction-text ok fa-lg" title="'.$csvPayment->content.'"></i>';
     echo $this->Form->hidden('Payments.'.$i.'.content', ['value' => $csvPayment->content]);
@@ -122,7 +122,7 @@ foreach($csvPayments as $csvPayment) {
 echo '</table>';
 
 echo '<button type="submit" class="btn btn-success">
-        <i class="fas fa-check"></i> ' . __d('admin', 'Save') . '
+        <i class="fas fa-check"></i> ' . __('Save') . '
     </button>';
 
 echo $this->Form->end();

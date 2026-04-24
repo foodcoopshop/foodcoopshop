@@ -27,7 +27,7 @@ use App\Model\Entity\OrderDetail;
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Helper.setFullBaseUrl('" . Configure::read('App.fullBaseUrl') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $identity->isManufacturer() . ");" .
-            Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
+            Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__('Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
                         Configure::read('app.jsNamespace') . ".Helper.initTooltip('#price-with-tooltip');" .
 
@@ -89,33 +89,33 @@ use App\Model\Entity\OrderDetail;
                     'pickupDay' => $pickupDay,
                 ]);
             ?>
-            <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
+            <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __('all_products'), 'options' => []]); ?>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer()) { ?>
-                <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
+                <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __('all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __('all_members'), 'options' => []]); ?>
             <?php } ?>
             <?php if ($identity->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
-            <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
+            <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __('Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <?php
                 if ($additionalFiltersEnabled) {
-                    echo $this->Form->control('cartType', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_cart_types'), 'options' => $this->Html->getCartTypes(), 'default' => $cartType]);
+                    echo $this->Form->control('cartType', ['type' => 'select', 'label' => '', 'empty' => __('all_cart_types'), 'options' => $this->Html->getCartTypes(), 'default' => $cartType]);
                     echo '<span style="margin-left: 3px;">'; // really strange - but gap would be missing here
                         echo $this->Form->control('categoryIds', [
                             'type' => 'select',
                             'label' => '',
                             'multiple' => true,
-                            'empty' => __d('admin', 'Category'),
+                            'empty' => __('Category'),
                             'options' => $categoriesForDropdown,
                             'default' => isset($categoryIds) ? $categoryIds : ''
                         ]);
                     echo '</span>';
                     echo '<span style="margin-left: 3px;">';
-                        echo $this->Form->control('taxRate', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'Tax rate'), 'options' => $taxRatesForDropdown, 'default' => $taxRate]);
+                        echo $this->Form->control('taxRate', ['type' => 'select', 'label' => '', 'empty' => __('Tax rate'), 'options' => $taxRatesForDropdown, 'default' => $taxRate]);
                     echo '</span>';
                 }
             ?>
@@ -139,7 +139,7 @@ use App\Model\Entity\OrderDetail;
                     }
                     echo '<div class="add-payment-deposit-button-wrapper">';
                         echo $this->element('addDepositPaymentOverlay', [
-                            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+                            'buttonText' => (!$isMobile ? __('Deposit_return') : ''),
                             'objectId' => $customerIdForDepositOverlay,
                             'userName' => $customerNameForDepsitOverlay,
                             'customerId' => $customerIdForDepositOverlay,
@@ -159,7 +159,7 @@ use App\Model\Entity\OrderDetail;
             }
             
             echo $this->element('orderDetailList/moreDropdown', [
-                'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products')),
+                'helperLink' => $this->Html->getDocsUrl(__('docs_route_pick_up_products')),
                 'emailAddresses' => $emailAddresses ?? [],
                 'pickupDay' => $pickupDay,
                 'deposit' => $deposit,
@@ -177,9 +177,9 @@ use App\Model\Entity\OrderDetail;
 if (isset($orderDetails) && count($orderDetails) == 0) {
     echo '<h2 class="info">';
     if (count($pickupDay) == 1) {
-        echo __d('admin', 'No_orders_found_for_pickup_day_{0}.', [$this->Time->formatToDateShort($pickupDay[0])]);
+        echo __('No_orders_found_for_pickup_day_{0}.', [$this->Time->formatToDateShort($pickupDay[0])]);
     } else {
-        echo __d('admin', 'No_orders_found_for_delivery_period_{0}_-_{1}.', [$this->Time->formatToDateShort($pickupDay[0]), $this->Time->formatToDateShort($pickupDay[1])]);
+        echo __('No_orders_found_for_delivery_period_{0}_-_{1}.', [$this->Time->formatToDateShort($pickupDay[0]), $this->Time->formatToDateShort($pickupDay[1])]);
     }
     echo '</h2>';
 }
@@ -321,11 +321,11 @@ if ($groupBy == 'customer') {
     if (!empty($orderDetails)) {
 
         $showAllOrderDetailsLink = $this->Html->link(
-            '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
+            '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __('All_products') : ''),
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId,
             [
                 'class' => 'btn btn-outline-light with-text',
-                'title' => __d('admin', 'Show_all_ordered_products'),
+                'title' => __('Show_all_ordered_products'),
                 'escape' => false
             ]
         );

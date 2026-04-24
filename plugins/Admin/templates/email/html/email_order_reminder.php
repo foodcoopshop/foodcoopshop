@@ -27,21 +27,21 @@ use Cake\Core\Configure;
 
             <?php
                 if ($lastOrderDayDiff == 0) {
-                    echo __d('admin', 'Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight.');
+                    echo __('Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight.');
                 } else {
-                    echo __d('admin', 'The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight.', [$lastOrderDayAsString]);
+                    echo __('The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight.', [$lastOrderDayAsString]);
                 }
             ?></p>
-            <p><?php echo __d('admin', 'Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that.'); ?><br />
-                 <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart"><?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart</a>
+            <p><?php echo __('Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that.'); ?><br />
+                 <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __('route_cart_admin'); ?>/addLastOrderToCart"><?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __('route_cart_admin'); ?>/addLastOrderToCart</a>
             </p>
 
             <p>
-                <?php echo __d('admin', 'Click_here_to_open_the') . ' ' . __d('admin', 'Website'); ?>:<br /> <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>"><?php echo Configure::read('App.fullBaseUrl'); ?></a>
+                <?php echo __('Click_here_to_open_the_admin') . ' ' . __('Website'); ?>:<br /> <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>"><?php echo Configure::read('App.fullBaseUrl'); ?></a>
             </p>
 
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __('Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
         </td>

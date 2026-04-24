@@ -21,7 +21,7 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Financial_reports')."');".
         Configure::read('app.jsNamespace') . ".Admin.initCustomerMultiDropdown(" . json_encode($customerIds) . ", 0, 1);".
         Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
         Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
@@ -32,11 +32,11 @@ $this->element('addScript', [
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-        <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
-        <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
-        <?php echo $this->Form->control('customerIds', ['type' => 'select', 'multiple' => true, 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
+        <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __('all_products'), 'options' => []]); ?>
+        <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __('all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
+        <?php echo $this->Form->control('customerIds', ['type' => 'select', 'multiple' => true, 'label' => '', 'placeholder' => __('all_members'), 'options' => []]); ?>
         <div class="right">
-            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_infos_for_success'))]); ?>
         </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -53,20 +53,20 @@ $this->element('highlightRowAfterEdit', [
     'rowIdPrefix' => '#order-detail-'
 ]);
 
-echo '<h2 style="margin-top:10px;">' . __d('admin', 'Net_profit') . '</h2>';
+echo '<h2 style="margin-top:10px;">' . __('Net_profit') . '</h2>';
 
 echo '<table class="list profit-table">';
 
     echo '<tr class="sort">';
-        echo '<th>' . $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight')) . '</th>';
-        echo '<th>' . __d('admin', 'Manufacturer') . '</th>';
-        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.total_price_tax_excl', __d('admin', 'Selling_price')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetailPurchasePrices.total_price_tax_excl', __d('admin', 'Purchase_price')) . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Profit') . '</th>';
+        echo '<th>' . $this->Paginator->sort('OrderDetails.pickup_day', __('Pickup_day')) . '</th>';
+        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.product_amount', __('Amount')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('OrderDetails.product_name', __('Product')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __('Weight')) . '</th>';
+        echo '<th>' . __('Manufacturer') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Member')) . '</th>';
+        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.total_price_tax_excl', __('Selling_price_admin')) . '</th>';
+        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetailPurchasePrices.total_price_tax_excl', __('Purchase_price')) . '</th>';
+        echo '<th style="text-align:right;">' . __('Profit') . '</th>';
     echo '</tr>';
 
     foreach($orderDetails as $orderDetail) {
@@ -139,7 +139,7 @@ echo '<table class="list profit-table">';
                     $this->Slug->getOrderDetailPurchasePriceEdit($orderDetail->id_order_detail),
                     [
                         'class' => 'btn btn-outline-light',
-                        'title' => __d('admin', 'Edit'),
+                        'title' => __('Edit'),
                         'escape' => false,
                     ]
                 );
@@ -172,7 +172,7 @@ echo '<table class="list profit-table">';
         echo '</td>';
 
         echo '<td colspan="4" style="text-align:right;">';
-            echo __d('admin', 'Total_sum');
+            echo __('Total_sum');
         echo '</td>';
 
         echo '<td style="text-align:right;">';

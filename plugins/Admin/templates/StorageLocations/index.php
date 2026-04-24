@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Configurations')."');
     "
 ]);
 $this->element('highlightRowAfterEdit', [
@@ -34,7 +34,7 @@ $this->element('highlightRowAfterEdit', [
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
         echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getStorageLocationAdd(), [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Add {0}', [__d('admin', 'Storage_location')]),
+            'title' => __('Add {0}', [__('Storage_location')]),
             'escape' => false
         ]);
         echo '</div>';
@@ -55,9 +55,9 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('StorageLocations.name', __d('admin', 'Name')) . '</th>';
-echo '<th>' . $this->Paginator->sort('StorageLocations.product_count', __d('admin', 'Products')) . '</th>';
-echo '<th>' . $this->Paginator->sort('StorageLocations.position', __d('admin', 'Rank')) . '</th>';
+echo '<th>' . $this->Paginator->sort('StorageLocations.name', __('Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('StorageLocations.product_count', __('Products')) . '</th>';
+echo '<th>' . $this->Paginator->sort('StorageLocations.position', __('Rank')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -74,7 +74,7 @@ foreach ($storageLocations as $storageLocation) {
         $this->Slug->getStorageLocationEdit($storageLocation->id),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
@@ -101,7 +101,7 @@ foreach ($storageLocations as $storageLocation) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> ' . __d('admin', '{0,plural,=1{record} other{records}}', $i) . '</td>';
+echo '<td colspan="4"><b>' . $i . '</b> ' . __('{0,plural,=1{record} other{records}}', $i) . '</td>';
 echo '</tr>';
 
 echo '</table>';

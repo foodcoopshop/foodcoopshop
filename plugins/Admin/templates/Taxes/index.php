@@ -22,7 +22,7 @@ use Cake\Core\Configure;
         <?php
         $this->element('addScript', [ 'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
+            Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Configurations')."');
             "
         ]);
         $this->element('highlightRowAfterEdit', [
@@ -37,7 +37,7 @@ use Cake\Core\Configure;
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getTaxAdd(), [
                 'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Add_tax_rate'),
+                'title' => __('Add_tax_rate'),
                 'escape' => false
             ]);
             echo '</div>';
@@ -55,10 +55,10 @@ echo $this->element('navTabs/configurationNavTabs', [
 $this->Paginator->setPaginated($taxes);
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">'.__d('admin', 'ID').'</th>';
+echo '<th class="hide">'.__('ID').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Taxes.active', __d('admin', 'Active')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Taxes.rate', __('Tax_rate_admin')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Taxes.active', __('Active')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -83,7 +83,7 @@ foreach ($taxes as $tax) {
         $this->Slug->getTaxEdit($tax->id_tax),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
@@ -105,7 +105,7 @@ foreach ($taxes as $tax) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="4"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

@@ -30,7 +30,7 @@ trait EditTrait
     public function edit(int $paymentId): ?Response
     {
 
-        $this->set('title_for_layout', __d('admin', 'Check_credit_upload'));
+        $this->set('title_for_layout', __('Check_credit_upload'));
 
         $this->setFormReferer();
 
@@ -66,7 +66,7 @@ trait EditTrait
         );
 
         if ($payment->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('payment', $payment);
         } else {
             $payment = $paymentsTable->patchEntity(
@@ -88,13 +88,13 @@ trait EditTrait
 
             $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
 
-            $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
+            $message = __('The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
 
             if ($payment->send_email) {
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
                 $email->setTo($payment->customer->email)
-                    ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['"' .$newStatusAsString.'"']))
+                    ->setSubject(__('The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['"' .$newStatusAsString.'"']))
                     ->setViewVars([
                         'identity' => $this->identity,
                         'data' => $payment->customer,
@@ -103,7 +103,7 @@ trait EditTrait
                         'payment' => $payment
                     ]);
                 $email->addToQueue();
-                $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
+                $message = __('The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
             }
 
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $payment->id, 'payments', $message . ' (PaymentId: ' . $payment->id.')');

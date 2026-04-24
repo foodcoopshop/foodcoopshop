@@ -38,7 +38,7 @@ class CronjobsController extends AdminAppController
         ]);
 
         $this->set('cronjobs', $cronjobs);
-        $this->set('title_for_layout', __d('admin', 'Cronjobs'));
+        $this->set('title_for_layout', __('Cronjobs'));
     }
 
     public function edit(int $cronjobId): ?Response
@@ -51,7 +51,7 @@ class CronjobsController extends AdminAppController
         if (empty($cronjob)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_cronjob'));
+        $this->set('title_for_layout', __('Edit_cronjob'));
 
         $this->setFormReferer();
         $this->set('timeIntervals', $cronjobsTable->getTimeIntervals());
@@ -80,12 +80,12 @@ class CronjobsController extends AdminAppController
             ],
         );
         if ($cronjob->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('cronjob', $cronjob);
         } else {
             $cronjob = $cronjobsTable->save($cronjob);
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            $message = __d('admin', 'The_cronjob_{0}_has_been_changed.', ['<b>' . $cronjob->name . '</b>']);
+            $message = __('The_cronjob_{0}_has_been_changed.', ['<b>' . $cronjob->name . '</b>']);
             $actionLogsTable->customSave('cronjob_changed', $this->identity->getId(), $cronjob->id, 'cronjobs', $message);
             $this->Flash->success($message);
 

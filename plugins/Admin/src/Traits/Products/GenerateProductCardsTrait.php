@@ -71,7 +71,7 @@ trait GenerateProductCardsTrait
             throw new \Exception('no stock product selected');
         }
         $pdfWriter = new ProductCardsPdfWriterService();
-        $pdfWriter->setFilename(__d('admin', 'Products').'.pdf');
+        $pdfWriter->setFilename(__('Products').'.pdf');
         $pdfWriter->setData([
             'products' => $preparedProducts
         ]);

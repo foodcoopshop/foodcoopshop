@@ -48,7 +48,7 @@ class ReportsController extends AdminAppController
 
             $upload = $this->getRequest()->getData('upload');
             if (!in_array($upload->getClientMediaType(), BankingReaderService::ALLOWED_UPLOAD_MIME_TYPES)) {
-                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
+                $this->Flash->error(__('The_uploaded_file_is_not_valid.'));
                 return null;
             }
 
@@ -65,9 +65,9 @@ class ReportsController extends AdminAppController
 
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
-                $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
+                $this->Flash->success(__('Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
             } catch(\Exception $e) {
-                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
+                $this->Flash->error(__('The_uploaded_file_is_not_valid.'));
                 return $this->redirect($this->referer());
             }
 
@@ -127,7 +127,7 @@ class ReportsController extends AdminAppController
                 $this->set('csvPayments', $csvPayments);
 
                 if ($paymentsHaveErrors && $saveRecords) {
-                    $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+                    $this->Flash->error(__('Errors_while_saving!_admin'));
                 }
 
                 if (!$paymentsHaveErrors && $saveRecords) {
@@ -151,7 +151,7 @@ class ReportsController extends AdminAppController
                                     $email = new AppMailer();
                                     $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
                                     $email->setTo($customer->email)
-                                    ->setSubject(__d('admin', 'Your_transaction_({0})_was_added_to_the_credit_system.', [
+                                    ->setSubject(__('Your_transaction_({0})_was_added_to_the_credit_system.', [
                                         Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount),
                                     ]))
                                     ->setViewVars([
@@ -167,13 +167,13 @@ class ReportsController extends AdminAppController
                         }
 
                         if (empty($csvPayments)) {
-                            $this->Flash->error(__d('admin', 'No_records_were_imported.'));
+                            $this->Flash->error(__('No_records_were_imported.'));
                             return $this->redirect($this->referer());
                         }
 
                         $paymentsTable = $this->getTableLocator()->get('Payments');
                         $paymentsTable->saveManyOrFail($csvPayments);
-                        $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}', [
+                        $message = __('{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}', [
                             count($csvPayments),
                             '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($sumAmount) . '</b>',
                         ]);
@@ -185,7 +185,7 @@ class ReportsController extends AdminAppController
                     });
                 }
             } catch(PersistenceFailedException $e) {
-                $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+                $this->Flash->error(__('Errors_while_saving!_admin'));
                 $this->set('csvPayments', $csvPayments);
             }
         }
@@ -262,7 +262,7 @@ class ReportsController extends AdminAppController
         $this->set('payments', $payments);
 
         $this->set('customersForDropdown', $customersTable->getForDropdown());
-        $this->set('title_for_layout', __d('admin', 'Report') . ': ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
+        $this->set('title_for_layout', __('Report') . ': ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', $paymentType == Payment::TYPE_DEPOSIT);
     }

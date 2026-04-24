@@ -21,20 +21,20 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     return;
 }
 
-echo '<h2>'.__d('admin', 'Bank_account_data').' <span>'.__d('admin', 'are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds.').'</span></h2>';
+echo '<h2>'.__('Bank_account_data').' <span>'.__('are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds.').'</span></h2>';
 echo $this->Form->control('Manufacturers.bank_name', [
-    'label' => __d('admin', 'Bank'),
+    'label' => __('Bank'),
 ]);
 echo $this->Form->control('Manufacturers.bank_account_holder', [
-    'label' => __d('admin', 'Account holder') . '<br /><span class="small">'.__d('admin', 'exact wording').'</span>',
+    'label' => __('Account holder') . '<br /><span class="small">'.__('exact wording').'</span>',
     'escape' => false,
 ]);
 echo $this->Form->control('Manufacturers.iban', [
-    'label' => __d('admin', 'IBAN'),
+    'label' => __('IBAN'),
     'maxLength' => '',
 ]);
 echo $this->Form->control('Manufacturers.bic', [
-    'label' => __d('admin', 'BIC'),
+    'label' => __('BIC'),
     'maxLength' => '',
 ]);
 echo '<div class="sc"></div>';

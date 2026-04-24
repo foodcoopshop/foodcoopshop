@@ -17,7 +17,7 @@ declare(strict_types=1);
 echo $this->element('pdf/order_list', [
     'pdf' => $pdf,
     'groupType' => 'customer',
-    'groupTypeLabel' => __d('admin', 'member'),
+    'groupTypeLabel' => __('member_admin'),
     'results' => $customerResults,
     'manufacturer' => isset($manufacturer) ? $manufacturer : []
 ]); // not defined in sendOrderList

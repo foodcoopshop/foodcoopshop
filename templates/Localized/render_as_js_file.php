@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-/** @var array<string, array<string, string>> $translations */
+/** @var array<string, string> $translations */
 /** @var array<string, mixed> $jsConfig */
 ?>
 window.foodcoopshop = window.foodcoopshop || {};

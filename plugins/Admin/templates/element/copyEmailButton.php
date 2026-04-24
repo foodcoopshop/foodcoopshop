@@ -19,5 +19,5 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace').".Admin.initCopySelectedEmailsToClipboard('" . $object . "');"
 ]);
-echo '<a class="btn-clipboard dropdown-item"><i class="far fa-envelope"></i> ' . __d('admin', 'Copy_selected_email_addresses') . '</a>';
+echo '<a class="btn-clipboard dropdown-item"><i class="far fa-envelope"></i> ' . __('Copy_selected_email_addresses') . '</a>';
 ?>

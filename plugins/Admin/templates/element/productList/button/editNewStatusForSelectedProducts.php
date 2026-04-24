@@ -20,4 +20,4 @@ if (empty($products)) {
     return false;
 }
 
-echo '<a id="editNewStatusForSelectedProducts" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-star"></i> ' . __d('admin', 'Edit_new_status') . '</a>';
+echo '<a id="editNewStatusForSelectedProducts" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-star"></i> ' . __('Edit_new_status') . '</a>';

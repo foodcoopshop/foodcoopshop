@@ -105,7 +105,7 @@ trait EditPickupDayTrait
                     $email = new AppMailer();
                     $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
                     $email->setTo($orderDetails[0]->customer->email)
-                    ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                    ->setSubject(__('The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
                     ->setViewVars([
                         'orderDetails' => $orderDetails,
                         'customer' => $orderDetails[0]->customer,
@@ -119,17 +119,17 @@ trait EditPickupDayTrait
                 }
             }
 
-            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}.', [
+            $message = __('The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}.', [
                 count($orderDetailIds),
                 '<b>'.$newPickupDay.'</b>',
             ]);
 
             if ($sendEmail) {
-                $message .= ' ' . __d('admin', '{0,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($customers)]);
+                $message .= ' ' . __('{0,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($customers)]);
             }
 
             if ($editPickupDayReason != '') {
-                $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editPickupDayReason . '"</b>';
+                $message .= ' ' . __('Reason') . ': <b>"' . $editPickupDayReason . '"</b>';
             }
 
             $this->Flash->success($message);

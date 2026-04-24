@@ -44,12 +44,12 @@ if (!empty($manufacturer->id_manufacturer)) {
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
             <a href="javascript:void(0);" class="btn btn-outline-light cancel"><i
-            class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
         <?php } ?>
-        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_manufacturers'))]); ?>
     </div>
 </div>
 
@@ -75,37 +75,37 @@ if ($identity->isManufacturer()) {
 
     echo $this->Form->hidden('referer', ['value' => $referer]);
 
-    echo '<h2>'.__d('admin', 'General').'</h2>';
+    echo '<h2>'.__('General').'</h2>';
 
     $imprintString = '';
     if (Configure::read('app.showManufacturerImprint')) {
         if ($identity->isManufacturer()) {
-            $imprintString = __d('admin', 'in_your_imprint');
+            $imprintString = __('in_your_imprint');
         } else {
-            $imprintString = __d('admin', 'in_the_imprint_of_the_manufacturer');
+            $imprintString = __('in_the_imprint_of_the_manufacturer');
         }
     }
 
     echo $this->Form->control('Manufacturers.name', [
         'type' => 'text',
-        'label' => __d('admin', 'Name'),
+        'label' => __('Name'),
     ]);
     echo $this->Form->control('Manufacturers.address_manufacturer.email', [
         'type' => 'text',
-        'label' => __d('admin', 'Email') . ($imprintString != '' ? '<span class="after small">'.__d('admin', 'Will_be_shown_in_imprint_{0}_and_spamprotected.', [$imprintString]).'</span>' : ''),
+        'label' => __('Email') . ($imprintString != '' ? '<span class="after small">'.__('Will_be_shown_in_imprint_{0}_and_spamprotected.', [$imprintString]).'</span>' : ''),
         'escape' => false,
     ]);
     echo $this->Form->control('Manufacturers.address_manufacturer.phone_mobile', [
-        'label' => __d('admin', 'Mobile') . ($imprintString != '' ? ' <span class="after small">'.__d('admin', 'Will_be_shown_in_imprint_{0}.', [$imprintString]).'</span>' : ''),
+        'label' => __('Mobile') . ($imprintString != '' ? ' <span class="after small">'.__('Will_be_shown_in_imprint_{0}.', [$imprintString]).'</span>' : ''),
         'escape' => false,
     ]);
     echo $this->Form->control('Manufacturers.address_manufacturer.phone', [
-        'label' => __d('admin', 'Phone') . ($imprintString != '' ? ' <span class="after small">'.__d('admin', 'Will_be_shown_in_imprint_{0}.', [$imprintString]).'</span>' : ''),
+        'label' => __('Phone') . ($imprintString != '' ? ' <span class="after small">'.__('Will_be_shown_in_imprint_{0}.', [$imprintString]).'</span>' : ''),
         'escape' => false,
     ]);
     echo $this->Form->control('Manufacturers.homepage', [
-        'placeholder' => __d('admin', 'Example_given_abbreviation') . ' https://www.foodcoopshop.com',
-        'label' => __d('admin', 'Website') . ($imprintString != '' ? ' <span class="after small">'.__d('admin', 'Will_be_shown_in_imprint_{0}.', [$imprintString]).'</span>' : ''),
+        'placeholder' => __('Example_given_abbreviation') . ' https://www.foodcoopshop.com',
+        'label' => __('Website') . ($imprintString != '' ? ' <span class="after small">'.__('Will_be_shown_in_imprint_{0}.', [$imprintString]).'</span>' : ''),
         'escape' => false,
     ]);
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
@@ -116,9 +116,9 @@ if ($identity->isManufacturer()) {
         $buttonOptions = ['class' => 'btn btn-outline-light', 'escape' => false];
         $buttonIcon = '<i class="fas fa-cog"></i> ';
         if ($identity->isManufacturer()) {
-            $optionsLink = $this->Html->link($buttonIcon . __d('admin', 'To_your_settings'), $this->Slug->getManufacturerMyOptions(), $buttonOptions);
+            $optionsLink = $this->Html->link($buttonIcon . __('To_your_settings'), $this->Slug->getManufacturerMyOptions(), $buttonOptions);
         } else {
-            $optionsLink = $this->Html->link($buttonIcon . __d('admin', 'To_the_settings_of_manufacturer'), $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer), $buttonOptions);
+            $optionsLink = $this->Html->link($buttonIcon . __('To_the_settings_of_manufacturer'), $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer), $buttonOptions);
         }
         echo ' <span class="description">' . $optionsLink . '</span>';
     }
@@ -126,9 +126,9 @@ if ($identity->isManufacturer()) {
     echo '<div class="sc"></div>';
 
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
-        echo '<h2>' . __d('admin', 'Profile');
+        echo '<h2>' . __('Profile');
         if ($this->request->getRequestTarget() != $this->Slug->getManufacturerAdd()) {
-            echo ' <span>' . $this->Html->link(__d('admin', 'To_manufacturer_profile'), $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name), [
+            echo ' <span>' . $this->Html->link(__('To_manufacturer_profile'), $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name), [
             'target' => '_blank'
             ]) . '</span>';
         }
@@ -140,9 +140,9 @@ if ($identity->isManufacturer()) {
         }
         $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         echo '<div class="input">';
-        echo '<label>'.__d('admin', 'Logo');
+        echo '<label>'.__('Logo');
         if ($imageExists) {
-            echo '<br /><span class="small">'.__d('admin', 'Click_on_logo_to_change_it.').'</span>';
+            echo '<br /><span class="small">'.__('Click_on_logo_to_change_it.').'</span>';
         }
         echo '</label>';
         echo '<div style="float:right;">';
@@ -151,7 +151,7 @@ if ($identity->isManufacturer()) {
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
-                'title' => __d('admin', 'Upload_new_logo_or_change_it'),
+                'title' => __('Upload_new_logo_or_change_it'),
                 'data-object-id' => $idForUpload,
                 'escape' => false
             ]
@@ -163,7 +163,7 @@ if ($identity->isManufacturer()) {
 
         echo '<div class="warning">';
             echo $this->Form->control('Manufacturers.delete_image', [
-            'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'label' => __('Delete_logo?'). '<span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
             'type' => 'checkbox',
             'escape' => false,
             ]);
@@ -173,21 +173,21 @@ if ($identity->isManufacturer()) {
             echo '<div style="margin-top:10px;"></div>';
             echo $this->Form->control('Manufacturers.short_description', [
                 'type' => 'textarea',
-                'label' => __d('admin', 'Short_description').'<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer.').'</span>',
+                'label' => __('Short_description').'<br /><br /><span class="small">'.__('Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer.').'</span>',
                 'escape' => false,
             ]);
         }
 
-        $label = __d('admin', 'Long_description');
+        $label = __('Long_description');
         if (!$isEditMode) {
             echo '<div class="input text">';
             echo '<label>' . $label . '</label>';
-            echo '<p>'.__d('admin', 'To_save_long_description_press_save_and_then_edit_manufacturer.').'</p>';
+            echo '<p>'.__('To_save_long_description_press_save_and_then_edit_manufacturer.').'</p>';
             echo '</div>';
         } else {
             echo $this->Form->control('Manufacturers.description', [
                 'type' => 'textarea',
-                'label' => $label . '<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+                'label' => $label . '<br /><br /><span class="small">'.__('Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
                 'escape' => false,
             ]);
         }
@@ -198,13 +198,13 @@ if ($identity->isManufacturer()) {
     }
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        echo '<h2>'.__d('admin', 'Company_data') . ($imprintString != '' ? ' <span>'.__d('admin', 'for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right.').'</span>' : '') . '</h2>';
+        echo '<h2>'.__('Company_data') . ($imprintString != '' ? ' <span>'.__('for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right.').'</span>' : '') . '</h2>';
         echo $this->element('manufacturer/companyDetails');
     }
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo $this->Form->control('Manufacturers.uid_number', [
-        'label' => __d('admin', 'VAT_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
+        'label' => __('VAT_number').' <span class="after small">'.__('if_it_is_available').'</span>',
         'escape' => false,
         ]);
 
@@ -215,21 +215,21 @@ if ($identity->isManufacturer()) {
         $fileUploadExists = $fileUploadSrc !== false;
 
         echo '<div class="input fcs-upload">';
-        echo '<label>'.__d('admin', 'General_terms_and_conditions');
+        echo '<label>'.__('General_terms_and_conditions');
         echo '</label>';
 
         echo '<div style="float:right;">';
         echo $this->Html->link(
-            '<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>',
+            '<span style="padding:8px;float:left;">' . ($fileUploadExists ? __('Change_general_terms_and_conditions') : __('Upload_general_terms_and_conditions')).'</span>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light add-general-terms-and-conditions-button' . ($fileUploadExists ? ' uploaded' : ''),
-                'title' => __d('admin', 'Upload_general_terms_and_conditions_or_change_them'),
+                'title' => __('Upload_general_terms_and_conditions_or_change_them'),
                 'data-object-id' => $idForUpload,
                 'escape' => false
             ]
         );
-        echo ' <span class="after small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
+        echo ' <span class="after small">'.__('If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
         echo '</div>';
         echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
         $this->Form->unlockField('Manufacturers.tmp_general_terms_and_conditions');
@@ -237,36 +237,36 @@ if ($identity->isManufacturer()) {
 
         if ($fileUploadExists) {
             echo $this->Form->control('Manufacturers.delete_general_terms_and_conditions', [
-                'label' => __d('admin', 'Delete_general_terms_and_conditions?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+                'label' => __('Delete_general_terms_and_conditions?'). '<span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
                 'type' => 'checkbox',
                 'escape' => false,
             ]);
         }
 
         echo $this->Form->control('Manufacturers.firmenbuchnummer', [
-        'label' => __d('admin', 'Commercial_register_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
+        'label' => __('Commercial_register_number_admin').' <span class="after small">'.__('if_it_is_available').'</span>',
         'escape' => false,
         ]);
 
         echo $this->Form->control('Manufacturers.firmengericht', [
-        'label' => __d('admin', 'Company_court').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
+        'label' => __('Company_court').' <span class="after small">'.__('if_it_is_available').'</span>',
         'escape' => false,
         ]);
 
         echo $this->Form->control('Manufacturers.aufsichtsbehoerde', [
-        'label' => __d('admin', 'Supervisory_authority').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
+        'label' => __('Supervisory_authority').' <span class="after small">'.__('if_it_is_available').'</span>',
         'escape' => false,
         ]);
 
         echo $this->Form->control('Manufacturers.kammer', [
-        'placeholder' => __d('admin', 'e. g. chamber_of_agriculture'),
-        'label' => __d('admin', 'Chamber').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
+        'placeholder' => __('e. g. chamber_of_agriculture'),
+        'label' => __('Chamber').' <span class="after small">'.__('if_it_is_available').'</span>',
         'escape' => false,
         ]);
 
         echo $this->Form->control('Manufacturers.additional_text_for_invoice', [
         'type' => 'textarea',
-        'label' => __d('admin', 'Additional_text_for_invoice') . '<br /><br /><span class="small">'.__d('admin', 'Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice.').'<br />'.__d('admin', 'Example_for_additional_invoice_text').'</span>',
+        'label' => __('Additional_text_for_invoice') . '<br /><br /><span class="small">'.__('Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice.').'<br />'.__('Example_for_additional_invoice_text').'</span>',
         'cols' => 81,
         'escape' => false,
         ]);
@@ -292,7 +292,7 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo $this->element('fileUploadForm', [
         'id' => $idForUpload,
         'action' => '/admin/tools/doTmpFileUpload/',
-        'fileName' => __d('admin', 'Filename_General-terms-and-conditions').'.pdf',
+        'fileName' => __('Filename_General-terms-and-conditions_admin').'.pdf',
         'fileUploadExists' => $fileUploadExists,
         'existingFileUploadSrc' => $fileUploadSrc,
     ]);

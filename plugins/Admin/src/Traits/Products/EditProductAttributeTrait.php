@@ -56,7 +56,7 @@ trait EditProductAttributeTrait
         if ($deleteProductAttribute) {
             $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
             $productAttributesTable->deleteProductAttribute($productId, $productAttributeId);
-            $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
+            $actionLogMessage = __('The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
                 '<b>' . $attributeName . '</b>',
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
@@ -84,7 +84,7 @@ trait EditProductAttributeTrait
             } catch (\Exception $e) {
                 return $this->sendAjaxError($e);
             }
-            $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully.', [
+            $actionLogMessage = __('The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully.', [
                 '<b>' . $attributeName . '</b>',
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',

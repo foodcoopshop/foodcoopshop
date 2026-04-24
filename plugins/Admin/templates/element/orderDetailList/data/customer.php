@@ -29,7 +29,7 @@ echo '<td class="customer-field">';
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light order-detail-customer-edit-button',
-                    'title' => __d('admin', 'Click_to_change_member'),
+                    'title' => __('Click_to_change_member'),
                     'escape' => false
                 ]
             );

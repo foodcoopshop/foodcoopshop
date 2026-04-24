@@ -53,7 +53,7 @@ trait EditProductNameTrait
 
         $orderDetailsTable->save($entity);
 
-        $message = __d('admin', 'The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}.', [
+        $message = __('The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}.', [
             '<b>' . $oldName . '</b>',
             '<b>' . $productName . '</b>',
         ]);

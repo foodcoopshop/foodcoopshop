@@ -31,7 +31,7 @@ trait GenerateMemberCardsTrait
         $customerId = $this->identity->getId();
         $pdfWriter = new MyMemberCardPdfWriterService();
         $customers = $pdfWriter->getMemberCardCustomerData([$customerId]);
-        $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
+        $pdfWriter->setFilename(__('Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
         $pdfWriter->setData([
             'customers' => $customers,
         ]);
@@ -43,7 +43,7 @@ trait GenerateMemberCardsTrait
         $customerIds = h($this->getRequest()->getQuery('customerIds'));
         $customerIds = explode(',', $customerIds);
         $pdfWriter = new MemberCardsPdfWriterService();
-        $pdfWriter->setFilename(__d('admin', 'Members') . ' ' . Configure::read('appDb.FCS_APP_NAME').'.pdf');
+        $pdfWriter->setFilename(__('Members') . ' ' . Configure::read('appDb.FCS_APP_NAME').'.pdf');
         $pdfWriter->setData([
             'customers' => $pdfWriter->getMemberCardCustomerData($customerIds),
         ]);

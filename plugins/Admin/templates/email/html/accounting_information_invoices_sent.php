@@ -23,7 +23,7 @@ use App\Model\Entity\Payment;
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 10px;">
-            <p><?php echo __d('admin', 'Dear_financial_responsible'); ?>,</p>
+            <p><?php echo __('Dear_financial_responsible'); ?>,</p>
         </td>
     </tr>
 
@@ -31,7 +31,7 @@ use App\Model\Entity\Payment;
         <td>
 
             <p>
-                <?php echo __d('admin', 'Here_you_find_the_overview_for_making_the_transfers:'); ?><br />
+                <?php echo __('Here_you_find_the_overview_for_making_the_transfers:'); ?><br />
                 <?php $formattedCurrentDay = $this->MyTime->formatToDateShort($cronjobRunDay); ?>
                 <?php $link = Configure::read('App.fullBaseUrl') . $this->Slug->getActionLogsList() . '?types[]=cronjob_send_invoices&dateFrom='.$formattedCurrentDay.'&dateTo='.$formattedCurrentDay; ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
@@ -39,13 +39,13 @@ use App\Model\Entity\Payment;
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p>
-                    <?php echo __d('admin', 'This_is_a_great_opportunity_to_check_the_credit_uploads_link_below.')?><br />
+                    <?php echo __('This_is_a_great_opportunity_to_check_the_credit_uploads_link_below.')?><br />
                     <?php $link = Configure::read('App.fullBaseUrl').$this->Slug->getReport(Payment::TYPE_PRODUCT); ?>
-                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a> <?php echo __d('admin', '(Link_only_works_for_superadmins).'); ?>
+                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a> <?php echo __('(Link_only_works_for_superadmins).'); ?>
                 </p>
             <?php } ?>
 
-            <p><?php echo __d('admin', 'Thank_you_very_much_for_your_work!'); ?></p>
+            <p><?php echo __('Thank_you_very_much_for_your_work!'); ?></p>
 
         </td>
 

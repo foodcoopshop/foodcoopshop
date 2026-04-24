@@ -15,22 +15,22 @@ declare(strict_types=1);
  */
 
 echo $this->Form->control('Manufacturers.address_manufacturer.firstname', [
-    'label' => __d('admin', 'Firstname'),
+    'label' => __('Firstname'),
 ]);
 echo $this->Form->control('Manufacturers.address_manufacturer.lastname', [
-    'label' => __d('admin', 'Lastname'),
+    'label' => __('Lastname'),
 ]);
 echo $this->Form->control('Manufacturers.address_manufacturer.address1', [
-    'label' => __d('admin', 'Street_and_number'),
+    'label' => __('Street_and_number'),
 ]);
 echo $this->Form->control('Manufacturers.address_manufacturer.address2', [
-    'label' => __d('admin', 'Additional_address_information'),
+    'label' => __('Additional_address_information'),
 ]);
 echo $this->Form->control('Manufacturers.address_manufacturer.postcode', [
-    'label' => __d('admin', 'Zip'),
+    'label' => __('Zip'),
 ]);
 echo $this->Form->control('Manufacturers.address_manufacturer.city', [
-    'label' => __d('admin', 'City'),
+    'label' => __('City'),
 ]);
 
 ?>

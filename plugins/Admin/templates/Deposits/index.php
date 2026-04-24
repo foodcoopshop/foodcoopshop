@@ -33,20 +33,20 @@ $this->element('addScript', [
             'type' => 'select',
             'label' => '',
             'options' => $manufacturersForDropdown,
-            'empty' => __d('admin', 'All_manufacturers'),
+            'empty' => __('All_manufacturers'),
             'default' => $manufacturerId != '' ? $manufacturerId : ''
             ]);
         }
         ?>
         <div class="right">
-            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_deposit'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_deposit'))]); ?>
         </div>
     <?php echo $this->Form->end(); ?>
 </div>
 
 <?php
 if (empty($manufacturer)) {
-    echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
+    echo '<h2 class="info">'.__('Please_chose_a_manufacturer.').'</h2>';
     return;
 }
 
@@ -55,7 +55,7 @@ echo '<div class="add-payment-deposit-wrapper">';
         'script' => Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();"
     ]);
     echo $this->element('addDepositPaymentOverlay', [
-        'buttonText' => __d('admin', 'Add_return_of_empty_glasses'),
+        'buttonText' => __('Add_return_of_empty_glasses'),
         'objectId' => $manufacturer->id_manufacturer,
         'userName' => $manufacturer->name,
         'manufacturerId' => $manufacturer->id_manufacturer
@@ -64,14 +64,14 @@ echo '<div class="add-payment-deposit-wrapper">';
     echo '<div class="sc"></div>';
 
     if (empty($deposits)) {
-        echo '<h2 class="info">'.__d('admin', 'Since_{0}_there_was_no_deposit_delivered_or_returned.', [date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate')))]).'</h2>';
+        echo '<h2 class="info">'.__('Since_{0}_there_was_no_deposit_delivered_or_returned.', [date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate')))]).'</h2>';
     } else {
         echo '<table class="list no-clone-last-row">';
 
         echo '<tr class="sort">';
-            echo '<th class="right">'.__d('admin', 'Month').'</th>';
-            echo '<th class="right">'.__d('admin', 'Product_with_deposit_delivered').'</th>';
-            echo '<th class="right">'.__d('admin', 'Empty_glasses_returned').'</th>';
+            echo '<th class="right">'.__('Month').'</th>';
+            echo '<th class="right">'.__('Product_with_deposit_delivered').'</th>';
+            echo '<th class="right">'.__('Empty_glasses_returned').'</th>';
         echo '</tr>';
 
         foreach ($deposits as $monthAndYear => $deposit) {
@@ -84,11 +84,11 @@ echo '<div class="add-payment-deposit-wrapper">';
                 echo '<td class="right">';
             if (isset($deposit['delivered'])) {
                 echo $this->Html->link(
-                    '<i class="fas fa-search ok"></i> '  . __d('admin', 'Details'),
+                    '<i class="fas fa-search ok"></i> '  . __('Details'),
                     '/admin/order-details/?manufacturerId='.$manufacturerId.'&pickupDay[]='.$deposit['dateFrom'].'&pickupDay[]='.$deposit['dateTo'].'&deposit=1',
                     [
                         'class' => 'btn btn-outline-light',
-                        'title' => __d('admin', 'Show_details'),
+                        'title' => __('Show_details'),
                         'style' => 'float:left;',
                         'escape' => false
                     ]
@@ -106,11 +106,11 @@ echo '<div class="add-payment-deposit-wrapper">';
                 echo '<td class="'.implode(' ', $classes).'">';
                     if (isset($deposit['returned'])) {
                         echo $this->Html->link(
-                            '<i class="fas fa-search ok"></i> ' . __d('admin', 'Details'),
+                            '<i class="fas fa-search ok"></i> ' . __('Details'),
                             $identity->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear),
                             [
                                 'class' => 'btn btn-outline-light',
-                                'title' => __d('admin', 'Show_details'),
+                                'title' => __('Show_details'),
                                 'style' => 'float:left;',
                                 'escape' => false
                             ]
@@ -125,8 +125,8 @@ echo '<div class="add-payment-deposit-wrapper">';
 
         echo '<tr class="fake-th">';
             echo '<td></td>';
-            echo '<td class="right"><b>'.__d('admin', 'Delivered_deposit').'</b></td>';
-            echo '<td class="right"><b>'.__d('admin', 'Returned_deposit').'</b></td>';
+            echo '<td class="right"><b>'.__('Delivered_deposit').'</b></td>';
+            echo '<td class="right"><b>'.__('Returned_deposit').'</b></td>';
         echo '</tr>';
 
         echo '<tr>';
@@ -144,7 +144,7 @@ echo '<div class="add-payment-deposit-wrapper">';
         echo '</tr>';
 
         echo '<tr>';
-            echo '<td colspan="2" class="right"><b>'.__d('admin', 'Your_deposit_balance').'</td>';
+            echo '<td colspan="2" class="right"><b>'.__('Your_deposit_balance').'</td>';
             $depositCreditBalance = $sumDepositsDelivered + $sumDepositsReturned;
             $depositCreditBalanceClasses = ['right'];
             if ((float) $depositCreditBalance < 0) {

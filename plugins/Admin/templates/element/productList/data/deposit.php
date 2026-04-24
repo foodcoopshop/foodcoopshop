@@ -29,7 +29,7 @@ echo '<td>';
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light product-deposit-edit-button',
-                    'title' => __d('admin', 'change_deposit'),
+                    'title' => __('change_deposit'),
                     'escape' => false
                 ]
             );

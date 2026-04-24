@@ -36,7 +36,7 @@ use App\Model\Entity\Payment;
         </div>
     </div>
 
-    <p style="padding-top:10px;"><b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
+    <p style="padding-top:10px;"><b><?php echo __('Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
 
 <?php
 
@@ -46,10 +46,10 @@ echo $this->Html->link('<i class="fas ' . $icon . '"></i> ' . $buttonText, 'java
     'escape' => false
 ]);
 echo '<div id="add-payment-form" class="add-payment-form">';
-echo '<h3>'.__d('admin', 'Add_new_payment').'</h3>';
-echo '<p>'.__d('admin', 'Please_enter_the_amount_that_you_just_transfered_to_our_bank_account.').'</p>';
+echo '<h3>'.__('Add_new_payment').'</h3>';
+echo '<p>'.__('Please_enter_the_amount_that_you_just_transfered_to_our_bank_account.').'</p>';
 echo $this->Form->control('Payments.amount', [
-    'label' => __d('admin', 'Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
+    'label' => __('Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
     'type' => 'number',
     'step' => '0.01'
 ]);
@@ -60,11 +60,11 @@ echo '<br />';
 
 if ($paymentType == Payment::TYPE_PRODUCT && $identity->isSuperadmin()) {
 
-    echo '<p style="margin-top:-10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
+    echo '<p style="margin-top:-10px;">'.__('If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
     echo $this->Form->control('Payments.approval_comment', [
-        'placeholder' => __d('admin', 'Optional'),
+        'placeholder' => __('Optional'),
         'type' => 'textarea',
-        'label' => __d('admin', 'Comment'),
+        'label' => __('Comment'),
     ]);
 
     $i = 0;

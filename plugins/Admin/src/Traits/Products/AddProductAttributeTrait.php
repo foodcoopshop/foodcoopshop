@@ -57,7 +57,7 @@ trait AddProductAttributeTrait
         }
 
         if (isset($attribute)) {
-            $actionLogMessage = __d('admin', 'The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created.', [
+            $actionLogMessage = __('The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created.', [
                 '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>',
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>'

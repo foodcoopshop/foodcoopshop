@@ -25,13 +25,13 @@ declare(strict_types=1);
         <td>
 
             <p>
-                <?php echo __d('admin', 'New_pickup_day'); ?>: <b><?php echo $newPickupDay; ?></b><br />
-                <?php echo __d('admin', 'Old_pickup_day'); ?>: <?php echo $oldPickupDay; ?>
+                <?php echo __('New_pickup_day_admin'); ?>: <b><?php echo $newPickupDay; ?></b><br />
+                <?php echo __('Old_pickup_day'); ?>: <?php echo $oldPickupDay; ?>
             </p>
 
             <?php if ($editPickupDayReason != '') { ?>
             <p>
-                <?php echo __d('admin', 'Why_was_the_pickup_day_changed?'); ?><br />
+                <?php echo __('Why_was_the_pickup_day_changed?'); ?><br />
                 <b><?php echo '"' . $editPickupDayReason . '"'; ?></b>
             </p>
             <?php } ?>
@@ -39,9 +39,9 @@ declare(strict_types=1);
             <p>
             <?php
             if (count($orderDetails) == 1) {
-                echo __d('admin', 'The_following_product_is_affected');
+                echo __('The_following_product_is_affected');
             } else {
-                echo __d('admin', 'The_following_{0}_products_are_affected', [count($orderDetails)]);
+                echo __('The_following_{0}_products_are_affected', [count($orderDetails)]);
             }
             ?>:</p>
             <ul style="padding-left:10px;">

@@ -57,7 +57,7 @@ class FeedbacksController extends AdminAppController
     public function myFeedback(): ?Response
     {
         $this->customerId = $this->identity->getId();
-        $this->set('title_for_layout', __d('admin', 'My_feedback'));
+        $this->set('title_for_layout', __('My_feedback'));
         $this->isOwnForm = true;
         $this->_processForm();
         if (empty($this->getRequest()->getData())) {
@@ -79,7 +79,7 @@ class FeedbacksController extends AdminAppController
         if ($manufacturer !== null) {
             $name = $manufacturer->name;
         }
-        $this->set('title_for_layout', __d('admin', 'Feedback_from_{0}', [$name]));
+        $this->set('title_for_layout', __('Feedback_from_{0}', [$name]));
         $this->isOwnForm = false;
         $this->_processForm();
         if (empty($this->getRequest()->getData())) {
@@ -155,7 +155,7 @@ class FeedbacksController extends AdminAppController
         }
 
         if ($feedback->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('feedback', $feedback);
             return $this->render('form');
         } else {
@@ -171,13 +171,13 @@ class FeedbacksController extends AdminAppController
                 $feedbacksTable->delete($feedback);
                 $actionLogType = 'user_feedback_deleted';
                 if ($this->isOwnForm) {
-                    $message = __d('admin', 'Your_feedback_has_been_{0}.', [
-                        __d('admin', 'deleted'),
+                    $message = __('Your_feedback_has_been_{0}.', [
+                        __('deleted_admin'),
                     ]);
                 } else {
-                    $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                    $message = __('The_feedback_of_{0}_has_been_{1}.', [
                         '<b>' . $userNameForActionLog . '</b>',
-                        __d('admin', 'deleted'),
+                        __('deleted_admin'),
                     ]);
                 }
                 $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
@@ -201,9 +201,9 @@ class FeedbacksController extends AdminAppController
                     $feedback->approved = $valueForApproved;
                     if (!$wasApproved) {
                         $actionLogType = 'user_feedback_approved';
-                        $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                        $message = __('The_feedback_of_{0}_has_been_{1}.', [
                             '<b>' . $userNameForActionLog . '</b>',
-                            __d('admin', 'approved'),
+                            __('approved'),
                         ]);
                         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                     }
@@ -215,19 +215,19 @@ class FeedbacksController extends AdminAppController
             }
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'user_feedback_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'user_feedback_changed';
             }
 
             if ($this->isOwnForm) {
-                $message = __d('admin', 'Your_feedback_has_been_{0}.', [
+                $message = __('Your_feedback_has_been_{0}.', [
                     $messageSuffix,
                 ]);
             } else {
-                $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                $message = __('The_feedback_of_{0}_has_been_{1}.', [
                     '<b>' . $userNameForActionLog . '</b>',
                     $messageSuffix,
                 ]);

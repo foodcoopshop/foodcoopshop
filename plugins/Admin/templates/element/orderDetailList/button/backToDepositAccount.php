@@ -20,7 +20,7 @@ if ($deposit != '') {
     if ($identity->isManufacturer()) {
         $depositOverviewUrl = $this->Slug->getMyDepositList();
     }
-    echo '<a class="dropdown-item" href="'.$depositOverviewUrl.'"><i class="fas fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
+    echo '<a class="dropdown-item" href="'.$depositOverviewUrl.'"><i class="fas fa-arrow-circle-left"></i> ' . __('Back_to_deposit_account') . '</a>';
 }
 
 ?>

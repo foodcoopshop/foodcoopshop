@@ -36,13 +36,13 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($identity->isManufacturer() || $identity->isSuperadmin() || $identity->isAdmin()) { ?>
-                <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogsTable->getTypesForDropdown($identity), 'data-val' => join(',', $types)]); ?>
+                <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __('all_activities'), 'label' => '', 'options' => $actionLogsTable->getTypesForDropdown($identity), 'data-val' => join(',', $types)]); ?>
             <?php } ?>
             <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_users'), 'options' => []]); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __('all_users'), 'options' => []]); ?>
             <?php } ?>
             <?php if ($identity->isManufacturer() || $identity->isSuperadmin() || $identity->isAdmin()) { ?>
-                <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
+                <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __('all_products'), 'options' => []]); ?>
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
@@ -59,10 +59,10 @@ $this->Paginator->setPaginated($actionLogs);
 echo '<table class="list no-hover">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('ActionLogs.id', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.type', __d('admin', 'Action_log_type')) . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.date', __d('admin', 'Date')) . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.text', __d('admin', 'Text')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'User')) . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.type', __('Action_log_type')) . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.date', __('Date')) . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.text', __('Text')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('User')) . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -125,14 +125,14 @@ foreach ($actionLogs as $actionLog) {
     // products
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'products' && ! ($actionLog->type == 'product_set_inactive')) {
         $showLink = true;
-        $title = __d('admin', 'Show_product');
+        $title = __('Show_product');
         $url = $this->Slug->getProductDetail($actionLog->object_id, '');
     }
 
     // manufacturers
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'manufacturers') {
         $showLink = true;
-        $title = __d('admin', 'Show_manufacturer');
+        $title = __('Show_manufacturer');
         $url = $this->Slug->getManufacturerDetail($actionLog->object_id, '');
     }
 
@@ -141,7 +141,7 @@ foreach ($actionLogs as $actionLog) {
         'blog_post_deleted'
     ]))) {
         $showLink = true;
-        $title = __d('admin', 'Show_blog_post');
+        $title = __('Show_blog_post');
         $url = $this->Slug->getBlogPostDetail($actionLog->object_id, '');
     }
 
@@ -150,7 +150,7 @@ foreach ($actionLogs as $actionLog) {
         'page_deleted'
     ]))) {
         $showLink = true;
-        $title = __d('admin', 'Show_page');
+        $title = __('Show_page');
         $url = $this->Slug->getPageDetail($actionLog->object_id, '');
     }
 
@@ -159,7 +159,7 @@ foreach ($actionLogs as $actionLog) {
         'category_deleted'
     ]))) {
         $showLink = true;
-        $title = __d('admin', 'Show_category');
+        $title = __('Show_category');
         $url = $this->Slug->getCategoryDetail($actionLog->object_id, '');
     }
 
@@ -181,7 +181,7 @@ foreach ($actionLogs as $actionLog) {
 }
 
 echo '<tr>';
-echo '<td colspan="10"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
+echo '<td colspan="10"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b> '.__('records').'</td>';
 echo '</tr>';
 
 echo '</table>';

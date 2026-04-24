@@ -21,7 +21,7 @@ use App\Model\Entity\Cronjob;
 $this->element('addScript', [ 'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();".
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Configurations')."');
     "
 ]);
 ?>
@@ -30,8 +30,8 @@ $this->element('addScript', [ 'script' =>
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
         <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -57,33 +57,33 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 echo '<h1>' . $cronjob->name . '</h1>';
 
 echo $this->Form->control('Cronjobs.time_interval', [
-    'label' => __d('admin', 'Time_interval'),
+    'label' => __('Time_interval'),
     'type' => 'select',
     'options' => $timeIntervals,
 ]);
 
 echo $this->Form->control('Cronjobs.day_of_month', [
-    'label' => __d('admin', 'Day_of_month'),
+    'label' => __('Day_of_month'),
     'type' => 'select',
-    'empty' => __d('admin', 'Please_select...'),
+    'empty' => __('Please_select...'),
     'options' => $daysOfMonth,
 ]);
 
 echo $this->Form->control('Cronjobs.weekday', [
-    'label' => __d('admin', 'Weekday'),
+    'label' => __('Weekday'),
     'type' => 'select',
-    'empty' => __d('admin', 'Please_select...'),
+    'empty' => __('Please_select...'),
     'options' => $weekdays,
 ]);
 
 echo $this->Form->control('Cronjobs.not_before_time', [
-    'label' => __d('admin', 'Not_before_time').' <span class="after small">'.__d('admin', 'Cronjob_is_called_up_to_10_min_after_the_given_time.').'</span>',
+    'label' => __('Not_before_time').' <span class="after small">'.__('Cronjob_is_called_up_to_10_min_after_the_given_time.').'</span>',
     'type' => 'time',
     'escape' => false,
 ]);
 
 echo $this->Form->control('Cronjobs.active', [
-    'label' => __d('admin', 'Active'),
+    'label' => __('Active'),
     'type' => 'checkbox',
 ]);
 
@@ -91,7 +91,7 @@ if ($cronjob->id == Cronjob::SEND_INVOICES_TO_MANUFACTURERS_ID && Configure::rea
     $date = DateTime::createFromFormat('m-d', Configure::read('app.extraBillingDayForManufacturers'));
     if ($date !== false) {
         echo '<h2 class="info" style="margin-bottom: 10px;">';
-            echo __d('admin', 'Extra billing') . ': ';
+            echo __('Extra billing') . ': ';
             echo $date->format('d') . '. ' . Configure::read('app.timeHelper')->getMonthName((int)$date->format('m'));
         echo '</h2>';
     }

@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
 $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init(); " .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('" . __d('admin', 'Website_administration') . "', '" . __d('admin', 'Configurations') . "');
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('" . __('Website_administration') . "', '" . __('Configurations') . "');
     "
 ]);
 
@@ -50,13 +50,13 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>' . __d('admin', 'Name') . '</th>';
-echo '<th>' . __d('admin', 'Time_interval') . '</th>';
-echo '<th style="text-align:center;">' . __d('admin', 'Day_of_month') . '</th>';
-echo '<th>' . __d('admin', 'Weekday') . '</th>';
-echo '<th style="text-align:center;">' . __d('admin', 'Not_before_time') . '</th>';
-echo '<th>' . __d('admin', 'Active') . '</th>';
-echo '<th>' . __d('admin', 'Last_run') . '</th>';
+echo '<th>' . __('Name') . '</th>';
+echo '<th>' . __('Time_interval') . '</th>';
+echo '<th style="text-align:center;">' . __('Day_of_month') . '</th>';
+echo '<th>' . __('Weekday') . '</th>';
+echo '<th style="text-align:center;">' . __('Not_before_time') . '</th>';
+echo '<th>' . __('Active') . '</th>';
+echo '<th>' . __('Last_run') . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -78,7 +78,7 @@ foreach ($cronjobs as $cronjob) {
         $this->Slug->getCronjobEdit($cronjob->id),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
@@ -149,7 +149,7 @@ foreach ($cronjobs as $cronjob) {
 }
 
 echo '<tr>';
-echo '<td colspan="8"><b>' . $i . '</b> ' . __d('admin', '{0,plural,=1{record} other{records}}', $i) . '</td>';
+echo '<td colspan="8"><b>' . $i . '</b> ' . __('{0,plural,=1{record} other{records}}', $i) . '</td>';
 echo '</tr>';
 
 echo '</table>';

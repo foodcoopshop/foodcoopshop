@@ -36,7 +36,7 @@ class CategoriesController extends AdminAppController
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add_category'));
+        $this->set('title_for_layout', __('Add_category'));
 
         $this->set('disabledSelectCategoryIds', []);
 
@@ -59,7 +59,7 @@ class CategoriesController extends AdminAppController
         if (empty($category)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_category'));
+        $this->set('title_for_layout', __('Edit_category'));
 
         $categoryChildren = $categoriesTable->find('all')->find('children', for: $categoryId);
 
@@ -96,17 +96,17 @@ class CategoriesController extends AdminAppController
         $categoriesTable = $this->getTableLocator()->get('Categories');
         $category = $categoriesTable->patchEntity($category, $this->getRequest()->getData());
         if ($category->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('category', $category);
             return $this->render('edit');
         } else {
             $category = $categoriesTable->save($category);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'category_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'category_changed';
             }
 
@@ -123,9 +123,9 @@ class CategoriesController extends AdminAppController
                 $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath());
                 $categoriesTable->delete($category);
                 $actionLogType = 'category_deleted';
-                $messageSuffix = __d('admin', 'deleted');
+                $messageSuffix = __('deleted_admin');
             }
-            $message = __d('admin', 'The_category_{0}_has_been_{1}.', ['<b>' . $category->name . '</b>', $messageSuffix]);
+            $message = __('The_category_{0}_has_been_{1}.', ['<b>' . $category->name . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $category->id_category, 'categories', $message);
             $this->Flash->success($message);
 
@@ -149,6 +149,6 @@ class CategoriesController extends AdminAppController
 
         $this->set('categories', $categories);
 
-        $this->set('title_for_layout', __d('admin', 'Categories'));
+        $this->set('title_for_layout', __('Categories'));
     }
 }

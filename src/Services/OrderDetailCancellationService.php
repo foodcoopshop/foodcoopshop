@@ -58,7 +58,7 @@ class OrderDetailCancellationService
                 ]
             )->first();
 
-            $message = __d('admin', 'Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled.', [
+            $message = __('Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled.', [
                 '<b>' . $orderDetail->product_name . '</b>',
                 '<b>' . $orderDetail->product->manufacturer->name . '</b>',
                 Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
@@ -86,7 +86,7 @@ class OrderDetailCancellationService
             $recipientNames = [];
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
-            $email->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name);
+            $email->setSubject(__('Product_was_cancelled').': ' . $orderDetail->product_name);
             $email->setViewVars([
                 'newsletterCustomer' => $orderDetail->customer,
                 'identity' => $identity,
@@ -121,16 +121,16 @@ class OrderDetailCancellationService
             }
 
             if (!empty($recipientNames)) {
-                $message .= ' '.__d('admin', 'An_email_was_sent_to_{0}.', [Text::toList($recipientNames)]);
+                $message .= ' '.__('An_email_was_sent_to_{0}.', [Text::toList($recipientNames)]);
             }
 
             if ($cancellationReason != '') {
-                $message .= ' '.__d('admin', 'Reason').': <b>"' . $cancellationReason . '"</b>';
+                $message .= ' '.__('Reason').': <b>"' . $cancellationReason . '"</b>';
             }
 
             if ($newQuantity !== false) {
                 $formattedNewQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newQuantity, $unitObject->name ?? '');
-                $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
+                $message .= ' ' . __('The_stock_was_increased_to_{0}.', [
                     $formattedNewQuantity,
                 ]);
             }
@@ -142,7 +142,7 @@ class OrderDetailCancellationService
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
         if ($orderDetailsCount > 1) {
-            $flashMessage = $orderDetailsCount . ' ' . __d('admin', '{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}', $orderDetailsCount);
+            $flashMessage = $orderDetailsCount . ' ' . __('{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}', $orderDetailsCount);
         }
 
         return $flashMessage;

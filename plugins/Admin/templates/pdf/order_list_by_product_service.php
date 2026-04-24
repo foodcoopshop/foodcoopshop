@@ -17,7 +17,7 @@ declare(strict_types=1);
 echo $this->element('pdf/order_list', [
     'pdf' => $pdf,
     'groupType' => 'product',
-    'groupTypeLabel' => __d('admin', 'product'),
+    'groupTypeLabel' => __('product'),
     'results' => $productResults,
     'manufacturer' => isset($manufacturer) ? $manufacturer : [],
     'currentDateForOrderLists' => isset($currentDateForOrderLists) ? $currentDateForOrderLists : null

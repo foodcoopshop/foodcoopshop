@@ -31,7 +31,7 @@ trait AddEditTrait
     {
         $this->edit($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
-        $this->set('title_for_layout', __d('admin', 'Edit_profile'));
+        $this->set('title_for_layout', __('Edit_profile'));
         if (empty($this->getRequest()->getData())) {
             return $this->render('edit');
         }
@@ -49,7 +49,7 @@ trait AddEditTrait
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add_manufacturer'));
+        $this->set('title_for_layout', __('Add_manufacturer'));
         $this->_processForm($manufacturer, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -77,7 +77,7 @@ trait AddEditTrait
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_manufacturer'));
+        $this->set('title_for_layout', __('Edit_manufacturer'));
         return $this->_processForm($manufacturer, true);
     }
 
@@ -116,7 +116,7 @@ trait AddEditTrait
             ]
         );
         if ($manufacturer->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('manufacturer', $manufacturer);
             return $this->render('edit');
         } else {
@@ -124,11 +124,11 @@ trait AddEditTrait
 
             if (!$isEditMode) {
                 $customer = [];
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'manufacturer_added';
             } else {
                 $customer = $manufacturersTable->getCustomerRecord($unchangedManufacturerAddress->email);
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'manufacturer_changed';
             }
 
@@ -163,7 +163,7 @@ trait AddEditTrait
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
+            $message = __('The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 

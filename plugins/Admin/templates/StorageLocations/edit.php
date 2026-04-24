@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('" . __d('admin', 'Website_administration') . "', '" . __d('admin', 'Configurations') . "');" .
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('" . __('Website_administration') . "', '" . __('Configurations') . "');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -30,10 +30,10 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-                    class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a
+                    class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a
                 href="javascript:void(0);"
                 class="btn btn-outline-light cancel"><i
-                    class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+                    class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
         <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -56,22 +56,22 @@ echo $this->Form->create($storageLocation, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('StorageLocations.name', [
-    'label' => __d('admin', 'Name'),
+    'label' => __('Name'),
 ]);
 echo $this->Form->control('StorageLocations.position', [
     'class' => 'short',
-    'label' => __d('admin', 'Rank'),
+    'label' => __('Rank'),
     'type' => 'text',
 ]);
 
 if ($this->request->getRequestTarget() != $this->Slug->getStorageLocationAdd()) {
     echo '<div class="warning">';
     echo $this->Form->control('StorageLocations.delete_storage_location', [
-        'label' => __d('admin', 'Delete storage location?') .
+        'label' => __('Delete storage location?') .
             '<span class="after small">' .
             ($productCount > 0 ?
-                __d('admin', 'Deleting is not possible. There are {0} products associated with this storage location.', $productCount) :
-                __d('admin', 'Check_and_do_not_forget_to_click_save_button.')
+                __('Deleting is not possible. There are {0} products associated with this storage location.', $productCount) :
+                __('Check_and_do_not_forget_to_click_save_button._admin')
             ).
             '</span>',
         'disabled' => ($productCount > 0 ? 'disabled' : ''),

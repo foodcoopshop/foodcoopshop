@@ -21,8 +21,8 @@ $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 
-$title = $results[0]['ManufacturerName'] . ': '.__d('admin', 'Order_list_grouped_by').' ' . $groupTypeLabel;
-$deliveryDateString = __d('admin', 'Delivery_day').': ' . $this->MyTime->getWeekdayName((int) date('N', strtotime($results[0]['OrderDetailPickupDay'])));
+$title = $results[0]['ManufacturerName'] . ': '.__('Order_list_grouped_by').' ' . $groupTypeLabel;
+$deliveryDateString = __('Delivery_day').': ' . $this->MyTime->getWeekdayName((int) date('N', strtotime($results[0]['OrderDetailPickupDay'])));
 $deliveryDateString .= ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($results[0]['OrderDetailPickupDay']));
 
 $pdf->infoTextForFooter = $results[0]['ManufacturerName'] . ', ' . $deliveryDateString;
@@ -45,11 +45,11 @@ $widths = [
     144
 ];
 $headers = [
-    __d('admin', 'Amount'),
-    __d('admin', 'Product'),
-    __d('admin', 'Price'),
-    __d('admin', 'Order_day'),
-    __d('admin', 'Member')
+    __('Amount'),
+    __('Product'),
+    __('Price'),
+    __('Order_day'),
+    __('Member')
 ];
 
 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -70,7 +70,7 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 
 $pdf->Ln(5);
-$html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
+$html = '<p>'.__('Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();

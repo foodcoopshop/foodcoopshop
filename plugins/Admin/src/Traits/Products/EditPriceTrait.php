@@ -58,7 +58,7 @@ trait EditPriceTrait
             return '';
         }
 
-        $message = __d('admin', 'The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:', [
+        $message = __('The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:', [
             count($changedOpenOrderDetails)
         ]);
 
@@ -132,7 +132,7 @@ trait EditPriceTrait
 
         $price = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('price'));
 
-        $successMessage = __d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
+        $successMessage = __('The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
         $additionalActionLogMessage = $this->applyPriceChangeToOpenOrders($ids, $price);
         if ($additionalActionLogMessage != '') {
             $successMessage .= '<br />' . $additionalActionLogMessage;
@@ -151,7 +151,7 @@ trait EditPriceTrait
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
 
-        $actionLogMessage = __d('admin', 'The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+        $actionLogMessage = __('The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
             '<b>' . $oldProduct->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>',
             $oldPrice,

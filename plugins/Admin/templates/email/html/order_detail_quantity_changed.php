@@ -26,22 +26,22 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                <?php echo __d('admin', 'The_weight_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?>
+                <?php echo __('The_weight_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li><?php echo __d('admin', 'Manufacturer'); ?>: <?php echo $oldOrderDetail->product->manufacturer->name; ?></b></li>
-                <li><?php echo __d('admin', 'Order_date'); ?>: <?php echo $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
-                <li><?php echo __d('admin', 'Old_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
-                <li><?php echo __d('admin', 'New_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
+                <li><?php echo __('Manufacturer'); ?>: <?php echo $oldOrderDetail->product->manufacturer->name; ?></b></li>
+                <li><?php echo __('Order_date'); ?>: <?php echo $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
+                <li><?php echo __('Old_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
+                <li><?php echo __('New_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
             </ul>
 
             <p>
-                <?php echo __d('admin', 'The_base_price_is_{0}.', [$this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount)]); ?>
+                <?php echo __('The_base_price_is_{0}.', [$this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount)]); ?>
             </p>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
+                <p><?php echo __('PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
             <?php } ?>
 
         </td>

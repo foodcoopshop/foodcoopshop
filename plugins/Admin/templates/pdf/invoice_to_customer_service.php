@@ -18,14 +18,14 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 $pdf->setTextHelper($this->Text);
-$pdf->infoTextForFooter = __d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber;
+$pdf->infoTextForFooter = __('Invoice_number_abbreviation_admin').': ' . $newInvoiceNumber;
 $pdf->AddPage();
 
 $html = '<h2>';
 if ($result->cancelledInvoice) {
-    $html .= __d('admin', 'Cancellation_invoice');
+    $html .= __('Cancellation_invoice');
 } else {
-    $html .=__d('admin', 'Invoice');
+    $html .=__('Invoice');
 }
 $html .= '</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
@@ -43,11 +43,11 @@ $html .= '<td width="272">';
 $html .= '</td>';
 
 $html .= '<td width="230" align="right">';
-    $html .= '<p style="font-weight:bold;">'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber;
+    $html .= '<p style="font-weight:bold;">'.__('Invoice_number_abbreviation_admin').': ' . $newInvoiceNumber;
     if ($result->cancelledInvoice) {
-        $html .= '<br />' . __d('admin', 'Cancellation_invoice') . ' ' .  __d('admin', 'for') .': ' . $result->cancelledInvoice->invoice_number . '<br />';
+        $html .= '<br />' . __('Cancellation_invoice') . ' ' .  __('for') .': ' . $result->cancelledInvoice->invoice_number . '<br />';
     }
-    $html .= '<br />' . __d('admin', 'Invoice_date').': ' . $invoiceDate . '</p>';
+    $html .= '<br />' . __('Invoice_date').': ' . $invoiceDate . '</p>';
     $html .= '</td>';
 $html .= '</tr></table>';
 
@@ -61,7 +61,7 @@ $pdf->renderTaxSumTable($result->tax_rates);
 
 if (!$result->cancelledInvoice) {
     $pdf->Ln(3);
-    $html = '<p>'.__d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
+    $html = '<p>'.__('{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
@@ -72,6 +72,6 @@ if (Configure::read('app.additionalTextForInvoice') != '') {
 
 if (!$result->cancelledInvoice && $paidInCash) {
     $pdf->Ln(3);
-    $html = '<p>'.__d('admin', 'Paid_in_cash_on_{0}.', [$invoiceDate]).'</p>';
+    $html = '<p>'.__('Paid_in_cash_on_{0}.', [$invoiceDate]).'</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
 }

@@ -45,7 +45,7 @@ foreach ($pages as $page) {
         $this->Slug->getPageEdit($page->id_page),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
@@ -120,7 +120,7 @@ foreach ($pages as $page) {
             $this->Slug->getPageDetail($page->id_page, $page->title),
             [
                 'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Show_page'),
+                'title' => __('Show_page'),
                 'target' => '_blank',
                 'escape' => false
             ]

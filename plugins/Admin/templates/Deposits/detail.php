@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Manufacturers')."', '".__d('admin', 'Deposit_account')."');".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Manufacturers_admin')."', '".__('Deposit_account')."');".
         Configure::read('app.jsNamespace') . ".ModalPaymentDelete.init();"
 ]);
 ?>
@@ -72,7 +72,7 @@ foreach ($payments as $payment) {
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light delete-payment-button',
-                    'title' => __d('admin', 'Delete_deposit_take_back?'),
+                    'title' => __('Delete_deposit_take_back?'),
                     'escape' => false
                 ]
             );

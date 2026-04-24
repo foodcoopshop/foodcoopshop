@@ -28,7 +28,7 @@ echo '<td>';
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-tax-edit-button',
-                'title' => __d('admin', 'change_tax_rate'),
+                'title' => __('change_tax_rate'),
                 'data-object-id' => $product->id_product,
                 'escape' => false
             ]

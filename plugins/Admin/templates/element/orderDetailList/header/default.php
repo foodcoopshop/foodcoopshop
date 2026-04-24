@@ -18,38 +18,38 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 echo '<th class="right">';
-    echo $sortOrLabel('OrderDetails.product_amount', __d('admin', 'Amount'));
+    echo $sortOrLabel('OrderDetails.product_amount', __('Amount'));
 echo '</th>';
 
 echo '<th>';
-    echo $sortOrLabel('OrderDetails.product_name', __d('admin', 'Product'));
+    echo $sortOrLabel('OrderDetails.product_name', __('Product'));
 echo '</th>';
 
 echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
-    echo $sortOrLabel('Manufacturers.name', __d('admin', 'Manufacturer'));
+    echo $sortOrLabel('Manufacturers.name', __('Manufacturer'));
 echo '</th>';
 
 echo '<th class="right">';
-    echo $sortOrLabel('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
+    echo $sortOrLabel('OrderDetails.total_price_tax_incl', __('Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled')) {
     echo '<th class="right">';
-        echo $sortOrLabel('OrderDetails.deposit', __d('admin', 'Deposit'));
+        echo $sortOrLabel('OrderDetails.deposit', __('Deposit'));
     echo '</th>';
 }
 
 echo '<th class="right">';
-    echo $sortOrLabel('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
+    echo $sortOrLabel('OrderDetailUnits.product_quantity_in_units', __('Weight'));
 echo '</th>';
 
-echo '<th>'.$sortOrLabel('CustomerNameForOrder', __d('admin', 'Member')).'</th>';
+echo '<th>'.$sortOrLabel('CustomerNameForOrder', __('Member')).'</th>';
 
 if (count($pickupDay) == 2) {
-    echo '<th>'.$sortOrLabel('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
+    echo '<th>'.$sortOrLabel('OrderDetails.pickup_day', __('Pickup_day')) . '</th>';
 }
 
-echo '<th>'.$sortOrLabel('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
+echo '<th>'.$sortOrLabel('OrderDetails.order_state', __('Status')).'</th>';
 echo '<th style="width:25px;"></th>';
 
 

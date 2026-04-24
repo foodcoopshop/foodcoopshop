@@ -35,7 +35,7 @@ if ($identity->isManufacturer()) {
 } else {
     $productImportUrl = $this->Slug->getProductImport($manufacturerId);
 }
-$buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import"></i> ' . __d('admin', 'Import_products') . '</a>';
+$buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import"></i> ' . __('Import_products') . '</a>';
 if (!empty($products)) {
     $buttons[] = $this->element('productList/button/exportAllProducts');
     $buttons[] = $this->element('productList/button/exportStockProducts');
@@ -44,7 +44,7 @@ if (!empty($products)) {
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
     'buttons' => $buttons,
-    'label' => __d('admin', 'Actions') . '...'
+    'label' => __('Actions') . '...'
 ]);
 
 ?>

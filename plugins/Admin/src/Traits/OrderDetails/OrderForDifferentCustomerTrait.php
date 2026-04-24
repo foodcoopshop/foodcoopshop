@@ -39,7 +39,7 @@ trait OrderForDifferentCustomerTrait
         if (! empty($orderCustomer)) {
             $this->getRequest()->getSession()->write('OrderIdentity', $orderCustomer);
         } else {
-            $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
+            $this->Flash->error(__('No_member_found_with_id_{0}.', [$customerId]));
         }
     }
 
@@ -57,12 +57,12 @@ trait OrderForDifferentCustomerTrait
 
     public function iframeInstantOrder(): void
     {
-        $this->set('title_for_layout', __d('admin', 'Instant_order'));
+        $this->set('title_for_layout', __('Instant_order'));
     }
 
     public function iframeSelfServiceOrder(): void
     {
-        $this->set('title_for_layout', __d('admin', 'Self_service_order'));
+        $this->set('title_for_layout', __('Self_service_order'));
     }
 
 }

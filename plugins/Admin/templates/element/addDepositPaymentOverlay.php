@@ -24,21 +24,21 @@ echo $this->Html->link(
     [
         'data-object-id' => $objectId,
         'class' => 'btn btn-outline-light add-payment-deposit-button with-text',
-        'title' => __d('admin', 'Add_deposit_amount'),
+        'title' => __('Add_deposit_amount'),
         'escape' => false
     ]
 );
 
 echo '<div id="add-payment-deposit-form-' . $objectId . '" class="add-payment-form add-payment-deposit-form">';
-echo '<h3>'.__d('admin', 'Add_deposit').'</h3>';
+echo '<h3>'.__('Add_deposit').'</h3>';
 
 if (isset($userName)) {
-    echo '<p>'.__d('admin', 'Add_deposit_amount_for_{0}', ['<b>' . $userName . '</b>']).':</p>';
+    echo '<p>'.__('Add_deposit_amount_for_{0}_admin', ['<b>' . $userName . '</b>']).':</p>';
 }
 
 if (isset($customerId)) {
     if (isset($showCustomerDropdown) && $showCustomerDropdown) {
-        echo '<p style="margin-bottom:0;">'.__d('admin', 'Add_deposit_amount_for').':</p>';
+        echo '<p style="margin-bottom:0;">'.__('Add_deposit_amount_for').':</p>';
         echo $this->Form->control('Payments.customerId', [
             'type' => 'select',
             'label' => '',
@@ -55,14 +55,14 @@ if (isset($customerId)) {
 
 if (isset($manufacturerId)) {
     if ($identity->isAdmin() || $identity->isManufacturer()) {
-        echo '<p style="margin-top:10px;">'.__d('admin', 'Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer.').'</p>';
+        echo '<p style="margin-top:10px;">'.__('Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer.').'</p>';
         echo $this->Form->hidden('Payments.text', [
             'value' => Payment::TEXT_EMPTY_GLASSES,
         ]);
     }
 
     if ($identity->isSuperadmin()) {
-        echo '<p style="margin-top:10px;">'.__d('admin', 'Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?').'</p>';
+        echo '<p style="margin-top:10px;">'.__('Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?').'</p>';
         echo '<div class="radio-group">';
             foreach ($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
                 echo '<div class="radio-wrapper">';
@@ -76,18 +76,18 @@ if (isset($manufacturerId)) {
 }
 
 echo $this->Form->control('Payments.amount', [
-    'label' => __d('admin', 'Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
+    'label' => __('Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
     'type' => 'number',
     'step' => '0.01',
 ]);
 
 if ($identity->isSuperadmin()) {
-    echo '<p style="margin-top:10px;">' . __d('admin', 'You can enter a negative amount if the manufacturer needs to pay money back to the initiative.') . '</p>';
+    echo '<p style="margin-top:10px;">' . __('You can enter a negative amount if the manufacturer needs to pay money back to the initiative.') . '</p>';
 }
 
 if (isset($manufacturerId)) {
     echo $this->Form->control('Payments.date_add', [
-        'label' => __d('admin', 'Date'),
+        'label' => __('Date'),
         'type' => 'text',
         'value' => date($this->Time->getI18Format('DateShortAlt'), $this->Time->getCurrentDay()),
         'class' => 'datepicker',

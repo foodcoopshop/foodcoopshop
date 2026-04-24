@@ -34,8 +34,8 @@ foreach($products as $product) {
     $pdf->table .= '<tr>';
     $pdf->table .= '<td>';
     $pdf->table .= '<b style="font-size:12px;">' . $product->name . '</b> <br />';
-    $pdf->table .= __d('admin', 'Price') . ': ' . $product->prepared_price . '<br />';
-    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:5px;">'.__d('admin', 'Manufacturer') . ': <b>' . $product->manufacturer->name . '</b> / ' . __d('admin', 'Product_ID') . ': <b>' . $product->id_product . '</b></td></tr></table>';
+    $pdf->table .= __('Price') . ': ' . $product->prepared_price . '<br />';
+    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:5px;">'.__('Manufacturer') . ': <b>' . $product->manufacturer->name . '</b> / ' . __('Product_ID') . ': <b>' . $product->id_product . '</b></td></tr></table>';
     $pdf->table .= '</td>';
     $pdf->table .= '</tr>';
     // END ROW with logo and name block

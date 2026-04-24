@@ -22,7 +22,7 @@ echo '<td style="text-align:center;width:54px;">';
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light add-product-attribute-button',
-                'title' => __d('admin', 'Add_new_attribute_for_product_{0}', [$product->unchanged_name]),
+                'title' => __('Add_new_attribute_for_product_{0}', [$product->unchanged_name]),
                 'escape' => false
             ]
         );

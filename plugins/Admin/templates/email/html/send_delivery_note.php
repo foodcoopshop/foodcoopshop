@@ -20,7 +20,7 @@ declare(strict_types=1);
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                <?php echo __d('admin', 'Hello'); ?> <?php echo $manufacturer->address_manufacturer->firstname; ?>,
+                <?php echo __('Hello'); ?> <?php echo $manufacturer->address_manufacturer->firstname; ?>,
             </td>
     </tr>
 
@@ -28,10 +28,10 @@ declare(strict_types=1);
         <td>
 
             <p>
-                <?php echo __d('admin', 'this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}.', [$invoicePeriodMonthAndYear]); ?>
+                <?php echo __('this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}.', [$invoicePeriodMonthAndYear]); ?>
             </p>
 
-            <p><b><?php echo __d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!'); ?></b></p>
+            <p><b><?php echo __('Thank_you_very_much_for_delivering_your_products_to_us!'); ?></b></p>
 
         </td>
 

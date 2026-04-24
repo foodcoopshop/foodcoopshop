@@ -68,17 +68,17 @@ trait EditProductsPickedUpTrait
 
         if (!empty($errorMessages)) {
             if (count($errorMessages) == 1) {
-                $message = __d('admin', 'The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight.', [
+                $message = __('The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight.', [
                     '<b>' . $errorMessages[0]['customerName'] . '</b>',
                     $errorMessages[0]['orderDetailsWithUnchangedWeight'],
                 ]);
             } else {
-                $message = __d('admin', 'The_following_customers_still_have_products_with_unchanged_weight:');
+                $message = __('The_following_customers_still_have_products_with_unchanged_weight:');
                 $message .= '<ul>';
                 foreach($errorMessages as $errorMessage) {
                     $message .= '<li>';
                         $message .= '<b>' . $errorMessage['customerName'] . '</b>: ';
-                        $message .= __d('admin', '{0,plural,=1{1_product} other{#_products}}', [
+                        $message .= __('{0,plural,=1{1_product} other{#_products}}', [
                             $errorMessage['orderDetailsWithUnchangedWeight'],
                         ]);
                     $message .= '</li>';
@@ -90,7 +90,7 @@ trait EditProductsPickedUpTrait
 
         $message = '';
         if (empty($result)) {
-            $message = __d('admin', 'Errors_while_saving!');
+            $message = __('Errors_while_saving!_admin');
         }
 
         $redirectUrl = '';

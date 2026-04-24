@@ -130,10 +130,10 @@ trait EditPurchasePriceTrait
             return $this->sendAjaxError($e);
         }
 
-        $messageString = __d('admin', 'Nothing_changed.');
+        $messageString = __('Nothing_changed.');
         if ($oldPrice != $newPrice) {
-            $messageString = __d('admin', 'The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
-            $actionLogMessage = __d('admin', 'The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+            $messageString = __('The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
+            $actionLogMessage = __('The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 $oldPrice,

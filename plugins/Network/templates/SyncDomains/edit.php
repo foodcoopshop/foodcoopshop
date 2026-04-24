@@ -30,15 +30,15 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fas fa-check"></i> <?php echo __d('network', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fas fa-times"></i> <?php echo __d('network', 'Cancel'); ?></a>
+            class="fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fas fa-times"></i> <?php echo __('Cancel'); ?></a>
     </div>
 </div>
 
 <div class="sc"></div>
 
 <?php if ($this->request->getRequestTarget() != $this->Network->getSyncDomainAdd()) { ?>
-    <h2 class="warning"><?php echo __d('network', 'Caution!_Editing_a_remote_foodcoop_can_result_in_problems_if_manufacturers_already_associated_products!'); ?></h2>
+    <h2 class="warning"><?php echo __('Caution!_Editing_a_remote_foodcoop_can_result_in_problems_if_manufacturers_already_associated_products!'); ?></h2>
 <?php } ?>
 
 <?php
@@ -52,7 +52,7 @@ echo $this->Form->create($syncDomain, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('SyncDomains.domain', [
-    'label' => __d('network', 'Remote_foodcoop') . ' <span class="after small">'.__d('network', 'Domain_of_the_foodcoop_needs_to_start_with_https').'</span>',
+    'label' => __('Remote_foodcoop') . ' <span class="after small">'.__('Domain_of_the_foodcoop_needs_to_start_with_https').'</span>',
     'required' => true,
     'escape' => false
 ]);
@@ -64,7 +64,7 @@ echo $this->Form->control('SyncDomains.active', [
 
 if ($this->request->getRequestTarget() != $this->Network->getSyncDomainAdd()) {
     echo $this->Form->control('SyncDomains.delete_sync_domain', [
-        'label' => __d('network', 'Delete_remote_foodcoop') . ' <span class="after small">'.__d('network', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'label' => __('Delete_remote_foodcoop') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._network').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

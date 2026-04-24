@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');" .
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Financial_reports')."');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
 ]);
 ?>
@@ -29,8 +29,8 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
     </div>
 </div>
 
@@ -44,24 +44,24 @@ echo $this->Form->create($orderDetail, [
 ]);
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<p><label>'.__d('admin', 'Member').'</label>' . $this->Html->getNameRespectingIsDeleted($orderDetail->customer) . '</p>';
-echo '<p><label>'.__d('admin', 'Amount').'</label>' . $this->Number->formatAsDecimal($orderDetail->product_amount, 0) . 'x</p>';
-echo '<p><label>'.__d('admin', 'Product').'</label>' . $orderDetail->product_name.'</p>';
-echo '<p><label>'.__d('admin', 'Weight').'</label>';
+echo '<p><label>'.__('Member').'</label>' . $this->Html->getNameRespectingIsDeleted($orderDetail->customer) . '</p>';
+echo '<p><label>'.__('Amount').'</label>' . $this->Number->formatAsDecimal($orderDetail->product_amount, 0) . 'x</p>';
+echo '<p><label>'.__('Product').'</label>' . $orderDetail->product_name.'</p>';
+echo '<p><label>'.__('Weight').'</label>';
     if (!empty($orderDetail->order_detail_unit)) {
         echo $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $orderDetail->order_detail_unit->unit_name;
     }
 echo '</p>';
-echo '<p><label>'.__d('admin', 'Pickup_day').'</label>' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .'</p>';
+echo '<p><label>'.__('Pickup_day').'</label>' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .'</p>';
 
 echo $this->Form->control('OrderDetails.order_detail_purchase_price.tax_rate', [
-    'label' => __d('admin', 'Tax_rate'),
+    'label' => __('Tax_rate_admin'),
     'type' => 'select',
     'options' => $taxesForDropdown,
 ]);
 
 echo $this->Form->control('OrderDetails.order_detail_purchase_price.total_price_tax_excl', [
-    'label' => __d('admin', 'Purchase_price_tax_excl'),
+    'label' => __('Purchase_price_tax_excl'),
     'step' => '0.01',
     'min' => '0.01',
 ]);

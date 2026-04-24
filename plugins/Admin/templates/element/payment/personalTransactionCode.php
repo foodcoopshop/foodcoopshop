@@ -18,11 +18,11 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
-    Configure::read('app.jsNamespace') . ".Admin.initCopyPersonalTransactionCodeToClipboardButton('" . __d('admin', 'Your_code_has_been_copied_successfully_into_the_clipboard.') . "');"
+    Configure::read('app.jsNamespace') . ".Admin.initCopyPersonalTransactionCodeToClipboardButton('" . __('Your_code_has_been_copied_successfully_into_the_clipboard.') . "');"
 ]);
 ?>
 
-<h2 class="info personal-transaction-code"><?php echo __d('admin', 'Please_add_this_code_to_your_transaction:_{0}', ['<b>' . $personalTransactionCode . '</b>']); ?>
+<h2 class="info personal-transaction-code"><?php echo __('Please_add_this_code_to_your_transaction:_{0}', ['<b>' . $personalTransactionCode . '</b>']); ?>
 <?php
     echo $this->Html->link(
         '<i class="far fa-fw fa-clone"></i>',
@@ -30,7 +30,7 @@ $this->element('addScript', [
         [
             'data-clipboard-text' => $personalTransactionCode,
             'class' => 'btn btn-outline-light btn-clipboard',
-            'title' => __d('admin', 'Copy_to_clipboard'),
+            'title' => __('Copy_to_clipboard'),
             'style' => 'float:right;margin-top:-5px;margin-right:-3px;',
             'escape' => false
         ]

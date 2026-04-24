@@ -58,7 +58,7 @@ trait EditIsStockProductTrait
             return $this->sendAjaxError($e);
         }
 
-        $this->Flash->success(__d('admin', 'The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
+        $this->Flash->success(__('The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

@@ -32,8 +32,8 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
             <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -51,38 +51,38 @@ echo $this->Form->create($page, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 echo $this->Form->control('Pages.title', [
-    'label' => __d('admin', 'Page_title'),
+    'label' => __('Page_title'),
     'required' => true
 ]);
 
 echo $this->Form->control('Pages.menu_type', [
     'type' => 'select',
-    'label' => __d('admin', 'Pages_menu_type_main_description').'<br /><span class="small">'. __d('admin', 'Pages_menu_type_sub_description').'</span>',
+    'label' => __('Pages_menu_type_main_description').'<br /><span class="small">'. __('Pages_menu_type_sub_description').'</span>',
     'options' => $this->Html->getMenuTypes(),
     'escape' => false
 ]);
 echo $this->Form->control('Pages.id_parent', [
     'type' => 'select',
-    'label' => __d('admin', 'Pages_parent_main_description').'<br /><span class="small">'.__d('admin', 'Pages_parent_sub_description').'</span>',
-    'empty' => __d('admin', 'Chose_parent_menu_item'),
+    'label' => __('Pages_parent_main_description').'<br /><span class="small">'.__('Pages_parent_sub_description').'</span>',
+    'empty' => __('Chose_parent_menu_item'),
     'options' => $pagesForSelect,
     'escape' => false
 ]);
 echo $this->Form->control('Pages.position', [
     'class' => 'short',
-    'label' => __d('admin', 'Pages_position_main_description').'<br /><span class="small">'.__d('admin', 'Pages_position_sub_description').'</span> <span class="after small">'.__d('admin', 'Pages_position_sub2_description').'</span>',
+    'label' => __('Pages_position_main_description').'<br /><span class="small">'.__('Pages_position_sub_description').'</span> <span class="after small">'.__('Pages_position_sub2_description').'</span>',
     'type' => 'text',
     'escape' => false
 ]);
 
 echo $this->Form->control('Pages.full_width', [
-    'label' => __d('admin', 'Pages_full_width_main_description') . ' <span class="after small">'.__d('admin', 'Pages_full_width_sub_description') . '</span>',
+    'label' => __('Pages_full_width_main_description') . ' <span class="after small">'.__('Pages_full_width_sub_description') . '</span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
 echo $this->Form->control('Pages.extern_url', [
-    'placeholder' => __d('admin', 'Example_given_abbreviation') . ' https://www.foodcoopshop.com',
-    'label' => __d('admin', 'Pages_extern_url_main_description') . '<br /><span class="small">'.__d('admin', 'Pages_extern_url_sub_description') . '</span>',
+    'placeholder' => __('Example_given_abbreviation') . ' https://www.foodcoopshop.com',
+    'label' => __('Pages_extern_url_main_description') . '<br /><span class="small">'.__('Pages_extern_url_sub_description') . '</span>',
     'div' => [
         'class' => 'long text input'
     ],
@@ -92,7 +92,7 @@ echo $this->Form->control('Pages.extern_url', [
 if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
     echo '<div class="warning">';
         echo $this->Form->control('Pages.delete_page', [
-            'label' => __d('admin', 'Pages_delete_page_main_description') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'label' => __('Pages_delete_page_main_description') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
@@ -100,17 +100,17 @@ if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
 }
 
 echo $this->Form->control('Pages.is_private', [
-    'label' => __d('admin', 'Only_for_members').'?',
+    'label' => __('Only_for_members').'?',
     'type' => 'checkbox'
 ]);
 echo $this->Form->control('Pages.active', [
-    'label' => __d('admin', 'Active').'?',
+    'label' => __('Active').'?',
     'type' => 'checkbox'
 ]);
 
 echo $this->Form->control('Pages.content', [
     'type' => 'textarea',
-    'label' => __d('admin', 'Text') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+    'label' => __('Text') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
 ]);
 

@@ -26,12 +26,12 @@ echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper">';
         'escape' => false
     ];
     $options['class'] = 'btn btn-outline-light';
-    echo $this->Html->link('<i class="fas fa-shopping-cart ok"></i> '.__d('admin', 'Instant_order_for_today'), 'javascript:void(0);', $options);
+    echo $this->Html->link('<i class="fas fa-shopping-cart ok"></i> '.__('Instant_order_for_today'), 'javascript:void(0);', $options);
     echo $this->Form->control('', [
         'type' => 'select',
         'label' => '',
         'id' => 'orderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
-        'empty' => __d('admin', 'chose_member...'),
+        'empty' => __('chose_member...'),
     ]);
 echo '</div>';

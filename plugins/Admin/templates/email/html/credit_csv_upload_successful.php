@@ -27,18 +27,18 @@ use Cake\Core\Configure;
 
             <p>
                 <?php
-                    echo __d('admin', 'Amount_(Money)') . ': ' . Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount);
+                    echo __('Amount_(Money)_admin') . ': ' . Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount);
                 ?>
             </p>
 
             <p>
                 <?php
-                    echo __d('admin', 'Date_when_payment_was_received_on_bank_account') . ': ' . $csvPayment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
+                    echo __('Date_when_payment_was_received_on_bank_account') . ': ' . $csvPayment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
                 ?>
             </p>
 
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __('Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
         </td>

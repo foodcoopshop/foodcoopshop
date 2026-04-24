@@ -28,7 +28,7 @@ echo '<td class="status">';
                 [
                     'class' => 'btn btn-outline-light set-status-to-inactive product-status-edit',
                     'id' => 'product-status-edit-' . $product->id_product,
-                    'title' => __d('admin', 'deactivate'),
+                    'title' => __('deactivate'),
                     'escape' => false
                 ]
             );
@@ -41,7 +41,7 @@ echo '<td class="status">';
                 [
                     'class' => 'btn btn-outline-light set-status-to-active product-status-edit',
                     'id' => 'product-status-edit-' . $product->id_product,
-                    'title' => __d('admin', 'activate'),
+                    'title' => __('activate'),
                     'escape' => false
                 ]
             );
@@ -51,7 +51,7 @@ echo '<td class="status">';
             empty($product->product_attributes) &&
             !$product->purchase_price_is_set
             ) {
-                echo '<i class="fas fa-exclamation not-ok purchase-price-not-set-info-text" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
+                echo '<i class="fas fa-exclamation not-ok purchase-price-not-set-info-text" title="' . __('Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
         }
 
     }

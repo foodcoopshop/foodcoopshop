@@ -75,7 +75,7 @@ trait DuplicateTrait
         }
 
         if (count($srcProducts) === 0) {
-            $message = __d('admin', 'No copyable products were found.');
+            $message = __('No copyable products were found.');
 
             $this->Flash->success($message);
 
@@ -90,7 +90,7 @@ trait DuplicateTrait
         foreach ($srcProducts as $srcProduct) {
             $preExistingCopies = $productsTable->find('all',
                 conditions: [
-                    $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                    $productsTable->aliasField('name LIKE') => __('{0} - copy {1}', [
                         $srcProduct->name,
                         '%',
                     ]),
@@ -115,7 +115,7 @@ trait DuplicateTrait
         }
 
         $this->getRequest()->getSession()->write('highlightedRowId', $copies[0]->id_product);
-        $message = __d('admin', '{0,plural,=1{Product was copied successfully.} other{Products were copied successfully.}}', [count($srcProducts)]);
+        $message = __('{0,plural,=1{Product was copied successfully.} other{Products were copied successfully.}}', [count($srcProducts)]);
 
         $this->Flash->success($message);
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
@@ -268,7 +268,7 @@ trait DuplicateTrait
      */
     public function configureCopy(Product $srcProduct, int $copyIndex, array $product): array
     {
-        $product['name'] = __d('admin', '{0} - copy {1}', [
+        $product['name'] = __('{0} - copy {1}', [
             $srcProduct->name,
             $copyIndex,
         ]);

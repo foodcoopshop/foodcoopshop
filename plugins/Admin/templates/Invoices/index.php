@@ -31,7 +31,7 @@ echo $this->element('autoPrintInvoice');
 
 if ($isOverviewMode) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
+        'script' => Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Financial_reports')."');"
     ]);
 }
 
@@ -48,11 +48,11 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
         <?php
             if ($isOverviewMode) {
-                echo $this->Form->control('customerIds', ['type' => 'select', 'multiple' => true, 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]);
+                echo $this->Form->control('customerIds', ['type' => 'select', 'multiple' => true, 'label' => '', 'placeholder' => __('all_members'), 'options' => []]);
             }
          ?>
         <div class="right">
-            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_infos_for_success'))]); ?>
         </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -65,10 +65,10 @@ if ($isOverviewMode) {
         'dateTo' => $dateTo,
     ]);
 }
-echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b>';
+echo '<p style="margin-top:15px;"><b>' . __('All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b>';
     if (Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
         echo $this->Html->link(
-            __d('admin', 'Show orders'),
+            __('Show orders'),
             '/admin/order-details/index/?pickupDay[]=' . $dateFrom.','.$dateTo . '&groupBy=customer&additionalFiltersEnabled=1',
             [
                 'class' => 'btn btn-outline-light',
@@ -81,18 +81,18 @@ echo '</p>';
 if ($isOverviewMode && !empty($invoices)) {
 
     if (!empty($taxRates['cash'])) {
-        echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
+        echo '<h4>' . __('Tax_overview_cash') . '</h4>';
         echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cash'], 'taxRatesSums' => $taxRatesSums['cash']]);
     }
 
 
     if (!empty($taxRates['cashless'])) {
-        echo '<h4>' . __d('admin', 'Tax_overview_cashless') . '</h4>';
+        echo '<h4>' . __('Tax_overview_cashless') . '</h4>';
         echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cashless'], 'taxRatesSums' => $taxRatesSums['cashless']]);
     }
 
     if (!empty($taxRates['total'])) {
-        echo '<h4>' . __d('admin', 'Tax_overview_total') . '</h4>';
+        echo '<h4>' . __('Tax_overview_total') . '</h4>';
         echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['total'], 'taxRatesSums' => $taxRatesSums['total']]);
     }
 
@@ -101,7 +101,7 @@ if ($isOverviewMode && !empty($invoices)) {
 }
 
 if ($isOverviewMode) {
-    echo '<h4>' . __d('admin', 'Invoices') . '</h4>';
+    echo '<h4>' . __('Invoices') . '</h4>';
 }
 
 if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
@@ -110,7 +110,7 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
         'javascript:void(0)',
         [
             'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
-            'title' => __d('admin', 'Download_invoices'),
+            'title' => __('Download_invoices'),
             'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
             'escape' => false,
         ]
@@ -121,7 +121,7 @@ echo $this->Html->link(
     'javascript:void(0)',
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
-        'title' => __d('admin', 'Copy_to_clipboard'),
+        'title' => __('Copy_to_clipboard'),
         'style' => ';clear:both;margin-right:3px;float:left;',
         'escape' => false,
     ]
@@ -130,19 +130,19 @@ echo $this->Html->link(
 echo '<table class="list invoices-table no-clone-last-row">';
 $this->Paginator->setPaginated($invoices);
     echo '<tr class="sort">';
-        echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoices.created', __d('admin', 'Invoice_date')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Net') . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'VAT') . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Gross') . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __('Invoice_number_abbreviation_admin')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.created', __('Invoice_date')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Name')) . '</th>';
+        echo '<th style="text-align:right;">' . __('Net') . '</th>';
+        echo '<th style="text-align:right;">' . __('VAT') . '</th>';
+        echo '<th style="text-align:right;">' . __('Gross') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __('Paid_in_cash')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.email_status', __('Email_sent')) . '</th>';
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-            echo '<th>' . __d('admin', 'Receipt') . '</th>';
+            echo '<th>' . __('Receipt') . '</th>';
         }
-        echo '<th>' . __d('admin', 'Invoice') . '</th>';
-        echo '<th>' . __d('admin', 'Cancellation') . '</th>';
+        echo '<th>' . __('Invoice') . '</th>';
+        echo '<th>' . __('Cancellation') . '</th>';
     echo '</tr>';
 
     foreach($invoices as $invoice) {
@@ -174,7 +174,7 @@ $this->Paginator->setPaginated($invoices);
             echo '</td>';
 
             echo '<td>';
-                echo $invoice->paid_in_cash_boolean ? __d('admin', 'yes') : __d('admin', 'no');
+                echo $invoice->paid_in_cash_boolean ? __('yes') : __('no');
             echo '</td>';
 
             echo '<td style="text-align:center;">';
@@ -219,7 +219,7 @@ $this->Paginator->setPaginated($invoices);
                             [
                                 'class' => 'btn btn-outline-light',
                                 'escape' => false,
-                                'onclick' => "alert('" . __d('admin', 'To_download_this_invoice_please_drop_an_email_to_{0}', [
+                                'onclick' => "alert('" . __('To_download_this_invoice_please_drop_an_email_to_{0}', [
                                     Configure::read('appDb.FCS_APP_EMAIL'),
                                 ]) . "');",
                             ],
@@ -258,7 +258,7 @@ $this->Paginator->setPaginated($invoices);
                     [
                         'class' => 'btn btn-outline-light',
                         'escape' => false,
-                        'onclick' => "alert('" . __d('admin', 'To_download_this_invoice_please_drop_an_email_to_{0}', [
+                        'onclick' => "alert('" . __('To_download_this_invoice_please_drop_an_email_to_{0}', [
                             Configure::read('appDb.FCS_APP_EMAIL'),
                             ]) . "');",
                         ],
@@ -292,7 +292,7 @@ $this->Paginator->setPaginated($invoices);
     echo '<tr style="font-weight:bold;">';
 
         echo '<td colspan="3" style="text-align:right;">';
-            echo __d('admin', 'Total_sum');
+            echo __('Total_sum');
         echo '</td>';
 
         echo '<td style="text-align:right;">';

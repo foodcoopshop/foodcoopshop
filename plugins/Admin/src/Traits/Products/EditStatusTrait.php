@@ -44,12 +44,12 @@ trait EditStatusTrait
 
             $productsTable = $this->getTableLocator()->get('Products');
             $productsTable->changeStatus($data);
-            $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deactivated.', [
+            $actionLogMessage = __('{0,plural,=1{1_product_was} other{#_products_were}}_deactivated.', [
                 count($productIds),
             ]);
             $actionLogType = 'product_set_inactive';
             if ($status) {
-                $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_activated.', [
+                $actionLogMessage = __('{0,plural,=1{1_product_was} other{#_products_were}}_activated.', [
                     count($productIds),
                 ]);
                 $actionLogType = 'product_set_active';
@@ -60,7 +60,7 @@ trait EditStatusTrait
 
             $this->set([
                 'status' => 1,
-                'msg' => __d('admin', 'Saving_successful.'),
+                'msg' => __('Saving_successful.'),
             ]);
 
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
@@ -90,13 +90,13 @@ trait EditStatusTrait
             ]
         )->first();
 
-        $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_deactivated.', [
+        $actionLogMessage = __('The_product_{0}_from_manufacturer_{1}_was_deactivated.', [
             '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         $actionLogType = 'product_set_inactive';
         if ($status) {
-            $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_activated.', [
+            $actionLogMessage = __('The_product_{0}_from_manufacturer_{1}_was_activated.', [
                 '<b>' . $product->name . '</b>',
                 '<b>' . $product->manufacturer->name . '</b>'
             ]);

@@ -26,30 +26,30 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                <?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?>
+                <?php echo __('The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li><?php echo __d('admin', 'Old_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
-                <li><?php echo __d('admin', 'New_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
+                <li><?php echo __('Old_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
+                <li><?php echo __('New_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
                 <?php if (Configure::read('app.showManufacturerListAndDetailPage')) { ?>
-                    <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b></li>
+                    <li><?php echo __('Manufacturer'); ?>: <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b></li>
                 <?php } ?>
                 <?php if (!$isAmountBasedOnQuantityInUnits) { ?>
-                    <li><?php echo __d('admin', 'Amount'); ?>: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
+                    <li><?php echo __('Amount'); ?>: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
                 <?php } ?>
-                <li><?php echo __d('admin', 'Order_date'); ?>: <b><?php echo $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
+                <li><?php echo __('Order_date'); ?>: <b><?php echo $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
             </ul>
 
             <?php if ($editPriceReason != '') { ?>
                 <p>
-                    <?php echo __d('admin', 'Why_has_the_price_been_adpated?'); ?><br />
+                    <?php echo __('Why_has_the_price_been_adpated?'); ?><br />
                     <b><?php echo '"' . $editPriceReason . '"'; ?></b>
                 </p>
             <?php } ?>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
+                <p><?php echo __('PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
             <?php } ?>
 
         </td>

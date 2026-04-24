@@ -37,8 +37,8 @@ if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
             <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -57,9 +57,9 @@ echo $this->Form->create($slider, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo '<div class="input">';
-echo '<label>' . __d('admin', 'Slider_image');
+echo '<label>' . __('Slider_image');
 if ($imageSrc) {
-    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'<br />'.__d('admin', 'Width').': 908px</span>';
+    echo '<br /><span class="small">'.__('Click_on_image_to_change_it.').'<br />'.__('Width').': 908px</span>';
 }
 echo '</label>';
 echo '<div style="float:right;">';
@@ -68,7 +68,7 @@ echo $this->Html->link(
     'javascript:void(0);',
     [
         'class' => 'btn btn-outline-light add-image-button ' . ($imageSrc ? 'uploaded' : ''),
-        'title' => __d('admin', 'Upload_new_image_or_change_it'),
+        'title' => __('Upload_new_image_or_change_it'),
         'data-object-id' => $idForImageUpload,
         'escape' => false
     ]
@@ -79,26 +79,26 @@ $this->Form->unlockField('Sliders.tmp_image');
 echo '</div>';
 
 echo $this->Form->control('Sliders.link', [
-    'label' => __d('admin', 'Linked_to'),
+    'label' => __('Linked_to'),
 ]);
 echo $this->Form->control('Sliders.position', [
     'class' => 'short',
-    'label' => __d('admin', 'Rank'),
+    'label' => __('Rank'),
     'type' => 'text',
 ]);
 echo $this->Form->control('Sliders.is_private', [
-    'label' => __d('admin', 'Only_for_members').'?',
+    'label' => __('Only_for_members').'?',
     'type' => 'checkbox',
 ]);
 echo $this->Form->control('Sliders.active', [
-    'label' => __d('admin', 'Active').'?',
+    'label' => __('Active').'?',
     'type' => 'checkbox',
 ]);
 
 if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     echo '<div class="warning">';
         echo $this->Form->control('Sliders.delete_slider', [
-            'label' => __d('admin', 'Delete_slider_image?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'label' => __('Delete_slider_image?').' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);

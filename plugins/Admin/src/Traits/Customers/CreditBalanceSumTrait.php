@@ -43,7 +43,7 @@ trait CreditBalanceSumTrait
         $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_ON);
         $paymentDepositDelta = $customerTable->getDepositBalanceForCustomers(APP_ON);
         $customers[] = [
-            'customer_type' => __d('admin', 'Sum_of_credits_of_activated_members'),
+            'customer_type' => __('Sum_of_credits_of_activated_members'),
             'count' => count($customerTable->getCustomerIdsWithStatus(APP_ON)),
             'credit_balance' => FormatterService::assureCorrectFloat($paymentProductDelta + $paymentDepositDelta),
             'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
@@ -53,7 +53,7 @@ trait CreditBalanceSumTrait
         $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_OFF);
         $paymentDepositDelta = $customerTable->getDepositBalanceForCustomers(APP_OFF);
         $customers[] = [
-            'customer_type' => __d('admin', 'Sum_of_credits_of_deactivated_members'),
+            'customer_type' => __('Sum_of_credits_of_deactivated_members'),
             'count' => count($customerTable->getCustomerIdsWithStatus(APP_OFF)),
             'credit_balance' => FormatterService::assureCorrectFloat($paymentProductDelta + $paymentDepositDelta),
             'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
@@ -63,7 +63,7 @@ trait CreditBalanceSumTrait
         $paymentProductDelta = $customerTable->getProductBalanceForDeletedCustomers();
         $paymentDepositDelta = $customerTable->getDepositBalanceForDeletedCustomers();
         $customers[] = [
-            'customer_type' => __d('admin', 'Sum_of_credits_of_deleted_members'),
+            'customer_type' => __('Sum_of_credits_of_deleted_members'),
             'count' => 0,
             'credit_balance' => FormatterService::assureCorrectFloat($paymentProductDelta + $paymentDepositDelta),
             'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
@@ -72,7 +72,7 @@ trait CreditBalanceSumTrait
 
         $paymentDepositDelta = $paymentsTable->getManufacturerDepositMoneySum();
         $customers[] = [
-            'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
+            'customer_type' => __('Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,
             'credit_balance' => 0,
             'payment_deposit_delta' => FormatterService::assureCorrectFloat($paymentDepositDelta * -1),
@@ -94,7 +94,7 @@ trait CreditBalanceSumTrait
 
         $this->set('sums', $sums);
 
-        $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
+        $this->set('title_for_layout', __('Credit_and_deposit_balance'));
     }
 
 }

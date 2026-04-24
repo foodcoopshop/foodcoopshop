@@ -41,7 +41,7 @@ trait EditProductPriceTrait
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
 
         if ($productPrice === false) {
-            $message = __d('admin', 'The_price_is_not_valid.');
+            $message = __('The_price_is_not_valid.');
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -71,7 +71,7 @@ trait EditProductPriceTrait
         $productQuantityService = new ProductQuantityService();
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($object->product, $unitObject);
 
-        $message = __d('admin', 'The_price_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}.', [
+        $message = __('The_price_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
             Configure::read('app.numberHelper')->formatAsCurrency($oldOrderDetail->total_price_tax_incl),
             Configure::read('app.numberHelper')->formatAsCurrency($productPrice),
@@ -83,7 +83,7 @@ trait EditProductPriceTrait
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
             $email->setTo($oldOrderDetail->customer->email)
-            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+            ->setSubject(__('Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
                 'newsletterCustomer' => $oldOrderDetail->customer,
@@ -104,7 +104,7 @@ trait EditProductPriceTrait
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
             $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email)
-            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+            ->setSubject(__('Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $orderDetailForManufacturerEmail,
                 'newOrderDetail' => $newOrderDetail,
@@ -117,15 +117,15 @@ trait EditProductPriceTrait
         }
 
         if (!$isAmountBasedOnQuantityInUnits) {
-            $message .= ' ' . __d('admin', 'Amount').': <b>' . $oldOrderDetail->product_amount . '</b>';
+            $message .= ' ' . __('Amount').': <b>' . $oldOrderDetail->product_amount . '</b>';
         }
 
         if ($editPriceReason != '') {
-            $message .= ' ' . __d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
+            $message .= ' ' . __('Reason').': <b>"' . $editPriceReason . '"</b>';
         }
 
         if (!empty($emailRecipients)) {
-            $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . Text::toList($emailRecipients) . '</b>']);
+            $message .= ' ' . __('An_email_was_sent_to_{0}.', ['<b>' . Text::toList($emailRecipients) . '</b>']);
         }
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');

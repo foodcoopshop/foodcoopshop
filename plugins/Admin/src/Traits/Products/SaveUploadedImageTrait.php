@@ -81,7 +81,7 @@ trait SaveUploadedImageTrait
                 ->save($thumbsFileName, quality: 100);
         }
 
-        $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [
+        $actionLogMessage = __('A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [
             '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);

@@ -52,14 +52,14 @@ trait IndexTrait
 
         $years = null;
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
-            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear, __d('admin', 'Member_fee') . ' ');
+            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear, __('Member_fee') . ' ');
         }
         $this->set('years', $years);
 
         $customers = $this->getCustomers($active, $year, $newsletter);
         $this->set('customers', $customers);
 
-        $this->set('title_for_layout', __d('admin', 'Members'));
+        $this->set('title_for_layout', __('Members'));
     }
 
 }

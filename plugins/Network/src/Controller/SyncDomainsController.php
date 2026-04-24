@@ -41,7 +41,7 @@ class SyncDomainsController extends AppController
             ['active' => APP_ON],
             ['validate' => false],
         );
-        $this->set('title_for_layout', __d('network', 'Add_remote_foodcoop'));
+        $this->set('title_for_layout', __('Add_remote_foodcoop_network'));
         $this->_processForm($syncDomain, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -60,7 +60,7 @@ class SyncDomainsController extends AppController
         if (empty($syncDomain)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('network', 'Edit_remote_foodcoop'));
+        $this->set('title_for_layout', __('Edit_remote_foodcoop'));
         $this->_processForm($syncDomain, true);
     }
 
@@ -84,7 +84,7 @@ class SyncDomainsController extends AppController
             $this->getRequest()->getData()
         );
         if ($syncDomain->hasErrors()) {
-            $this->Flash->error(__d('network', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_network'));
             $this->set('syncDomain', $syncDomain);
             return $this->render('edit');
         } else {
@@ -92,20 +92,20 @@ class SyncDomainsController extends AppController
             $syncDomain = $syncDomainsTable->save($syncDomain);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('network', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'remote_foodcoop_added';
             } else {
-                $messageSuffix = __d('network', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'remote_foodcoop_changed';
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('SyncDomains.delete_sync_domain'))) {
                 $syncDomainsTable->delete($syncDomain);
-                $messageSuffix = __d('network', 'deleted');
+                $messageSuffix = __('deleted_network');
                 $actionLogType = 'remote_foodcoop_deleted';
             }
-            $message = __d('network', 'The_remote_foodcoop_{0}_has_been_{1}.', ['<b>' . $syncDomain->domain. '</b>', $messageSuffix]);
+            $message = __('The_remote_foodcoop_{0}_has_been_{1}.', ['<b>' . $syncDomain->domain. '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $syncDomain->id, 'sync_domains', $message);
             $this->Flash->success($message);
 

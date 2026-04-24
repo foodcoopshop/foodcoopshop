@@ -59,14 +59,14 @@ trait DeleteTrait
             if (Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers')) {
                 $openOrderDetails = count($customer->active_order_details);
                 if ($openOrderDetails > 0) {
-                    $errors[] = __d('admin', 'Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:'). ' '. $openOrderDetails . '.';
+                    $errors[] = __('Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:'). ' '. $openOrderDetails . '.';
                 }
             }
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $customersTable->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
-                    $errors[] = __d('admin', 'The_credit_is') . ' ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. ' . __d('admin', 'It_needs_to_be_zero.');
+                    $errors[] = __('The_credit_is') . ' ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. ' . __('It_needs_to_be_zero.');
                 }
             }
 
@@ -79,7 +79,7 @@ trait DeleteTrait
                     'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
                 ])->count();
                 if ($notApprovedPaymentsCount > 0) {
-                    $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
+                    $errors[] = __('Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
                 }
             }
 
@@ -88,7 +88,7 @@ trait DeleteTrait
                 foreach($customer->manufacturers as $manufacturer) {
                     $manufacturerNames[] = $manufacturer->name;
                 }
-                $errors[] = __d('admin', 'The_member_is_still_associated_to_the_following_manufacturers:') . ' ' . join(', ', $manufacturerNames);
+                $errors[] = __('The_member_is_still_associated_to_the_following_manufacturers:') . ' ' . join(', ', $manufacturerNames);
             }
 
             if (!empty($errors)) {
@@ -114,10 +114,10 @@ trait DeleteTrait
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
-            $message = __d('admin', 'Your_account_has_been_deleted_successfully.');
+            $message = __('Your_account_has_been_deleted_successfully.');
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
         } else {
-            $message = __d('admin', '{0}_has_deleted_an_account.', [$this->identity->name]);
+            $message = __('{0}_has_deleted_an_account.', [$this->identity->name]);
             $redirectUrl = $this->getRequest()->getData('referer');
         }
         $actionLogsTable->customSave('customer_deleted', $this->identity->getId(), $customer->id_customer, 'customers', $message);

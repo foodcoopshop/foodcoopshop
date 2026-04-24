@@ -28,8 +28,8 @@ $this->element('addScript', ['script' =>
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
             <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -51,11 +51,11 @@ echo $this->Form->control('Attributes.name', [
     'div' => [
         'class' => 'long text input'
     ],
-    'label' => __d('admin', 'Name')
+    'label' => __('Name')
 ]);
 
 echo $this->Form->control('Attributes.can_be_used_as_unit', [
-    'label' => __d('admin', 'Weight_unit').'? <span class="after small">'.__d('admin', 'Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg).') . ' ' . '<a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_products')).'" target="_blank">'.__d('admin', 'Information_needed_for_function_price_per_unit.').'</a></span>',
+    'label' => __('Weight_unit').'? <span class="after small">'.__('Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg).') . ' ' . '<a href="'.$this->Html->getDocsUrl(__('docs_route_products')).'" target="_blank">'.__('Information_needed_for_function_price_per_unit.').'</a></span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
@@ -64,7 +64,7 @@ echo $this->Form->control('Attributes.can_be_used_as_unit', [
 if ($this->request->getRequestTarget() != $this->Slug->getAttributeAdd()) {
     echo '<div class="warning">';
         echo $this->Form->control('Attributes.delete_attribute', [
-            'label' => __d('admin', 'Delete_attribute?').' <span class="after small">' . ($attribute->has_combined_products ? __d('admin', 'Attribute_can_not_be_deleted_because_products_are_associated_with_it.') : __d('admin', 'Check_and_do_not_forget_to_click_save_button.')) . '</span>',
+            'label' => __('Delete_attribute?').' <span class="after small">' . ($attribute->has_combined_products ? __('Attribute_can_not_be_deleted_because_products_are_associated_with_it.') : __('Check_and_do_not_forget_to_click_save_button._admin')) . '</span>',
             'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),
             'escape' => false,
             'type' => 'checkbox'

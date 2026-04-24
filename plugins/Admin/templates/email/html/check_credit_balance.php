@@ -27,35 +27,35 @@ use Cake\Core\Configure;
 
             <p>
                 <?php
-                    echo __d('admin', 'your_current_credit_equals_{0}.', [
+                    echo __('your_current_credit_equals_{0}.', [
                         '<b>'.$delta.'</b>',
                     ]);
                 ?>
             </p>
 
             <?php if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) { ?>
-                <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_to_our_bank_account.'); ?></p>
-                <p><?php echo __d('admin', 'Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer.'); ?></p>
-                <p><?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
+                <p><?php echo __('Please_soon_transfer_new_credit_to_our_bank_account.'); ?></p>
+                <p><?php echo __('Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer.'); ?></p>
+                <p><?php echo __('Here_you_find_the_link_to_add_the_credit:'); ?><br />
                     <a href="<?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?></a>
                 </p>
            <?php } else { ?>
-                <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}.', [
+                <p><?php echo __('Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}.', [
                         '<b>' . $personalTransactionCode . '</b>',
                 ]); ?></p>
                 <?php if (!is_null($lastCsvUploadDate)) { ?>
-                    <p><?php echo __d('admin', 'Transactions_were_checked_until_{0}.', [
+                    <p><?php echo __('Transactions_were_checked_until_{0}.', [
                         $lastCsvUploadDate->i18nFormat($this->MyTime->getI18Format('DateNTimeShort'))
                     ]); ?></p>
                 <?php } ?>
            <?php } ?>
             <?php
                 if (Configure::read('appDb.FCS_BANK_ACCOUNT_DATA') != '') {
-                    echo '<p><b>'.__d('admin', 'Bank_account_data').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
+                    echo '<p><b>'.__('Bank_account_data').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
                 }
             ?>
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __('Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
             </p>
         </td>
 

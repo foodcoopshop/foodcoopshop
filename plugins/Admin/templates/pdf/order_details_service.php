@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
-$pdf->infoTextForFooter = __d('admin', 'Orders');
+$pdf->infoTextForFooter = __('Orders');
 
 $j = 1;
 foreach ($orderDetails as $od) {
@@ -27,12 +27,12 @@ foreach ($orderDetails as $od) {
     $pdf->Ln(5);
     $customerHtml = '<h1 style="font-size:24px;">' . $od[0]->customer->name . '</h1>';
     $pdf->writeHTML($customerHtml, true, false, true, false, '');
-    $pdf->writeHTML('<h3>' .__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>' .__('Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
 
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !empty($od[0]->pickup_day_entity) && $od[0]->pickup_day_entity->comment != '') {
         $pdf->SetRightMargin(16);
         $pdf->Ln(2);
-        $pdf->writeHTML('<p><b>'.__d('admin', 'Comment').': </b>' . $od[0]->pickup_day_entity->comment . '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p><b>'.__('Comment').': </b>' . $od[0]->pickup_day_entity->comment . '</p>', true, false, true, false, '');
     }
 
     $pdf->Ln(5);
@@ -45,15 +45,15 @@ foreach ($orderDetails as $od) {
     ];
 
     $headers = [
-        __d('admin', 'Amount'),
-        __d('admin', 'Product'),
-        __d('admin', 'Manufacturer'),
-        __d('admin', 'Price'),
+        __('Amount'),
+        __('Product'),
+        __('Manufacturer'),
+        __('Price'),
     ];
 
     if (Configure::read('app.isDepositEnabled')) {
         $widths[4] = 45;
-        $headers[] = __d('admin', 'Deposit');
+        $headers[] = __('Deposit');
     } else {
         $widths[1] = 265;
         $widths[4] = 0;
@@ -77,7 +77,7 @@ foreach ($orderDetails as $od) {
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && $order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
             $pdf->table .= '<tr style="background-color:#cecece;">';
-            $pdf->table .= '<td width="'.array_sum($widths).'"><b>' . __d('admin', 'Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
+            $pdf->table .= '<td width="'.array_sum($widths).'"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
             $pdf->table .= '</tr>';
         }
 
@@ -157,7 +157,7 @@ foreach ($orderDetails as $od) {
             }
 
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__d('admin', 'Total').'</td>';
+                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__('Total').'</td>';
                 $pdf->table .= '<td colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" style="font-size:10px;font-weight:bold;text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
             $pdf->table .= '</tr>';
         }
@@ -169,7 +169,7 @@ foreach ($orderDetails as $od) {
     $pdf->renderTable();
 
     if ($usesQuantityInUnits > 0) {
-        $html = '<p>* '.__d('admin', 'The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';
+        $html = '<p>* '.__('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly._admin').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
     }
 

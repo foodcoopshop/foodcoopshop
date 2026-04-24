@@ -38,11 +38,11 @@ class NetworkHelper extends Helper
         return [
             [
                 'url' => $this->getSyncProducts(),
-                'name' => __d('network', 'Associate_products')
+                'name' => __('Associate_products')
             ],
             [
                 'url' => $this->getSyncProductData(),
-                'name' => __d('network', 'Synchronize_products')
+                'name' => __('Synchronize_products')
             ]
         ];
     }
@@ -79,6 +79,6 @@ class NetworkHelper extends Helper
 
     public function getNetworkPluginDocs(): string
     {
-        return $this->MyHtml->getDocsUrl(__d('network', 'docs_route_network_module'));
+        return $this->MyHtml->getDocsUrl(__('docs_route_network_module'));
     }
 }

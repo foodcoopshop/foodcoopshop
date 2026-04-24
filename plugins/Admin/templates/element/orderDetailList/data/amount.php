@@ -30,7 +30,7 @@ echo '<td class="right">';
                     'javascript:void(0);',
                     [
                         'class' => 'btn btn-outline-light order-detail-product-amount-edit-button',
-                        'title' => __d('admin', 'Click_to_change_amount'),
+                        'title' => __('Click_to_change_amount'),
                         'escape' => false
                     ]
                 );
