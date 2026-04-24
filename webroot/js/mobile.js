@@ -264,7 +264,7 @@ foodcoopshop.Mobile = {
                 let modifiedCartButton = $(this).clone();
                 let anchor = modifiedCartButton.find('a');
                 let icon = anchor.find('i');
-                anchor.attr('href', foodcoopshop.LocalizedJs.admin.routeCartShow);
+                anchor.attr('href', ['', __('route_cart'), __('route_cart_show')].join('/'));
                 anchor.addClass('responsive-cart');
                 icon.addClass('fa-2x');
                 icon.removeClass('ok');

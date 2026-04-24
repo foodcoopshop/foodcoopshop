@@ -59,7 +59,7 @@ foodcoopshop.ModalCart = {
         foodcoopshop.ModalOrderForDifferentCustomerCancel.init();
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            document.location.href = foodcoopshop.LocalizedJs.admin.routeCartShow;
+            document.location.href = ['', __('route_cart'), __('route_cart_show')].join('/');
         });
 
         $(modalSelector + ' .modal-title').html(headingHtml);
