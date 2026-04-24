@@ -32,7 +32,7 @@ class AttributesController extends AdminAppController
             ['active' => APP_ON],
             ['validate' => false],
         );
-        $this->set('title_for_layout', __d('admin', 'Add_attribute'));
+        $this->set('title_for_layout', __('Add_attribute'));
         $this->_processForm($attribute, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -56,7 +56,7 @@ class AttributesController extends AdminAppController
         if (empty($attribute)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_attribute'));
+        $this->set('title_for_layout', __('Edit_attribute'));
         $this->_processForm($attribute, true);
     }
 
@@ -77,17 +77,17 @@ class AttributesController extends AdminAppController
         $attributesTable = $this->getTableLocator()->get('Attributes');
         $attribute = $attributesTable->patchEntity($attribute, $this->getRequest()->getData());
         if ($attribute->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('attribute', $attribute);
             return $this->render('edit');
         } else {
             $attribute = $attributesTable->save($attribute);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'attribute_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'attribute_changed';
             }
 
@@ -95,10 +95,10 @@ class AttributesController extends AdminAppController
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
                 $attributesTable->delete($attribute);
-                $messageSuffix = __d('admin', 'deleted');
+                $messageSuffix = __('deleted_admin');
                 $actionLogType = 'attribute_deleted';
             }
-            $message = __d('admin', 'The_attribute_{0}_has_been_{1}.', ['<b>' . $attribute->name . '</b>', $messageSuffix]);
+            $message = __('The_attribute_{0}_has_been_{1}.', ['<b>' . $attribute->name . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
 
@@ -131,6 +131,6 @@ class AttributesController extends AdminAppController
         }
         $this->set('attributes', $attributes);
 
-        $this->set('title_for_layout', __d('admin', 'Attributes'));
+        $this->set('title_for_layout', __('Attributes'));
     }
 }

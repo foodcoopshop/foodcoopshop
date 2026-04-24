@@ -71,7 +71,7 @@ trait DeleteTrait
                 $errors = [];
                 if ($query->count() > 0) {
                     foreach($query as $orderDetail) {
-                        $errors[] = __d('admin', 'The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
+                        $errors[] = __('The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
                             [
                                 '<b>' . $orderDetail->productName . '</b>',
                                 $orderDetail->orderDetailsCount,
@@ -81,7 +81,7 @@ trait DeleteTrait
                 }
                 if (!empty($errors)) {
                     $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
-                    $errorString .= __d('admin', 'Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
+                    $errorString .= __('Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
                     throw new \Exception($errorString);
                 }
             } catch (\Exception $e) {
@@ -106,7 +106,7 @@ trait DeleteTrait
             );
         }
 
-        $message = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully.', [
+        $message = __('{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully.', [
             count($productIds)
         ]);
         $this->Flash->success($message);

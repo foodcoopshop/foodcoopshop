@@ -39,8 +39,8 @@ if (!empty($category->tmp_image != '')) {
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
             <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -59,19 +59,19 @@ echo $this->Form->create($category, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Categories.name', [
-    'label' => __d('admin', 'Name')
+    'label' => __('Name')
 ]);
 echo $this->Form->control('Categories.id_parent', [
     'type' => 'select',
-    'label' => __d('admin', 'Parent_category'),
-    'empty' => __d('admin', 'No_parent_category_(highest_level)'),
+    'label' => __('Parent_category'),
+    'empty' => __('No_parent_category_(highest_level)'),
     'options' => $categoriesForSelect
 ]);
 
 echo '<div class="input">';
-echo '<label>'.__d('admin', 'Image');
+echo '<label>'.__('Image');
 if ($imageSrc) {
-    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'</span>';
+    echo '<br /><span class="small">'.__('Click_on_image_to_change_it.').'</span>';
 }
 echo '</label>';
 echo '<div style="float:right;">';
@@ -80,7 +80,7 @@ echo $this->Html->link(
     'javascript:void(0);',
     [
         'class' => 'btn btn-outline-light add-image-button ' . ($imageSrc ? 'uploaded' : ''),
-        'title' => __d('admin', 'Upload_new_image_or_change_it'),
+        'title' => __('Upload_new_image_or_change_it'),
         'data-object-id' => $idForImageUpload,
         'escape' => false
     ]
@@ -92,7 +92,7 @@ echo '</div>';
 
 echo '<div class="warning">';
     echo $this->Form->control('Categories.delete_image', [
-        'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'label' => __('Delete_image?') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -101,7 +101,7 @@ echo '</div>';
 if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
     echo '<div class="warning">';
         echo $this->Form->control('Categories.delete_category', [
-            'label' => __d('admin', 'Delete_category?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'label' => __('Delete_category?').' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
@@ -109,13 +109,13 @@ if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
 }
 
 echo $this->Form->control('Categories.active', [
-    'label' => __d('admin', 'Active').'?',
+    'label' => __('Active').'?',
     'type' => 'checkbox'
 ]);
 
 echo $this->Form->control('Categories.description', [
     'type' => 'textarea',
-    'label' => __d('admin', 'Description') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+    'label' => __('Description') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
 ]);
 

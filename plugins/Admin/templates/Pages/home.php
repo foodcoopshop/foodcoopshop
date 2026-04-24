@@ -34,11 +34,11 @@ echo '<div id="home">';
 echo $this->Flash->render();
 echo $this->Flash->render('auth');
 echo '<br /><br />';
-$adminNameGreeting = __d('admin', 'to_the_admin_area');
+$adminNameGreeting = __('to_the_admin_area');
 if ($identity->isManufacturer()) {
-    $adminNameGreeting = __d('admin', 'to_the_manufacturer_area');
+    $adminNameGreeting = __('to_the_manufacturer_area');
 }
-echo '<h1>'.__d('admin', 'Welcome') . '<br />' . $adminNameGreeting . '</h1>';
+echo '<h1>'.__('Welcome') . '<br />' . $adminNameGreeting . '</h1>';
 echo $this->element('acceptUpdatedTermsOfUseForm');
 echo '<br />';
 echo '<div class="filter-container"></div>';
@@ -47,11 +47,11 @@ echo '<div class="sc"></div>';
 
 echo '<div class="changelog-link">';
     echo $this->Html->link(
-        '<i class="fas fa-file-alt"></i> ' . __d('admin', 'Changelog') . ' ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion(),
+        '<i class="fas fa-file-alt"></i> ' . __('Changelog') . ' ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion(),
         '/admin/configurations/changelog',
         [
             'escape' => false,
-            'title' => __d('admin', 'Changelog'),
+            'title' => __('Changelog'),
         ]
     );
 echo '</div>';

@@ -36,7 +36,7 @@ trait EditProductAmountTrait
         $editAmountReason = strip_tags(html_entity_decode($this->getRequest()->getData('editAmountReason')));
 
         if ($productAmount < 1) {
-            $message = __d('admin', 'The_amount_is_not_valid.');
+            $message = __('The_amount_is_not_valid.');
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -75,7 +75,7 @@ trait EditProductAmountTrait
             $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
         }
 
-        $message = __d('admin', 'The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}.', [
+        $message = __('The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
             $oldOrderDetail->product_amount,
             $productAmount
@@ -85,7 +85,7 @@ trait EditProductAmountTrait
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_amount_changed');
         $email->setTo($oldOrderDetail->customer->email)
-        ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
+        ->setSubject(__('Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newsletterCustomer' => $oldOrderDetail->customer,
@@ -95,13 +95,13 @@ trait EditProductAmountTrait
         ]);
         $email->addToQueue();
 
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+        $emailMessage = ' ' . __('An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductAmountChangedNotification = $manufacturersTable->getOptionSendOrderedProductAmountChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_amount_changed_notification);
 
         if (! $this->identity->isManufacturer() && $oldOrderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+            $emailMessage = ' ' . __('An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
@@ -117,11 +117,11 @@ trait EditProductAmountTrait
         $message .= $emailMessage;
 
         if ($editAmountReason != '') {
-            $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editAmountReason . '"</b>';
+            $message .= ' ' . __('Reason') . ': <b>"' . $editAmountReason . '"</b>';
         }
 
         if ($newQuantity !== false) {
-            $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
+            $message .= ' ' . __('The_stock_was_increased_to_{0}.', [
                 Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0)
             ]);
         }

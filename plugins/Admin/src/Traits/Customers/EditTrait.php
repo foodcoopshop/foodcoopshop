@@ -27,7 +27,7 @@ trait EditTrait
 
     public function profile(): ?Response
     {
-        $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
+        $this->set('title_for_layout', __('Edit_my_profile'));
         $this->_processForm($this->identity->getId());
         if (empty($this->getRequest()->getData())) {
             return $this->render('edit');
@@ -37,7 +37,7 @@ trait EditTrait
 
     public function edit(int $customerId): ?Response
     {
-        $this->set('title_for_layout', __d('admin', 'Edit_profile'));
+        $this->set('title_for_layout', __('Edit_profile'));
         $this->_processForm($customerId);
         if (empty($this->getRequest()->getData())) {
             return $this->render('edit');
@@ -94,7 +94,7 @@ trait EditTrait
             );
 
         if ($customer->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('customer', $customer);
             return $this->render('edit');
         } else {
@@ -117,9 +117,9 @@ trait EditTrait
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
-                $message = __d('admin', 'Your_profile_was_changed.');
+                $message = __('Your_profile_was_changed.');
             } else {
-                $message = __d('admin', 'The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
+                $message = __('The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
             }
             $actionLogsTable->customSave('customer_profile_changed', $this->identity->getId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);

@@ -24,7 +24,7 @@ $this->element('addScript', [
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
-        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_product_import'))]); ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_product_import'))]); ?>
     </div>
 </div>
 
@@ -43,8 +43,8 @@ $this->element('addScript', [
     <div>1. 
     <?php
         echo $this->MyHtml->link(
-            __d('admin', 'Read_guide_for_product_import'),
-            $this->Html->getDocsUrl(__d('admin', 'docs_route_product_import')),
+            __('Read_guide_for_product_import'),
+            $this->Html->getDocsUrl(__('docs_route_product_import')),
             [
                 'escape' => false,
                 'target' => '_blank',
@@ -56,7 +56,7 @@ $this->element('addScript', [
     <div>2.
     <?php
         echo $this->MyHtml->link(
-            __d('admin', 'Download_empty_CSV_template'),
+            __('Download_empty_CSV_template'),
             '/admin/products/downloadImportTemplate',
             [
                 'escape' => false,
@@ -72,7 +72,7 @@ $this->element('addScript', [
             'type' => 'file',
             'accept' => '.csv',
             'onchange' => 'form.submit()',
-            'label' => __d('admin', 'Upload_changed_template_with_products') . ': ',
+            'label' => __('Upload_changed_template_with_products') . ': ',
             'style' => 'padding-left:5px;',
         ]);
         ?>
@@ -82,7 +82,7 @@ $this->element('addScript', [
         echo $this->Form->end();
 
         echo $this->MyHtml->link(
-            '<i class="fas fa-arrow-left"></i> ' . __d('admin', 'Back_to_product_page'),
+            '<i class="fas fa-arrow-left"></i> ' . __('Back_to_product_page'),
             $this->Slug->getProductAdmin($identity->isManufacturer() ? '' : $manufacturer->id_manufacturer),
             [
                 'class' => 'btn btn-outline-light',

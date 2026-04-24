@@ -22,17 +22,17 @@ echo '<td class="cell-name">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         $title = [];
         if ($product->description_short != '') {
-            $title[] = '<b>'.__d('admin', 'Short_description').'</b><br />'.$product->description_short;
+            $title[] = '<b>'.__('Short_description').'</b><br />'.$product->description_short;
         }
         if ($product->description != '') {
-            $title[] = '<b>'.__d('admin', 'Long_description').'</b><br />'.$product->description;
+            $title[] = '<b>'.__('Long_description').'</b><br />'.$product->description;
         }
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && isset($storageLocationsForForDropdown[$product->id_storage_location])) {
-            $title[] = '<b>'.__d('admin', 'Storage_location').'</b>: '.$storageLocationsForForDropdown[$product->id_storage_location];
+            $title[] = '<b>'.__('Storage_location').'</b>: '.$storageLocationsForForDropdown[$product->id_storage_location];
         }
 
-        $title[] = '<b>'.__d('admin', 'changed').'</b><br /> '.date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($product->modified));
-        $title[] = '<b>'.__d('admin', 'created').'</b><br />'.date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($product->created));
+        $title[] = '<b>'.__('changed').'</b><br /> '.date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($product->modified));
+        $title[] = '<b>'.__('created').'</b><br />'.date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($product->created));
 
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
@@ -52,7 +52,7 @@ echo '<td class="cell-name">';
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light edit-product-attribute-button',
-                'title' => __d('admin', 'Edit_attribute_for_product_{0}', [$product->name]),
+                'title' => __('Edit_attribute_for_product_{0}', [$product->name]),
                 'escape' => false
             ]
         );
@@ -60,7 +60,7 @@ echo '<td class="cell-name">';
 
         echo '<span style="float:left;">';
         if ($product->default_on == 1) {
-            echo '<i class="fas fa-star gold" title="'.__d('admin', 'This_attribute_is_the_default_attribute.').'"></i>';
+            echo '<i class="fas fa-star gold" title="'.__('This_attribute_is_the_default_attribute.').'"></i>';
         } else {
 
             echo $this->Html->link(
@@ -68,7 +68,7 @@ echo '<td class="cell-name">';
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light set-default-attribute-button',
-                    'title' => __d('admin', 'Define_as_new_default_attribute'),
+                    'title' => __('Define_as_new_default_attribute'),
                     'escape' => false
                 ]
             );
@@ -95,14 +95,14 @@ echo '<td class="cell-name">';
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-categories-edit-button',
-                'title' => __d('admin', 'change_category'),
+                'title' => __('change_category'),
                 'data-object-id' => $product->id_product,
                 'escape' => false
             ]
         );
         echo '<span class="categories-for-dialog">';
             if (empty($product->category->names)) {
-                echo __d('admin', 'chose_category...');
+                echo __('chose_category...');
             } else {
                 echo join(', ', $product->category->names);
             }

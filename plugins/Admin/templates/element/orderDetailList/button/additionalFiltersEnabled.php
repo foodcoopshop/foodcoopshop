@@ -22,6 +22,6 @@ $queryParams['additionalFiltersEnabled'] = !$additionalFiltersEnabled;
 $queryString = '?' . http_build_query($queryParams);
 $href = $this->request->getUri()->getPath() . $queryString;
 
-echo '<a href="' . $href . '" class="dropdown-item"><i class="fas fa-filter fa-fw"></i> ' .  __d('admin', 'Show additional filters') . ': ' . ($additionalFiltersEnabled ? __d('admin', 'yes') : __d('admin', 'no')) . '</a>';
+echo '<a href="' . $href . '" class="dropdown-item"><i class="fas fa-filter fa-fw"></i> ' .  __('Show additional filters') . ': ' . ($additionalFiltersEnabled ? __('yes') : __('no')) . '</a>';
 
 ?>

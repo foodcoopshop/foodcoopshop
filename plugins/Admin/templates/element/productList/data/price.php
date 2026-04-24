@@ -32,7 +32,7 @@ echo '<td class="cell-price ' . ($product->price_is_zero ? 'not-available' : '')
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-price-edit-button',
-                'title' => __d('admin', 'change_price'),
+                'title' => __('change_price'),
                 'escape' => false
             ]
         );

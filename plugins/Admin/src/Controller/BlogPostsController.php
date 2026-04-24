@@ -41,7 +41,7 @@ class BlogPostsController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add_blog_post'));
+        $this->set('title_for_layout', __('Add_blog_post'));
         $this->_processForm($blogPost, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -72,7 +72,7 @@ class BlogPostsController extends AdminAppController
             'show_on_start_page_until' => $showOnStartPageUntil,
         ]);
 
-        $this->set('title_for_layout', __d('admin', 'Edit_blog_post'));
+        $this->set('title_for_layout', __('Edit_blog_post'));
         return $this->_processForm($blogPost, true);
     }
 
@@ -116,17 +116,17 @@ class BlogPostsController extends AdminAppController
         $blogPost = $blogPostsTable->patchEntity($blogPost, $this->getRequest()->getData());
 
         if ($blogPost->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('blogPost', $blogPost);
             return $this->render('edit');
         } else {
             $blogPost = $blogPostsTable->save($blogPost);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'blog_post_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'blog_post_changed';
             }
 
@@ -143,10 +143,10 @@ class BlogPostsController extends AdminAppController
                 $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath());
                 $blogPost = $blogPostsTable->patchEntity($blogPost, ['active' => APP_DEL]);
                 $blogPostsTable->save($blogPost);
-                $messageSuffix = __d('admin', 'deleted');
+                $messageSuffix = __('deleted_admin');
                 $actionLogType = 'blog_post_deleted';
             }
-            $message = __d('admin', 'The_blog_post_{0}_has_been_{1}.', ['<b>' . $blogPost->title . '</b>', $messageSuffix]);
+            $message = __('The_blog_post_{0}_has_been_{1}.', ['<b>' . $blogPost->title . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
 
@@ -215,7 +215,7 @@ class BlogPostsController extends AdminAppController
 
         $this->set('blogPosts', $blogPosts);
 
-        $this->set('title_for_layout', __d('admin', 'Blog_posts'));
+        $this->set('title_for_layout', __('Blog_posts'));
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());

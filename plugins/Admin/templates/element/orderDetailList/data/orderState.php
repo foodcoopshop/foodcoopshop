@@ -25,13 +25,13 @@ if ($groupBy == '') {
     echo '<td style="text-align:center;font-size:17px;'.$widthStyle.'">';
         if (isset($this->MyHtml->getOrderStates()[$orderDetail->order_state])) {
             $title = 'ID: ' .  $orderDetail->id_order_detail;
-            $title .= '<br />' . __d('admin', 'Order_state') . ': ' . $this->MyHtml->getOrderStates()[$orderDetail->order_state];
-            $title .= '<br />' . __d('admin', 'Cart_type') . ': ' . (Configure::read('app.htmlHelper')->getCartTypes()[$orderDetail->cart_product->cart->cart_type]);
-            $title .= '<br />' . __d('admin', 'Order_date') . ': ' .  $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
+            $title .= '<br />' . __('Order_state') . ': ' . $this->MyHtml->getOrderStates()[$orderDetail->order_state];
+            $title .= '<br />' . __('Cart_type') . ': ' . (Configure::read('app.htmlHelper')->getCartTypes()[$orderDetail->cart_product->cart->cart_type]);
+            $title .= '<br />' . __('Order_date') . ': ' .  $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
             echo '<i title="'.$title.'" class="order-state-icon ' . $this->MyHtml->getOrderStateFontawesomeIcon($orderDetail->order_state).'"></i>';
         }
         if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
-            echo '&nbsp;<i title="'.__d('admin', 'products_picked_up').'" class="fas fa-home ok"></i>';
+            echo '&nbsp;<i title="'.__('products_picked_up').'" class="fas fa-home ok"></i>';
         }
     echo '</td>';
 }

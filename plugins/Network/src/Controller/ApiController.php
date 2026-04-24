@@ -215,11 +215,11 @@ class ApiController extends Controller
             empty($products2saveForDeposit) &&
             empty($products2saveForDeliveryRhythm) &&
             empty($products2saveForStatus)) {
-            $message = __d('network', 'No_fields_were_selected_for_synchronizing.');
+            $message = __('No_fields_were_selected_for_synchronizing.');
         } else {
 
             if (!empty($products2saveForImage)) {
-                $syncFieldsOk[] = __d('network', 'Image');
+                $syncFieldsOk[] = __('Image');
                 $updateStatus = $productsTable->changeImage($products2saveForImage);
                 $productIds = [];
                 foreach ($products2saveForImage as $p) {
@@ -228,7 +228,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForName)) {
-                $syncFieldsOk[] = __d('network', 'Name');
+                $syncFieldsOk[] = __('Name');
                 $updateStatus = $productsTable->changeName($products2saveForName);
                 $productIds = [];
                 foreach ($products2saveForName as $p) {
@@ -237,7 +237,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForIsStockProduct)) {
-                $fieldName = __d('network', 'Stock_product');
+                $fieldName = __('Stock_product');
                 try {
                     $updateIsStockProduct = $productsTable->changeIsStockProduct($products2saveForIsStockProduct);
                     if ($updateIsStockProduct) {
@@ -255,7 +255,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForQuantity)) {
-                $syncFieldsOk[] = __d('network', 'Amount');
+                $syncFieldsOk[] = __('Amount');
                 $productsTable->changeQuantity($products2saveForQuantity);
                 $productIds = [];
                 foreach ($products2saveForQuantity as $p) {
@@ -264,7 +264,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForPrice)) {
-                $fieldName = __d('network', 'Price');
+                $fieldName = __('Price');
                 try {
                     $updateStatus = $productsTable->changePrice($products2saveForPrice);
                     if ($updateStatus) {
@@ -282,7 +282,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForDeposit)) {
-                $syncFieldsOk[] = __d('network', 'Deposit');
+                $syncFieldsOk[] = __('Deposit');
                 $updateStatus = $productsTable->changeDeposit($products2saveForDeposit);
                 $productIds = [];
                 foreach ($products2saveForDeposit as $p) {
@@ -291,7 +291,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForDeliveryRhythm)) {
-                $syncFieldsOk[] = __d('network', 'Delivery_rhythm');
+                $syncFieldsOk[] = __('Delivery_rhythm');
                 $updateStatus = $productsTable->changeDeliveryRhythm($products2saveForDeliveryRhythm);
                 $productIds = [];
                 foreach ($products2saveForDeliveryRhythm as $p) {
@@ -300,7 +300,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForStatus)) {
-                $fieldName = __d('network', 'Status');
+                $fieldName = __('Status');
                 try {
                     $updateStatus = $productsTable->changeStatus($products2saveForStatus);
                     if ($updateStatus) {
@@ -320,23 +320,23 @@ class ApiController extends Controller
             $message = '';
             $errorMessage = '';
 
-            $syncronizedProductsString = count($products) . ' '. (count($products) == 1 ? __d('network', 'product') : __d('network', 'products'));
-            $syncronizedAttributesString = count($attributes) . ' '. (count($attributes) == 1 ? __d('network', 'attribute') : __d('network', 'attributes'));
+            $syncronizedProductsString = count($products) . ' '. (count($products) == 1 ? __('product') : __('products'));
+            $syncronizedAttributesString = count($attributes) . ' '. (count($attributes) == 1 ? __('attribute') : __('attributes'));
             $listOfSyncFieldsOk = join(', ', $syncFieldsOk);
 
             if (count($syncFieldsOk) > 0) {
-                $message = __d('network', '{0}_and_{1}_({2})_have_been_successfully_synchronized.', [$syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
+                $message = __('{0}_and_{1}_({2})_have_been_successfully_synchronized.', [$syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
             }
-            $actionLogMessage = __d('network', 'Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized.', [$this->getRequest()->getData('data.metaData.baseDomain'), $syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
+            $actionLogMessage = __('Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized.', [$this->getRequest()->getData('data.metaData.baseDomain'), $syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
             $actionLogMessage .= ' ' . $this->getProductDetailLinks($productsData);
 
             if (count($syncFieldsError) > 0) {
-                $errorMessage .=  '<br /><b>'.__d('network', 'Errors_occurred_while_synchronizing!').'</b><br />';
+                $errorMessage .=  '<br /><b>'.__('Errors_occurred_while_synchronizing!').'</b><br />';
                 $errorMessage .= '<b>';
                 if (count($syncFieldsError) == 1) {
-                    $errorMessage .=  __d('network', '{0}_has_not_been_updated.', [join(', ', $syncFieldsError)]);
+                    $errorMessage .=  __('{0}_has_not_been_updated.', [join(', ', $syncFieldsError)]);
                 } else {
-                    $errorMessage .=  __d('network', '{0}_have_not_been_updated.', [join(', ', $syncFieldsError)]);
+                    $errorMessage .=  __('{0}_have_not_been_updated.', [join(', ', $syncFieldsError)]);
                 }
                 $errorMessage .= '</b><br />';
                 $message .= $errorMessage;

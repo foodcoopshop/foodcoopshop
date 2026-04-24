@@ -47,10 +47,10 @@ trait EditCommentTrait
                 )
             );
 
-        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
+        $this->Flash->success(__('The_comment_was_changed_successfully.'));
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogsTable->customSave('customer_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
+        $actionLogsTable->customSave('customer_comment_changed', $this->identity->getId(), $customerId, 'customers', __('The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
         $this->set([
             'status' => 1,

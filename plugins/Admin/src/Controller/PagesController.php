@@ -28,7 +28,7 @@ class PagesController extends AdminAppController
 
     public function home(): void
     {
-        $this->set('title_for_layout', __d('admin', 'Home'));
+        $this->set('title_for_layout', __('Home'));
     }
 
     public function add(): ?Response
@@ -42,7 +42,7 @@ class PagesController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add_page'));
+        $this->set('title_for_layout', __('Add_page'));
         $this->set('disabledSelectPageIds', []);
         $this->_processForm($page, false);
         if (empty($this->getRequest()->getData())) {
@@ -61,7 +61,7 @@ class PagesController extends AdminAppController
         if (empty($page)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_page'));
+        $this->set('title_for_layout', __('Edit_page'));
 
         $pageChildren = $pagesTable->find('all', conditions: [
             'Pages.active > ' . APP_DEL
@@ -106,17 +106,17 @@ class PagesController extends AdminAppController
 
         $page = $pagesTable->patchEntity($page, $this->getRequest()->getData());
         if ($page->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('page', $page);
             return $this->render('edit');
         } else {
             $page = $pagesTable->save($page);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'page_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'page_changed';
             }
 
@@ -124,10 +124,10 @@ class PagesController extends AdminAppController
             if (!empty($this->getRequest()->getData('Pages.delete_page'))) {
                 $page = $pagesTable->patchEntity($page, ['active' => APP_DEL]);
                 $pagesTable->save($page);
-                $messageSuffix = __d('admin', 'deleted');
+                $messageSuffix = __('deleted_admin');
                 $actionLogType = 'page_deleted';
             }
-            $message = __d('admin', 'The_page_{0}_has_been_{1}.', ['<b>' . $page->title . '</b>', $messageSuffix]);
+            $message = __('The_page_{0}_has_been_{1}.', ['<b>' . $page->title . '</b>', $messageSuffix]);
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $page->id_page, 'pages', $message);
             $this->Flash->success($message);
@@ -160,7 +160,7 @@ class PagesController extends AdminAppController
         $pages = $pagesTable->getThreaded($conditions);
         $this->set('pages', $pages);
 
-        $this->set('title_for_layout', __d('admin', 'Pages'));
+        $this->set('title_for_layout', __('Pages'));
 
         $customersTable = $this->getTableLocator()->get('Customers');
         $this->set('customersForDropdown', $customersTable->getForDropdown());

@@ -50,7 +50,7 @@ trait GetInvoiceTrait
             (bool) $manufacturer->anonymize_customers,
         );
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
-            die(__d('admin', 'No_orders_within_the_given_time_range.'));
+            die(__('No_orders_within_the_given_time_range.'));
         }
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {

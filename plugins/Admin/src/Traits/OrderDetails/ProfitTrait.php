@@ -140,7 +140,7 @@ trait ProfitTrait
             'surcharge' => $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
         ]);
 
-        $this->set('title_for_layout', __d('admin', 'Profit'));
+        $this->set('title_for_layout', __('Profit'));
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $manufacturersTable->getForDropdown());

@@ -18,29 +18,29 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 echo '<th class="right">';
-    echo $sortOrLabel('sum_amount', __d('admin', 'Amount'));
+    echo $sortOrLabel('sum_amount', __('Amount'));
 echo '</th>';
 
 echo '<th>';
-    echo $sortOrLabel('Products.name', __d('admin', 'Product'));
+    echo $sortOrLabel('Products.name', __('Product'));
 echo '</th>';
 
 echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
-    echo $sortOrLabel('Manufacturers.name', __d('admin', 'Manufacturer'));
+    echo $sortOrLabel('Manufacturers.name', __('Manufacturer'));
 echo '</th>';
 
 echo '<th class="right">';
-    echo $sortOrLabel('sum_price', __d('admin', 'Price'));
+    echo $sortOrLabel('sum_price', __('Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled')) {
     echo '<th class="right">';
-        echo $sortOrLabel('sum_deposit', __d('admin', 'Deposit'));
+        echo $sortOrLabel('sum_deposit', __('Deposit'));
     echo '</th>';
 }
 
 echo '<th class="right">';
-    echo $sortOrLabel('sum_units', __d('admin', 'Weight'));
+    echo $sortOrLabel('sum_units', __('Weight'));
 echo '</th>';
 
 ?>

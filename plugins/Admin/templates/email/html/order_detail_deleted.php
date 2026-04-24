@@ -26,32 +26,32 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                <b><?php echo __d('admin', 'sorry,_{0}_can_not_be_delivered.', [$orderDetail->product_name]); ?></b>
+                <b><?php echo __('sorry,_{0}_can_not_be_delivered.', [$orderDetail->product_name]); ?></b>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li><?php echo __d('admin', 'Price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl); ?></b></li>
-                <li><?php echo __d('admin', 'Amount'); ?>: <b><?php echo $cancelledQuantity; ?></b></li>
+                <li><?php echo __('Price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl); ?></b></li>
+                <li><?php echo __('Amount'); ?>: <b><?php echo $cancelledQuantity; ?></b></li>
                 <?php if (Configure::read('app.showManufacturerListAndDetailPage')) { ?>
-                    <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
+                    <li><?php echo __('Manufacturer'); ?>: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
                 <?php } ?>
-                <li><?php echo __d('admin', 'Order_date'); ?>: <b><?php echo $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
+                <li><?php echo __('Order_date'); ?>: <b><?php echo $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
             </ul>
 
             <p>
-                <?php echo __d('admin', 'Why_has_the_product_been_cancelled?'); ?><br />
+                <?php echo __('Why_has_the_product_been_cancelled?'); ?><br />
                 <b><?php echo '"' . $cancellationReason . '"'; ?></b>
             </p>
 
-            <p><?php echo __d('admin', 'Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere.'); ?></p>
-            <p><?php echo __d('admin', 'Thanks_for_respecting_that!'); ?></p>
+            <p><?php echo __('Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere.'); ?></p>
+            <p><?php echo __('Thanks_for_respecting_that!'); ?></p>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
+                <p><?php echo __('PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
             <?php } ?>
 
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$profileRoute; ?>"><?php echo Configure::read('App.fullBaseUrl').$profileRoute; ?></a>
+                <?php echo __('Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$profileRoute; ?>"><?php echo Configure::read('App.fullBaseUrl').$profileRoute; ?></a>
             </p>
 
         </td>

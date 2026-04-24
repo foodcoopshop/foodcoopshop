@@ -37,7 +37,7 @@ trait EditProductQuantityTrait
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
         if (!$productQuantity || $productQuantity < 0) {
-            $message = __d('admin', 'The_delivered_quantity_is_not_valid.');
+            $message = __('The_delivered_quantity_is_not_valid.');
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -68,7 +68,7 @@ trait EditProductQuantityTrait
             $toleranceFactor = 100;
             $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
             if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
-                $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
+                $message = __('The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
                     '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
                     '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
                 ]);
@@ -104,7 +104,7 @@ trait EditProductQuantityTrait
             $productQuantityService->changeStockAvailable($oldOrderDetail, $increaseQuantity);
         }
 
-        $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}.', [
+        $message = __('The_weight_of_the_ordered_product_{0}_was_successfully_apapted_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
             Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name,
             Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name
@@ -115,7 +115,7 @@ trait EditProductQuantityTrait
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
-            ->setSubject(__d('admin', 'Weight_adapted_for_"0":', [$oldOrderDetail->product_name]) . ' ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name)
+            ->setSubject(__('Weight_adapted_for_"0":', [$oldOrderDetail->product_name]) . ' ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
                 'newsletterCustomer' => $oldOrderDetail->customer,
@@ -125,13 +125,13 @@ trait EditProductQuantityTrait
             ]);
             $email->addToQueue();
 
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+            $emailMessage = ' ' . __('An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
             $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
             $sendOrderedProductPriceChangedNotification = $manufacturersTable->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
 
             if (! $this->identity->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                $emailMessage = ' ' . __('An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                     '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);

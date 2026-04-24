@@ -72,7 +72,7 @@ trait AddTrait
             return $this->sendAjaxError($e);
         }
 
-        $messageString = __d('admin', 'The_product_{0}_was_created_for_{1}.', [
+        $messageString = __('The_product_{0}_was_created_for_{1}.', [
             '<b>' . $productName . '</b>',
             '<b>' . $manufacturer->name . '</b>',
         ]);

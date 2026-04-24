@@ -19,7 +19,7 @@ $html = $this->Html->link(
     'javascript:void(0)',
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
-        'title' => __d('admin', 'Copy_to_clipboard'),
+        'title' => __('Copy_to_clipboard'),
         'style' => 'margin-right:3px;float:left;',
         'escape' => false,
     ]
@@ -27,10 +27,10 @@ $html = $this->Html->link(
 $html .= '<table class="list tax-sum-table">';
 
 $html .= '<tr>';
-    $html .= '<th>' . __d('admin', 'Tax_rate').'</th>';
-    $html .= '<th>' . __d('admin', 'Sum') . ' ' . __d('admin', 'Net') . '</th>';
-    $html .= '<th>' . __d('admin', 'Sum') . ' ' . __d('admin', 'VAT').'</th>';
-    $html .= '<th>' . __d('admin', 'Sum') . ' ' . __d('admin', 'Gross') .'</th>';
+    $html .= '<th>' . __('Tax_rate_admin').'</th>';
+    $html .= '<th>' . __('Sum') . ' ' . __('Net') . '</th>';
+    $html .= '<th>' . __('Sum') . ' ' . __('VAT').'</th>';
+    $html .= '<th>' . __('Sum') . ' ' . __('Gross') .'</th>';
 $html .= '</tr>';
 
 foreach($taxRates as $taxRate => $data) {
@@ -47,7 +47,7 @@ foreach($taxRates as $taxRate => $data) {
 }
 
 $html .= '<tr style="font-weight:bold;">';
-$html .= '<td>'.__d('admin', 'Sum').'</td>';
+$html .= '<td>'.__('Sum').'</td>';
 $html .= '<td>'. $this->Number->formatAsDecimal($taxRatesSums['sum_price_excl']) . '</td>';
 $html .= '<td>'. $this->Number->formatAsDecimal($taxRatesSums['sum_tax']) . '</td>';
 $html .= '<td>'. $this->Number->formatAsDecimal($taxRatesSums['sum_price_incl']) . '</td>';

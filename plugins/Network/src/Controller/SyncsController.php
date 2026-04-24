@@ -93,13 +93,13 @@ class SyncsController extends AppController
             )
         );
 
-        $type = __d('network', 'Product');
+        $type = __('Product');
         if ($remoteProductIds['attributeId'] > 0) {
-            $type = __d('network', 'Attribute');
+            $type = __('Attribute');
         }
-        $message = __d('network', '{0}_{1}_was_successfully_associated.', [$type, '<b>'.$product['productName'].'</b>']);
+        $message = __('{0}_{1}_was_successfully_associated.', [$type, '<b>'.$product['productName'].'</b>']);
         if (!$status) {
-            $message = __d('network', '{0}_{1}_could_not_be_associated.', [$type, '<b>'.$product['productName'].'</b>']);
+            $message = __('{0}_{1}_could_not_be_associated.', [$type, '<b>'.$product['productName'].'</b>']);
         }
 
         $this->set([
@@ -143,7 +143,7 @@ class SyncsController extends AppController
         }
         $this->set('emptyProductsString', $emptyProductsString);
 
-        $this->set('title_for_layout', __d('network', 'Associate_products'));
+        $this->set('title_for_layout', __('Associate_products'));
     }
 
     public function ajaxDeleteProductRelation(): ?Response
@@ -174,9 +174,9 @@ class SyncsController extends AppController
         $syncProductsTable = $this->getTableLocator()->get('Network.SyncProducts');
         $status = $syncProductsTable->deleteAll($syncProduct) === 0 ? false : true;
 
-        $message = __d('network', 'The_product_{0}_has_been_deleted_successfully.', ['<b>'.$product['productName'].'</b>']);
+        $message = __('The_product_{0}_has_been_deleted_successfully.', ['<b>'.$product['productName'].'</b>']);
         if (!$status) {
-            $message = __d('network', 'While_deleting_the_product_{0}_there_has_an_error_occurred.', ['<b>'.$product['productName'].'</b>']);
+            $message = __('While_deleting_the_product_{0}_there_has_an_error_occurred.', ['<b>'.$product['productName'].'</b>']);
         }
 
         $this->set([
@@ -228,7 +228,7 @@ class SyncsController extends AppController
         }
         $this->set('emptyProductsString', $emptyProductsString);
 
-        $this->set('title_for_layout', __d('network', 'Synchronize_products'));
+        $this->set('title_for_layout', __('Synchronize_products'));
     }
 
     /**
@@ -240,7 +240,7 @@ class SyncsController extends AppController
         foreach($syncDomains as $syncDomain) {
             $syncDomainNames[] = $syncDomain->domain;
         }
-        $emptyProductsString = __d('network', 'There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}.', [
+        $emptyProductsString = __('There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}.', [
             '<b>'.Configure::read('appDb.FCS_APP_NAME').'</b>',
             '<b>(' . join(', ', $syncDomainNames) . ')</b>'
         ]);

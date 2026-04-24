@@ -23,7 +23,7 @@ echo '<td class="delivery-rhythm">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            echo __d('admin', 'Member_choses_pickup_day.');
+            echo __('Member_choses_pickup_day.');
             echo '</td>';
             return;
         }
@@ -34,7 +34,7 @@ echo '<td class="delivery-rhythm">';
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light product-delivery-rhythm-edit-button',
-                    'title' => __d('admin', 'change_delivery_rhythm'),
+                    'title' => __('change_delivery_rhythm'),
                     'escape' => false
                 ]
             );
@@ -71,14 +71,14 @@ echo '<td class="delivery-rhythm">';
 
                 if ($product->delivery_rhythm_type != 'individual') {
                     if ($product->delivery_rhythm_send_order_list_weekday != (new DeliveryRhythmService())->getSendOrderListsWeekday()) {
-                        $elementsToRender[] = __d('admin', 'Last_order_weekday') . ': ' . $this->Time->getWeekdayName($lastOrderWeekday) . ' ' . __d('admin', 'midnight');
+                        $elementsToRender[] = __('Last_order_weekday_admin') . ': ' . $this->Time->getWeekdayName($lastOrderWeekday) . ' ' . __('midnight');
                     }
                 }
 
                 if ($product->delivery_rhythm_type == 'individual') {
 
                     $sendOrderListDayElement = '';
-                    $sendOrderListDayElement .= __d('admin', 'Order_possible_until') . ' ';
+                    $sendOrderListDayElement .= __('Order_possible_until') . ' ';
                     $sendOrderListDayElement .= '<span class="order-possible-until">';
                     if (!is_null($product->delivery_rhythm_order_possible_until)) {
                         $sendOrderListDayElement .= $this->Time->formatToDateShort($product->delivery_rhythm_order_possible_until);
@@ -87,12 +87,12 @@ echo '<td class="delivery-rhythm">';
                     $elementsToRender[] = $sendOrderListDayElement;
 
                     if (!is_null($product->delivery_rhythm_send_order_list_day)) {
-                        $elementsToRender[] = __d('admin', 'Send_order_lists_day') . ' ' .
+                        $elementsToRender[] = __('Send_order_lists_day_admin') . ' ' .
                             '<span class="send-order-list-day">' .
                                 $this->Time->formatToDateShort($product->delivery_rhythm_send_order_list_day) .
                         '</span>';
                     } else {
-                        $elementsToRender[] = __d('admin', 'Order_list_is_not_sent');
+                        $elementsToRender[] = __('Order_list_is_not_sent');
                     }
 
                 }
@@ -100,9 +100,9 @@ echo '<td class="delivery-rhythm">';
                 $deliveryDayElement = '';
                 if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                     if ($product->delivery_rhythm_type != 'individual') {
-                        $deliveryDayElement = __d('admin', 'delivery_rhythm_from') . ' ';
+                        $deliveryDayElement = __('delivery_rhythm_from') . ' ';
                     } else {
-                        $deliveryDayElement = __d('admin', 'Delivery_day') . ': ';
+                        $deliveryDayElement = __('Delivery_day') . ': ';
                     }
                     if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                         $deliveryDayElement .= $this->Time->formatToDateShort($product->delivery_rhythm_first_delivery_day);

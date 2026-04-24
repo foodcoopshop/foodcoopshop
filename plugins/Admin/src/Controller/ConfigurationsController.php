@@ -32,7 +32,7 @@ class ConfigurationsController extends AdminAppController
  
     public function changelog(): void
     {
-        $this->set('title_for_layout', __d('admin', 'Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion());
+        $this->set('title_for_layout', __('Changelog') . ': ' . TableRegistry::getTableLocator()->get('Configurations')->getVersion());
     }
 
     public function edit(string $name): ?Response
@@ -49,7 +49,7 @@ class ConfigurationsController extends AdminAppController
         if (empty($configuration)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_setting'));
+        $this->set('title_for_layout', __('Edit_setting'));
 
         if (in_array($configuration->type, ['textarea_big'])) {
             $_SESSION['ELFINDER'] = [
@@ -95,13 +95,13 @@ class ConfigurationsController extends AdminAppController
         );
 
         if ($configuration->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('configuration', $configuration);
         } else {
             $configuration = $configurationsTable->save($configuration);
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
-            $actionLogsTable->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
+            $this->Flash->success(__('The_setting_has_been_changed_successfully.'));
+            $actionLogsTable->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __('The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
             return $this->redirect($this->getPreparedReferer());
         }
 
@@ -180,15 +180,15 @@ class ConfigurationsController extends AdminAppController
         } catch (\PDOException  $e) {
         }
 
-        $this->set('title_for_layout', __d('admin', 'Settings'));
+        $this->set('title_for_layout', __('Settings'));
     }
 
     public function sendTestEmail(): void
     {
-        $this->set('title_for_layout', __d('admin', 'Send_test_email'));
+        $this->set('title_for_layout', __('Send_test_email'));
         $email = new AppMailer(false);
         $email->setTo(Configure::read('app.hostingEmail'))
-        ->setSubject(__d('admin', 'Test_email'))
+        ->setSubject(__('Test_email'))
         ->viewBuilder()->setTemplate('send_test_email_template');
         $email->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS . Configure::read('app.logoFileName'),

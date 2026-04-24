@@ -41,7 +41,7 @@ use Cake\Core\Configure;
             ?>
             <div class="right">
             <?php
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]);
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_manufacturers'))]);
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
@@ -51,10 +51,10 @@ use Cake\Core\Configure;
     echo '<table class="list">';
 
     echo '<tr class="sort">';
-    echo '<th>'.__d('admin', 'Invoice_date').'</th>';
-    echo '<th>'.__d('admin', 'Invoice_number_abbreviation').'</th>';
-    echo '<th>'.__d('admin', 'Manufacturer').'</th>';
-    echo '<th>'.__d('admin', 'Invoice').'</th>';
+    echo '<th>'.__('Invoice_date').'</th>';
+    echo '<th>'.__('Invoice_number_abbreviation_admin').'</th>';
+    echo '<th>'.__('Manufacturer').'</th>';
+    echo '<th>'.__('Invoice').'</th>';
     echo '</tr>';
 
     $i = 0;
@@ -91,7 +91,7 @@ use Cake\Core\Configure;
     }
 
     echo '<tr>';
-    echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+    echo '<td colspan="4"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
     echo '</tr>';
 
     echo '</table>';

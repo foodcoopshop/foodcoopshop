@@ -39,7 +39,7 @@ class SlidersController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add_slider'));
+        $this->set('title_for_layout', __('Add_slider'));
         $this->_processForm($slider, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -58,7 +58,7 @@ class SlidersController extends AdminAppController
         if (empty($slider)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_slider'));
+        $this->set('title_for_layout', __('Edit_slider'));
         $this->_processForm($slider, true);
     }
 
@@ -80,17 +80,17 @@ class SlidersController extends AdminAppController
         $slidersTable = $this->getTableLocator()->get('Sliders');
         $slider = $slidersTable->patchEntity($slider, $this->getRequest()->getData());
         if ($slider->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('slider', $slider);
             return $this->render('edit');
         } else {
             $slider = $slidersTable->save($slider);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'slider_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'slider_changed';
             }
 
@@ -105,10 +105,10 @@ class SlidersController extends AdminAppController
                 $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath());
                 $slider = $slidersTable->patchEntity($slider, ['active' => APP_DEL]);
                 $slidersTable->save($slider);
-                $messageSuffix = __d('admin', 'deleted');
+                $messageSuffix = __('deleted_admin');
                 $actionLogType = 'slider_deleted';
             }
-            $message = __d('admin', 'The_slider_{0}_has_been_{1}.', ['<b>' . $slider->id_slider . '</b>', $messageSuffix]);
+            $message = __('The_slider_{0}_has_been_{1}.', ['<b>' . $slider->id_slider . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
 
@@ -136,6 +136,6 @@ class SlidersController extends AdminAppController
         ]);
 
         $this->set('sliders', $sliders);
-        $this->set('title_for_layout', __d('admin', 'Slideshow'));
+        $this->set('title_for_layout', __('Slideshow'));
     }
 }

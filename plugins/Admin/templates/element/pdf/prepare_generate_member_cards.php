@@ -39,8 +39,8 @@ foreach($customers as $customer) {
             $pdf->table .= '</td>';
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between logo and top right name block
             $pdf->table .= '<td style="width:138px;">';
-                $pdf->table .= __d('admin', 'Customer_ID') . ': <b>' . $customer->id_customer . '</b><br />';
-                $pdf->table .= __d('admin', 'Register_date') . ': ' . $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '<br />';
+                $pdf->table .= __('Customer_ID') . ': <b>' . $customer->id_customer . '</b><br />';
+                $pdf->table .= __('Register_date') . ': ' . $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '<br />';
                 $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:25px;"><b>' . $customer->name . '</b></td></tr></table>';
             $pdf->table .= '</td>';
         $pdf->table .= '</tr>';
@@ -50,7 +50,7 @@ foreach($customers as $customer) {
         $pdf->table .= '</tr>';
         $pdf->table .= '<tr>';
             $pdf->table .= '<td colspan="3" style="line-height:20px;height:20px;border-bottom:1px solid dotted;border-top:1px solid dotted;">';
-                $pdf->table .= __d('admin', 'Member_card') . ': <b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>';
+                $pdf->table .= __('Member_card') . ': <b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>';
             $pdf->table .= '</td>';
         $pdf->table .= '</tr>';
         // END ROW with logo and name block

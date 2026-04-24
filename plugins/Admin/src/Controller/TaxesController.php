@@ -35,7 +35,7 @@ class TaxesController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', __d('admin', 'Add_tax_rate'));
+        $this->set('title_for_layout', __('Add_tax_rate'));
         $this->_processForm($tax, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -54,7 +54,7 @@ class TaxesController extends AdminAppController
         if (empty($tax)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', __d('admin', 'Edit_tax_rate'));
+        $this->set('title_for_layout', __('Edit_tax_rate'));
         return $this->_processForm($tax, true);
     }
 
@@ -76,22 +76,22 @@ class TaxesController extends AdminAppController
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $tax = $taxesTable->patchEntity($tax, $this->getRequest()->getData());
         if ($tax->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('tax', $tax);
             return $this->render('edit');
         } else {
             $tax = $taxesTable->save($tax);
 
             if (!$isEditMode) {
-                $messageSuffix = __d('admin', 'created');
+                $messageSuffix = __('created');
                 $actionLogType = 'tax_added';
             } else {
-                $messageSuffix = __d('admin', 'changed');
+                $messageSuffix = __('changed');
                 $actionLogType = 'tax_changed';
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            $message = __d('admin', 'The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b>', $messageSuffix]);
+            $message = __('The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 
@@ -120,6 +120,6 @@ class TaxesController extends AdminAppController
 
         $this->set('taxes', $taxes);
 
-        $this->set('title_for_layout', __d('admin', 'Tax_rates'));
+        $this->set('title_for_layout', __('Tax_rates'));
     }
 }

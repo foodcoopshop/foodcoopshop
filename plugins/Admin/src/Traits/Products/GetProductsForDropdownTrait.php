@@ -36,7 +36,7 @@ trait GetProductsForDropdownTrait
             $productsForDropdown[] = '</optgroup>';
         }
 
-        $emptyElement = ['<option value="">' . __d('admin', 'All_products') . '</option>'];
+        $emptyElement = ['<option value="">' . __('All_products') . '</option>'];
         $productsForDropdown = array_merge($emptyElement, $productsForDropdown);
 
         $this->set([

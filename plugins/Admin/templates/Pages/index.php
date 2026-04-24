@@ -32,13 +32,13 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <h1><?php echo $title_for_layout; ?></h1>
-            <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_users'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+            <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __('all_users'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <div class="right">
                 <?php
                 echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
                 echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getPageAdd(), [
                     'class' => 'btn btn-outline-light',
-                    'title' => __d('admin', 'Add_page'),
+                    'title' => __('Add_page'),
                     'escape' => false
                 ]);
                 echo '</div>';
@@ -55,15 +55,15 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
 echo '<th></th>';
-echo '<th>'.__d('admin', 'Title').'</th>';
-echo '<th>'.__d('admin', 'Menu').'</th>';
-echo '<th>'.__d('admin', 'Rank_in_menu').'</th>';
-echo '<th>'.__d('admin', 'Only_for_members').'</th>';
-echo '<th>'.__d('admin', 'Full_width').'</th>';
-echo '<th>'.__d('admin', 'Link').'</th>';
-echo '<th>'.__d('admin', 'Modified_by').'</th>';
-echo '<th>'.__d('admin', 'Modified_on').'</th>';
-echo '<th>'.__d('admin', 'Active').'</th>';
+echo '<th>'.__('Title').'</th>';
+echo '<th>'.__('Menu').'</th>';
+echo '<th>'.__('Rank_in_menu').'</th>';
+echo '<th>'.__('Only_for_members').'</th>';
+echo '<th>'.__('Full_width').'</th>';
+echo '<th>'.__('Link').'</th>';
+echo '<th>'.__('Modified_by').'</th>';
+echo '<th>'.__('Modified_on').'</th>';
+echo '<th>'.__('Active').'</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -72,7 +72,7 @@ echo $this->element('pageTreeRows', [
 ]);
 
 echo '<tr>';
-echo '<td colspan="12"><b>' . $totalPagesCount . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
+echo '<td colspan="12"><b>' . $totalPagesCount . '</b> '.__('{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
 echo '</tr>';
 
 echo '</table>';

@@ -19,15 +19,15 @@ echo '<div class="pickup-day-filter-wrapper'.(count($pickupDay) == 2 ? ' two-pic
     echo '<b>';
     if ($identity->isManufacturer()) {
         if (count($pickupDay) == 1) {
-            echo __d('admin', 'Delivery_day');
+            echo __('Delivery_day');
         } else {
-            echo __d('admin', 'Delivery_days');
+            echo __('Delivery_days');
         }
     } else {
         if (count($pickupDay) == 1) {
-            echo __d('admin', 'Pickup_day');
+            echo __('Pickup_day');
         } else {
-            echo __d('admin', 'Pickup_days');
+            echo __('Pickup_days');
         }
     }
     echo ':</b>';

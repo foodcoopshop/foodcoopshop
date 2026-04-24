@@ -71,7 +71,7 @@ trait ChangeStatusTrait
             $actionLogType .= '_'.$userType;
         }
 
-        $message = __d('admin', 'The_payment_({0}_{1})_was_removed_successfully.', [
+        $message = __('The_payment_({0}_{1})_was_removed_successfully.', [
             Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
             Configure::read('app.htmlHelper')->getPaymentText((int) $payment->type)]
         );
@@ -81,7 +81,7 @@ trait ChangeStatusTrait
             } else {
                 $username = $payment->manufacturer->name;
             }
-            $message = __d('admin', 'The_payment_({0}_{1})_of_{2}_was_removed_successfully.', [
+            $message = __('The_payment_({0}_{1})_of_{2}_was_removed_successfully.', [
                 Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
                 Configure::read('app.htmlHelper')->getPaymentText((int) $payment->type),
                 $username

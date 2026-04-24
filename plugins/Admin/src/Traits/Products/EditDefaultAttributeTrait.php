@@ -48,7 +48,7 @@ trait EditDefaultAttributeTrait
             ]
         )->first();
 
-        $actionLogMessage = __d('admin', 'The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
+        $actionLogMessage = __('The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
             '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>',
             '<b>' . $productAttribute->product_attribute_combination->attribute->name . '</b>'

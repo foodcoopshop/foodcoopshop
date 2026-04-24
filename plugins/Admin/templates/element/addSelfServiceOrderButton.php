@@ -26,12 +26,12 @@ echo '<div id="add-self-service-order-button-wrapper" class="add-button-wrapper 
         'escape' => false
     ];
     $options['class'] = 'btn btn-outline-light';
-    echo $this->Html->link('<i class="fas fa-shopping-bag ok"></i> '.__d('admin', 'Order_stock_products'), 'javascript:void(0);', $options);
+    echo $this->Html->link('<i class="fas fa-shopping-bag ok"></i> '.__('Order_stock_products'), 'javascript:void(0);', $options);
     echo $this->Form->control('', [
         'type' => 'select',
         'label' => '',
         'id' => 'selfServiceOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
-        'empty' => __d('admin', 'chose_member...'),
+        'empty' => __('chose_member...'),
     ]);
 echo '</div>';

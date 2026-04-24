@@ -24,7 +24,7 @@ if ($groupBy == '') {
                 [
                     'class' => 'btn btn-outline-light delete-order-detail',
                     'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
-                    'title' => __d('admin', 'Click_to_cancel_product'),
+                    'title' => __('Click_to_cancel_product'),
                     'escape' => false
                 ]
             );

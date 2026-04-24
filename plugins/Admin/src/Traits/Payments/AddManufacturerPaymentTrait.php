@@ -96,14 +96,14 @@ trait AddManufacturerPaymentTrait
             $tresholdExceeded = false;
             if ($amount > $maxAmount) {
                 $tresholdExceeded = true;
-                $msg = __d('admin', 'The maximum amount of {0} was exceeded.', [
+                $msg = __('The maximum amount of {0} was exceeded.', [
                     Configure::read('app.numberHelper')->formatAsCurrency($maxAmount),
                 ]);
             } else {
                 $depositBalance = $manufacturersTable->getDepositBalance($manufacturerId);
                 if ($amount + $depositBalance > 0) {
                     $tresholdExceeded = true;
-                    $msg = __d('admin', 'The amount exceeds the deposit balance of {0}, the manufacturer would take back more deposit than he sold.', [
+                    $msg = __('The amount exceeds the deposit balance of {0}, the manufacturer would take back more deposit than he sold.', [
                         Configure::read('app.numberHelper')->formatAsCurrency(
                             FormatterService::assureCorrectFloat($depositBalance) * -1
                         ),
@@ -111,7 +111,7 @@ trait AddManufacturerPaymentTrait
                 }
             }
             if ($tresholdExceeded) {
-                $msg .= ' ' . __d('admin', 'Press the submit button again to add the payment of {0} anyway.', [
+                $msg .= ' ' . __('Press the submit button again to add the payment of {0} anyway.', [
                     Configure::read('app.numberHelper')->formatAsCurrency($amount),
                 ]);
                 $this->request = $this->request->withParam('_ext', 'json');
@@ -128,15 +128,15 @@ trait AddManufacturerPaymentTrait
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
 
-        $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
-        $message .= ' ' . __d('admin', 'for') . ' ' . $manufacturer->name;
+        $message = __('Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
+        $message .= ' ' . __('for') . ' ' . $manufacturer->name;
 
         $newPayment = $paymentsTable->save($newEntity);
         $paymentPastDateMessage = '';
         if ($paymentPastDate) {
-            $paymentPastDateMessage = ' ' . __d('admin', 'for_the') . ' <b>' . $dateAddForEntity->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</b>';
+            $paymentPastDateMessage = ' ' . __('for_the') . ' <b>' . $dateAddForEntity->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</b>';
         }
-        $message .= ' ' . __d('admin', 'was_added_successfully_{0}:_{1}', [
+        $message .= ' ' . __('was_added_successfully_{0}:_{1}', [
             $paymentPastDateMessage,
             '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
         ]);
@@ -147,7 +147,7 @@ trait AddManufacturerPaymentTrait
         $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $newPayment->id, 'payments', $message);
 
         $message .= '. ';
-        $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
+        $message .= __('The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
 
         $this->Flash->success($message);
 

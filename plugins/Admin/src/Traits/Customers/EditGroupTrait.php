@@ -66,7 +66,7 @@ trait EditGroupTrait
                 )
             );
 
-        $messageString = __d('admin', 'The_group_of_the_member_{0}_was_changed_to_{1}.', [
+        $messageString = __('The_group_of_the_member_{0}_was_changed_to_{1}.', [
             '<b>' . $oldCustomer->name . '</b>',
             '<b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b>'
         ]);

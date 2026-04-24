@@ -123,7 +123,7 @@ trait EditTaxTrait
                 }
 
                 $changedTaxInfoForMessage[] = [
-                    'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Selling_price') . ': ' : '',
+                    'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Selling_price_admin') . ': ' : '',
                     'oldTaxRate' => $oldTaxRate,
                     'newTaxRate' => $newTaxRate,
                 ];
@@ -131,7 +131,7 @@ trait EditTaxTrait
             }
 
             if (!empty($changedTaxInfoForMessage)) {
-                $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully.', [
+                $messageString = __('The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully.', [
                     '<b>' . $oldProduct->name . '</b>',
                     '<b>' . $oldProduct->manufacturer->name . '</b>',
                 ]);
@@ -140,7 +140,7 @@ trait EditTaxTrait
                     if ($info['label'] != '') {
                         $messageString .= '<b>' . $info['label'] . '</b>';
                     }
-                    $messageString .= __d('admin', 'From_{0}_to_{1}', [
+                    $messageString .= __('From_{0}_to_{1}', [
                         Configure::read('app.numberHelper')->formatTaxRate($info['oldTaxRate']) . '%',
                         '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
                     ]);
@@ -148,7 +148,7 @@ trait EditTaxTrait
                 $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
                 $actionLogsTable->customSave('product_tax_changed', $this->identity->getId(), $productId, 'products', $messageString);
             } else {
-                $messageString = __d('admin', 'Nothing_changed.');
+                $messageString = __('Nothing_changed.');
             }
             $this->Flash->success($messageString);
 
@@ -156,7 +156,7 @@ trait EditTaxTrait
 
             $this->set([
                 'status' => 1,
-                'msg' => __d('admin', 'Saving_successful.'),
+                'msg' => __('Saving_successful.'),
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 

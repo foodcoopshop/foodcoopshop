@@ -58,13 +58,13 @@ class StatisticsController extends AdminAppController
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
         if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
-            $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
+            $manufacturersForDropdown = ['all' => __('All_manufacturers')];
         }
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->set('manufacturerId', $manufacturerId);
 
-        $titleForLayout = Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics');
+        $titleForLayout = Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Turnover_and_profit_statistics') : __('Turnover_statistics');
         if ($manufacturerId == '') {
             $this->set('title_for_layout', $titleForLayout);
             return;
@@ -91,9 +91,9 @@ class StatisticsController extends AdminAppController
         $lastOrderYear = $orderDetailsTable->getLastOrderYear($manufacturerId);
 
         $rangesForDropdown = [
-            '' => __d('admin', 'Total'),
-            'last-months-12' => __d('admin', 'Last_{0}_months', [12]),
-            'last-months-24' => __d('admin', 'Last_{0}_months', [24]),
+            '' => __('Total'),
+            'last-months-12' => __('Last_{0}_months', [12]),
+            'last-months-24' => __('Last_{0}_months', [24]),
         ];
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
             $allYears = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
@@ -173,7 +173,7 @@ class StatisticsController extends AdminAppController
             $yAxisDataWithYearSeparators[] = $yAxisData[$i];
             $yAxisData2WithYearSeparators[] = $yAxisData2[$i];
             $yAxisData3WithYearSeparators[] = $yAxisData3[$i];
-            if (preg_match('/'.__d('admin', 'December').'/', $x)) {
+            if (preg_match('/'.__('December').'/', $x)) {
                 $xAxisDataWithYearSeparators[] = '';
                 $yAxisDataWithYearSeparators[] = 0;
                 $yAxisData2WithYearSeparators[] = 0;

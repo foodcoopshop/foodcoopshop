@@ -35,7 +35,7 @@ $this->element('addScript', [
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
-            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_settings'))]); ?>
         </div>
     </div>
 
@@ -45,14 +45,14 @@ $this->element('addScript', [
         ]);
     ?>
 
-    <h2 class="info"><?php echo __d('admin', 'The_following_settings_can_be_changed_in_the_admin_area.'); ?></h2>
+    <h2 class="info"><?php echo __('The_following_settings_can_be_changed_in_the_admin_area.'); ?></h2>
 
     <table class="list no-hover no-clone-last-row">
 
         <tr>
-            <th><?php echo __d('admin', 'Setting'); ?></th>
+            <th><?php echo __('Setting'); ?></th>
             <th></th>
-            <th><?php echo __d('admin', 'Value'); ?></th>
+            <th><?php echo __('Value'); ?></th>
         </tr>
 
         <?php
@@ -90,7 +90,7 @@ $this->element('addScript', [
                         $this->Slug->getConfigurationEdit($configuration->name),
                         [
                             'class' => 'btn btn-outline-light',
-                            'title' => __d('admin', 'Edit'),
+                            'title' => __('Edit'),
                             'escape' => false
                         ]
                     );
@@ -102,7 +102,7 @@ $this->element('addScript', [
                     'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
                     'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
-                    'boolean' => (bool) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no'),
+                    'boolean' => (bool) $configuration->value ? __('yes') : __('no'),
                     default => '',
                 };
 
@@ -115,22 +115,22 @@ $this->element('addScript', [
         <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
             <tr>
                 <td class="first">
-                    <b><?php echo __d('admin', 'Remote_foodcoops'); ?></b>
-                    <br /><div class="small"><?php echo __d('admin', 'Foodcoops_with_which_manufacturers_can_synchronize_their_product_data.'); ?><br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>"><?php echo __d('admin', 'Info_page_for_network_module'); ?></a></div>
+                    <b><?php echo __('Remote_foodcoops'); ?></b>
+                    <br /><div class="small"><?php echo __('Foodcoops_with_which_manufacturers_can_synchronize_their_product_data.'); ?><br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>"><?php echo __('Info_page_for_network_module'); ?></a></div>
                 </td>
                 <?php if (!Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
                     echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Network->getSyncDomainAdd(), [
                         'class' => 'btn btn-outline-light',
-                        'title' => __d('admin', 'Add_remote_foodcoop'),
+                        'title' => __('Add_remote_foodcoop'),
                         'escape' => false
                     ]);
                 if (!empty($syncDomains)) {
                     echo '<table class="list">';
                     echo '<tr class="sort">';
-                    echo '<th>'.__d('admin', 'Domain').'</th>';
-                    echo '<th>'.__d('admin', 'Active').'</th>';
+                    echo '<th>'.__('Domain').'</th>';
+                    echo '<th>'.__('Active').'</th>';
                     echo '<th></th>';
                     echo '</th>';
                 }
@@ -151,7 +151,7 @@ $this->element('addScript', [
                         $this->Network->getSyncDomainEdit($syncDomain->id),
                         [
                             'class' => 'btn btn-outline-light',
-                            'title' => __d('admin', 'Edit'),
+                            'title' => __('Edit'),
                             'escape' => false
                         ]
                     );
@@ -164,7 +164,7 @@ $this->element('addScript', [
                     ?>
                 </td>
                 <?php } else { ?>
-                <td colspan="2"><p><?php echo __d('admin', 'As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop.'); ?></p></td>
+                <td colspan="2"><p><?php echo __('As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop.'); ?></p></td>
                 <?php } ?>
         </tr>
         <?php } ?>
@@ -173,13 +173,13 @@ $this->element('addScript', [
     <br />
 
 
-    <h2 class="info"><?php echo __d('admin', 'The_following_settings_can_not_be_changed_in_the_admin_area.'); ?></h2>
+    <h2 class="info"><?php echo __('The_following_settings_can_not_be_changed_in_the_admin_area.'); ?></h2>
 
     <table class="list no-hover">
 
         <tr>
-            <th><?php echo __d('admin', 'Setting'); ?></th>
-            <th><?php echo __d('admin', 'Value'); ?></th>
+            <th><?php echo __('Setting'); ?></th>
+            <th><?php echo __('Value'); ?></th>
         </tr>
 
         <?php
@@ -212,13 +212,13 @@ $this->element('addScript', [
         ?>
 
         <tr>
-            <td><?php echo __d('admin', 'Version_FoodCoopShop'); ?></td>
-            <td><?php echo $versionFoodCoopShop; ?> (<?php echo $this->Html->link(__d('admin', 'Changelog'), '/admin/configurations/changelog'); ?>)</td>
+            <td><?php echo __('Version_FoodCoopShop'); ?></td>
+            <td><?php echo $versionFoodCoopShop; ?> (<?php echo $this->Html->link(__('Changelog'), '/admin/configurations/changelog'); ?>)</td>
         </tr>
 
         <?php if (!empty($lastMigration)) { ?>
         <tr>
-            <td><?php echo __d('admin', 'Last_executed_migration'); ?></td>
+            <td><?php echo __('Last_executed_migration'); ?></td>
             <td><?php echo $lastMigration[0][0] . ' ' . $lastMigration[0][1]; ?></td>
         </tr>
         <?php } ?>
@@ -240,7 +240,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.emailOrderReminderEnabled</td>
-            <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <?php
@@ -267,7 +267,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.isDepositEnabled</td>
-            <td><?php echo Configure::read('app.isDepositEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.isDepositEnabled') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <?php if ($this->Html->paymentIsCashless()) { ?>
@@ -296,17 +296,17 @@ $this->element('addScript', [
 
         <tr>
             <td>app.isCustomerAllowedToModifyOwnOrders</td>
-            <td><?php echo Configure::read('app.isCustomerAllowedToModifyOwnOrders') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.isCustomerAllowedToModifyOwnOrders') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.isCustomerAllowedToViewOwnOrders</td>
-            <td><?php echo Configure::read('app.isCustomerAllowedToViewOwnOrders') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.isCustomerAllowedToViewOwnOrders') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.isZeroTaxEnabled</td>
-            <td><?php echo Configure::read('app.isZeroTaxEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.isZeroTaxEnabled') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
@@ -316,57 +316,57 @@ $this->element('addScript', [
 
         <tr>
             <td>app.showStatisticsForAdmins</td>
-            <td><?php echo Configure::read('app.showStatisticsForAdmins') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.showStatisticsForAdmins') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.isBlogFeatureEnabled</td>
-            <td><?php echo Configure::read('app.isBlogFeatureEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.isBlogFeatureEnabled') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.applyOrdersNotYetBilledCheckOnDeletingCustomers</td>
-            <td><?php echo Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.applyPaymentsOkCheckOnDeletingCustomers</td>
-            <td><?php echo Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled</td>
-            <td><?php echo Configure::read('app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.sendEmailWhenOrderDetailQuantityChanged</td>
-            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityChanged') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.selfServiceModeAutoLogoutDesktopEnabled</td>
-            <td><?php echo Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.selfServiceModeShowOnlyStockProducts</td>
-            <td><?php echo Configure::read('app.selfServiceModeShowOnlyStockProducts') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.selfServiceModeShowOnlyStockProducts') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.selfServiceIsAmountValidationEnabled</td>
-            <td><?php echo Configure::read('app.selfServiceIsAmountValidationEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.selfServiceIsAmountValidationEnabled') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.selfServiceEasyModeEnabled</td>
-            <td><?php echo Configure::read('app.selfServiceEasyModeEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.selfServiceEasyModeEnabled') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.selfServiceModeAutoGenerateInvoice</td>
-            <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
@@ -391,22 +391,22 @@ $this->element('addScript', [
 
         <tr>
             <td>app.showTaxInOrderConfirmationEmail</td>
-            <td><?php echo Configure::read('app.showTaxInOrderConfirmationEmail') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.showTaxInOrderConfirmationEmail') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.applyOpenOrderCheckForOrderReminder</td>
-            <td><?php echo Configure::read('app.applyOpenOrderCheckForOrderReminder') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.applyOpenOrderCheckForOrderReminder') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled</td>
-            <td><?php echo Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
             <td>app.emailErrorLoggingEnabled</td>
-            <td><?php echo Configure::read('app.emailErrorLoggingEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.emailErrorLoggingEnabled') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
@@ -416,7 +416,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.defaultTax</td>
-            <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __d('admin', 'activated') : __d('admin', 'deactivated'); ?></td>
+            <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __('activated_admin') : __('deactivated_admin'); ?></td>
         </tr>
 
         <tr>
@@ -438,31 +438,31 @@ $this->element('addScript', [
 
         <tr>
             <td>app.confirmNewSuperadminPayments</td>
-            <td><?php echo Configure::read('app.confirmNewSuperadminPayments') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td><?php echo Configure::read('app.confirmNewSuperadminPayments') ? __('yes') : __('no'); ?></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/<?php echo Configure::read('app.logoFileName'); ?></td>
+            <td><?php echo __('Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/<?php echo Configure::read('app.logoFileName'); ?></td>
             <td><img src="/files/images/<?php echo Configure::read('app.logoFileName'); ?>" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Logo_for_order_lists_and_invoices,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/logo-pdf.jpg</td>
+            <td><?php echo __('Logo_for_order_lists_and_invoices,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/logo-pdf.jpg</td>
             <td><img src="/files/images/logo-pdf.jpg" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_product,_width:'); ?> 150x150<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/products/de-default-home_default.jpg</td>
+            <td><?php echo __('Default_image_for_product,_width:'); ?> 150x150<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/products/de-default-home_default.jpg</td>
             <td><img src="/files/images/products/de-default-home_default.jpg" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_manufacturer,_width:'); ?> 150x150<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
+            <td><?php echo __('Default_image_for_manufacturer,_width:'); ?> 150x150<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
             <td><img src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_blog_post,_width:'); ?> 150x113<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/blog_posts/no-home-default.jpg</td>
+            <td><?php echo __('Default_image_for_blog_post,_width:'); ?> 150x113<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/blog_posts/no-home-default.jpg</td>
             <td><img src="/files/images/blog_posts/no-home-default.jpg" /></td>
         </tr>
 

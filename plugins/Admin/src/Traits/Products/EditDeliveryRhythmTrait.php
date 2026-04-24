@@ -104,20 +104,20 @@ trait EditDeliveryRhythmTrait
             $additionalMessages = [];
             if ($deliveryRhythmFirstDeliveryDay != '') {
                 if ($product2update['delivery_rhythm_order_possible_until'] != '') {
-                    $additionalMessages[] = __d('admin', 'Order_possible_until') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmOrderPossibleUntil) . '</b>';
+                    $additionalMessages[] = __('Order_possible_until') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmOrderPossibleUntil) . '</b>';
                 }
             }
 
             if ($deliveryRhythmType == 'individual') {
                 if ($product2update['delivery_rhythm_send_order_list_day'] != '') {
-                    $additionalMessages[] = __d('admin', 'Send_order_lists_day') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmSendOrderListDay) . '</b>';
+                    $additionalMessages[] = __('Send_order_lists_day_admin') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmSendOrderListDay) . '</b>';
                 } else {
-                    $additionalMessages[] = __d('admin', 'Order_list_is_not_sent');
+                    $additionalMessages[] = __('Order_list_is_not_sent');
                 }
             } else {
                 if ($product2update['delivery_rhythm_send_order_list_weekday'] != (new DeliveryRhythmService())->getSendOrderListsWeekday()) {
-                    $additionalMessages[] =  __d('admin', 'Last_order_weekday') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
-                        (int) $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
+                    $additionalMessages[] =  __('Last_order_weekday_admin') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
+                        (int) $deliveryRhythmSendOrderListWeekday) . ' ' . __('midnight')
                         . '</b>';
                 }
             }
@@ -125,9 +125,9 @@ trait EditDeliveryRhythmTrait
             if ($deliveryRhythmFirstDeliveryDay != '') {
                 $deliveryDayMessage = '';
                 if ($deliveryRhythmType == 'individual') {
-                    $deliveryDayMessage .= __d('admin', 'Delivery_day');
+                    $deliveryDayMessage .= __('Delivery_day');
                 } else {
-                    $deliveryDayMessage .= __d('admin', 'First_delivery_day');
+                    $deliveryDayMessage .= __('First_delivery_day');
                 }
                 $deliveryDayMessage .= ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmFirstDeliveryDay) . '</b>';
                 $additionalMessages[] = $deliveryDayMessage;
@@ -135,7 +135,7 @@ trait EditDeliveryRhythmTrait
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if ($singleEditMode && isset($productId)) {
-                $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
+                $messageString = __('The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
                     '<b>' . $oldProduct->name . '</b>',
                     '<b>' . $oldProduct->manufacturer->name . '</b>',
                     '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString(
@@ -150,7 +150,7 @@ trait EditDeliveryRhythmTrait
                 $actionLogsTable->customSave('product_delivery_rhythm_changed', $this->identity->getId(), (int) $productId, 'products', $messageString);
                 $this->getRequest()->getSession()->write('highlightedRowId', $productId);
             } else {
-                $messageString = __d('admin', 'Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}.', [
+                $messageString = __('Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}.', [
                     count($productIds),
                     '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString(false, $deliveryRhythmType, $deliveryRhythmCount) . '</b>'
                 ]);
@@ -164,7 +164,7 @@ trait EditDeliveryRhythmTrait
 
             $this->set([
                 'status' => 1,
-                'msg' => __d('admin', 'Saving_successful.'),
+                'msg' => __('Saving_successful.'),
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 

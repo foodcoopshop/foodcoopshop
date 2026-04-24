@@ -47,12 +47,12 @@ trait EditNewStatusTrait
 
             $productsTable = $this->getTableLocator()->get('Products');
             $productsTable->changeNewStatus($data);
-            $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_unmarked_as_new.', [
+            $actionLogMessage = __('{0,plural,=1{1_product_was} other{#_products_were}}_unmarked_as_new.', [
                 count($productIds),
             ]);
             $actionLogType = 'product_set_to_old';
             if ($status) {
-                $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_marked_as_new.', [
+                $actionLogMessage = __('{0,plural,=1{1_product_was} other{#_products_were}}_marked_as_new.', [
                     count($productIds),
                 ]);
                 $actionLogType = 'product_set_to_new';
@@ -63,7 +63,7 @@ trait EditNewStatusTrait
 
             $this->set([
                 'status' => 1,
-                'msg' => __d('admin', 'Saving_successful.'),
+                'msg' => __('Saving_successful.'),
             ]);
 
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
@@ -95,12 +95,12 @@ trait EditNewStatusTrait
         )->first();
 
         $actionLogType = 'product_set_to_old';
-        $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [
+        $actionLogMessage = __('The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [
             '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         if ($status) {
-            $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days.', [
+            $actionLogMessage = __('The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days.', [
                 '<b>' . $product->name . '</b>',
                 '<b>' . $product->manufacturer->name . '</b>',
                 Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')

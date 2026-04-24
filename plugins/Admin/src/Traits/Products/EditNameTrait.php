@@ -56,10 +56,10 @@ trait EditNameTrait
             return $this->sendAjaxError($e);
         }
 
-        $this->Flash->success(__d('admin', 'The_product_was_changed_successfully.'));
+        $this->Flash->success(__('The_product_was_changed_successfully.'));
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         if ($this->getRequest()->getData('name') != $oldProduct->name) {
-            $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}.', [
+            $actionLogMessage = __('The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}.', [
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<i>"' . $this->getRequest()->getData('name') . '"</i>'
@@ -67,7 +67,7 @@ trait EditNameTrait
             $actionLogsTable->customSave('product_name_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         }
         if ($this->getRequest()->getData('unity') != $oldProduct->unity) {
-            $actionLogMessage = __d('admin', 'The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
+            $actionLogMessage = __('The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<i>"' . $this->getRequest()->getData('unity') . '"</i>'
@@ -75,7 +75,7 @@ trait EditNameTrait
             $actionLogsTable->customSave('product_unity_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         }
         if ($this->getRequest()->getData('description') != $oldProduct->description) {
-            $actionLogMessage = __d('admin', 'The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
+            $actionLogMessage = __('The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<div class="changed">' . $this->getRequest()->getData('description') . ' </div>'
@@ -83,7 +83,7 @@ trait EditNameTrait
             $actionLogsTable->customSave('product_description_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         }
         if ($this->getRequest()->getData('descriptionShort') != $oldProduct->description_short) {
-            $actionLogMessage = __d('admin', 'The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
+            $actionLogMessage = __('The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<div class="changed">' . $this->getRequest()->getData('descriptionShort') . ' </div>'

@@ -25,7 +25,7 @@ trait EditPurchasePriceTrait
 
     public function editPurchasePrice(int $orderDetailId): ?Response
     {
-        $this->set('title_for_layout', __d('admin', 'Edit_purchase_price'));
+        $this->set('title_for_layout', __('Edit_purchase_price'));
 
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $taxesTable->getForDropdown(true));
@@ -68,7 +68,7 @@ trait EditPurchasePriceTrait
         );
 
         if ($orderDetail->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('orderDetail', $orderDetail);
         } else {
             $productsTable = $this->getTableLocator()->get('Products');
@@ -100,7 +100,7 @@ trait EditPurchasePriceTrait
                 ],
             );
 
-            $this->Flash->success(__d('admin', 'Purchase_price_has_been_saved_successfully.'));
+            $this->Flash->success(__('Purchase_price_has_been_saved_successfully.'));
             $this->getRequest()->getSession()->write('highlightedRowId', $orderDetail->id_order_detail);
 
             return $this->redirect($this->getPreparedReferer());

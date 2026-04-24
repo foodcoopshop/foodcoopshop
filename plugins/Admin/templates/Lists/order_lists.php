@@ -30,10 +30,10 @@ use Cake\Core\Configure;
 
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo __d('admin', 'Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
+            <?php echo __('Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
             <div class="right">
             <?php
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_pick_up_products'))]);
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
@@ -42,19 +42,19 @@ use Cake\Core\Configure;
     <?php
     echo '<h2 class="info">';
         if ($identity->isManufacturer()) {
-            echo __d('admin', 'Here_you_find_the_unchanged_order_lists_that_were_sent_to_you.');
+            echo __('Here_you_find_the_unchanged_order_lists_that_were_sent_to_you.');
         } else {
-            echo __d('admin', 'Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers.');
+            echo __('Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers.');
         }
     echo '</h2>';
 
     echo '<table class="list">';
 
     echo '<tr class="sort">';
-    echo '<th>'.__d('admin', 'Pickup_day').'</th>';
-    echo '<th>'.__d('admin', 'Manufacturer').'</th>';
-    echo '<th>'.__d('admin', 'Order_list_by_product').'</th>';
-    echo '<th>'.__d('admin', 'Order_list_by_member').'</th>';
+    echo '<th>'.__('Pickup_day').'</th>';
+    echo '<th>'.__('Manufacturer').'</th>';
+    echo '<th>'.__('Order_list_by_product').'</th>';
+    echo '<th>'.__('Order_list_by_member').'</th>';
     echo '</tr>';
 
     $i = 0;
@@ -103,7 +103,7 @@ use Cake\Core\Configure;
     }
 
     echo '<tr>';
-    echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+    echo '<td colspan="4"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
     echo '</tr>';
 
     echo '</table>';

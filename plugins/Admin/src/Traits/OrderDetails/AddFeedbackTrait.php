@@ -72,7 +72,7 @@ trait AddFeedbackTrait
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_feedback_add');
         $email->setTo($orderDetail->product->manufacturer->address_manufacturer->email)
-            ->setSubject(__d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
+            ->setSubject(__('{0}_has_written_a_feedback_to_product_{1}.', [
                 $orderDetail->customer->name,
                 '"' . $orderDetail->product_name . '"',
             ])
@@ -86,10 +86,10 @@ trait AddFeedbackTrait
 
         $email->addToQueue();
 
-        $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
+        $this->Flash->success(__('The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-        $actionLogMessage = __d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
+        $actionLogMessage = __('{0}_has_written_a_feedback_to_product_{1}.', [
             '<b>' . $orderDetail->customer->name . '</b>',
             '<b>' . $orderDetail->product_name . '</b>',
         ]);

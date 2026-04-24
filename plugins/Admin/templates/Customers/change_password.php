@@ -28,7 +28,7 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a>
         <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -43,18 +43,18 @@ echo $this->Form->create($customer, [
 ]);
 
 echo $this->Form->control('Customers.passwd_old', [
-    'label' => __d('admin', 'Old_password'),
+    'label' => __('Old_password'),
     'required' => true,
     'type' => 'password',
 ]);
 echo $this->Form->control('Customers.passwd_1', [
-    'label' => __d('admin', 'New_password') . '<br /><span class="small">'.__d('admin', 'min_8_characters').'</span>',
+    'label' => __('New_password') . '<br /><span class="small">'.__('min_8_characters').'</span>',
     'required' => true,
     'type' => 'password',
     'escape' => false,
 ]);
 echo $this->Form->control('Customers.passwd_2', [
-    'label' => __d('admin', 'New_password_again') . '<br /><span class="small">'.__d('admin', 'min_8_characters').'</span>',
+    'label' => __('New_password_again') . '<br /><span class="small">'.__('min_8_characters').'</span>',
     'required' => true,
     'type' => 'password',
     'escape' => false,

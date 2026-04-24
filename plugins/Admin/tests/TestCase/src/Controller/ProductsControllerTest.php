@@ -876,7 +876,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $copies = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                $productsTable->aliasField('name LIKE') => __('{0} - copy {1}', [
                     $srcProduct->name,
                     '%',
                 ]),
@@ -893,7 +893,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($normalizedSrc, $normalizedCopy);
 
         $this->assertTrue($copy->new->isToday());
-        $this->assertStringContainsString(__d('admin', '{0} - copy {1}', ['', '']), $copy->name);
+        $this->assertStringContainsString(__('{0} - copy {1}', ['', '']), $copy->name);
     }
 
     public function testDuplicatePurchasePrice(): void
@@ -937,7 +937,7 @@ class ProductsControllerTest extends AppCakeTestCase
         );
         $copies = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                $productsTable->aliasField('name LIKE') => __('{0} - copy {1}', [
                     $srcProduct->name,
                     '%',
                 ]),
@@ -982,7 +982,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $copies = $productsTable->find('all',
             conditions: [
-                $productsTable->aliasField('name LIKE') => __d('admin', '{0} - copy {1}', [
+                $productsTable->aliasField('name LIKE') => __('{0} - copy {1}', [
                     $srcProduct->name,
                     '%',
                 ]),

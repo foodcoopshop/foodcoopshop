@@ -23,7 +23,7 @@ if ($product->active && (! empty($product->product_attributes) || isset($product
         $this->Slug->getProductDetail($product->id_product, $product->unchanged_name),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'product_preview'),
+            'title' => __('product_preview'),
             'target' => '_blank',
             'escape' => false
         ]

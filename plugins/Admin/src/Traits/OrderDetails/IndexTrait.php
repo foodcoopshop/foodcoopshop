@@ -68,11 +68,11 @@ trait IndexTrait
         $this->set('groupBy', $groupBy);
 
         $groupByForDropdown = [
-            'product' => __d('admin', 'Group_by_product')
+            'product' => __('Group_by_product')
         ];
         if (!$this->identity->isManufacturer()) {
-            $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
-            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
+            $groupByForDropdown['customer'] = __('Group_by_member');
+            $groupByForDropdown['manufacturer'] = __('Group_by_manufacturer');
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
@@ -86,7 +86,7 @@ trait IndexTrait
             $this->set('taxRatesForDropdown', $taxRatesForDropdown);
         }
 
-        $this->set('title_for_layout', __d('admin', 'Orders'));
+        $this->set('title_for_layout', __('Orders'));
 
         $sums = [
             'records_count' => 0,
@@ -104,7 +104,7 @@ trait IndexTrait
 
         if (count($pickupDay) > 1) {
             if (Configure::read('app.timeHelper')->isDifferenceGreaterThanTwoYears($pickupDay[0], $pickupDay[1])) {
-                $this->Flash->error(__d('admin', 'The date range must not be greater than two years.'));
+                $this->Flash->error(__('The date range must not be greater than two years.'));
                 $this->set('sums', $sums);
                 return;
             }

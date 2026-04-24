@@ -79,7 +79,7 @@ trait IndexTrait
         $categoriesTable = $this->getTableLocator()->get('Categories');
         $this->set('categoriesForDropdown', $categoriesTable->getForSelect(null, true));
         $this->set('categoriesForCheckboxes', $categoriesTable->getForSelect(null, true, true));
-        $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
+        $manufacturersForDropdown = ['all' => __('All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $taxesTable = $this->getTableLocator()->get('Taxes');
@@ -101,7 +101,7 @@ trait IndexTrait
         $advancedStockManagementEnabled = $manufacturerId == 'all' || (!empty($manufacturer) && $manufacturer->stock_management_enabled);
         $this->set('advancedStockManagementEnabled', $advancedStockManagementEnabled);
 
-        $this->set('title_for_layout', __d('admin', 'Products'));
+        $this->set('title_for_layout', __('Products'));
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
             $storageLocationsTable = $this->getTableLocator()->get('StorageLocations');

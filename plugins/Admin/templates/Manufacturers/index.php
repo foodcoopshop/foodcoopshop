@@ -45,13 +45,13 @@ use Cake\ORM\TableRegistry;
                     echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
                     echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getManufacturerAdd(), [
                         'class' => 'btn btn-outline-light',
-                        'title' => __d('admin', 'Add_manufacturer'),
+                        'title' => __('Add_manufacturer'),
                         'escape' => false
                     ]);
                     echo '</div>';
                 }
                 echo $this->element('manufacturerList/moreDropdown', [
-                    'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')),
+                    'helperLink' => $this->Html->getDocsUrl(__('docs_route_manufacturers')),
                 ]);
                 ?>
             </div>
@@ -68,17 +68,17 @@ echo '<tr class="sort">';
     ]);
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Name')) . '</th>';
-    echo '<th style="width:83px;">'.__d('admin', 'Products').'</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __('Name')) . '</th>';
+    echo '<th style="width:83px;">'.__('Products').'</th>';
     if (Configure::read('app.isDepositEnabled')) {
-        echo '<th>'.__d('admin', 'Deposit').'</th>';
+        echo '<th>'.__('Deposit').'</th>';
     }
-    echo '<th>' . __d('admin', 'Email') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __d('admin', 'Stock_products')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __d('admin', 'Delivery_break')) . '</th>';
-    echo '<th style="width:40px;">' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
-    echo '<th title="'.__d('admin', 'Sum_of_open_orders_in_given_time_range').'">'.__d('admin', 'Open_orders_abbreviation').'</th>';
-    echo '<th>'.__d('admin', 'Settings_abbreviation').'</th>';
+    echo '<th>' . __('Email') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __('Stock_products')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __('Delivery_break')) . '</th>';
+    echo '<th style="width:40px;">' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
+    echo '<th title="'.__('Sum_of_open_orders_in_given_time_range').'">'.__('Open_orders_abbreviation').'</th>';
+    echo '<th>'.__('Settings_abbreviation').'</th>';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<th>%</th>';
     }
@@ -87,7 +87,7 @@ echo '<tr class="sort">';
         echo '<th></th>';
     }
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
-        echo '<th>'.__d('admin', 'Feedback').'</th>';
+        echo '<th>'.__('Feedback').'</th>';
     }
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
         echo '<th></th>';
@@ -139,7 +139,7 @@ foreach ($manufacturers as $manufacturer) {
             $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer),
             [
                 'class' => 'btn btn-outline-light edit-link',
-                'title' => __d('admin', 'Edit'),
+                'title' => __('Edit'),
                 'escape' => false
             ]
         );
@@ -150,7 +150,7 @@ foreach ($manufacturers as $manufacturer) {
                 echo '<br />' . $manufacturer->address_manufacturer->city;
             }
             if (!empty($manufacturer->customer)) {
-                echo '<br /><i class="fas fa-fw fa-user" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+                echo '<br /><i class="fas fa-fw fa-user" title="' . __('Contact_person_admin') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
             }
         echo '</span>';
 
@@ -158,14 +158,14 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:145px;">';
     $sumProductCount += $manufacturer->product_count;
-    $productString = __d('admin', '{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
+    $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
 
     echo $this->Html->link(
         '<i class="fas fa-tag ok"></i> ' . str_replace(' ', '&nbsp;', $productString),
         $this->Slug->getProductAdmin($manufacturer->id_manufacturer),
         [
             'class' => 'btn btn-outline-light with-text',
-            'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
+            'title' => __('Show_all_products_from_{0}', [$manufacturer->name]),
             'escape' => false
         ]
     );
@@ -185,7 +185,7 @@ foreach ($manufacturers as $manufacturer) {
                 $this->Slug->getDepositList($manufacturer->id_manufacturer),
                 [
                     'class' => 'btn btn-outline-light with-text',
-                    'title' => __d('admin', 'Show_deposit_account'),
+                    'title' => __('Show_deposit_account'),
                     'escape' => false
                 ]
             );
@@ -207,7 +207,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td style="text-align:center;">';
         $noDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
         if ($noDeliveryDaysString != '') {
-            echo '<i class="fas fa-ban not-ok no-delivery-days-button" title="' . __d('admin', 'Delivery_break') . ': ' . h($noDeliveryDaysString) . '"><i>';
+            echo '<i class="fas fa-ban not-ok no-delivery-days-button" title="' . __('Delivery_break') . ': ' . h($noDeliveryDaysString) . '"><i>';
         }
     echo '</td>';
 
@@ -230,7 +230,7 @@ foreach ($manufacturers as $manufacturer) {
         $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit_manufacturer_settings'),
+            'title' => __('Edit_manufacturer_settings'),
             'escape' => false
         ]
     );
@@ -245,9 +245,9 @@ foreach ($manufacturers as $manufacturer) {
         $orderListProductBaseLink = '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom;
         $testOrderListLinks = '<div class="generate-order-lists-tooltip">';
         $testOrderListLinks .= '<p><b>' . h($manufacturer->name) . '</b><br />';
-        $testOrderListLinks .= __d('admin', 'Anonymize_customers?') . ' <b>' . ($manufacturer->anonymize_customers ? __d('admin', 'yes') . ' <i class="fas fa-eye-slash ok"></i>' : __d('admin', 'no') . ' <i class="fas fa-eye ok"></i>') . '</b></p>';
+        $testOrderListLinks .= __('Anonymize_customers?') . ' <b>' . ($manufacturer->anonymize_customers ? __('yes') . ' <i class="fas fa-eye-slash ok"></i>' : __('no') . ' <i class="fas fa-eye ok"></i>') . '</b></p>';
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-eye ok"></i> ' . __d('admin', 'Order_list_with_clear_names') . ' - ' . __d('admin', 'grouped_by_product'),
+            '<i class="fas fa-eye ok"></i> ' . __('Order_list_with_clear_names') . ' - ' . __('grouped_by_product'),
             $orderListProductBaseLink . '&isAnonymized=0',
             [
                 'class' => 'btn btn-outline-light',
@@ -257,7 +257,7 @@ foreach ($manufacturers as $manufacturer) {
         ]);
         $testOrderListLinks .= '<br />';
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-eye-slash ok"></i> ' . __d('admin', 'Anonymized_list') . ' - ' . __d('admin', 'grouped_by_product'),
+            '<i class="fas fa-eye-slash ok"></i> ' . __('Anonymized_list') . ' - ' . __('grouped_by_product'),
             $orderListProductBaseLink . '&isAnonymized=1',
             [
                 'class' => 'btn btn-outline-light',
@@ -268,7 +268,7 @@ foreach ($manufacturers as $manufacturer) {
         $testOrderListLinks .= '<br />';
         $orderListCustomerBaseLink = '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom;
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-eye ok"></i> ' . __d('admin', 'Order_list_with_clear_names') . ' - ' . __d('admin', 'grouped_by_customer'),
+            '<i class="fas fa-eye ok"></i> ' . __('Order_list_with_clear_names') . ' - ' . __('grouped_by_customer'),
             $orderListCustomerBaseLink . '&isAnonymized=0',
             [
                 'class' => 'btn btn-outline-light',
@@ -278,7 +278,7 @@ foreach ($manufacturers as $manufacturer) {
         ]);
         $testOrderListLinks .= '<br />';
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-eye-slash ok"></i> ' . __d('admin', 'Anonymized_order_list') . ' - ' . __d('admin', 'grouped_by_customer'),
+            '<i class="fas fa-eye-slash ok"></i> ' . __('Anonymized_order_list') . ' - ' . __('grouped_by_customer'),
             $orderListCustomerBaseLink . '&isAnonymized=1',
             [
                 'class' => 'btn btn-outline-light',
@@ -286,14 +286,14 @@ foreach ($manufacturers as $manufacturer) {
                 'escape' => false,
         ]);
         $testOrderListLinks .= '</div>';
-        echo '<span class="test-order-list" title="' . h($testOrderListLinks) . '">' . __d('admin', 'Test_order_list').'</span>';
+        echo '<span class="test-order-list" title="' . h($testOrderListLinks) . '">' . __('Test_order_list').'</span>';
     echo '</td>';
 
 
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo '<td>';
             echo $this->Html->link(
-                __d('admin', 'Delivery_note'),
+                __('Delivery_note'),
                 '/admin/manufacturers/getDeliveryNote.xlsx?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
                 [
                     'target' => '_blank',
@@ -304,7 +304,7 @@ foreach ($manufacturers as $manufacturer) {
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             echo '<td>';
                 echo $this->Html->link(
-                    __d('admin', 'Test_invoice'),
+                    __('Test_invoice'),
                     '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
                     [
                         'target' => '_blank',
@@ -319,8 +319,8 @@ foreach ($manufacturers as $manufacturer) {
         if (!empty($manufacturer->feedback)) {
             $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
             $approved = $feedbacksTable->isApproved($manufacturer->feedback);
-            $tooltipContent = __d('admin', 'created') . ': ' . $manufacturer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
-            $tooltipContent .= __d('admin', 'changed') . ': ' . $manufacturer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
+            $tooltipContent = __('created') . ': ' . $manufacturer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
+            $tooltipContent .= __('changed') . ': ' . $manufacturer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
             echo $this->Html->link(
                 '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
                 $this->Slug->getFeedbackForm($manufacturer->feedback->customer_id),
@@ -335,7 +335,7 @@ foreach ($manufacturers as $manufacturer) {
                 $sumFeedbackNotApproved++;
             }
         } else {
-            $tooltipContent = __d('admin', 'Create_feedback_for_{0}.', [
+            $tooltipContent = __('Create_feedback_for_{0}.', [
                 $manufacturer->name,
             ]);
             echo $this->Html->link(
@@ -360,7 +360,7 @@ foreach ($manufacturers as $manufacturer) {
                 $manufacturerLink,
                 [
                     'class' => 'btn btn-outline-light',
-                    'title' => __d('admin', 'Manufacturer_profile'),
+                    'title' => __('Manufacturer_profile'),
                     'target' => '_blank',
                     'escape' => false
                 ]
@@ -372,7 +372,7 @@ foreach ($manufacturers as $manufacturer) {
 }
 
 echo '<tr>';
-echo '<td colspan="3"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="3"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 8;
 echo '<td></td>';

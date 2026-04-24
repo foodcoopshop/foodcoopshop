@@ -27,7 +27,7 @@ use Cake\Core\Configure;
 
             <p>
                 <?php
-                   echo __d('admin', 'The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}.', [
+                   echo __('The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}.', [
                        '<b>'.$payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</b>',
                        '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($payment->amount).'</b>',
                        $newStatusAsString
@@ -35,21 +35,21 @@ use Cake\Core\Configure;
                 ?>
 
                 <?php if ($payment->approval == -1) { ?>
-                    <?php echo __d('admin', 'Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer.'); ?>
+                    <?php echo __('Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer.'); ?>
                 <?php } ?>
 
             </p>
 
             <?php
             if ($payment->approval_comment != '') {
-                echo '<p>'.__d('admin', 'Comment').':<br />';
+                echo '<p>'.__('Comment').':<br />';
                 echo '<b>"'.$payment->approval_comment . '</b>"';
                 echo '</p>';
             }
             ?>
 
             <p>
-                <?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
+                <?php echo __('Here_you_find_the_link_to_add_the_credit:'); ?><br />
                 <a href="<?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?></a>
             </p>
 

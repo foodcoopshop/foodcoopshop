@@ -19,10 +19,10 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
 
     echo '<td>';
         if ($orderDetail['products_picked_up']) {
-            $buttonText = __d('admin', 'Yes');
+            $buttonText = __('Yes');
             $iconClass = 'fa-home ok';
         } else {
-            $buttonText = __d('admin', 'No');
+            $buttonText = __('No');
             $iconClass = 'fa-exclamation-triangle neutral';
         }
         echo $this->Html->link(

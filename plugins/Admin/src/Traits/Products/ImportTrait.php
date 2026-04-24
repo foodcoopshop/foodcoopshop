@@ -38,17 +38,17 @@ trait ImportTrait
     public function initializeImportTrait(): void
     {
         $this->columnsFieldMap = [
-            __d('admin', 'Name') => 'name',
-            __d('admin', 'Description_short') => 'description_short',
-            __d('admin', 'Description') => 'description',
-            __d('admin', 'Unit') => 'unity',
-            __d('admin', 'Gross_price') => 'price',
-            __d('admin', 'Tax_rate') => 'id_tax',
-            __d('admin', 'Deposit') => 'deposit_product',
-            __d('admin', 'Amount') => 'stock_available',
-            __d('admin', 'Status') => 'active',
-            __d('admin', 'Product_declaration') => 'is_declaration_ok',
-            __d('admin', 'Storage_location') => 'id_storage_location',
+            __('Name') => 'name',
+            __('Description_short') => 'description_short',
+            __('Description') => 'description',
+            __('Unit') => 'unity',
+            __('Gross_price') => 'price',
+            __('Tax_rate_admin') => 'id_tax',
+            __('Deposit') => 'deposit_product',
+            __('Amount') => 'stock_available',
+            __('Status') => 'active',
+            __('Product_declaration_admin') => 'is_declaration_ok',
+            __('Storage_location') => 'id_storage_location',
         ];
     }
 
@@ -97,13 +97,13 @@ trait ImportTrait
         }
         $this->set('manufacturer', $manufacturer);
 
-        $this->set('title_for_layout', __d('admin', 'Product_import_for_{0}', [$manufacturer->name]));
+        $this->set('title_for_layout', __('Product_import_for_{0}', [$manufacturer->name]));
 
         if (!empty($this->getRequest()->getData('upload'))) {
 
             $upload = $this->getRequest()->getData('upload');
             if (!in_array($upload->getClientMediaType(), ProductReaderService::ALLOWED_UPLOAD_MIME_TYPES)) {
-                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
+                $this->Flash->error(__('The_uploaded_file_is_not_valid.'));
                 return;
             }
 
@@ -115,7 +115,7 @@ trait ImportTrait
             $this->set('productEntities', $productEntities);
 
             if ($reader->areAllEntitiesValid($productEntities)) {
-                $messageString = __d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x';
+                $messageString = __('Product_import_successful.') . ' ' . count($productEntities) . 'x';
                 $this->Flash->success($messageString);
                 $actionLogsTable = TableRegistry::getTableLocator()->get('ActionLogs');
                 $actionLogsTable->customSave('product_added', $this->identity->getId(), $manufacturer->id_manufacturer, 'products', $messageString);
@@ -143,9 +143,9 @@ trait ImportTrait
                     $errorRows[] = $header . $errorMessage;
                 }
                 if (empty($errors)) {
-                    $errorMessage = __d('admin', 'The_uploaded_file_was_empty._Please_add_products_and_upload_again.');
+                    $errorMessage = __('The_uploaded_file_was_empty._Please_add_products_and_upload_again.');
                 } else {
-                    $errorMessage = __d('admin', 'The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>';
+                    $errorMessage = __('The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>';
                 }
                 $this->Flash->error($errorMessage);
             }

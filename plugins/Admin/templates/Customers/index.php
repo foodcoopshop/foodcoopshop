@@ -40,7 +40,7 @@ use Cake\ORM\TableRegistry;
                     echo $this->Form->control('year', [
                         'type' => 'select',
                         'label' => '',
-                        'empty' => __d('admin', 'Member_fee') . ' - ' . __d('admin', 'Show_all_years'),
+                        'empty' => __('Member_fee') . ' - ' . __('Show_all_years'),
                         'options' => $years,
                         'default' => $year != '' ? $year : ''
                     ]);
@@ -49,7 +49,7 @@ use Cake\ORM\TableRegistry;
                     echo $this->Form->control('newsletter', [
                         'type' => 'select',
                         'label' => '',
-                        'empty' => __d('admin', 'Newsletter'),
+                        'empty' => __('Newsletter'),
                         'options' => $this->Html->getYesNoArray(),
                         'default' => $newsletter,
                     ]);
@@ -58,7 +58,7 @@ use Cake\ORM\TableRegistry;
             <div class="right">
                 <?php
                     echo $this->element('customerList/moreDropdown', [
-                        'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members')),
+                        'helperLink' => $this->Html->getDocsUrl(__('docs_route_members')),
                     ]);
                 ?>
             </div>
@@ -73,34 +73,34 @@ echo $this->element('rowMarker/rowMarkerAll', [
     'enabled' => true
 ]);
 echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Name')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
+echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __('Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __('Group')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.active', __('Status')) . '</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>' . $this->Paginator->sort('credit_balance',  __d('admin', 'Credit'), ['direction' => 'desc']) . '</th>';
+    echo '<th>' . $this->Paginator->sort('credit_balance',  __('Credit'), ['direction' => 'desc']) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Order_reminder')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __('Order_reminder')) . '</th>';
 }
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __d('admin', 'Check_credit_reminder')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __('Check_credit_reminder')) . '</th>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
-    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __('Newsletter')) . '</th>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
-    echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __('Feedback')) . '</th>';
 }
-echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
-echo '<th>' . $this->Paginator->sort('last_pickup_day',  __d('admin', 'Last_pickup_day'), ['direction' => 'desc']) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.date_add',  __('Register_date')) . '</th>';
+echo '<th>' . $this->Paginator->sort('last_pickup_day',  __('Last_pickup_day'), ['direction' => 'desc']) . '</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    echo '<th>' . $this->Paginator->sort('member_fee', __d('admin', 'Member_fee')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('member_fee', __('Member_fee')) . '</th>';
 }
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-    echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __('Prices')) . '</th>';
 }
-echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
+echo '<th>'.__('Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
@@ -132,13 +132,13 @@ foreach ($customers as $customer) {
                 $this->Slug->getCustomerEdit($customer->id_customer),
                 [
                     'class' => 'btn btn-outline-light edit-link',
-                    'title' => __d('admin', 'Edit'),
+                    'title' => __('Edit'),
                     'escape' => false
                 ]
             );
         }
         if ($customer->different_pickup_day_count <= 2) {
-            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_has_{0}_orders.', [
+            $customerName = '<i class="fas fa-carrot" title="'.__('Newbie_has_{0}_orders.', [
                 $customer->different_pickup_day_count,
             ]).'"></i> ' . $customerName;
         }
@@ -147,7 +147,7 @@ foreach ($customers as $customer) {
             $customerLink = $customerName;
         } else {
             $customerLink = $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort($lastOrderYear . '-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort($lastOrderYear . '-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
-                'title' => __d('admin', 'Show_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
+                'title' => __('Show_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
                 'escape' => false
             ]);
         }
@@ -181,7 +181,7 @@ foreach ($customers as $customer) {
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light customer-group-edit-button',
-                'title' => __d('admin', 'Change_group'),
+                'title' => __('Change_group'),
                 'escape' => false
             ]
         );
@@ -198,7 +198,7 @@ foreach ($customers as $customer) {
         $title = h($customer->email);
         if ($customer->activate_email_code != null) {
             $classes[] = 'not-activated';
-            $title .= '<br /><br />' . __d('admin', 'This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}.', [
+            $title .= '<br /><br />' . __('This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}.', [
                 $this->Slug->getActivateEmailAddress($customer->activate_email_code),
             ]);
         }
@@ -215,7 +215,7 @@ foreach ($customers as $customer) {
             [
                 'class' => 'btn btn-outline-light set-state-to-inactive change-active-state',
                 'id' => 'change-active-state-' . $customer->id_customer,
-                'title' => __d('admin', 'deactivate'),
+                'title' => __('deactivate'),
                 'escape' => false
             ]
         );
@@ -228,7 +228,7 @@ foreach ($customers as $customer) {
             [
                 'class' => 'btn btn-outline-light set-state-to-active change-active-state',
                 'id' => 'change-active-state-' . $customer->id_customer,
-                'title' => __d('admin', 'activate'),
+                'title' => __('activate'),
                 'escape' => false
             ]
         );
@@ -247,7 +247,7 @@ foreach ($customers as $customer) {
                 $this->Slug->getCreditBalance($customer->id_customer),
                 [
                     'class' => 'btn btn-outline-light with-text',
-                    'title' => __d('admin', 'Show_credit'),
+                    'title' => __('Show_credit'),
                     'escape' => false
                 ]
             );
@@ -292,8 +292,8 @@ foreach ($customers as $customer) {
         if (!empty($customer->feedback)) {
             $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
             $approved = $feedbacksTable->isApproved($customer->feedback);
-            $tooltipContent = __d('admin', 'created') . ': ' . $customer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
-            $tooltipContent .= __d('admin', 'changed') . ': ' . $customer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
+            $tooltipContent = __('created') . ': ' . $customer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
+            $tooltipContent .= __('changed') . ': ' . $customer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
             echo $this->Html->link(
                 '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
                 $this->Slug->getFeedbackForm($customer->id_customer),
@@ -308,7 +308,7 @@ foreach ($customers as $customer) {
                 $sumFeedbackNotApproved++;
             }
         } else {
-            $tooltipContent = __d('admin', 'Create_feedback_for_{0}.', [
+            $tooltipContent = __('Create_feedback_for_{0}.', [
                 $customer->name,
             ]);
             echo $this->Html->link(
@@ -343,16 +343,16 @@ foreach ($customers as $customer) {
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<td style="text-align:right;">';
             if ($customer->shopping_price == Customer::PURCHASE_PRICE) {
-                echo __d('admin', 'Purchase_price_abbreviation');
+                echo __('Purchase_price_abbreviation');
             }
             if ($customer->shopping_price == Customer::ZERO_PRICE) {
-                echo __d('admin', 'Zero_price_abbreviation');
+                echo __('Zero_price_abbreviation');
             }
         echo '</td>';
     }
 
     echo '<td style="padding-left: 11px;">';
-        $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __d('admin', 'Add_comment');
+        $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __('Add_comment');
         echo $this->Html->link(
             '<i class="fas fa-comment-dots ok"></i>',
             'javascript:void(0);',
@@ -369,7 +369,7 @@ foreach ($customers as $customer) {
 }
 
 echo '<tr>';
-echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="6"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
 $colspan = 3;
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';

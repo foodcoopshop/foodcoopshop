@@ -20,7 +20,7 @@ use App\Services\FormatterService;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Financial_reports')."');"
 ]);
 ?>
 
@@ -39,9 +39,9 @@ echo $this->element('navTabs/reportNavTabs', [
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-    echo '<th>'.__d('admin', 'Members').'</th>';
-    echo '<th>'.__d('admin', 'Sum_of_credits').'</th>';
-    echo '<th>'.__d('admin', 'Included_deposit').'</th>';
+    echo '<th>'.__('Members').'</th>';
+    echo '<th>'.__('Sum_of_credits').'</th>';
+    echo '<th>'.__('Included_deposit').'</th>';
 echo '</tr>';
 
 foreach($customers as $customer) {

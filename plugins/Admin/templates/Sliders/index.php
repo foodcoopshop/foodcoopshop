@@ -33,7 +33,7 @@ $this->element('highlightRowAfterEdit', [
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
         echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getSliderAdd(), [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Add_slider'),
+            'title' => __('Add_slider'),
             'escape' => false
         ]);
         echo '</div>';
@@ -50,11 +50,11 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>'.__d('admin', 'Image').'</th>';
-echo '<th>' . $this->Paginator->sort('Sliders.link', __d('admin', 'Link')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Sliders.position', __d('admin', 'Rank')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Sliders.is_private', __d('admin', 'Only_for_members')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Sliders.active', __d('admin', 'Active')) . '</th>';
+echo '<th>'.__('Image').'</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.link', __('Link')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.position', __('Rank')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.is_private', __('Only_for_members')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.active', __('Active')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -74,7 +74,7 @@ foreach ($sliders as $slider) {
         $this->Slug->getSliderEdit($slider->id_slider),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
@@ -125,7 +125,7 @@ foreach ($sliders as $slider) {
 }
 
 echo '<tr>';
-echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="6"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

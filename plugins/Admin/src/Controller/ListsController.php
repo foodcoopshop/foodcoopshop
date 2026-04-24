@@ -61,7 +61,7 @@ class ListsController extends AdminAppController
                 continue;
             }
 
-            if (!preg_match('/'.__d('admin', '_Invoice_filename_').'/', $object->getFileName(), $matches)) {
+            if (!preg_match('/'.__('_Invoice_filename_').'/', $object->getFileName(), $matches)) {
                 continue;
             }
 
@@ -104,7 +104,7 @@ class ListsController extends AdminAppController
                 'invoice_number' => $invoiceNumber,
                 'manufacturer_name' => $manufacturer->name,
                 'invoice' => [
-                    'label' => __d('admin', 'Download'), 'link' => $invoiceLink, 'icon' => 'fa-arrow-right',
+                    'label' => __('Download'), 'link' => $invoiceLink, 'icon' => 'fa-arrow-right',
                 ],
                 'manufacturer_id' => $manufacturerId,
             ];
@@ -115,7 +115,7 @@ class ListsController extends AdminAppController
         $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
         $this->set('files', $files);
 
-        $this->set('title_for_layout', __d('admin', 'Invoices'));
+        $this->set('title_for_layout', __('Invoices'));
     }
 
     public function orderLists(): void
@@ -146,7 +146,7 @@ class ListsController extends AdminAppController
 
             // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
             // the following preg_match avoids a batch renaming
-            if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|Artikel)/', $name, $matches)) {
+            if (!preg_match('/'.__('_Order_list_filename_').'('.__('product').'|Artikel)/', $name, $matches)) {
                 continue;
             }
 
@@ -189,19 +189,19 @@ class ListsController extends AdminAppController
             $productListLink = Configure::read('app.slugHelper')->getOrderListDownloadRoute($filenameForDownloadLink);
             $productListLink = str_replace(DS, '/', $productListLink);
             $customerListLink = preg_replace(
-                '/' . str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . $matches[1] . '/',
-                str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . __d('admin', 'member'),
+                '/' . str_replace(' ', '_', __('Order_list')) . '_' . $matches[1] . '/',
+                str_replace(' ', '_', __('Order_list')) . '_' . __('member_admin'),
                 $productListLink,
             1);
             
-            $listLabel = __d('admin', 'Order_list_with_clear_names');
+            $listLabel = __('Order_list_with_clear_names');
             $listIcon = 'fa-eye';
             if ($isAnonymized) {
-                $listLabel = __d('admin', 'Anonymized_order_list');
+                $listLabel = __('Anonymized_order_list');
                 $listIcon = 'fa-eye-slash';
             }
             if ($this->identity->isManufacturer()) {
-                $listLabel = __d('admin', 'Show_order_list');
+                $listLabel = __('Show_order_list');
                 $listIcon = 'fa-arrow-right';
             }
             $files[] = [
@@ -225,7 +225,7 @@ class ListsController extends AdminAppController
 
         $this->set('files', $files);
 
-        $this->set('title_for_layout', __d('admin', 'Order_lists'));
+        $this->set('title_for_layout', __('Order_lists'));
     }
 
     /**
@@ -240,7 +240,7 @@ class ListsController extends AdminAppController
         $manufacturerString = substr($fileName, 11);
 
         // remove part after $positionOrderListsString (foodcoop name and file ending)
-        $positionOrderListsString = strpos($manufacturerString, __d('admin', '_Order_list_filename_') . $ending);
+        $positionOrderListsString = strpos($manufacturerString, __('_Order_list_filename_') . $ending);
         $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
         $splittedManufacturerString = explode('_', $manufacturerString);
 
@@ -260,7 +260,7 @@ class ListsController extends AdminAppController
         $filenameWithPath = Configure::read('app.folder_order_lists') . DS . h($this->getRequest()->getQuery('file'));
 
         if ($this->identity->isManufacturer()) {
-            preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', h($this->getRequest()->getQuery('file')), $matches);
+            preg_match('/'.__('_Order_list_filename_').'('.__('product').'|'.__('member_admin').'|Artikel)/', h($this->getRequest()->getQuery('file')), $matches);
             if (!empty($matches[1])) {
                 $splittedFileName = $this->splitOrderDetailStringIntoParts(h($this->getRequest()->getQuery('file')), $matches[1]);
                 $manufacturerId = $splittedFileName['manufacturerId'];
@@ -285,7 +285,7 @@ class ListsController extends AdminAppController
 
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isCustomer()) {
             $string = h($this->getRequest()->getQuery('file'));
-            $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
+            $positionInvoiceString = strpos($string, '_' . __('Invoice') . '_');
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
             $customerId = end($splittedFileName);
             if ($customerId != $this->identity->getId()) {
@@ -295,7 +295,7 @@ class ListsController extends AdminAppController
 
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isManufacturer()) {
             $string = h($this->getRequest()->getQuery('file'));
-            $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
+            $positionInvoiceString = strpos($string, '_' . __('Invoice') . '_');
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
             $manufacturerId = (int) explode('_', $string)[2];
             if ($manufacturerId != $this->identity->getManufacturerId()) {

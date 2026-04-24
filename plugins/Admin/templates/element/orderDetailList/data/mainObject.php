@@ -30,7 +30,7 @@ if ($groupBy == '' || $groupBy == 'product') {
     if ($groupBy == '') {
 
         if (Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
-            $productFeedback = __d('admin', 'Add_product_feedback');
+            $productFeedback = __('Add_product_feedback_admin');
             $buttonClasses = [
                 'btn',
                 'btn-outline-light',
@@ -63,7 +63,7 @@ if ($groupBy == '' || $groupBy == 'product') {
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light order-detail-product-name-edit-button',
-                    'title' => __d('admin', 'Click_to_change_name'),
+                    'title' => __('Click_to_change_name'),
                     'escape' => false
                 ]
             );
@@ -101,7 +101,7 @@ if ($groupBy == 'manufacturer') {
 }
 if ($groupBy == 'customer') {
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && count($pickupDay) == 1) {
-        $commentText = !empty($orderDetail['comment']) ? $orderDetail['comment'] : __d('admin', 'Add_comment');
+        $commentText = !empty($orderDetail['comment']) ? $orderDetail['comment'] : __('Add_comment');
         echo $this->Html->link(
             '<i class="fas fa-exclamation-circle not-ok"></i>',
             'javascript:void(0);',
@@ -115,7 +115,7 @@ if ($groupBy == 'customer') {
     }
     $name = $orderDetail['name'];
     if ($orderDetail['different_pickup_day_count'] <= 2) {
-        $name = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_has_{0}_orders.', [
+        $name = '<i class="fas fa-carrot" title="'.__('Newbie_has_{0}_orders.', [
             $orderDetail['different_pickup_day_count'],
         ]).'"></i> ' . $name;
     }
@@ -135,11 +135,11 @@ echo '</td>';
 if ($groupBy == 'customer') {
     echo '<td'.(!$isMobile ? ' style="width: 161x;"' : '').'>';
     echo $this->Html->link(
-        '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''),
+        '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __('Ordered_products') : ''),
         $groupByObjectHref,
         [
             'class' => 'btn btn-outline-light with-text',
-            'title' => __d('admin', 'Show_all_ordered_products_from_{0}', [$orderDetail['name']]),
+            'title' => __('Show_all_ordered_products_from_{0}', [$orderDetail['name']]),
             'escape' => false
         ]
     );

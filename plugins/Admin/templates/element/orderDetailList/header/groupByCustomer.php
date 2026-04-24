@@ -18,26 +18,26 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 echo '<th>';
-echo __d('admin', 'Member');
+echo __('Member');
 echo '</th>';
 
 echo '<th>';
 echo '</th>';
 
 echo '<th class="right">';
-echo $sortOrLabel('sum_price', __d('admin', 'Price'));
+echo $sortOrLabel('sum_price', __('Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless()) {
-    echo '<th>'.__d('admin', 'Deposit').'</th>';
+    echo '<th>'.__('Deposit').'</th>';
 }
 
 if (count($pickupDay) == 1) {
-    echo '<th>'.__d('admin', 'Picked_up').'</th>';
+    echo '<th>'.__('Picked_up').'</th>';
 }
 
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
-    echo '<th>'.__d('admin', 'Invoice').'</th>';
+    echo '<th>'.__('Invoice').'</th>';
 }
 
 ?>

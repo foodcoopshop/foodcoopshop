@@ -45,7 +45,7 @@ foreach ($categories as $category) {
         $this->Slug->getCategoryEdit($category->id_category),
         [
             'class' => 'btn btn-outline-light',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
@@ -75,7 +75,7 @@ foreach ($categories as $category) {
             $this->Slug->getCategoryDetail($category->id_category, $category->name),
             [
                 'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Show_category'),
+                'title' => __('Show_category'),
                 'target' => '_blank',
                 'escape' => false
             ]

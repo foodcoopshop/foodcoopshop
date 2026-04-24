@@ -25,7 +25,7 @@ trait ChangePasswordTrait
 
     public function changePassword(): ?Response
     {
-        $this->set('title_for_layout', __d('admin', 'Change_password'));
+        $this->set('title_for_layout', __('Change_password'));
 
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all', conditions: [
@@ -46,7 +46,7 @@ trait ChangePasswordTrait
         );
 
         if ($customer->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('customer', $customer);
             return null;
         } else {
@@ -61,12 +61,12 @@ trait ChangePasswordTrait
                 );
 
             if ($this->identity->isManufacturer()) {
-                $message = __d('admin', 'The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->identity->getManufacturerName() . '</b>']);
+                $message = __('The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->identity->getManufacturerName() . '</b>']);
                 $actionLogType = 'manufacturer_password_changed';
                 $actionLogId = $this->identity->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->identity->name . '</b>']);
+                $message = __('{0}_has_changed_the_password.', ['<b>' . $this->identity->name . '</b>']);
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->identity->getId();
                 $actionLogModel = 'customers';
@@ -74,7 +74,7 @@ trait ChangePasswordTrait
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $actionLogId, $actionLogModel, $message);
-            $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
+            $this->Flash->success(__('Your_new_password_has_been_saved_successfully.'));
             return $this->redirect($this->referer());
         }
 

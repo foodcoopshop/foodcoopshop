@@ -21,7 +21,7 @@ if ($groupBy == 'customer' && Configure::read('app.isDepositEnabled') && $this->
     echo '<td style="text-align:center;">';
     if (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
         echo $this->element('addDepositPaymentOverlay', [
-            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+            'buttonText' => (!$isMobile ? __('Deposit_return') : ''),
             'objectId' => $orderDetail['customer_id'],
             'userName' => $orderDetail['name'],
             'customerId' => $orderDetail['customer_id'],

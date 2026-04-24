@@ -13,10 +13,11 @@
  */
 
 /**
- * JavaScript counterparts of CakePHP's __() and __d() translation functions.
+ * JavaScript counterpart of CakePHP's __() translation function.
  *
- * Translations are looked up against window.foodcoopshop.translations[domain],
- * which is generated server-side from the loaded gettext catalogs.
+ * Translations are looked up against window.foodcoopshop.translations,
+ * which is generated server-side from the loaded gettext catalog
+ * (default domain only).
  *
  * Placeholder substitution supports CakePHP's {0}, {1}, ... numeric tokens.
  * If the msgid is not found, the msgid itself is used as the fallback string,
@@ -24,7 +25,6 @@
  *
  *   __('Save')
  *   __('You_have_already_ordered_{0}_{1}_times_for_{2}.', amount, name, day)
- *   __d('admin', 'Place_order_for')
  */
 (function (root) {
     'use strict';
@@ -32,8 +32,8 @@
     var ns = root.foodcoopshop = root.foodcoopshop || {};
     ns.translations = ns.translations || {};
 
-    function lookup(domain, msgid) {
-        var dict = ns.translations[domain];
+    function lookup(msgid) {
+        var dict = ns.translations;
         if (dict && Object.prototype.hasOwnProperty.call(dict, msgid)) {
             var value = dict[msgid];
             if (value !== '' && value !== null && value !== undefined) {
@@ -53,18 +53,9 @@
         return str;
     }
 
-    function translate(domain, msgid, args) {
-        return applyPlaceholders(lookup(domain, msgid), args);
-    }
-
     root.__ = function (msgid) {
         var args = Array.prototype.slice.call(arguments, 1);
-        return translate('default', msgid, args);
-    };
-
-    root.__d = function (domain, msgid) {
-        var args = Array.prototype.slice.call(arguments, 2);
-        return translate(domain, msgid, args);
+        return applyPlaceholders(lookup(msgid), args);
     };
 
 })(typeof window !== 'undefined' ? window : this);

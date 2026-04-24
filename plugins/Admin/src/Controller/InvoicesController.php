@@ -59,7 +59,7 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $zipFilename = __d('admin', 'Invoices') . '.zip';
+        $zipFilename = __('Invoices') . '.zip';
 
         $zip = new \ZipArchive();
         $tmpZipFilePath = TMP . $zipFilename;
@@ -107,7 +107,7 @@ class InvoicesController extends AdminAppController
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoiceData = $invoicesTable->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         if (!$invoiceData->new_invoice_necessary) {
-            $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
+            $this->Flash->success(__('No_data_available_to_generate_an_invoice.'));
             return $this->redirect($this->referer());
         }
 
@@ -144,7 +144,7 @@ class InvoicesController extends AdminAppController
                         'date_add' => DateTime::now(),
                         'date_changed' => DateTime::now(),
                         'amount' => abs($invoiceData->sumPriceIncl),
-                        'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
+                        'approval_comment' => __('Paid_in_cash') . ', ' . __('Invoice_number_abbreviation_admin') . ': ' . $invoiceNumber,
                         'created_by' => $this->identity->getId(),
                     ]
                 );
@@ -166,7 +166,7 @@ class InvoicesController extends AdminAppController
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
-            __d('admin', 'Print_receipt'),
+            __('Print_receipt'),
             $invoiceRoute,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
@@ -174,7 +174,7 @@ class InvoicesController extends AdminAppController
                 'escape' => false,
             ],
         );
-        $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_generated_successfully.', [
+        $messageString = __('Invoice_number_{0}_of_{1}_was_generated_successfully.', [
             '<b>' . $invoiceNumber . '</b>',
             '<b>' . $customer->name . '</b>',
         ]);
@@ -211,7 +211,7 @@ class InvoicesController extends AdminAppController
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoiceData = $invoicesTable->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
-            die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
+            die(__('No_data_available_to_generate_an_invoice.'));
         }
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
@@ -344,11 +344,11 @@ class InvoicesController extends AdminAppController
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $paymentsTable = $this->getTableLocator()->get('Payments');
-                $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
+                $approvalString = __('Paid_in_cash') . ', ' . __('Invoice_number_abbreviation_admin') . ': ' . $cancelledInvoiceNumber;
                 $paymentsTable->updateAll([
                     'status' => APP_DEL,
                     'date_changed' => DateTime::now(),
-                    'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
+                    'approval_comment' => __('Invoice_cancelled') . ': ' . $approvalString
                 ], [
                     'type IN' => [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK],
                     'id_customer' => $invoice->customer->id_customer,
@@ -371,7 +371,7 @@ class InvoicesController extends AdminAppController
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
-            __d('admin', 'Download'),
+            __('Download'),
             $invoiceRoute,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
@@ -380,12 +380,12 @@ class InvoicesController extends AdminAppController
             ],
         );
 
-        $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
+        $messageString = __('Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
             '<b>' . $cancelledInvoiceNumber . '</b>',
             '<b>' . $invoice->customer->name . '</b>',
         ]);
 
-        $messageString .= '<br />' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
+        $messageString .= '<br />' . __('Cancellation_invoice_number_{0}_was_generated_successfully.', [
             '<b>' . $cancellationInvoiceNumber . '</b>',
         ]);
 
@@ -421,7 +421,7 @@ class InvoicesController extends AdminAppController
         $this->set('customerIds', [$customerId]);
         $this->processIndex($dateFrom, $dateTo, [$customerId]);
         $this->set('isOverviewMode', false);
-        $this->set('title_for_layout', __d('admin', 'My_invoices'));
+        $this->set('title_for_layout', __('My_invoices_admin'));
         return $this->render('index');
     }
 
@@ -452,7 +452,7 @@ class InvoicesController extends AdminAppController
 
         $this->processIndex($dateFrom, $dateTo, $customerIds);
 
-        $this->set('title_for_layout', __d('admin', 'Journal'));
+        $this->set('title_for_layout', __('Journal'));
         $this->set('isOverviewMode', true);
 
     }

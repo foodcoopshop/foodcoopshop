@@ -30,7 +30,7 @@ trait EditOptionsTrait
     {
         $this->editOptions($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
-        $this->set('title_for_layout', __d('admin', 'Edit_settings'));
+        $this->set('title_for_layout', __('Edit_settings'));
         if (empty($this->getRequest()->getData())) {
             return$this->render('editOptions');
         }
@@ -47,7 +47,7 @@ trait EditOptionsTrait
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', $manufacturer->name . ': ' . __d('admin', 'Edit_settings'));
+        $this->set('title_for_layout', $manufacturer->name . ': ' . __('Edit_settings'));
 
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $taxesTable->getForDropdown());
@@ -120,7 +120,7 @@ trait EditOptionsTrait
         );
 
         if ($manufacturer->hasErrors()) {
-            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('manufacturer', $manufacturer);
             return $this->render('edit_options');
         } else {
@@ -202,9 +202,9 @@ trait EditOptionsTrait
                 $this->renewAuthSession();
             }
 
-            $message = __d('admin', 'The_settings_of_manufacturer_{0}_have_been_changed.', ['<b>' . $manufacturer->name . '</b>']);
+            $message = __('The_settings_of_manufacturer_{0}_have_been_changed.', ['<b>' . $manufacturer->name . '</b>']);
             if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
-                $message = __d('admin', 'Your_settings_have_been_changed.');
+                $message = __('Your_settings_have_been_changed.');
                 $this->renewAuthSession();
             }
 

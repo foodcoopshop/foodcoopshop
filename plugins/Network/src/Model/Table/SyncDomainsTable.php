@@ -31,17 +31,17 @@ class SyncDomainsTable extends AppTable
     {
         $validator->add('domain', 'hostname', [
             'rule' => ['custom', HOSTNAME_REGEX],
-            'message' => __d('network', 'The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash).'),
+            'message' => __('The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash).'),
         ]);
         $validator->notEmptyString('domain', 'Bitte gib eine Domain ein, sie muss mit https:// beginnen.');
         $validator->add('domain', 'https', [
             'rule' => ['custom', HTTPS_REGEX],
-            'message' => __d('network', 'The_domain_needs_to_start_with_https://.'),
+            'message' => __('The_domain_needs_to_start_with_https://.'),
         ]);
         $validator->add('domain', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => __d('network', 'The_domain_already_exists.'),
+            'message' => __('The_domain_already_exists.'),
         ]);
         return $validator;
     }

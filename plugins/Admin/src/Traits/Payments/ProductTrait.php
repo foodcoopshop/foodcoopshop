@@ -34,7 +34,7 @@ trait ProductTrait
     {
 
         $this->paymentType = Payment::TYPE_PRODUCT;
-        $this->set('title_for_layout', __d('admin', 'Credit'));
+        $this->set('title_for_layout', __('Credit'));
 
         $this->allowedPaymentTypes = Payment::ALLOWED_CUSTOMER_TYPES;
         
@@ -131,12 +131,12 @@ trait ProductTrait
                         'deposit' => strtotime($dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
                         'type' => 'order',
                         'text' => Configure::read('app.htmlHelper')->link(
-                            __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
+                            __('Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
                             '/admin/order-details/?pickupDay[]=' . $dateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
                             '&pickupDay[]=' . $dateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
                             '&customerId=' . $this->getCustomerId(),
                             [
-                                'title' => __d('admin', 'Show_order')
+                                'title' => __('Show_order')
                             ]
                         ),
                         'payment_id' => null,
@@ -153,7 +153,7 @@ trait ProductTrait
 
         $title = $this->viewBuilder()->getVars()['title_for_layout'];
         if ($this->getRequest()->getParam('action') == 'product') {
-            $title .= ' '.__d('admin', 'of_{0}', [$customer->name]);
+            $title .= ' '.__('of_{0}', [$customer->name]);
         }
         $this->set('title_for_layout', $title);
 

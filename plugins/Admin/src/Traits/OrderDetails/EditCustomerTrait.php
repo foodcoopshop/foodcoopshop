@@ -58,19 +58,19 @@ trait EditCustomerTrait
 
         $errors = [];
         if (empty($newCustomer)) {
-            $errors[] = __d('admin', 'Please_select_a_new_member.');
+            $errors[] = __('Please_select_a_new_member.');
         } else {
             if ($newCustomer->id_customer == $oldOrderDetail->id_customer) {
-                $errors[] = __d('admin', 'The_same_member_must_not_be_selected.');
+                $errors[] = __('The_same_member_must_not_be_selected.');
             }
         }
 
         if ($amount > $oldOrderDetail->product_amount || $amount < 1) {
-            $errors[] = __d('admin', 'The_amount_is_not_valid.');
+            $errors[] = __('The_amount_is_not_valid.');
         }
 
         if ($editCustomerReason == '') {
-            $errors[] = __d('admin', 'The_reason_for_changing_the_member_is_mandatory.');
+            $errors[] = __('The_reason_for_changing_the_member_is_mandatory.');
         }
 
         if (!empty($errors)) {
@@ -154,7 +154,7 @@ trait EditCustomerTrait
 
         }
 
-        $message = __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
+        $message = __('The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
             Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
             '<b>' . $newCustomer->name . '</b>'
@@ -162,11 +162,11 @@ trait EditCustomerTrait
 
         $amountString = '';
         if ($originalProductAmount != $amount) {
-            $amountString = ' ' . __d('admin', 'Amount') . ': <b>' . $amount . '</b>';
+            $amountString = ' ' . __('Amount') . ': <b>' . $amount . '</b>';
             $message .= $amountString;
         }
 
-        $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
+        $message .= ' '.__('Reason').': <b>"' . $editCustomerReason . '"</b>';
 
         if ($sendEmailToCustomers) {
             $recipients = [
@@ -184,7 +184,7 @@ trait EditCustomerTrait
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
                 $email->setTo($recipient['email'])
-                ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
+                ->setSubject(__('Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
                 ->setViewVars([
                     'oldOrderDetail' => $oldOrderDetail,
                     'customer' => $recipient['customer'],
@@ -197,7 +197,7 @@ trait EditCustomerTrait
                 $email->addToQueue();
             }
 
-            $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
+            $message .= ' ' . __('An_email_was_sent_to_{0}_and_{1}.', [
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $newCustomer->name . '</b>'
             ]);

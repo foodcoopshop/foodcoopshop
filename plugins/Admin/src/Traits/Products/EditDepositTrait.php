@@ -66,12 +66,12 @@ trait EditDepositTrait
                     break;
                 }
             }
-            $productName .= ' ('.__d('admin', 'Attribute').': '.$attributeName.')';
+            $productName .= ' ('.__('Attribute').': '.$attributeName.')';
         }
 
         $deposit = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('deposit'));
 
-        $actionLogMessage = __d('admin', 'The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [
+        $actionLogMessage = __('The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [
             '<b>' . $productName . '</b>',
             Configure::read('app.numberHelper')->formatAsCurrency($oldDeposit),
             Configure::read('app.numberHelper')->formatAsCurrency($deposit)

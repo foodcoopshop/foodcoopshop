@@ -57,7 +57,7 @@ trait DeleteImageTrait
             ]
         );
 
-        $actionLogMessage = __d('admin', 'Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
+        $actionLogMessage = __('Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
             $product->image->id_image,
             '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>',

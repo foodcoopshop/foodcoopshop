@@ -53,7 +53,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-quantity-edit-button',
-                'title' => __d('admin', 'change_amount'),
+                'title' => __('change_amount'),
                 'escape' => false
             ]
         );
@@ -61,7 +61,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
         $elementsToRender = [];
 
         if (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available) {
-            $elementsToRender[] = '<i class="always-available fas fa-infinity ok" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
+            $elementsToRender[] = '<i class="always-available fas fa-infinity ok" title="'.__('This_product_is_always_available.').'"></i>';
         }
 
         $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName);
@@ -88,7 +88,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
 
                 $element = ' <i class="small sold-out-limit-for-dialog">';
                 if (is_null($product->stock_available->sold_out_limit)) {
-                    $element .= '<i class="fas fa-times" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
+                    $element .= '<i class="fas fa-times" title="'.__('No_email_notifications_are_sent_for_this_product.').'"></i>';
                 } else {
                     $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->sold_out_limit, $unitName);
                     $element .= $formattedSoldOutLimit;

@@ -26,7 +26,7 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <p><?php echo __d('admin', 'Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}.', ['<b>' . $formattedPickupDay . '</b>']); ?></p>
+            <p><?php echo __('Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}.', ['<b>' . $formattedPickupDay . '</b>']); ?></p>
 
             <ul style="padding-left:10px;">
                 <?php
@@ -36,10 +36,10 @@ use Cake\Core\Configure;
                 ?>
             </ul>
 
-            <p><?php echo __d('admin', 'As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
+            <p><?php echo __('As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
 
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __('Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
         </td>

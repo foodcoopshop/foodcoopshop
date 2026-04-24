@@ -46,10 +46,10 @@ trait ChangeStatusTrait
         $customer->active = $status;
         $customersTable->save($customer);
 
-        $message = __d('admin', 'The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
+        $message = __('The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
         $actionLogType = 'customer_set_inactive';
         if ($status) {
-            $message = __d('admin', 'The_member_{0}_has_been_activated_succesfully.', ['<b>' . $customer->name . '</b>']);
+            $message = __('The_member_{0}_has_been_activated_succesfully.', ['<b>' . $customer->name . '</b>']);
             $actionLogType = 'customer_set_active';
         }
 
@@ -59,7 +59,7 @@ trait ChangeStatusTrait
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
-            ->setSubject(__d('admin', 'Your_account_was_activated'))
+            ->setSubject(__('Your_account_was_activated'))
             ->setViewVars([
                 'identity' => $this->identity,
                 'data' => $customer,
@@ -68,11 +68,11 @@ trait ChangeStatusTrait
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
-                $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
             }
             $email->addToQueue();
 
-            $message = __d('admin', 'The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email.', ['<b>' . $customer->name . '</b>']);
+            $message = __('The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email.', ['<b>' . $customer->name . '</b>']);
         }
 
         $this->Flash->success($message);

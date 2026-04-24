@@ -23,4 +23,4 @@ if (!($identity->isSuperadmin() || $identity->isAdmin())) {
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initExportStockProductsButton();"
 ]);
-echo '<a id="exportStockProductsButton" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-file-export"></i> ' . __d('admin', 'Export_{0}', [__d('admin', 'Stock_products')]) . '</a>';
+echo '<a id="exportStockProductsButton" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-file-export"></i> ' . __('Export_{0}', [__('Stock_products')]) . '</a>';

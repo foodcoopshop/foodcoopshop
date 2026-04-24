@@ -44,7 +44,7 @@ trait GetCustomersForDropdownTrait
             $customersForDropdown[] = '</optgroup>';
         }
 
-        $emptyElement = ['<option value="">' . __d('admin', 'all_members') . '</option>'];
+        $emptyElement = ['<option value="">' . __('all_members') . '</option>'];
         $customersForDropdown = array_merge($emptyElement, $customersForDropdown);
 
         $this->set([

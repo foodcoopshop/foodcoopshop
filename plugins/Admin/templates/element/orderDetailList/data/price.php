@@ -24,7 +24,7 @@ echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl 
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light order-detail-product-price-edit-button',
-                    'title' => __d('admin', 'Click_to_change_price'),
+                    'title' => __('Click_to_change_price'),
                     'escape' => false
                 ]
             );

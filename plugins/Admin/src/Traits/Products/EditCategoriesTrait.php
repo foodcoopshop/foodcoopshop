@@ -77,7 +77,7 @@ trait EditCategoriesTrait
             $categoryProductsTable->saveMany($categoryProducts);
         }
 
-        $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $product->name . '</b>', '<b>' . $product->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
+        $messageString = __('The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $product->name . '</b>', '<b>' . $product->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
         $this->Flash->success($messageString);
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->customSave('product_categories_changed', $this->identity->getId(), $productId, 'products', $messageString);
@@ -86,7 +86,7 @@ trait EditCategoriesTrait
 
         $this->set([
             'status' => 1,
-            'msg' => __d('admin', 'Saving_successful.'),
+            'msg' => __('Saving_successful.'),
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }

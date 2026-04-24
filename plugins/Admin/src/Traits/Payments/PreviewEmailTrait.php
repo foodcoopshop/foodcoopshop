@@ -46,7 +46,7 @@ trait PreviewEmailTrait
         }
 
         $payment->approval = $approval;
-        $payment->approval_comment = __d('admin', 'Your_comment_will_be_shown_here.');
+        $payment->approval_comment = __('Your_comment_will_be_shown_here.');
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
         $email->setTo($payment->customer->email)
