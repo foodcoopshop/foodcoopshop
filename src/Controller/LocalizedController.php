@@ -110,7 +110,7 @@ class LocalizedController extends Controller
 
     public function renderAsJsFile(): void
     {
-        $this->response = $this->response->withType('application/javascript');
+        $this->response = $this->response->withType('application/javascript')->withCharset('UTF-8');
         $this->viewBuilder()->setLayout('ajax');
         $this->set('translations', $this->getTranslations());
         $this->set('jsConfig', $this->getConfig());
