@@ -192,7 +192,7 @@ foodcoopshop.Mobile = {
             menuItems.push(ps);
         }
 
-        let homeMenuItemA = $('<a/>').attr('href', '/').html('<i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home);
+        let homeMenuItemA = $('<a/>').attr('href', '/').html('<i class="fas"></i>' + __('Home'));
         menuItems.push('<li class="home">' + $('<div>').append(homeMenuItemA.clone()).html() + $('<div>').append($('a.color-mode-toggle')).html() + '</li>');
 
         $('#user-menu > li').each(function () {
@@ -210,8 +210,8 @@ foodcoopshop.Mobile = {
 
         // if all manufacturers are disabled / set to private - do not include menu item
         $('.sidebar li.header').each(function () {
-            if ($(this).html() == foodcoopshop.LocalizedJs.mobile.manufacturers) {
-                menuItems.push('<li><a href="/' + foodcoopshop.LocalizedJs.mobile.routeManufacturerList + '"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.manufacturers + '</a></li>');
+            if ($(this).html() == __('Manufacturers')) {
+                menuItems.push('<li><a href="/' + __('route_manufacturer_list') + '"><i class="fa"></i>' + __('Manufacturers') + '</a></li>');
             }
         });
 
@@ -223,11 +223,11 @@ foodcoopshop.Mobile = {
             menuItems.push($(this).clone());
         });
 
-        var pageItems = ['<li class="header">' + foodcoopshop.LocalizedJs.mobile.pages + '</li>'];
+        var pageItems = ['<li class="header">' + __('Pages') + '</li>'];
         $('#main-menu > li').each(function () {
             // take categories and manufacturers from sidebar and not from main menu
             var mainMenuHref = $(this).find('a').attr('href');
-            if ($.inArray(mainMenuHref, ['/' + foodcoopshop.LocalizedJs.mobile.routeManufacturerList, foodcoopshop.LocalizedJs.mobile.routeAllCategories, '/' + foodcoopshop.LocalizedJs.mobile.routeNewsList]) == -1) {
+            if ($.inArray(mainMenuHref, ['/' + __('route_manufacturer_list'), foodcoopshop.config.routeAllCategories, '/' + __('route_news_list')]) == -1) {
                 pageItems.push($(this));
             }
         });
@@ -275,11 +275,11 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append($('#header .logo-wrapper'));
 
         // button renamings
-        var regexp = new RegExp(foodcoopshop.LocalizedJs.mobile.showAllProducts);
+        var regexp = new RegExp(__('Show_all_products'));
         $('.manufacturer-wrapper div.c3 a.btn').each(function () {
-            $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
+            $(this).html($(this).html().replace(regexp, __('Show')));
         });
-        $('.blog-post-wrapper div.c3 a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
+        $('.blog-post-wrapper div.c3 a.btn').html(__('Show'));
         $('.ew .btn').each(function() {
             if (!$(this).find('i').hasClass('fa-times')) { // delivery break?
                 $(this).html($(this).find('i').after($(this).text()));

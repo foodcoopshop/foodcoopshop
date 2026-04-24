@@ -19,7 +19,7 @@ foodcoopshop.ModalOrderDetailProductNameEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.ChangeProductName,
+            __('Change_product_name'),
             foodcoopshop.ModalOrderDetailProductNameEdit.getHtml()
         );
 
@@ -38,7 +38,7 @@ foodcoopshop.ModalOrderDetailProductNameEdit = {
     },
 
     getHtml : function() {
-        var html = '<label for="dialogName"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
+        var html = '<label for="dialogName"><b>' + __('Name') + '</b></label><br />';
         html += '<input type="text" name="dialogOrderDetailProductNameName" id="dialogOrderDetailProductNameName" value="" /><br />';
         html += '<input type="hidden" name="dialogOrderDetailProductNameOrderDetailId" id="dialogOrderDetailProductNameOrderDetailId" value="" />';
         html += '<hr />';

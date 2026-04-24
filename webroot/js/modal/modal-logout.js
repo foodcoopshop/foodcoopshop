@@ -18,13 +18,13 @@ foodcoopshop.ModalLogout = {
         var modalSelector = '#logout-form';
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Yes'), 'fa-fw fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('No'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.helper.logout,
+            __('Sign_out?'),
             this.getHtml(),
             buttons
         );
@@ -40,11 +40,11 @@ foodcoopshop.ModalLogout = {
     },
 
     getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p>';
+        return '<p>' + __('Really_sign_out?') + '</p>';
     },
 
     getSuccessHandler : function(redirect) {
-        var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+        var redirectUrl = '/' + __('route_sign_out');
         if (redirect !== undefined) {
             redirectUrl += '?redirect=' + redirect;
         }

@@ -31,8 +31,8 @@ foodcoopshop.ModalCart = {
 
         const elementSelector = button.data('element-selector');
         let buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.cart.ContinueToFinishCart, 'fa-fw fas fa-shopping-cart', false),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)
+            foodcoopshop.Modal.createButton(['btn-success'], __('Continue_to_finish_cart'), 'fa-fw fas fa-shopping-cart', false),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('Close'), null, true)
         ];
 
         foodcoopshop.Modal.appendModalToDom(
@@ -53,7 +53,7 @@ foodcoopshop.ModalCart = {
 
         $(modalSelector + ' .modal-body').append(contentHtml);
 
-        headingHtml = foodcoopshop.LocalizedJs.cart.YourCart;
+        headingHtml = __('Your cart');
         foodcoopshop.Cart.initRemoveFromCartLinks();
         foodcoopshop.ModalLoadLastOrderDetails.init();
         foodcoopshop.ModalOrderForDifferentCustomerCancel.init();

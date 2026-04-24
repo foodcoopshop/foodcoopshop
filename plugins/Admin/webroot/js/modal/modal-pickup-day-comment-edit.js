@@ -19,7 +19,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.pickupDay.ChangePickupDayComment,
+            __('Change_pickup_day_comment'),
             foodcoopshop.ModalPickupDayCommentEdit.getHtml()
         );
 
@@ -38,7 +38,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
     },
 
     getHtml : function() {
-        var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
+        var html = '<label>' + __('Member') + ': <b></b></label>';
         html += '<div class="textarea-wrapper">';
         html += '<textarea name="dialogPickupDayComment" id="dialogPickupDayComment"></textarea>';
         html += '</div>';
@@ -80,7 +80,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
         var editor = foodcoopshop.Editor.initSmall('dialogPickupDayComment', true);
 
         var text = button.attr('originalTitle');
-        if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
+        if (text == __('Add_comment')) {
             text = '';
         }
         editor.setEditorValue(text);

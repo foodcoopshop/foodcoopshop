@@ -27,7 +27,7 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
         button.on('click', function () {
 
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var title = foodcoopshop.LocalizedJs.admin.CalculateSellingPrice;
+            var title = __('Calculate_selling_price');
 
             var products = [];
             for (var i in productIds) {
@@ -36,8 +36,8 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
             var html = '<ul><li>' + products.join('</li><li>') + '</li></ul>';
 
             html += '<div class="field-wrapper">';
-            html += '<label for="dialogProductSurcharge">' + foodcoopshop.LocalizedJs.admin.SurchargeInPercentFromPurchasePriceNet + ':<br />';
-            html += '<br /><span class="small">' + foodcoopshop.LocalizedJs.admin.CalculateSellingPriceExplanationText + '</span>';
+            html += '<label for="dialogProductSurcharge">' + __('Surcharge_in_percent_from_purchase_price_net') + ':<br />';
+            html += '<br /><span class="small">' + __('Calculate_selling_price_explanation_text.') + '</span>';
             html += '</label>';
             html += '<input type="number" step="0.01" min="0.01" name="dialogProductSurcharge" id="dialogProductSurcharge" value="" />';
             html += '</div>';
@@ -77,7 +77,7 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
                 },
                 onError: function (data) {
                     var message = '<p>';
-                    message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileCalculatingSellingPrice;
+                    message += __('Errors_occurred_while_calculating_selling_price.');
                     message += ':</p>';
                     message = message + data.msg;
                     foodcoopshop.Modal.appendFlashMessageError(modalSelector, message);

@@ -21,11 +21,11 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
     },
 
     getHtml : function(customerName, invoiceAmount, paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled) {
-        var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
+        var html = '<p>' + __('Really_generate_invoice_for_{0}?', '<b>' + customerName + '</b>') + '</p>';
         html += '<h3 style="text-align:center;font-weight:bold;font-size:35px" id="invoiceAmount">' + invoiceAmount + '</h3>';
         html += '<div class="field-wrapper">';
         html += '<input type="number" id="givenAmount" style="text-align:left;margin-bottom:15px;" />';
-        html += ' ' + foodcoopshop.LocalizedJs.admin.GivenAmount;
+        html += ' ' + __('Given_amount');
         html += '</div>';
         html += '<div class="field-wrapper">';
         html += '<h3 style="text-align:center;font-weight:bold;color:var(--not-ok-red);" id="changeAmount">&nbsp;</h3>';
@@ -34,7 +34,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         if (paymentIsCashless) {
             html += '<label class="checkbox">';
             html += '<input type="checkbox" ' + (isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled ? ' checked="checked"' : '') + ' name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
-            html += ' ' + foodcoopshop.LocalizedJs.admin.PaidInCash + '?';
+            html += ' ' + __('Paid_in_cash') + '?';
             html += '</label>';
         }
         html += '</div>';
@@ -63,9 +63,9 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         var row = button.closest('tr');
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-outline-light preview-invoice-button'], foodcoopshop.LocalizedJs.admin.ShowPreview, 'fas fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light generate-invoice-button'], foodcoopshop.LocalizedJs.admin.GenerateInvoice, 'fas fa-exclamation-triangle not-ok'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            foodcoopshop.Modal.createButton(['btn-outline-light preview-invoice-button'], __('Show_preview'), 'fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light generate-invoice-button'], __('Generate_invoice'), 'fas fa-exclamation-triangle not-ok'),
+            foodcoopshop.Modal.createButton(['btn-outline-light'], __('Cancel'), null, true)
         ];
 
         var customerName = row.find('td:nth-child(3)').text();
@@ -74,7 +74,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.GenerateInvoice,
+            __('Generate_invoice'),
             foodcoopshop.ModalInvoiceForCustomerAdd.getHtml(customerName, invoiceAmount, paymentIsCashless, isPaidCashForManualCustomerInvoiceGenerationDefaultEnabled),
             buttons
         );
@@ -90,7 +90,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
             var changeAmount = parseFloat($(this).val()) - foodcoopshop.Helper.getCurrencyAsFloat($(modalSelector + ' #invoiceAmount').text());
             var newValue = '&nbsp;';
             if (changeAmount > 0) {
-                newValue = foodcoopshop.Helper.formatFloatAsCurrency(changeAmount) + ' ' + foodcoopshop.LocalizedJs.admin.back;
+                newValue = foodcoopshop.Helper.formatFloatAsCurrency(changeAmount) + ' ' + __('back');
             }
             $(modalSelector + ' #changeAmount').html(newValue);
 

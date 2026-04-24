@@ -100,8 +100,8 @@ foodcoopshop.Modal = {
 
         buttons = buttons ||
             [
-                this.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.save, 'fa-fw fas fa-check'),
-                this.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+                this.createButton(['btn-success'], __('Save'), 'fa-fw fas fa-check'),
+                this.createButton(['btn-outline-light'], __('Cancel'), null, true)
             ];
 
         var html = '<div id="' + elementId.replace(/#/, '') + '" class="modal" tabindex="-1" role="dialog">';
@@ -109,7 +109,7 @@ foodcoopshop.Modal = {
         html += '<div class="modal-content">';
         html += '<div class="modal-header">';
         html += '<h5 class="modal-title">' + title + '</h5>';
-        html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
+        html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="' + __('Close') + '">';
         html += '<i class="fas fa-2x fa-times"></i>';
         html += '</button>';
         html += '</div>';

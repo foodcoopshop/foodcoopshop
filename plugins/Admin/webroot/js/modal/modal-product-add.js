@@ -27,25 +27,25 @@ foodcoopshop.ModalProductAdd = {
         var infoText = '';
         if (!foodcoopshop.Helper.isManufacturer) {
             var manufacturerName = $('#manufacturerid').find('option:selected').text();
-            infoText = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
+            infoText = __('Manufacturer') + ': <b>' + manufacturerName + '</b>';
         }
         var html = '<p>' + infoText + '</p>';
 
         html = '<div class="block block-a">';
 
-        html += '<label for="dialogName"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
-        html += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
+        html += '<label for="dialogName"><b>' + __('Name') + '</b></label><br />';
+        html += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="small" style="float:left;">' + __('Product_rename_info_text') + '</span><br />';
         html += '<hr />';
         html += '<div class="dialog-unity-wrapper">';
-        html += '<label id="dialogLabelUnity" for="dialogUnity"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Unit + '</b> <span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '</span></label><br />';
+        html += '<label id="dialogLabelUnity" for="dialogUnity"><b>' + __('Unit') + '</b> <span class="small">' + __('Unit_description_example') + '</span></label><br />';
         html += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
-        html += '<span class="small">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
+        html += '<span class="small">' + __('Enter_approximate_weight_in_price_dialog.') + '</span>';
         html += '</div>';
 
         if ($('.storage-location-dropdown-wrapper').length > 0) {
             html += '<hr />';
             html += '<div class="field-wrapper storage-location-wrapper">';
-            html += '<label for="dialogStorageLocation"><b>' + foodcoopshop.LocalizedJs.dialogProduct.StorageLocation + '</b></label>';
+            html += '<label for="dialogStorageLocation"><b>' + __('Storage_location') + '</b></label>';
             html += '<select name="dialogStorageLoation" id="dialogStorageLocation"></select><br />';
             html += '</div>';
         }
@@ -53,7 +53,7 @@ foodcoopshop.ModalProductAdd = {
         if (foodcoopshop.Helper.isSelfServiceModeEnabled) {
             html += '<hr />';
             html += '<div class="dialog-barcode-wrapper">';
-            html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + foodcoopshop.LocalizedJs.dialogProduct.BarcodeDescription + '</b></label><br />';
+            html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + __('EAN_13_code') + '</b></label><br />';
             html += '<input type="text" name="dialogBarcode" id="dialogBarcode" value="" /><br />';
             html += '</div>';
         }
@@ -61,7 +61,7 @@ foodcoopshop.ModalProductAdd = {
         html += '<hr />';
 
         html += '<div class="textarea-wrapper">';
-        html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
+        html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + __('Description_short') + '</b></label><br />';
         html += '<textarea name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
         html += '</div>';
         html += '<hr />';
@@ -71,9 +71,9 @@ foodcoopshop.ModalProductAdd = {
         html += '<div class="block block-b">';
 
         html += '<div class="textarea-wrapper">';
-        html += '<label for="dialogDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
+        html += '<label for="dialogDescription"><b>' + __('Description_long') + '</b></label><br />';
         html += '<div class="declaration-wrapper">';
-        html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
+        html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + __('Product_declaration_ok?') + '</label><a href="' + foodcoopshop.config.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + __('Help') + '</a><br />';
         html += '<textarea hide" name="dialogDescription" id="dialogDescription"></textarea>';
         html += '</div>';
         html += '</div>';
@@ -118,7 +118,7 @@ foodcoopshop.ModalProductAdd = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.AddNewProduct,
+            __('Add_new_product?'),
             foodcoopshop.ModalProductAdd.getHtml()
         );
 

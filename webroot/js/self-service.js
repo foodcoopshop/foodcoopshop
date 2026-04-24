@@ -90,7 +90,7 @@ foodcoopshop.SelfService = {
     },
 
     mobileScannerCallbackForProducts : function(result) {
-        var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService + '?keyword=' + result.codeResult.code;
+        var redirectUrl = '/' + __('route_self_service') + '?keyword=' + result.codeResult.code;
         document.location.href = redirectUrl;
     },
 
@@ -261,7 +261,7 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.currentLogoutTimer--;
                 foodcoopshop.SelfService.renderTimer();
                 if (foodcoopshop.SelfService.currentLogoutTimer == 0) {
-                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + document.location.href;
+                    document.location.href = '/' + __('route_sign_out') + '?redirect=' + document.location.href;
                 }
             },
             recurIdleCall : true,

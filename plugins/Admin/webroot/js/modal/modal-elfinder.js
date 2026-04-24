@@ -24,7 +24,7 @@ foodcoopshop.ModalElfinder = {
         var opts = {
             url : '/js/elfinder/php/connector.minimal.php',
             cssAutoLoad: false,
-            lang: foodcoopshop.LocalizedJs.helper.defaultLocaleShort,
+            lang: foodcoopshop.config.defaultLocaleShort,
             i18nBaseUrl: '/js/elfinder/js/i18n/',
             workerBaseUrl: '/js/elfinder/js/worker/',
             soundPath: '/js/elfinder/sounds/',
@@ -43,7 +43,7 @@ foodcoopshop.ModalElfinder = {
                 } else {
                     foodcoopshop.Helper.copyToClipboard(fm.convAbsUrl(file.url)).then(
                         ()  => {
-                            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheFileHasBeenCopiedToYourClipboard);
+                            foodcoopshop.Helper.showSuccessMessage(__('The_url_of_the_file_has_been_copied_successfully_to_your_clipboard.'));
                         },
                         (error) => {
                             foodcoopshop.Helper.showErrorMessage('Clipboard copy failed. Use HTTPS or localhost.');
@@ -66,7 +66,7 @@ foodcoopshop.ModalElfinder = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
+            __('Upload_image_or_file'),
             '',
             [],
         );

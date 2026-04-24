@@ -21,7 +21,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.DecreaseAmount,
+                __('Decrease_amount'),
                 foodcoopshop.ModalOrderDetailProductAmountEdit.getHtml()
             );
 
@@ -41,11 +41,11 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
     getHtml : function() {
         var html = '<div class="field-wrapper">';
-        html += '<label for="dialogOrderDetailProductAmountAmount">' + foodcoopshop.LocalizedJs.admin.NewAmount + ' </label>';
+        html += '<label for="dialogOrderDetailProductAmountAmount">' + __('New_amount') + ' </label>';
         html += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
         html += '</div>';
         html += '<div class="textarea-wrapper">';
-        html += '<label for="dialogEditAmountReason">' + foodcoopshop.LocalizedJs.admin.WhyIsAmountDecreased + '</label>';
+        html += '<label for="dialogEditAmountReason">' + __('Why_is_amount_decreased_(mandatory_field)?') + '</label>';
         html += '<textarea name="dialogEditAmountReason" id="dialogEditAmountReason"></textarea>';
         html += '</div>';
         html += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
@@ -60,7 +60,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
         var editorData = $('#dialogEditAmountReason').val();
         if (editorData == '') {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.admin.AdaptAmountReasonIsMandatory);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('Adapt_amount_reason_is_mandatory.'));
             foodcoopshop.Modal.resetButtons(modalSelector);
             return false;
         }
@@ -95,7 +95,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
         select.find('option').remove();
         select.append($('<option>', {
             value: '',
-            text: foodcoopshop.LocalizedJs.admin.PleaseSelect
+            text: __('Please_select...')
         }));
         for (var i = currentAmount - 1; i >= 1; i--) {
             select.append($('<option>', {
@@ -106,7 +106,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
         $(modalSelector + ' #dialogOrderDetailProductAmountOrderDetailId').val(row.find('td:nth-child(2)').html());
         var infoTextForEditProductAmount = '<p><b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>';
-        infoTextForEditProductAmount += ' (' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ';
+        infoTextForEditProductAmount += ' (' + __('ordered_by') + ' ';
         infoTextForEditProductAmount += row.find('td.customer-field span.customer-name-for-dialog').html() + ')</p>';
         $(modalSelector + ' .modal-body').prepend(infoTextForEditProductAmount);
 

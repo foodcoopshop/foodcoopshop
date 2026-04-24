@@ -19,7 +19,7 @@ foodcoopshop.ModalCustomerGroupEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.modalCustomer.ChangeGroup,
+            __('Change_group'),
             foodcoopshop.ModalCustomerGroupEdit.getHtml()
         );
 
@@ -79,8 +79,8 @@ foodcoopshop.ModalCustomerGroupEdit = {
         select.find('option').remove();
         select.append($('#selectgroupid').html());
         select.val(selectedGroupId);
-        var html = foodcoopshop.LocalizedJs.admin.ChangeGroupFor + ': <b>' + button.closest('tr').find('td:nth-child(3) a').text() + '</b>';
-        html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheUserNeedsToSignInAgain + '</p>';
+        var html = __('Change_group_for') + ': <b>' + button.closest('tr').find('td:nth-child(3) a').text() + '</b>';
+        html += '<p style="font-weight: normal;"><br />' + __('The_user_needs_to_sign_again.') + '</p>';
         $(modalSelector + ' #dialogCustomerGroupEditText').html(html);
         $(modalSelector + ' #dialogCustomerGroupEditCustomerId').val(button.closest('tr').find('td:nth-child(2)').html());
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();

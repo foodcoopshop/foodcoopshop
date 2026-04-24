@@ -58,8 +58,8 @@ foodcoopshop.SyncProducts = {
 
     getProductTableHeadElements : function () {
         return [
-            foodcoopshop.LocalizedJs.syncProducts.Id,
-            foodcoopshop.LocalizedJs.syncProducts.Product
+            __('Id'),
+            __('Product')
         ];
     },
 
@@ -239,7 +239,7 @@ foodcoopshop.SyncProducts = {
                 if (ui.draggable.parent().hasClass('main-product')) {
                     foodcoopshop.SyncProducts.onDropRemoteProduct($(this), ui);
                 } else {
-                    foodcoopshop.Helper.showErrorMessage(foodcoopshop.LocalizedJs.syncProducts.AnAttributeCannotBeAssignedToAProduct);
+                    foodcoopshop.Helper.showErrorMessage(__('An_attribute_cannot_be_assigned_to_a_product.'));
                 }
             }
         });
@@ -252,7 +252,7 @@ foodcoopshop.SyncProducts = {
                 if (ui.draggable.parent().hasClass('sub-row')) {
                     foodcoopshop.SyncProducts.onDropRemoteProduct($(this), ui);
                 } else {
-                    foodcoopshop.Helper.showErrorMessage(foodcoopshop.LocalizedJs.syncProducts.AProductCannotBeAssignedToAnAttribute);
+                    foodcoopshop.Helper.showErrorMessage(__('A_product_cannot_be_assigned_to_an_attribute.'));
                 }
             }
         });

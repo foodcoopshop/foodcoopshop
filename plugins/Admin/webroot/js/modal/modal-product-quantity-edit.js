@@ -33,21 +33,21 @@ foodcoopshop.ModalProductQuantityEdit = {
         html += '<div class="field-wrapper">';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogQuantityAlwaysAvailable" id="dialogQuantityAlwaysAvailable" />';
-        html += ' ' + foodcoopshop.LocalizedJs.dialogProduct.IsTheProductAlwaysAvailable;
+        html += ' ' + __('Is_the_product_always_available?');
         html += '</label>';
         html += '</div>';
         html += '<div class="field-wrapper quantity-wrapper">';
         html += '<hr />';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.AvailableAmount + '</label>';
+        html += '<label>' + __('Available_amount') + '</label>';
         html += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" class="calculator-output"/><a class="calculator-toggle-button" href="javascript:void(0);"><i class="fas fa-calculator"></i></a><br />';
-        html += '<input id="dialogQuantityCalculator" class="calculator-input" placeholder="' + foodcoopshop.LocalizedJs.admin.ExampleGivenAbbr + ' 167+142" type="text" /><br />';
-        html += '<input type="text" name="dialogQuantityChangeReason" id="dialogQuantityChangeReason" maxlength="200" placeholder="' + foodcoopshop.LocalizedJs.dialogProduct.ReasonForChange + '" /><br />';
+        html += '<input id="dialogQuantityCalculator" class="calculator-input" placeholder="' + __('Example_given_abbr') + ' 167+142" type="text" /><br />';
+        html += '<input type="text" name="dialogQuantityChangeReason" id="dialogQuantityChangeReason" maxlength="200" placeholder="' + __('Reason_for_change') + '" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper quantity-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderLists + '</label>';
+        html += '<label>' + __('Default_quantity_after_sending_order_lists') + '</label>';
         html += '<input type="number" step="1" name="dialogQuantityDefaultQuantityAfterSendingOrderLists" id="dialogQuantityDefaultQuantityAfterSendingOrderLists" />';
-        html += '<span style="float:left;" class="small">' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderListsHelpText + '</span>';
+        html += '<span style="float:left;" class="small">' + __('After_the_order_lists_are_sent_available_amount_is_set_to_this_value.') + '</span>';
         html += '</div>';
         html += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         return html;
@@ -57,19 +57,19 @@ foodcoopshop.ModalProductQuantityEdit = {
         let unitNameString = isPricePerUnitEnabled && useWeightAsAmount ? ' - in ' + unitName : '';
         var html = '<label for="dialogQuantityQuantity"></label><br />';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + unitNameString + '</label>';
+        html += '<label>' + __('Current_stock') + unitNameString + '</label>';
         html += '<input type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantityQuantity" id="dialogQuantityQuantity" class="calculator-output" /><a class="calculator-toggle-button" href="javascript:void(0);"><i class="fas fa-calculator"></i></a><br />';
-        html += '<input id="dialogQuantityCalculator" class="calculator-input" placeholder="' + foodcoopshop.LocalizedJs.admin.ExampleGivenAbbr + ' 167+142" type="text" /><br />';
-        html += '<input type="text" name="dialogQuantityChangeReason" id="dialogQuantityChangeReason" maxlength="200" placeholder="' + foodcoopshop.LocalizedJs.dialogProduct.ReasonForChange + '" /><br />';
+        html += '<input id="dialogQuantityCalculator" class="calculator-input" placeholder="' + __('Example_given_abbr') + ' 167+142" type="text" /><br />';
+        html += '<input type="text" name="dialogQuantityChangeReason" id="dialogQuantityChangeReason" maxlength="200" placeholder="' + __('Reason_for_change') + '" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + unitNameString + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
+        html += '<label>' + __('Orders_possible_until_amount_of') + unitNameString + '<br /><span class="small">' + __('zero_or_smaller_zero') + '.</span></label>';
         html += '<input max="0" type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.NotificationIfAmountLowerThan + unitNameString + ' (' + foodcoopshop.LocalizedJs.dialogProduct.MinimalStockAmount + ')<br /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings + '</span></label>';
+        html += '<label>' + __('Notification_if_amount_lower_than') + unitNameString + ' (' + __('Minimal_stock_amount') + ')<br /><span class="small" style="float:left;">' + __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.') + '</span></label>';
         html += '<input type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         html += '</div>';
         html += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
@@ -83,7 +83,7 @@ foodcoopshop.ModalProductQuantityEdit = {
     getSuccessHandler : function(modalSelector, row) {
 
         if ($('#dialogQuantityProductId').val() == '') {
-            foodcoopshop.Modal.appendFlashMessageError(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
+            foodcoopshop.Modal.appendFlashMessageError(modalSelector, __('An_error_occurred'));
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
         }
@@ -141,7 +141,7 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount,
+            __('Change_amount'),
             html,
         );
 

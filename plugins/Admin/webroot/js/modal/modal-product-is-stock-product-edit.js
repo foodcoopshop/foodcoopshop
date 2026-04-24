@@ -21,7 +21,7 @@ foodcoopshop.ModalProductIsStockProductEdit = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.dialogProduct.StockProduct,
+                __('Stock_product'),
                 foodcoopshop.ModalProductIsStockProductEdit.getHtml()
             );
 
@@ -45,10 +45,10 @@ foodcoopshop.ModalProductIsStockProductEdit = {
         html += '<div class="field-wrapper">';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogIsStockProductIsStockProduct" id="dialogIsStockProductIsStockProduct" />';
-        html += ' ' + foodcoopshop.LocalizedJs.dialogProduct.IsProductStockProduct;
+        html += ' ' + __('Is_product_a_stock_product?');
         html += '</label>';
         html += '</div>';
-        html += '<p style="margin-top:20px;float:left;" class="small">' + foodcoopshop.LocalizedJs.dialogProduct.TheDeliveryRhythmOfStockProductsIsAlwaysWeekly + '</p>';
+        html += '<p style="margin-top:20px;float:left;" class="small">' + __('The_delivery_rhythm_of_stock_products_is_always_weekly.') + '</p>';
         html += '<input type="hidden" name="dialogIsStockProductProductId" id="dialogIsStockProductProductId" value="" />';
         return html;
     },

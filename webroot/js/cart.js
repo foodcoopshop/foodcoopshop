@@ -28,7 +28,7 @@ foodcoopshop.Cart = {
     addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
         var pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay));
         if (pickupDayHeader.length == 0) {
-            $('.cart .products').append('<div class="pickup-day-header"><span class="label">' + foodcoopshop.LocalizedJs.cart.PickupDay + ': <b>' + pickupDay + '</b></span></div>');
+            $('.cart .products').append('<div class="pickup-day-header"><span class="label">' + __('Pickup_day') + ': <b>' + pickupDay + '</b></span></div>');
             pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay)); // re-init after append
         }
         pickupDayHeader.append(
@@ -126,12 +126,12 @@ foodcoopshop.Cart = {
         var newUnityHtml = oldUnity.html();
 
         if (newAmount > 1 && oldAmountValue == 1) {
-            var approxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.approx);
-            newUnityHtml = newUnityHtml.replace(approxRegExp, foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
+            var approxRegExp = new RegExp(__('approx.'));
+            newUnityHtml = newUnityHtml.replace(approxRegExp, __('for_each') + ' ' + __('approx.'));
         }
         if (newAmount == 1 && oldAmountValue > 1) {
-            var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
-            newUnityHtml = newUnityHtml.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
+            var forEachApproxRegExp = new RegExp(__('for_each') + ' ' + __('approx.'));
+            newUnityHtml = newUnityHtml.replace(forEachApproxRegExp, __('approx.'));
         }
 
         if (orderedQuantityInUnits > 0) {
@@ -232,8 +232,8 @@ foodcoopshop.Cart = {
             }
 
             if (amount > 1) {
-                var approxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.approx);
-                unity = unity.replace(approxRegExp, foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
+                var approxRegExp = new RegExp(__('approx.'));
+                unity = unity.replace(approxRegExp, __('for_each') + ' ' + __('approx.'));
             }
 
             var orderedQuantityInUnits;
@@ -317,7 +317,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton(disabledButtonsDuringUpdateCartRequest);
 
             foodcoopshop.Helper.ajaxCall(
-                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
+                '/' + __('route_cart') + '/ajaxAdd/',
                 {
                     productId: productId,
                     amount: amount,
@@ -431,7 +431,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton(disabledButtonsDuringUpdateCartRequest);
 
             foodcoopshop.Helper.ajaxCall(
-                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
+                '/' + __('route_cart') + '/ajaxAdd/',
                 {
                     productId: productId,
                     amount: amount
@@ -501,9 +501,9 @@ foodcoopshop.Cart = {
             '</span>' +
             '<span class="manufacturer-link">' + manufacturerLink + '</span>' +
             '<span class="right">' +
-                '<span class="delete"><a class="btn" title="' + foodcoopshop.LocalizedJs.cart.removeFromCart + '" href="javascript:void(0);"><i class="fa-fw fas fa-times-circle"></i></a></span>' +
+                '<span class="delete"><a class="btn" title="' + __('Remove_from_cart?') + '" href="javascript:void(0);"><i class="fa-fw fas fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsCurrency(price) + '</span>' +
-                (deposit != 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsCurrency(deposit) + '</span></span>' : '') +
+                (deposit != 0 ? '<span class="deposit">' + __('deposit') + ' + <span>' + foodcoopshop.Helper.formatFloatAsCurrency(deposit) + '</span></span>' : '') +
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsCurrency(tax) + '</span>' +
             '</span>' +
         '</span>';
@@ -628,7 +628,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton(disabledButtonsDuringUpdateCartRequest);
 
             foodcoopshop.Helper.ajaxCall(
-                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxRemove/',
+                '/' + __('route_cart') + '/ajaxRemove/',
                 {
                     productId: productId
                 },

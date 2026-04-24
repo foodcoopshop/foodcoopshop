@@ -21,7 +21,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.AddProductFeedback,
+                __('Add_product_feedback'),
                 foodcoopshop.ModalOrderDetailFeedbackAdd.getHtml()
             );
 
@@ -104,9 +104,9 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
         );
 
         $(modalSelector + ' #dialogOrderDetailId').val(orderDetailId);
-        $(modalSelector + ' label').html('<b>' + productName + '</b>' + ' (' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + customerName + ')');
+        $(modalSelector + ' label').html('<b>' + productName + '</b>' + ' (' + __('ordered_by') + ' ' + customerName + ')');
         $(modalSelector + ' .add-product-feedback-explanation-text').html(
-            foodcoopshop.LocalizedJs.admin.AddProductFeedbackExplanationText0.replaceI18n(0, '<b>' + manufacturerName + '</b>')
+            __('Add_product_feedback_explanation_text_{0}.', '<b>' + manufacturerName + '</b>')
         );
 
     }
