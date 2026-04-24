@@ -223,7 +223,7 @@ foodcoopshop.Mobile = {
         $('#main-menu > li').each(function () {
             // take categories and manufacturers from sidebar and not from main menu
             var mainMenuHref = $(this).find('a').attr('href');
-            if ($.inArray(mainMenuHref, ['/' + __('route_manufacturer_list'), foodcoopshop.config.routeAllCategories, '/' + __('routeNewsList')]) == -1) {
+            if ($.inArray(mainMenuHref, ['/' + __('route_manufacturer_list'), foodcoopshop.config.routeAllCategories, '/' + __('route_news_list')]) == -1) {
                 pageItems.push($(this));
             }
         });
