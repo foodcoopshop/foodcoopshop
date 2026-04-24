@@ -52,14 +52,16 @@ div.products-wrapper {
 }
 
 @media screen and (min-width: 1800px) {
-    div.products-wrapper {
+    div.products-wrapper,
+    div.manufacturers-wrapper {
         position: relative;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: 30px;
         align-items: start;
     }
-    div.products-wrapper::after {
+    div.products-wrapper::after,
+    div.manufacturers-wrapper::after {
         content: '';
         position: absolute;
         top: 0;
@@ -70,7 +72,8 @@ div.products-wrapper {
         transform: translateX(-50%);
         pointer-events: none;
     }
-    div.products-wrapper > .pw {
+    div.products-wrapper > .pw,
+    div.manufacturers-wrapper > .manufacturer-wrapper {
         float: none;
         width: auto;
         min-width: 0;

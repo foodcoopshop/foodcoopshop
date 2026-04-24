@@ -33,56 +33,59 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null)
 
 <?php
 
-foreach ($manufacturers as $manufacturer) {
-    echo '<div class="manufacturer-wrapper">';
+echo '<div class="manufacturers-wrapper">';
 
-        echo '<div class="c1">';
-            $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
-            $largeImageExists = $this->Html->largeImageExists($srcLargeImage);
-            if ($largeImageExists) {
-                echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
-            }
-            echo '<img class="lazyload" data-src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
-            if ($largeImageExists) {
-                echo '</a>';
-            }
-        echo '</div>';
+    foreach ($manufacturers as $manufacturer) {
+        echo '<div class="manufacturer-wrapper">';
 
-        echo '<div class="c2">';
-            echo '<h4>'.$this->Html->link(
-                $manufacturer->name,
-                $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
-                ['escape' => false]
-            ).'</h4>';
-            echo $manufacturer->short_description;
-
-            if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl()) {
-                $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, false, 5);
-                if ($manufacturerNoDeliveryDaysString != '') {
-                    echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
+            echo '<div class="c1">';
+                $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
+                $largeImageExists = $this->Html->largeImageExists($srcLargeImage);
+                if ($largeImageExists) {
+                    echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
                 }
-            }
+                echo '<img class="lazyload" data-src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
+                if ($largeImageExists) {
+                    echo '</a>';
+                }
+            echo '</div>';
+
+            echo '<div class="c2">';
+                echo '<h4>'.$this->Html->link(
+                    $manufacturer->name,
+                    $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
+                    ['escape' => false]
+                ).'</h4>';
+                echo $manufacturer->short_description;
+
+                if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl()) {
+                    $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, false, 5);
+                    if ($manufacturerNoDeliveryDaysString != '') {
+                        echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
+                    }
+                }
+
+            echo '</div>';
+
+            echo '<div class="c3">';
+                $manufacturerDetailLinkName  = __('Show_manufacturer_profile');
+                if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
+                    $manufacturerDetailLinkName = __('Show_products');
+                }
+                echo $this->Html->link(
+                    $manufacturerDetailLinkName . ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
+                    $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
+                    ['class' => 'btn btn-outline-light']
+                );
+                if ($identity !== null && !empty($manufacturer->customer) && !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name . '</i>';
+                }
+            echo '</div>';
 
         echo '</div>';
 
-        echo '<div class="c3">';
-            $manufacturerDetailLinkName  = __('Show_manufacturer_profile');
-            if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
-                $manufacturerDetailLinkName = __('Show_products');
-            }
-            echo $this->Html->link(
-                $manufacturerDetailLinkName . ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
-                $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
-                ['class' => 'btn btn-outline-light']
-            );
-            if ($identity !== null && !empty($manufacturer->customer) && !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name . '</i>';
-            }
-        echo '</div>';
+    }
 
-    echo '</div>';
-
-    echo '<div class="sc"></div>';
-}
+echo '</div>';
 
 ?>
