@@ -137,6 +137,9 @@ form.fcs-form .bootstrap-select {
 }
 .vertical.menu a {
     border-right: none;
+    font-size: 14px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .vertical.menu li.footer {
   padding: 5px 10px;

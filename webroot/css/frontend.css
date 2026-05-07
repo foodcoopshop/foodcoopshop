@@ -43,6 +43,9 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+body.carts.detail #inner-content {
+    max-width: var(--cart-max-width);
+}
 #inner-content.without-sidebar {
     width: 100%;
 }
@@ -185,7 +188,7 @@ body.categories div.description-wrapper {
     border-bottom-right-radius: 3px;
 }
 .vertical.menu a {
-    padding: 4px 10px;
+    padding: 5px 10px;
     word-break: break-word;
 }
 .vertical.menu a i.fas,
@@ -219,7 +222,7 @@ body.categories div.description-wrapper {
 #main-menu li > a {
     font-weight: 500;
     color: #333;
-    font-size: 16px;
+    font-size: 17px;
     padding: 12px 14px;
     border-radius: 8px;
     display: inline-flex;
@@ -275,7 +278,7 @@ body.categories div.description-wrapper {
     overflow: hidden;
     white-space: nowrap;
     max-width: 100%;
-    padding: 6px;
+    padding: 7px;
     border-radius: 6px;
 }
 #main-menu li ul li a:hover {
@@ -1346,7 +1349,8 @@ body.carts .cart:not(#cart) .products {
     overflow-x: hidden; /* error wrapper tricky to style */
     margin-bottom: 20px;
 }
-body.carts .cart:not(#cart) p.total-sum-wrapper {
+.cart .credit-balance-wrapper,
+.cart p.total-sum-wrapper {
     font-size: 20px;
 }
 body.carts .cart:not(#cart) p.sum-deposit-wrapper span.sum {

@@ -1108,7 +1108,7 @@ msgid "Configuration_subtext_FCS_REGISTRATION_NOTIFICATION_EMAILS"
 msgstr "Mehrere E-Mail-Adressen mit Komma trennen."
 
 msgid "Configuration_subtext_FCS_RIGHT_INFO_BOX_HTML"
-msgstr "Um eine Zeile färbig zu hinterlegen (Überschrift) bitte als \"Überschrift 3\" formatieren."
+msgstr "Um eine Zeile färbig zu hinterlegen (Überschrift) als \"Überschrift 3\" formatieren."
 
 msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
 msgstr "<a href=\"https://foodcoopshop.github.io/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a>"
@@ -1261,7 +1261,7 @@ msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
 msgstr "Wer soll bei neuen Registrierungen informiert werden?"
 
 msgid "Configuration_text_FCS_RIGHT_INFO_BOX_HTML"
-msgstr "Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes."
+msgstr "Inhalt der Info-Box"
 
 msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
 msgstr "Lagerort für Produkte erfassen und in Bestelllisten anzeigen?"
