@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\I18n\DateTime;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
-use Cake\I18n\DateTime;
 use Cake\Datasource\EntityInterface;
 
 /**
@@ -524,16 +524,32 @@ class ActionLogsTable extends AppTable
 
     public function removeCustomerNameFromAllActionLogs(string $customerName): bool
     {
-        $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
-        $statement = $this->getConnection()->getDriver()->prepare($query);
-        return $statement->execute();
+        $replace = Configure::read('app.htmlHelper')->getDeletedCustomerName();
+        $query = $this->updateQuery();
+
+        $query
+            ->set([
+                'text' => $query->expr('REPLACE(text, :search, :replace)'),
+            ])
+            ->bind(':search', $customerName, 'string')
+            ->bind(':replace', $replace, 'string');
+
+        return $query->execute() !== false;
     }
 
     public function removeCustomerEmailFromAllActionLogs(string $email): bool
     {
-        $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $email . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerEmail().'\')';
-        $statement = $this->getConnection()->getDriver()->prepare($query);
-        return $statement->execute();
+        $replace = Configure::read('app.htmlHelper')->getDeletedCustomerEmail();
+        $query = $this->updateQuery();
+
+        $query
+            ->set([
+                'text' => $query->expr('REPLACE(text, :search, :replace)'),
+            ])
+            ->bind(':search', $email, 'string')
+            ->bind(':replace', $replace, 'string');
+
+        return $query->execute() !== false;
     }
 
     /**
