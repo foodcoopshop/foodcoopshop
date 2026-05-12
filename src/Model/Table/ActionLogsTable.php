@@ -522,7 +522,7 @@ class ActionLogsTable extends AppTable
         ];
     }
 
-    public function removeCustomerNameFromAllActionLogs(string $customerName): bool
+    public function removeCustomerNameFromAllActionLogs(string $customerName): void
     {
         $replace = Configure::read('app.htmlHelper')->getDeletedCustomerName();
         $query = $this->updateQuery();
@@ -534,10 +534,10 @@ class ActionLogsTable extends AppTable
             ->bind(':search', $customerName, 'string')
             ->bind(':replace', $replace, 'string');
 
-        return $query->execute() !== false;
+        $query->execute();
     }
 
-    public function removeCustomerEmailFromAllActionLogs(string $email): bool
+    public function removeCustomerEmailFromAllActionLogs(string $email): void
     {
         $replace = Configure::read('app.htmlHelper')->getDeletedCustomerEmail();
         $query = $this->updateQuery();
@@ -549,7 +549,7 @@ class ActionLogsTable extends AppTable
             ->bind(':search', $email, 'string')
             ->bind(':replace', $replace, 'string');
 
-        return $query->execute() !== false;
+        $query->execute();
     }
 
     /**
