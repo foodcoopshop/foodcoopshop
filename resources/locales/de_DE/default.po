@@ -5523,3 +5523,6 @@ msgstr "{0} {1} konnte <b>nicht</b> zugeordnet werden."
 
 msgid "{0}_{1}_was_successfully_associated."
 msgstr "{0} {1} wurde erfolgreich zugeordnet."
+
+msgid "Join signal support group"
+msgstr "Signal-Support-Gruppe beitreten"
