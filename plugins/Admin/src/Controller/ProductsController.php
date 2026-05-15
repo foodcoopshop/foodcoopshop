@@ -28,6 +28,7 @@ use Admin\Traits\Products\GetProductsForDropdownTrait;
 use Admin\Traits\Products\ImportTrait;
 use Admin\Traits\Products\IndexTrait;
 use Admin\Traits\Products\SaveUploadedImageTrait;
+use Admin\Traits\Products\StockValueTrait;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
 
@@ -72,6 +73,7 @@ class ProductsController extends AdminAppController
     use ExportTrait;
     use SaveUploadedImageTrait;
     use DuplicateTrait;
+    use StockValueTrait;
 
     public function initialize(): void
     {

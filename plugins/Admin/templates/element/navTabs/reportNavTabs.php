@@ -24,10 +24,10 @@ declare(strict_types=1);
         if ($tab['key'] == $key) {
             $btnClass = 'active';
         }
-        if ($this->Html->paymentIsCashless() || in_array($tab['key'], ['deposit', 'credit-balance-sum'])) {
+        if ($this->Html->paymentIsCashless() || in_array($tab['key'], ['deposit', 'credit-balance-sum', 'products'])) {
 
             $dateParams = '?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
-            if (in_array($tab['key'], ['profit'])) {
+            if (in_array($tab['key'], ['profit', 'products'])) {
                 $dateParams = '';
             }
             echo '<li class="' . $btnClass . '"><a href="' . $tab['url'] . $dateParams . '">' . $tab['name'] . '</a></li>';

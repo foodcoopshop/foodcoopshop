@@ -51,6 +51,12 @@ class MyNumberHelper extends NumberHelper
         return $currency;
     }
 
+    public function formatAsCurrencyWithDecimals(string|float|int $amount, int $decimals): string
+    {
+        $amount = FormatterService::assureCorrectFloat((float) $amount);
+        return self::formatAsDecimal($amount, $decimals) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL');
+    }
+
     public function formatAsPercent(string|float|int $amount, int $decimals = 2): string
     {
         return self::formatAsDecimal($amount, $decimals) . '%';
