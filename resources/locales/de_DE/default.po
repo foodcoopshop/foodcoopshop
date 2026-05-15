@@ -3457,8 +3457,14 @@ msgstr "Sollen dein Name und dein Ort angezeigt werden?"
 msgid "product"
 msgstr "Produkt"
 
-msgid "Product"
-msgstr "Produkt"
+msgid "Products with stock below minimum stock"
+msgstr "Produkte mit Lagerstand unter Mindestlagerstand"
+
+msgid "Stock <= 0"
+msgstr "Lagerstand <= 0"
+
+msgid "expiring"
+msgstr "auslaufend"
 
 msgid "Product was copied successfully."
 msgstr "Produkt erfolgreich kopiert."

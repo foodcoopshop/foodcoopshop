@@ -24,6 +24,15 @@ use stdClass;
 trait StockValueTrait
 {
 
+    private const string STOCK_FILTER_ALL = 'all';
+    private const string STOCK_FILTER_EMPTY = 'empty';
+    private const string STOCK_FILTER_RUNNING_OUT_OF_STOCK = 'running-out-of-stock';
+    private const array STOCK_FILTER_MAP = [
+        self::STOCK_FILTER_ALL => 'all',
+        self::STOCK_FILTER_EMPTY => 'Stock <= 0',
+        self::STOCK_FILTER_RUNNING_OUT_OF_STOCK => 'expiring',
+    ];
+
     public function stockValue(): void
     {
         $manufacturerId = h($this->getRequest()->getQuery('manufacturerId', 'all'));
@@ -31,6 +40,10 @@ trait StockValueTrait
             $manufacturerId = (int) $manufacturerId;
         }
         $active = h($this->getRequest()->getQuery('active', APP_ON));
+        $stockFilter = h($this->getRequest()->getQuery('stockFilter', self::STOCK_FILTER_ALL));
+        if (!array_key_exists($stockFilter, self::STOCK_FILTER_MAP)) {
+            $stockFilter = self::STOCK_FILTER_ALL;
+        }
 
         $productsForBackendService = new ProductsForBackendService();
         $query = $productsForBackendService->getQuery(
@@ -77,6 +90,11 @@ trait StockValueTrait
                 continue;
             }
 
+            if (!$this->productMatchesStockFilter($product, $stockFilter)) {
+                unset($products[$index]);
+                continue;
+            }
+
             $products[$index]->price = $productStockValueService->getPrice($product);
             $products[$index]->stock_value = $productStockValueService->getStockValue($product);
             $productIdParts = explode('-', (string) $product->id_product);
@@ -95,11 +113,14 @@ trait StockValueTrait
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = ['all' => __('All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
+        $stockFiltersForDropdown = $this->getStockFiltersForDropdown();
 
         $this->set('products', $products);
         $this->set('manufacturerId', $manufacturerId);
         $this->set('active', $active);
+        $this->set('stockFilter', $stockFilter);
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
+        $this->set('stockFiltersForDropdown', $stockFiltersForDropdown);
         $this->set('stockValueSum', $stockValueSum);
         $this->set('priceLabel', Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Purchase_price') . ' ' . __('net') : __('Price'));
         $this->set('title_for_layout', __('Stock_value'));
@@ -116,6 +137,29 @@ trait StockValueTrait
             return '';
         }
         return $attributeUnity;
+    }
+
+    private function productMatchesStockFilter(stdClass $product, string $stockFilter): bool
+    {
+        if ($stockFilter == self::STOCK_FILTER_EMPTY) {
+            return $product->stock_available->quantity <= 0;
+        }
+        if ($stockFilter == self::STOCK_FILTER_RUNNING_OUT_OF_STOCK) {
+            return $product->stock_available->quantity > 0 && $product->stock_available->sold_out_limit > 0 && $product->stock_available->quantity < $product->stock_available->sold_out_limit;
+        }
+        return true;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getStockFiltersForDropdown(): array
+    {
+        $stockFiltersForDropdown = [];
+        foreach (self::STOCK_FILTER_MAP as $stockFilter => $label) {
+            $stockFiltersForDropdown[$stockFilter] = __('Products') . ': ' . __($label);
+        }
+        return $stockFiltersForDropdown;
     }
 
 }

@@ -40,10 +40,13 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseContains('14.985,00 €');
         $this->assertResponseContains('<select name="manufacturerId" id="manufacturerid">');
         $this->assertResponseContains('<select name="active" id="active">');
+        $this->assertResponseContains('<select name="stockFilter" id="stockfilter">');
         $this->assertResponseContains('Produkte: alle');
+        $this->assertResponseContains('Produkte: Lagerstand &lt;= 0');
+        $this->assertResponseContains('Produkte: auslaufend');
         $this->assertResponseContains('<option value="5">Demo Gemüse-Hersteller</option>');
         $this->assertResponseContains('<option value="15">Demo Milch-Hersteller</option>');
-        $this->assertResponseContains('<a href="/admin/products/stock-value?manufacturerId=5&amp;active=1">Demo Gemüse-Hersteller</a>');
+        $this->assertResponseContains('<a href="/admin/products/stock-value?manufacturerId=5&amp;active=1&amp;stockFilter=all">Demo Gemüse-Hersteller</a>');
     }
 
     public function testStockValueManufacturerFilter(): void
@@ -64,6 +67,71 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('Produkte: aktiviert');
         $this->assertResponseContains('Lagerprodukt 2');
+    }
+
+    public function testStockValueEmptyStockFilter(): void
+    {
+        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $stockAvailablesTable->updateAll([
+            'quantity' => -1,
+        ], [
+            'id_product' => 351,
+            'id_product_attribute' => 0,
+        ]);
+
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getReportStockValue() . '?stockFilter=empty');
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('<option value="empty" selected="selected">Produkte: Lagerstand &lt;= 0</option>');
+        $this->assertResponseContains('Lagerprodukt 2');
+        $this->assertResponseContains('<td class="negative-stock" style="text-align:right;">');
+        $this->assertResponseNotContains('Lagerprodukt mit Varianten');
+    }
+
+    public function testStockValueNegativeStockIsDarkRed(): void
+    {
+        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $stockAvailablesTable->updateAll([
+            'quantity' => -1,
+        ], [
+            'id_product' => 351,
+            'id_product_attribute' => 0,
+        ]);
+
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getReportStockValue());
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Lagerprodukt 2');
+        $this->assertResponseContains('<td class="negative-stock" style="text-align:right;">');
+    }
+
+    public function testStockValueRunningOutOfStockFilter(): void
+    {
+        $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
+        $stockAvailablesTable->updateAll([
+            'quantity' => 0,
+            'sold_out_limit' => 1000,
+        ], [
+            'id_product' => 351,
+            'id_product_attribute' => 0,
+        ]);
+        $stockAvailablesTable->updateAll([
+            'sold_out_limit' => 6,
+        ], [
+            'id_product' => 350,
+            'id_product_attribute' => 13,
+        ]);
+
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getReportStockValue() . '?stockFilter=running-out-of-stock');
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('<option value="running-out-of-stock" selected="selected">Produkte: auslaufend</option>');
+        $this->assertResponseNotContains('Lagerprodukt 2');
+        $this->assertResponseContains('Lagerprodukt mit Varianten');
+        $this->assertResponseContains('<td class="below-minimum-amount" style="text-align:right;">');
     }
 
     public function testStockValueInactiveProductsAreDeactivated(): void

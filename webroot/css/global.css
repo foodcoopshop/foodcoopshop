@@ -20,6 +20,7 @@
     --dark-mode-main-border-color: #696969;
     --not-ok-red: #dc143c;
     --warning-yellow: #FDB813;
+    --warning-red: #a40000;
 }
 
 @media print {

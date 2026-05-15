@@ -48,6 +48,12 @@ $activeStates = array_map(
             'options' => $activeStates,
             'default' => $active,
         ]);
+        echo $this->Form->control('stockFilter', [
+            'type' => 'select',
+            'label' => '',
+            'options' => $stockFiltersForDropdown,
+            'default' => $stockFilter,
+        ]);
         ?>
         <div class="right">
             <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_products'))]); ?>
@@ -92,12 +98,23 @@ foreach ($products as $product) {
                 $this->Slug->getReportStockValue() . '?' . http_build_query([
                     'manufacturerId' => $product->id_manufacturer_for_edit,
                     'active' => $active,
+                    'stockFilter' => $stockFilter,
                 ]),
             );
         echo '</td>';
         $unitName = !empty($product->unit) ? $product->unit->name : '';
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit);
-        echo '<td style="text-align:right;">' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName) . '</td>';
+        $amountClasses = [];
+        if ($product->stock_available->quantity < 0) {
+            $amountClasses[] = 'negative-stock';
+        }
+        if ($product->stock_available->quantity == 0) {
+            $amountClasses[] = 'not-available';
+        }
+        if ($product->stock_available->quantity > 0 && $product->stock_available->sold_out_limit > 0 && $product->stock_available->quantity < $product->stock_available->sold_out_limit) {
+            $amountClasses[] = 'below-minimum-amount';
+        }
+        echo '<td class="' . join(' ', $amountClasses) . '" style="text-align:right;">' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName) . '</td>';
         echo '<td style="text-align:right;">' . $this->Number->formatAsDecimal($product->price, 6, true, 2) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</td>';
         echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($product->stock_value) . '</td>';
     echo '</tr>';
