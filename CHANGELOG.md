@@ -8,8 +8,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## unreleased
 
-- Neuer Finanzbericht "Lagerwert" für Superadmins: Der aktuelle Lagerwert von Lagerprodukten wird mit Hersteller- und Produktstatus-Filter angezeigt. [I#1238](https://github.com/foodcoopshop/foodcoopshop/issues/1238) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [PR#1250](https://github.com/foodcoopshop/foodcoopshop/pull/1250) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Eigenes CSS kann jetzt direkt in den Einstellungen bearbeitet werden. [I#1248](https://github.com/foodcoopshop/foodcoopshop/issues/1248) / [PR#1249](https://github.com/foodcoopshop/foodcoopshop/pull/1249) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Neuer Finanzbericht "Lagerwert" für Superadmins: Der aktuelle Lagerwert von Lagerprodukten wird mit Hersteller- und Produktstatus-Filter angezeigt. [I#1238](https://github.com/foodcoopshop/foodcoopshop/issues/1238) <a href="https://github.com/Koope04177"><img src="https://github.com/Koope04177.png" width="20"></a> / [PR#1250](https://github.com/foodcoopshop/foodcoopshop/pull/1250) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Eigenes CSS kann jetzt direkt in den Einstellungen bearbeitet werden. [I#1248](https://github.com/foodcoopshop/foodcoopshop/issues/1248) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [PR#1249](https://github.com/foodcoopshop/foodcoopshop/pull/1249) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v4.2
