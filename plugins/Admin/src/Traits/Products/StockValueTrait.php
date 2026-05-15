@@ -30,13 +30,13 @@ trait StockValueTrait
         if ($manufacturerId != 'all') {
             $manufacturerId = (int) $manufacturerId;
         }
-        $active = h($this->getRequest()->getQuery('active', 'all'));
+        $active = h($this->getRequest()->getQuery('active', APP_ON));
 
         $productsForBackendService = new ProductsForBackendService();
         $query = $productsForBackendService->getQuery(
             productIds: '',
             manufacturerId: $manufacturerId,
-            active: $active,
+            active: (string) $active,
         );
         $query->where([
             'Products.is_stock_product' => APP_ON,
@@ -101,7 +101,7 @@ trait StockValueTrait
         $this->set('active', $active);
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->set('stockValueSum', $stockValueSum);
-        $this->set('priceLabel', Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross'));
+        $this->set('priceLabel', Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Purchase_price') . ' ' . __('net') : __('Price'));
         $this->set('title_for_layout', __('Stock_value'));
     }
 

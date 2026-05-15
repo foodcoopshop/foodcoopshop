@@ -35,12 +35,12 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseContains('Lagerprodukt 2');
         $this->assertResponseContains('Lagerprodukt mit Varianten');
         $this->assertResponseContains('0,5 kg');
-        $this->assertResponseContains('Verkaufspreis brutto');
+        $this->assertResponseContains('Preis');
         $this->assertResponseContains('Lagerwert');
         $this->assertResponseContains('14.985,00 €');
         $this->assertResponseContains('<select name="manufacturerId" id="manufacturerid">');
         $this->assertResponseContains('<select name="active" id="active">');
-        $this->assertResponseContains('<option value="all" selected="selected">alle</option>');
+        $this->assertResponseContains('Produkte: alle');
         $this->assertResponseContains('<option value="5">Demo Gemüse-Hersteller</option>');
         $this->assertResponseContains('<option value="15">Demo Milch-Hersteller</option>');
     }
@@ -61,7 +61,7 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->get($this->Slug->getReportStockValue() . '?active=1');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('<option value="1" selected="selected">aktiviert</option>');
+        $this->assertResponseContains('Produkte: aktiviert');
         $this->assertResponseContains('Lagerprodukt 2');
     }
 

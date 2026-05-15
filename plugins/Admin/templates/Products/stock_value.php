@@ -26,6 +26,10 @@ $this->element('addScript', [
 
 <?php
 $productQuantityService = new ProductQuantityService();
+$activeStates = array_map(
+    fn(string $activeState): string => __('Products') . ': ' . $activeState,
+    $this->MyHtml->getActiveStates(),
+);
 ?>
 
 <div class="filter-container">
@@ -41,7 +45,7 @@ $productQuantityService = new ProductQuantityService();
         echo $this->Form->control('active', [
             'type' => 'select',
             'label' => '',
-            'options' => $this->MyHtml->getActiveStates(),
+            'options' => $activeStates,
             'default' => $active,
         ]);
         ?>
