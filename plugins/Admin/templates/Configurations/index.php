@@ -100,6 +100,7 @@ $this->element('addScript', [
 
                 echo match($configuration->type) {
                     'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
+                    'textarea_css' => $configuration->value != '' ? __('Custom_CSS_is_available.') : __('No_custom_CSS_available.'),
                     'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __('yes') : __('no'),

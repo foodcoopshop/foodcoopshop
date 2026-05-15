@@ -49,6 +49,7 @@ use Cake\Utility\Inflector;
         $renderConfigs[] = $this->plugin.'.all';
     }
     echo $this->element('renderCss', ['configs' => $renderConfigs]);
+    echo $this->element('customCss');
     echo $this->element('layout/customHeader');
     ?>
 

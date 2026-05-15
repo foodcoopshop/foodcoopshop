@@ -12,6 +12,7 @@ use Cake\Utility\Inflector;
 use App\Services\SanitizeService;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
+use App\Services\CssConfigurationService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -68,7 +69,7 @@ class ConfigurationsController extends AdminAppController
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
-        if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
+        if (!in_array($configuration->type, ['textarea', 'textarea_big', 'textarea_css'])) {
             $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
         if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
@@ -98,6 +99,9 @@ class ConfigurationsController extends AdminAppController
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('configuration', $configuration);
         } else {
+            if ($configuration->type == 'textarea_css') {
+                $configuration->value = (new CssConfigurationService())->format($configuration->value);
+            }
             $configuration = $configurationsTable->save($configuration);
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__('The_setting_has_been_changed_successfully.'));
