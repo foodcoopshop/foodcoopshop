@@ -15,9 +15,9 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
 use App\Model\Entity\Configuration;
+use App\Services\DeliveryRhythmService;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
@@ -100,6 +100,7 @@ $this->element('addScript', [
 
                 echo match($configuration->type) {
                     'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
+                    'textarea_css' => !empty(trim($configuration->value)) ? __('Custom CSS is available.') : __('No custom CSS available.'),
                     'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __('yes') : __('no'),

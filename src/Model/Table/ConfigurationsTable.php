@@ -53,7 +53,7 @@ class ConfigurationsTable extends AppTable
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         $request = Router::getRequest();
-        $configurationName = $request->getParam('pass')[0];
+        $configurationName = $request?->getParam('pass')[0] ?? '';
         if (in_array($configurationName , ['FCS_REGISTRATION_NOTIFICATION_EMAILS'])) {
             $data['value'] = StringComponent::removeWhitespace($data['value']);
         }

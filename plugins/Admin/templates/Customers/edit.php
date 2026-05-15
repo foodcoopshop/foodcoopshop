@@ -189,6 +189,11 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     ]);
 }
 
+if ($customer->isAdmin() || $customer->isSuperadmin()) {
+    echo '<div class="sc"></div>';
+    echo '<a target="_blank" style="margin-bottom: 10px;" class="btn btn-outline-light" href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN"><i class="fa-brands fa-signal-messenger"></i> ' . __('Join signal support group') . '</a>';
+}
+
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     && (
         !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $identity->isSuperadmin())

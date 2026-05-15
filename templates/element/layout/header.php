@@ -63,7 +63,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
             echo $this->Html->css(['customer-can-select-pickup-day']);
         }
         echo $this->element('customCssVars');
-        echo $this->Html->css(['custom']);
+        echo $this->element('customCss');
         echo $this->element('layout/customHeader');
     ?>
 

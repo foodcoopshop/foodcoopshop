@@ -1071,6 +1071,9 @@ msgstr "Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen."
 msgid "Configuration_subtext_FCS_HOME_TEXT"
 msgstr "Optional."
 
+msgid "Configuration_subtext_FCS_CUSTOM_CSS"
+msgstr "CSS für Frontend und Admin-Bereich. Optional."
+
 msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
 msgstr "Max. 6 Zeichen inkl. Trennzeichen."
 
@@ -1160,6 +1163,15 @@ msgstr "Bankverbindung für die Guthaben-Einzahlungen"
 
 msgid "Configuration_text_FCS_CASHLESS_PAYMENT_ADD_TYPE"
 msgstr "Art der Eintragung der Guthaben-Aufladungen"
+
+msgid "Configuration_text_FCS_CUSTOM_CSS"
+msgstr "Eigenes CSS"
+
+msgid "Custom CSS is available."
+msgstr "Eigenes CSS ist vorhanden."
+
+msgid "No custom CSS available."
+msgstr "Kein eigenes CSS vorhanden."
 
 msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
 msgstr "Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?"
@@ -5530,3 +5542,6 @@ msgstr "{0} {1} konnte <b>nicht</b> zugeordnet werden."
 
 msgid "{0}_{1}_was_successfully_associated."
 msgstr "{0} {1} wurde erfolgreich zugeordnet."
+
+msgid "Join signal support group"
+msgstr "Signal-Support-Gruppe beitreten"
