@@ -9,5 +9,7 @@
 - Verify against PHPStan rules (call `composer phpstan`)
 - Use trailing commas in arrays, function calls and function definitions where applicable
 - Ensure tests pass (call `composer test`)
-- Write unit tests for new functionality
+- Write unit tests for new features
 - If CSS or JS files are modified, there is no need to call `asset_compress build` as this is done automatically on deployment
+- New translation keys (msgid) should not be separated with an underscore, use natural language with spaces instead. Skip translations for other languages than German.
+- Translation keys starting with "Configuration_" can hold underscores, as they are used in the code as configuration keys. Also translate these keys for all languages.

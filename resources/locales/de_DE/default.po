@@ -1165,10 +1165,10 @@ msgstr "Art der Eintragung der Guthaben-Aufladungen"
 msgid "Configuration_text_FCS_CUSTOM_CSS"
 msgstr "Eigenes CSS"
 
-msgid "Custom_CSS_is_available."
+msgid "Custom CSS is available."
 msgstr "Eigenes CSS ist vorhanden."
 
-msgid "No_custom_CSS_available."
+msgid "No custom CSS available."
 msgstr "Kein eigenes CSS vorhanden."
 
 msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
@@ -3258,9 +3258,6 @@ msgstr "Bitte gibt eine gültige Internet-Adresse an."
 
 msgid "Please_enter_a_valid_time."
 msgstr "Bitte gib eine gültige Uhrzeit ein."
-
-msgid "Please enter valid css."
-msgstr "Bitte gib gültiges CSS ein."
 
 msgid "Please_enter_an_email_address."
 msgstr "Bitte gib eine E-Mail-Adresse an."
