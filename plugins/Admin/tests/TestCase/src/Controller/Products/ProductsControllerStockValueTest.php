@@ -43,6 +43,7 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseContains('Produkte: alle');
         $this->assertResponseContains('<option value="5">Demo Gemüse-Hersteller</option>');
         $this->assertResponseContains('<option value="15">Demo Milch-Hersteller</option>');
+        $this->assertResponseContains('<a href="/admin/products/stock-value?manufacturerId=5&amp;active=1">Demo Gemüse-Hersteller</a>');
     }
 
     public function testStockValueManufacturerFilter(): void

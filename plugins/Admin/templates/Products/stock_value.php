@@ -86,11 +86,19 @@ foreach ($products as $product) {
             );
             echo '<span class="product-name">' . $product->name . '</span>';
         echo '</td>';
-        echo '<td>' . h($product->manufacturer->name) . '</td>';
+        echo '<td>';
+            echo $this->Html->link(
+                $product->manufacturer->name,
+                $this->Slug->getReportStockValue() . '?' . http_build_query([
+                    'manufacturerId' => $product->id_manufacturer_for_edit,
+                    'active' => $active,
+                ]),
+            );
+        echo '</td>';
         $unitName = !empty($product->unit) ? $product->unit->name : '';
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit);
         echo '<td style="text-align:right;">' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName) . '</td>';
-        echo '<td style="text-align:right;">' . $this->Number->formatAsCurrencyWithDecimals($product->price, 6) . '</td>';
+        echo '<td style="text-align:right;">' . $this->Number->formatAsDecimal($product->price, 6, true, 2) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</td>';
         echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($product->stock_value) . '</td>';
     echo '</tr>';
 }
