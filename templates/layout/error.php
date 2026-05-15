@@ -39,8 +39,8 @@ use Cake\Core\Configure;
             'fonts',
             'frontend',
             'error',
-            'custom',
         ]);
+        echo $this->element('customCss');
         if (isset($isMobile) && $isMobile) {
             echo $this->Html->css(['mobile-error']);
         }

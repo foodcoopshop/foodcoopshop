@@ -8,6 +8,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## unreleased
 
+- Eigenes CSS kann jetzt direkt in den Einstellungen bearbeitet werden. [I#1248](https://github.com/foodcoopshop/foodcoopshop/issues/1248) / [PR#1249](https://github.com/foodcoopshop/foodcoopshop/pull/1249) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v4.2
 
 ### Neue Funktionen / Verbesserungen

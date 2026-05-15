@@ -1044,3 +1044,11 @@ body.products .product-import-wrapper > * {
     margin-top: 25px;
     font-weight: bold;
 }
+body.configurations.edit form.fcs-form .input.textarea:has(.textarea-css) {
+    display: block;
+    width: 100%;
+}
+body.configurations.edit form.fcs-form .textarea-css {
+    width: 100%;
+    height: 500px;
+}

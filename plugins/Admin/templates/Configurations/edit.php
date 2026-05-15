@@ -74,6 +74,14 @@ switch ($configuration->type) {
             'escape' => false
         ]);
         break;
+    case 'textarea_css':
+        echo $this->Form->control('Configurations.value', [
+            'type' => 'textarea',
+            'label' => $label,
+            'escape' => false,
+            'class' => 'textarea-css',
+        ]);
+        break;
     case 'textarea_big':
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Editor.initBig('configurations-value');"
