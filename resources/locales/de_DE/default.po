@@ -3457,6 +3457,9 @@ msgstr "Sollen dein Name und dein Ort angezeigt werden?"
 msgid "product"
 msgstr "Produkt"
 
+msgid "Product"
+msgstr "Produkt"
+
 msgid "Products with stock below minimum stock"
 msgstr "Produkte mit Lagerstand unter Mindestlagerstand"
 
