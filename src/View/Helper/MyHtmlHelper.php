@@ -650,11 +650,6 @@ class MyHtmlHelper extends HtmlHelper
                 'key' => 'deposit_overview',
             ];
         }
-        $tabs[] = [
-            'name' => __('Stock_value'),
-            'url' => Configure::read('app.slugHelper')->getReportStockValue(),
-            'key' => 'products',
-        ];
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             $tabs[] = [
                 'name' => __('Journal'),

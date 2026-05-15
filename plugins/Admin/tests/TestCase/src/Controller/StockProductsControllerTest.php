@@ -17,10 +17,10 @@ declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 
-class ProductsControllerStockValueTest extends AppCakeTestCase
+class StockProductsControllerTest extends AppCakeTestCase
 {
 
-    public function testStockValue(): void
+    public function testIndex(): void
     {
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntity = $unitsTable->get(8);
@@ -28,10 +28,10 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $unitsTable->save($unitEntity);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue());
+        $this->get($this->Slug->getStockProducts());
 
         $this->assertResponseOk();
-        $this->assertResponseContains('<li class="active"><a href="/admin/products/stock-value">Lagerwert</a></li>');
+        $this->assertResponseContains('Lagerprodukte');
         $this->assertResponseContains('Lagerprodukt 2');
         $this->assertResponseContains('Lagerprodukt mit Varianten');
         $this->assertResponseContains('0,5 kg');
@@ -46,30 +46,54 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseContains('Produkte: auslaufend');
         $this->assertResponseContains('<option value="5">Demo Gemüse-Hersteller</option>');
         $this->assertResponseContains('<option value="15">Demo Milch-Hersteller</option>');
-        $this->assertResponseContains('<a href="/admin/products/stock-value?manufacturerId=5&amp;active=1&amp;stockFilter=all">Demo Gemüse-Hersteller</a>');
+        $this->assertResponseContains('<a href="/admin/stock-products?manufacturerId=5&amp;active=1&amp;stockFilter=all">Demo Gemüse-Hersteller</a>');
     }
 
-    public function testStockValueManufacturerFilter(): void
+    public function testIndexAsAdmin(): void
+    {
+        $this->loginAsAdmin();
+        $this->get($this->Slug->getStockProducts());
+
+        $this->assertResponseOk();
+    }
+
+    public function testIndexAsManufacturerWithEnabledStockManagementIsDenied(): void
+    {
+        $this->loginAsVegetableManufacturer();
+        $this->get($this->Slug->getStockProducts() . '?manufacturerId=15');
+
+        $this->assertRedirectToLoginPage();
+    }
+
+    public function testIndexAsManufacturerWithDisabledStockManagement(): void
+    {
+        $this->loginAsMeatManufacturer();
+        $this->get($this->Slug->getStockProducts());
+
+        $this->assertRedirectToLoginPage();
+    }
+
+    public function testManufacturerFilter(): void
     {
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue() . '?manufacturerId=5');
+        $this->get($this->Slug->getStockProducts() . '?manufacturerId=5');
 
         $this->assertResponseOk();
         $this->assertResponseContains('<option value="5" selected="selected">Demo Gemüse-Hersteller</option>');
         $this->assertResponseContains('Lagerprodukt 2');
     }
 
-    public function testStockValueActiveFilter(): void
+    public function testActiveFilter(): void
     {
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue() . '?active=1');
+        $this->get($this->Slug->getStockProducts() . '?active=1');
 
         $this->assertResponseOk();
         $this->assertResponseContains('Produkte: aktiviert');
         $this->assertResponseContains('Lagerprodukt 2');
     }
 
-    public function testStockValueEmptyStockFilter(): void
+    public function testEmptyStockFilter(): void
     {
         $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->updateAll([
@@ -80,7 +104,7 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         ]);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue() . '?stockFilter=empty');
+        $this->get($this->Slug->getStockProducts() . '?stockFilter=empty');
 
         $this->assertResponseOk();
         $this->assertResponseContains('<option value="empty" selected="selected">Produkte: Lagerstand &lt;= 0</option>');
@@ -89,7 +113,7 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseNotContains('Lagerprodukt mit Varianten');
     }
 
-    public function testStockValueNegativeStockIsDarkRed(): void
+    public function testNegativeStockIsDarkRed(): void
     {
         $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->updateAll([
@@ -100,14 +124,14 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         ]);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue());
+        $this->get($this->Slug->getStockProducts());
 
         $this->assertResponseOk();
         $this->assertResponseContains('Lagerprodukt 2');
         $this->assertResponseContains('<td class="negative-stock" style="text-align:right;">');
     }
 
-    public function testStockValueRunningOutOfStockFilter(): void
+    public function testRunningOutOfStockFilter(): void
     {
         $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->updateAll([
@@ -125,7 +149,7 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         ]);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue() . '?stockFilter=running-out-of-stock');
+        $this->get($this->Slug->getStockProducts() . '?stockFilter=running-out-of-stock');
 
         $this->assertResponseOk();
         $this->assertResponseContains('<option value="running-out-of-stock" selected="selected">Produkte: auslaufend</option>');
@@ -134,7 +158,7 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         $this->assertResponseContains('<td class="below-minimum-amount" style="text-align:right;">');
     }
 
-    public function testStockValueInactiveProductsAreDeactivated(): void
+    public function testInactiveProductsAreDeactivated(): void
     {
         $productsTable = $this->getTableLocator()->get('Products');
         $productsTable->updateAll([
@@ -144,19 +168,19 @@ class ProductsControllerStockValueTest extends AppCakeTestCase
         ]);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue() . '?active=0');
+        $this->get($this->Slug->getStockProducts() . '?active=0');
 
         $this->assertResponseOk();
         $this->assertResponseContains('<tr class="data deactivated">');
         $this->assertResponseNotContains('sub-row');
     }
 
-    public function testStockValueWithPurchasePrices(): void
+    public function testWithPurchasePrices(): void
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getReportStockValue());
+        $this->get($this->Slug->getStockProducts());
 
         $this->assertResponseOk();
         $this->assertResponseContains('Einkaufspreis netto');

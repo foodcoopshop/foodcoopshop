@@ -34,8 +34,6 @@ class ProductsPolicy implements RequestPolicyInterface
         }
 
         switch ($request->getParam('action')) {
-            case 'stockValue':
-                return $identity->isSuperadmin();
             case 'myImport':
                 return $identity->isManufacturer();
             case 'generateProductCards':

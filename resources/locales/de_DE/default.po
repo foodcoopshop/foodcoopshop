@@ -4114,6 +4114,9 @@ msgstr "Lagerprodukte in Bestelllisten"
 msgid "Stock_value"
 msgstr "Lagerwert"
 
+msgid "Stock products"
+msgstr "Lagerprodukte"
+
 msgid "Storage locations"
 msgstr "Lagerorte"
 

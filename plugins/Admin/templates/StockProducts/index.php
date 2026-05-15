@@ -20,7 +20,7 @@ use App\Services\ProductQuantityService;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Website_administration')."', '".__('Financial_reports')."');"
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Manufacturers_admin')."', '".__('Stock products')."');"
 ]);
 ?>
 
@@ -36,12 +36,14 @@ $activeStates = array_map(
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php
-        echo $this->Form->control('manufacturerId', [
-            'type' => 'select',
-            'label' => '',
-            'options' => $manufacturersForDropdown,
-            'default' => $manufacturerId,
-        ]);
+        if (!$identity->isManufacturer()) {
+            echo $this->Form->control('manufacturerId', [
+                'type' => 'select',
+                'label' => '',
+                'options' => $manufacturersForDropdown,
+                'default' => $manufacturerId,
+            ]);
+        }
         echo $this->Form->control('active', [
             'type' => 'select',
             'label' => '',
@@ -62,12 +64,6 @@ $activeStates = array_map(
 </div>
 
 <?php
-
-echo $this->element('navTabs/reportNavTabs', [
-    'key' => 'products',
-    'dateFrom' => '',
-    'dateTo' => '',
-]);
 
 echo '<table class="list">';
 echo '<tr class="sort">';
@@ -93,14 +89,18 @@ foreach ($products as $product) {
             echo '<span class="product-name">' . $product->name . '</span>';
         echo '</td>';
         echo '<td>';
-            echo $this->Html->link(
-                $product->manufacturer->name,
-                $this->Slug->getReportStockValue() . '?' . http_build_query([
-                    'manufacturerId' => $product->id_manufacturer_for_edit,
-                    'active' => $active,
-                    'stockFilter' => $stockFilter,
-                ]),
-            );
+            if ($identity->isManufacturer()) {
+                echo h($product->manufacturer->name);
+            } else {
+                echo $this->Html->link(
+                    $product->manufacturer->name,
+                    $this->Slug->getStockProducts() . '?' . http_build_query([
+                        'manufacturerId' => $product->id_manufacturer_for_edit,
+                        'active' => $active,
+                        'stockFilter' => $stockFilter,
+                    ]),
+                );
+            }
         echo '</td>';
         $unitName = !empty($product->unit) ? $product->unit->name : '';
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit);

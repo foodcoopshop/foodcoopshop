@@ -103,6 +103,13 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
             'fa-icon' => 'fa-fw ok fa-tags'
         ]
     ];
+    $manufacturerMenu['children'][] = [
+        'slug' => $this->Slug->getStockProducts(),
+        'name' => __('Stock products'),
+        'options' => [
+            'fa-icon' => 'fa-fw ok fa-boxes-stacked'
+        ]
+    ];
 
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = [

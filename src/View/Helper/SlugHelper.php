@@ -374,9 +374,9 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getReportStockValue(): string
+    public function getStockProducts(): string
     {
-        return '/admin/products/stock-value';
+        return '/admin/stock-products';
     }
 
     public function getInvoices(): string

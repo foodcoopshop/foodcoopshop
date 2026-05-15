@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Admin\Traits\Products;
+namespace Admin\Traits\StockProducts;
 
 use App\Services\ProductsForBackendService;
 use App\Services\ProductStockValueService;
@@ -21,7 +21,7 @@ use stdClass;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-trait StockValueTrait
+trait IndexTrait
 {
 
     private const string STOCK_FILTER_ALL = 'all';
@@ -33,11 +33,14 @@ trait StockValueTrait
         self::STOCK_FILTER_RUNNING_OUT_OF_STOCK => 'expiring',
     ];
 
-    public function stockValue(): void
+    public function index(): void
     {
         $manufacturerId = h($this->getRequest()->getQuery('manufacturerId', 'all'));
         if ($manufacturerId != 'all') {
             $manufacturerId = (int) $manufacturerId;
+        }
+        if ($this->identity->isManufacturer()) {
+            $manufacturerId = $this->identity->getManufacturerId();
         }
         $active = h($this->getRequest()->getQuery('active', APP_ON));
         $stockFilter = h($this->getRequest()->getQuery('stockFilter', self::STOCK_FILTER_ALL));
@@ -123,7 +126,7 @@ trait StockValueTrait
         $this->set('stockFiltersForDropdown', $stockFiltersForDropdown);
         $this->set('stockValueSum', $stockValueSum);
         $this->set('priceLabel', Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __('Purchase_price') . ' ' . __('net') : __('Price'));
-        $this->set('title_for_layout', __('Stock_value'));
+        $this->set('title_for_layout', __('Stock products'));
     }
 
     private function getAttributeUnity(stdClass $product): string
