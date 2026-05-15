@@ -15,7 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Log\Log;
 use Cake\Core\Configure;
 use App\Model\Entity\Configuration;
 use App\Services\DeliveryRhythmService;
@@ -98,10 +97,6 @@ $this->element('addScript', [
                 echo '</td>';
 
                 echo '<td>';
-
-                if ($configuration->type == 'textarea_css') {
-                    Log::error($configuration->value);
-                }
 
                 echo match($configuration->type) {
                     'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
