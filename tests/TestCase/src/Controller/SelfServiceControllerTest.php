@@ -426,6 +426,111 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
     }
 
+    /**
+     * Tests that scanning the same product twice in rapid succession
+     * (simulated by two consecutive GET requests with the same barcode)
+     * adds the product to the cart twice – i.e. both scans are processed
+     * sequentially and neither is silently dropped.
+     *
+     * This is the server-side counterpart to the JS scan-queue: the
+     * controller itself is stateless and processes every request it
+     * receives, so each queued scan must result in exactly one cart entry.
+     */
+    public function testRapidScanAddsProductTwice(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $barcode = BarcodesFixture::BARCODE_PRODUCT_A['barcode'];
+
+        // First scan
+        $this->get($this->Slug->getSelfService($barcode));
+        $this->assertRedirect($this->Slug->getSelfService());
+
+        // Second scan (rapid – simulated as an immediate second request)
+        $this->get($this->Slug->getSelfService($barcode));
+        $this->assertRedirect($this->Slug->getSelfService());
+
+        // Both scans must have landed in the cart
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
+            conditions: [
+                'Carts.id_customer' => Configure::read('test.superadminId'),
+            ],
+            contain: [
+                'CartProducts',
+            ],
+            order: [
+                'Carts.id_cart' => 'DESC',
+            ],
+        )->first();
+
+        // The cart product for this barcode should have quantity 2
+        $this->assertNotEmpty($cart->cart_products);
+
+        $totalQuantity = array_sum(array_map(
+            fn($cp) => $cp->amount,
+            $cart->cart_products
+        ));
+
+        $this->assertEquals(
+            2,
+            $totalQuantity,
+            'Both rapid scans should have been added to the cart (quantity = 2).'
+        );
+    }
+
+    /**
+     * Tests that a scan arriving while the previous redirect is still
+     * "in flight" is not lost: the JS queue holds it and the server
+     * processes it as a separate, subsequent request.
+     *
+     * On the server side this means: two independent GET requests for the
+     * same keyword must each succeed and produce a separate cart entry.
+     * The locking/serialisation is purely a JS concern; the controller
+     * must handle both requests correctly when they do arrive.
+     */
+    public function testQueuedScanIsNotDroppedAfterError(): void
+    {
+        $this->loginAsSuperadmin();
+
+        // First scan: product that triggers an error (missing weight)
+        $barcodeWithMissingWeight = 'b5320000';
+        $this->get($this->Slug->getSelfService($barcodeWithMissingWeight));
+        // Controller redirects to self-service with productWithError param
+        $this->assertFlashMessageAt(0, 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.');
+
+        // Second scan: a valid product – must still be processed even
+        // though the first scan ended with an error
+        $validBarcode = BarcodesFixture::BARCODE_PRODUCT_A['barcode'];
+        $this->get($this->Slug->getSelfService($validBarcode));
+        $this->assertRegExpWithUnquotedString(
+            'Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.',
+            $_SESSION['Flash']['flash'][0]['message']
+        );
+        $this->assertRedirect($this->Slug->getSelfService());
+
+        // The valid product must be in the cart
+        $cartsTable = $this->getTableLocator()->get('Carts');
+        $cart = $cartsTable->find('all',
+            conditions: [
+                'Carts.id_customer' => Configure::read('test.superadminId'),
+            ],
+            contain: [
+                'CartProducts',
+            ],
+            order: [
+                'Carts.id_cart' => 'DESC',
+            ],
+        )->first();
+
+        $this->assertNotEmpty($cart->cart_products);
+        $this->assertEquals(
+            1,
+            count($cart->cart_products),
+            'The scan queued after an error must still be processed.'
+        );
+    }
+
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomerWithAutoGenerateInvoiceDisabled(): void
     {
 
