@@ -23,6 +23,7 @@ foodcoopshop.SelfService = {
         this.initSearchForm();
         this.bindQuantityInUnitsInputFields();
         this.initDepositPayment();
+        this.initGlobalBarcodeScannerListener();
     },
 
     injectLoginButtons : function(buttonHtml) {
@@ -147,12 +148,10 @@ foodcoopshop.SelfService = {
         searchForms.each(function() {
 
             var searchForm = $(this);
-            var formIsSubmitted = false;
             searchForm.on('submit', function(e) {
-                if (formIsSubmitted) {
-                    return false;
-                }
-                formIsSubmitted = true;
+                e.preventDefault();
+                foodcoopshop.SelfService.ajaxScan();
+                return false;
             });
 
             if (!foodcoopshop.Helper.isMobile()) {
@@ -178,6 +177,144 @@ foodcoopshop.SelfService = {
         foodcoopshop.Helper.addSpinnerToButton(submitButton, icon);
         foodcoopshop.Helper.disableButton(submitButton);
         searchForm.submit();
+    },
+
+    ajaxScan: function() {
+        var searchForm = $('form#product-search-1');
+        var searchInput = searchForm.find('input[name="keyword"]');
+        var keyword = searchInput.val();
+        
+        var requestUrl = searchForm.attr('action');
+        if (!requestUrl) {
+            requestUrl = '/' + __('route_self_service');
+        }
+        requestUrl += '?' + searchForm.serialize();
+        
+        if (keyword != '') {
+            searchInput.val('');
+        }
+
+        foodcoopshop.Cart.queue.push(function() {
+            foodcoopshop.Helper.removeFlashMessage();
+            var submitButton = searchForm.find('.btn[type="submit"]');
+            foodcoopshop.Helper.addSpinnerToButton(submitButton, 'fa-search');
+            foodcoopshop.Helper.disableButton(submitButton);
+            
+            $.ajax({
+                url: requestUrl,
+                type: 'GET',
+                success: function(response) {
+                    try {
+                        foodcoopshop.Helper.removeSpinnerFromButton(submitButton, 'fa-search');
+                        foodcoopshop.Helper.enableButton(submitButton);
+                        
+                        var parser = new DOMParser();
+                        var doc = parser.parseFromString(response, 'text/html');
+                        
+                        var flashMessageSuccess = $(doc).find('#flashMessage.success');
+                        if (flashMessageSuccess.length > 0) {
+                            $('.right-box').replaceWith($(doc).find('.right-box')[0].outerHTML);
+                            
+                            var cartScriptMatch = response.match(/foodcoopshop\.Cart\.initCartProducts\('(?:[^'\\]|\\.)*'\);/);
+                            if (cartScriptMatch) {
+                                eval(cartScriptMatch[0]);
+                            }
+                            
+                            foodcoopshop.SelfService.bindQuantityInUnitsInputFields();
+                            
+                            foodcoopshop.Cart.isProcessing = false;
+                            foodcoopshop.Cart.processQueue();
+                            foodcoopshop.SelfService.setFocusToSearchInputField();
+                        } else if ($(doc).find('#flashMessage.error').length > 0) {
+                            foodcoopshop.Helper.showErrorMessage($(doc).find('#flashMessage.error').html());
+                            foodcoopshop.SelfService.playErrorSound();
+                            foodcoopshop.Cart.isProcessing = false;
+                            foodcoopshop.Cart.processQueue();
+                            foodcoopshop.SelfService.setFocusToSearchInputField();
+                        } else {
+                            if ($(doc).find('.product-wrapper').length === 0 && /^\d{4,}$/.test(keyword)) {
+                                $('.right-box').replaceWith($(doc).find('.right-box')[0].outerHTML);
+                                foodcoopshop.SelfService.bindQuantityInUnitsInputFields();
+                                foodcoopshop.Helper.showErrorMessage('Barcode ' + keyword + ' nicht gefunden.');
+                                foodcoopshop.SelfService.playErrorSound();
+                                foodcoopshop.Cart.isProcessing = false;
+                                foodcoopshop.Cart.processQueue();
+                                foodcoopshop.SelfService.setFocusToSearchInputField();
+                            } else {
+                                document.location.href = requestUrl;
+                            }
+                        }
+                    } catch (e) {
+                        console.error('AJAX Success processing error: ', e);
+                        foodcoopshop.Cart.isProcessing = false;
+                        foodcoopshop.Cart.processQueue();
+                        foodcoopshop.SelfService.setFocusToSearchInputField();
+                    }
+                },
+                error: function() {
+                    foodcoopshop.Helper.removeSpinnerFromButton(submitButton, 'fa-search');
+                    foodcoopshop.Helper.enableButton(submitButton);
+                    foodcoopshop.Helper.showErrorMessage(__('An_error_occurred'));
+                    foodcoopshop.SelfService.playErrorSound();
+                    foodcoopshop.Cart.isProcessing = false;
+                    foodcoopshop.Cart.processQueue();
+                    foodcoopshop.SelfService.setFocusToSearchInputField();
+                }
+            });
+        });
+        foodcoopshop.Cart.processQueue();
+    },
+
+    playErrorSound: function() {
+        try {
+            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            var oscillator = audioCtx.createOscillator();
+            var gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(200, audioCtx.currentTime); // Low buzz
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        } catch (e) {
+            console.warn('Web Audio API not supported', e);
+        }
+    },
+
+    barcodeBuffer: '',
+    barcodeTimer: null,
+
+    initGlobalBarcodeScannerListener: function() {
+        $(document).on('keypress', function(e) {
+            if (e.key && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                foodcoopshop.SelfService.barcodeBuffer += e.key;
+                if (foodcoopshop.SelfService.barcodeTimer) clearTimeout(foodcoopshop.SelfService.barcodeTimer);
+                foodcoopshop.SelfService.barcodeTimer = setTimeout(function() {
+                    foodcoopshop.SelfService.barcodeBuffer = '';
+                }, 300);
+            } else if (e.key === 'Enter') {
+                if (foodcoopshop.SelfService.barcodeBuffer.length >= 4) {
+                    var code = foodcoopshop.SelfService.barcodeBuffer;
+                    foodcoopshop.SelfService.barcodeBuffer = '';
+                    e.preventDefault();
+                    
+                    var searchInput = $('form#product-search-1 input[name="keyword"]');
+                    if (searchInput.length) {
+                        searchInput.val(code);
+                        searchInput.closest('form').submit();
+                    }
+                } else {
+                    foodcoopshop.SelfService.barcodeBuffer = '';
+                }
+            }
+        });
     },
 
     initHighlightedProductIdForMobileBarcodeScanning: function(productId) {
@@ -208,6 +345,10 @@ foodcoopshop.SelfService = {
     bindQuantityInUnitsInputFields: function(){
         $('.quantity-in-units-input-field-wrapper input').on('keypress', function(e) {
             if (e.which === 13) {
+                if (foodcoopshop.SelfService.barcodeBuffer && foodcoopshop.SelfService.barcodeBuffer.length >= 4) {
+                    $(this).val('');
+                    return;
+                }
                 $(this).closest('.ew').find('.btn-cart').trigger('click');
                 $(this).val('');
             }
@@ -239,7 +380,8 @@ foodcoopshop.SelfService = {
     },
 
     setFocusToSearchInputField : function() {
-        $('.product-search-form-wrapper input[name="keyword"]').focus();
+        var inputField = $('.product-search-form-wrapper input[name="keyword"]');
+        inputField.focus();
     },
 
     onWindowResize : function() {
