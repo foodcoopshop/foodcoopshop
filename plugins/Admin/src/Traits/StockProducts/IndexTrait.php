@@ -115,7 +115,7 @@ trait IndexTrait
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = ['all' => __('All_manufacturers')];
-        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdown());
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $manufacturersTable->getForDropdownOnlyStockManagementEnabled());
         $stockFiltersForDropdown = $this->getStockFiltersForDropdown();
 
         $this->set('products', $products);

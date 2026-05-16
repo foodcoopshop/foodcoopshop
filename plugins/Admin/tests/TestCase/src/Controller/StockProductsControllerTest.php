@@ -38,6 +38,8 @@ class StockProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Preis');
         $this->assertResponseContains('Lagerwert');
         $this->assertResponseContains('14.985,00 €');
+        $this->assertResponseContains('<td class="hide cell-id">351</td>');
+        $this->assertResponseContains('product-quantity-edit-button');
         $this->assertResponseContains('<select name="manufacturerId" id="manufacturerid">');
         $this->assertResponseContains('<select name="active" id="active">');
         $this->assertResponseContains('<select name="stockFilter" id="stockfilter">');
@@ -45,7 +47,6 @@ class StockProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Produkte: Lagerstand &lt;= 0');
         $this->assertResponseContains('Produkte: auslaufend');
         $this->assertResponseContains('<option value="5">Demo Gemüse-Hersteller</option>');
-        $this->assertResponseContains('<option value="15">Demo Milch-Hersteller</option>');
         $this->assertResponseContains('<a href="/admin/stock-products?manufacturerId=5&amp;active=1&amp;stockFilter=all">Demo Gemüse-Hersteller</a>');
     }
 
@@ -109,7 +110,7 @@ class StockProductsControllerTest extends AppCakeTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('<option value="empty" selected="selected">Produkte: Lagerstand &lt;= 0</option>');
         $this->assertResponseContains('Lagerprodukt 2');
-        $this->assertResponseContains('<td class="negative-stock" style="text-align:right;">');
+        $this->assertResponseContains('<td class="amount negative-stock" style="text-align:right;">');
         $this->assertResponseNotContains('Lagerprodukt mit Varianten');
     }
 
@@ -128,7 +129,7 @@ class StockProductsControllerTest extends AppCakeTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('Lagerprodukt 2');
-        $this->assertResponseContains('<td class="negative-stock" style="text-align:right;">');
+        $this->assertResponseContains('<td class="amount negative-stock" style="text-align:right;">');
     }
 
     public function testRunningOutOfStockFilter(): void
@@ -155,7 +156,7 @@ class StockProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<option value="running-out-of-stock" selected="selected">Produkte: auslaufend</option>');
         $this->assertResponseNotContains('Lagerprodukt 2');
         $this->assertResponseContains('Lagerprodukt mit Varianten');
-        $this->assertResponseContains('<td class="below-minimum-amount" style="text-align:right;">');
+        $this->assertResponseContains('<td class="amount below-minimum-amount" style="text-align:right;">');
     }
 
     public function testInactiveProductsAreDeactivated(): void

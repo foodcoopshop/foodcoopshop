@@ -16,16 +16,16 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use App\Services\ProductQuantityService;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Manufacturers_admin')."', '".__('Stock products')."');"
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__('Manufacturers_admin')."', '".__('Stock products')."');" .
+    Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#stock-products');" .
+    Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();"
 ]);
 ?>
 
 <?php
-$productQuantityService = new ProductQuantityService();
 $activeStates = array_map(
     fn(string $activeState): string => __('Products') . ': ' . $activeState,
     $this->MyHtml->getActiveStates(),
@@ -65,6 +65,7 @@ $activeStates = array_map(
 
 <?php
 
+echo '<div id="stock-products">';
 echo '<table class="list">';
 echo '<tr class="sort">';
     echo '<th>' . __('Product') . '</th>';
@@ -76,6 +77,8 @@ echo '</tr>';
 
 foreach ($products as $product) {
     echo '<tr class="data ' . h($product->row_class) . '">';
+        echo '<td class="hide cell-id">' . h($product->id_product) . '</td>';
+        echo '<td class="hide is-stock-product"><i class="fas fa-check ok no-button"></i></td>';
         echo '<td>';
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt"></i>',
@@ -86,7 +89,7 @@ foreach ($products as $product) {
                     'escape' => false,
                 ],
             );
-            echo '<span class="product-name">' . $product->name . '</span>';
+            echo '<span class="product-name name-for-dialog">' . $product->name . '</span>';
         echo '</td>';
         echo '<td>';
             if ($identity->isManufacturer()) {
@@ -102,28 +105,22 @@ foreach ($products as $product) {
                 );
             }
         echo '</td>';
-        $unitName = !empty($product->unit) ? $product->unit->name : '';
-        $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit);
-        $amountClasses = [];
-        if ($product->stock_available->quantity < 0) {
-            $amountClasses[] = 'negative-stock';
-        }
-        if ($product->stock_available->quantity == 0) {
-            $amountClasses[] = 'not-available';
-        }
-        if ($product->stock_available->quantity > 0 && $product->stock_available->sold_out_limit > 0 && $product->stock_available->quantity < $product->stock_available->sold_out_limit) {
-            $amountClasses[] = 'below-minimum-amount';
-        }
-        echo '<td class="' . join(' ', $amountClasses) . '" style="text-align:right;">' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName) . '</td>';
+        echo $this->element('productList/data/amount', [
+            'product' => $product,
+            'alignRight' => true,
+        ]);
         echo '<td style="text-align:right;">' . $this->Number->formatAsDecimal($product->price, 6, true, 2) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</td>';
         echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($product->stock_value) . '</td>';
     echo '</tr>';
 }
 
-echo '<tr style="font-weight:bold;">';
-    echo '<td colspan="4" style="text-align:right;">' . __('Total_sum') . '</td>';
-    echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($stockValueSum) . '</td>';
+echo '<tr>';
+    $count = count($products);
+    echo '<td colspan="2"><b>' . $count . '</b> '.__('{0,plural,=1{record} other{records}}', $count).'</td>';
+    echo '<td colspan="2" style="text-align:right;"><b>' . __('Sum') . '</b></td>';
+    echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($stockValueSum) . '</b></td>';
 echo '</tr>';
 echo '</table>';
+echo '</div>';
 
 ?>

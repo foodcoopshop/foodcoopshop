@@ -547,6 +547,16 @@ body.order_details.index .table-cell-wrapper.price {
 table.list td.amount > .has-separator:after {
     content: ' / ';
 }
+#stock-products table.list td.amount .quantity-limit-for-dialog,
+#stock-products table.list td.amount .sold-out-limit-for-dialog {
+    display: none;
+}
+#stock-products table.list td.amount .product-quantity-edit-button {
+    float: left;
+}
+#stock-products table.list td.amount > .quantity-for-dialog.has-separator:after {
+    content: '';
+}
 #manufacturer-options-edit-form h3 {
     margin-top: 15px;
 }

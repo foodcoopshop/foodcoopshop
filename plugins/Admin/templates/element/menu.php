@@ -103,13 +103,21 @@ if ($identity->isSuperadmin() || $identity->isAdmin()) {
             'fa-icon' => 'fa-fw ok fa-tags'
         ]
     ];
-    $manufacturerMenu['children'][] = [
-        'slug' => $this->Slug->getStockProducts(),
-        'name' => __('Stock products'),
-        'options' => [
-            'fa-icon' => 'fa-fw ok fa-boxes-stacked'
-        ]
-    ];
+
+    $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+    $hasStockManagement = $manufacturersTable->find()
+        ->where(['stock_management_enabled' => 1])
+        ->count() > 0;
+
+    if ($hasStockManagement) {
+        $manufacturerMenu['children'][] = [
+            'slug' => $this->Slug->getStockProducts(),
+            'name' => __('Stock products'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-boxes-stacked'
+            ]
+        ];
+    }
 
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = [
