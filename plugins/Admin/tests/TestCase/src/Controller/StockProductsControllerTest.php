@@ -44,7 +44,7 @@ class StockProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<select name="active" id="active">');
         $this->assertResponseContains('<select name="stockFilter" id="stockfilter">');
         $this->assertResponseContains('Produkte: alle');
-        $this->assertResponseContains('Produkte: Lagerstand &lt;= 0');
+        $this->assertResponseContains('Produkte: nicht auf Lager');
         $this->assertResponseContains('Produkte: auslaufend');
         $this->assertResponseContains('<option value="5">Demo Gemüse-Hersteller</option>');
         $this->assertResponseContains('<a href="/admin/stock-products?manufacturerId=5&amp;active=1&amp;stockFilter=all">Demo Gemüse-Hersteller</a>');
@@ -94,7 +94,7 @@ class StockProductsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Lagerprodukt 2');
     }
 
-    public function testEmptyStockFilter(): void
+    public function testOutOfStockFilter(): void
     {
         $stockAvailablesTable = $this->getTableLocator()->get('StockAvailables');
         $stockAvailablesTable->updateAll([
@@ -105,10 +105,10 @@ class StockProductsControllerTest extends AppCakeTestCase
         ]);
 
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getStockProducts() . '?stockFilter=empty');
+        $this->get($this->Slug->getStockProducts() . '?stockFilter=out-of-stock');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('<option value="empty" selected="selected">Produkte: Lagerstand &lt;= 0</option>');
+        $this->assertResponseContains('<option value="out-of-stock" selected="selected">Produkte: nicht auf Lager</option>');
         $this->assertResponseContains('Lagerprodukt 2');
         $this->assertResponseContains('<td class="amount negative-stock" style="text-align:right;">');
         $this->assertResponseNotContains('Lagerprodukt mit Varianten');
