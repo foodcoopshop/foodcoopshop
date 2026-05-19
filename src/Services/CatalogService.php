@@ -36,9 +36,9 @@ class CatalogService
     protected mixed $identity;
     public bool $showOnlyProductsForNextWeekFilterEnabled = true;
 
-    const MAX_PRODUCTS_PER_PAGE = 100;
-    const BARCODE_WITH_WEIGHT_PREFIX = '27';
-    const BARCODE_WITH_WEIGHT_PREFIX_INHOUSE = '21';
+    const int MAX_PRODUCTS_PER_PAGE = 100;
+    const string BARCODE_WITH_WEIGHT_PREFIX = '27';
+    const string BARCODE_WITH_WEIGHT_PREFIX_INHOUSE = '21';
 
     public function __construct()
     {
