@@ -25,11 +25,11 @@ trait IndexTrait
 {
 
     private const string STOCK_FILTER_ALL = 'all';
-    private const string STOCK_FILTER_EMPTY = 'empty';
+    private const string STOCK_FILTER_OUT_OF_STOCK = 'out-of-stock';
     private const string STOCK_FILTER_RUNNING_OUT_OF_STOCK = 'running-out-of-stock';
     private const array STOCK_FILTER_MAP = [
         self::STOCK_FILTER_ALL => 'all',
-        self::STOCK_FILTER_EMPTY => 'Stock <= 0',
+        self::STOCK_FILTER_OUT_OF_STOCK => 'out of stock',
         self::STOCK_FILTER_RUNNING_OUT_OF_STOCK => 'expiring',
     ];
 
@@ -144,7 +144,7 @@ trait IndexTrait
 
     private function productMatchesStockFilter(stdClass $product, string $stockFilter): bool
     {
-        if ($stockFilter == self::STOCK_FILTER_EMPTY) {
+        if ($stockFilter == self::STOCK_FILTER_OUT_OF_STOCK) {
             return $product->stock_available->quantity <= 0;
         }
         if ($stockFilter == self::STOCK_FILTER_RUNNING_OUT_OF_STOCK) {

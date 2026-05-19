@@ -3463,8 +3463,8 @@ msgstr "Produkt"
 msgid "Products with stock below minimum stock"
 msgstr "Produkte mit Lagerstand unter Mindestlagerstand"
 
-msgid "Stock <= 0"
-msgstr "Lagerstand <= 0"
+msgid "out of stock"
+msgstr "nicht auf Lager"
 
 msgid "expiring"
 msgstr "auslaufend"
