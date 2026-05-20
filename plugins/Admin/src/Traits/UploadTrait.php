@@ -25,6 +25,9 @@ trait UploadTrait
 
     protected function deleteUploadedImage(int $imageId, string $thumbsPath): void
     {
+        if (!is_dir($thumbsPath)) {
+            return;
+        }
         $dir = new \DirectoryIterator($thumbsPath);
         foreach ($dir as $fileinfo) {
             if (!$fileinfo->isDot()) {
@@ -37,12 +40,15 @@ trait UploadTrait
     }
 
     /**
-     * @param array<string, array{suffix: string}> $imageSizes
+    * @param array<string, array{suffix: string, scaleDown?: bool}> $imageSizes
      */
     protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string|bool
     {
 
         $this->deleteUploadedImage($imageId, $thumbsPath);
+        if (!is_dir($thumbsPath)) {
+            mkdir($thumbsPath, 0755, true);
+        }
 
         // if image was rotated, cut off ?xyz (random string)
         $explodedFilename = explode('?', $filename);
@@ -58,7 +64,11 @@ trait UploadTrait
             if ($image->height() > $image->width()) {
                 $thumbSize = (int) round((int) $thumbSize * ($image->width() / $image->height()), 0);
             }
-            $image->scale($thumbSize);
+            if (!empty($options['scaleDown'])) {
+                $image->scaleDown($thumbSize);
+            } else {
+                $image->scale($thumbSize);
+            }
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
             $image->save($thumbsFileName, quality: 100);
         }

@@ -22,6 +22,7 @@ use Cake\Core\Configure;
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Imagick\Driver;
+use App\Model\Entity\Page;
 use Cake\View\JsonView;
 
 class ToolsController extends AdminAppController
@@ -69,14 +70,56 @@ class ToolsController extends AdminAppController
 
     public function doTmpImageUpload(): void
     {
+        $this->processTmpImageUpload();
+    }
+
+    public function doTmpPageImageUpload(): void
+    {
+        $this->processTmpImageUpload(Page::IMAGE_UPLOAD_MIN_WIDTH);
+    }
+
+    private function processTmpImageUpload(?int $minWidth = null, ?int $maxWidth = null): void
+    {
         $this->request = $this->request->withParam('_ext', 'json');
 
         // check if uploaded file is image file
         $upload = $this->getRequest()->getData('upload');
+        $uploadedFile = (string) $upload->getStream()->getMetadata('uri');
 
         // non-image files will return false
-        if (!in_array(mime_content_type($upload->getStream()->getMetadata('uri')), Configure::read('app.allowedImageMimeTypes'))) {
+        if (!in_array(mime_content_type($uploadedFile), Configure::read('app.allowedImageMimeTypes'))) {
             $message = __('The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
+            $this->set([
+                'status' => 0,
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
+        }
+
+        $imageInfo = getimagesize($uploadedFile);
+        if ($imageInfo === false) {
+            $message = __('The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
+            $this->set([
+                'status' => 0,
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
+        }
+
+        if ($minWidth !== null && $imageInfo[0] < $minWidth) {
+            $message = __('The image width needs to be at least {0} pixels.', [(int) $minWidth]);
+            $this->set([
+                'status' => 0,
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
+        }
+
+        if ($maxWidth !== null && $imageInfo[0] > $maxWidth) {
+            $message = __('The image width needs to be at most {0} pixels.', [(int) $maxWidth]);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -95,7 +138,7 @@ class ToolsController extends AdminAppController
 
         $manager = new ImageManager(new Driver());
         $manager->decodePath(WWW_ROOT . $filenameWithPath)
-            ->scaleDown($this->getMaxTmpUploadFileSize())
+            ->scaleDown($maxWidth ?? $this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath, quality: 100);
 
         $this->set([

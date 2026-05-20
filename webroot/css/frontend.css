@@ -1649,3 +1649,92 @@ body.feedbacks.index .edit-shortcut-button {
     position: absolute;
     right: 10px;
 }
+
+/* Page header image: hero mode (logged-out users) */
+body.has-page-hero #header {
+    background-image: var(--page-header-image-desktop);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 750px;
+    position: fixed;
+}
+body.has-page-hero #header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 0;
+    pointer-events: none;
+}
+body.has-page-hero #user-menu,
+body.has-page-hero .header-main-row {
+    position: relative;
+    z-index: 1;
+}
+body.has-page-hero #user-menu {
+    background: rgba(0, 0, 0, 0.45);
+}
+body.has-page-hero .header-main-row {
+    align-items: center;
+    justify-content: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+body.has-page-hero #main-menu {
+    flex: 0 0 auto;
+    width: auto;
+    justify-content: center;
+}
+body.has-page-hero #main-menu > li > a {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+    font-weight: 600;
+    font-size: 18px;
+}
+body.has-page-hero #main-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.18);
+    text-decoration: none !important;
+}
+body.has-page-hero #main-menu > li > a > i.fas:empty,
+body.has-page-banner #main-menu > li > a > i.fas:empty {
+    display: none;
+}
+#main-menu li > a > i.fas:empty {
+    display: none;
+}
+#main-menu .menu-item-label {
+    padding-right: 0;
+}
+#main-menu > li {
+    margin-right: 9px;
+}
+body.has-page-hero #header .logo-wrapper a img.logo {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+@media (max-width: 767px) {
+    body.has-page-hero #header {
+        background-image: var(--page-header-image-mobile);
+        min-height: 320px;
+    }
+}
+
+/* Page header image: banner mode (logged-in users) */
+.page-header-banner {
+    width: 100%;
+    height: 350px;
+    background-image: var(--page-header-image-desktop);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: var(--header-height, 148px);
+}
+body.has-page-banner #content {
+    padding-top: 0;
+}
+@media (max-width: 767px) {
+    .page-header-banner {
+        background-image: var(--page-header-image-mobile);
+        height: 160px;
+    }
+}

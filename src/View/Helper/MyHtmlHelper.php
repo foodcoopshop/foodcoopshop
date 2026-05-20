@@ -18,6 +18,7 @@ use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
 use Cake\I18n\I18n;
 use App\Model\Entity\BlogPost;
+use App\Model\Entity\Page;
 use App\Model\Entity\Product;
 use Authorization\IdentityInterface;
 
@@ -732,6 +733,11 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getUploadImageDir() . DS . 'blog_posts';
     }
 
+    public function getPageThumbsPath(): string
+    {
+        return $this->getUploadImageDir() . DS . 'pages';
+    }
+
     public function getManufacturerThumbsPath(): string
     {
         return $this->getUploadImageDir() . DS . 'manufacturers';
@@ -803,6 +809,19 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         return $this->prepareAsUrl($imageFilenameAndPath);
+    }
+
+    public function getPageImageSrc(Page $page, string $size): string
+    {
+        $thumbsPath = $this->getPageThumbsPath();
+        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'pages' . DS;
+
+        $imageFilename = $this->getImageFile($thumbsPath, $page->id_page . '-' . $size . '-default');
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
+            return '';
+        }
+
+        return $this->prepareAsUrl($urlPrefix . $imageFilename);
     }
 
     public function getManufacturerTermsOfUseSrcTemplate(string|int $manufacturerId): string

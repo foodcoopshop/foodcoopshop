@@ -21,8 +21,9 @@ use Cake\Core\Configure;
 
         <?php
         $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();
-        "
+            'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
+                Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');
+            ",
         ]);
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#page-'
@@ -54,6 +55,7 @@ echo '<table class="list">';
 
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
+echo '<th>'.__('Image').'</th>';
 echo '<th></th>';
 echo '<th>'.__('Title').'</th>';
 echo '<th>'.__('Menu').'</th>';
@@ -72,7 +74,7 @@ echo $this->element('pageTreeRows', [
 ]);
 
 echo '<tr>';
-echo '<td colspan="12"><b>' . $totalPagesCount . '</b> '.__('{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
+echo '<td colspan="13"><b>' . $totalPagesCount . '</b> '.__('{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
 echo '</tr>';
 
 echo '</table>';

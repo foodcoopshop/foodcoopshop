@@ -78,5 +78,21 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
     if ($identity !== null && $identity->isSuperadmin()) {
         $bodyClasses[] = 'superadmin';
     }
+
+    $pageHeaderImageDesktop = $pageHeaderImageDesktop ?? null;
+    $pageHeaderImageMobile = $pageHeaderImageMobile ?? null;
+    $bodyStyle = '';
+    if ($pageHeaderImageDesktop !== null) {
+        if ($identity === null) {
+            $bodyClasses[] = 'has-page-hero';
+        } else {
+            $bodyClasses[] = 'has-page-banner';
+        }
+        $bodyStyle = sprintf(
+            ' style="--page-header-image-desktop:url(\'%s\');--page-header-image-mobile:url(\'%s\');"',
+            h($pageHeaderImageDesktop),
+            h($pageHeaderImageMobile ?? $pageHeaderImageDesktop),
+        );
+    }
 ?>
-<body class="<?php echo implode(' ', $bodyClasses); ?>">
+<body class="<?php echo implode(' ', $bodyClasses); ?>"<?php echo $bodyStyle; ?>>

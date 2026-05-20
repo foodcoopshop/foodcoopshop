@@ -503,11 +503,14 @@ body.order_details.index td a.pickup-day-comment-edit-button {
 .add-payment-form .checkbox label {
     margin-left: 3px;
 }
-#blogPostEditForm .blog-post-image-wrapper {
+#blogPostEditForm .blog-post-image-wrapper,
+#pageEditForm .page-image-wrapper {
+    align-items: center;
+    display: flex;
     float: left;
 }
-#blogPostEditForm .blog-post-image-wrapper span {
-    float: left;
+#blogPostEditForm .blog-post-image-wrapper span,
+#pageEditForm .page-image-wrapper span {
     width: 400px;
     margin-left: 10px;
 }

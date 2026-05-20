@@ -9,6 +9,7 @@ use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 use App\Model\Entity\Page;
 use Cake\Http\Response;
+use Admin\Traits\UploadTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +26,8 @@ use Cake\Http\Response;
  */
 class PagesController extends AdminAppController
 {
+
+    use UploadTrait;
 
     public function home(): void
     {
@@ -120,8 +123,17 @@ class PagesController extends AdminAppController
                 $actionLogType = 'page_changed';
             }
 
+            if (!empty($this->getRequest()->getData('Pages.tmp_image'))) {
+                $this->saveUploadedImage($page->id_page, $this->getRequest()->getData('Pages.tmp_image'), Configure::read('app.htmlHelper')->getPageThumbsPath(), Configure::read('app.pageImageSizes'));
+            }
+
+            if (!empty($this->getRequest()->getData('Pages.delete_image'))) {
+                $this->deleteUploadedImage($page->id_page, Configure::read('app.htmlHelper')->getPageThumbsPath());
+            }
+
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Pages.delete_page'))) {
+                $this->deleteUploadedImage($page->id_page, Configure::read('app.htmlHelper')->getPageThumbsPath());
                 $page = $pagesTable->patchEntity($page, ['active' => APP_DEL]);
                 $pagesTable->save($page);
                 $messageSuffix = __('deleted_admin');

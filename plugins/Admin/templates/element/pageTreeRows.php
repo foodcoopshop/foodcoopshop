@@ -39,6 +39,17 @@ foreach ($pages as $page) {
     echo $page->id_page;
     echo '</td>';
 
+    echo '<td align="center" class="image">';
+    $srcLargeImage = $this->Html->getPageImageSrc($page, 'single');
+    $srcSmallImage = $this->Html->getPageImageSrc($page, 'home');
+
+    if ($srcSmallImage != '') {
+        echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($page->title) . '" data-modal-image="' . $srcLargeImage . '">';
+        echo '<img width="90" src="' . $srcSmallImage . '" />';
+        echo '</a>';
+    }
+    echo '</td>';
+
     echo '<td>';
     echo $this->Html->link(
         '<i class="fas fa-pencil-alt ok"></i>',

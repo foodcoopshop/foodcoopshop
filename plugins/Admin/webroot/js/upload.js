@@ -36,6 +36,20 @@ foodcoopshop.Upload = {
         foodcoopshop.Modal.destroy(modalSelector);
     },
 
+    savePageTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        $('body.pages input[name="Pages[tmp_image]"]').val(image.attr('src'));
+        var button = $('body.pages a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
     saveManufacturerTmpImageInForm : function (modalSelector) {
         var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
         if (image.length == 0) {

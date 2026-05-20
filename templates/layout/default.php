@@ -34,6 +34,10 @@ echo $this->element('layout/header');
         </div>
     </div>
 
+    <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity !== null) : ?>
+        <div class="page-header-banner"></div>
+    <?php endif; ?>
+
     <div id="content">
         <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>
         <?php echo $this->element('sidebar'); ?>

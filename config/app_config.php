@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Model\Entity\Page;
+
 /**
  * app.config.php
  * this file contains the main configuration for foodcoopshop
@@ -136,26 +138,31 @@ return [
         'productImageSizes' => [
             '150' => ['suffix' => '-home_default'],      // list page
             '358' => ['suffix' => '-large_default'],     // detail page
-            '800' => ['suffix' => '-thickbox_default']   // lightbox
+            '800' => ['suffix' => '-thickbox_default'],   // lightbox
         ],
         'blogPostImageSizes' => [
             '170' => ['suffix' => '-home-default'],     // detail / list page
-            '800' => ['suffix' => '-single-default']    // lightbox
+            '800' => ['suffix' => '-single-default'],    // lightbox
+        ],
+        'pageImageSizes' => [
+            '170' => ['suffix' => '-home-default'],     // list page
+            Page::IMAGE_MOBILE_WIDTH => ['suffix' => '-mobile-default', 'scaleDown' => true], // mobile
+            Page::IMAGE_UPLOAD_MAX_WIDTH => ['suffix' => '-single-default', 'scaleDown' => true], // lightbox
         ],
         'customerImageSizes' => [
             '200' => ['suffix' => '-small'],  // list page
             '800' => ['suffix' => '-large'],  // lightbox
-            '1200' => ['suffix' => '-xxl']    // lightbox
+            '1200' => ['suffix' => '-xxl'],    // lightbox
         ],
         'manufacturerImageSizes' => [
             '200' => ['suffix' => '-medium_default'],  // detail / list page
-            '800' => ['suffix' => '-large_default']    // lightbox
+            '800' => ['suffix' => '-large_default'],    // lightbox
         ],
         'categoryImageSizes' => [
-            '717' => ['suffix' => '-category_default'] // detail AND lightbox
+            '717' => ['suffix' => '-category_default'], // detail AND lightbox
         ],
         'sliderImageSizes' => [
-            '908' => ['suffix' => '-slider'] // detail AND lightbox
+            '908' => ['suffix' => '-slider'], // detail AND lightbox
         ],
         'tmpUploadImagesDir' => DS . 'tmp' . DS . 'images',
         'tmpUploadFilesDir' => DS . 'tmp' . DS . 'files',

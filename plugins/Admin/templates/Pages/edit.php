@@ -16,15 +16,25 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Controller\Component\StringComponent;
+use App\Model\Entity\Page;
 
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Editor.initBig('pages-content');" .
+        Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.pages .add-image-button', foodcoopshop.Upload.savePageTmpImageInForm);" .
         Configure::read('app.jsNamespace') . ".Admin.disableSelectpickerItems('#pages-id-parent', " . json_encode($disabledSelectPageIds) . ");" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
+
+$idForImageUpload = (!empty($page->id_page)) ? $page->id_page : StringComponent::createRandomString(6);
+$imageSrc = $this->Html->getPageImageSrc($page, 'single');
+if (!empty($page->tmp_image) && $page->tmp_image != '') {
+    $imageSrc = str_replace('\\', '/', $page->tmp_image);
+}
+$imageExists = $imageSrc != '';
 
 ?>
 
@@ -89,6 +99,39 @@ echo $this->Form->control('Pages.extern_url', [
     'escape' => false
 ]);
 
+echo '<div class="input">';
+echo '<label>'.__('Image');
+if ($imageExists) {
+    echo '<br /><span class="small">'.__('Click_on_image_to_change_it.').'</span>';
+}
+echo '</label>';
+echo '<div class="page-image-wrapper">';
+    echo $this->Html->link(
+        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+        'javascript:void(0);',
+        [
+            'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+            'title' => __('Upload_new_image_or_change_it'),
+            'data-object-id' => $idForImageUpload,
+            'escape' => false,
+        ]
+    );
+    echo '<span class="small">' . __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]) . '</span>';
+echo '</div>';
+echo $this->Form->hidden('Pages.tmp_image');
+$this->Form->unlockField('Pages.tmp_image');
+echo '</div>';
+
+if ($imageExists) {
+    echo '<div class="warning">';
+        echo $this->Form->control('Pages.delete_image', [
+            'label' => __('Delete_image?') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+        ]);
+    echo '</div>';
+}
+
 if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
     echo '<div class="warning">';
         echo $this->Form->control('Pages.delete_page', [
@@ -119,3 +162,12 @@ echo $this->Form->end();
 ?>
 
 <div class="sc"></div>
+
+<?php
+echo $this->element('imageUploadForm', [
+    'id' => $idForImageUpload,
+    'action' => '/admin/tools/doTmpPageImageUpload/',
+    'imageExists' => $imageExists,
+    'existingImageSrc' => $imageSrc,
+]);
+?>
