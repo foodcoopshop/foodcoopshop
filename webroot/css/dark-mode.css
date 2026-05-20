@@ -140,6 +140,7 @@ body.dark .tooltipster-box .tooltipster-content,
 body.dark .tooltipster-box .tooltipster-content a,
 body.dark table.list td.not-available,
 body.dark table.list td.not-available i.sold-out-limit-for-dialog i,
+body.dark table.list td.negative-stock,
 body.dark.admin ul.nav-tabs > li > a {
     color: var(--dark-mode-main-font-color) ! important;
 }

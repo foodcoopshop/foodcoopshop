@@ -23,6 +23,7 @@ use Cake\Controller\Exception\InvalidParameterException;
 use Cake\ORM\TableRegistry;
 use stdClass;
 use App\Services\ProductsForBackendService;
+use App\Services\ProductStockValueService;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -89,6 +90,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
     public function getRecords(): array
     {
         $productsForBackendService = new ProductsForBackendService();
+        $productStockValueService = new ProductStockValueService();
         $query = $productsForBackendService->getQuery(
             productIds: $this->productIds,
             manufacturerId: 'all',
@@ -109,15 +111,11 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $productName = $this->getProductName($product, $isMainProduct);
             $availableQuantity = $product->stock_available->quantity;
 
-            $price = $this->getSellingPriceGross($product);
-            $pricePerUnit = $product->unit->price_incl_per_unit ?? 0;
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $price = $this->getPurchasePriceNet($product);
-                $pricePerUnit = $product->unit->purchase_price_incl_per_unit ?? 0;
-            }
+            $price = $productStockValueService->getPrice($product);
+            $pricePerUnit = $productStockValueService->getPricePerUnit($product);
 
             $unit = $this->getUnit($product, $isMainProduct);
-            $stockValue = $this->getStockValue($product, $price, $availableQuantity, $pricePerUnit);
+            $stockValue = $productStockValueService->calculateStockValue($product, $price, $availableQuantity, $pricePerUnit);
 
             $stockValueSum += $stockValue;
 
@@ -209,39 +207,6 @@ class ProductCsvWriterService extends BaseCsvWriterService
         }
 
         return $productName;
-    }
-
-    private function getSellingPriceGross(stdClass $product): float
-    {
-        $sellingPriceGross = $product->gross_price;
-        if ($product->unit && $product->unit->price_per_unit_enabled) {
-            $sellingPriceGross = $product->unit->price_incl_per_unit;
-        }
-        return (float) $sellingPriceGross;
-    }
-
-    private function getPurchasePriceNet(stdClass $product): float
-    {
-        $purchasePriceNet = $product->purchase_net_price ?? 0;
-        if ($product->unit && $product->unit->price_per_unit_enabled) {
-            $purchasePriceNet = $product->unit->purchase_price_incl_per_unit ?? 0;
-        }
-        return (float) $purchasePriceNet;
-    }
-
-    private function getStockValue(stdClass $product, float $price, float|string $availableQuantity, float|string $pricePerUnit): float|int
-    {
-        if ($availableQuantity <= 0) {
-            return 0;
-        }
-
-        if ($product->unit && $product->unit->price_per_unit_enabled) {
-            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($pricePerUnit, $product->unit->quantity_in_units, $product->unit->amount);
-        }
-
-        $stockValue = $price * $availableQuantity;
-
-        return $stockValue;
     }
 
     private function getUnitForPrice(stdClass $product): string

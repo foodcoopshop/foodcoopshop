@@ -15,15 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
-if (!empty($product->unit)) {
-    echo '<span id="product-unit-object-'.$product->id_product.'" class="product-unit-object"></span>';
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.setProductUnitData($('#product-unit-object-".$product->id_product."'),'".json_encode($product->unit)."');"
-    ]);
-}
-
 echo '<td class="cell-price ' . ($product->price_is_zero ? 'not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if (empty($product->product_attributes)) {

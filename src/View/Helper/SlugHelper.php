@@ -374,6 +374,11 @@ class SlugHelper extends Helper
         return $url;
     }
 
+    public function getStockProducts(): string
+    {
+        return '/admin/stock-products';
+    }
+
     public function getInvoices(): string
     {
         return '/admin/invoices';

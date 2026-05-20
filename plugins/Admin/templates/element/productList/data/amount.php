@@ -17,23 +17,25 @@ use App\Services\ProductQuantityService;
  */
 
 $available = true;
-$belowMinimumAmount = false;
 $productQuantityService = new ProductQuantityService();
 $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit);
 $unitName = !empty($product->unit) ? $product->unit->name : '';
 
+echo $this->element('productList/data/unitData', [
+    'product' => $product,
+]);
+
+if (empty($product->product_attributes) && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+    echo $this->element('productList/data/stockProductAmount', [
+        'product' => $product,
+        'alignRight' => $alignRight ?? false,
+    ]);
+    return;
+}
+
 if (empty($product->product_attributes)) {
-    if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-        if ($product->stock_available->quantity <= 0) {
-            $available = false;
-        }
-        if ($product->stock_available->sold_out_limit > 0 && $product->stock_available->quantity < $product->stock_available->sold_out_limit) {
-            $belowMinimumAmount = true;
-        }
-    } else {
-        if ($product->stock_available->quantity <= 0 && !$product->stock_available->always_available) {
-            $available = false;
-        }
+    if ($product->stock_available->quantity <= 0 && !$product->stock_available->always_available) {
+        $available = false;
     }
 }
 
@@ -41,10 +43,6 @@ $rowClasses = ['amount'];
 if (!$available) {
     $rowClasses[] = 'not-available';
 }
-if ($available && $belowMinimumAmount) {
-    $rowClasses[] = 'below-minimum-amount';
-}
-
 echo '<td class="' . join(' ', $rowClasses) . '">';
 
     if (empty($product->product_attributes)) {
@@ -78,25 +76,6 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
             : '') .
          '</span>';
 
-        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-
-            if ($product->stock_available->quantity_limit != 0) {
-                $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity_limit, $unitName);
-                $elementsToRender[] =' <i style="display: none;" class="small quantity-limit-for-dialog">' . $formattedQuantityLimit .'</i>';
-            }
-            if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
-
-                $element = ' <i class="small sold-out-limit-for-dialog">';
-                if (is_null($product->stock_available->sold_out_limit)) {
-                    $element .= '<i class="fas fa-times" title="'.__('No_email_notifications_are_sent_for_this_product.').'"></i>';
-                } else {
-                    $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->sold_out_limit, $unitName);
-                    $element .= $formattedSoldOutLimit;
-                }
-                $element .= '</i>';
-                $elementsToRender[] = $element;
-            }
-        }
         echo join('', $elementsToRender);
     }
 

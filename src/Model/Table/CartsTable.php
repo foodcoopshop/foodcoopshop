@@ -15,6 +15,7 @@ use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\UnitProduct;
 use App\Model\Entity\CartProduct;
+use App\Model\Entity\ProductAttribute;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -114,6 +115,19 @@ class CartsTable extends AppTable
     public function getProductNameWithUnity(string $productName, string $unity): string
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');
+    }
+
+    public function getProductAttributeUnityForOrderDetail(ProductAttribute $productAttribute): string
+    {
+        $attributeName = $productAttribute->product_attribute_combination->attribute->name;
+        $unitProductAttribute = $productAttribute->unit_product_attribute;
+        if (!empty($unitProductAttribute)
+            && $unitProductAttribute->price_per_unit_enabled
+            && $productAttribute->product_attribute_combination->attribute->can_be_used_as_unit
+        ) {
+            return '';
+        }
+        return $attributeName;
     }
 
     /**
@@ -609,16 +623,13 @@ class CartsTable extends AppTable
         $productData['deposit'] = $deposit;
 
         $unitName = '';
-        $unityName = '';
+        $unityName = $this->getProductAttributeUnityForOrderDetail($cartProduct->product_attribute);
         $unitAmount = 0;
         $priceInclPerUnit = 0;
 
         if (!empty($unitProductAttribute) && $unitProductAttribute->price_per_unit_enabled) {
 
             $unitName = $unitProductAttribute->name;
-            if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
-                $unityName = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
-            }
             $unitAmount = $unitProductAttribute->amount;
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
 
@@ -650,7 +661,6 @@ class CartsTable extends AppTable
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
-            $unityName = $unity;
         }
         $productData['unity'] = $unityName;
         $productData['unity_with_unit'] = $unity;

@@ -978,9 +978,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getActiveStates(): array
     {
         return [
+            'all' => __('active_state_all'),
             1 => __('active_state_active'),
             0 => __('active_state_inactive'),
-            'all' => __('active_state_all')
         ];
     }
 

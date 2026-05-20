@@ -3462,6 +3462,15 @@ msgstr "Produkt"
 msgid "Product"
 msgstr "Produkt"
 
+msgid "Products with stock below minimum stock"
+msgstr "Produkte mit Lagerstand unter Mindestlagerstand"
+
+msgid "out of stock"
+msgstr "nicht auf Lager"
+
+msgid "expiring"
+msgstr "auslaufend"
+
 msgid "Product was copied successfully."
 msgstr "Produkt erfolgreich kopiert."
 
@@ -4106,6 +4115,9 @@ msgstr "Lagerprodukte in Bestelllisten"
 
 msgid "Stock_value"
 msgstr "Lagerwert"
+
+msgid "Stock products"
+msgstr "Lagerprodukte"
 
 msgid "Storage locations"
 msgstr "Lagerorte"

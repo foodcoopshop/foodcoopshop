@@ -69,6 +69,10 @@ table.list td.not-available i.sold-out-limit-for-dialog i {
     background-color: var(--not-ok-red);
     color: white;
 }
+table.list td.negative-stock {
+  background-color: var(--warning-red);
+  color: white;
+}
 table.list td.below-minimum-amount {
     background-color: var(--warning-yellow);
     color: white;

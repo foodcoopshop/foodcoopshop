@@ -85,6 +85,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getReport(Payment::TYPE_PRODUCT),
             $this->Slug->getReport(Payment::TYPE_PAYBACK),
             $this->Slug->getReport(Payment::TYPE_DEPOSIT),
+            $this->Slug->getStockProducts(),
             $this->Slug->getMyCreditBalance(),
             $this->Slug->getPaymentEdit(1),
             $this->Slug->getBlogPostListAdmin(),

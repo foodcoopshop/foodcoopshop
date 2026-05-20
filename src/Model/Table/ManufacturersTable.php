@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Controller\Component\StringComponent;
-use App\Model\Entity\Manufacturer;
-use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
+use ArrayObject;
 use Cake\Core\Configure;
-use Cake\Validation\Validator;
-use App\Model\Traits\MultipleEmailsRuleTrait;
-use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Customer;
 use Cake\Event\EventInterface;
-use ArrayObject;
+use Cake\Validation\Validator;
+use Cake\ORM\Query\SelectQuery;
+use App\Model\Entity\Manufacturer;
 use App\Services\FormatterService;
+use App\Controller\Component\StringComponent;
+use App\Model\Traits\MultipleEmailsRuleTrait;
+use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -332,9 +333,35 @@ class ManufacturersTable extends AppTable
     public function getForDropdown(): array
     {
         $manufacturers = $this->find('all', order: [
-            'Manufacturers.name' => 'ASC'
+            $this->aliasField('name') => 'ASC'
         ]);
 
+        return $this->prepareForDropdown($manufacturers);
+    }
+
+    /**
+     * @return array<string, array<int, string>>
+     */
+    public function getForDropdownOnlyStockManagementEnabled(): array
+    {
+        $manufacturers = $this->find('all',
+        conditions: [
+            $this->aliasField('stock_management_enabled') => APP_ON
+        ],
+        order: [
+            $this->aliasField('name') => 'ASC'
+        ]);
+
+        return $this->prepareForDropdown($manufacturers);
+    }
+
+    /**
+     * @param \Cake\ORM\Query\SelectQuery<\App\Model\Entity\Manufacturer> $manufacturers
+     * @return array<string, array<int, string>>
+     */
+    private function prepareForDropdown(SelectQuery $manufacturers): array
+    {
+        
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
