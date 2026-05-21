@@ -1186,7 +1186,7 @@ msgid "No custom CSS available."
 msgstr "Kein eigenes CSS vorhanden."
 
 msgid "No home block has been created yet."
-msgstr "Es wurde noch kein Startseiten-Block erstellt."
+msgstr "Es wurde noch kein Block erstellt."
 
 msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
 msgstr "Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?"

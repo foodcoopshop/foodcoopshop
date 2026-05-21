@@ -72,9 +72,6 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo '<section class="home-edit-section home-edit-section-header-image">';
     echo '<h2>' . __('Header image') . '</h2>';
-    if ($imageExists) {
-        echo '<div class="small">' . __('Click_on_image_to_change_it.') . '</div>';
-    }
     echo '<div class="input">';
         echo '<div class="page-image-wrapper">';
             echo $this->Html->link(
@@ -87,7 +84,11 @@ echo '<section class="home-edit-section home-edit-section-header-image">';
                     'escape' => false,
                 ]
             );
-            echo '<span class="small">' . __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]) . '</span>';
+            $imageLabel = __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]);
+            if ($imageExists) {
+                $imageLabel .= '<br />' . __('Click_on_image_to_change_it.');
+            }
+            echo '<span class="small">' . $imageLabel . '</span>';
         echo '</div>';
         echo $this->Form->hidden('Pages.tmp_image');
         $this->Form->unlockField('Pages.tmp_image');
