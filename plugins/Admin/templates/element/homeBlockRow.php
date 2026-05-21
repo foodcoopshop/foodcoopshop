@@ -25,11 +25,10 @@ if (!empty($block['tmp_image'])) {
 
     <div class="home-block-row-fields">
         <div class="input home-block-image-input">
-            <label><?php echo __('Image'); ?></label>
             <div class="home-block-image-wrapper">
                 <?php
                 echo $this->Html->link(
-                    $imageSrc != '' ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+                    $imageSrc != '' ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i> ' . __('Upload_image'),
                     'javascript:void(0);',
                     [
                         'class' => 'btn btn-outline-light add-image-button block-image-upload-button ' . ($imageSrc != '' ? 'uploaded' : ''),
@@ -40,6 +39,23 @@ if (!empty($block['tmp_image'])) {
                 );
                 ?>
             </div>
+            <?php
+            echo '<div class="home-block-image-position-wrapper' . ($imageSrc == '' ? ' hide' : '') . '">';
+            echo $this->Form->control('Blocks.' . $rowKey . '.image_position', [
+                'type' => 'select',
+                'class' => 'selectpicker-disabled',
+                'label' => false,
+                'options' => [
+                    Block::IMAGE_POSITION_LEFT => __('Left aligned'),
+                    Block::IMAGE_POSITION_RIGHT => __('Right aligned'),
+                ],
+                'value' => !empty($block['image_position']) ? (int)$block['image_position'] : Block::IMAGE_POSITION_LEFT,
+            ]);
+            echo '</div>';
+            if (($imagePositionError = $firstError('image_position')) !== false) {
+                echo '<div class="error-message block-error-message">' . h($imagePositionError) . '</div>';
+            }
+            ?>
             <?php echo $this->Form->hidden('Blocks.' . $rowKey . '.tmp_image'); ?>
             <?php $this->Form->unlockField('Blocks.' . $rowKey . '.tmp_image'); ?>
             <?php if ($imageSrc != '') { ?>
@@ -52,47 +68,36 @@ if (!empty($block['tmp_image'])) {
 
         <div class="home-block-text-inputs">
             <?php
-            echo $this->Form->control('Blocks.' . $rowKey . '.image_position', [
-                'type' => 'select',
-                'class' => 'selectpicker-disabled',
-                'label' => __('Image position'),
-                'options' => [
-                    Block::IMAGE_POSITION_LEFT => __('Left'),
-                    Block::IMAGE_POSITION_RIGHT => __('Right'),
-                ],
-                'value' => !empty($block['image_position']) ? (int)$block['image_position'] : Block::IMAGE_POSITION_LEFT,
-            ]);
-            if (($imagePositionError = $firstError('image_position')) !== false) {
-                echo '<div class="error-message block-error-message">' . h($imagePositionError) . '</div>';
-            }
-
             echo $this->Form->control('Blocks.' . $rowKey . '.heading', [
-                'label' => __('Heading'),
+                'class' => 'home-block-heading-input',
+                'label' => false,
+                'placeholder' => __('Heading'),
                 'value' => $block['heading'] ?? '',
             ]);
 
             echo $this->Form->control('Blocks.' . $rowKey . '.content', [
                 'type' => 'textarea',
-                'label' => __('Text'),
+                'label' => false,
                 'value' => $block['content'] ?? '',
                 'id' => 'home-block-content-' . $rowKey,
             ]);
 
-            echo $this->Form->control('Blocks.' . $rowKey . '.position', [
-                'label' => __('Position'),
-                'class' => 'short',
-                'type' => 'text',
-                'value' => $block['position'] ?? 0,
-            ]);
+            echo '<div class="home-block-meta-row">';
+                echo $this->Form->control('Blocks.' . $rowKey . '.position', [
+                    'label' => __('Position'),
+                    'class' => 'short',
+                    'type' => 'text',
+                    'value' => $block['position'] ?? 0,
+                ]);
+                echo $this->Form->control('Blocks.' . $rowKey . '.active', [
+                    'label' => __('Active'),
+                    'type' => 'checkbox',
+                    'checked' => isset($block['active']) ? (bool)$block['active'] : true,
+                ]);
+            echo '</div>';
             if (($positionError = $firstError('position')) !== false) {
                 echo '<div class="error-message block-error-message">' . h($positionError) . '</div>';
             }
-
-            echo $this->Form->control('Blocks.' . $rowKey . '.active', [
-                'label' => __('Active'),
-                'type' => 'checkbox',
-                'checked' => isset($block['active']) ? (bool)$block['active'] : true,
-            ]);
             ?>
         </div>
     </div>

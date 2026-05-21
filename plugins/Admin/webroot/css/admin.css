@@ -761,12 +761,29 @@ body.pages.edit_home .home-blocks-editor {
     margin-top: 10px;
 }
 
+body.pages.edit_home .home-edit-section {
+    clear: both;
+    margin-top: 24px;
+}
+
+body.pages.edit_home .home-edit-section:first-of-type {
+    margin-top: 12px;
+}
+
+body.pages.edit_home .home-edit-section h2 {
+    float: none;
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
 body.pages.edit_home .home-blocks-editor h2 {
     float: none;
     margin-top: 0;
     margin-bottom: 0;
-    border-bottom: 0;
-    padding-bottom: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #dfdfdf;
 }
 
 body.pages.edit_home .home-blocks-editor-header {
@@ -774,9 +791,35 @@ body.pages.edit_home .home-blocks-editor-header {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    border-bottom: 1px solid #dfdfdf;
     padding-bottom: 5px;
     margin-bottom: 10px;
+}
+
+body.pages.edit_home .home-edit-info-text-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+body.pages.edit_home .home-edit-info-text-label {
+    flex: 0 0 220px;
+}
+
+body.pages.edit_home .home-edit-info-text-label label {
+    float: none;
+    width: auto;
+    margin-top: 0;
+}
+
+body.pages.edit_home .home-edit-info-text-editor {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+body.pages.edit_home .home-edit-info-text-editor .input {
+    float: none;
+    clear: none;
+    margin-bottom: 0;
 }
 
 body.pages.edit_home .home-blocks-empty-state {
@@ -828,7 +871,9 @@ body.pages.edit_home .home-block-image-input {
 }
 
 body.pages.edit_home .home-block-image-wrapper {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    width: 100%;
+    float: left;
 }
 
 body.pages.edit_home .home-block-image-wrapper img {
@@ -884,7 +929,62 @@ body.pages.edit_home .home-block-row textarea {
     width: 100%;
 }
 
+body.pages.edit_home .home-block-row .input.text input.short {
+    width: 30px;
+}
+
+body.pages.edit_home .home-block-row .input.text input.home-block-heading-input {
+    font-size: 18px;
+    padding: 8px 10px;
+}
+
+body.pages.edit_home .home-block-row .jodit-container {
+    float: none;
+    clear: both;
+    width: 100%;
+}
+
+body.pages.edit_home .home-block-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+body.pages.edit_home .home-block-meta-row .input {
+    margin-bottom: 0;
+}
+
+body.pages.edit_home .home-block-meta-row .input.text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.pages.edit_home .home-block-meta-row .input.text label {
+    margin-bottom: 0;
+}
+
+body.pages.edit_home .home-block-meta-row .input.checkbox {
+    margin-left: 6px;
+}
+
+body.pages.edit_home .home-block-meta-row .input.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    margin-bottom: 0;
+}
+
+body.pages.edit_home .home-block-meta-row .input.checkbox input[type="checkbox"] {
+    position: static;
+    left: auto;
+    float: none;
+    margin: 0;
+}
+
 body.pages.edit_home .home-block-row .error-message.block-error-message {
+    margin-top: 8px;
     margin-left: 0;
     width: 100%;
     float: none;

@@ -124,6 +124,7 @@ foodcoopshop.Upload = {
         var objectId = form.data('objectId');
         var row = $('body.pages .home-block-row[data-object-id="' + objectId + '"]');
         row.find('input[name="Blocks[' + objectId + '][tmp_image]"]').val(image.attr('src'));
+        row.find('.home-block-image-position-wrapper').removeClass('hide');
         var button = row.find('a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');

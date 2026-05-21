@@ -33,7 +33,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('id="pages-content"');
-        $this->assertResponseContains('Blöcke für uneingeloggte User');
+        $this->assertResponseContains('Blöcke (sichtbar nur für uneingeloggte User)');
     }
 
     public function testEditHomePost(): void
@@ -123,5 +123,52 @@ class AdminPagesControllerTest extends AppCakeTestCase
 
         $blocksTable = $this->getTableLocator()->get('Blocks');
         $this->assertEquals(1, $blocksTable->find()->count());
+    }
+
+    public function testEditHomePostAllowsExistingImageOnlyBlock(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $blocksTable = $this->getTableLocator()->get('Blocks');
+        $block = $blocksTable->get(1);
+        $block = $blocksTable->patchEntity($block, [
+            'image' => 'demo.jpg',
+            'heading' => '',
+            'content' => '',
+        ], [
+            'validate' => false,
+        ]);
+        $blocksTable->saveOrFail($block, [
+            'validate' => false,
+        ]);
+
+        $this->post($this->Slug->getPageEditHome(), [
+            'Pages' => [
+                'content' => '<p>Neue Startseite</p>',
+            ],
+            'Blocks' => [
+                'block-1' => [
+                    'id' => 1,
+                    'tmp_image' => '',
+                    'image_position' => Block::IMAGE_POSITION_LEFT,
+                    'heading' => '',
+                    'content' => '',
+                    'position' => 5,
+                    'active' => 1,
+                ],
+            ],
+            'Configurations' => [
+                'FCS_FOODCOOPS_MAP_ENABLED' => 0,
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertFlashMessage('Die Startseite wurde erfolgreich geändert.');
+        $this->assertRedirect('/');
+
+        $savedBlock = $blocksTable->get(1);
+        $this->assertSame('demo.jpg', $savedBlock->image);
+        $this->assertSame('', $savedBlock->heading);
+        $this->assertSame('', $savedBlock->content);
     }
 }

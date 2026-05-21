@@ -60,6 +60,9 @@ if ($identity === null && !empty($homeBlocks)) {
         foreach ($homeBlocks as $block) {
             $imagePosition = (int)($block->image_position ?? Block::IMAGE_POSITION_LEFT);
             $blockClass = $imagePosition === Block::IMAGE_POSITION_RIGHT ? 'home-block image-right' : 'home-block image-left';
+            if (empty($block->image)) {
+                $blockClass .= ' no-image';
+            }
             echo '<article class="' . $blockClass . '">';
                 echo '<div class="home-block-inner">';
                     if (!empty($block->image)) {

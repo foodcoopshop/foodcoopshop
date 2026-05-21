@@ -757,10 +757,16 @@ msgid "BIC"
 msgstr "BIC"
 
 msgid "Blocks for logged out users"
-msgstr "Blöcke für uneingeloggte User"
+msgstr "Blöcke (für uneingeloggte User)"
+
+msgid "Blocks (visible only for logged out users)"
+msgstr "Blöcke (sichtbar nur für uneingeloggte User)"
 
 msgid "Blog_archive"
 msgstr "Blog-Archiv"
+
+msgid "Info text (visible to all users)"
+msgstr "Info-Text (sichtbar für alle User)"
 
 msgid "Blog_post_manufacturer_description"
 msgstr "Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung \"nur für Mitglieder\")."
@@ -788,6 +794,9 @@ msgstr "Abbrechen"
 
 msgid "Cancel_invoice"
 msgstr "Rechnung stornieren"
+
+msgid "Map"
+msgstr "Karte"
 
 msgid "Cancel_order?"
 msgstr "Bestellung abbrechen?"
@@ -2301,6 +2310,12 @@ msgstr "um diese Plattform weiterhin verwenden zu können, lese bitte die geänd
 msgid "Header image"
 msgstr "Header-Bild"
 
+msgid "Header image upload"
+msgstr "Header-Bild hochladen"
+
+msgid "Heading"
+msgstr "Überschrift"
+
 msgid "Image"
 msgstr "Bild"
 
@@ -3618,8 +3633,8 @@ msgstr "Möchtest du das Produkt wirklich löschen?"
 msgid "Really_delete_image?"
 msgstr "Möchtest du das Bild wirklich löschen?"
 
-msgid "Really delete block?"
-msgstr "Möchtest du den Block wirklich löschen?"
+msgid "Really delete block? Don't forget to click save afterwards."
+msgstr "Möchtest du den Block wirklich löschen? Nicht vergessen: Danach auf Speichern klicken."
 
 msgid "Really_delete_member?"
 msgstr "Möchtest du das Mitglied wirklich löschen?"
@@ -3777,8 +3792,14 @@ msgstr "Bitte mindestens eines der Felder Bild, Überschrift oder Text ausfülle
 msgid "Left"
 msgstr "Links"
 
+msgid "Left aligned"
+msgstr "linksbündig"
+
 msgid "Right"
 msgstr "Rechts"
+
+msgid "Right aligned"
+msgstr "rechtsbündig"
 
 msgid "route_list_of_allergens"
 msgstr "allergenliste"
@@ -5068,6 +5089,9 @@ msgstr "Neue Datei hochladen"
 
 msgid "Upload_new_image"
 msgstr "Neues Bild hochladen"
+
+msgid "Upload_image"
+msgstr "Bild hochladen"
 
 msgid "Upload_new_image_or_change_it"
 msgstr "Neues Bild hochladen bzw. austauschen"

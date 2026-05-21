@@ -1614,6 +1614,12 @@ body.pages.home .home-block-body {
     flex: 1 1 auto;
     min-width: 0;
 }
+body.pages.home .home-block.image-right .home-block-body {
+    text-align: right;
+}
+body.pages.home .home-block.no-image .home-block-body {
+    text-align: center;
+}
 body.pages.home .home-block-body h2 {
     margin-top: 0;
 }

@@ -125,4 +125,24 @@ foodcoopshop.Editor = {
 
     },
 
+    initBigReduced: function (name, startupFocus) {
+        
+        const editor = Jodit.make('textarea#' + name, {
+            ... this.getDefaultOptions(),
+            width: 760,
+            height: 550,
+            buttons: ['bold', 'eraser',
+                    '|', 'paragraph', 'ul', 'ol', 'hr',
+            ],
+
+        });
+
+        if (startupFocus) {
+            editor.selection.focus();
+        }
+
+        return editor;
+
+    },    
+
 };

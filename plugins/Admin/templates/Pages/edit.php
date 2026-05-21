@@ -107,7 +107,7 @@ if ($imageExists) {
 echo '</label>';
 echo '<div class="page-image-wrapper">';
     echo $this->Html->link(
-        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i> ' . __('Header image upload'),
         'javascript:void(0);',
         [
             'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),

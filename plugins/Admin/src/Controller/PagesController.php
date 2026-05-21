@@ -177,6 +177,14 @@ class PagesController extends AdminAppController
         foreach ($submittedBlocks as $submittedBlock) {
             $blockId = (int)($submittedBlock['id'] ?? 0);
             if ($blockId > 0 && isset($homeBlocksById[$blockId])) {
+                if (
+                    empty($submittedBlock['delete_image'])
+                    && trim((string)($submittedBlock['tmp_image'] ?? '')) === ''
+                    && trim((string)($submittedBlock['image'] ?? '')) === ''
+                    && !empty($homeBlocksById[$blockId]->image)
+                ) {
+                    $submittedBlock['image'] = (string)$homeBlocksById[$blockId]->image;
+                }
                 $blockEntity = $blocksTable->patchEntity($homeBlocksById[$blockId], $submittedBlock);
             } else {
                 $blockEntity = $blocksTable->newEntity($submittedBlock);

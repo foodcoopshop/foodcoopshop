@@ -70,28 +70,29 @@ $this->Form->unlockField('Blocks');
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<div class="input">';
-echo '<label>'.__('Header image');
-if ($imageExists) {
-    echo '<br /><span class="small">'.__('Click_on_image_to_change_it.').'</span>';
-}
-echo '</label>';
-echo '<div class="page-image-wrapper">';
-    echo $this->Html->link(
-        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
-        'javascript:void(0);',
-        [
-            'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
-            'title' => __('Upload_new_image_or_change_it'),
-            'data-object-id' => $idForImageUpload,
-            'escape' => false,
-        ]
-    );
-    echo '<span class="small">' . __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]) . '</span>';
-echo '</div>';
-echo $this->Form->hidden('Pages.tmp_image');
-$this->Form->unlockField('Pages.tmp_image');
-echo '</div>';
+echo '<section class="home-edit-section home-edit-section-header-image">';
+    echo '<h2>' . __('Header image') . '</h2>';
+    if ($imageExists) {
+        echo '<div class="small">' . __('Click_on_image_to_change_it.') . '</div>';
+    }
+    echo '<div class="input">';
+        echo '<div class="page-image-wrapper">';
+            echo $this->Html->link(
+                $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i> ' . __('Header image upload'),
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+                    'title' => __('Upload_new_image_or_change_it'),
+                    'data-object-id' => $idForImageUpload,
+                    'escape' => false,
+                ]
+            );
+            echo '<span class="small">' . __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]) . '</span>';
+        echo '</div>';
+        echo $this->Form->hidden('Pages.tmp_image');
+        $this->Form->unlockField('Pages.tmp_image');
+    echo '</div>';
+echo '</section>';
 
 if ($imageExists) {
     echo '<div class="warning">';
@@ -103,9 +104,10 @@ if ($imageExists) {
     echo '</div>';
 }
 
+echo '<section class="home-edit-section home-edit-section-blocks">';
 echo '<div class="home-blocks-editor">';
     echo '<div class="home-blocks-editor-header">';
-        echo '<h2>' . __('Blocks for logged out users') . '</h2>';
+        echo '<h2>' . __('Blocks (visible only for logged out users)') . '</h2>';
         echo '<a href="javascript:void(0);" class="btn btn-success add-home-block-button"><i class="fa-fw fas fa-plus"></i> ' . __('Add block') . '</a>';
     echo '</div>';
 
@@ -130,20 +132,33 @@ echo '<div class="home-blocks-editor">';
         ]);
     echo '</div>';
 echo '</div>';
+echo '</section>';
 
+echo '<section class="home-edit-section home-edit-section-map">';
+echo '<h2>' . __('Map') . '</h2>';
 echo $this->Form->control('Configurations.FCS_FOODCOOPS_MAP_ENABLED', [
     'type' => 'checkbox',
     'label' => __('Configuration_text_FCS_FOODCOOPS_MAP_ENABLED'),
     'checked' => $foodcoopsMapEnabled,
     'escape' => false,
 ]);
+echo '</section>';
 
-echo $this->Form->control('Pages.content', [
-    'type' => 'textarea',
-    'value' => $homeText,
-    'label' => __('Text') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
-    'escape' => false,
-]);
+echo '<section class="home-edit-section home-edit-section-info-text">';
+echo '<h2>' . __('Info text (visible to all users)') . '</h2>';
+echo '<div class="home-edit-info-text-row">';
+    echo '<div class="home-edit-info-text-label">';
+        echo '<p class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></p>';
+    echo '</div>';
+    echo '<div class="home-edit-info-text-editor">';
+        echo $this->Form->control('Pages.content', [
+            'type' => 'textarea',
+            'value' => $homeText,
+            'label' => false,
+        ]);
+    echo '</div>';
+echo '</div>';
+echo '</section>';
 
 echo $this->Form->end();
 
@@ -172,7 +187,7 @@ echo $this->element('addScript', [
 
     var initBlockRow = function (row) {
         var objectId = row.data('objectId');
-        foodcoopshop.Editor.initSmall('home-block-content-' + objectId);
+        foodcoopshop.Editor.initBigReduced('home-block-content-' + objectId);
         foodcoopshop.Upload.initImageUpload('body.pages .block-image-upload-button[data-object-id="' + objectId + '"]', foodcoopshop.Upload.saveBlockTmpImageInForm);
     };
 
@@ -207,7 +222,7 @@ echo $this->element('addScript', [
     });
 
     $(document).on('click', '.remove-home-block-button', function () {
-        if (!confirm(__('Really delete block?'))) {
+        if (!confirm(__('Really delete block? Don\'t forget to click save afterwards.'))) {
             return;
         }
 
@@ -220,6 +235,8 @@ echo $this->element('addScript', [
 
     $(document).on('click', '.home-block-row-actions .submit', function (e) {
         e.preventDefault();
+        foodcoopshop.Helper.disableButton($(this));
+        foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
         $('#pageEditForm').submit();
     });
 }());
