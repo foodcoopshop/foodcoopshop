@@ -23,6 +23,30 @@ $this->element('addScript', ['script' =>
 
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
+$srcLargeImage = $this->Html->getHomeImageSrc('single');
+if ($srcLargeImage != '') {
+    $srcMobileImage = $this->Html->getHomeImageSrc('mobile');
+    if ($srcMobileImage == '') {
+        $srcMobileImage = $srcLargeImage;
+    }
+    $this->set('pageHeaderImageDesktop', $srcLargeImage);
+    $this->set('pageHeaderImageMobile', $srcMobileImage);
+}
+
+if ($identity !== null) {
+    if ($identity->isSuperadmin() || $identity->isAdmin()) {
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt"></i>',
+            $this->Slug->getPageEditHome(),
+            [
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __('Edit'),
+                'escape' => false,
+            ]
+        );
+    }
+}
+
 if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
     echo '<div class="home-text">';
         echo Configure::read('appDb.FCS_HOME_TEXT');

@@ -218,7 +218,7 @@ class ConfigurationsFixture extends AppFixture
             'active' => 1,
             'name' => 'FCS_FOODCOOPS_MAP_ENABLED',
             'value' => '1',
-            'type' => 'boolean',
+            'type' => 'hidden',
             'position' => 1280,
         ],
         [
@@ -407,7 +407,7 @@ class ConfigurationsFixture extends AppFixture
             'active' => 1,
             'name' => 'FCS_HOME_TEXT',
             'value' => '',
-            'type' => 'textarea_big',
+            'type' => 'hidden',
             'position' => 1290,
         ],
         [

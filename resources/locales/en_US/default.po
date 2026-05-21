@@ -1175,16 +1175,13 @@ msgid "Configuration_text_FCS_FEEDBACK_TO_PRODUCTS_ENABLED"
 msgstr "Are members allowed to write feedback to products?"
 
 msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
-msgstr "Show map with other foodcoops on home?"
+msgstr "Show map with other foodcoops?"
 
 msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
 msgstr "Additional text for footer"
 
 msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
 msgstr "Enable API to hellocash.at?"
-
-msgid "Configuration_text_FCS_HOME_TEXT"
-msgstr "Text that is shown on the home page."
 
 msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
 msgstr "Include stock products in invoices?"

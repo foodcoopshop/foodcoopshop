@@ -824,6 +824,12 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($urlPrefix . $imageFilename);
     }
 
+    public function getHomeImageSrc(string $size): string
+    {
+        $homePage = new Page(['id_page' => Page::PAGE_ID_HOME]);
+        return $this->getPageImageSrc($homePage, $size);
+    }
+
     public function getManufacturerTermsOfUseSrcTemplate(string|int $manufacturerId): string
     {
         return Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __('Filename_General-terms-and-conditions') . '.pdf';

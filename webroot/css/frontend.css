@@ -1531,11 +1531,13 @@ body.blog_posts.detail #inner-content > .img-wrapper {
 }
 body.blog_posts.detail #inner-content,
 body.pages.detail #inner-content,
+body.pages.home #inner-content,
 body.manufacturers.detail #inner-content {
     position: relative;
 }
 body.blog_posts a.edit-shortcut-button,
 body.pages.detail a.edit-shortcut-button,
+body.pages.home a.edit-shortcut-button,
 body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
     top: -3px;
     right: 3px;

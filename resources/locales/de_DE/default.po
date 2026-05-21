@@ -1210,16 +1210,13 @@ msgid "Configuration_text_FCS_FEEDBACK_TO_PRODUCTS_ENABLED"
 msgstr "Feedback-Funktion für Produkte aktiviert?"
 
 msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
-msgstr "Auf Home Karte mit anderen Foodcoops anzeigen?"
+msgstr "Karte mit anderen Foodcoops anzeigen?"
 
 msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
 msgstr "Zusätzlicher Text für den Footer"
 
 msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
 msgstr "Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?"
-
-msgid "Configuration_text_FCS_HOME_TEXT"
-msgstr "Text, der auf der Startseite angezeigt wird."
 
 msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
 msgstr "Lagerprodukte in Rechnungen miteinbeziehen?"
@@ -4564,6 +4561,9 @@ msgstr "Die Bestellung wurde erfolgreich abgeschlossen."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
+
+msgid "The homepage has been changed successfully."
+msgstr "Die Startseite wurde erfolgreich geändert."
 
 msgid "The_page_{0}_has_been_{1}."
 msgstr "Die Seite {0} wurde {1}."

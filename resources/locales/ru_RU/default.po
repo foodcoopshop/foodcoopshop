@@ -1165,9 +1165,6 @@ msgstr "Дополнительный текст для нижнего колон
 msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
 msgstr "Активировать API для hellocash.at?"
 
-msgid "Configuration_text_FCS_HOME_TEXT"
-msgstr "Text that is shown on the home page."
-
 msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
 msgstr "Включать товары со склада складских продуктов в счета?"
 

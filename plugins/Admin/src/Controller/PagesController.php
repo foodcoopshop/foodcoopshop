@@ -80,6 +80,100 @@ class PagesController extends AdminAppController
         $this->_processForm($page, true);
     }
 
+    public function editHome(): ?Response
+    {
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $configuration = $configurationsTable->find('all', conditions: [
+            'Configurations.name' => 'FCS_HOME_TEXT',
+        ])->first();
+
+        if (empty($configuration)) {
+            throw new NotFoundException();
+        }
+
+        $mapConfiguration = $configurationsTable->find('all', conditions: [
+            'Configurations.name' => 'FCS_FOODCOOPS_MAP_ENABLED',
+        ])->first();
+
+        if (empty($mapConfiguration)) {
+            throw new NotFoundException();
+        }
+
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . '/files/kcfinder/pages',
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . '/files/kcfinder/pages',
+        ];
+
+        $this->set('title_for_layout', __('homepage'));
+        $this->setFormReferer();
+
+        if (empty($this->getRequest()->getData())) {
+            $this->set('homeText', $configuration->value);
+            $this->set('foodcoopsMapEnabled', (bool) $mapConfiguration->value);
+            return $this->render('edit_home');
+        }
+
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
+
+        $homeText = (string) $this->getRequest()->getData('Pages.content');
+        $configuration = $configurationsTable->patchEntity(
+            $configuration,
+            [
+                'value' => $homeText,
+            ],
+            [
+                'validate' => false,
+            ],
+        );
+
+        $foodcoopsMapEnabled = $this->getRequest()->getData('Configurations.FCS_FOODCOOPS_MAP_ENABLED') ? '1' : '0';
+        $mapConfiguration = $configurationsTable->patchEntity(
+            $mapConfiguration,
+            [
+                'value' => $foodcoopsMapEnabled,
+            ],
+            [
+                'validate' => false,
+            ],
+        );
+
+        if ($configuration->hasErrors() || $mapConfiguration->hasErrors()) {
+            $this->Flash->error(__('Errors_while_saving!_admin'));
+            $this->set('homeText', $homeText);
+            $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
+            return $this->render('edit_home');
+        }
+
+        $saved = $configurationsTable->save($configuration);
+        $mapSaved = $configurationsTable->save($mapConfiguration);
+        if (empty($saved) || empty($mapSaved)) {
+            $this->Flash->error(__('Errors_while_saving!_admin'));
+            $this->set('homeText', $homeText);
+            $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
+            return $this->render('edit_home');
+        }
+
+        $thumbsPath = Configure::read('app.htmlHelper')->getPageThumbsPath();
+
+        if (!empty($this->getRequest()->getData('Pages.tmp_image'))) {
+            $this->saveUploadedImage(
+                Page::PAGE_ID_HOME,
+                (string) $this->getRequest()->getData('Pages.tmp_image'),
+                $thumbsPath,
+                Configure::read('app.pageImageSizes'),
+            );
+        }
+
+        if (!empty($this->getRequest()->getData('Pages.delete_image'))) {
+            $this->deleteUploadedImage(Page::PAGE_ID_HOME, $thumbsPath);
+        }
+
+        $this->Flash->success(__('The homepage has been changed successfully.'));
+        return $this->redirect($this->getPreparedReferer());
+    }
+
     private function _processForm(Page $page, bool $isEditMode): ?Response
     {
         $_SESSION['ELFINDER'] = [

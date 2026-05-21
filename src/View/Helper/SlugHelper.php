@@ -432,6 +432,11 @@ class SlugHelper extends Helper
         return '/admin/pages/add';
     }
 
+    public function getPageEditHome(): string
+    {
+        return '/admin/pages/edit-home';
+    }
+
     public function getPaymentEdit(int $paymentId): string
     {
         return '/admin/payments/edit/'.$paymentId;
