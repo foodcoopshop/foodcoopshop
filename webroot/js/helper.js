@@ -237,6 +237,11 @@ foodcoopshop.Helper = {
 
     initMenuAutoHide : function() {
 
+        if ($('body').hasClass('has-page-hero')) {
+            $('#header').removeClass('off-canvas fixed');
+            return;
+        }
+
         // scroll is still position
         var scroll = $(document).scrollTop();
         var headerHeight = $('#header').height();

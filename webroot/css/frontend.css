@@ -1659,7 +1659,7 @@ body.has-page-hero #header {
     background-position: center;
     background-repeat: no-repeat;
     min-height: 750px;
-    position: fixed;
+    position: relative;
 }
 body.has-page-hero #header::before {
     content: '';
@@ -1697,6 +1697,9 @@ body.has-page-hero #main-menu > li > a {
 body.has-page-hero #main-menu > li > a:hover {
     background: rgba(255, 255, 255, 0.18);
     text-decoration: none !important;
+}
+body.has-page-hero #content {
+    padding-top: 0;
 }
 body.has-page-hero #main-menu > li > a > i.fas:empty,
 body.has-page-banner #main-menu > li > a > i.fas:empty {
