@@ -164,6 +164,9 @@ return [
         'sliderImageSizes' => [
             '908' => ['suffix' => '-slider'], // detail AND lightbox
         ],
+        'blockImageSizes' => [
+            '500' => ['suffix' => '-block', 'scaleDown' => true],
+        ],
         'tmpUploadImagesDir' => DS . 'tmp' . DS . 'images',
         'tmpUploadFilesDir' => DS . 'tmp' . DS . 'files',
 

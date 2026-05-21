@@ -52,6 +52,13 @@ class PagesController extends FrontendController
         $sliders = $slidersTable->getForHome();
         $this->set('sliders', $sliders);
 
+        $homeBlocks = [];
+        if ($this->identity === null) {
+            $blocksTable = $this->getTableLocator()->get('Blocks');
+            $homeBlocks = $blocksTable->getForHome()->all()->toArray();
+        }
+        $this->set('homeBlocks', $homeBlocks);
+
         $products = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $catalogService = new CatalogService();

@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 use App\Model\Entity\Page;
+use App\Model\Entity\Block;
 use Cake\Http\Response;
 use Admin\Traits\UploadTrait;
 
@@ -83,6 +84,7 @@ class PagesController extends AdminAppController
     public function editHome(): ?Response
     {
         $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $blocksTable = $this->getTableLocator()->get('Blocks');
         $configuration = $configurationsTable->find('all', conditions: [
             'Configurations.name' => 'FCS_HOME_TEXT',
         ])->first();
@@ -99,6 +101,11 @@ class PagesController extends AdminAppController
             throw new NotFoundException();
         }
 
+        $homeBlocks = $blocksTable->find('all', order: [
+            'Blocks.position' => 'ASC',
+            'Blocks.id' => 'ASC',
+        ])->toArray();
+
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . '/files/kcfinder/pages',
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . '/files/kcfinder/pages',
@@ -110,6 +117,7 @@ class PagesController extends AdminAppController
         if (empty($this->getRequest()->getData())) {
             $this->set('homeText', $configuration->value);
             $this->set('foodcoopsMapEnabled', (bool) $mapConfiguration->value);
+            $this->set('blocks', $homeBlocks);
             return $this->render('edit_home');
         }
 
@@ -118,6 +126,27 @@ class PagesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
         $homeText = (string) $this->getRequest()->getData('Pages.content');
+        $submittedBlocksRaw = (array) $this->getRequest()->getData('Blocks');
+        $submittedBlocks = [];
+        foreach ($submittedBlocksRaw as $rowKey => $submittedBlock) {
+            if ((string) $rowKey === '__INDEX__' || !is_array($submittedBlock)) {
+                continue;
+            }
+
+            $blockId = (int)($submittedBlock['id'] ?? 0);
+            $tmpImage = trim((string)($submittedBlock['tmp_image'] ?? ''));
+            $image = trim((string)($submittedBlock['image'] ?? ''));
+            $heading = trim(strip_tags((string)($submittedBlock['heading'] ?? '')));
+            $content = trim(strip_tags((string)($submittedBlock['content'] ?? '')));
+            $deleteImage = !empty($submittedBlock['delete_image']);
+            $hasUserContent = $tmpImage !== '' || $image !== '' || $heading !== '' || $content !== '' || $deleteImage;
+
+            if ($blockId === 0 && !$hasUserContent) {
+                continue;
+            }
+
+            $submittedBlocks[] = $submittedBlock;
+        }
         $configuration = $configurationsTable->patchEntity(
             $configuration,
             [
@@ -139,10 +168,31 @@ class PagesController extends AdminAppController
             ],
         );
 
-        if ($configuration->hasErrors() || $mapConfiguration->hasErrors()) {
+        $blockEntities = [];
+        $blockErrors = false;
+        $homeBlocksById = [];
+        foreach ($homeBlocks as $homeBlock) {
+            $homeBlocksById[(int) $homeBlock->id] = $homeBlock;
+        }
+        foreach ($submittedBlocks as $submittedBlock) {
+            $blockId = (int)($submittedBlock['id'] ?? 0);
+            if ($blockId > 0 && isset($homeBlocksById[$blockId])) {
+                $blockEntity = $blocksTable->patchEntity($homeBlocksById[$blockId], $submittedBlock);
+            } else {
+                $blockEntity = $blocksTable->newEntity($submittedBlock);
+            }
+            /** @var Block $blockEntity */
+            if ($blockEntity->hasErrors()) {
+                $blockErrors = true;
+            }
+            $blockEntities[] = $blockEntity;
+        }
+
+        if ($configuration->hasErrors() || $mapConfiguration->hasErrors() || $blockErrors) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('homeText', $homeText);
             $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
+            $this->set('blocks', $blockEntities);
             return $this->render('edit_home');
         }
 
@@ -152,6 +202,7 @@ class PagesController extends AdminAppController
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('homeText', $homeText);
             $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
+            $this->set('blocks', $blockEntities);
             return $this->render('edit_home');
         }
 
@@ -168,6 +219,48 @@ class PagesController extends AdminAppController
 
         if (!empty($this->getRequest()->getData('Pages.delete_image'))) {
             $this->deleteUploadedImage(Page::PAGE_ID_HOME, $thumbsPath);
+        }
+
+        $savedBlockIds = [];
+        $blockThumbsPath = Configure::read('app.htmlHelper')->getBlockThumbsPath();
+        foreach ($blockEntities as $index => $blockEntity) {
+            $savedBlock = $blocksTable->save($blockEntity);
+            if (empty($savedBlock)) {
+                $this->Flash->error(__('Errors_while_saving!_admin'));
+                $this->set('homeText', $homeText);
+                $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
+                $this->set('blocks', $blockEntities);
+                return $this->render('edit_home');
+            }
+            /** @var Block $savedBlock */
+            $savedBlockIds[] = (int) $savedBlock->id;
+
+            $submittedBlock = $submittedBlocks[$index] ?? [];
+            if (!empty($submittedBlock['tmp_image'])) {
+                $filename = $this->saveUploadedImage(
+                    $savedBlock->id,
+                    (string) $submittedBlock['tmp_image'],
+                    $blockThumbsPath,
+                    Configure::read('app.blockImageSizes'),
+                );
+                if ($filename !== false) {
+                    $savedBlock = $blocksTable->patchEntity($savedBlock, ['image' => $filename]);
+                    $blocksTable->save($savedBlock);
+                }
+            }
+
+            if (!empty($submittedBlock['delete_image'])) {
+                $this->deleteUploadedImage($savedBlock->id, $blockThumbsPath);
+                $savedBlock = $blocksTable->patchEntity($savedBlock, ['image' => null]);
+                $blocksTable->save($savedBlock);
+            }
+        }
+
+        foreach ($homeBlocks as $homeBlock) {
+            if (!in_array((int) $homeBlock->id, $savedBlockIds, true)) {
+                $this->deleteUploadedImage((int) $homeBlock->id, $blockThumbsPath);
+                $blocksTable->delete($homeBlock);
+            }
         }
 
         $this->Flash->success(__('The homepage has been changed successfully.'));

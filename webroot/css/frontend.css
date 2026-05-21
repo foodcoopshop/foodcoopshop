@@ -1558,6 +1558,70 @@ body.blog_posts.detail #inner-content ul {
 body.blog_posts.detail .blog-wrapper {
     margin-top: 10px;
 }
+body.pages.home .home-blocks {
+    margin-top: 20px;
+    margin-bottom: 36px;
+}
+
+body.pages.home #content {
+    flex-wrap: wrap;
+}
+
+body.pages.home #inner-content {
+    order: 1;
+    width: 100%;
+    max-width: var(--content-max-width);
+}
+
+body.pages.home .sidebar {
+    order: 2;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding-top: 0;
+}
+
+body.pages.home .home-block {
+    padding: 28px;
+}
+body.pages.home .home-block:nth-child(odd) {
+    background: #fff;
+}
+body.pages.home .home-block:nth-child(even) {
+    background: #f2f2f2;
+}
+body.pages.home .home-block-inner {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0;
+}
+body.pages.home .home-block.image-right .home-block-inner {
+    flex-direction: row-reverse;
+}
+body.pages.home .home-block-image {
+    flex: 0 0 min(500px, 45%);
+}
+body.pages.home .home-block-image img {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+body.pages.home .home-block-body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+body.pages.home .home-block-body h2 {
+    margin-top: 0;
+}
+
+body.pages.home .home-block-text {
+    font-size: 18px;
+    line-height: 1.45;
+}
 body.categories .blog-wrapper,
 body.manufacturers.detail .blog-wrapper {
     height: 330px;
@@ -1579,6 +1643,21 @@ body.categories.detail .description-wrapper h3 {
     color: #333;
     padding-top: 10px;
     font-size: 16px;
+}
+@media (max-width: 768px) {
+    body.pages.home .home-block-text {
+        font-size: 16px;
+    }
+
+    body.pages.home .home-block-inner,
+    body.pages.home .home-block.image-right .home-block-inner {
+        flex-direction: column;
+    }
+
+    body.pages.home .home-block-image {
+        flex-basis: auto;
+        width: 100%;
+    }
 }
 body.products.detail .pw {
     border-bottom: 1px solid #d6d4d4;

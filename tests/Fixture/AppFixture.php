@@ -29,6 +29,7 @@ abstract class AppFixture extends ChecksumTestFixture {
         'app.Addresses',
         'app.Attributes',
         'app.Barcodes',
+        'app.Blocks',
         'app.BlogPosts',
         'app.Carts',
         'app.CartProducts',

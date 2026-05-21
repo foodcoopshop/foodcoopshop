@@ -18,6 +18,7 @@ use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
 use Cake\I18n\I18n;
 use App\Model\Entity\BlogPost;
+use App\Model\Entity\Block;
 use App\Model\Entity\Page;
 use App\Model\Entity\Product;
 use Authorization\IdentityInterface;
@@ -758,6 +759,11 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getUploadImageDir() . DS . 'sliders';
     }
 
+    public function getBlockThumbsPath(): string
+    {
+        return $this->getUploadImageDir() . DS . 'blocks';
+    }
+
     public function getUploadImageDir(): string
     {
         return substr(WWW_ROOT, 0, - 1) . Configure::read('app.uploadedImagesDir');
@@ -767,6 +773,19 @@ class MyHtmlHelper extends HtmlHelper
     {
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'sliders' . DS;
         return $this->prepareAsUrl($urlPrefix . ($sliderImage ?? ''));
+    }
+
+    public function getBlockImageSrc(Block $block): string
+    {
+        $thumbsPath = $this->getBlockThumbsPath();
+        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blocks' . DS;
+
+        $imageFilename = $this->getImageFile($thumbsPath, $block->id . '-block');
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
+            return '';
+        }
+
+        return $this->prepareAsUrl($urlPrefix . $imageFilename);
     }
 
     public function getImageFile(string $thumbsPath, string $filenameWithoutExtension): string|null

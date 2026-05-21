@@ -756,6 +756,9 @@ msgstr "Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!"
 msgid "BIC"
 msgstr "BIC"
 
+msgid "Blocks for logged out users"
+msgstr "Blöcke für uneingeloggte User"
+
 msgid "Blog_archive"
 msgstr "Blog-Archiv"
 
@@ -1172,6 +1175,9 @@ msgstr "Eigenes CSS ist vorhanden."
 
 msgid "No custom CSS available."
 msgstr "Kein eigenes CSS vorhanden."
+
+msgid "No home block has been created yet."
+msgstr "Es wurde noch kein Startseiten-Block erstellt."
 
 msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
 msgstr "Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?"
@@ -3612,6 +3618,9 @@ msgstr "Möchtest du das Produkt wirklich löschen?"
 msgid "Really_delete_image?"
 msgstr "Möchtest du das Bild wirklich löschen?"
 
+msgid "Really delete block?"
+msgstr "Möchtest du den Block wirklich löschen?"
+
 msgid "Really_delete_member?"
 msgstr "Möchtest du das Mitglied wirklich löschen?"
 
@@ -3746,6 +3755,30 @@ msgstr "content"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+msgid "Home blocks"
+msgstr "Startseiten-Blöcke"
+
+msgid "Add block"
+msgstr "Block hinzufügen"
+
+msgid "New block"
+msgstr "Neuer Block"
+
+msgid "Image position"
+msgstr "Bildposition"
+
+msgid "Image will be scaled down to 500 px."
+msgstr "Das Bild wird auf 500 px verkleinert."
+
+msgid "Please fill in at least one of image heading or text."
+msgstr "Bitte mindestens eines der Felder Bild, Überschrift oder Text ausfüllen."
+
+msgid "Left"
+msgstr "Links"
+
+msgid "Right"
+msgstr "Rechts"
 
 msgid "route_list_of_allergens"
 msgstr "allergenliste"

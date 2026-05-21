@@ -115,6 +115,23 @@ foodcoopshop.Upload = {
         foodcoopshop.Modal.destroy(modalSelector);
     },
 
+    saveBlockTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        var form = $(modalSelector + ' form.mini-upload-form-image');
+        var objectId = form.data('objectId');
+        var row = $('body.pages .home-block-row[data-object-id="' + objectId + '"]');
+        row.find('input[name="Blocks[' + objectId + '][tmp_image]"]').val(image.attr('src'));
+        var button = row.find('a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
     saveProductImage : function (modalSelector) {
 
         var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);

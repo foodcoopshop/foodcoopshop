@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Core\Configure;
+use App\Model\Entity\Block;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -53,6 +54,33 @@ if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
     echo '</div>';
     echo '<hr />';
 }
+
+if ($identity === null && !empty($homeBlocks)) {
+    echo '<section class="home-blocks">';
+        foreach ($homeBlocks as $block) {
+            $imagePosition = (int)($block->image_position ?? Block::IMAGE_POSITION_LEFT);
+            $blockClass = $imagePosition === Block::IMAGE_POSITION_RIGHT ? 'home-block image-right' : 'home-block image-left';
+            echo '<article class="' . $blockClass . '">';
+                echo '<div class="home-block-inner">';
+                    if (!empty($block->image)) {
+                        echo '<div class="home-block-image">';
+                            echo $this->Html->image($this->Html->getBlockImageSrc($block));
+                        echo '</div>';
+                    }
+                    echo '<div class="home-block-body">';
+                        if (!empty($block->heading)) {
+                            echo '<h2>' . h($block->heading) . '</h2>';
+                        }
+                        if (!empty($block->content)) {
+                            echo '<div class="home-block-text">' . $block->content . '</div>';
+                        }
+                    echo '</div>';
+                echo '</div>';
+            echo '</article>';
+        }
+    echo '</section>';
+}
+
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
     echo '<h1 class="news">'.__('News').'</h1>';
 }

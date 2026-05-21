@@ -214,6 +214,19 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
+    public function testHomeBlocksVisibleOnlyForGuests(): void
+    {
+        $this->get($this->Slug->getHome());
+        $this->assertResponseOk();
+        $this->assertResponseContains('Demo block content');
+
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getHome());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('Demo block content');
+        $this->logout();
+    }
+
     public function testPageDetailOfflinePublicLoggedOut(): void
     {
         $pageId = 3;

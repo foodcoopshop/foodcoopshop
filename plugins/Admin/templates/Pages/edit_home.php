@@ -17,13 +17,14 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use App\Controller\Component\StringComponent;
+use App\Model\Entity\Block;
 use App\Model\Entity\Page;
 
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Editor.initBig('pages-content');" .
-        Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.pages .add-image-button', foodcoopshop.Upload.savePageTmpImageInForm);" .
+        Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.pages .page-image-wrapper .add-image-button', foodcoopshop.Upload.savePageTmpImageInForm);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -34,6 +35,15 @@ if (!empty($this->request->getData('Pages.tmp_image'))) {
     $imageSrc = str_replace('\\', '/', (string) $this->request->getData('Pages.tmp_image'));
 }
 $imageExists = $imageSrc != '';
+
+$preparedBlocks = [];
+foreach ($blocks as $index => $block) {
+    $rowKey = !empty($block['id']) ? 'block-' . (string) $block['id'] : 'block-temp-' . $index;
+    $preparedBlocks[] = [
+        'rowKey' => $rowKey,
+        'block' => $block,
+    ];
+}
 ?>
 
 <div class="filter-container">
@@ -55,6 +65,8 @@ echo $this->Form->create(null, [
     'url' => $this->Slug->getPageEditHome(),
     'id' => 'pageEditForm'
 ]);
+
+$this->Form->unlockField('Blocks');
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
@@ -91,6 +103,34 @@ if ($imageExists) {
     echo '</div>';
 }
 
+echo '<div class="home-blocks-editor">';
+    echo '<div class="home-blocks-editor-header">';
+        echo '<h2>' . __('Blocks for logged out users') . '</h2>';
+        echo '<a href="javascript:void(0);" class="btn btn-success add-home-block-button"><i class="fa-fw fas fa-plus"></i> ' . __('Add block') . '</a>';
+    echo '</div>';
+
+    echo '<div class="home-blocks-empty-state' . (count($preparedBlocks) > 0 ? ' hide' : '') . '">';
+        echo '<div class="home-blocks-empty-text">' . __('No home block has been created yet.') . '</div>';
+        echo '<div class="home-blocks-empty-separator"></div>';
+    echo '</div>';
+
+    echo '<div class="home-blocks-list">';
+        foreach ($preparedBlocks as $preparedBlock) {
+            echo $this->element('homeBlockRow', [
+                'rowKey' => $preparedBlock['rowKey'],
+                'block' => $preparedBlock['block'],
+                'isTemplate' => false,
+                'templateKey' => '',
+            ]);
+        }
+        echo $this->element('homeBlockRow', [
+            'block' => [],
+            'isTemplate' => true,
+            'templateKey' => '__INDEX__',
+        ]);
+    echo '</div>';
+echo '</div>';
+
 echo $this->Form->control('Configurations.FCS_FOODCOOPS_MAP_ENABLED', [
     'type' => 'checkbox',
     'label' => __('Configuration_text_FCS_FOODCOOPS_MAP_ENABLED'),
@@ -112,10 +152,113 @@ echo $this->Form->end();
 <div class="sc"></div>
 
 <?php
+echo $this->element('addScript', [
+    'script' => <<<JS
+(function () {
+    var blocksContainer = $('.home-blocks-list');
+    var blockTemplate = $('.home-block-row.template');
+    var emptyState = $('.home-blocks-empty-state');
+    var uploadFormsContainer = $('#home-block-upload-forms');
+    var uploadFormTemplate = $('form#mini-upload-form-image-__INDEX__');
+    var blockIndex = $('.home-block-row:not(.template)').length;
+
+    var toggleEmptyState = function () {
+        if (blocksContainer.find('.home-block-row:not(.template)').length === 0) {
+            emptyState.removeClass('hide');
+        } else {
+            emptyState.addClass('hide');
+        }
+    };
+
+    var initBlockRow = function (row) {
+        var objectId = row.data('objectId');
+        foodcoopshop.Editor.initSmall('home-block-content-' + objectId);
+        foodcoopshop.Upload.initImageUpload('body.pages .block-image-upload-button[data-object-id="' + objectId + '"]', foodcoopshop.Upload.saveBlockTmpImageInForm);
+    };
+
+    var addUploadFormForBlock = function (objectId) {
+        var uploadForm = uploadFormTemplate.clone();
+        uploadForm.removeClass('hide');
+        uploadForm.attr('id', 'mini-upload-form-image-' + objectId);
+        uploadForm.attr('data-object-id', objectId);
+        uploadForm.find('.heading').text(__('Upload_new_image'));
+        uploadForm.find('.drop img').remove();
+        uploadForm.find('a.uploadedFile').remove();
+        uploadForm.find('input[type="file"]').val('');
+        uploadFormsContainer.append(uploadForm);
+    };
+
+    $('.home-block-row:not(.template)').each(function () {
+        initBlockRow($(this));
+    });
+    toggleEmptyState();
+
+    $(document).on('click', '.add-home-block-button', function () {
+        var objectId = 'new-block-' + blockIndex + '-' + Date.now();
+        blockIndex++;
+        var row = blockTemplate.clone();
+        row.removeClass('template hide').show();
+        row.attr('data-object-id', objectId);
+        row.html(row.html().replace(/__INDEX__/g, objectId));
+        blocksContainer.append(row);
+        addUploadFormForBlock(objectId);
+        initBlockRow(row);
+        toggleEmptyState();
+    });
+
+    $(document).on('click', '.remove-home-block-button', function () {
+        if (!confirm(__('Really delete block?'))) {
+            return;
+        }
+
+        var row = $(this).closest('.home-block-row');
+        var objectId = row.data('objectId');
+        $('form#mini-upload-form-image-' + objectId).remove();
+        row.remove();
+        toggleEmptyState();
+    });
+
+    $(document).on('click', '.home-block-row-actions .submit', function (e) {
+        e.preventDefault();
+        $('#pageEditForm').submit();
+    });
+}());
+JS,
+]);
+?>
+
+<?php
 echo $this->element('imageUploadForm', [
     'id' => $idForImageUpload,
     'action' => '/admin/tools/doTmpPageImageUpload/',
     'imageExists' => $imageExists,
     'existingImageSrc' => $imageSrc,
 ]);
+
+echo '<div id="home-block-upload-forms" class="hide">';
+    foreach ($preparedBlocks as $preparedBlock) {
+        $blockRow = $preparedBlock['block'];
+        $blockImageSrc = '';
+        if (!empty($blockRow['tmp_image'])) {
+            $blockImageSrc = str_replace('\\', '/', (string) $blockRow['tmp_image']);
+        } elseif (!empty($blockRow['image']) && !empty($blockRow['id'])) {
+            $blockEntity = $blockRow instanceof Block ? $blockRow : new Block((array) $blockRow);
+            $blockImageSrc = $this->Html->getBlockImageSrc($blockEntity);
+        }
+
+        echo $this->element('imageUploadForm', [
+            'id' => $preparedBlock['rowKey'],
+            'action' => '/admin/tools/doTmpImageUpload/',
+            'imageExists' => $blockImageSrc != '',
+            'existingImageSrc' => $blockImageSrc,
+        ]);
+    }
+
+    echo $this->element('imageUploadForm', [
+        'id' => '__INDEX__',
+        'action' => '/admin/tools/doTmpImageUpload/',
+        'imageExists' => false,
+        'existingImageSrc' => '',
+    ]);
+echo '</div>';
 ?>
