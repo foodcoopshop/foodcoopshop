@@ -59,7 +59,7 @@ echo $this->Form->create(null, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo '<div class="input">';
-echo '<label>'.__('Image');
+echo '<label>'.__('Header image');
 if ($imageExists) {
     echo '<br /><span class="small">'.__('Click_on_image_to_change_it.').'</span>';
 }

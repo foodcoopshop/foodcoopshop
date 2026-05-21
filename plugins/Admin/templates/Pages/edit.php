@@ -100,7 +100,7 @@ echo $this->Form->control('Pages.extern_url', [
 ]);
 
 echo '<div class="input">';
-echo '<label>'.__('Image');
+echo '<label>'.__('Header image');
 if ($imageExists) {
     echo '<br /><span class="small">'.__('Click_on_image_to_change_it.').'</span>';
 }

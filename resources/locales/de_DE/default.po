@@ -2292,6 +2292,9 @@ msgstr "Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Fo
 msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
 msgstr "um diese Plattform weiterhin verwenden zu können, lese bitte die geänderten {0} und akzeptiere sie."
 
+msgid "Header image"
+msgstr "Header-Bild"
+
 msgid "Image"
 msgstr "Bild"
 
