@@ -759,8 +759,8 @@ msgstr "BIC"
 msgid "Blocks for logged out users"
 msgstr "Blöcke (für uneingeloggte User)"
 
-msgid "Blocks (visible only for logged out users)"
-msgstr "Blöcke (sichtbar nur für uneingeloggte User)"
+msgid "Blocks (only for logged out users)"
+msgstr "Blöcke (nur für uneingeloggte User)"
 
 msgid "Blog_archive"
 msgstr "Blog-Archiv"
@@ -3634,7 +3634,7 @@ msgid "Really_delete_image?"
 msgstr "Möchtest du das Bild wirklich löschen?"
 
 msgid "Really delete block? Don't forget to click save afterwards."
-msgstr "Möchtest du den Block wirklich löschen? Nicht vergessen: Danach auf Speichern klicken."
+msgstr "Möchtest du diesen Block wirklich löschen? Danach auf Speichern klicken."
 
 msgid "Really_delete_member?"
 msgstr "Möchtest du das Mitglied wirklich löschen?"

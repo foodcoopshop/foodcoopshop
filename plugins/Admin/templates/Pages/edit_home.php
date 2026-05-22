@@ -108,8 +108,8 @@ if ($imageExists) {
 echo '<section class="home-edit-section home-edit-section-blocks">';
 echo '<div class="home-blocks-editor">';
     echo '<div class="home-blocks-editor-header">';
-        echo '<h2>' . __('Blocks (visible only for logged out users)') . '</h2>';
-        echo '<a href="javascript:void(0);" class="btn btn-success add-home-block-button"><i class="fa-fw fas fa-plus"></i> ' . __('Add block') . '</a>';
+        echo '<h2>' . __('Blocks (only for logged out users)') . '</h2>';
+        echo '<a href="javascript:void(0);" class="btn btn-success add-home-block-button"><i class="fa-fw fas fa-plus"></i> ' . ($isMobile ? __('Block') : __('Add block')) . '</a>';
     echo '</div>';
 
     echo '<div class="home-blocks-empty-state' . (count($preparedBlocks) > 0 ? ' hide' : '') . '">';
@@ -186,6 +186,12 @@ echo $this->element('addScript', [
         }
     };
 
+    var scrollToRow = function (row) {
+        var filterContainerHeight = $('.filter-container:visible').outerHeight() || 0;
+        var targetTop = Math.max(0, row.offset().top - filterContainerHeight - 12);
+        $('html, body').stop(true).animate({scrollTop: targetTop}, 250);
+    };
+
     var initBlockRow = function (row) {
         var objectId = row.data('objectId');
         foodcoopshop.Editor.initBigReduced('home-block-content-' + objectId);
@@ -220,6 +226,7 @@ echo $this->element('addScript', [
         addUploadFormForBlock(objectId);
         initBlockRow(row);
         toggleEmptyState();
+        scrollToRow(row);
     });
 
     $(document).on('click', '.remove-home-block-button', function () {

@@ -1817,6 +1817,7 @@ body.has-page-banner #main-menu > li > a > i.fas:empty {
 body.has-page-hero #header .logo-wrapper a img.logo {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
+
 @media (max-width: 767px) {
     body.has-page-hero #header {
         background-image: var(--page-header-image-mobile);
