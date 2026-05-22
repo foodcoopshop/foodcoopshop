@@ -19,13 +19,14 @@ body {
     width: 100%;
     float: left;
     display: none;
+    background: #fff;
 }
 #content {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
     width: 100%;
-    background: #fff;
     z-index: 100;
+    padding-top: 20px;
     margin-right: 0px;
     border-right: 1px solid #d6d4d4;
     padding-top: var(--header-height, 148px);
@@ -1558,11 +1559,6 @@ body.blog_posts.detail #inner-content ul {
 body.blog_posts.detail .blog-wrapper {
     margin-top: 10px;
 }
-body.pages.home .home-blocks {
-    margin-top: 20px;
-    margin-bottom: 90px;
-}
-
 body.pages.home #content {
     display: grid;
     grid-template-columns: var(--sidebar-width) 10px minmax(0, 1fr) 10px;
@@ -1582,8 +1578,14 @@ body.pages.home .sidebar {
     padding-top: 0;
 }
 
+body.pages.home #content:not(:has(#inner-content > .home-blocks)) .sidebar {
+    grid-row: 1 / span 999;
+}
+
 body.pages.home .home-blocks {
     grid-column: 1 / -1;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 body.pages.home #inner-content > :not(.home-blocks) {
@@ -1836,7 +1838,7 @@ body.has-page-hero #header .logo-wrapper a img.logo {
     margin-top: var(--header-height, 148px);
 }
 body.has-page-banner #content {
-    padding-top: 0;
+    padding-top: 20px;
 }
 @media (max-width: 767px) {
     .page-header-banner {
