@@ -45,7 +45,7 @@ body {
     margin-right: auto;
 }
 body.carts.detail #inner-content {
-    max-width: var(--cart-max-width);
+    max-width: var(--content-small-max-width);
 }
 #inner-content.without-sidebar {
     width: 100%;
@@ -1586,6 +1586,9 @@ body.pages.home .home-blocks {
     grid-column: 1 / -1;
     margin-top: 20px;
     margin-bottom: 20px;
+    max-width: var(--content-small-max-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body.pages.home #inner-content > :not(.home-blocks) {
@@ -1606,7 +1609,6 @@ body.pages.home .home-block-inner {
     display: flex;
     gap: 28px;
     align-items: flex-start;
-    max-width: calc(var(--content-max-width) + var(--sidebar-width));
     margin: 0 auto;
     padding: 0;
 }
