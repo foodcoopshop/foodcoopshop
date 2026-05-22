@@ -258,6 +258,31 @@ body.dark .password-toggle-icon:hover {
     color: var(--dark-mode-2nd-font-color);
 }
 
+body.dark.pages.home .home-blocks {
+    background-color: transparent;
+}
+body.dark.pages.home .home-block,
+body.dark.pages.home .home-block:nth-child(odd),
+body.dark.pages.home .home-block:nth-child(even) {
+    background-color: var(--dark-mode-main-bg-color);
+    border-top-color: var(--dark-mode-main-border-color);
+}
+body.dark.pages.home .home-block:nth-child(even) {
+    background-color: var(--dark-mode-2nd-bg-color);
+}
+body.dark.pages.home .home-block-body h2,
+body.dark.pages.home .home-block-text,
+body.dark.pages.home .home-block a {
+    color: var(--dark-mode-main-font-color);
+}
+body.dark.pages.home .home-block a:hover {
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark.pages.home .home-block.no-image .home-block-body,
+body.dark.pages.home .home-block.image-right .home-block-body {
+    color: var(--dark-mode-main-font-color);
+}
+
 
 
 body.dark #header {
