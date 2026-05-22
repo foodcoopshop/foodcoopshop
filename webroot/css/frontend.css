@@ -592,7 +592,8 @@ body.blog_posts.index h1 {
     padding-bottom: 0;
 }
 body.home .home-text {
-    margin-bottom: 10px;
+    margin-bottom: 0;
+    padding-bottom: 10px;
 }
 a.button {
     border-radius: 5px;
@@ -1578,7 +1579,7 @@ body.pages.home a.home-edit-shortcut-button {
 
 body.pages.home .sidebar {
     grid-column: 1;
-    grid-row: 2 / span 999;
+    grid-row: 1 / span 999;
     width: auto;
     min-width: var(--sidebar-width);
     max-width: var(--sidebar-width);
@@ -1590,8 +1591,7 @@ body.pages.home #content:not(:has(#inner-content > .home-blocks)) .sidebar {
 }
 
 body.pages.home .home-blocks {
-    grid-column: 1 / -1;
-    margin-top: 20px;
+    grid-column: 3;
     margin-bottom: 20px;
     max-width: var(--content-small-max-width);
     margin-left: auto;
@@ -1645,7 +1645,8 @@ body.pages.home .home-block-body h2 {
     margin-top: 0;
 }
 
-body.pages.home .home-block-text {
+body.pages.home .home-block-text,
+body.home .home-text {
     font-size: 18px;
     line-height: 1.45;
 }
@@ -1810,7 +1811,7 @@ body.has-page-hero #main-menu > li > a:hover {
     text-decoration: none !important;
 }
 body.has-page-hero #content {
-    padding-top: 0;
+    padding-top: 20px;
 }
 body.has-page-hero #main-menu > li > a > i.fas:empty,
 body.has-page-banner #main-menu > li > a > i.fas:empty {
