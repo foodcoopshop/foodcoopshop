@@ -33,7 +33,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('id="pages-content"');
-        $this->assertResponseContains('Blöcke (sichtbar nur für uneingeloggte User)');
+        $this->assertResponseContains('Blöcke (nur für uneingeloggte User)');
     }
 
     public function testEditHomePost(): void
