@@ -63,7 +63,10 @@ class PagesController extends FrontendController
 
         if ($this->identity === null) {
             $blocksTable = $this->getTableLocator()->get('Blocks');
-            $homeBlocks = array_merge($homeBlocks, $blocksTable->getForHome()->all()->toArray());
+            $blocks = $blocksTable->getForHome()->all()->toArray();
+            if (!empty($blocks)) {
+                $homeBlocks = array_merge($homeBlocks, $blocks);
+            }
         }
         $this->set('homeBlocks', $homeBlocks);
 

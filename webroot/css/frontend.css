@@ -591,10 +591,6 @@ body.home h1,
 body.blog_posts.index h1 {
     padding-bottom: 0;
 }
-body.home .home-text {
-    margin-bottom: 0;
-    padding-bottom: 10px;
-}
 a.button {
     border-radius: 5px;
     color: #fff;
@@ -1657,8 +1653,7 @@ body.pages.home .home-block-body h2 {
     margin-top: 0;
 }
 
-body.pages.home .home-block-text,
-body.home .home-text {
+body.pages.home .home-block-text {
     font-size: 18px;
     line-height: 1.45;
 }
