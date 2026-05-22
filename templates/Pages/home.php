@@ -48,14 +48,7 @@ if ($identity !== null) {
     }
 }
 
-if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
-    echo '<div class="home-text">';
-        echo Configure::read('appDb.FCS_HOME_TEXT');
-    echo '</div>';
-    echo '<hr />';
-}
-
-if ($identity === null && !empty($homeBlocks)) {
+if (!empty($homeBlocks)) {
     echo '<section class="home-blocks">';
         foreach ($homeBlocks as $block) {
             $imagePosition = (int)($block->image_position ?? Block::IMAGE_POSITION_LEFT);

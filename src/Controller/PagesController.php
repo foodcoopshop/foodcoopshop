@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\StringComponent;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\EventInterface;
-use Cake\Core\Configure;
-use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
-use App\Services\CatalogService;
 use Cake\Http\Response;
+use Cake\Core\Configure;
+use App\Model\Entity\Block;
+use Cake\Event\EventInterface;
+use App\Services\CatalogService;
+use App\Controller\Component\StringComponent;
+use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -53,9 +54,16 @@ class PagesController extends FrontendController
         $this->set('sliders', $sliders);
 
         $homeBlocks = [];
+        if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
+            $homeBlocks[] = (object)[
+                'content' => Configure::read('appDb.FCS_HOME_TEXT'),
+                'image_position' => Block::IMAGE_POSITION_LEFT,
+            ];
+        }
+
         if ($this->identity === null) {
             $blocksTable = $this->getTableLocator()->get('Blocks');
-            $homeBlocks = $blocksTable->getForHome()->all()->toArray();
+            $homeBlocks = array_merge($homeBlocks, $blocksTable->getForHome()->all()->toArray());
         }
         $this->set('homeBlocks', $homeBlocks);
 

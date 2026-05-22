@@ -105,6 +105,22 @@ if ($imageExists) {
     echo '</div>';
 }
 
+echo '<section class="home-edit-section home-edit-section-info-text">';
+echo '<h2>' . __('Info text (visible to all users)') . '</h2>';
+echo '<div class="home-edit-info-text-row">';
+    echo '<div class="home-edit-info-text-label">';
+        echo '<p class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></p>';
+    echo '</div>';
+    echo '<div class="home-edit-info-text-editor">';
+        echo $this->Form->control('Pages.content', [
+            'type' => 'textarea',
+            'value' => $homeText,
+            'label' => false,
+        ]);
+    echo '</div>';
+echo '</div>';
+echo '</section>';
+
 echo '<section class="home-edit-section home-edit-section-blocks">';
 echo '<div class="home-blocks-editor">';
     echo '<div class="home-blocks-editor-header">';
@@ -143,22 +159,6 @@ echo $this->Form->control('Configurations.FCS_FOODCOOPS_MAP_ENABLED', [
     'checked' => $foodcoopsMapEnabled,
     'escape' => false,
 ]);
-echo '</section>';
-
-echo '<section class="home-edit-section home-edit-section-info-text">';
-echo '<h2>' . __('Info text (visible to all users)') . '</h2>';
-echo '<div class="home-edit-info-text-row">';
-    echo '<div class="home-edit-info-text-label">';
-        echo '<p class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></p>';
-    echo '</div>';
-    echo '<div class="home-edit-info-text-editor">';
-        echo $this->Form->control('Pages.content', [
-            'type' => 'textarea',
-            'value' => $homeText,
-            'label' => false,
-        ]);
-    echo '</div>';
-echo '</div>';
 echo '</section>';
 
 echo $this->Form->end();

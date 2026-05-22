@@ -1566,6 +1566,10 @@ body.pages.home #content {
     position: relative;
 }
 
+body.pages.home #content:not(:has(.sidebar)) {
+    grid-template-columns: 1fr minmax(0, var(--content-max-width)) 1fr;
+}
+
 body.pages.home #inner-content {
     display: contents;
 }
@@ -1598,8 +1602,16 @@ body.pages.home .home-blocks {
     margin-right: auto;
 }
 
+body.pages.home #content:not(:has(.sidebar)) #inner-content > .home-blocks {
+    grid-column: 2;
+}
+
 body.pages.home #inner-content > :not(.home-blocks) {
     grid-column: 3;
+}
+
+body.pages.home #content:not(:has(.sidebar)) #inner-content > :not(.home-blocks) {
+    grid-column: 2;
 }
 
 body.pages.home .home-block {
