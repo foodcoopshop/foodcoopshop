@@ -222,6 +222,48 @@
     body.has-page-hero .header-main-row {
         display: none ! important;
     }
+    body.pages.home .home-header-promo {
+        position: absolute ! important;
+        top: 110px ! important;
+        left: 0 ! important;
+        right: 0 ! important;
+        width: 100% ! important;
+        padding: 0 14px 8px ! important;
+        margin: 0 ! important;
+        z-index: 2;
+    }
+    body.pages.home .home-header-promo-inner {
+        max-width: none ! important;
+        max-width: 100% ! important;
+    }
+    body.pages.home .home-header-promo-title {
+        font-size: 28px ! important;
+        line-height: 1.05 ! important;
+        margin-bottom: 4px ! important;
+    }
+    body.pages.home .home-header-promo-lead {
+        font-size: 15px ! important;
+        line-height: 1.3 ! important;
+        margin-bottom: 8px ! important;
+    }
+    body.pages.home .home-header-promo-text {
+        font-size: 13px ! important;
+        line-height: 1.35 ! important;
+        max-width: none ! important;
+    }
+    body.pages.home .home-header-promo-actions {
+        display: flex ! important;
+        flex-direction: column ! important;
+        gap: 10px ! important;
+        margin-top: 12px ! important;
+        align-items: stretch ! important;
+    }
+    body.pages.home .home-header-promo-actions .btn {
+        width: 100% ! important;
+        min-width: 0 ! important;
+        padding: 10px 14px ! important;
+        font-size: 15px ! important;
+    }
     body.has-page-hero #content {
         padding-top: 0 ! important;
         margin-top: 0 ! important;
@@ -253,8 +295,15 @@
     }
     /* Logged-in: banner mode */
     body.has-page-banner .page-header-banner {
+        position: relative ! important;
         margin-top: 55px ! important;
         height: 200px ! important;
+    }
+    body.has-page-banner .page-header-banner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.20);
     }
     body.has-page-banner #content {
         padding-top: 0 ! important;

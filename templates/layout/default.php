@@ -18,6 +18,8 @@ use Cake\Core\Configure;
 
 echo $this->element('layout/header');
 
+$identity = $this->request->getAttribute('identity');
+
 ?>
 
 <div id="container">
@@ -32,10 +34,17 @@ echo $this->element('layout/header');
             <?php echo $this->element('logo'); ?>
             <?php echo $this->element('mainMenu'); ?>
         </div>
+        <?php if (!empty($pageHeaderImageDesktop ?? null) && $this->request->getParam('controller') === 'Pages' && $this->request->getParam('action') === 'home' && $identity === null) : ?>
+            <?php echo $this->element('layout/homeHeaderPromo'); ?>
+        <?php endif; ?>
     </div>
 
     <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity !== null) : ?>
-        <div class="page-header-banner"></div>
+        <div class="page-header-banner">
+            <?php if ($this->request->getParam('controller') === 'Pages' && $this->request->getParam('action') === 'home') : ?>
+                <?php echo $this->element('layout/homeHeaderPromo'); ?>
+            <?php endif; ?>
+        </div>
     <?php endif; ?>
 
     <div id="content">
