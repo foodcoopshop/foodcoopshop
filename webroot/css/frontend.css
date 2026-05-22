@@ -1538,7 +1538,6 @@ body.manufacturers.detail #inner-content {
 }
 body.blog_posts a.edit-shortcut-button,
 body.pages.detail a.edit-shortcut-button,
-body.pages.home a.edit-shortcut-button,
 body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
     top: -3px;
     right: 3px;
@@ -1563,10 +1562,18 @@ body.pages.home #content {
     display: grid;
     grid-template-columns: var(--sidebar-width) 10px minmax(0, 1fr) 10px;
     align-items: start;
+    position: relative;
 }
 
 body.pages.home #inner-content {
     display: contents;
+}
+
+body.pages.home a.home-edit-shortcut-button {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    z-index: 3;
 }
 
 body.pages.home .sidebar {

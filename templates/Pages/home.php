@@ -40,7 +40,7 @@ if ($identity !== null) {
             '<i class="fas fa-pencil-alt"></i>',
             $this->Slug->getPageEditHome(),
             [
-                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'class' => 'btn btn-outline-light edit-shortcut-button home-edit-shortcut-button',
                 'title' => __('Edit'),
                 'escape' => false,
             ]
