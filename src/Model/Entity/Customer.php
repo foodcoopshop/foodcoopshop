@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Authentication\IdentityInterface;
-use Cake\Core\Configure;
-use App\Services\OrderCustomerService;
-use App\Model\Entity\Cart;
 use ArrayAccess;
+use Cake\Core\Configure;
+use App\Model\Entity\Cart;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Datasource\EntityInterface;
+use Authentication\IdentityInterface;
+use App\Services\OrderCustomerService;
+use App\Model\Table\ManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,7 +45,9 @@ class Customer extends AppEntity implements IdentityInterface
     const PURCHASE_PRICE = 'PP';
     const ZERO_PRICE = 'ZP';
 
-    private Manufacturer|string|null $_manufacturer = 'not-yet-loaded';
+    const NOT_YET_LOADED = 'not-yet-loaded';
+
+    private Manufacturer|string|null $_manufacturer = self::NOT_YET_LOADED;
 
     public function getIdentifier(): int|null
     {
@@ -61,9 +65,10 @@ class Customer extends AppEntity implements IdentityInterface
             return null;
         }
 
-        if ($this->_manufacturer === 'not-yet-loaded') {
+        if ($this->_manufacturer === self::NOT_YET_LOADED) {
             $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
-            $this->_manufacturer = $manufacturersTable->find('all',
+            /** @var Manufacturer|null $manufacturer */
+            $manufacturer = $manufacturersTable->find('all',
                 conditions: [
                     'AddressManufacturers.email' => $this->email,
                     'AddressManufacturers.id_manufacturer > ' . APP_OFF,
@@ -73,6 +78,7 @@ class Customer extends AppEntity implements IdentityInterface
                     'Customers.AddressCustomers',
                 ]
             )->first();
+            $this->_manufacturer = $manufacturer;
         }
         return $this->_manufacturer;
     }
