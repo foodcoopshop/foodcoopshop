@@ -16,13 +16,15 @@ declare(strict_types=1);
  */
 ?>
 <div class="home-header-promo">
-    <div class="home-header-promo-inner">
-        <div class="home-header-promo-title">Lorem ipsum dolor</div>
-        <div class="home-header-promo-lead">Sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</div>
-        <div class="home-header-promo-text">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</div>
-        <div class="home-header-promo-actions">
-            <a class="btn btn-success" href="/">Tempor invidunt</a>
-            <a class="btn btn-outline-light" href="/">Diam voluptua</a>
+    <?php if ($identity === null) : ?>
+        <div class="home-header-promo-inner">
+            <div class="home-header-promo-title">Demo FoodCoopShop</div>
+            <div class="home-header-promo-lead">Sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</div>
+            <div class="home-header-promo-text">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</div>
+            <div class="home-header-promo-actions">
+                <a class="btn btn-success" href="/anmelden">Mitglied werden</a>
+                <a class="btn btn-outline-light" href="/">Zu den Produkten</a>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 </div>
