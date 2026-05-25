@@ -39,7 +39,8 @@ class AssetsProvider
             'dark-mode.css',
             'global.css',
             'modal.css',
-            'fonts.css',
+            'font-open-sans.css',
+            'font-fuzzy-bubbles.css',
             'tooltipster/dist/css/tooltipster.bundle.css',
             'tooltipster/src/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.css',
         ];

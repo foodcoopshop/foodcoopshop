@@ -1926,7 +1926,10 @@ body.pages.home .home-header-promo-actions .btn {
     font-weight: 600;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
-body.pages.home.has-page-banner .home-header-promo-title {
+.home-header-promo-title {
+    font-family: 'Fuzzy Bubbles', cursive;
+}
+body.pages.home.has-page-banner {
     font-size: 42px;
     margin-bottom: 8px;
 }
