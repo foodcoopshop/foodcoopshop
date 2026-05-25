@@ -59,7 +59,7 @@ foreach ($blocks as $index => $block) {
 
 <?php
 
-echo $this->Form->create(null, [
+echo $this->Form->create($page, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
     'url' => $this->Slug->getPageEditHome(),
@@ -105,8 +105,15 @@ if ($imageExists) {
     echo '</div>';
 }
 
+echo '<section class="home-edit-section home-edit-section-header-promo">';
+    echo '<h2>' . __('Header infos') . ' ' . '(' . __('only for logged out users') . ')</h2>';
+echo '<div class="header-promo-actions-editor">';
+echo $this->element('headerPromoFields');
+echo '</div>';
+echo '</section>';
+
 echo '<section class="home-edit-section home-edit-section-info-text">';
-echo '<h2>' . __('Info text (visible to all users)') . '</h2>';
+echo '<h2>' . __('Info text') . ' ' . '(' . __('visible to all users') . ')</h2>';
 echo '<div class="home-edit-info-text-row">';
     echo '<div class="home-edit-info-text-label">';
         echo '<p class="small"><a href="'.$this->Html->getDocsUrl(__('docs_route_wysiwyg_editor')).'" target="_blank">'.__('How_do_I_use_the_WYSIWYG_editor?').'</a></p>';
@@ -124,7 +131,7 @@ echo '</section>';
 echo '<section class="home-edit-section home-edit-section-blocks">';
 echo '<div class="home-blocks-editor">';
     echo '<div class="home-blocks-editor-header">';
-        echo '<h2>' . __('Blocks (only for logged out users)') . '</h2>';
+        echo '<h2>' . __('Blocks') . ' ' . '(' . __('only for logged out users') . ')</h2>';
         echo '<a href="javascript:void(0);" class="btn btn-success add-home-block-button"><i class="fa-fw fas fa-plus"></i> ' . ($isMobile ? __('Block') : __('Add block')) . '</a>';
     echo '</div>';
 
@@ -152,7 +159,7 @@ echo '</div>';
 echo '</section>';
 
 echo '<section class="home-edit-section home-edit-section-map">';
-echo '<h2>' . __('Map') . '</h2>';
+echo '<h2>' . __('Map') . ' ' . '(' . __('visible to all users') . ')</h2>';
 echo $this->Form->control('Configurations.FCS_FOODCOOPS_MAP_ENABLED', [
     'type' => 'checkbox',
     'label' => __('Configuration_text_FCS_FOODCOOPS_MAP_ENABLED'),

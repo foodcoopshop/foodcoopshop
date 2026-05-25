@@ -65,39 +65,6 @@ echo $this->Form->control('Pages.title', [
     'required' => true
 ]);
 
-echo $this->Form->control('Pages.menu_type', [
-    'type' => 'select',
-    'label' => __('Pages_menu_type_main_description').'<br /><span class="small">'. __('Pages_menu_type_sub_description').'</span>',
-    'options' => $this->Html->getMenuTypes(),
-    'escape' => false
-]);
-echo $this->Form->control('Pages.id_parent', [
-    'type' => 'select',
-    'label' => __('Pages_parent_main_description').'<br /><span class="small">'.__('Pages_parent_sub_description').'</span>',
-    'empty' => __('Chose_parent_menu_item'),
-    'options' => $pagesForSelect,
-    'escape' => false
-]);
-echo $this->Form->control('Pages.position', [
-    'class' => 'short',
-    'label' => __('Pages_position_main_description').'<br /><span class="small">'.__('Pages_position_sub_description').'</span> <span class="after small">'.__('Pages_position_sub2_description').'</span>',
-    'type' => 'text',
-    'escape' => false
-]);
-
-echo $this->Form->control('Pages.full_width', [
-    'label' => __('Pages_full_width_main_description') . ' <span class="after small">'.__('Pages_full_width_sub_description') . '</span>',
-    'type' => 'checkbox',
-    'escape' => false
-]);
-echo $this->Form->control('Pages.extern_url', [
-    'placeholder' => __('Example_given_abbreviation') . ' https://www.foodcoopshop.com',
-    'label' => __('Pages_extern_url_main_description') . '<br /><span class="small">'.__('Pages_extern_url_sub_description') . '</span>',
-    'div' => [
-        'class' => 'long text input'
-    ],
-    'escape' => false
-]);
 
 echo '<div class="input">';
 echo '<label>'.__('Header image');
@@ -131,6 +98,45 @@ if ($imageExists) {
         ]);
     echo '</div>';
 }
+
+echo '<h2>' . __('Header infos') . ' ' . '(' . __('only for logged out users') . ')</h2>';
+echo $this->element('headerPromoFields');
+
+echo '<h2>' . __('Further data') . '</h2>';
+
+echo $this->Form->control('Pages.menu_type', [
+    'type' => 'select',
+    'label' => __('Pages_menu_type_main_description').'<br /><span class="small">'. __('Pages_menu_type_sub_description').'</span>',
+    'options' => $this->Html->getMenuTypes(),
+    'escape' => false
+]);
+echo $this->Form->control('Pages.id_parent', [
+    'type' => 'select',
+    'label' => __('Pages_parent_main_description').'<br /><span class="small">'.__('Pages_parent_sub_description').'</span>',
+    'empty' => __('Chose_parent_menu_item'),
+    'options' => $pagesForSelect,
+    'escape' => false
+]);
+echo $this->Form->control('Pages.position', [
+    'class' => 'short',
+    'label' => __('Pages_position_main_description').'<br /><span class="small">'.__('Pages_position_sub_description').'</span> <span class="after small">'.__('Pages_position_sub2_description').'</span>',
+    'type' => 'text',
+    'escape' => false
+]);
+
+echo $this->Form->control('Pages.full_width', [
+    'label' => __('Pages_full_width_main_description') . ' <span class="after small">'.__('Pages_full_width_sub_description') . '</span>',
+    'type' => 'checkbox',
+    'escape' => false
+]);
+echo $this->Form->control('Pages.extern_url', [
+    'placeholder' => __('Example_given_abbreviation') . ' https://www.foodcoopshop.com',
+    'label' => __('Pages_extern_url_main_description') . '<br /><span class="small">'.__('Pages_extern_url_sub_description') . '</span>',
+    'div' => [
+        'class' => 'long text input'
+    ],
+    'escape' => false
+]);
 
 if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
     echo '<div class="warning">';

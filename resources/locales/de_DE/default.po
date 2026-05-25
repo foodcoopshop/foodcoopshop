@@ -756,17 +756,20 @@ msgstr "Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!"
 msgid "BIC"
 msgstr "BIC"
 
-msgid "Blocks for logged out users"
-msgstr "Blöcke (für uneingeloggte User)"
+msgid "Blocks"
+msgstr "Blöcke"
 
-msgid "Blocks (only for logged out users)"
-msgstr "Blöcke (nur für uneingeloggte User)"
+msgid "only for logged out users"
+msgstr "nur für uneingeloggte User"
 
 msgid "Blog_archive"
 msgstr "Blog-Archiv"
 
-msgid "Info text (visible to all users)"
-msgstr "Info-Text (sichtbar für alle User)"
+msgid "Info text"
+msgstr "Info-Text"
+
+msgid "visible to all users"
+msgstr "sichtbar für alle User"
 
 msgid "Blog_post_manufacturer_description"
 msgstr "Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung \"nur für Mitglieder\")."
@@ -5623,3 +5626,57 @@ msgstr "{0} {1} wurde erfolgreich zugeordnet."
 
 msgid "Join signal support group"
 msgstr "Signal-Support-Gruppe beitreten"
+
+msgid "Header infos"
+msgstr "Header-Infos"
+
+msgid "Subtitle"
+msgstr "Untertitel"
+
+msgid "Button label"
+msgstr "Button-Beschriftung"
+
+msgid "Button link"
+msgstr "Button-Link"
+
+msgid "Please enter a valid primary link."
+msgstr "Bitte gib einen gültigen primären Link ein."
+
+msgid "Please enter a valid secondary link."
+msgstr "Bitte gib einen gültigen sekundären Link ein."
+
+msgid "Primary button label and link must both be filled or both be empty."
+msgstr "Bei der primären Aktion müssen Beschriftung und Link entweder beide ausgefüllt oder beide leer sein."
+
+msgid "Secondary button label and link must both be filled or both be empty."
+msgstr "Bei der sekundären Aktion müssen Beschriftung und Link entweder beide ausgefüllt oder beide leer sein."
+
+msgid "Button label {0}"
+msgstr "Button-Beschriftung {0}"
+
+msgid "Link {0}"
+msgstr "Link {0}"
+
+msgid "Please enter at most {0} characters for the title."
+msgstr "Bitte gib für den Titel maximal {0} Zeichen ein."
+
+msgid "Please enter at most {0} characters for the subtitle."
+msgstr "Bitte gib für den Untertitel maximal {0} Zeichen ein."
+
+msgid "Please enter at most {0} characters for the text."
+msgstr "Bitte gib für den Text maximal {0} Zeichen ein."
+
+msgid "Please enter at most {0} characters for the primary button label."
+msgstr "Bitte gib für die primäre Button-Beschriftung maximal {0} Zeichen ein."
+
+msgid "Please enter at most {0} characters for the secondary button label."
+msgstr "Bitte gib für die sekundäre Button-Beschriftung maximal {0} Zeichen ein."
+
+msgid "Please enter at most {0} characters for the primary link."
+msgstr "Bitte gib für den primären Link maximal {0} Zeichen ein."
+
+msgid "Please enter at most {0} characters for the secondary link."
+msgstr "Bitte gib für den sekundären Link maximal {0} Zeichen ein."
+
+msgid "Further data"
+msgstr "Weitere Daten"

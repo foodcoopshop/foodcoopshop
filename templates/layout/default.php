@@ -34,16 +34,14 @@ $identity = $this->request->getAttribute('identity');
             <?php echo $this->element('logo'); ?>
             <?php echo $this->element('mainMenu'); ?>
         </div>
-        <?php if (!empty($pageHeaderImageDesktop ?? null) && $this->request->getParam('controller') === 'Pages' && $this->request->getParam('action') === 'home' && $identity === null) : ?>
-            <?php echo $this->element('layout/homeHeaderPromo'); ?>
+        <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity === null) : ?>
+            <?php echo $this->element('layout/headerPromo', ['headerPromo' => $headerPromo ?? null]); ?>
         <?php endif; ?>
     </div>
 
     <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity !== null) : ?>
         <div class="page-header-banner">
-            <?php if ($this->request->getParam('controller') === 'Pages' && $this->request->getParam('action') === 'home') : ?>
-                <?php echo $this->element('layout/homeHeaderPromo'); ?>
-            <?php endif; ?>
+            <?php echo $this->element('layout/headerPromo', ['headerPromo' => $headerPromo ?? null]); ?>
         </div>
     <?php endif; ?>
 

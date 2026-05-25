@@ -15,16 +15,44 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<div class="home-header-promo">
-    <?php if ($identity === null) : ?>
-        <div class="home-header-promo-inner">
-            <div class="home-header-promo-title">Demo FoodCoopShop</div>
-            <div class="home-header-promo-lead">Sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</div>
-            <div class="home-header-promo-text">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</div>
-            <div class="home-header-promo-actions">
-                <a class="btn btn-success" href="/anmelden">Mitglied werden</a>
-                <a class="btn btn-outline-light" href="/">Zu den Produkten</a>
+<?php
+$headerPromo = $headerPromo ?? null;
+if ($headerPromo === null) {
+    return;
+}
+
+$title = trim((string)($headerPromo->title ?? ''));
+$lead = trim((string)($headerPromo->lead ?? ''));
+$text = trim((string)($headerPromo->text ?? ''));
+$primaryLabel = trim((string)($headerPromo->primary_label ?? ''));
+$primaryHref = trim((string)($headerPromo->primary_href ?? ''));
+$secondaryLabel = trim((string)($headerPromo->secondary_label ?? ''));
+$secondaryHref = trim((string)($headerPromo->secondary_href ?? ''));
+
+if ($title === '' && $lead === '' && $text === '' && $primaryLabel === '' && $secondaryLabel === '') {
+    return;
+}
+?>
+<div class="header-promo">
+    <div class="header-promo-inner">
+        <?php if ($title !== '') : ?>
+            <div class="header-promo-title"><?php echo h($title); ?></div>
+        <?php endif; ?>
+        <?php if ($lead !== '') : ?>
+            <div class="header-promo-lead"><?php echo h($lead); ?></div>
+        <?php endif; ?>
+        <?php if ($text !== '') : ?>
+            <div class="header-promo-text"><?php echo h($text); ?></div>
+        <?php endif; ?>
+        <?php if (($primaryLabel !== '' && $primaryHref !== '') || ($secondaryLabel !== '' && $secondaryHref !== '')) : ?>
+            <div class="header-promo-actions">
+                <?php if ($primaryLabel !== '' && $primaryHref !== '') : ?>
+                    <a class="btn btn-success primary" href="<?php echo h($primaryHref); ?>"><?php echo h($primaryLabel); ?></a>
+                <?php endif; ?>
+                <?php if ($secondaryLabel !== '' && $secondaryHref !== '') : ?>
+                    <a class="btn btn-outline-light secondary" href="<?php echo h($secondaryHref); ?>"><?php echo h($secondaryLabel); ?></a>
+                <?php endif; ?>
             </div>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
 </div>

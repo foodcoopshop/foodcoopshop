@@ -73,7 +73,7 @@ foodcoopshop.Editor = {
 
         const editor = Jodit.make('textarea#' + name, {
             ...this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton()],
+            buttons: ['bold', 'italic', 'eraser'],
             height: 220,
             width: 270,
         });
@@ -90,7 +90,7 @@ foodcoopshop.Editor = {
 
         const editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton(), this.getUploadButton()],
+            buttons: ['bold', 'italic', 'eraser', this.getUploadButton()],
             height: 364,
             width: 270,
         });

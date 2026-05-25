@@ -770,6 +770,9 @@ body.pages.edit_home .home-edit-section:first-of-type {
     margin-top: 12px;
 }
 
+body.pages.edit h2 {
+    clear: both;
+}
 body.pages.edit_home .home-edit-section h2 {
     float: none;
     margin-top: 0;

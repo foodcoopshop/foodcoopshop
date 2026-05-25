@@ -18,6 +18,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Model\Entity\Block;
+use App\Model\Entity\Page;
 
 class AdminPagesControllerTest extends AppCakeTestCase
 {
@@ -57,6 +58,15 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'Configurations' => [
                 'FCS_FOODCOOPS_MAP_ENABLED' => 0,
             ],
+            'HeaderPromo' => [
+                'title' => 'Startseiten Titel',
+                'lead_text' => 'Startseiten Lead',
+                'text' => 'Startseiten Text',
+                'primary_label' => 'Primar',
+                'primary_href' => '/anmelden',
+                'secondary_label' => 'Sekundar',
+                'secondary_href' => '/',
+            ],
             'referer' => '/',
         ]);
 
@@ -83,6 +93,97 @@ class AdminPagesControllerTest extends AppCakeTestCase
         ])->first();
 
         $this->assertEquals('0', $mapConfiguration->value);
+
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $headerPromo = $headerPromosTable->find('all', conditions: [
+            'HeaderPromos.page_id' => Page::PAGE_ID_HOME,
+        ])->first();
+        $this->assertNotNull($headerPromo);
+        $this->assertSame('Startseiten Titel', $headerPromo->title);
+        $this->assertSame('Startseiten Lead', $headerPromo->lead_text);
+        $this->assertSame('Startseiten Text', $headerPromo->text);
+        $this->assertSame('Primar', $headerPromo->primary_label);
+        $this->assertSame('/anmelden', $headerPromo->primary_href);
+        $this->assertSame('Sekundar', $headerPromo->secondary_label);
+        $this->assertSame('/', $headerPromo->secondary_href);
+    }
+
+    public function testEditHomePostShowsHeaderPromoTitleValidationError(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $this->post($this->Slug->getPageEditHome(), [
+            'Pages' => [
+                'content' => '<p>Neue Startseite</p>',
+            ],
+            'Blocks' => [
+                'block-1' => [
+                    'id' => 1,
+                    'image_position' => Block::IMAGE_POSITION_LEFT,
+                    'heading' => 'Neuer Block',
+                    'content' => '<p>Blockinhalt</p>',
+                    'position' => 5,
+                    'active' => 1,
+                ],
+            ],
+            'Configurations' => [
+                'FCS_FOODCOOPS_MAP_ENABLED' => 0,
+            ],
+            'header_promo' => [
+                'title' => str_repeat('x', 56),
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Bitte gib für den Titel maximal 55 Zeichen ein.');
+    }
+
+    public function testEditPagePostSavesHeaderPromo(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $pagesTable = $this->getTableLocator()->get('Pages');
+        $page = $pagesTable->get(3);
+
+        $this->post($this->Slug->getPageEdit(3), [
+            'Pages' => [
+                'title' => (string)$page->title,
+                'menu_type' => (string)$page->menu_type,
+                'id_parent' => (int)$page->id_parent,
+                'position' => (int)$page->position,
+                'full_width' => (int)$page->full_width,
+                'extern_url' => (string)$page->extern_url,
+                'is_private' => (int)$page->is_private,
+                'active' => (int)$page->active,
+                'content' => (string)$page->content,
+            ],
+            'HeaderPromo' => [
+                'title' => 'Page Header Titel',
+                'lead_text' => 'Page Header Lead',
+                'text' => 'Page Header Text',
+                'primary_label' => 'Mehr Infos',
+                'primary_href' => '/neuigkeiten',
+                'secondary_label' => 'Kontakt',
+                'secondary_href' => '/kontakt',
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertRedirect('/');
+
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $headerPromo = $headerPromosTable->find('all', conditions: [
+            'HeaderPromos.page_id' => 3,
+        ])->first();
+        $this->assertNotNull($headerPromo);
+        $this->assertSame('Page Header Titel', $headerPromo->title);
+        $this->assertSame('Page Header Lead', $headerPromo->lead_text);
+        $this->assertSame('Page Header Text', $headerPromo->text);
+        $this->assertSame('Mehr Infos', $headerPromo->primary_label);
+        $this->assertSame('/neuigkeiten', $headerPromo->primary_href);
+        $this->assertSame('Kontakt', $headerPromo->secondary_label);
+        $this->assertSame('/kontakt', $headerPromo->secondary_href);
     }
 
     public function testEditHomePostIgnoresTemplateRow(): void

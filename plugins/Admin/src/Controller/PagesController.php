@@ -9,6 +9,8 @@ use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 use App\Model\Entity\Page;
 use App\Model\Entity\Block;
+use App\Model\Entity\HeaderPromo;
+use App\Model\Table\HeaderPromosTable;
 use Cake\Http\Response;
 use Admin\Traits\UploadTrait;
 
@@ -85,6 +87,8 @@ class PagesController extends AdminAppController
     {
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $blocksTable = $this->getTableLocator()->get('Blocks');
+        $pagesTable = $this->getTableLocator()->get('Pages');
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
         $configuration = $configurationsTable->find('all', conditions: [
             'Configurations.name' => 'FCS_HOME_TEXT',
         ])->first();
@@ -114,10 +118,17 @@ class PagesController extends AdminAppController
         $this->set('title_for_layout', __('homepage'));
         $this->setFormReferer();
 
+        $headerPromo = $this->getOrCreateHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
+        $page = new Page([
+            'id_page' => Page::PAGE_ID_HOME,
+            'header_promo' => $headerPromo,
+        ]);
+
         if (empty($this->getRequest()->getData())) {
             $this->set('homeText', $configuration->value);
             $this->set('foodcoopsMapEnabled', (bool) $mapConfiguration->value);
             $this->set('blocks', $homeBlocks);
+            $this->set('page', $page);
             return $this->render('edit_home');
         }
 
@@ -168,6 +179,18 @@ class PagesController extends AdminAppController
             ],
         );
 
+        $this->setRequest($this->getRequest()->withData('header_promo', $this->getHeaderPromoDataFromRequest()));
+        $page = $pagesTable->patchEntity($page, $this->getRequest()->getData(), [
+            'associated' => [
+                'HeaderPromos',
+            ],
+        ]);
+        $headerPromo = $page->get('header_promo');
+        if (!$headerPromo instanceof HeaderPromo) {
+            $headerPromo = $this->getOrCreateHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
+            $page->set('header_promo', $headerPromo);
+        }
+
         $blockEntities = [];
         $blockErrors = false;
         $homeBlocksById = [];
@@ -196,21 +219,30 @@ class PagesController extends AdminAppController
             $blockEntities[] = $blockEntity;
         }
 
-        if ($configuration->hasErrors() || $mapConfiguration->hasErrors() || $blockErrors) {
+        if ($configuration->hasErrors() || $mapConfiguration->hasErrors() || $blockErrors || $page->hasErrors()) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('homeText', $homeText);
             $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
             $this->set('blocks', $blockEntities);
+            $this->set('page', $page);
             return $this->render('edit_home');
         }
 
+        $headerPromo = $headerPromosTable->patchEntity($headerPromo, [
+            'page_id' => Page::PAGE_ID_HOME,
+        ], [
+            'validate' => false,
+        ]);
+
         $saved = $configurationsTable->save($configuration);
         $mapSaved = $configurationsTable->save($mapConfiguration);
-        if (empty($saved) || empty($mapSaved)) {
+        $headerPromoSaved = $headerPromosTable->save($headerPromo);
+        if (empty($saved) || empty($mapSaved) || empty($headerPromoSaved)) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('homeText', $homeText);
             $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
             $this->set('blocks', $blockEntities);
+            $this->set('page', $page);
             return $this->render('edit_home');
         }
 
@@ -238,6 +270,7 @@ class PagesController extends AdminAppController
                 $this->set('homeText', $homeText);
                 $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
                 $this->set('blocks', $blockEntities);
+                $this->set('page', $page);
                 return $this->render('edit_home');
             }
             /** @var Block $savedBlock */
@@ -282,9 +315,13 @@ class PagesController extends AdminAppController
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
         ];
         $pagesTable = $this->getTableLocator()->get('Pages');
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
         $this->set('pagesForSelect', $pagesTable->getForSelect($page->id_page));
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
+
+        $headerPromo = $page->id_page ? $this->getOrCreateHeaderPromo($headerPromosTable, (int)$page->id_page) : $headerPromosTable->newEntity([]);
+        $page->set('header_promo', $headerPromo);
 
         if (empty($this->getRequest()->getData())) {
             $this->set('page', $page);
@@ -302,13 +339,23 @@ class PagesController extends AdminAppController
             $this->request = $this->request->withData('Pages.id_parent', 0);
         }
 
-        $page = $pagesTable->patchEntity($page, $this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withData('header_promo', $this->getHeaderPromoDataFromRequest()));
+
+        $page = $pagesTable->patchEntity($page, $this->getRequest()->getData(), [
+            'associated' => [
+                'HeaderPromos',
+            ],
+        ]);
         if ($page->hasErrors()) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('page', $page);
             return $this->render('edit');
         } else {
-            $page = $pagesTable->save($page);
+            $page = $pagesTable->saveOrFail($page, [
+                'associated' => [
+                    'HeaderPromos',
+                ],
+            ]);
 
             if (!$isEditMode) {
                 $messageSuffix = __('created');
@@ -343,6 +390,34 @@ class PagesController extends AdminAppController
             return $this->redirect($this->getPreparedReferer());
         }
 
+    }
+
+    private function getOrCreateHeaderPromo(HeaderPromosTable $headerPromosTable, int $pageId): HeaderPromo
+    {
+        $headerPromo = $headerPromosTable->find('all', conditions: [
+            'HeaderPromos.page_id' => $pageId,
+        ])->first();
+
+        if ($headerPromo === null) {
+            $headerPromo = $headerPromosTable->newEntity([
+                'page_id' => $pageId,
+            ]);
+        }
+
+        return $headerPromo;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getHeaderPromoDataFromRequest(): array
+    {
+        $headerPromoData = (array)$this->getRequest()->getData('header_promo', []);
+        if ($headerPromoData === []) {
+            $headerPromoData = (array)$this->getRequest()->getData('HeaderPromo', []);
+        }
+
+        return $headerPromoData;
     }
 
     public function index(): void
