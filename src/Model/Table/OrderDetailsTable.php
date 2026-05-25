@@ -262,7 +262,7 @@ class OrderDetailsTable extends AppTable
             $result = $query->toArray();
 
             if (isset($result[0])) {
-                return $result[0]['SumPriceIncl'];
+                return $result[0]->SumPriceIncl;
             }
 
         }
@@ -581,7 +581,7 @@ class OrderDetailsTable extends AppTable
 
         $orderDetails = $query->toArray();
         if (isset($orderDetails[0])) {
-            return $orderDetails[0]['sumOrderDetail'];
+            return $orderDetails[0]->sumOrderDetail;
         } else {
             return 0;
         }

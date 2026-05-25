@@ -88,19 +88,19 @@ class PagesController extends FrontendController
             return $this->redirect($page->extern_url);
         }
 
-        $conditionsForChildren = ['Pages.active' => APP_ON];
+        $conditionsForChildren = [$pagesTable->aliasField('active') => APP_ON];
         if ($this->identity === null) {
-            $conditionsForChildren['Pages.is_private'] = APP_OFF;
+            $conditionsForChildren[$pagesTable->aliasField('is_private')] = APP_OFF;
         }
-        $page['children'] = $pagesTable->find('children',
-        for: $pageId,
-        direct: true,
-        parentField: 'id_parent',
-        conditions: $conditionsForChildren,
-        order: [
-            'Pages.position' => 'ASC',
-            'Pages.title' => 'ASC'
-        ]);
+        $page->children = $pagesTable->find('children',
+            for: $pageId,
+            direct: true,
+            parentField: 'id_parent',
+            conditions: $conditionsForChildren,
+            order: [
+                $pagesTable->aliasField('position') => 'ASC',
+                $pagesTable->aliasField('title') => 'ASC'
+            ]);
 
         $correctSlug = StringComponent::slugify($page->title);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);

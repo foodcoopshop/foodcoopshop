@@ -88,10 +88,10 @@ class ManufacturersController extends FrontendController
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $manufacturersTable->find('all',
-        conditions: $conditions,
-        contain: [
-            'AddressManufacturers',
-        ])->first();
+            conditions: $conditions,
+            contain: [
+                'AddressManufacturers',
+            ])->first();
 
         if (empty($manufacturer)) {
             throw new RecordNotFoundException('manufacturer not found or not active');
@@ -107,10 +107,10 @@ class ManufacturersController extends FrontendController
             $catalogService = new CatalogService();
             $products = $catalogService->getProductsByManufacturerId($manufacturerId, false, $page);
             $totalProductCount = $catalogService->getProductsByManufacturerId($manufacturerId, true);
-            $manufacturer['Products'] = $catalogService->prepareProducts($products);
+            $manufacturer->Products = $catalogService->prepareProducts($products);
             $pagesCount = $catalogService->getPagesCount($totalProductCount);
 
-            $this->throw404IfNoProductsOnPaginatedPageFound($manufacturer['Products'], $page);
+            $this->throw404IfNoProductsOnPaginatedPageFound($manufacturer->Products, $page);
     
             $this->set('totalProductCount', $totalProductCount);
             $this->set('pagesCount', $pagesCount);

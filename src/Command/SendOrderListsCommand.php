@@ -16,14 +16,15 @@ declare(strict_types=1);
  */
 namespace App\Command;
 
-use App\Services\DeliveryRhythmService;
+use Cake\I18n\Date;
+use Cake\Utility\Hash;
+use Cake\Core\Configure;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
-use Cake\Core\Configure;
-use Cake\Utility\Hash;
-use Cake\I18n\Date;
-use App\Command\Traits\CronjobCommandTrait;
 use Cake\ORM\Query\SelectQuery;
+use App\Model\Entity\OrderDetail;
+use App\Services\DeliveryRhythmService;
+use App\Command\Traits\CronjobCommandTrait;
 use App\Services\OrderDetailCancellationService;
 
 class SendOrderListsCommand extends AppCommand
@@ -104,7 +105,8 @@ class SendOrderListsCommand extends AppCommand
             // => multiple order lists need to be sent then!
             // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
             $groupedOrderDetails = [];
-            foreach($manufacturer['order_details'] as $orderDetail) {
+
+            foreach($manufacturer->order_details as $orderDetail) {
                 $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
                 if (!isset($groupedOrderDetails[$formattedPickupDay])) {
                     $groupedOrderDetails[$formattedPickupDay] = [];

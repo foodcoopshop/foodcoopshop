@@ -240,7 +240,7 @@ class PaymentsTable extends AppTable
         $result = $query->toArray();
 
         if (isset($result[0])) {
-            return $result[0]['sumManufacturerMoneyDeposit'];
+            return $result[0]->sumManufacturerMoneyDeposit;
         }
 
         return 0;
