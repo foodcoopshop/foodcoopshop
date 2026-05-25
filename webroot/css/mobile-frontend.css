@@ -228,7 +228,7 @@
         left: 0 ! important;
         right: 0 ! important;
         width: 100% ! important;
-        padding: 0 14px 8px ! important;
+        padding: 8px 14px 18px ! important;
         margin: 0 ! important;
         z-index: 2;
     }
@@ -239,27 +239,30 @@
     body.pages.home .home-header-promo-title {
         font-size: 28px ! important;
         line-height: 1.05 ! important;
-        margin-bottom: 4px ! important;
+        margin-bottom: 12px ! important;
     }
     body.pages.home .home-header-promo-lead {
         font-size: 15px ! important;
         line-height: 1.3 ! important;
-        margin-bottom: 8px ! important;
+        margin-bottom: 16px ! important;
     }
     body.pages.home .home-header-promo-text {
         font-size: 13px ! important;
         line-height: 1.35 ! important;
         max-width: none ! important;
+        margin-bottom: 10px ! important;
     }
     body.pages.home .home-header-promo-actions {
         display: flex ! important;
-        flex-direction: column ! important;
-        gap: 10px ! important;
-        margin-top: 12px ! important;
-        align-items: stretch ! important;
+        flex-direction: row ! important;
+        flex-wrap: wrap ! important;
+        gap: 16px ! important;
+        margin-top: 20px ! important;
+        align-items: center ! important;
     }
     body.pages.home .home-header-promo-actions .btn {
-        width: 100% ! important;
+        width: auto ! important;
+        flex: 0 0 auto ! important;
         min-width: 0 ! important;
         padding: 10px 14px ! important;
         font-size: 15px ! important;

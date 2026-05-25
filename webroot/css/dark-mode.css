@@ -19,7 +19,8 @@ body.dark img {
     filter: brightness(.8) contrast(1.2);
 }
 body.dark #header,
-body.dark #container,
+body.admin.dark #content,
+body.dark:not(.admin) #container,
 body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content,
