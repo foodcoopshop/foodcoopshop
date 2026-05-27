@@ -5680,3 +5680,12 @@ msgstr "Bitte gib für den sekundären Link maximal {0} Zeichen ein."
 
 msgid "Further data"
 msgstr "Weitere Daten"
+
+msgid "Come by and join us!"
+msgstr "Komm vorbei und mach mit!"
+
+msgid "Become part of our food coop and help shape a fair, regional food supply. Here you will find fresh, sustainable products directly from producers."
+msgstr "Werde Teil unserer Foodcoop und gestalte eine faire, regionale Lebensmittelversorgung mit. Bei uns findest du frische, nachhaltige Produkte direkt von den Produzent:innen."
+
+msgid "Become a member"
+msgstr "Mitglied werden"
