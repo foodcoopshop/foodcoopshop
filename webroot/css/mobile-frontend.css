@@ -412,8 +412,10 @@
         margin-left: 73px;
     }
     #LoginForm .input.checkbox label {
-        width: 140px ! important;
+        width: 155px ! important;
         padding-left: 0;
+        margin-left: 40px;
+        float: left;
     }
     #LoginForm button {
         margin-right: 65px;
@@ -449,7 +451,7 @@
     }
     body.carts .cart:not(#cart) .input.checkbox .error-message,
     body.carts .cart:not(#cart) .input.select .error-message {
-        font-size: 12px;
+        font-size: 14px;
         line-height: 18px;
     }
     .testimonial-quote .quote-container {

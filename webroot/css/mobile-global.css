@@ -73,7 +73,7 @@
         margin-top: 8px;
     }
     #responsive-header .responsive-cart span {
-        font-size: 16px ! important;
+        font-size: 18px ! important;
     }
     #flashMessage {
         right: auto ! important;
@@ -184,7 +184,7 @@
         background-color: #fff;
     }
     li ul li a {
-        font-size: 12px;
+        font-size: 14px;
         padding-left: 10px ! important;
     }
     li ul li a {
