@@ -30,13 +30,6 @@ $this->element('highlightRowAfterEdit', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <?php
-        echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i>', $this->Slug->getSliderAdd(), [
-            'class' => 'btn btn-outline-light',
-            'title' => __('Add_slider'),
-            'escape' => false
-        ]);
-        echo '</div>';
         echo $this->element('printIcon');
         ?>
     </div>
@@ -44,6 +37,7 @@ $this->element('highlightRowAfterEdit', [
 </div>
 
 <?php
+echo '<h2 class="info">'.__('The sliders are not used any more. You can define a header image for each page in the settings of the respective page.').'</h2>';
 
 $this->Paginator->setPaginated($sliders);
 echo '<table class="list">';
@@ -69,15 +63,6 @@ foreach ($sliders as $slider) {
     echo '<tr id="slider-' . $slider->id_slider . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td>';
-    echo $this->Html->link(
-        '<i class="fas fa-pencil-alt ok"></i>',
-        $this->Slug->getSliderEdit($slider->id_slider),
-        [
-            'class' => 'btn btn-outline-light',
-            'title' => __('Edit'),
-            'escape' => false
-        ]
-    );
     echo '</td>';
 
     echo '<td class="hide">';

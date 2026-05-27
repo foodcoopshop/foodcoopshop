@@ -5689,3 +5689,6 @@ msgstr "Werde Teil unserer Foodcoop und gestalte eine faire, regionale Lebensmit
 
 msgid "Become a member"
 msgstr "Mitglied werden"
+
+msgid "The sliders are not used any more. You can define a header image for each page in the settings of the respective page."
+msgstr "Die Slideshow-Bilder werden nicht mehr verwendet. Du kannst für jede Seite ein Header-Bild in den Einstellungen der jeweiligen Seite definieren."

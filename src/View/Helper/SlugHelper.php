@@ -515,14 +515,6 @@ class SlugHelper extends Helper
     {
         return '/admin/sliders';
     }
-    public function getSliderEdit(int $slideId): string
-    {
-        return '/admin/sliders/edit/'.$slideId;
-    }
-    public function getSliderAdd(): string
-    {
-        return '/admin/sliders/add';
-    }
 
     public function getProductAdmin(string|int|null $manufacturerId = null, ?int $productId = null): string
     {

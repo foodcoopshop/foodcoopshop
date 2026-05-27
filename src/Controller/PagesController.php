@@ -56,10 +56,6 @@ class PagesController extends FrontendController
 
         $this->set('title_for_layout', __('Welcome'));
 
-        $slidersTable = $this->getTableLocator()->get('Sliders');
-        $sliders = $slidersTable->getForHome();
-        $this->set('sliders', $sliders);
-
         $homeBlocks = [];
         if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
             $homeBlocks[] = (object)[
