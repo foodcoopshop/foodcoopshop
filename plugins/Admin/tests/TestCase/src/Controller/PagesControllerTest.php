@@ -186,6 +186,79 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertSame('/kontakt', $headerPromo->secondary_href);
     }
 
+    public function testEditHomePostWithoutHeaderPromoDataDoesNotCreateHeaderPromo(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $headerPromosTable->deleteAll([
+            'page_id' => Page::PAGE_ID_HOME,
+        ]);
+
+        $this->post($this->Slug->getPageEditHome(), [
+            'Pages' => [
+                'content' => '<p>Neue Startseite</p>',
+            ],
+            'Blocks' => [
+                'block-1' => [
+                    'id' => 1,
+                    'image_position' => Block::IMAGE_POSITION_LEFT,
+                    'heading' => 'Neuer Block',
+                    'content' => '<p>Blockinhalt</p>',
+                    'position' => 5,
+                    'active' => 1,
+                ],
+            ],
+            'Configurations' => [
+                'FCS_FOODCOOPS_MAP_ENABLED' => 0,
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertFlashMessage('Die Startseite wurde erfolgreich geändert.');
+        $this->assertRedirect('/');
+
+        $headerPromo = $headerPromosTable->find('all', conditions: [
+            'HeaderPromos.page_id' => Page::PAGE_ID_HOME,
+        ])->first();
+        $this->assertNull($headerPromo);
+    }
+
+    public function testEditPagePostWithoutHeaderPromoDataDoesNotCreateHeaderPromo(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $pagesTable = $this->getTableLocator()->get('Pages');
+        $page = $pagesTable->get(3);
+
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $headerPromosTable->deleteAll([
+            'page_id' => 3,
+        ]);
+
+        $this->post($this->Slug->getPageEdit(3), [
+            'Pages' => [
+                'title' => (string)$page->title,
+                'menu_type' => (string)$page->menu_type,
+                'id_parent' => (int)$page->id_parent,
+                'position' => (int)$page->position,
+                'full_width' => (int)$page->full_width,
+                'extern_url' => (string)$page->extern_url,
+                'is_private' => (int)$page->is_private,
+                'active' => (int)$page->active,
+                'content' => (string)$page->content,
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertRedirect('/');
+
+        $headerPromo = $headerPromosTable->find('all', conditions: [
+            'HeaderPromos.page_id' => 3,
+        ])->first();
+        $this->assertNull($headerPromo);
+    }
+
     public function testEditHomePostIgnoresTemplateRow(): void
     {
         $this->loginAsSuperadmin();

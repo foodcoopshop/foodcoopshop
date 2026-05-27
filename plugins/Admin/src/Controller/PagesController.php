@@ -118,7 +118,7 @@ class PagesController extends AdminAppController
         $this->set('title_for_layout', __('homepage'));
         $this->setFormReferer();
 
-        $headerPromo = $this->getOrCreateHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
+        $headerPromo = $this->getHeaderPromoByPageId($headerPromosTable, Page::PAGE_ID_HOME) ?? $headerPromosTable->newEntity([]);
         $page = new Page([
             'id_page' => Page::PAGE_ID_HOME,
             'header_promo' => $headerPromo,
@@ -179,17 +179,13 @@ class PagesController extends AdminAppController
             ],
         );
 
-        $this->setRequest($this->getRequest()->withData('header_promo', $this->getHeaderPromoDataFromRequest()));
-        $page = $pagesTable->patchEntity($page, $this->getRequest()->getData(), [
-            'associated' => [
-                'HeaderPromos',
-            ],
-        ]);
-        $headerPromo = $page->get('header_promo');
-        if (!$headerPromo instanceof HeaderPromo) {
-            $headerPromo = $this->getOrCreateHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
-            $page->set('header_promo', $headerPromo);
+        $headerPromoData = $this->getHeaderPromoDataFromRequest();
+        $hasHeaderPromoData = $this->hasHeaderPromoData($headerPromoData);
+        $headerPromo = $this->getHeaderPromoByPageId($headerPromosTable, Page::PAGE_ID_HOME) ?? $headerPromosTable->newEntity([]);
+        if ($hasHeaderPromoData) {
+            $headerPromo = $headerPromosTable->patchEntity($headerPromo, $headerPromoData);
         }
+        $page->set('header_promo', $headerPromo);
 
         $blockEntities = [];
         $blockErrors = false;
@@ -219,7 +215,7 @@ class PagesController extends AdminAppController
             $blockEntities[] = $blockEntity;
         }
 
-        if ($configuration->hasErrors() || $mapConfiguration->hasErrors() || $blockErrors || $page->hasErrors()) {
+        if ($configuration->hasErrors() || $mapConfiguration->hasErrors() || $blockErrors || ($hasHeaderPromoData && $headerPromo->hasErrors())) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('homeText', $homeText);
             $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
@@ -228,22 +224,32 @@ class PagesController extends AdminAppController
             return $this->render('edit_home');
         }
 
-        $headerPromo = $headerPromosTable->patchEntity($headerPromo, [
-            'page_id' => Page::PAGE_ID_HOME,
-        ], [
-            'validate' => false,
-        ]);
-
         $saved = $configurationsTable->save($configuration);
         $mapSaved = $configurationsTable->save($mapConfiguration);
-        $headerPromoSaved = $headerPromosTable->save($headerPromo);
-        if (empty($saved) || empty($mapSaved) || empty($headerPromoSaved)) {
+        if (empty($saved) || empty($mapSaved)) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('homeText', $homeText);
             $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
             $this->set('blocks', $blockEntities);
             $this->set('page', $page);
             return $this->render('edit_home');
+        }
+
+        if ($hasHeaderPromoData) {
+            $headerPromo = $headerPromosTable->patchEntity($headerPromo, [
+                'page_id' => Page::PAGE_ID_HOME,
+            ], [
+                'validate' => false,
+            ]);
+            $headerPromoSaved = $headerPromosTable->save($headerPromo);
+            if (empty($headerPromoSaved)) {
+                $this->Flash->error(__('Errors_while_saving!_admin'));
+                $this->set('homeText', $homeText);
+                $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
+                $this->set('blocks', $blockEntities);
+                $this->set('page', $page);
+                return $this->render('edit_home');
+            }
         }
 
         $thumbsPath = Configure::read('app.htmlHelper')->getPageThumbsPath();
@@ -321,7 +327,7 @@ class PagesController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        $headerPromo = $page->id_page ? $this->getOrCreateHeaderPromo($headerPromosTable, (int)$page->id_page) : $headerPromosTable->newEntity([]);
+        $headerPromo = $page->id_page ? ($this->getHeaderPromoByPageId($headerPromosTable, (int) $page->id_page) ?? $headerPromosTable->newEntity([])) : $headerPromosTable->newEntity([]);
         $page->set('header_promo', $headerPromo);
 
         if (empty($this->getRequest()->getData())) {
@@ -340,23 +346,40 @@ class PagesController extends AdminAppController
             $this->request = $this->request->withData('Pages.id_parent', 0);
         }
 
-        $this->setRequest($this->getRequest()->withData('header_promo', $this->getHeaderPromoDataFromRequest()));
+        $headerPromoData = $this->getHeaderPromoDataFromRequest();
+        $hasHeaderPromoData = $this->hasHeaderPromoData($headerPromoData);
+        $headerPromo = $page->id_page
+            ? ($this->getHeaderPromoByPageId($headerPromosTable, (int) $page->id_page) ?? $headerPromosTable->newEntity([]))
+            : $headerPromosTable->newEntity([]);
+        if ($hasHeaderPromoData) {
+            $headerPromo = $headerPromosTable->patchEntity($headerPromo, $headerPromoData);
+        }
+        $page->set('header_promo', $headerPromo);
 
-        $page = $pagesTable->patchEntity($page, $this->getRequest()->getData(), [
-            'associated' => [
-                'HeaderPromos',
-            ],
-        ]);
-        if ($page->hasErrors()) {
+        $page = $pagesTable->patchEntity($page, $this->getRequest()->getData());
+        if ($page->hasErrors() || ($hasHeaderPromoData && $headerPromo->hasErrors())) {
             $this->Flash->error(__('Errors_while_saving!_admin'));
             $this->set('page', $page);
             return $this->render('edit');
         } else {
+            $page->unset('header_promo');
             $page = $pagesTable->saveOrFail($page, [
-                'associated' => [
-                    'HeaderPromos',
-                ],
+                'associated' => [],
             ]);
+
+            if ($hasHeaderPromoData) {
+                $headerPromo = $headerPromosTable->patchEntity($headerPromo, [
+                    'page_id' => (int) $page->id_page,
+                ], [
+                    'validate' => false,
+                ]);
+                $headerPromoSaved = $headerPromosTable->save($headerPromo);
+                if (empty($headerPromoSaved)) {
+                    $this->Flash->error(__('Errors_while_saving!_admin'));
+                    $this->set('page', $page);
+                    return $this->render('edit');
+                }
+            }
 
             if (!$isEditMode) {
                 $messageSuffix = __('created');
@@ -399,18 +422,11 @@ class PagesController extends AdminAppController
 
     }
 
-    private function getOrCreateHeaderPromo(HeaderPromosTable $headerPromosTable, int $pageId): HeaderPromo
+    private function getHeaderPromoByPageId(HeaderPromosTable $headerPromosTable, int $pageId): ?HeaderPromo
     {
         $headerPromo = $headerPromosTable->find('all', conditions: [
             'HeaderPromos.page_id' => $pageId,
         ])->first();
-
-        if ($headerPromo === null) {
-            $headerPromo = $headerPromosTable->newEntity([
-                'page_id' => $pageId,
-            ]);
-        }
-
         return $headerPromo;
     }
 
@@ -425,6 +441,20 @@ class PagesController extends AdminAppController
         }
 
         return $headerPromoData;
+    }
+
+    /**
+     * @param array<string, mixed> $headerPromoData
+     */
+    private function hasHeaderPromoData(array $headerPromoData): bool
+    {
+        foreach (['title', 'lead_text', 'text', 'primary_label', 'primary_href', 'secondary_label', 'secondary_href'] as $field) {
+            if (trim((string)($headerPromoData[$field] ?? '')) !== '') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function index(): void

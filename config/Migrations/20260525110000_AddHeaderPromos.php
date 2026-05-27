@@ -63,8 +63,5 @@ class AddHeaderPromos extends BaseMigration
                 'unique' => true,
             ])
             ->create();
-
-        $this->execute("INSERT INTO fcs_header_promos (page_id, created, modified) VALUES (0, NOW(), NOW())");
-        $this->execute("INSERT INTO fcs_header_promos (page_id, created, modified) SELECT id_page, NOW(), NOW() FROM fcs_pages");
     }
 }
