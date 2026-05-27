@@ -21,7 +21,7 @@ body {
 #inner-content {
     width: 100%;
     text-align: center;
-    margin-left: 0;
+    margin-left: auto;
     background: transparent;
 }
 #content {
@@ -52,6 +52,7 @@ body {
 #container {
     display: block;
     padding: 0 30px;
+    background-color: transparent;
 }
 h2 {
     font-size: 18px;
