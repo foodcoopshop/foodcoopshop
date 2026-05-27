@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits;
 
 use Intervention\Image\ImageManager;
+use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\Drivers\Imagick\Driver;
 
 /**
@@ -42,7 +43,13 @@ trait UploadTrait
     /**
     * @param array<string, array{suffix: string, scaleDown?: bool}> $imageSizes
      */
-    protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string|bool
+    protected function saveUploadedImage(
+        int $imageId,
+        string $filename,
+        string $thumbsPath,
+        array $imageSizes,
+        bool $saveAsWebp = false,
+    ): string|bool
     {
 
         $this->deleteUploadedImage($imageId, $thumbsPath);
@@ -56,6 +63,9 @@ trait UploadTrait
             $filename = $explodedFilename[0];
         }
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if ($saveAsWebp) {
+            $extension = 'webp';
+        }
         $manager = new ImageManager(new Driver());
 
         foreach ($imageSizes as $thumbSize => $options) {
@@ -70,7 +80,11 @@ trait UploadTrait
                 $image->scale($thumbSize);
             }
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image->save($thumbsFileName, quality: 100);
+            if ($saveAsWebp) {
+                $image->encode(new WebpEncoder(quality: 75))->save($thumbsFileName);
+            } else {
+                $image->save($thumbsFileName, quality: 100);
+            }
         }
 
         if (isset($options)) {

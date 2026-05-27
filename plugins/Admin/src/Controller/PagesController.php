@@ -254,6 +254,7 @@ class PagesController extends AdminAppController
                 (string) $this->getRequest()->getData('Pages.tmp_image'),
                 $thumbsPath,
                 Configure::read('app.pageImageSizes'),
+                true,
             );
         }
 
@@ -366,7 +367,13 @@ class PagesController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Pages.tmp_image'))) {
-                $this->saveUploadedImage($page->id_page, $this->getRequest()->getData('Pages.tmp_image'), Configure::read('app.htmlHelper')->getPageThumbsPath(), Configure::read('app.pageImageSizes'));
+                $this->saveUploadedImage(
+                    $page->id_page,
+                    (string) $this->getRequest()->getData('Pages.tmp_image'),
+                    Configure::read('app.htmlHelper')->getPageThumbsPath(),
+                    Configure::read('app.pageImageSizes'),
+                    true,
+                );
             }
 
             if (!empty($this->getRequest()->getData('Pages.delete_image'))) {
