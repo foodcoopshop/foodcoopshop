@@ -43,6 +43,7 @@ foodcoopshop.Editor = {
             showCharsCounter: false,
             showWordsCounter: false,
             showXPathInStatusbar: false,
+            disablePlugins: 'paste',
             defaultActionOnPaste: 'insert_clear_html',
         };
     },

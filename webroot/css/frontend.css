@@ -12,7 +12,7 @@
  * @link          https://www.foodcoopshop.com
  */
 body {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 #container {
@@ -43,6 +43,7 @@ body {
     flex-grow: 1;
     margin-left: auto;
     margin-right: auto;
+    line-height: 24px;
 }
 body.carts.detail #inner-content {
     max-width: var(--content-small-max-width);
@@ -309,7 +310,6 @@ body.categories div.description-wrapper {
     list-style: none;
 }
 #user-menu li > a {
-    font-size: 14px;
     color: #fff;
 }
 #user-menu > li > a > i {
@@ -392,7 +392,6 @@ body.categories div.description-wrapper {
     border: 0;
     outline: 0;
     color: #fff;
-    font-size: 14px;
     padding: 6px 4px 6px 0;
     width: 220px;
 }
@@ -456,7 +455,7 @@ body.categories div.description-wrapper {
     color: #333;
 }
 #user-menu li ul li a.has-icon i {
-    padding-right: 12px;
+    padding-right: 24px;
     color: #555;
 }
 #user-menu li ul ul {
@@ -513,7 +512,7 @@ body.customers.new_password_request .input label {
 #login-form .input,
 body.customers.new_password_request .input {
     float: left;
-    margin-bottom: 4px;
+    margin-bottom: 0;
     padding: 3px;
 }
 #LoginForm .input input[type="checkbox"] {
@@ -532,7 +531,7 @@ body.customers.new_password_request .input {
 }
 #LoginForm .remember-me-wrapper label {
     float: right;
-    padding-left: 130px;
+    padding-left: 125px;
     line-height: 20px ! important;
     margin-top: -5px;
     width: 275px;
@@ -663,6 +662,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
  .pw div.c3 .unity,
 .pw .radio label {
+    margin-bottom: 0.1rem;
     word-break: break-word;
 }
 .pw .toggle-link {
@@ -738,13 +738,14 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     margin-bottom: 0px;
 }
 .pw label.attribute-button input {
-    margin-right: 3px;
-    margin-top: 3px;
+    margin-right: 6px;
+    margin-top: 7px;
     float: left;
 }
 .ew .btn-cart {
     width: 100%;
     float: left;
+    padding: 4px 6px;
 }
 .ew .btn-cart i.fa-spin,
 .btn-cart-detail i.fa-spin {
@@ -763,7 +764,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
 .pw .p-info {
     float: left;
-    line-height: 17px;
+    line-height: 19px;
     color: #969696;
 }
 .pw .p-info .unit-amount {
@@ -885,7 +886,6 @@ body.manufacturers.index h2.info {
     width: 45%;
     float: left;
     text-align: left;
-    font-size: 14px;
     margin-bottom: 5px;
     margin-left: 10px;
 }
@@ -894,7 +894,6 @@ body.manufacturers.index h2.info {
     margin-right: 75px;
     text-align: left;
     margin-bottom: 10px;
-    font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
     width: 45%;
@@ -1137,7 +1136,6 @@ body.carts .load-last-order-details,
 }
 .btn {
     padding: 4px 8px;
-    font-size: 14px;
 }
 .edit-shortcut-button {
     padding: 0px 4px;
@@ -1146,9 +1144,6 @@ body.carts .load-last-order-details,
 #cart .btn-success {
     padding-top: 6px;
     padding-bottom: 6px;
-}
-#cart .btn-success {
-    font-size: 14px;
 }
 #cart .delete a.btn {
     width: 22px;
@@ -1475,9 +1470,9 @@ a.blog-post-wrapper img {
     max-height: 100%;
 }
 a.blog-post-wrapper h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    line-height: 18px;
+    line-height: 24px;
     margin-bottom: 4px;
     width: 100%;
     float: left;
@@ -1695,21 +1690,6 @@ body.categories.detail .description-wrapper h3 {
     color: #333;
     padding-top: 10px;
     font-size: 16px;
-}
-@media (max-width: 768px) {
-    body.pages.home .home-block-text {
-        font-size: 16px;
-    }
-
-    body.pages.home .home-block-inner,
-    body.pages.home .home-block.image-right .home-block-inner {
-        flex-direction: column;
-    }
-
-    body.pages.home .home-block-image {
-        flex-basis: auto;
-        width: 100%;
-    }
 }
 body.products.detail .pw {
     border-bottom: 1px solid #d6d4d4;
