@@ -43,7 +43,7 @@ body {
     flex-grow: 1;
     margin-left: auto;
     margin-right: auto;
-    line-height: 24px;
+    line-height: 22px;
 }
 body.carts.detail #inner-content {
     max-width: var(--content-small-max-width);
@@ -626,6 +626,7 @@ a[disabled] {
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
+    margin-bottom: 5px;
 }
 body.superadmin .pw .heading h4 {
     max-width: 95%;
@@ -1483,7 +1484,7 @@ a.blog-post-wrapper h3 {
 }
 a.blog-post-wrapper span {
     float: left;
-    line-height: 19px;
+    line-height: 22px;
     color: #333;
     word-break: break-word;
 }
