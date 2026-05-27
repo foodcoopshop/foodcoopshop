@@ -31,39 +31,4 @@ class SlidersTable extends AppTable
         $this->setPrimaryKey('id_slider');
     }
 
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator->notEmptyString('image', __('Please_upload_an_image.'));
-        $validator->notEmptyString('position', __('Please_enter_a_number_between_{0}_and_{1}.', [0,100]));
-        $validator->range('position', [-1, 101], __('Please_enter_a_number_between_{0}_and_{1}.', [0,100]));
-        $validator->allowEmptyString('link');
-        $validator->urlWithProtocol('link', __('Please_enter_a_valid_internet_address.'));
-        return $validator;
-    }
-
-    /**
-     * @return SelectQuery<\App\Model\Entity\Slider>
-     */
-    public function getForHome(): SelectQuery
-    {
-
-        $conditions = [
-            'Sliders.active' => APP_ON
-        ];
-
-        $identity = Router::getRequest()->getAttribute('identity');
-        if ($identity === null) {
-            $conditions['Sliders.is_private'] = APP_OFF;
-        }
-
-        $slides = $this->find('all',
-        conditions: $conditions,
-        order: [
-            'Sliders.position' => 'ASC'
-        ]);
-        /** @var SelectQuery<\App\Model\Entity\Slider> $slides */
-
-        return $slides;
-
-    }
 }

@@ -7,7 +7,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Network\View\Helper\NetworkHelper;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -106,8 +105,6 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getTaxAdd(),
             $this->Slug->getTaxEdit(2),
             $this->Slug->getSlidersList(),
-            $this->Slug->getSliderAdd(),
-            $this->Slug->getSliderEdit(6),
             $this->Slug->getStatistics(),
             $this->Slug->getStatistics(4),
             $this->Network->getSyncDomainAdd(),

@@ -46,7 +46,6 @@ $identity = $this->request->getAttribute('identity');
     <?php endif; ?>
 
     <div id="content">
-        <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>
         <?php echo $this->element('sidebar'); ?>
         <div id="inner-content" class="<?php echo empty($categoriesForMenu) && empty($manufacturersForMenu) ? 'without-sidebar' : ''; ?>">
             <?php echo $this->fetch('content'); ?>
