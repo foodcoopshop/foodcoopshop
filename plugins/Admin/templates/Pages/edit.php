@@ -65,47 +65,53 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 echo '<div class="page-header-layout">';
 echo '<div class="page-header-image-column">';
 
-echo '<section class="home-edit-section home-edit-section-header-image">';
-    echo '<h2>' . __('Header image') . '</h2>';
-    echo '<div class="input">';
-    echo '<div class="page-image-wrapper">';
-        echo $this->Html->link(
-            $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i> ' . __('Header image upload'),
-            'javascript:void(0);',
-            [
-                'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
-                'title' => __('Upload_new_image_or_change_it'),
-                'data-object-id' => $idForImageUpload,
-                'escape' => false,
-            ]
-        );
-        $imageLabel = __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]);
-        if ($imageExists) {
-            $imageLabel .= '<br />' . __('Click_on_image_to_change_it.');
-        }
-        echo '<span class="small">' . $imageLabel . '</span>';
-    echo '</div>';
-    echo $this->Form->hidden('Pages.tmp_image');
-    $this->Form->unlockField('Pages.tmp_image');
-    echo '</div>';
-echo '</section>';
+if ($isEditMode) {
+    echo '<section class="home-edit-section home-edit-section-header-image">';
+        echo '<h2>' . __('Header image') . '</h2>';
+        echo '<div class="input">';
+        echo '<div class="page-image-wrapper">';
+            echo $this->Html->link(
+                $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i> ' . __('Header image upload'),
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+                    'title' => __('Upload_new_image_or_change_it'),
+                    'data-object-id' => $idForImageUpload,
+                    'escape' => false,
+                ]
+            );
+            $imageLabel = __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]);
+            if ($imageExists) {
+                $imageLabel .= '<br />' . __('Click_on_image_to_change_it.');
+            }
+            echo '<span class="small">' . $imageLabel . '</span>';
+        echo '</div>';
+        echo $this->Form->hidden('Pages.tmp_image');
+        $this->Form->unlockField('Pages.tmp_image');
+        echo '</div>';
+    echo '</section>';
 
-if ($imageExists) {
-    echo '<div class="warning">';
-        echo $this->Form->control('Pages.delete_image', [
-            'label' => __('Delete_image?') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
-            'type' => 'checkbox',
-            'escape' => false,
-        ]);
+    if ($imageExists) {
+        echo '<div class="warning">';
+            echo $this->Form->control('Pages.delete_image', [
+                'label' => __('Delete_image?') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
+                'type' => 'checkbox',
+                'escape' => false,
+            ]);
+        echo '</div>';
+    }
+
+    echo '</div>';
+
+    echo '<section class="home-edit-section home-edit-section-header-promo page-header-info-column header-promo-section' . ($imageExists ? '' : ' hide') . '">';
+        echo '<h2>' . __('Header infos') . ' ' . '(' . __('only for logged out users') . ')</h2>';
+        echo $this->element('headerPromoFields');
+    echo '</section>';
+} else {
+    echo '<div class="warning" style="margin-bottom: 10px;">';
+        echo __('You can add a header image and header infos after saving the page for the first time.');
     echo '</div>';
 }
-
-echo '</div>';
-
-echo '<section class="home-edit-section home-edit-section-header-promo page-header-info-column header-promo-section' . ($imageExists ? '' : ' hide') . '">';
-    echo '<h2>' . __('Header infos') . ' ' . '(' . __('only for logged out users') . ')</h2>';
-    echo $this->element('headerPromoFields');
-echo '</section>';
 echo '</div>';
 
 echo '<h2>' . __('Further data') . '</h2>';
