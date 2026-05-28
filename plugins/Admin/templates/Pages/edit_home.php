@@ -25,6 +25,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Editor.initBig('pages-content');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.pages .page-image-wrapper .add-image-button', foodcoopshop.Upload.savePageTmpImageInForm);" .
+        Configure::read('app.jsNamespace') . ".Admin.initHeaderPromoVisibility('body.pages .page-image-wrapper a.add-image-button', 'body.pages input[name=\\\"Pages[delete_image]\\\"]', '.header-promo-section');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -70,6 +71,9 @@ $this->Form->unlockField('Blocks');
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
+echo '<div class="page-header-layout">';
+echo '<div class="page-header-image-column">';
+
 echo '<section class="home-edit-section home-edit-section-header-image">';
     echo '<h2>' . __('Header image') . '</h2>';
     echo '<div class="input">';
@@ -105,12 +109,16 @@ if ($imageExists) {
     echo '</div>';
 }
 
-echo '<section class="home-edit-section home-edit-section-header-promo">';
+echo '</div>';
+
+echo '<section class="home-edit-section home-edit-section-header-promo page-header-info-column header-promo-section' . ($imageExists ? '' : ' hide') . '">';
     echo '<h2>' . __('Header infos') . ' ' . '(' . __('only for logged out users') . ')</h2>';
 echo '<div class="header-promo-actions-editor">';
 echo $this->element('headerPromoFields');
 echo '</div>';
 echo '</section>';
+
+echo '</div>';
 
 echo '<section class="home-edit-section home-edit-section-info-text">';
 echo '<h2>' . __('Info text') . ' ' . '(' . __('visible to all users') . ')</h2>';

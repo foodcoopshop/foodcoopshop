@@ -47,6 +47,7 @@ foodcoopshop.Upload = {
         button.html('');
         var newImage = $('<img />').attr('src', image.attr('src'));
         button.append(newImage);
+        $(document).trigger('fcs:page-header-image-updated');
         foodcoopshop.Modal.destroy(modalSelector);
     },
 

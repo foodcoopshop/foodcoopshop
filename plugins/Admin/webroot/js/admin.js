@@ -423,6 +423,21 @@ foodcoopshop.Admin = {
 
     },
 
+    initHeaderPromoVisibility: function(imageButtonSelector, deleteImageSelector, sectionSelector) {
+
+        var imageButton = imageButtonSelector || 'body.pages a.add-image-button';
+        var headerPromoSection = sectionSelector || '.header-promo-section';
+
+        var toggleHeaderPromoSection = function () {
+            var hasImage = $(imageButton).hasClass('uploaded');
+            $(headerPromoSection).toggleClass('hide', !hasImage);
+        };
+
+        toggleHeaderPromoSection();
+        $(document).on('fcs:page-header-image-updated', toggleHeaderPromoSection);
+
+    },
+
     triggerFilter : function () {
         foodcoopshop.Helper.showLoader();
         foodcoopshop.Admin.submitFilterForm();

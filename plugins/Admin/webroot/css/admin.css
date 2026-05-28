@@ -770,9 +770,45 @@ body.pages.edit_home .home-edit-section:first-of-type {
     margin-top: 12px;
 }
 
+body.pages.edit .page-header-layout,
+body.pages.edit_home .page-header-layout {
+    clear: both;
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 10px;
+}
+
+body.pages.edit .page-header-image-column,
+body.pages.edit_home .page-header-image-column,
+body.pages.edit .page-header-info-column,
+body.pages.edit_home .page-header-info-column {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.pages.edit .page-header-info-column,
+body.pages.edit_home .page-header-info-column {
+    border-left: 1px solid #dfdfdf;
+    padding-left: 24px;
+}
+
+body.pages.edit .page-header-info-column h2,
+body.pages.edit_home .page-header-info-column h2 {
+    margin-top: 0;
+}
+
+body.pages.edit .page-header-layout .home-edit-section,
+body.pages.edit_home .page-header-layout .home-edit-section {
+    margin-top: 2px;
+}
+
 body.pages.edit h2 {
     clear: both;
 }
+body.pages.edit .home-edit-section h2,
 body.pages.edit_home .home-edit-section h2 {
     float: none;
     margin-top: 0;
@@ -1026,6 +1062,21 @@ body.pages.edit_home .home-block-add-button-wrapper {
     body.pages.edit_home .home-block-image-input {
         width: 100%;
         min-width: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    body.pages.edit .page-header-layout,
+    body.pages.edit_home .page-header-layout {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    body.pages.edit .page-header-info-column,
+    body.pages.edit_home .page-header-info-column {
+        border-left: 0;
+        padding-left: 0;
+        margin-top: 10px;
     }
 }
 
