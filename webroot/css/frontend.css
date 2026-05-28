@@ -23,7 +23,7 @@ body {
 }
 #content {
     line-height: 20px;
-    min-height: 500px; /* hack for mobile with little content */
+    min-height: 75vh; /* hack for mobile with little content */
     width: 100%;
     z-index: 100;
     padding-top: 20px;
