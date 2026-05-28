@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use ArrayObject;
+use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
 
 /**
@@ -22,6 +25,20 @@ use Cake\Validation\Validator;
  */
 class HeaderPromosTable extends AppTable
 {
+
+    /**
+     * @param EventInterface<\App\Model\Table\HeaderPromosTable> $event
+     * @param ArrayObject<string, mixed> $data
+     * @param ArrayObject<string, mixed> $options
+     */
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        foreach (['primary_href', 'secondary_href'] as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = $this->stripAppFullBaseUrlFromHref((string)$data[$field]);
+            }
+        }
+    }
 
     public function initialize(array $config): void
     {
@@ -53,7 +70,7 @@ class HeaderPromosTable extends AppTable
             'rule' => function (mixed $value): bool {
                 return $this->isValidHref((string)$value);
             },
-            'message' => __('Please enter a valid primary link.'),
+            'message' => __('Please enter a valid link.'),
         ]);
 
         $validator->maxLength('secondary_href', 255, __('Please enter at most {0} characters for the secondary link.', [255]));
@@ -62,7 +79,7 @@ class HeaderPromosTable extends AppTable
             'rule' => function (mixed $value): bool {
                 return $this->isValidHref((string)$value);
             },
-            'message' => __('Please enter a valid secondary link.'),
+            'message' => __('Please enter a valid link.'),
         ]);
 
         $validator->add('primary_label', 'primaryPair', [
@@ -102,5 +119,33 @@ class HeaderPromosTable extends AppTable
         }
 
         return false;
+    }
+
+    private function stripAppFullBaseUrlFromHref(string $href): string
+    {
+        $href = trim($href);
+        if ($href === '') {
+            return '';
+        }
+
+        $fullBaseUrl = rtrim(trim((string)Configure::read('App.fullBaseUrl')), '/');
+        if ($fullBaseUrl === '' || !str_starts_with($href, $fullBaseUrl)) {
+            return $href;
+        }
+
+        $strippedHref = substr($href, strlen($fullBaseUrl));
+        if ($strippedHref === '') {
+            return '/';
+        }
+
+        if (!in_array($strippedHref[0], ['/', '?', '#'], true)) {
+            return $href;
+        }
+
+        if ($strippedHref[0] === '/') {
+            return $strippedHref;
+        }
+
+        return '/' . $strippedHref;
     }
 }

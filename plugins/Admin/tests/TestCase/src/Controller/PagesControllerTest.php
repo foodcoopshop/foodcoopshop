@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Model\Entity\Block;
 use App\Model\Entity\Page;
+use Cake\Core\Configure;
 
 class AdminPagesControllerTest extends AppCakeTestCase
 {
@@ -63,9 +64,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
                 'lead_text' => 'Startseiten Lead',
                 'text' => 'Startseiten Text',
                 'primary_label' => 'Primar',
-                'primary_href' => '/anmelden',
+                'primary_href' => Configure::read('App.fullBaseUrl') . '/anmelden',
                 'secondary_label' => 'Sekundar',
-                'secondary_href' => '/',
+                'secondary_href' => Configure::read('App.fullBaseUrl'),
             ],
             'referer' => '/',
         ]);
@@ -163,9 +164,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
                 'lead_text' => 'Page Header Lead',
                 'text' => 'Page Header Text',
                 'primary_label' => 'Mehr Infos',
-                'primary_href' => '/neuigkeiten',
+                'primary_href' => Configure::read('App.fullBaseUrl') . '/neuigkeiten',
                 'secondary_label' => 'Kontakt',
-                'secondary_href' => '/kontakt',
+                'secondary_href' => Configure::read('App.fullBaseUrl') . '/kontakt',
             ],
             'referer' => '/',
         ]);
