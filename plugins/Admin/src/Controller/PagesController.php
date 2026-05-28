@@ -118,7 +118,7 @@ class PagesController extends AdminAppController
         $this->set('title_for_layout', __('homepage'));
         $this->setFormReferer();
 
-        $headerPromo = $this->getHeaderPromoByPageId($headerPromosTable, Page::PAGE_ID_HOME) ?? $headerPromosTable->newEntity([]);
+        $headerPromo = $this->resolveHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
         $page = new Page([
             'id_page' => Page::PAGE_ID_HOME,
             'header_promo' => $headerPromo,
@@ -181,7 +181,7 @@ class PagesController extends AdminAppController
 
         $headerPromoData = $this->getHeaderPromoDataFromRequest();
         $hasHeaderPromoData = $this->hasHeaderPromoData($headerPromoData);
-        $headerPromo = $this->getHeaderPromoByPageId($headerPromosTable, Page::PAGE_ID_HOME) ?? $headerPromosTable->newEntity([]);
+        $headerPromo = $this->resolveHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
         if ($hasHeaderPromoData) {
             $headerPromo = $headerPromosTable->patchEntity($headerPromo, $headerPromoData);
         }
@@ -216,23 +216,13 @@ class PagesController extends AdminAppController
         }
 
         if ($configuration->hasErrors() || $mapConfiguration->hasErrors() || $blockErrors || ($hasHeaderPromoData && $headerPromo->hasErrors())) {
-            $this->Flash->error(__('Errors_while_saving!_admin'));
-            $this->set('homeText', $homeText);
-            $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
-            $this->set('blocks', $blockEntities);
-            $this->set('page', $page);
-            return $this->render('edit_home');
+            return $this->renderEditHomeError($homeText, (bool) $foodcoopsMapEnabled, $blockEntities, $page);
         }
 
         $saved = $configurationsTable->save($configuration);
         $mapSaved = $configurationsTable->save($mapConfiguration);
         if (empty($saved) || empty($mapSaved)) {
-            $this->Flash->error(__('Errors_while_saving!_admin'));
-            $this->set('homeText', $homeText);
-            $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
-            $this->set('blocks', $blockEntities);
-            $this->set('page', $page);
-            return $this->render('edit_home');
+            return $this->renderEditHomeError($homeText, (bool) $foodcoopsMapEnabled, $blockEntities, $page);
         }
 
         if ($hasHeaderPromoData) {
@@ -243,12 +233,7 @@ class PagesController extends AdminAppController
             ]);
             $headerPromoSaved = $headerPromosTable->save($headerPromo);
             if (empty($headerPromoSaved)) {
-                $this->Flash->error(__('Errors_while_saving!_admin'));
-                $this->set('homeText', $homeText);
-                $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
-                $this->set('blocks', $blockEntities);
-                $this->set('page', $page);
-                return $this->render('edit_home');
+                return $this->renderEditHomeError($homeText, (bool) $foodcoopsMapEnabled, $blockEntities, $page);
             }
         }
 
@@ -273,12 +258,7 @@ class PagesController extends AdminAppController
         foreach ($blockEntities as $index => $blockEntity) {
             $savedBlock = $blocksTable->save($blockEntity);
             if (empty($savedBlock)) {
-                $this->Flash->error(__('Errors_while_saving!_admin'));
-                $this->set('homeText', $homeText);
-                $this->set('foodcoopsMapEnabled', (bool) $foodcoopsMapEnabled);
-                $this->set('blocks', $blockEntities);
-                $this->set('page', $page);
-                return $this->render('edit_home');
+                return $this->renderEditHomeError($homeText, (bool) $foodcoopsMapEnabled, $blockEntities, $page);
             }
             /** @var Block $savedBlock */
             $savedBlockIds[] = (int) $savedBlock->id;
@@ -327,7 +307,7 @@ class PagesController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        $headerPromo = $page->id_page ? ($this->getHeaderPromoByPageId($headerPromosTable, (int) $page->id_page) ?? $headerPromosTable->newEntity([])) : $headerPromosTable->newEntity([]);
+        $headerPromo = $this->resolveHeaderPromo($headerPromosTable, $page->id_page !== null ? (int) $page->id_page : null);
         $page->set('header_promo', $headerPromo);
 
         if (empty($this->getRequest()->getData())) {
@@ -348,9 +328,7 @@ class PagesController extends AdminAppController
 
         $headerPromoData = $this->getHeaderPromoDataFromRequest();
         $hasHeaderPromoData = $this->hasHeaderPromoData($headerPromoData);
-        $headerPromo = $page->id_page
-            ? ($this->getHeaderPromoByPageId($headerPromosTable, (int) $page->id_page) ?? $headerPromosTable->newEntity([]))
-            : $headerPromosTable->newEntity([]);
+        $headerPromo = $this->resolveHeaderPromo($headerPromosTable, $page->id_page !== null ? (int) $page->id_page : null);
         if ($hasHeaderPromoData) {
             $headerPromo = $headerPromosTable->patchEntity($headerPromo, $headerPromoData);
         }
@@ -424,10 +402,31 @@ class PagesController extends AdminAppController
 
     private function getHeaderPromoByPageId(HeaderPromosTable $headerPromosTable, int $pageId): ?HeaderPromo
     {
-        $headerPromo = $headerPromosTable->find('all', conditions: [
+        return $headerPromosTable->find('all', conditions: [
             'HeaderPromos.page_id' => $pageId,
         ])->first();
-        return $headerPromo;
+    }
+
+    private function resolveHeaderPromo(HeaderPromosTable $headerPromosTable, ?int $pageId): HeaderPromo
+    {
+        if ($pageId === null || $pageId === 0) {
+            return $headerPromosTable->newEntity([]);
+        }
+
+        return $this->getHeaderPromoByPageId($headerPromosTable, $pageId) ?? $headerPromosTable->newEntity([]);
+    }
+
+    /**
+     * @param array<int, Block> $blocks
+     */
+    private function renderEditHomeError(string $homeText, bool $foodcoopsMapEnabled, array $blocks, Page $page): Response
+    {
+        $this->Flash->error(__('Errors_while_saving!_admin'));
+        $this->set('homeText', $homeText);
+        $this->set('foodcoopsMapEnabled', $foodcoopsMapEnabled);
+        $this->set('blocks', $blocks);
+        $this->set('page', $page);
+        return $this->render('edit_home');
     }
 
     /**

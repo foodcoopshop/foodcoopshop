@@ -438,6 +438,87 @@ foodcoopshop.Admin = {
 
     },
 
+    initHomeBlocksEditor: function () {
+
+        var blocksContainer = $('.home-blocks-list');
+        var blockTemplate = $('.home-block-row.template');
+        var emptyState = $('.home-blocks-empty-state');
+        var uploadFormsContainer = $('#home-block-upload-forms');
+        var uploadFormTemplate = $('form#mini-upload-form-image-__INDEX__');
+        var blockIndex = $('.home-block-row:not(.template)').length;
+
+        var toggleEmptyState = function () {
+            if (blocksContainer.find('.home-block-row:not(.template)').length === 0) {
+                emptyState.removeClass('hide');
+            } else {
+                emptyState.addClass('hide');
+            }
+        };
+
+        var scrollToRow = function (row) {
+            var filterContainerHeight = $('.filter-container:visible').outerHeight() || 0;
+            var targetTop = Math.max(0, row.offset().top - filterContainerHeight - 12);
+            $('html, body').stop(true).animate({scrollTop: targetTop}, 250);
+        };
+
+        var initBlockRow = function (row) {
+            var objectId = row.data('objectId');
+            foodcoopshop.Editor.initBigReduced('home-block-content-' + objectId);
+            foodcoopshop.Upload.initImageUpload('body.pages .block-image-upload-button[data-object-id="' + objectId + '"]', foodcoopshop.Upload.saveBlockTmpImageInForm);
+        };
+
+        var addUploadFormForBlock = function (objectId) {
+            var uploadForm = uploadFormTemplate.clone();
+            uploadForm.removeClass('hide');
+            uploadForm.attr('id', 'mini-upload-form-image-' + objectId);
+            uploadForm.attr('data-object-id', objectId);
+            uploadForm.find('.heading').text(__('Upload_new_image'));
+            uploadForm.find('.drop img').remove();
+            uploadForm.find('a.uploadedFile').remove();
+            uploadForm.find('input[type="file"]').val('');
+            uploadFormsContainer.append(uploadForm);
+        };
+
+        $('.home-block-row:not(.template)').each(function () {
+            initBlockRow($(this));
+        });
+        toggleEmptyState();
+
+        $(document).on('click', '.add-home-block-button', function () {
+            var objectId = 'new-block-' + blockIndex + '-' + Date.now();
+            blockIndex++;
+            var row = blockTemplate.clone();
+            row.removeClass('template hide').show();
+            row.attr('data-object-id', objectId);
+            row.html(row.html().replace(/__INDEX__/g, objectId));
+            blocksContainer.append(row);
+            addUploadFormForBlock(objectId);
+            initBlockRow(row);
+            toggleEmptyState();
+            scrollToRow(row);
+        });
+
+        $(document).on('click', '.remove-home-block-button', function () {
+            if (!confirm(__('Really delete block? Don\'t forget to click save afterwards.'))) {
+                return;
+            }
+
+            var row = $(this).closest('.home-block-row');
+            var objectId = row.data('objectId');
+            $('form#mini-upload-form-image-' + objectId).remove();
+            row.remove();
+            toggleEmptyState();
+        });
+
+        $(document).on('click', '.home-block-row-actions .submit', function (e) {
+            e.preventDefault();
+            foodcoopshop.Helper.disableButton($(this));
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
+            $('#pageEditForm').submit();
+        });
+
+    },
+
     triggerFilter : function () {
         foodcoopshop.Helper.showLoader();
         foodcoopshop.Admin.submitFilterForm();
