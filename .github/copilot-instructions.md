@@ -15,3 +15,4 @@
 - Translation keys starting with "Configuration_" can hold underscores, as they are used in the code as configuration keys. Also translate these keys for all languages.
 - Never run `asset_compress build` locally
 - Avoid code duplication. If you find yourself copying and pasting code, consider refactoring to create a reusable function or component.
+- Always put javascript functions in the appropriate existing files and not directly in the template files
