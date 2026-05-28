@@ -74,8 +74,8 @@ class HeaderPromosTableTest extends AppCakeTestCase
 
         $errors = $entity->getErrors();
 
-        $this->assertSame('Bitte gib einen gültigen primären Link ein.', $errors['primary_href']['validPrimaryHref']);
-        $this->assertSame('Bitte gib einen gültigen sekundären Link ein.', $errors['secondary_href']['validSecondaryHref']);
+        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['validPrimaryHref']);
+        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['secondary_href']['validSecondaryHref']);
     }
 
     public function testValidationRequiresPrimaryAndSecondaryPairs(): void
@@ -91,12 +91,30 @@ class HeaderPromosTableTest extends AppCakeTestCase
         $errors = $entity->getErrors();
 
         $this->assertSame(
-            'Bei der primären Aktion müssen Beschriftung und Link entweder beide ausgefüllt oder beide leer sein.',
+            'Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.',
             $errors['primary_label']['primaryPair'],
         );
         $this->assertSame(
-            'Bei der sekundären Aktion müssen Beschriftung und Link entweder beide ausgefüllt oder beide leer sein.',
+            'Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.',
             $errors['secondary_label']['secondaryPair'],
+        );
+
+        $entity = $headerPromosTable->newEntity([
+            'primary_label' => '',
+            'primary_href' => '/anmelden',
+            'secondary_label' => '',
+            'secondary_href' => '/kontakt',
+        ]);
+
+        $errors = $entity->getErrors();
+
+        $this->assertSame(
+            'Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.',
+            $errors['primary_href']['primaryPair'],
+        );
+        $this->assertSame(
+            'Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.',
+            $errors['secondary_href']['secondaryPair'],
         );
     }
 }

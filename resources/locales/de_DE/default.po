@@ -5642,11 +5642,8 @@ msgstr "Button-Link"
 msgid "Please enter a valid link."
 msgstr "Bitte gib einen gültigen Link ein."
 
-msgid "Primary button label and link must both be filled or both be empty."
-msgstr "Bei der primären Aktion müssen Beschriftung und Link entweder beide ausgefüllt oder beide leer sein."
-
-msgid "Secondary button label and link must both be filled or both be empty."
-msgstr "Bei der sekundären Aktion müssen Beschriftung und Link entweder beide ausgefüllt oder beide leer sein."
+msgid "Button label and link must both be filled or both be empty."
+msgstr "Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein."
 
 msgid "Button label {0}"
 msgstr "Button-Beschriftung {0}"

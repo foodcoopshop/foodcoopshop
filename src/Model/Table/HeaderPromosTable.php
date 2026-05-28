@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Validation\Validation;
 use Cake\Validation\Validator;
 
 /**
@@ -82,23 +83,10 @@ class HeaderPromosTable extends AppTable
             'message' => __('Please enter a valid link.'),
         ]);
 
-        $validator->add('primary_label', 'primaryPair', [
-            'rule' => function (mixed $value, array $context): bool {
-                $label = trim((string)$value);
-                $href = trim((string)($context['data']['primary_href'] ?? ''));
-                return ($label === '' && $href === '') || ($label !== '' && $href !== '');
-            },
-            'message' => __('Primary button label and link must both be filled or both be empty.'),
-        ]);
-
-        $validator->add('secondary_label', 'secondaryPair', [
-            'rule' => function (mixed $value, array $context): bool {
-                $label = trim((string)$value);
-                $href = trim((string)($context['data']['secondary_href'] ?? ''));
-                return ($label === '' && $href === '') || ($label !== '' && $href !== '');
-            },
-            'message' => __('Secondary button label and link must both be filled or both be empty.'),
-        ]);
+        $this->addPairValidationRule($validator, 'primaryPair', 'primary_label', 'primary_href');
+        $this->addPairValidationRule($validator, 'primaryPair', 'primary_href', 'primary_label');
+        $this->addPairValidationRule($validator, 'secondaryPair', 'secondary_label', 'secondary_href');
+        $this->addPairValidationRule($validator, 'secondaryPair', 'secondary_href', 'secondary_label');
 
         return $validator;
     }
@@ -114,7 +102,7 @@ class HeaderPromosTable extends AppTable
             return true;
         }
 
-        if (filter_var($href, FILTER_VALIDATE_URL) !== false) {
+        if (Validation::url($href, true)) {
             return true;
         }
 
@@ -147,5 +135,22 @@ class HeaderPromosTable extends AppTable
         }
 
         return '/' . $strippedHref;
+    }
+
+    private function addPairValidationRule(Validator $validator, string $ruleName, string $field, string $pairedField): void
+    {
+        $validator->add($field, $ruleName, [
+            'rule' => function (mixed $value, array $context) use ($pairedField): bool {
+                $firstValue = trim((string)$value);
+                $secondValue = trim((string)($context['data'][$pairedField] ?? ''));
+                return $this->isEitherBothFilledOrBothEmpty($firstValue, $secondValue);
+            },
+            'message' => __('Button label and link must both be filled or both be empty.'),
+        ]);
+    }
+
+    private function isEitherBothFilledOrBothEmpty(string $firstValue, string $secondValue): bool
+    {
+        return ($firstValue === '' && $secondValue === '') || ($firstValue !== '' && $secondValue !== '');
     }
 }
