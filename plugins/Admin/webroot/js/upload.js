@@ -41,8 +41,9 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
+        var objectId = $(modalSelector + ' form.mini-upload-form-image').data('objectId');
         $('body.pages input[name="Pages[tmp_image]"]').val(image.attr('src'));
-        var button = $('body.pages a.add-image-button');
+        var button = $('body.pages a.add-image-button[data-object-id="' + objectId + '"]');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
         var newImage = $('<img />').attr('src', image.attr('src'));
