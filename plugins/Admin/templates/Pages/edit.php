@@ -155,13 +155,14 @@ echo $this->Form->control('Pages.extern_url', [
 ]);
 
 if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
-    echo '<div class="warning">';
-        echo $this->Form->control('Pages.delete_page', [
-            'label' => __('Pages_delete_page_main_description') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
-            'type' => 'checkbox',
-            'escape' => false
-        ]);
-    echo '</div>';
+    echo $this->Form->hidden('Pages.delete_page', [
+        'value' => 0,
+        'id' => 'pages-delete-page',
+        'class' => 'js-delete-entity-input',
+        'data-delete-label' => __('Delete'),
+        'data-delete-confirm' => __('Do you really want to delete this page?'),
+    ]);
+    $this->Form->unlockField('Pages.delete_page');
 }
 
 echo $this->Form->control('Pages.is_private', [

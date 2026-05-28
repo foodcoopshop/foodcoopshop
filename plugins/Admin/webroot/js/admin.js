@@ -388,7 +388,9 @@ foodcoopshop.Admin = {
         // copy save and cancel button below form
         var form = $('form.fcs-form');
         form.after('<div class="form-buttons"></div>');
-        $('#content .form-buttons').append($('.filter-container .right > a.submit, .filter-container .right > a.cancel').clone(true)); // true clones events
+        var formButtons = $('#content .form-buttons');
+        formButtons.append($('.filter-container .right > a.submit, .filter-container .right > a.cancel').clone(true)); // true clones events
+        this.initDeleteEntityButton(form, formButtons);
 
         // submit form on enter in text fields
         form.find('input[type=text], input[type=number], input[type=password], input[type="tel"]').keypress(function (e) {
@@ -419,6 +421,52 @@ foodcoopshop.Admin = {
             if ($(this).prev().hasClass('long')) {
                 $(this).addClass('long');
             }
+        });
+
+    },
+
+    initDeleteEntityButton: function (form, formButtons) {
+
+        var deleteEntityInput = form.find('input.js-delete-entity-input');
+        if (deleteEntityInput.length === 0) {
+            return;
+        }
+
+        var formButtonsLeft = $('#content .form-buttons-left');
+        if (formButtonsLeft.length === 0) {
+            formButtonsLeft = $('<div class="form-buttons-left"></div>');
+            formButtonsLeft.insertAfter(form);
+        }
+
+        var buttonClass = deleteEntityInput.data('deleteButtonClass') || 'btn-danger';
+        var buttonLabel = deleteEntityInput.data('deleteLabel') || __('Delete');
+        var confirmMessage = deleteEntityInput.data('deleteConfirm') || __('Are you sure?');
+        var buttonIcon = deleteEntityInput.data('deleteIcon') || 'fa-trash-alt';
+        var isDisabled = !!deleteEntityInput.data('deleteDisabled');
+        var disabledTitle = deleteEntityInput.data('deleteDisabledTitle') || '';
+
+        var deleteButtonClass = 'btn ' + buttonClass + ' delete-entity';
+
+        if (isDisabled) {
+            if (disabledTitle !== '') {
+                var infoText = $('<span class="delete-entity-info"></span>').text(disabledTitle);
+                formButtonsLeft.append(infoText);
+                formButtonsLeft.addClass('has-delete-info');
+            }
+            return;
+        }
+
+        var deleteButton = $('<a href="javascript:void(0);" class="' + deleteButtonClass + '"><i class="fa-fw fas ' + buttonIcon + '"></i> ' + buttonLabel + '</a>');
+        formButtonsLeft.append(deleteButton);
+
+        deleteButton.on('click', function () {
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            deleteEntityInput.val(1);
+            foodcoopshop.Helper.disableButton($(this));
+            foodcoopshop.Helper.addSpinnerToButton($(this), buttonIcon);
+            form.submit();
         });
 
     },

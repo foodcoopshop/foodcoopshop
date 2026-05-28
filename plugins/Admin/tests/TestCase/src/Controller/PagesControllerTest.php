@@ -260,6 +260,35 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertNull($headerPromo);
     }
 
+    public function testDeletePage(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $pagesTable = $this->getTableLocator()->get('Pages');
+        $page = $pagesTable->get(3);
+
+        $this->post($this->Slug->getPageEdit(3), [
+            'Pages' => [
+                'title' => (string) $page->title,
+                'menu_type' => (string) $page->menu_type,
+                'id_parent' => (int) $page->id_parent,
+                'position' => (int) $page->position,
+                'full_width' => (int) $page->full_width,
+                'extern_url' => (string) $page->extern_url,
+                'is_private' => (int) $page->is_private,
+                'active' => (int) $page->active,
+                'content' => (string) $page->content,
+                'delete_page' => 1,
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertRedirect('/');
+
+        $page = $pagesTable->get(3);
+        $this->assertSame(APP_DEL, (int) $page->active);
+    }
+
     public function testEditHomePostIgnoresTemplateRow(): void
     {
         $this->loginAsSuperadmin();

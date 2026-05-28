@@ -60,4 +60,36 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     }
 
+    public function testDeleteBlogPost(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $this->post(
+            $this->Slug->getBlogPostEdit(2),
+            [
+                'BlogPosts' => [
+                    'id_blog_post' => 2,
+                    'title' => 'Demo Blog Artikel',
+                    'short_description' => 'Lorem ipsum dolor sit amet, consetetur sadipscing',
+                    'content' => '<p>Lorem ipsum dolor sit amet.</p>',
+                    'id_manufacturer' => 0,
+                    'is_private' => 0,
+                    'active' => 1,
+                    'show_on_start_page_until' => '30.03.2040',
+                    'delete_blog_post' => 1,
+                ],
+            ]
+        );
+
+        $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
+        $blogPost = $blogPostsTable->find('all',
+            conditions: [
+                'BlogPosts.id_blog_post' => 2,
+            ],
+        )->first();
+
+        $this->assertEquals(APP_DEL, $blogPost->active);
+
+    }
+
 }

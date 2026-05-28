@@ -1527,17 +1527,8 @@ msgstr "Variante löschen?"
 msgid "Delete_attribute_{0}?"
 msgstr "Variante {0} löschen?"
 
-msgid "Delete_blog_post?"
-msgstr "Blog-Artikel löschen?"
-
-msgid "Delete_category?"
-msgstr "Kategorie löschen?"
-
 msgid "Delete_deposit_take_back?"
 msgstr "Pfand-Rücknahme löschen?"
-
-msgid "Delete_feedback?"
-msgstr "Feedback löschen?"
 
 msgid "Delete_general_terms_and_conditions?"
 msgstr "AGB löschen?"
@@ -1565,9 +1556,6 @@ msgstr "Produkte löschen?"
 
 msgid "Delete_profile_image?"
 msgstr "Profilbild löschen?"
-
-msgid "Delete_remote_foodcoop"
-msgstr "Remote-Foodcoop löschen"
 
 msgid "Delete_slider_image?"
 msgstr "Slideshow-Bild löschen?"
@@ -5689,3 +5677,24 @@ msgstr "Die Slideshow-Bilder werden nicht mehr verwendet. Du kannst für jede Se
 
 msgid "You can add a header image and header infos after saving the page for the first time."
 msgstr "Du kannst ein Header-Bild hinzufügen, nachdem du die Seite zum ersten Mal gespeichert hast."
+
+msgid "Do you really want to delete this page?"
+msgstr "Möchtest du diese Seite wirklich löschen?"
+
+msgid "Do you really want to delete this category?"
+msgstr "Möchtest du diese Kategorie wirklich löschen?"
+
+msgid "Do you really want to delete this blog post?"
+msgstr "Möchtest du diesen Blog-Artikel wirklich löschen?"
+
+msgid "Do you really want to delete this attribute?"
+msgstr "Möchtest du diese Variante wirklich löschen?"
+
+msgid "Do you really want to delete this feedback?"
+msgstr "Möchtest du dieses Feedback wirklich löschen?"
+
+msgid "Do you really want to delete this storage location?"
+msgstr "Möchtest du diesen Lagerort wirklich löschen?"
+
+msgid "Do you really want to delete this remote foodcoop?"
+msgstr "Möchtest du diese Remote-Foodcoop wirklich löschen?"

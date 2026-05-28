@@ -99,13 +99,14 @@ echo '<div class="warning">';
 echo '</div>';
 
 if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
-    echo '<div class="warning">';
-        echo $this->Form->control('Categories.delete_category', [
-            'label' => __('Delete_category?').' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
-            'type' => 'checkbox',
-            'escape' => false
-        ]);
-    echo '</div>';
+    echo $this->Form->hidden('Categories.delete_category', [
+        'value' => 0,
+        'id' => 'categories-delete-category',
+        'class' => 'js-delete-entity-input',
+        'data-delete-label' => __('Delete'),
+        'data-delete-confirm' => __('Do you really want to delete this category?'),
+    ]);
+    $this->Form->unlockField('Categories.delete_category');
 }
 
 echo $this->Form->control('Categories.active', [

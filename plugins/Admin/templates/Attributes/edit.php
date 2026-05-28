@@ -62,14 +62,25 @@ echo $this->Form->control('Attributes.can_be_used_as_unit', [
 
 
 if ($this->request->getRequestTarget() != $this->Slug->getAttributeAdd()) {
-    echo '<div class="warning">';
-        echo $this->Form->control('Attributes.delete_attribute', [
-            'label' => __('Delete_attribute?').' <span class="after small">' . ($attribute->has_combined_products ? __('Attribute_can_not_be_deleted_because_products_are_associated_with_it.') : __('Check_and_do_not_forget_to_click_save_button._admin')) . '</span>',
-            'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),
-            'escape' => false,
-            'type' => 'checkbox'
+    if ($attribute->has_combined_products) {
+        echo $this->Form->hidden('Attributes.delete_attribute', [
+            'value' => 0,
+            'id' => 'attributes-delete-attribute',
+            'class' => 'js-delete-entity-input',
+            'data-delete-label' => __('Delete'),
+            'data-delete-disabled' => 1,
+            'data-delete-disabled-title' => __('Attribute_can_not_be_deleted_because_products_are_associated_with_it.'),
         ]);
-    echo '</div>';
+    } else {
+        echo $this->Form->hidden('Attributes.delete_attribute', [
+            'value' => 0,
+            'id' => 'attributes-delete-attribute',
+            'class' => 'js-delete-entity-input',
+            'data-delete-label' => __('Delete'),
+            'data-delete-confirm' => __('Do you really want to delete this attribute?'),
+        ]);
+        $this->Form->unlockField('Attributes.delete_attribute');
+    }
 }
 
 echo $this->Form->end();

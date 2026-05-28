@@ -232,14 +232,33 @@ td.amount .fa-times {
    margin-right: 5px;
 }
 #content .form-buttons {
-    clear: both;
     float: right;
     margin-right: 10px;
+    margin-top: 10px;
     margin-bottom: 10px;
+}
+#content .form-buttons-left {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#content .form-buttons-left.has-delete-info {
+    width: 100%;
+    margin-bottom: 0;
 }
 #content .form-buttons a {
     float: left;
     margin-left: 3px;
+}
+#content .form-buttons-left a {
+    float: left;
+}
+#content .form-buttons-left span.delete-entity-info {
+    float: left;
+    color: var(--not-ok-red);
+    line-height: 29px;
+    margin-right: 8px;
 }
 
 .filter-container h1 {
