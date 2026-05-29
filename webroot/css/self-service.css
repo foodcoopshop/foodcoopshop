@@ -120,6 +120,10 @@ body.self_services #content {
     padding-top: 20px;
     position: relative;
 }
+.self-service #login-form {
+    margin-left: auto;
+    margin-right: auto;
+}
 .self-service #login-form hr {
     clear: both;
     width: 100%;
@@ -212,6 +216,10 @@ body.customers.login .self-service .footer {
 body.customers.login .self-service {
     margin-top: -100px ! important;
     min-height: 565px ! important;
+    display: block;
+}
+body.customers.login #content.self-service {
+    display: block;
 }
 body.customers.login .footer .left-wrapper,
 body.customers.login .footer .right-wrapper .btn-add-deposit {
