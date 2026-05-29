@@ -40,6 +40,12 @@ foodcoopshop.Cart = {
         this.cartButtonIcon = cartButtonIcon;
     },
 
+    showMovedIntoCartSuccessMessage : function(productName) {
+        var cartModalLink = '<a href="javascript:void(0);" class="modal-link-cart" data-element-selector="#modal-cart-wrapper">' + __('into the cart') + '</a>';
+        foodcoopshop.Helper.showSuccessMessage(__('{0} was moved {1}.', '<b>' + productName + '</b>', cartModalLink));
+        foodcoopshop.ModalCart.init('#flashMessage a.modal-link-cart');
+    },
+
     /**
      * cart products already existed in database
      */
@@ -329,6 +335,9 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
                         foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
+                        if (!foodcoopshop.Helper.isMobile()) {
+                            foodcoopshop.Cart.showMovedIntoCartSuccessMessage(productName);
+                        }
                         if (data.callback) {
                             eval(data.callback);
                         }

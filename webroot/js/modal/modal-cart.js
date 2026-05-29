@@ -17,7 +17,7 @@ foodcoopshop.ModalCart = {
 
         var modalSelector = '#modal-cart';
 
-        $(button).on('click', function () {
+        $(button).off('click').on('click', function () {
             foodcoopshop.ModalCart.getOpenHandler(modalSelector, $(this));
         });
 

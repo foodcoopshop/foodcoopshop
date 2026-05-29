@@ -311,6 +311,10 @@ h2.info a:not(.btn) {
     text-decoration: underline ! important;
     color: #fff ! important;
 }
+#flashMessage.success a {
+    text-decoration: underline ! important;
+    color: #fff ! important;
+}
 #flashMessage.error .progress-bar.bg-success {
     background-color: #f3515c ! important;
 }

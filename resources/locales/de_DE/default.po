@@ -2655,6 +2655,12 @@ msgstr "Mehr Infos zu {0}"
 msgid "Move_in_cart"
 msgstr "In den Warenkorb"
 
+msgid "{0} was moved {1}."
+msgstr "{0} wurde {1} gelegt."
+
+msgid "into the cart"
+msgstr "in den Warenkorb"
+
 msgid "Move_in_shopping_bag"
 msgstr "In die Einkaufstasche"
 
