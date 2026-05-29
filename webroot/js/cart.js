@@ -41,8 +41,8 @@ foodcoopshop.Cart = {
     },
 
     showMovedIntoCartSuccessMessage : function(productName) {
-        var cartModalLink = '<a href="javascript:void(0);" class="modal-link-cart" data-element-selector="#modal-cart-wrapper">' + __('into the cart') + '</a>';
-        foodcoopshop.Helper.showSuccessMessage(__('{0} was moved {1}.', '<b>' + productName + '</b>', cartModalLink));
+        var cartModalLink = '<a href="javascript:void(0);" class="modal-link-cart" data-element-selector="#modal-cart-wrapper">' + __('to the cart') + '</a>';
+        foodcoopshop.Helper.showSuccessMessage(__('{0} was added {1}.', '<b>' + productName + '</b>', cartModalLink));
         foodcoopshop.ModalCart.init('#flashMessage a.modal-link-cart');
     },
 
