@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use ArrayObject;
-use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\Validation\Validation;
 use Cake\Validation\Validator;
 
 /**
@@ -27,6 +25,8 @@ use Cake\Validation\Validator;
 class HeaderPromosTable extends AppTable
 {
 
+    use ButtonLinkValidationTrait;
+
     /**
      * @param EventInterface<\App\Model\Table\HeaderPromosTable> $event
      * @param ArrayObject<string, mixed> $data
@@ -34,11 +34,7 @@ class HeaderPromosTable extends AppTable
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
-        foreach (['primary_href', 'secondary_href'] as $field) {
-            if (isset($data[$field])) {
-                $data[$field] = $this->stripAppFullBaseUrlFromHref((string)$data[$field]);
-            }
-        }
+        $this->normalizeHrefFields($data, ['primary_href', 'secondary_href']);
     }
 
     public function initialize(array $config): void
@@ -67,21 +63,11 @@ class HeaderPromosTable extends AppTable
 
         $validator->maxLength('primary_href', 255, __('Please enter at most {0} characters for the primary link.', [255]));
         $validator->allowEmptyString('primary_href');
-        $validator->add('primary_href', 'validPrimaryHref', [
-            'rule' => function (mixed $value): bool {
-                return $this->isValidHref((string)$value);
-            },
-            'message' => __('Please enter a valid link.'),
-        ]);
+        $this->addHrefValidationRule($validator, 'primary_href', 'validPrimaryHref');
 
         $validator->maxLength('secondary_href', 255, __('Please enter at most {0} characters for the secondary link.', [255]));
         $validator->allowEmptyString('secondary_href');
-        $validator->add('secondary_href', 'validSecondaryHref', [
-            'rule' => function (mixed $value): bool {
-                return $this->isValidHref((string)$value);
-            },
-            'message' => __('Please enter a valid link.'),
-        ]);
+        $this->addHrefValidationRule($validator, 'secondary_href', 'validSecondaryHref');
 
         $this->addPairValidationRule($validator, 'primaryPair', 'primary_label', 'primary_href');
         $this->addPairValidationRule($validator, 'primaryPair', 'primary_href', 'primary_label');
@@ -89,68 +75,5 @@ class HeaderPromosTable extends AppTable
         $this->addPairValidationRule($validator, 'secondaryPair', 'secondary_href', 'secondary_label');
 
         return $validator;
-    }
-
-    private function isValidHref(string $href): bool
-    {
-        $href = trim($href);
-        if ($href === '') {
-            return true;
-        }
-
-        if (preg_match('/^\//', $href) === 1) {
-            return true;
-        }
-
-        if (Validation::url($href, true)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function stripAppFullBaseUrlFromHref(string $href): string
-    {
-        $href = trim($href);
-        if ($href === '') {
-            return '';
-        }
-
-        $fullBaseUrl = rtrim(trim((string)Configure::read('App.fullBaseUrl')), '/');
-        if ($fullBaseUrl === '' || !str_starts_with($href, $fullBaseUrl)) {
-            return $href;
-        }
-
-        $strippedHref = substr($href, strlen($fullBaseUrl));
-        if ($strippedHref === '') {
-            return '/';
-        }
-
-        if (!in_array($strippedHref[0], ['/', '?', '#'], true)) {
-            return $href;
-        }
-
-        if ($strippedHref[0] === '/') {
-            return $strippedHref;
-        }
-
-        return '/' . $strippedHref;
-    }
-
-    private function addPairValidationRule(Validator $validator, string $ruleName, string $field, string $pairedField): void
-    {
-        $validator->add($field, $ruleName, [
-            'rule' => function (mixed $value, array $context) use ($pairedField): bool {
-                $firstValue = trim((string)$value);
-                $secondValue = trim((string)($context['data'][$pairedField] ?? ''));
-                return $this->isEitherBothFilledOrBothEmpty($firstValue, $secondValue);
-            },
-            'message' => __('Button label and link must both be filled or both be empty.'),
-        ]);
-    }
-
-    private function isEitherBothFilledOrBothEmpty(string $firstValue, string $secondValue): bool
-    {
-        return ($firstValue === '' && $secondValue === '') || ($firstValue !== '' && $secondValue !== '');
     }
 }

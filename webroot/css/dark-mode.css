@@ -274,11 +274,14 @@ body.dark.pages.home .home-block:nth-child(even) {
 }
 body.dark.pages.home .home-block-body h2,
 body.dark.pages.home .home-block-text,
-body.dark.pages.home .home-block a {
+body.dark.pages.home .home-block a:not(.btn) {
     color: var(--dark-mode-main-font-color);
 }
-body.dark.pages.home .home-block a:hover {
+body.dark.pages.home .home-block a:not(.btn):hover {
     color: var(--dark-mode-2nd-font-color);
+}
+body.dark.pages.home .home-block-actions .btn {
+    color: #fff;
 }
 body.dark.pages.home .home-block.no-image .home-block-body,
 body.dark.pages.home .home-block.image-right .home-block-body {

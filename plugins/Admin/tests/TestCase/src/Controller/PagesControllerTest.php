@@ -52,6 +52,10 @@ class AdminPagesControllerTest extends AppCakeTestCase
                     'image_position' => Block::IMAGE_POSITION_LEFT,
                     'heading' => 'Neuer Block',
                     'content' => '<p>Blockinhalt</p>',
+                    'primary_label' => 'Mehr Infos',
+                    'primary_href' => Configure::read('App.fullBaseUrl') . '/neuigkeiten',
+                    'secondary_label' => 'Kontakt',
+                    'secondary_href' => Configure::read('App.fullBaseUrl') . '/kontakt',
                     'position' => 5,
                     'active' => 1,
                 ],
@@ -85,6 +89,10 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $block = $blocksTable->get(1);
         $this->assertEquals('Neuer Block', $block->heading);
         $this->assertEquals('<p>Blockinhalt</p>', $block->content);
+        $this->assertSame('Mehr Infos', $block->primary_label);
+        $this->assertSame('/neuigkeiten', $block->primary_href);
+        $this->assertSame('Kontakt', $block->secondary_label);
+        $this->assertSame('/kontakt', $block->secondary_href);
         $this->assertEquals(Block::IMAGE_POSITION_LEFT, (int)$block->image_position);
         $this->assertEquals(5, $block->position);
         $this->assertEquals(1, $block->active);

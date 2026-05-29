@@ -1001,6 +1001,16 @@ body.pages.edit_home .home-block-row .jodit-container {
     width: 100%;
 }
 
+body.pages.edit_home .home-block-actions-editor {
+    display: flex;
+    gap: 18px;
+}
+
+body.pages.edit_home .home-block-action-pair {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
 body.pages.edit_home .home-block-meta-row {
     display: flex;
     align-items: center;
@@ -1076,6 +1086,11 @@ body.pages.edit_home .home-block-add-button-wrapper {
     body.pages.edit_home .home-block-row-fields {
         flex-direction: column;
         gap: 14px;
+    }
+
+    body.pages.edit_home .home-block-actions-editor {
+        flex-direction: column;
+        gap: 0;
     }
 
     body.pages.edit_home .home-block-image-input {

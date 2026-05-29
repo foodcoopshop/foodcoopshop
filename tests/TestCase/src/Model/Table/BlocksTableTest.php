@@ -34,6 +34,22 @@ class BlocksTableTest extends AppCakeTestCase
         $this->assertFalse($entity->hasErrors());
     }
 
+    public function testValidationAllowsButtonOnlyBlock(): void
+    {
+        $blocksTable = $this->getTableLocator()->get('Blocks');
+        $entity = $blocksTable->newEntity([
+            'image' => '',
+            'heading' => '',
+            'content' => '',
+            'primary_label' => 'Mehr',
+            'primary_href' => '/anmelden',
+            'position' => 0,
+            'active' => 1,
+        ]);
+
+        $this->assertFalse($entity->hasErrors());
+    }
+
     public function testValidationRejectsCompletelyEmptyBlock(): void
     {
         $blocksTable = $this->getTableLocator()->get('Blocks');
@@ -47,5 +63,26 @@ class BlocksTableTest extends AppCakeTestCase
 
         $this->assertTrue($entity->hasErrors());
         $this->assertArrayHasKey('position', $entity->getErrors());
+    }
+
+    public function testValidationRejectsInvalidButtonLinksAndPairs(): void
+    {
+        $blocksTable = $this->getTableLocator()->get('Blocks');
+        $entity = $blocksTable->newEntity([
+            'image' => '',
+            'heading' => 'Heading',
+            'content' => 'Text',
+            'primary_label' => 'Mehr',
+            'primary_href' => 'ungueltiger-link',
+            'secondary_label' => '',
+            'secondary_href' => '/kontakt',
+            'position' => 0,
+            'active' => 1,
+        ]);
+
+        $errors = $entity->getErrors();
+
+        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['validPrimaryHref']);
+        $this->assertSame('Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.', $errors['secondary_href']['secondaryPair']);
     }
 }

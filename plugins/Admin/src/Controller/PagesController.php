@@ -149,8 +149,20 @@ class PagesController extends AdminAppController
             $image = trim((string)($submittedBlock['image'] ?? ''));
             $heading = trim(strip_tags((string)($submittedBlock['heading'] ?? '')));
             $content = trim(strip_tags((string)($submittedBlock['content'] ?? '')));
+            $primaryLabel = trim((string)($submittedBlock['primary_label'] ?? ''));
+            $primaryHref = trim((string)($submittedBlock['primary_href'] ?? ''));
+            $secondaryLabel = trim((string)($submittedBlock['secondary_label'] ?? ''));
+            $secondaryHref = trim((string)($submittedBlock['secondary_href'] ?? ''));
             $deleteImage = !empty($submittedBlock['delete_image']);
-            $hasUserContent = $tmpImage !== '' || $image !== '' || $heading !== '' || $content !== '' || $deleteImage;
+            $hasUserContent = $tmpImage !== ''
+                || $image !== ''
+                || $heading !== ''
+                || $content !== ''
+                || $primaryLabel !== ''
+                || $primaryHref !== ''
+                || $secondaryLabel !== ''
+                || $secondaryHref !== ''
+                || $deleteImage;
 
             if ($blockId === 0 && !$hasUserContent) {
                 continue;

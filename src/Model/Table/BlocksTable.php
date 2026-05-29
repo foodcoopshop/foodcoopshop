@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Block;
+use ArrayObject;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query\SelectQuery;
 use Cake\Validation\Validator;
 
@@ -25,6 +27,18 @@ use Cake\Validation\Validator;
 class BlocksTable extends AppTable
 {
 
+    use ButtonLinkValidationTrait;
+
+    /**
+     * @param EventInterface<\App\Model\Table\BlocksTable> $event
+     * @param ArrayObject<string, mixed> $data
+     * @param ArrayObject<string, mixed> $options
+     */
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        $this->normalizeHrefFields($data, ['primary_href', 'secondary_href']);
+    }
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -44,16 +58,46 @@ class BlocksTable extends AppTable
         $validator->allowEmptyString('heading');
         $validator->allowEmptyString('content');
 
+        $validator->maxLength('primary_label', 25, __('Please enter at most {0} characters for the primary button label.', [25]));
+        $validator->allowEmptyString('primary_label');
+
+        $validator->maxLength('secondary_label', 25, __('Please enter at most {0} characters for the secondary button label.', [25]));
+        $validator->allowEmptyString('secondary_label');
+
+        $validator->maxLength('primary_href', 255, __('Please enter at most {0} characters for the primary link.', [255]));
+        $validator->allowEmptyString('primary_href');
+        $this->addHrefValidationRule($validator, 'primary_href', 'validPrimaryHref');
+
+        $validator->maxLength('secondary_href', 255, __('Please enter at most {0} characters for the secondary link.', [255]));
+        $validator->allowEmptyString('secondary_href');
+        $this->addHrefValidationRule($validator, 'secondary_href', 'validSecondaryHref');
+
+        $this->addPairValidationRule($validator, 'primaryPair', 'primary_label', 'primary_href');
+        $this->addPairValidationRule($validator, 'primaryPair', 'primary_href', 'primary_label');
+        $this->addPairValidationRule($validator, 'secondaryPair', 'secondary_label', 'secondary_href');
+        $this->addPairValidationRule($validator, 'secondaryPair', 'secondary_href', 'secondary_label');
+
         $validator->add('position', 'atLeastOneContentField', [
             'rule' => function (mixed $value, array $context): bool {
                 $image = trim((string)($context['data']['image'] ?? ''));
                 $tmpImage = trim((string)($context['data']['tmp_image'] ?? ''));
                 $heading = trim(strip_tags((string)($context['data']['heading'] ?? '')));
                 $content = trim(strip_tags((string)($context['data']['content'] ?? '')));
+                $primaryLabel = trim((string)($context['data']['primary_label'] ?? ''));
+                $primaryHref = trim((string)($context['data']['primary_href'] ?? ''));
+                $secondaryLabel = trim((string)($context['data']['secondary_label'] ?? ''));
+                $secondaryHref = trim((string)($context['data']['secondary_href'] ?? ''));
 
-                return $image !== '' || $tmpImage !== '' || $heading !== '' || $content !== '';
+                return $image !== ''
+                    || $tmpImage !== ''
+                    || $heading !== ''
+                    || $content !== ''
+                    || $primaryLabel !== ''
+                    || $primaryHref !== ''
+                    || $secondaryLabel !== ''
+                    || $secondaryHref !== '';
             },
-            'message' => __('Please fill in at least one of image heading or text.'),
+            'message' => __('Please fill in at least one of image heading text or button.'),
         ]);
 
         return $validator;

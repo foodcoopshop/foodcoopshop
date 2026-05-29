@@ -70,6 +70,20 @@ if (!empty($homeBlocks)) {
                         if (!empty($block->content)) {
                             echo '<div class="home-block-text">' . $block->content . '</div>';
                         }
+                        $primaryLabel = trim((string)($block->primary_label ?? ''));
+                        $primaryHref = trim((string)($block->primary_href ?? ''));
+                        $secondaryLabel = trim((string)($block->secondary_label ?? ''));
+                        $secondaryHref = trim((string)($block->secondary_href ?? ''));
+                        if (($primaryLabel !== '' && $primaryHref !== '') || ($secondaryLabel !== '' && $secondaryHref !== '')) {
+                            echo '<div class="header-promo-actions home-block-actions">';
+                                if ($primaryLabel !== '' && $primaryHref !== '') {
+                                    echo '<a class="btn btn-success primary" href="' . h($primaryHref) . '">' . h($primaryLabel) . '</a>';
+                                }
+                                if ($secondaryLabel !== '' && $secondaryHref !== '') {
+                                    echo '<a class="btn btn-outline-light secondary" href="' . h($secondaryHref) . '">' . h($secondaryLabel) . '</a>';
+                                }
+                            echo '</div>';
+                        }
                     echo '</div>';
                 echo '</div>';
             echo '</article>';

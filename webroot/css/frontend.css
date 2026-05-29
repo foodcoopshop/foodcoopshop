@@ -1666,6 +1666,20 @@ body.pages.home .home-block-text {
     line-height: 1.45;
 }
 
+body.pages.home .home-block-actions {
+    gap: 12px;
+    margin-top: 24px;
+}
+
+body.pages.home .home-block-actions .btn {
+    min-width: 190px;
+    padding: 10px 16px;
+    border-radius: 24px;
+    font-size: 15px;
+    line-height: 1.25;
+    text-align: center;
+}
+
 body.pages.home .home-block:last-child {
     margin-bottom: 0;
 }
@@ -1984,6 +1998,19 @@ body.has-page-banner .header-promo-actions .btn {
     .header-promo-actions .btn:only-child {
         width: auto;
         margin-top: 12px;
+    }
+
+    body.pages.home .home-block-actions {
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    body.pages.home .home-block-actions .btn {
+        width: auto;
+        min-width: 0;
+        padding: 8px 13px;
+        font-size: 14px;
     }
 }
 
