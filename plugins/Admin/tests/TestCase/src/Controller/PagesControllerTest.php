@@ -66,7 +66,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'HeaderPromo' => [
                 'title' => 'Startseiten Titel',
                 'lead_text' => 'Startseiten Lead',
-                'text' => 'Startseiten Text',
+                'text' => '<p><strong>Startseiten Text</strong></p>',
                 'primary_label' => 'Primar',
                 'primary_href' => Configure::read('App.fullBaseUrl') . '/anmelden',
                 'secondary_label' => 'Sekundar',
@@ -110,7 +110,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertNotNull($headerPromo);
         $this->assertSame('Startseiten Titel', $headerPromo->title);
         $this->assertSame('Startseiten Lead', $headerPromo->lead_text);
-        $this->assertSame('Startseiten Text', $headerPromo->text);
+        $this->assertSame('<p><strong>Startseiten Text</strong></p>', $headerPromo->text);
         $this->assertSame('Primar', $headerPromo->primary_label);
         $this->assertSame('/anmelden', $headerPromo->primary_href);
         $this->assertSame('Sekundar', $headerPromo->secondary_label);

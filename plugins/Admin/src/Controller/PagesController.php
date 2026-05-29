@@ -134,7 +134,7 @@ class PagesController extends AdminAppController
 
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content', 'text'])));
 
         $homeText = (string) $this->getRequest()->getData('Pages.content');
         $submittedBlocksRaw = (array) $this->getRequest()->getData('Blocks');
@@ -329,7 +329,7 @@ class PagesController extends AdminAppController
 
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content', 'text'])));
 
         $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addProtocolToUrl($this->getRequest()->getData('Pages.extern_url'))));
         $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->identity->getId()));

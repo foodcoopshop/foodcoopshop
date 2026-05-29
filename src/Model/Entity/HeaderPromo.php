@@ -18,4 +18,6 @@ namespace App\Model\Entity;
  */
 class HeaderPromo extends AppEntity
 {
+	public const string ALLOWED_TAGS_TEXT = '<p><br><b><i><strong><em>';
+
 }

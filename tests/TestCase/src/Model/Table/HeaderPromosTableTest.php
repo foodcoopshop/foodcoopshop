@@ -117,4 +117,36 @@ class HeaderPromosTableTest extends AppCakeTestCase
             $errors['secondary_href']['secondaryPair'],
         );
     }
+
+    public function testTextSanitizationAllowsOnlyConfiguredTags(): void
+    {
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $entity = $headerPromosTable->newEntity([
+            'text' => '<p><strong>Bold</strong> <em>Italic</em> <b>Bold2</b> <i>Italic2</i><br>line</p><h2>Nope</h2><script>alert(1)</script>',
+        ]);
+
+        $this->assertSame('<p><strong>Bold</strong> <em>Italic</em> <b>Bold2</b> <i>Italic2</i><br>line</p>Nopealert(1)', $entity->text);
+    }
+
+    public function testBeforeMarshalStripsTagsFromPlainStringFields(): void
+    {
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $entity = $headerPromosTable->newEntity([
+            'title' => '<h2>Titel</h2>',
+            'lead_text' => '<strong>Untertitel</strong>',
+            'primary_label' => '<b>Mehr</b>',
+            'primary_href' => '<i>/anmelden</i>',
+            'secondary_label' => '<script>Kontakt</script>',
+            'secondary_href' => '<div>/kontakt</div>',
+            'text' => '<p><strong>Text</strong></p>',
+        ]);
+
+        $this->assertSame('Titel', $entity->title);
+        $this->assertSame('Untertitel', $entity->lead_text);
+        $this->assertSame('Mehr', $entity->primary_label);
+        $this->assertSame('/anmelden', $entity->primary_href);
+        $this->assertSame('Kontakt', $entity->secondary_label);
+        $this->assertSame('/kontakt', $entity->secondary_href);
+        $this->assertSame('<p><strong>Text</strong></p>', $entity->text);
+    }
 }

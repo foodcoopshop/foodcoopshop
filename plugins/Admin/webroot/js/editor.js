@@ -163,8 +163,9 @@ foodcoopshop.Editor = {
             ... this.getDefaultOptions(),
             width: 760,
             height: 550,
-            buttons: ['bold', 'eraser',
-                    '|', 'paragraph', 'ul', 'ol', 'hr',
+            enter: 'p',
+            buttons: ['bold', 'italic', 'eraser',
+                '|', 'paragraph', 'ul', 'ol',
             ],
 
         }, startupFocus);

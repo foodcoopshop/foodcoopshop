@@ -1001,6 +1001,18 @@ body.pages.edit_home .home-block-row .jodit-container {
     width: 100%;
 }
 
+body.pages.edit_home .home-block-row .jodit-wysiwyg h2,
+body.pages.edit_home .home-block-row .jodit-wysiwyg h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: inherit;
+    border-bottom: none;
+    padding-bottom: 0;
+    text-decoration: none;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
 body.pages.edit_home .home-block-actions-editor {
     display: flex;
     gap: 18px;

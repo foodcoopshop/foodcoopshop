@@ -18,6 +18,7 @@ namespace App\Model\Entity;
  */
 class Block extends AppEntity
 {
+	public const string ALLOWED_TAGS = '<h2><h3><b><i><strong><em><p><ul><ol><li><br><hr>';
 	public const int IMAGE_POSITION_LEFT = 1;
 	public const int IMAGE_POSITION_RIGHT = 2;
 }

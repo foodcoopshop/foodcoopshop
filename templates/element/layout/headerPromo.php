@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 $headerPromo = $headerPromo ?? null;
+$identity = $identity ?? null;
 if ($headerPromo === null) {
     return;
 }
@@ -42,7 +43,7 @@ if ($title === '' && $lead === '' && $text === '' && $primaryLabel === '' && $se
                 <div class="header-promo-lead"><?php echo h($lead); ?></div>
             <?php endif; ?>
             <?php if ($text !== '') : ?>
-                <div class="header-promo-text"><?php echo h($text); ?></div>
+                <div class="header-promo-text"><?php echo $text; ?></div>
             <?php endif; ?>
             <?php if (($primaryLabel !== '' && $primaryHref !== '') || ($secondaryLabel !== '' && $secondaryHref !== '')) : ?>
                 <div class="header-promo-actions">

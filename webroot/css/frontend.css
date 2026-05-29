@@ -1672,6 +1672,13 @@ body.pages.home .home-block-text {
     word-break: break-word;
 }
 
+body.pages.home .home-block-text h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
 body.pages.home .home-block-text img,
 body.pages.home .home-block-text video,
 body.pages.home .home-block-text iframe {

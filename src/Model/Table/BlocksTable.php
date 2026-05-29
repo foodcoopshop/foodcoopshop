@@ -37,6 +37,30 @@ class BlocksTable extends AppTable
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         $this->normalizeHrefFields($data, ['primary_href', 'secondary_href']);
+
+        $plainStringFields = [
+            'heading',
+            'image',
+            'tmp_image',
+            'primary_label',
+            'primary_href',
+            'secondary_label',
+            'secondary_href',
+        ];
+
+        $rawData = $data->getArrayCopy();
+        foreach ($plainStringFields as $field) {
+            if (array_key_exists($field, $rawData)) {
+                $data[$field] = $this->sanitizePlainStringValue($rawData[$field]);
+            }
+        }
+
+        if (array_key_exists('content', $rawData)) {
+            $data['content'] = trim(strip_tags(
+                htmlspecialchars_decode((string)$rawData['content']),
+                Block::ALLOWED_TAGS,
+            ));
+        }
     }
 
     public function initialize(array $config): void

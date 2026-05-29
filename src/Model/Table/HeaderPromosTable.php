@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use ArrayObject;
 use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
+use App\Model\Entity\HeaderPromo;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,6 +36,29 @@ class HeaderPromosTable extends AppTable
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         $this->normalizeHrefFields($data, ['primary_href', 'secondary_href']);
+
+        $plainStringFields = [
+            'title',
+            'lead_text',
+            'primary_label',
+            'primary_href',
+            'secondary_label',
+            'secondary_href',
+        ];
+
+        $rawData = $data->getArrayCopy();
+        foreach ($plainStringFields as $field) {
+            if (array_key_exists($field, $rawData)) {
+                $data[$field] = $this->sanitizePlainStringValue($rawData[$field]);
+            }
+        }
+
+        if (array_key_exists('text', $rawData)) {
+            $data['text'] = trim(strip_tags(
+                htmlspecialchars_decode((string)$rawData['text']),
+                HeaderPromo::ALLOWED_TAGS_TEXT,
+            ));
+        }
     }
 
     public function initialize(array $config): void

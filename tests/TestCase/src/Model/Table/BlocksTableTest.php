@@ -85,4 +85,26 @@ class BlocksTableTest extends AppCakeTestCase
         $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['validPrimaryHref']);
         $this->assertSame('Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.', $errors['secondary_href']['secondaryPair']);
     }
+
+    public function testBeforeMarshalStripsDisallowedBlockTags(): void
+    {
+        $blocksTable = $this->getTableLocator()->get('Blocks');
+        $entity = $blocksTable->newEntity([
+            'heading' => '<h2>Heading</h2>',
+            'primary_label' => '<b>Mehr</b>',
+            'primary_href' => '<i>/anmelden</i>',
+            'secondary_label' => '<script>Kontakt</script>',
+            'secondary_href' => '<div>/kontakt</div>',
+            'content' => '<h2>Title</h2><h3>Subtitle</h3><p><b>Bold</b> <i>Italic</i></p><ul><li>Item</li></ul><ol><li>Item 2</li></ol><hr><div>Ignored</div>',
+            'position' => 0,
+            'active' => 1,
+        ]);
+
+        $this->assertSame('Heading', $entity->heading);
+        $this->assertSame('Mehr', $entity->primary_label);
+        $this->assertSame('/anmelden', $entity->primary_href);
+        $this->assertSame('Kontakt', $entity->secondary_label);
+        $this->assertSame('/kontakt', $entity->secondary_href);
+        $this->assertSame('<h2>Title</h2><h3>Subtitle</h3><p><b>Bold</b> <i>Italic</i></p><ul><li>Item</li></ul><ol><li>Item 2</li></ol><hr>Ignored', $entity->content);
+    }
 }
