@@ -1682,6 +1682,7 @@ body.pages.home .home-block-text iframe {
 body.pages.home .home-block-actions {
     gap: 12px;
     margin-top: 24px;
+    justify-content: center;
 }
 
 body.pages.home .home-block-actions .btn {
