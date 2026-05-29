@@ -1558,6 +1558,10 @@ body.pages.home #content {
     position: relative;
 }
 
+body.pages.home {
+    overflow-x: hidden;
+}
+
 body.pages.home #content:has(#inner-content.without-sidebar) {
     grid-template-columns: minmax(0, var(--content-max-width));
     justify-content: center;
@@ -1664,6 +1668,15 @@ body.pages.home .home-block-body h2 {
 body.pages.home .home-block-text {
     font-size: 18px;
     line-height: 1.45;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+body.pages.home .home-block-text img,
+body.pages.home .home-block-text video,
+body.pages.home .home-block-text iframe {
+    max-width: 100%;
+    height: auto;
 }
 
 body.pages.home .home-block-actions {
@@ -1678,6 +1691,9 @@ body.pages.home .home-block-actions .btn {
     font-size: 15px;
     line-height: 1.25;
     text-align: center;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 body.pages.home .home-block:last-child {
@@ -1845,6 +1861,9 @@ body.has-page-banner #main-menu > li > a > i.fas:empty {
 }
 #main-menu > li {
     margin-right: 9px;
+}
+#main-menu > li:last-child {
+    margin-right: 0;
 }
 body.has-page-hero #header .logo-wrapper a img.logo {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));

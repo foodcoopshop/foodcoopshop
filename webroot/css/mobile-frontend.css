@@ -246,6 +246,7 @@
         left: 0 ! important;
         right: 0 ! important;
         width: 100% ! important;
+        box-sizing: border-box ! important;
         padding: 8px 14px 18px ! important;
         margin: 0 ! important;
         z-index: 2;
