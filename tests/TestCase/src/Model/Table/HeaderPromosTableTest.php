@@ -29,9 +29,9 @@ class HeaderPromosTableTest extends AppCakeTestCase
             'lead_text' => 'Untertitel',
             'text' => 'Text',
             'primary_label' => 'Mehr',
-            'primary_href' => '/anmelden',
+            'primary_href' => 'https://example.com/anmelden',
             'secondary_label' => 'Kontakt',
-            'secondary_href' => '/kontakt',
+            'secondary_href' => 'https://example.com/kontakt',
         ];
     }
 
@@ -74,8 +74,8 @@ class HeaderPromosTableTest extends AppCakeTestCase
 
         $errors = $entity->getErrors();
 
-        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['validPrimaryHref']);
-        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['secondary_href']['validSecondaryHref']);
+        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['urlWithProtocol']);
+        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['secondary_href']['urlWithProtocol']);
     }
 
     public function testValidationRequiresPrimaryAndSecondaryPairs(): void
@@ -101,9 +101,9 @@ class HeaderPromosTableTest extends AppCakeTestCase
 
         $entity = $headerPromosTable->newEntity([
             'primary_label' => '',
-            'primary_href' => '/anmelden',
+            'primary_href' => 'https://example.com/anmelden',
             'secondary_label' => '',
-            'secondary_href' => '/kontakt',
+            'secondary_href' => 'https://example.com/kontakt',
         ]);
 
         $errors = $entity->getErrors();
@@ -135,18 +135,18 @@ class HeaderPromosTableTest extends AppCakeTestCase
             'title' => '<h2>Titel</h2>',
             'lead_text' => '<strong>Untertitel</strong>',
             'primary_label' => '<b>Mehr</b>',
-            'primary_href' => '<i>/anmelden</i>',
+            'primary_href' => '<i>https://example.com/anmelden</i>',
             'secondary_label' => '<script>Kontakt</script>',
-            'secondary_href' => '<div>/kontakt</div>',
+            'secondary_href' => '<div>https://example.com/kontakt</div>',
             'text' => '<p><strong>Text</strong></p>',
         ]);
 
         $this->assertSame('Titel', $entity->title);
         $this->assertSame('Untertitel', $entity->lead_text);
         $this->assertSame('Mehr', $entity->primary_label);
-        $this->assertSame('/anmelden', $entity->primary_href);
+        $this->assertSame('https://example.com/anmelden', $entity->primary_href);
         $this->assertSame('Kontakt', $entity->secondary_label);
-        $this->assertSame('/kontakt', $entity->secondary_href);
+        $this->assertSame('https://example.com/kontakt', $entity->secondary_href);
         $this->assertSame('<p><strong>Text</strong></p>', $entity->text);
     }
 }

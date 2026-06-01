@@ -42,7 +42,7 @@ class BlocksTableTest extends AppCakeTestCase
             'heading' => '',
             'content' => '',
             'primary_label' => 'Mehr',
-            'primary_href' => '/anmelden',
+            'primary_href' => 'https://example.com/anmelden',
             'position' => 0,
             'active' => 1,
         ]);
@@ -75,14 +75,14 @@ class BlocksTableTest extends AppCakeTestCase
             'primary_label' => 'Mehr',
             'primary_href' => 'ungueltiger-link',
             'secondary_label' => '',
-            'secondary_href' => '/kontakt',
+            'secondary_href' => 'https://example.com/kontakt',
             'position' => 0,
             'active' => 1,
         ]);
 
         $errors = $entity->getErrors();
 
-        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['validPrimaryHref']);
+        $this->assertSame('Bitte gib einen gültigen Link ein.', $errors['primary_href']['urlWithProtocol']);
         $this->assertSame('Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein.', $errors['secondary_href']['secondaryPair']);
     }
 
@@ -92,9 +92,9 @@ class BlocksTableTest extends AppCakeTestCase
         $entity = $blocksTable->newEntity([
             'heading' => '<h2>Heading</h2>',
             'primary_label' => '<b>Mehr</b>',
-            'primary_href' => '<i>/anmelden</i>',
+            'primary_href' => '<i>https://example.com/anmelden</i>',
             'secondary_label' => '<script>Kontakt</script>',
-            'secondary_href' => '<div>/kontakt</div>',
+            'secondary_href' => '<div>https://example.com/kontakt</div>',
             'content' => '<h2>Title</h2><h3>Subtitle</h3><p><b>Bold</b> <i>Italic</i></p><ul><li>Item</li></ul><ol><li>Item 2</li></ol><hr><div>Ignored</div>',
             'position' => 0,
             'active' => 1,
@@ -102,9 +102,9 @@ class BlocksTableTest extends AppCakeTestCase
 
         $this->assertSame('Heading', $entity->heading);
         $this->assertSame('Mehr', $entity->primary_label);
-        $this->assertSame('/anmelden', $entity->primary_href);
+        $this->assertSame('https://example.com/anmelden', $entity->primary_href);
         $this->assertSame('Kontakt', $entity->secondary_label);
-        $this->assertSame('/kontakt', $entity->secondary_href);
+        $this->assertSame('https://example.com/kontakt', $entity->secondary_href);
         $this->assertSame('<h2>Title</h2><h3>Subtitle</h3><p><b>Bold</b> <i>Italic</i></p><ul><li>Item</li></ul><ol><li>Item 2</li></ol><hr>Ignored', $entity->content);
     }
 }

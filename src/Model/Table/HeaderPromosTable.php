@@ -35,8 +35,6 @@ class HeaderPromosTable extends AppTable
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
-        $this->normalizeHrefFields($data, ['primary_href', 'secondary_href']);
-
         $plainStringFields = [
             'title',
             'lead_text',
@@ -87,11 +85,11 @@ class HeaderPromosTable extends AppTable
 
         $validator->maxLength('primary_href', 255, __('Please enter at most {0} characters for the primary link.', [255]));
         $validator->allowEmptyString('primary_href');
-        $this->addHrefValidationRule($validator, 'primary_href', 'validPrimaryHref');
+        $validator->urlWithProtocol('primary_href', __('Please enter a valid link.'));
 
         $validator->maxLength('secondary_href', 255, __('Please enter at most {0} characters for the secondary link.', [255]));
         $validator->allowEmptyString('secondary_href');
-        $this->addHrefValidationRule($validator, 'secondary_href', 'validSecondaryHref');
+        $validator->urlWithProtocol('secondary_href', __('Please enter a valid link.'));
 
         $this->addPairValidationRule($validator, 'primaryPair', 'primary_label', 'primary_href');
         $this->addPairValidationRule($validator, 'primaryPair', 'primary_href', 'primary_label');
