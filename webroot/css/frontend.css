@@ -1635,7 +1635,7 @@ body.pages.home .home-block:nth-child(even) {
 body.pages.home .home-block-inner {
     display: flex;
     gap: 28px;
-    align-items: flex-start;
+    align-items: center;
     margin: 0 auto;
     padding: 0;
 }
@@ -1677,6 +1677,9 @@ body.pages.home .home-block-text h3 {
     font-weight: 700;
     margin-top: 0;
     margin-bottom: 0.5rem;
+}
+body.pages.home .home-block-text li {
+    line-height: 1.45 !important;
 }
 
 body.pages.home .home-block-text img,
