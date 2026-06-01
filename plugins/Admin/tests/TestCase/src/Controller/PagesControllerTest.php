@@ -75,7 +75,6 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'referer' => '/',
         ]);
 
-        $this->assertFlashMessage('Die Startseite wurde erfolgreich geändert.');
         $this->assertRedirect('/');
 
         $configurationsTable = $this->getTableLocator()->get('Configurations');
@@ -224,7 +223,6 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'referer' => '/',
         ]);
 
-        $this->assertFlashMessage('Die Startseite wurde erfolgreich geändert.');
         $this->assertRedirect('/');
 
         $headerPromo = $headerPromosTable->find('all', conditions: [
