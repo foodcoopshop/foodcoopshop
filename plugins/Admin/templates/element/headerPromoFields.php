@@ -17,9 +17,8 @@ echo '<div class="header-promo-fields">';
     ]);
 
     echo $this->element('addScript', [
-        'script' => "foodcoopshop.Editor.initSmall('header-promo-text');",
+        'script' => "foodcoopshop.Editor.initSmallWithLink('header-promo-text');",
     ]);
-
     echo $this->Form->control('header_promo.primary_label', [
         'label' => __('Button label {0}', ['#1']),
     ]);

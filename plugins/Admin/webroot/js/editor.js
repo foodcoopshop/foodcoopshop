@@ -130,7 +130,15 @@ foodcoopshop.Editor = {
             height: 220,
             width: 270,
         }, startupFocus);
+    },
 
+    initSmallWithLink: function (name, startupFocus) {
+        return this.initJoditEditor('textarea#' + name, {
+            ...this.getDefaultOptions(),
+            buttons: ['bold', 'italic', 'link', 'eraser'],
+            height: 220,
+            width: 270,
+        }, startupFocus);
     },
 
     initSmallWithUpload: function (name, startupFocus) {
@@ -155,7 +163,6 @@ foodcoopshop.Editor = {
                 '|', 'source', this.getEmojiButton(),
             ],
         }, startupFocus);
-
     },
 
     initBigReduced: function (name, startupFocus) {
@@ -165,11 +172,10 @@ foodcoopshop.Editor = {
             height: 550,
             enter: 'p',
             buttons: ['bold', 'italic', 'eraser',
-                '|', 'paragraph', 'ul', 'ol',
+                '|', 'paragraph', 'ul', 'ol', 'link',
             ],
 
         }, startupFocus);
-
-    },    
+    },
 
 };
