@@ -19,7 +19,7 @@ $buttons = array_filter($buttons); // remove empty array elements
 
 $buttons[] = '<hr class="dropdown-divider" />';
 $buttons[] = '<a class="dropdown-item" href="javascript:window.print();"><i class="fas fa-print fa-fw"></i> ' .  __('Print_page') . '</a>';
-$buttons[] = '<a class="dropdown-item" href="' . $helperLink . '" target="_blank"><i class="fas fa-question fa-fw"></i> ' .  __('Help_admin') . '</a>';
+$buttons[] = '<a class="dropdown-item" href="' . $helperLink . '" target="_blank"><i class="far fa-question-circle fa-fw"></i> ' .  __('Help_admin') . '</a>';
 
 ?>
 

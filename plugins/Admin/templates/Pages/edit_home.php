@@ -54,6 +54,8 @@ foreach ($blocks as $index => $block) {
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></a> <a href="javascript:void(0);"
             class="btn btn-outline-light cancel"><i class="fa-fw fas fa-times"></i> <?php echo __('Cancel'); ?></a>
+            
+        <?php echo $this->element('helpIcon', ['link' => $this->Html->getDocsUrl(__('docs_route_redesign'))]); ?>
     </div>
 </div>
 
