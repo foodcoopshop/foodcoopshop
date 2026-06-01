@@ -88,34 +88,34 @@ if (!empty($block['tmp_image'])) {
                         'label' => __('Button label {0}', ['#1']),
                         'value' => $block['primary_label'] ?? '',
                     ]);
+                    if (($primaryLabelError = $firstError('primary_label')) !== false) {
+                        echo '<div class="error-message block-error-message">' . h($primaryLabelError) . '</div>';
+                    }
                     echo $this->Form->control('Blocks.' . $rowKey . '.primary_href', [
                         'label' => __('Link {0}', ['#1']),
                         'value' => $block['primary_href'] ?? '',
                     ]);
+                    if (($primaryHrefError = $firstError('primary_href')) !== false) {
+                        echo '<div class="error-message block-error-message">' . h($primaryHrefError) . '</div>';
+                    }
                 echo '</div>';
                 echo '<div class="home-block-action-pair">';
                     echo $this->Form->control('Blocks.' . $rowKey . '.secondary_label', [
                         'label' => __('Button label {0}', ['#2']),
                         'value' => $block['secondary_label'] ?? '',
                     ]);
+                    if (($secondaryLabelError = $firstError('secondary_label')) !== false) {
+                        echo '<div class="error-message block-error-message">' . h($secondaryLabelError) . '</div>';
+                    }
                     echo $this->Form->control('Blocks.' . $rowKey . '.secondary_href', [
                         'label' => __('Link {0}', ['#2']),
                         'value' => $block['secondary_href'] ?? '',
                     ]);
+                    if (($secondaryHrefError = $firstError('secondary_href')) !== false) {
+                        echo '<div class="error-message block-error-message">' . h($secondaryHrefError) . '</div>';
+                    }
                 echo '</div>';
             echo '</div>';
-            if (($primaryLabelError = $firstError('primary_label')) !== false) {
-                echo '<div class="error-message block-error-message">' . h($primaryLabelError) . '</div>';
-            }
-            if (($primaryHrefError = $firstError('primary_href')) !== false) {
-                echo '<div class="error-message block-error-message">' . h($primaryHrefError) . '</div>';
-            }
-            if (($secondaryLabelError = $firstError('secondary_label')) !== false) {
-                echo '<div class="error-message block-error-message">' . h($secondaryLabelError) . '</div>';
-            }
-            if (($secondaryHrefError = $firstError('secondary_href')) !== false) {
-                echo '<div class="error-message block-error-message">' . h($secondaryHrefError) . '</div>';
-            }
 
             echo '<div class="home-block-meta-row">';
                 echo $this->Form->control('Blocks.' . $rowKey . '.position', [
