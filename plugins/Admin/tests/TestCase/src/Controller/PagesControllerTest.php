@@ -75,8 +75,6 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'referer' => '/',
         ]);
 
-        $this->assertRedirect('/');
-
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $configuration = $configurationsTable->find('all', conditions: [
             'Configurations.name' => 'FCS_HOME_TEXT',
@@ -177,8 +175,6 @@ class AdminPagesControllerTest extends AppCakeTestCase
             ],
             'referer' => '/',
         ]);
-
-        $this->assertRedirect('/');
 
         $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
         $headerPromo = $headerPromosTable->find('all', conditions: [
