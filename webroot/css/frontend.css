@@ -1955,8 +1955,13 @@ body.has-page-banner .header-promo-inner {
     display: inline-block ! important;
     width: auto ! important;
     max-width: 100%;
+    box-sizing: border-box;
     justify-self: start;
     margin: 10px 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    text-align: center;
 }
 .header-promo-title {
     font-family: 'Fuzzy Bubbles', cursive;

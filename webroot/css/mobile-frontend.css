@@ -150,7 +150,12 @@
         display: inline-block ! important;
         width: auto ! important;
         max-width: 100%;
+        box-sizing: border-box;
         justify-self: start ! important;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        text-align: center;
     }
     /* show all editor images in full width and below each other */
     #inner-content img:not(.manufacturer-logo):not(.blog-post-image) {
