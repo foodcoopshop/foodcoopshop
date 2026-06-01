@@ -44,7 +44,7 @@ foodcoopshop.ModalText = {
 
         const elementSelector = button.data('element-selector');
         var contentWrapper = $(elementSelector).clone();
-        let headingHtml = contentWrapper.find('h1, h3').first().html();
+        let headingHtml = contentWrapper.find('h1, h3').first().html() || '';
 
         let contentHtml = contentWrapper.html();
         if (elementSelector === '#modal-info-box-wrapper') {

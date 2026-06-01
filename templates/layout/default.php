@@ -80,6 +80,7 @@ $identity = $this->request->getAttribute('identity');
                 echo $this->element('globalNoDeliveryDayBox');
                 echo $this->element('infoBox');
             ?>
+        </div>
     </div>
 
 </div>

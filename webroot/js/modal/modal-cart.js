@@ -53,7 +53,7 @@ foodcoopshop.ModalCart = {
 
         $(modalSelector + ' .modal-body').append(contentHtml);
 
-        headingHtml = __('Your cart');
+        const headingHtml = __('Your cart');
         foodcoopshop.Cart.initRemoveFromCartLinks();
         foodcoopshop.ModalLoadLastOrderDetails.init();
         foodcoopshop.ModalOrderForDifferentCustomerCancel.init();

@@ -5378,9 +5378,6 @@ msgstr "Dein Mitgliedskonto wurde aktiviert"
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!"
 
-msgid "Your_cart"
-msgstr "Dein Warenkorb"
-
 msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."
 msgstr "Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen."
 

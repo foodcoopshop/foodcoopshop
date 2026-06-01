@@ -116,7 +116,6 @@ class MenuHelper extends Helper
                     $item['options']['class'] ?? [],
                     $item['options']['fa-icon'] ?? '',
                     $item['options']['data-element-selector'] ?? '',
-                    $item['options']['data-content'] ?? '',
                 );
             }
 

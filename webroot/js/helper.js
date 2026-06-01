@@ -397,10 +397,10 @@ foodcoopshop.Helper = {
     },
 
     getMaxVisibleBlogPosts: function () {
-        var containerWidth = $('.blog-wrapper').width() || $('#inner-content').width();
+        var containerWidth = $('.blog-wrapper').width() || $('#inner-content').width() || 0;
         var slideWidth = 249; // 229px width + 2*10px padding
         var gap = 16;
-        return Math.floor((containerWidth + gap) / (slideWidth + gap));
+        return Math.max(1, Math.floor((containerWidth + gap) / (slideWidth + gap)));
     },
 
     initBlogPostCarousel: function () {

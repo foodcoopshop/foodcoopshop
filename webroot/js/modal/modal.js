@@ -37,7 +37,7 @@ foodcoopshop.Modal = {
     },
 
     getSuccessButton : function(selector) {
-        return $(selector + ' .modal-footer .btn-success:not(.no-auto-bind');
+        return $(selector + ' .modal-footer .btn-success:not(.no-auto-bind)');
     },
 
     bindSuccessButton: function(selector, callback) {
