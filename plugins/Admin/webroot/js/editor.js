@@ -172,7 +172,7 @@ foodcoopshop.Editor = {
             height: 550,
             enter: 'p',
             buttons: ['bold', 'italic', 'eraser',
-                '|', 'paragraph', 'ul', 'ol', 'link',
+                '|', 'paragraph', 'ul', 'ol', 'link', 'source',
             ],
 
         }, startupFocus);
