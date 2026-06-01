@@ -1023,6 +1023,14 @@ body.pages.edit_home .home-block-action-pair {
     min-width: 0;
 }
 
+body.pages.edit_home .home-block-action-pair .input {
+    margin-bottom: 0;
+}
+
+body.pages.edit_home .home-block-action-pair .error-message.block-error-message {
+    margin-bottom: 12px;
+}
+
 body.pages.edit_home .home-block-meta-row {
     display: flex;
     align-items: center;
@@ -1063,7 +1071,7 @@ body.pages.edit_home .home-block-meta-row .input.checkbox input[type="checkbox"]
 }
 
 body.pages.edit_home .home-block-row .error-message.block-error-message {
-    margin-top: 8px;
+    margin-top: 0;
     margin-left: 0;
     width: 100%;
     float: none;
