@@ -19,7 +19,6 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Model\Entity\Block;
 use App\Model\Entity\Page;
-use Cake\Core\Configure;
 
 class AdminPagesControllerTest extends AppCakeTestCase
 {
@@ -53,9 +52,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
                     'heading' => 'Neuer Block',
                     'content' => '<p>Blockinhalt</p>',
                     'primary_label' => 'Mehr Infos',
-                    'primary_href' => Configure::read('App.fullBaseUrl') . '/neuigkeiten',
+                    'primary_href' => 'https://www.example.com/neuigkeiten',
                     'secondary_label' => 'Kontakt',
-                    'secondary_href' => Configure::read('App.fullBaseUrl') . '/kontakt',
+                    'secondary_href' => 'https://www.example.com/kontakt',
                     'position' => 5,
                     'active' => 1,
                 ],
@@ -68,12 +67,15 @@ class AdminPagesControllerTest extends AppCakeTestCase
                 'lead_text' => 'Startseiten Lead',
                 'text' => '<p><strong>Startseiten Text</strong></p>',
                 'primary_label' => 'Primar',
-                'primary_href' => Configure::read('App.fullBaseUrl') . '/anmelden',
+                'primary_href' => 'https://www.example.com/anmelden',
                 'secondary_label' => 'Sekundar',
-                'secondary_href' => Configure::read('App.fullBaseUrl'),
+                'secondary_href' => 'https://www.example.com',
             ],
             'referer' => '/',
         ]);
+
+        $this->assertFlashMessage(__('The homepage has been changed successfully.'));
+        $this->assertRedirect('/');
 
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $configuration = $configurationsTable->find('all', conditions: [
@@ -87,9 +89,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertEquals('Neuer Block', $block->heading);
         $this->assertEquals('<p>Blockinhalt</p>', $block->content);
         $this->assertSame('Mehr Infos', $block->primary_label);
-        $this->assertSame(Configure::read('App.fullBaseUrl') . '/neuigkeiten', $block->primary_href);
+        $this->assertSame('https://www.example.com/neuigkeiten', $block->primary_href);
         $this->assertSame('Kontakt', $block->secondary_label);
-        $this->assertSame(Configure::read('App.fullBaseUrl') . '/kontakt', $block->secondary_href);
+        $this->assertSame('https://www.example.com/kontakt', $block->secondary_href);
         $this->assertEquals(Block::IMAGE_POSITION_LEFT, (int)$block->image_position);
         $this->assertEquals(5, $block->position);
         $this->assertEquals(1, $block->active);
@@ -109,9 +111,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertSame('Startseiten Lead', $headerPromo->lead_text);
         $this->assertSame('<p><strong>Startseiten Text</strong></p>', $headerPromo->text);
         $this->assertSame('Primar', $headerPromo->primary_label);
-        $this->assertSame(Configure::read('App.fullBaseUrl') . '/anmelden', $headerPromo->primary_href);
+        $this->assertSame('https://www.example.com/anmelden', $headerPromo->primary_href);
         $this->assertSame('Sekundar', $headerPromo->secondary_label);
-        $this->assertSame(Configure::read('App.fullBaseUrl'), $headerPromo->secondary_href);
+        $this->assertSame('https://www.example.com', $headerPromo->secondary_href);
     }
 
     public function testEditHomePostShowsHeaderPromoTitleValidationError(): void
@@ -169,9 +171,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
                 'lead_text' => 'Page Header Lead',
                 'text' => 'Page Header Text',
                 'primary_label' => 'Mehr Infos',
-                'primary_href' => Configure::read('App.fullBaseUrl') . '/neuigkeiten',
+                'primary_href' => 'https://www.example.com/neuigkeiten',
                 'secondary_label' => 'Kontakt',
-                'secondary_href' => Configure::read('App.fullBaseUrl') . '/kontakt',
+                'secondary_href' => 'https://www.example.com/kontakt',
             ],
             'referer' => '/',
         ]);
@@ -185,9 +187,9 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertSame('Page Header Lead', $headerPromo->lead_text);
         $this->assertSame('Page Header Text', $headerPromo->text);
         $this->assertSame('Mehr Infos', $headerPromo->primary_label);
-        $this->assertSame(Configure::read('App.fullBaseUrl') . '/neuigkeiten', $headerPromo->primary_href);
+        $this->assertSame('https://www.example.com/neuigkeiten', $headerPromo->primary_href);
         $this->assertSame('Kontakt', $headerPromo->secondary_label);
-        $this->assertSame(Configure::read('App.fullBaseUrl') . '/kontakt', $headerPromo->secondary_href);
+        $this->assertSame('https://www.example.com/kontakt', $headerPromo->secondary_href);
     }
 
     public function testEditHomePostWithoutHeaderPromoDataDoesNotCreateHeaderPromo(): void
@@ -219,6 +221,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'referer' => '/',
         ]);
 
+        $this->assertFlashMessage(__('The homepage has been changed successfully.'));
         $this->assertRedirect('/');
 
         $headerPromo = $headerPromosTable->find('all', conditions: [
@@ -324,7 +327,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'referer' => '/',
         ]);
 
-        $this->assertFlashMessage('Die Startseite wurde erfolgreich geändert.');
+        $this->assertFlashMessage(__('The homepage has been changed successfully.'));
         $this->assertRedirect('/');
 
         $blocksTable = $this->getTableLocator()->get('Blocks');
@@ -369,7 +372,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
             'referer' => '/',
         ]);
 
-        $this->assertFlashMessage('Die Startseite wurde erfolgreich geändert.');
+        $this->assertFlashMessage(__('The homepage has been changed successfully.'));
         $this->assertRedirect('/');
 
         $savedBlock = $blocksTable->get(1);
