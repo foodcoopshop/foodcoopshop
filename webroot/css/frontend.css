@@ -1849,7 +1849,11 @@ body.has-page-hero #main-menu {
 }
 body.has-page-hero #main-menu > li > a {
     color: #fff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.98),
+        0 0 3px rgba(0, 0, 0, 0.95),
+        0 3px 10px rgba(0, 0, 0, 0.82),
+        0 8px 28px rgba(0, 0, 0, 0.52);
     font-weight: 600;
     font-size: 18px;
 }
@@ -1922,20 +1926,32 @@ body.has-page-banner .header-promo-inner {
     font-weight: 700;
     line-height: 1.08;
     margin-bottom: 8px;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.7);
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.98),
+        0 0 3px rgba(0, 0, 0, 0.95),
+        0 3px 10px rgba(0, 0, 0, 0.82),
+        0 8px 28px rgba(0, 0, 0, 0.52);
 }
 .header-promo-lead {
     font-size: 22px;
     font-weight: 700;
     line-height: 1.35;
     margin-bottom: 22px;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.98),
+        0 0 3px rgba(0, 0, 0, 0.95),
+        0 3px 10px rgba(0, 0, 0, 0.82),
+        0 8px 28px rgba(0, 0, 0, 0.52);
 }
 .header-promo-text {
     font-size: 19px;
     line-height: 1.6;
     max-width: 940px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), 0 0 2px rgba(0, 0, 0, 0.55);
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.98),
+        0 0 3px rgba(0, 0, 0, 0.95),
+        0 3px 10px rgba(0, 0, 0, 0.82),
+        0 8px 28px rgba(0, 0, 0, 0.52);
 }
 .header-promo-actions {
     display: flex;
