@@ -87,7 +87,6 @@ class PagesController extends AdminAppController
     {
         $configurationsTable = $this->getTableLocator()->get('Configurations');
         $blocksTable = $this->getTableLocator()->get('Blocks');
-        $pagesTable = $this->getTableLocator()->get('Pages');
         $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
         $configuration = $configurationsTable->find('all', conditions: [
             'Configurations.name' => 'FCS_HOME_TEXT',
