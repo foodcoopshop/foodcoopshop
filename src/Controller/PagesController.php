@@ -130,16 +130,7 @@ class PagesController extends FrontendController
             return $this->redirect(Configure::read('app.slugHelper')->getPageDetail($pageId, $page->title));
         }
 
-        $headerPromo = $page->header_promo;
-        if ($headerPromo === null) {
-            $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
-            $headerPromo = $headerPromosTable->find('all', conditions: [
-                'HeaderPromos.page_id' => $page->id_page,
-            ])->first();
-        }
-
         $this->set('page', $page);
-        $this->set('headerPromo', $headerPromo);
         $this->set('title_for_layout', $page->title);
 
         return null;
