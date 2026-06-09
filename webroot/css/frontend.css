@@ -1441,6 +1441,11 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     margin-bottom: 20px;
     height: 300px;
 }
+.blog-wrapper::after {
+    content: '';
+    display: table;
+    clear: both;
+}
 body.carts.order_successful h2 {
     margin-top: 20px;
 }
@@ -1569,6 +1574,10 @@ body.pages.home #content:has(#inner-content.without-sidebar) {
 
 body.pages.home #inner-content {
     display: contents;
+}
+
+body.pages.home .blog-wrapper {
+    height: auto;
 }
 
 body.pages.home a.home-edit-shortcut-button {
