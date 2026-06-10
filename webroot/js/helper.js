@@ -997,7 +997,7 @@ foodcoopshop.Helper = {
 
         this.removeFlashMessage();
 
-        var root = '#content';
+        var root = '#container';
 
         var responsiveHeaderSelector = '#responsive-header';
         if (foodcoopshop.Helper.isMobile() && $(responsiveHeaderSelector).length == 1) {

@@ -23,12 +23,11 @@ $identity = $this->request->getAttribute('identity');
 ?>
 
 <div id="container">
-
+    <?php
+        echo $this->Flash->render();
+        echo $this->Flash->render('auth');
+    ?>
     <div id="header">
-        <?php
-            echo $this->Flash->render();
-            echo $this->Flash->render('auth');
-        ?>
         <?php echo $this->element('userMenu'); ?>
         <div class="header-main-row">
             <?php echo $this->element('logo'); ?>
@@ -51,6 +50,10 @@ $identity = $this->request->getAttribute('identity');
             <?php echo $this->fetch('content'); ?>
             <div class="sc"></div>
         </div>
+        <?php
+            echo $this->Flash->render();
+            echo $this->Flash->render('auth');
+        ?>
     </div>
 
     <div id="footer">
