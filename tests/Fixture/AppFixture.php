@@ -45,6 +45,7 @@ abstract class AppFixture extends ChecksumTestFixture {
         'app.Invoices',
         'app.InvoiceTaxes',
         'app.Feedbacks',
+        'app.HeaderPromos',
         'app.Manufacturers',
         'app.OrderDetails',
         'app.OrderDetailFeedbacks',
