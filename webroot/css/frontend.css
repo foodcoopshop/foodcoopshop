@@ -1834,7 +1834,7 @@ body.has-page-hero #header::before {
 body.has-page-hero #user-menu,
 body.has-page-hero .header-main-row {
     position: relative;
-    z-index: 1;
+    z-index: 30;
 }
 body.has-page-hero #user-menu {
     background: rgba(0, 0, 0, 0.45);
