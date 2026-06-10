@@ -46,7 +46,7 @@ class AddHomeHeaderPromo extends BaseMigration
             'lead_text' => __('Come by and join us!'),
             'text' => __('Become part of our food coop and help shape a fair, regional food supply. Here you will find fresh, sustainable products directly from producers.'),
             'primary_label' => __('Become a member'),
-            'primary_href' => '/' . __('route_sign_in'),
+            'primary_href' => Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getLogin(),
         ]);
 
         $headerPromosTable->saveOrFail($headerPromo);
