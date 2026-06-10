@@ -36,6 +36,8 @@ $markAsMigratedMigrations = [
     '20240313184917_ManufacturerLoginFix',
     '20230612181632_AddConfigurationTextForHome',
     '20250209201857_AddConfigurationShowOnlyProductsForNextWeekFilterEnabled',
+    '20260530113000_AddHomeHeaderPromo',
+    '20260610160000_AddHomeBlocks',
 ];
 foreach($markAsMigratedMigrations as $markAsMigratedMigration) {
     $migrations->markMigrated($markAsMigratedMigration, ['connection' => 'test']);
