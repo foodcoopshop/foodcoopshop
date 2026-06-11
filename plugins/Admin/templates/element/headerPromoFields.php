@@ -23,13 +23,13 @@ echo '<div class="header-promo-fields">';
         'label' => __('Button label {0}', ['#1']),
     ]);
     echo $this->Form->control('header_promo.primary_href', [
-        'label' => __('Link {0}', ['#1']),
+        'label' => __('Link'),
     ]);
     echo $this->Form->control('header_promo.secondary_label', [
         'label' => __('Button label {0}', ['#2']),
     ]);
     echo $this->Form->control('header_promo.secondary_href', [
-        'label' => __('Link {0}', ['#2']),
+        'label' => __('Link'),
     ]);
 
 echo '</div>';

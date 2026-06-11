@@ -92,7 +92,7 @@ if (!empty($block['tmp_image'])) {
                         echo '<div class="error-message block-error-message">' . h($primaryLabelError) . '</div>';
                     }
                     echo $this->Form->control('Blocks.' . $rowKey . '.primary_href', [
-                        'label' => __('Link {0}', ['#1']),
+                        'label' => __('Link'),
                         'value' => $block['primary_href'] ?? '',
                     ]);
                     if (($primaryHrefError = $firstError('primary_href')) !== false) {
@@ -108,7 +108,7 @@ if (!empty($block['tmp_image'])) {
                         echo '<div class="error-message block-error-message">' . h($secondaryLabelError) . '</div>';
                     }
                     echo $this->Form->control('Blocks.' . $rowKey . '.secondary_href', [
-                        'label' => __('Link {0}', ['#2']),
+                        'label' => __('Link'),
                         'value' => $block['secondary_href'] ?? '',
                     ]);
                     if (($secondaryHrefError = $firstError('secondary_href')) !== false) {

@@ -5625,12 +5625,6 @@ msgstr "Header-Infos"
 msgid "Subtitle"
 msgstr "Untertitel"
 
-msgid "Button label"
-msgstr "Button-Beschriftung"
-
-msgid "Button link"
-msgstr "Button-Link"
-
 msgid "Please enter a valid link."
 msgstr "Bitte gib einen gültigen Link ein."
 
@@ -5638,10 +5632,7 @@ msgid "Button label and link must both be filled or both be empty."
 msgstr "Beschriftung und Link müssen entweder beide ausgefüllt oder beide leer sein."
 
 msgid "Button label {0}"
-msgstr "Button-Beschriftung {0}"
-
-msgid "Link {0}"
-msgstr "Link {0}"
+msgstr "Button {0} (Beschriftung)"
 
 msgid "Please enter at most {0} characters for the title."
 msgstr "Bitte gib für den Titel maximal {0} Zeichen ein."
