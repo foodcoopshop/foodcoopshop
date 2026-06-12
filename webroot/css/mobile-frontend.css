@@ -227,6 +227,16 @@
         padding: 0 ! important;
         margin-top: 50px ! important;
     }
+    body.pages.home #content {
+        display: block ! important;
+        grid-template-columns: none ! important;
+    }
+    body.pages.home #inner-content {
+        display: block ! important;
+    }
+    body.pages.home #inner-content > * {
+        grid-column: auto ! important;
+    }
     body.has-page-hero #header {
         display: block ! important;
         position: relative ! important;
