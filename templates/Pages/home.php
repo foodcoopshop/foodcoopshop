@@ -48,6 +48,12 @@ if ($identity !== null) {
     }
 }
 
+$blockHeadingFont = (string) Configure::read('appDb.FCS_FONT_BLOCK_HEADING');
+if ($blockHeadingFont === '') {
+    $blockHeadingFont = 'open-sans';
+}
+$blockHeadingFontClass = 'font-' . $blockHeadingFont;
+
 if (!empty($homeBlocks)) {
     echo '<section class="home-blocks">';
         foreach ($homeBlocks as $block) {
@@ -65,7 +71,7 @@ if (!empty($homeBlocks)) {
                     }
                     echo '<div class="home-block-body">';
                         if (!empty($block->heading)) {
-                            echo '<h2>' . h($block->heading) . '</h2>';
+                            echo '<h2 class="' . h($blockHeadingFontClass) . '">' . h($block->heading) . '</h2>';
                         }
                         if (!empty($block->content)) {
                             echo '<div class="home-block-text">' . $block->content . '</div>';

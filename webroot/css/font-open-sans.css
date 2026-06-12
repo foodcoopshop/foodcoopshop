@@ -94,3 +94,6 @@
   font-weight: 800;
   src: url('/fonts/open-sans-v40-cyrillic-ext_latin_latin-ext-800italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+.font-open-sans {
+    font-family: 'Open Sans', sans-serif;
+}

@@ -1988,9 +1988,6 @@ body.has-page-banner .header-promo-inner {
     word-break: break-word;
     text-align: center;
 }
-.header-promo-title {
-    font-family: 'Fuzzy Bubbles', cursive;
-}
 body.has-page-banner .header-promo-title {
     font-size: 42px;
     margin-bottom: 8px;

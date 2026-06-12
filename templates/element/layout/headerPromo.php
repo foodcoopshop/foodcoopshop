@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Core\Configure;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -32,12 +34,18 @@ $secondaryHref = trim((string)($headerPromo->secondary_href ?? ''));
 if ($title === '' && $lead === '' && $text === '' && $primaryLabel === '' && $secondaryLabel === '') {
     return;
 }
+
+$headerPromoTitleFont = (string) Configure::read('appDb.FCS_FONT_HEADER_PROMO_TITLE');
+if ($headerPromoTitleFont === '') {
+    $headerPromoTitleFont = 'fuzzy-bubbles';
+}
+$headerPromoTitleFontClass = 'font-' . $headerPromoTitleFont;
 ?>
 <div class="header-promo">
     <?php if ($identity === null) : ?>
         <div class="header-promo-inner">
             <?php if ($title !== '') : ?>
-                <div class="header-promo-title"><?php echo h($title); ?></div>
+                <div class="header-promo-title <?php echo h($headerPromoTitleFontClass); ?>"><?php echo h($title); ?></div>
             <?php endif; ?>
             <?php if ($lead !== '') : ?>
                 <div class="header-promo-lead"><?php echo h($lead); ?></div>

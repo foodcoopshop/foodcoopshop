@@ -39,8 +39,11 @@ class AssetsProvider
             'dark-mode.css',
             'global.css',
             'modal.css',
+            'font-amatic-sc.css',
+            'font-courgette.css',
             'font-open-sans.css',
             'font-fuzzy-bubbles.css',
+            'font-shadows-into-light-two.css',
             'tooltipster/dist/css/tooltipster.bundle.css',
             'tooltipster/src/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.css',
         ];

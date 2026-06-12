@@ -60,6 +60,9 @@ class ConfigurationHelper extends Helper
                 return $values;
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();
+            case 'FCS_FONT_HEADER_PROMO_TITLE':
+            case 'FCS_FONT_BLOCK_HEADING':
+                return $this->getFontDropdownOptions();
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $productsTable = TableRegistry::getTableLocator()->get('Products');
                 return $productsTable->getForDropdown(0);
@@ -84,9 +87,31 @@ class ConfigurationHelper extends Helper
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public function getFontDropdownOptions(): array
+    {
+        return [
+            'amatic-sc' => 'Amatic SC',
+            'courgette' => 'Courgette',
+            'fuzzy-bubbles' => 'Fuzzy Bubbles',
+            'open-sans' => 'Open Sans',
+            'shadows-into-light-two' => 'Shadows Into Light Two',
+        ];
+    }
+
     public function getConfigurationDropdownOption(string $name, string $value): string
     {
         return self::getConfigurationDropdownOptions($name)[$value];
+    }
+
+    public function getFontPreview(string $name, string $value): string
+    {
+        $label = h(self::getConfigurationDropdownOption($name, $value));
+        $previewClass = 'font-' . h($value);
+        $previewText = h(__('All human beings are born free and equal in dignity and rights.'));
+        return $label . '<p class="' . $previewClass . '" style="margin-top:5px;margin-bottom:5px;font-size:1.3em">' . $previewText . '</p>';
     }
 
     public function getConfigurationMultipleDropdownOptions(string $name, string $value): string
