@@ -1466,9 +1466,6 @@ a.blog-post-wrapper {
     -webkit-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
 }
-a.blog-post-wrapper:nth-of-type(3n) {
-    margin-right: 0;
-}
 a.blog-post-wrapper img {
     padding: 2px;
     margin-bottom: 5px;
