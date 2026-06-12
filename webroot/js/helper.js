@@ -237,35 +237,61 @@ foodcoopshop.Helper = {
 
     initMenuAutoHide : function() {
 
-        if ($('body').hasClass('has-page-hero')) {
-            $('#header').removeClass('off-canvas fixed');
+        var header = $('#header');
+        if (!header.length) {
             return;
         }
 
-        // scroll is still position
+        if ($('body').hasClass('has-page-hero')) {
+            header.removeClass('off-canvas fixed');
+            return;
+        }
+
         var scroll = $(document).scrollTop();
-        var headerHeight = $('#header').height();
+        var headerHeight = header.outerHeight() || 0;
+        var minHideOffset = Math.max(220, Math.round(headerHeight * 1.35));
+        var pageHeaderBanner = $('.page-header-banner');
+        var downDistance = 0;
+        var upDistance = 0;
+
+        if (pageHeaderBanner.length) {
+            minHideOffset = Math.max(
+                minHideOffset,
+                Math.round(pageHeaderBanner.offset().top + pageHeaderBanner.outerHeight()),
+            );
+        }
 
         $(window).scroll(function() {
-            // scrolled is new position just obtained
             var scrolled = $(document).scrollTop();
+            var delta = scrolled - scroll;
 
-            // optionally emulate non-fixed positioning behaviour
-            if (scrolled > headerHeight){
-                $('#header').addClass('off-canvas');
-            } else {
-                $('#header').removeClass('off-canvas');
+            if (scrolled <= headerHeight) {
+                header.removeClass('off-canvas fixed');
+                downDistance = 0;
+                upDistance = 0;
+                scroll = scrolled;
+                return;
             }
 
-            if (scrolled > scroll){
-                // scrolling down
-                $('#header').removeClass('fixed');
-            } else {
-                //scrolling up
-                $('#header').addClass('fixed');
+            if (delta > 0) {
+                downDistance += delta;
+                upDistance = 0;
+
+                if (scrolled > minHideOffset && downDistance >= 24) {
+                    header.addClass('off-canvas').removeClass('fixed');
+                    downDistance = 0;
+                }
+            } else if (delta < 0) {
+                upDistance += Math.abs(delta);
+                downDistance = 0;
+
+                if (upDistance >= 12 || scrolled <= minHideOffset) {
+                    header.removeClass('off-canvas').addClass('fixed');
+                    upDistance = 0;
+                }
             }
 
-            scroll = $(document).scrollTop();
+            scroll = scrolled;
         });
     },
 
