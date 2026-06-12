@@ -30,7 +30,11 @@ $identity = $this->request->getAttribute('identity');
     <div id="header">
         <?php echo $this->element('userMenu'); ?>
         <div class="header-main-row">
-            <?php echo $this->element('logo'); ?>
+            <?php
+                echo $this->element('logo', [
+                    'isLogoLinked' => true,
+                ]);
+            ?>
             <?php echo $this->element('mainMenu'); ?>
         </div>
         <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity === null) : ?>
