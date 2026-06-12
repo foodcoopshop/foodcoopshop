@@ -58,8 +58,11 @@ class PagesController extends FrontendController
 
         $homeBlocks = [];
         if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
+            $homeText = Configure::read('appDb.FCS_HOME_TEXT');
+            $fontBlockHeadingClass = 'font-' . Configure::read('appDb.FCS_FONT_BLOCK_HEADING');
+
             $homeBlocks[] = (object)[
-                'content' => Configure::read('appDb.FCS_HOME_TEXT'),
+                'content' => preg_replace('/<h2>/i', '<h2 class="' . $fontBlockHeadingClass . '">', $homeText),
                 'image_position' => Block::IMAGE_POSITION_LEFT,
             ];
         }
