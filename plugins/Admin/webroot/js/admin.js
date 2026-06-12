@@ -835,5 +835,28 @@ foodcoopshop.Admin = {
         });
     },
 
+    initFontPreview: function () {
+        var fontConfigSelect = $('#font-config-select');
+        if (fontConfigSelect.length === 0) {
+            return;
+        }
+
+        fontConfigSelect.on('change', function () {
+            var selectedFont = $(this).val();
+            var fontPreview = $('#font-preview');
+            if (fontPreview.length === 0) {
+                return;
+            }
+
+            // Remove all font classes
+            fontPreview.removeClass(function (index, className) {
+                return (className.match(/\bfont-\S+/g) || []).join(' ');
+            });
+
+            // Add the new font class
+            fontPreview.addClass('font-' + selectedFont);
+        });
+    },
+
 
 };
