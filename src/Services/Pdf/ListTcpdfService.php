@@ -32,6 +32,8 @@ class ListTcpdfService extends AppTcpdfService
 
     public ?string $html;
 
+    private string $thinTableCellBorderStyle = 'border:0.1mm solid #000;';
+
     public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, int|false $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
@@ -79,14 +81,15 @@ class ListTcpdfService extends AppTcpdfService
      */
     public function renderDetailedOrderList(array $results, array $widths, array $headers, string $groupType, bool $onlyShowSums = false): void
     {
-        $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
+
+        $this->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
         $isOrderList = $this->isOrderList($headers);
 
         // Header
         $num_headers = count($headers);
         for ($i = 0; $i < $num_headers; ++ $i) {
-            $this->table .= '<th style="font-weight:bold;background-color:#cecece" width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
+            $this->table .= '<th' . $this->getTableCellStyleAttribute('font-weight:bold;background-color:#cecece') . ' width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
         }
         $this->table .= '</tr></thead>';
 
@@ -111,7 +114,7 @@ class ListTcpdfService extends AppTcpdfService
             $showPricePerUnitSign = false;
             $showUnitSum = false;
 
-            if ($groupType == 'customer' 
+            if ($groupType == 'customer'
                 && isset($lastCustomerName)
                 && isset($lastUnitSum)
                 && isset($lastTaxRate)
@@ -156,7 +159,7 @@ class ListTcpdfService extends AppTcpdfService
                 if ($amount > 1) {
                     $amountStyle = 'background-color: #cecece;';
                 }
-                $this->table .= '<td style="' . $amountStyle . '" align="right" width="' . $widths[$indexForWidth] . '">' . $amount . 'x</td>';
+                $this->table .= '<td' . $this->getTableCellStyleAttribute($amountStyle) . ' align="right" width="' . $widths[$indexForWidth] . '">' . $amount . 'x</td>';
 
                 $indexForWidth ++;
 
@@ -181,31 +184,31 @@ class ListTcpdfService extends AppTcpdfService
                 if ($unity != '') {
                     $unity = ', ' . $unity;
                 }
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $productName . $unity . '</td>';
+                $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' width="' . $widths[$indexForWidth] . '">' . $productName . $unity . '</td>';
 
                 if (in_array(__('Price_excl.'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceExcl) . '</td>';
+                    $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceExcl) . '</td>';
                 }
 
                 if (in_array(__('VAT'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)</td>';
+                    $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)</td>';
                 }
 
                 if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
+                    $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
                 }
 
                 if (in_array(__('Order_day'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailCreated']) . '</td>';
+                    $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailCreated']) . '</td>';
                 }
 
                 if (in_array(__('Delivery_day'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailPickupDay']) . '</td>';
+                    $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailPickupDay']) . '</td>';
                 }
 
                 $indexForWidth ++;
@@ -215,7 +218,7 @@ class ListTcpdfService extends AppTcpdfService
                 } else {
                     $customerNameForColumn = __('Deleted_Member');
                 }
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $customerNameForColumn . '</td>';
+                $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' width="' . $widths[$indexForWidth] . '">' . $customerNameForColumn . '</td>';
 
                 $this->table .= '</tr>';
             }
@@ -278,7 +281,7 @@ class ListTcpdfService extends AppTcpdfService
 
         $indexForWidth = 0;
 
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . $amountSum . 'x</td>';
+        $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right" width="' . $widths[$indexForWidth] . '">' . $amountSum . 'x</td>';
         $indexForWidth ++;
 
         $unitSumString = '';
@@ -288,12 +291,12 @@ class ListTcpdfService extends AppTcpdfService
                 $unitSumString = ', ' . $unitSumString;
             }
         }
-        $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $lastObjectName . $unitSumString .  '</td>';
+        $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' width="' . $widths[$indexForWidth] . '">' . $lastObjectName . $unitSumString .  '</td>';
         $indexForWidth ++;
 
         if (in_array(__('Price_excl.'), $headers)) {
             $colspan --;
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceExclSum) . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceExclSum) . '</td>';
             $indexForWidth ++;
         }
 
@@ -303,23 +306,23 @@ class ListTcpdfService extends AppTcpdfService
             if ($detailsHidden) {
                 $taxRateString = ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)';
             }
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;
         }
 
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
         }
         $indexForWidth ++;
 
         if ($colspan > 0) {
-            $this->table .= '<td colspan="' . $colspan . '">' . ($showPricePerUnitMessage ? ' * ' . __('Price_per_weight') : '') . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' colspan="' . $colspan . '">' . ($showPricePerUnitMessage ? ' * ' . __('Price_per_weight') : '') . '</td>';
         }
 
         $this->table .= '</tr>';
 
         if (! $detailsHidden) {
-            $this->table .= '<tr border="0"><td></td></tr>';
+            $this->table .= '<tr><td></td></tr>';
         }
     }
 
@@ -375,32 +378,41 @@ class ListTcpdfService extends AppTcpdfService
 
         if (in_array(__('Amount'), $headers)) {
             $colspan --;
-            $this->table .= '<td align="right">' . $sumAmount . 'x</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right">' . $sumAmount . 'x</td>';
         }
 
-        $this->table .= '<td>' . __('Total_sum') . '</td>';
+        $this->table .= '<td' . $this->getTableCellStyleAttribute() . '>' . __('Total_sum') . '</td>';
 
         if (in_array(__('Price_excl.'), $headers)) {
             $colspan --;
-            $this->table .= '<td align="right">' . $sumPriceExcl . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right">' . $sumPriceExcl . '</td>';
         }
 
         if (in_array(__('VAT'), $headers)) {
             $colspan --;
-            $this->table .= '<td align="right">' . $sumTax . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right">' . $sumTax . '</td>';
         }
 
         if (is_null($sumPriceIncl)) {
             $colspan++;
         } else {
-            $this->table .= '<td align="right">' . $sumPriceIncl . '</td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' align="right">' . $sumPriceIncl . '</td>';
         }
 
         if ($colspan > 0) {
-            $this->table .= '<td colspan="' . $colspan . '"></td>';
+            $this->table .= '<td' . $this->getTableCellStyleAttribute() . ' colspan="' . $colspan . '"></td>';
         }
 
         $this->table .= '</tr>';
+    }
+
+    private function getTableCellStyleAttribute(string $style = ''): string
+    {
+        if ($style != '' && !str_ends_with($style, ';')) {
+            $style .= ';';
+        }
+
+        return ' style="' . $style . $this->thinTableCellBorderStyle . '"';
     }
 
     /**
