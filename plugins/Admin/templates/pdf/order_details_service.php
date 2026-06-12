@@ -59,11 +59,11 @@ foreach ($orderDetails as $od) {
         $widths[4] = 0;
     }
 
-    $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
+    $pdf->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
     $num_headers = count($headers);
     for ($i = 0; $i < $num_headers; ++ $i) {
-        $pdf->table .= '<th style="font-weight:bold;background-color:#cecece" width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
+        $pdf->table .= '<th' . $pdf->getThinTableCellStyleAttribute('font-weight:bold;background-color:#cecece') . ' width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
     }
     $pdf->table .= '</tr></thead>';
 
@@ -77,7 +77,7 @@ foreach ($orderDetails as $od) {
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && $order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
             $pdf->table .= '<tr style="background-color:#cecece;">';
-            $pdf->table .= '<td width="'.array_sum($widths).'"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="'.array_sum($widths).'"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
             $pdf->table .= '</tr>';
         }
 
@@ -89,7 +89,7 @@ foreach ($orderDetails as $od) {
         if ($orderDetail['product_amount'] > 1) {
             $quantityStyle = ' background-color:#cecece;';
         }
-        $pdf->table .= '<td style="' . $quantityStyle . 'text-align:center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
+        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute($quantityStyle . 'text-align:center;') . ' width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
 
         $unity = '';
         if (!empty($orderDetail->order_detail_unit)) {
@@ -103,16 +103,16 @@ foreach ($orderDetails as $od) {
                 $unity = ', ' . $unity;
             }
         }
-        $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . $unity . '</td>';
+        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[1] . '">' . $orderDetail->product_name . $unity . '</td>';
 
-        $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail->product->manufacturer->name . '</td>';
+        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[2] . '">' . $orderDetail->product->manufacturer->name . '</td>';
 
         $priceStyle = '';
         if (!empty($orderDetail->order_detail_unit) && !$orderDetail->order_detail_unit->mark_as_saved) {
             $priceStyle = ' background-color:#cecece;';
         }
 
-        $pdf->table .= '<td style="' . $priceStyle . 'text-align:right"; width="' . $widths[3] . '">';
+        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute($priceStyle . 'text-align:right;') . ' width="' . $widths[3] . '">';
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
 
         if (!empty($orderDetail->order_detail_unit) && !$orderDetail->order_detail_unit->mark_as_saved) {
@@ -130,7 +130,7 @@ foreach ($orderDetails as $od) {
             } else {
                 $deposit = '';
             }
-            $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' width="' . $widths[4] . '">' . $deposit . '</td>';
         }
 
         $sumPrice += $orderDetail['total_price_tax_incl'];
@@ -141,10 +141,10 @@ foreach ($orderDetails as $od) {
 
             if (Configure::read('app.isDepositEnabled')) {
                 $pdf->table .= '<tr nobr="true" style="font-weight:normal;background-color:#ffffff;">';
-                    $pdf->table .= '<td width="' . $widths[0] . '"></td>';
-                    $pdf->table .= '<td width="' . $widths[1] . '"></td>';
-                    $pdf->table .= '<td width="' . $widths[2] . '"></td>';
-                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[0] . '"></td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[1] . '"></td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[2] . '"></td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;font-weight:bold;') . ' width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
 
                     if ($sumDeposit > 0) {
                         $sumDepositAsString = $this->Number->formatAsCurrency($sumDeposit);
@@ -152,13 +152,13 @@ foreach ($orderDetails as $od) {
                         $sumDepositAsString = '';
                     }
 
-                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;font-weight:bold;') . ' width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
                 $pdf->table .= '</tr>';
             }
 
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__('Total').'</td>';
-                $pdf->table .= '<td colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" style="font-size:10px;font-weight:bold;text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
+                $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('font-size:10px;font-weight:bold;text-align:right;') . ' colspan="3" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__('Total').'</td>';
+                $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('font-size:10px;font-weight:bold;text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';') . ' colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
             $pdf->table .= '</tr>';
         }
 

@@ -32,8 +32,6 @@ class ListTcpdfService extends AppTcpdfService
 
     public ?string $html;
 
-    private string $thinTableCellBorderStyle = 'border:0.1mm solid #000;';
-
     public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, int|false $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
@@ -408,11 +406,7 @@ class ListTcpdfService extends AppTcpdfService
 
     private function getTableCellStyleAttribute(string $style = ''): string
     {
-        if ($style != '' && !str_ends_with($style, ';')) {
-            $style .= ';';
-        }
-
-        return ' style="' . $style . $this->thinTableCellBorderStyle . '"';
+        return $this->getThinTableCellStyleAttribute($style);
     }
 
     /**

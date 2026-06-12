@@ -125,7 +125,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
         }
 
         $this->table .= '<tr style="font-size:12px;">';
-            $this->table .= '<td colspan="7"></td>';
+            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' colspan="7"></td>';
         $this->table .= '</tr>';
 
         $this->renderSumRow(__('Total_sum_net'), Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl));
@@ -137,9 +137,9 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
     private function renderSumRow(string $label, string $value): void
     {
         $this->table .= '<tr>';
-            $this->table .= '<td colspan="4" align="right">' . $label . '</td>';
-            $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $value . '</td>';
-            $this->table .= '<td colspan="2"></td>';
+            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' colspan="4" align="right">' . $label . '</td>';
+            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $value . '</td>';
+            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' colspan="2"></td>';
         $this->table .= '</tr>';
     }
 

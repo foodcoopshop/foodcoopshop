@@ -66,7 +66,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $this->assertResponseContains('<td align="left" width="142">Pfand geliefert</td><td align="left" width="81"></td><td align="right" width="58">1,00 €</td><td align="right" width="58">0,00 € (0%)</td><td align="right" width="58">1,00 €</td>');
+        $this->assertResponseContains('<td style="border:0.1mm solid #000;" align="left" width="142">Pfand geliefert</td><td style="border:0.1mm solid #000;" align="left" width="81"></td><td style="border:0.1mm solid #000;" align="right" width="58">1,00 €</td><td style="border:0.1mm solid #000;" align="right" width="58">0,00 € (0%)</td><td style="border:0.1mm solid #000;" align="right" width="58">1,00 €</td>');
 
     }
 

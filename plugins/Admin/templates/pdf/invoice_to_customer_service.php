@@ -31,8 +31,8 @@ $html .= '</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(7);
 
-$html = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-$html .= '<td width="272">';
+$html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="0"><tr>';
+$html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="272">';
     $html .= '<p>';
         $html .= $result->name . '<br />';
         if ($result->is_company && $result->lastname != '') {
@@ -42,7 +42,7 @@ $html .= '<td width="272">';
     $html .= '</p>';
 $html .= '</td>';
 
-$html .= '<td width="230" align="right">';
+$html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="230" align="right">';
     $html .= '<p style="font-weight:bold;">'.__('Invoice_number_abbreviation_admin').': ' . $newInvoiceNumber;
     if ($result->cancelledInvoice) {
         $html .= '<br />' . __('Cancellation_invoice') . ' ' .  __('for') .': ' . $result->cancelledInvoice->invoice_number . '<br />';

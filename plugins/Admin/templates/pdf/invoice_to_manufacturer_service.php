@@ -22,8 +22,8 @@ $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
 
-$html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
-$html .= '<td width="200">';
+$html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="7"><tr>';
+$html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="200">';
 $html .= '<p><b>'.__('conveyed_for').'</b></p>';
 $manufacturerAddress = '<p>' . $productResults[0]['ManufacturerName'] . '<br />';
 $manufacturerAddress .= $productResults[0]['ManufacturerFirstname'] . ' ' . $productResults[0]['ManufacturerLastname'] . '<br />';
@@ -32,7 +32,7 @@ $manufacturerAddress .= $productResults[0]['ManufacturerPostcode'] . ' ' . $prod
 $html .= $manufacturerAddress . '</p>';
 $html .= '</td>';
 
-$html .= '<td width="330">';
+$html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="330">';
 $html .= '<h2>'.__('Invoice_number_abbreviation_admin').': ' . $newInvoiceNumber . '</h2>';
 $html .= '<h3>'.__('Orders_from').' ' . $period . '</h3>';
 $html .= '<h3>'.__('Invoice_date').': ' . $invoiceDate . '</h3>';
@@ -80,24 +80,24 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $firstColumnWidth = 365;
     $secondColumnWidth = 165;
 
-    $html = '<table border="1" cellspacing="0" cellpadding="1">';
+    $html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="1">';
 
     $html .= '<tr>';
-    $html .= '<td width="' . $firstColumnWidth . '">';
+    $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $firstColumnWidth . '">';
     $html .= '<h3> - ' . $variableMemberFee . '% '.__('variable_member_fee').'</h3>';
     $html .= '</td>';
 
-    $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+    $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' align="right" width="' . $secondColumnWidth . '">';
     $html .= '<h3> - ' . $this->MyNumber->formatAsDecimal($compensatedPrice) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
     $html .= '<tr>';
-    $html .= '<td width="' . $firstColumnWidth . '">';
+    $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $firstColumnWidth . '">';
     $html .= '<h3>'.__('New_total_sum').'</h3>';
     $html .= '</td>';
 
-    $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+    $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' align="right" width="' . $secondColumnWidth . '">';
     $html .= '<h3>' . $this->MyNumber->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
