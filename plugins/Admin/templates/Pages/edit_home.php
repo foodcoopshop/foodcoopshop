@@ -91,7 +91,8 @@ echo '<section class="home-edit-section home-edit-section-header-image">';
                     'escape' => false,
                 ]
             );
-            $imageLabel = __('min {0}px width.', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]);
+            $imageLabel = __('min {0}px width', [number_format(Page::IMAGE_UPLOAD_MIN_WIDTH, 0, ',', '.')]);
+            $imageLabel .= '<br />' . __('max {0}:1 ratio', [Page::IMAGE_UPLOAD_MAX_ASPECT_RATIO]);
             if ($imageExists) {
                 $imageLabel .= '<br />' . __('Click_on_image_to_change_it.');
             }

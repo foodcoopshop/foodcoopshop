@@ -75,10 +75,13 @@ class ToolsController extends AdminAppController
 
     public function doTmpPageImageUpload(): void
     {
-        $this->processTmpImageUpload(Page::IMAGE_UPLOAD_MIN_WIDTH);
+        $this->processTmpImageUpload(
+            minWidth: Page::IMAGE_UPLOAD_MIN_WIDTH,
+            maxAspectRatio: Page::IMAGE_UPLOAD_MAX_ASPECT_RATIO,
+        );
     }
 
-    private function processTmpImageUpload(?int $minWidth = null, ?int $maxWidth = null): void
+    private function processTmpImageUpload(?int $minWidth = null, ?int $maxWidth = null, ?float $maxAspectRatio = null): void
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
@@ -120,6 +123,16 @@ class ToolsController extends AdminAppController
 
         if ($maxWidth !== null && $imageInfo[0] > $maxWidth) {
             $message = __('The image width needs to be at most {0} pixels.', [(int) $maxWidth]);
+            $this->set([
+                'status' => 0,
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
+        }
+
+        if ($maxAspectRatio !== null && $imageInfo[1] > 0 && ($imageInfo[0] / $imageInfo[1]) > $maxAspectRatio) {
+            $message = __('The image format is not ok, the aspect ratio (width / height) needs to be at most {0}. Current aspect ratio is {1}.', [$maxAspectRatio, Configure::read('app.numberHelper')->formatAsDecimal($imageInfo[0] / $imageInfo[1], 2)]);
             $this->set([
                 'status' => 0,
                 'msg' => $message,

@@ -4845,8 +4845,14 @@ msgstr "Die hochgeladene Datei muss folgendes Format haben: {0}"
 msgid "The image width needs to be at least {0} pixels."
 msgstr "Die Bildbreite muss mindestens {0} Pixel betragen."
 
+msgid "The image format is not ok, the aspect ratio (width / height) needs to be at most {0}. Current aspect ratio is {1}."
+msgstr "Das Bild ist zu schmal, das Seitenverhältnis darf höchstens {0} betragen. Das aktuelle Seitenverhältnis ist {1}."
+
 msgid "min {0}px width."
 msgstr "min {0}px Breite."
+
+msgid "max {0}:1 ratio"
+msgstr "max. {0}:1 Seitenverhältnis"
 
 msgid "The_uploaded_file_was_empty._Please_add_products_and_upload_again."
 msgstr "Die hochgeladene Datei war leer. Bitte füge deine Produkte hinzu und lade die Datei erneut hoch."
