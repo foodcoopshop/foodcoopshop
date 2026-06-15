@@ -6,7 +6,6 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use App\Services\CatalogService;
-use App\Services\CartService;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
 use Cake\Http\Response;
