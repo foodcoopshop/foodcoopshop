@@ -63,6 +63,13 @@ if ($identity !== null && !$identity->isManufacturer()) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".ModalCart.init('#user-menu a.modal-link-cart');"
     ]);
+    if ($identity && $this->Html->paymentIsCashless()) {
+        $creditBalanceClasses = [];
+        if ($creditBalance < 0) {
+            $creditBalanceClasses = ['negative'];
+        }
+        $menu[] = ['slug' => $this->Slug->getMyCreditBalance(), 'name' => __('Credit') . ': <span class="' . implode(' ', $creditBalanceClasses) . '">' . $this->MyNumber->formatAsCurrency($creditBalance) . '</span>', 'options' => ['fa-icon' => 'ok fa-fw fa-wallet', 'class' => ['credit-balance']]];
+    }
     $menu[] = ['slug' => 'javascript:void(0)', 'name' => $this->MyNumber->formatAsCurrency($identity->getProductAndDepositSum()), 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['modal-link-cart'], 'data-element-selector' => '#modal-cart-wrapper']];
 }
 

@@ -197,7 +197,7 @@ foodcoopshop.Mobile = {
 
         $('#user-menu > li').each(function () {
             var item = $(this);
-            if (item.hasClass('user-menu-search')) {
+            if (item.hasClass('credit-balance') || item.hasClass('user-menu-search')) {
                 return;
             }
             let anchor = item.find('a');
