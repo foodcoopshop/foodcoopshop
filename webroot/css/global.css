@@ -34,11 +34,17 @@
         content: '';
     }
 }
+html {
+    scrollbar-gutter: stable;
+}
 body {
     font-family: 'Open Sans';
     color: #333333;
     background-attachment: fixed;
     background-color: #a9a9a9;
+}
+body.modal-open {
+    padding-right: 0 !important;
 }
 img, iframe {
     border-radius: 5px;
