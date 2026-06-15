@@ -1667,6 +1667,13 @@ body.pages.home .home-block.image-right .home-block-body {
 body.pages.home .home-block.no-image .home-block-body {
     text-align: center;
 }
+body.pages.home .home-block.no-image .home-block-text ul,
+body.pages.home .home-block.no-image .home-block-text ol {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto;
+    padding-left: 1.2em;
+}
 body.pages.home .home-block-body h2 {
     margin-top: 0;
 }
