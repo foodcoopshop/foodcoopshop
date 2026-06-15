@@ -37,7 +37,7 @@ $this->element('highlightRowAfterEdit', [
 </div>
 
 <?php
-echo '<h2 class="info">'.__('The sliders are not used any more. You can define a header image for each page in the settings of the respective page.').'</h2>';
+echo '<h2 class="info">'.__('The sliders are not used any more. You can define a header image for the home page.').'</h2>';
 
 $this->Paginator->setPaginated($sliders);
 echo '<table class="list">';
