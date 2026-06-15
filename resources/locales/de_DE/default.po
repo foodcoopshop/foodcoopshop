@@ -4848,8 +4848,8 @@ msgstr "Die Bildbreite muss mindestens {0} Pixel betragen."
 msgid "The image format is not ok, the aspect ratio (width / height) needs to be at most {0}. Current aspect ratio is {1}."
 msgstr "Das Bild ist zu schmal, das Seitenverhältnis darf höchstens {0} betragen. Das aktuelle Seitenverhältnis ist {1}."
 
-msgid "min {0}px width."
-msgstr "min {0}px Breite."
+msgid "min {0}px width"
+msgstr "min. {0}px Breite"
 
 msgid "max {0}:1 ratio"
 msgstr "max. {0}:1 Seitenverhältnis"
