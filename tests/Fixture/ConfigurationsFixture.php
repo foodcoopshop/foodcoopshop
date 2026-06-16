@@ -218,7 +218,7 @@ class ConfigurationsFixture extends AppFixture
             'active' => 1,
             'name' => 'FCS_FOODCOOPS_MAP_ENABLED',
             'value' => '1',
-            'type' => 'boolean',
+            'type' => 'hidden',
             'position' => 1280,
         ],
         [
@@ -407,7 +407,7 @@ class ConfigurationsFixture extends AppFixture
             'active' => 1,
             'name' => 'FCS_HOME_TEXT',
             'value' => '',
-            'type' => 'textarea_big',
+            'type' => 'hidden',
             'position' => 1290,
         ],
         [
@@ -416,6 +416,20 @@ class ConfigurationsFixture extends AppFixture
             'value' => 0,
             'type' => 'boolean',
             'position' => 3600,
+        ],
+        [
+            'name' => 'FCS_FONT_HEADER_PROMO_TITLE',
+            'active' => 1,
+            'value' => 'fuzzy-bubbles',
+            'type' => 'dropdown',
+            'position' => 3620,
+        ],
+        [
+            'name' => 'FCS_FONT_BLOCK_HEADING',
+            'active' => 1,
+            'value' => 'open-sans',
+            'type' => 'dropdown',
+            'position' => 3630,
         ]
     ];
 

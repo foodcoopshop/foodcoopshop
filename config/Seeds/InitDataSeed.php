@@ -80,9 +80,10 @@ class InitDataSeed extends BaseSeed
             (1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','0','readonly',585),
             (1,'FCS_NEWSLETTER_ENABLED','0','boolean',3400),
             (1,'FCS_USER_FEEDBACK_ENABLED','0','boolean',3500),
-            (1,'FCS_CUSTOM_CSS','','textarea_css',3610);
             ";
             // FCS_HOME_TEXT added in Migration AddConfigurationTextForHome
+            // FCS_CUSTOM_CSS added in Migration AddConfigurationCustomCss
+            // FCS_FONT_HEADER_PROMO_TITLE and FCS_FONT_BLOCK_HEADING added in Migration AddConfigurationFontsForHomeTexts
         $this->execute($query);
 
         $query = "

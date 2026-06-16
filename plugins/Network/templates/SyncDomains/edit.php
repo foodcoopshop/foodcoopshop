@@ -61,13 +61,17 @@ echo $this->Form->control('SyncDomains.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
 ]);
+echo '<div class="sc"></div>';
 
 if ($this->request->getRequestTarget() != $this->Network->getSyncDomainAdd()) {
-    echo $this->Form->control('SyncDomains.delete_sync_domain', [
-        'label' => __('Delete_remote_foodcoop') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._network').'</span>',
-        'type' => 'checkbox',
-        'escape' => false
+    echo $this->Form->hidden('SyncDomains.delete_sync_domain', [
+        'value' => 0,
+        'id' => 'sync-domains-delete-sync-domain',
+        'class' => 'js-delete-entity-input',
+        'data-delete-label' => __('Delete'),
+        'data-delete-confirm' => __('Do you really want to delete this remote foodcoop?'),
     ]);
+    $this->Form->unlockField('SyncDomains.delete_sync_domain');
 }
 
 echo $this->Form->end();

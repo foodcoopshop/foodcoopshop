@@ -15,4 +15,4 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<a class="btn btn-warning help" title="<?php echo __('Help'); ?>" href="<?php echo $link; ?>" target="_blank"><b><?php echo __('Help?'); ?></b></a>
+<a class="btn btn-warning help" title="<?php echo __('Help'); ?>" href="<?php echo $link; ?>" target="_blank"><i class="fa-fw far fa-question-circle"></i> <b><?php echo __('Help'); ?></b></a>

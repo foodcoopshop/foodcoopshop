@@ -46,7 +46,7 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
 <div class="<?php echo join(' ', $classes); ?>">
 
     <p class="no-products"><?php echo __('Your_cart_is_empty'); ?>.</p>
-    <p class="products"></p>
+    <div class="products"></div>
 
     <?php if (!empty($identity->getProducts())) { ?>
 

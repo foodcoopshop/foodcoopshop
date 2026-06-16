@@ -19,12 +19,14 @@ body.dark img {
     filter: brightness(.8) contrast(1.2);
 }
 body.dark #header,
-body.dark #content,
+body.admin.dark #content,
+body.dark:not(.admin) #container,
 body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content,
 body.dark .modal-content,
 body.dark .btn-outline-light.disabled:not(.btn-danger),
+body.dark #content.self-service,
 body.dark .self-service .header,
 body.dark .self-service #SelfServiceForm,
 body.dark .self-service #login-form h2 span,
@@ -113,7 +115,7 @@ body.dark .dropdown .dropdown-menu li a span.text,
 body.dark .dropdown .no-results,
 body.dark .dropdown > .dropdown-toggle:after,
 body.dark.admin .filter-container,
-body.dark.admin .btn i:not(.not-ok),
+body.dark.admin .btn i:not(.not-ok):not(.fa-question-circle),
 body.dark a.btn.edit-shortcut-button i {
     color: var(--dark-mode-main-font-color);
 }
@@ -205,6 +207,7 @@ body.dark .manufacturer-wrapper,
 body.dark a.blog-post-wrapper h3,
 body.dark .modal-footer,
 body.dark .h1-registration,
+body.dark #cart .pickup-day-header,
 body.dark .self-service #SelfServiceForm,
 body.dark .self-service #cart,
 body.dark .self-service #login-form h2,
@@ -216,7 +219,7 @@ body.reports.payment form#csv-upload,
 body.dark hr.dropdown-divider {
     border-color: var(--dark-mode-main-border-color);
 }
-body.dark #load-last-order-details {
+body.dark .load-last-order-details {
     border-color: var(--dark-mode-main-border-color) ! important;
 }
 body.dark .btn-outline-light:active {
@@ -257,4 +260,79 @@ body.dark .password-toggle-icon:hover {
     color: var(--dark-mode-2nd-font-color);
 }
 
+body.dark.pages.home .home-blocks {
+    background-color: transparent;
+}
+body.dark.pages.home .home-block,
+body.dark.pages.home .home-block:nth-child(odd),
+body.dark.pages.home .home-block:nth-child(even) {
+    background-color: var(--dark-mode-main-bg-color);
+    border-top-color: var(--dark-mode-main-border-color);
+}
+body.dark.pages.home .home-block:nth-child(even) {
+    background-color: var(--dark-mode-2nd-bg-color);
+}
+body.dark.pages.home .home-block-body h2,
+body.dark.pages.home .home-block-text,
+body.dark.pages.home .home-block a:not(.btn) {
+    color: var(--dark-mode-main-font-color);
+}
+body.dark.pages.home .home-block a:not(.btn):hover {
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark.pages.home .home-block-actions .btn {
+    color: #fff;
+}
+body.dark.pages.home .home-block.no-image .home-block-body,
+body.dark.pages.home .home-block.image-right .home-block-body {
+    color: var(--dark-mode-main-font-color);
+}
 
+
+
+body.dark #header {
+    border-bottom-color: var(--dark-mode-main-border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+body.dark #user-menu {
+    background: var(--dark-mode-2nd-bg-color);
+    border-bottom: 1px solid var(--dark-mode-main-border-color);
+}
+body.dark #user-menu li > a,
+body.dark #user-menu > li > a {
+    color: var(--dark-mode-main-font-color);
+    background: rgba(255, 255, 255, 0.06);
+}
+body.dark #user-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #user-menu .user-menu-search-form-wrapper {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+body.dark #user-menu .user-menu-search-form-wrapper input[type="text"] {
+    color: var(--dark-mode-2nd-font-color);
+    background: transparent;
+}
+body.dark #user-menu .user-menu-search-form-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+body.dark #user-menu .user-menu-search-form-wrapper .btn {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #user-menu .user-menu-search-form-wrapper .btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+}
+body.dark #user-menu li ul li a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #main-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--dark-mode-2nd-font-color);
+}
+body.dark #main-menu li ul li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}

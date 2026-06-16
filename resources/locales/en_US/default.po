@@ -1045,6 +1045,12 @@ msgstr "Optional."
 msgid "Configuration_subtext_FCS_CUSTOM_CSS"
 msgstr "CSS for frontend and admin area. Optional."
 
+msgid "Configuration_subtext_FCS_FONT_BLOCK_HEADING"
+msgstr "Font for headings in home page blocks."
+
+msgid "Configuration_subtext_FCS_FONT_HEADER_PROMO_TITLE"
+msgstr "Font for the header promo title on the home page."
+
 msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
 msgstr "Max. 6 chars incl. separator."
 
@@ -1138,6 +1144,12 @@ msgstr "Type of adding the payments"
 msgid "Configuration_text_FCS_CUSTOM_CSS"
 msgstr "Custom CSS"
 
+msgid "Configuration_text_FCS_FONT_BLOCK_HEADING"
+msgstr "Font for block headings"
+
+msgid "Configuration_text_FCS_FONT_HEADER_PROMO_TITLE"
+msgstr "Font for header promo title"
+
 msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
 msgstr "Limit of credit saldo when the reminder email is sent."
 
@@ -1175,16 +1187,13 @@ msgid "Configuration_text_FCS_FEEDBACK_TO_PRODUCTS_ENABLED"
 msgstr "Are members allowed to write feedback to products?"
 
 msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
-msgstr "Show map with other foodcoops on home?"
+msgstr "Show map with other foodcoops?"
 
 msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
 msgstr "Additional text for footer"
 
 msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
 msgstr "Enable API to hellocash.at?"
-
-msgid "Configuration_text_FCS_HOME_TEXT"
-msgstr "Text that is shown on the home page."
 
 msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
 msgstr "Include stock products in invoices?"
@@ -3706,6 +3715,12 @@ msgstr "Runtime"
 msgid "Saturday"
 msgstr "Saturday"
 
+msgid "Zip"
+msgstr "Zip"
+
+msgid "Continue_to_finish_cart"
+msgstr "Go to page \"Finish cart\""
+
 msgid "SaturdayShort"
 msgstr "Sat"
 
@@ -5158,7 +5173,7 @@ msgstr "Your account was activated"
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr "Your account was created but not activated yet. This means, you can't login yet!"
 
-msgid "Your_cart"
+msgid "Your cart"
 msgstr "Your cart"
 
 msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."

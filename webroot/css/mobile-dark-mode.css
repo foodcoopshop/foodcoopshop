@@ -33,4 +33,13 @@
         border-color: var(--dark-mode-main-border-color);
     }
 
+    body.dark.has-page-hero #responsive-header {
+        background: rgba(0, 0, 0, 0.45) ! important;
+        background-color: rgba(0, 0, 0, 0.45) ! important;
+    }
+    body.dark.has-page-hero #responsive-header a,
+    body.dark.has-page-hero #responsive-header i {
+        color: #fff ! important;
+    }
+
 }

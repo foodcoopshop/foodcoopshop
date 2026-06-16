@@ -18,59 +18,74 @@ use Cake\Core\Configure;
 
 echo $this->element('layout/header');
 
+$identity = $this->request->getAttribute('identity');
+
 ?>
 
 <div id="container">
-
+    <?php
+        echo $this->Flash->render();
+        echo $this->Flash->render('auth');
+    ?>
     <div id="header">
-        <?php echo $this->element('logo'); ?>
-        <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) { ?>
-            <?php echo $this->element('productSearch', [
-                'action' => __('route_search'),
-                'placeholder' =>  __('Search'),
-                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts(),
-                'includeCategoriesDropdown' => false
-            ]); ?>
-        <?php } ?>
         <?php echo $this->element('userMenu'); ?>
-        <?php echo $this->element('mainMenu'); ?>
+        <div class="header-main-row">
+            <?php
+                echo $this->element('logo', [
+                    'isLogoLinked' => true,
+                ]);
+            ?>
+            <?php echo $this->element('mainMenu'); ?>
+        </div>
+        <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity === null) : ?>
+            <?php echo $this->element('layout/headerPromo', ['headerPromo' => $headerPromo ?? null]); ?>
+        <?php endif; ?>
     </div>
 
+    <?php if (!empty($pageHeaderImageDesktop ?? null) && $identity !== null) : ?>
+        <div class="page-header-banner">
+            <?php echo $this->element('layout/headerPromo', ['headerPromo' => $headerPromo ?? null]); ?>
+        </div>
+    <?php endif; ?>
+
     <div id="content">
+        <?php echo $this->element('sidebar'); ?>
+        <div id="inner-content" class="<?php echo empty($categoriesForMenu) && empty($manufacturersForMenu) ? 'without-sidebar' : ''; ?>">
+            <?php echo $this->fetch('content'); ?>
+            <div class="sc"></div>
+        </div>
         <?php
             echo $this->Flash->render();
             echo $this->Flash->render('auth');
         ?>
-        <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>
-        <?php echo $this->element('sidebar'); ?>
-        <div id="inner-content">
-            <?php echo $this->fetch('content'); ?>
-            <div class="sc"></div>
-        </div>
-    </div>
-
-    <div id="right">
-        <div class="inner-right">
-            <?php echo $this->element('globalNoDeliveryDayBox'); ?>
-            <?php echo $this->element('cart', [
-                'selfServiceModeEnabled' => false,
-                'showLoadLastOrderDetailsDropdown' => true,
-                'showCartDetailButton' => true,
-                'showFutureOrderDetails' => true,
-                'icon' => 'fa-shopping-cart',
-                'name' => __('Cart'),
-                'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
-                'cartButtonIcon' => 'fa-cart-plus',
-                'cartEmptyMessage' => __('Your_cart_is_empty.'),
-            ]); ?>
-            <?php echo $this->element('infoBox'); ?>
-        </div>
     </div>
 
     <div id="footer">
         <div class="inner-footer">
             <?php
                 echo $this->element('footer');
+            ?>
+        </div>
+    </div>
+
+    <div class="hide">
+        <div id="modal-cart-wrapper">
+            <?php
+                echo $this->element('cart', [
+                    'selfServiceModeEnabled' => false,
+                    'showLoadLastOrderDetailsDropdown' => true,
+                    'showFutureOrderDetails' => true,
+                    'icon' => 'fa-shopping-cart',
+                    'name' => __('Cart'),
+                    'cartButtonIcon' => 'fa-cart-plus',
+                    'cartEmptyMessage' => __('Your_cart_is_empty.'),
+                ]);
+            ?>
+        </div>
+        <div id="modal-info-box-wrapper">
+            <?php
+                echo $this->element('globalNoDeliveryDayBox');
+                echo $this->element('infoBox');
             ?>
         </div>
     </div>

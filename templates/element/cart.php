@@ -50,23 +50,19 @@ if ($identity->getProducts() !== null) {
 }
 ?>
 
-<div id="cart" class="box cart">
-    <h3>
-        <i class="fas <?php echo $icon; ?>"></i>
-        <?php echo $name; ?>
-        <?php
-        if (!(Configure::read('app.selfServiceEasyModeEnabled') && OrderCustomerService::isSelfServiceMode())){
-        ?>
-            <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
-        <?php } ?>
-    </h3>
+<div id="cart" class="<?php echo $additionalClassForCart ?? ''; ?> cart">
+
+    <?php if (OrderCustomerService::isSelfServiceMode()) { ?>
+        <h3>
+            <i class="fas <?php echo $icon; ?>"></i>
+            <?php echo $name; ?>
+        </h3>
+    <?php } ?>
+
     <div class="inner">
 
-        <?php
+    <?php
         if (OrderCustomerService::isOrderForDifferentCustomerMode()) {
-            $this->element('addScript', ['script' =>
-                Configure::read('app.jsNamespace').".ModalOrderForDifferentCustomerCancel.init();"
-            ]);
             echo '<p class="cart-extra-info order-for-different-customer-info">';
                 echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$identity->name.'</b>']);
                 if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
@@ -86,14 +82,13 @@ if ($identity->getProducts() !== null) {
             $lastOrderDetails = $identity->getLastOrderDetailsForDropdown();
             if (!empty($lastOrderDetails)) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
-                $this->element('addScript', ['script' =>
-                    Configure::read('app.jsNamespace') . ".ModalLoadLastOrderDetails.init();"
-                ]);
                 echo $this->Form->control('load-last-order-details', [
                     'label' => '',
+                    'id' => null,
+                    'class' => 'load-last-order-details',
                     'type' => 'select',
                     'empty' => __('Load_past_orders').'...',
-                    'options' => $lastOrderDetails
+                    'options' => $lastOrderDetails,
                 ]);
             }
         }
@@ -104,13 +99,13 @@ if ($identity->getProducts() !== null) {
                 $class[] = 'negative';
             }
             echo '<div class="credit-balance-wrapper">';
-              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b></p>';
+              echo '<b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b>';
             echo '</div>';
         }
         ?>
 
         <p class="no-products"><?php echo $cartEmptyMessage; ?></p>
-        <p class="products"></p>
+        <div class="products"></div>
 
         <div class="sums-wrapper">
             <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
@@ -122,24 +117,9 @@ if ($identity->getProducts() !== null) {
             <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
         </div>
 
-        <p class="tmp-wrapper"></p>
+        <div class="tmp-wrapper"></div>
 
         <div class="sc"></div>
-
-        <?php
-            if ($showCartDetailButton) {
-                $this->element('addScript', ['script' => "
-                    $('.btn-cart-detail').on('click', function () {
-                        foodcoopshop.Helper.disableButton($(this));
-                        foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-shopping-cart');
-                    });"
-                ]);
-        ?>
-
-        <p><a class="btn btn-success btn-cart-detail" href="<?php echo $this->Slug->getCartDetail(); ?>">
-            <i class="fas fa-shopping-cart fa-lg fa-fw"></i> <?php echo __('Show_cart_button'); ?>
-        </a></p>
-        <?php } ?>
 
         <?php
             if ($showFutureOrderDetails && !empty($futureOrderDetails)) {

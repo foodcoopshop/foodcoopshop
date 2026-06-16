@@ -1,0 +1,12 @@
+/* shadows-into-light-two-regular - latin_latin-ext */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Shadows Into Light Two';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/shadows-into-light-two-v19-latin_latin-ext-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+.font-shadows-into-light-two {
+    font-family: 'Shadows Into Light Two', cursive;
+    letter-spacing: 0.15em;
+}

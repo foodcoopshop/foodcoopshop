@@ -16,7 +16,11 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
-?><div id="info-box" class="box">
+if (empty(Configure::read('appDb.FCS_RIGHT_INFO_BOX_HTML'))) {
+    return;
+}
+?>
+<div id="info-box">
     <?php
         echo Configure::read('appDb.FCS_RIGHT_INFO_BOX_HTML');
     ?>

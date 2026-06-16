@@ -25,6 +25,16 @@ if ($page->full_width) {
     echo $this->Html->css('page-full-width');
 }
 
+$srcLargeImage = $this->Html->getPageImageSrc($page, 'single');
+if ($srcLargeImage != '') {
+    $srcMobileImage = $this->Html->getPageImageSrc($page, 'mobile');
+    if ($srcMobileImage == '') {
+        $srcMobileImage = $srcLargeImage;
+    }
+    $this->set('pageHeaderImageDesktop', $srcLargeImage);
+    $this->set('pageHeaderImageMobile', $srcMobileImage);
+}
+
 echo '<h1>'.$page->title.'</h1>';
 
 if (!empty($page['children'])) {

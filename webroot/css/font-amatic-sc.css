@@ -1,0 +1,12 @@
+/* amatic-sc-regular - cyrillic_latin_latin-ext */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Amatic SC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/amatic-sc-v28-cyrillic_latin_latin-ext-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+.font-amatic-sc {
+    font-family: 'Amatic SC', cursive;
+    letter-spacing: 0.05em;
+}

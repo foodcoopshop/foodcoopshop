@@ -21,6 +21,12 @@
     --not-ok-red: #dc143c;
     --warning-yellow: #FDB813;
     --warning-red: #a40000;
+    --sidebar-width: 250px;
+    --light-grey: #bbb;
+    --content-max-width: 1500px;
+    --content-small-max-width: 1140px;
+    --modal-width: 600px;
+    --modal-width-lg: 900px;
 }
 
 @media print {
@@ -28,11 +34,17 @@
         content: '';
     }
 }
+html {
+    scrollbar-gutter: stable;
+}
 body {
     font-family: 'Open Sans';
     color: #333333;
     background-attachment: fixed;
     background-color: #a9a9a9;
+}
+body.modal-open {
+    padding-right: 0 !important;
 }
 img, iframe {
     border-radius: 5px;
@@ -260,17 +272,14 @@ h2.info a:not(.btn) {
 }
 #flashMessage {
     position: fixed;
-    top: 48px;
-    left: 392px;
+    top: 60px;
+    right: 15px;
     padding: 8px;
-    width: 450px;
+    width: 500px;
     opacity: 0.9;
     border-radius: 5px;
-    z-index: 1000;
+    z-index: 10000;
     text-align: left;
-    -webkit-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
-    -moz-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
-    box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     word-break: break-word;
     max-height: 90vh;
     overflow-y: auto;
@@ -305,6 +314,10 @@ h2.info a:not(.btn) {
     border-radius: 6px;
 }
 #flashMessage.error a {
+    text-decoration: underline ! important;
+    color: #fff ! important;
+}
+#flashMessage.success a {
     text-decoration: underline ! important;
     color: #fff ! important;
 }
@@ -352,7 +365,7 @@ h2.info a:not(.btn) {
     background: #fff;
     border-bottom: 1px solid #dfdfdf;
     border-right: 1px solid #dfdfdf;
-    font-size: 14px;
+    font-size: 15px;
     width: 100%;
     position: relative;
 }
@@ -511,7 +524,7 @@ input[type="checkbox"] {
 .password-toggle-icon:hover {
     color: #333;
     background-color: #e8e8e8;
-    border-color: #bbb;
+    border-color: var(--light-grey);
 }
 span.new {
     font-size:10px;

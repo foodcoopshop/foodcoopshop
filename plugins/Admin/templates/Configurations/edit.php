@@ -17,9 +17,16 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
+$isFontConfig = in_array($configuration->name, ['FCS_FONT_HEADER_PROMO_TITLE', 'FCS_FONT_BLOCK_HEADING']);
+
+$script = Configure::read('app.jsNamespace') . ".Admin.init();" . 
+          Configure::read('app.jsNamespace') . ".Admin.initForm();";
+if ($isFontConfig) {
+    $script .= Configure::read('app.jsNamespace') . ".Admin.initFontPreview();";
+}
+
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
-    "
+    'script' => $script
 ]);
 
 ?>
@@ -98,8 +105,14 @@ switch ($configuration->type) {
             'type' => 'select',
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),
-            'escape' => false
+            'escape' => false,
+            'id' => $isFontConfig ? 'font-config-select' : null,
         ]);
+        if ($isFontConfig) {
+            $previewClass = 'font-' . h($configuration->value);
+            $previewText = h(__('All human beings are born free and equal in dignity and rights.'));
+            echo '<div id="font-preview" class="' . $previewClass . '" style="margin-top:15px;margin-bottom:15px;font-size:1.3em;padding:10px;">' . $previewText . '</div>';
+        }
         break;
     case 'multiple_dropdown':
         $this->element('addScript', ['script' =>

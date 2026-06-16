@@ -41,6 +41,10 @@ class PagesTable extends AppTable
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
+        $this->hasOne('HeaderPromos', [
+            'foreignKey' => 'page_id',
+            'dependent' => true,
+        ]);
     }
 
     public function validationDefault(Validator $validator): Validator

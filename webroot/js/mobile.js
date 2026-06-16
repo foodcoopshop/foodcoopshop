@@ -154,7 +154,7 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append($('.footer .right-wrapper .btn-add-deposit'));
         $('.footer .left-wrapper').remove();
 
-        var cartButtonHtml = '<a href="javascript:void(0);" class="responsive-cart"><span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-bag fa-2x"></i></a>';
+        var cartButtonHtml = '<a href="javascript:void(0);" class="responsive-cart modal-link-cart"><i class="fas fa-shopping-bag fa-2x"></i><span class="menu-item-label">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span></a>';
         $('#' + headerId).append(cartButtonHtml);
         $('#' + headerId).find('.responsive-cart').on('click', function() {
             if ($('.right-box').css('display') == 'block') {
@@ -187,19 +187,23 @@ foodcoopshop.Mobile = {
 
         var menuItems = [];
 
-        var ps = $('.product-search-form-wrapper');
+        var ps = $('#user-menu > li.user-menu-search');
         if (ps.length > 0) {
-            menuItems.push(ps.wrap('<li>').parent());
+            menuItems.push(ps);
         }
 
         let homeMenuItemA = $('<a/>').attr('href', '/').html('<i class="fas"></i>' + __('Home'));
-        menuItems.push('<li class="home">' + $('<div>').append(homeMenuItemA.clone()).html()  + $('<div>').append($('.color-mode-toggle')).html() + '</li>');
+        menuItems.push('<li class="home">' + $('<div>').append(homeMenuItemA.clone()).html() + $('<div>').append($('a.color-mode-toggle')).html() + '</li>');
 
         $('#user-menu > li').each(function () {
             var item = $(this);
-            if (item.find('a').length > 0) {
-                item.find('a').removeClass('btn');
-                item.find('a').removeClass('btn-success');
+            if (item.hasClass('credit-balance') || item.hasClass('user-menu-search')) {
+                return;
+            }
+            let anchor = item.find('a');
+            if (!anchor.hasClass('modal-link-info-box') && !anchor.hasClass('modal-link-cart') && !anchor.hasClass('color-mode-toggle') && anchor.length > 0) {
+                anchor.removeClass('btn');
+                anchor.removeClass('btn-success');
                 menuItems.push(item);
             }
         });
@@ -246,33 +250,27 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
-        // START info box as modal
-        var noGlobalDeliveryBreakHtml = '';
-        var noGlobalDeliveryBreakElement = $('#global-no-delivery-day-box');
-        if (noGlobalDeliveryBreakElement.length > 0) {
-            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
-        }
-        var infoBoxContent = (noGlobalDeliveryBreakHtml + $('#info-box').html()).trim();
-        if (infoBoxContent != '') {
-            var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + infoBoxContent + '</div>';
-            infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
-            $('#container').append(infoBoxHtml);
-
-            var infoButton = $('<a/>');
-            infoButton.addClass('open-with-modal');
-            infoButton.attr('href', 'javascript:void(0);');
-            infoButton.data('element-selector', '#right-info-box-text');
-            infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
-            $('#' + headerId).append(infoButton);
-            foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
-        }
-        // END info box as modal
-
-        var cartButton = $('#cart .inner .btn-success');
-        cartButton.addClass('responsive-cart');
-        cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x fa-fw"></i>');
-        $('#' + headerId).append(cartButton);
+        $('#user-menu > li').each(function () {
+            if ($(this).find('a').hasClass('modal-link-info-box')) {
+                let anchor = $(this).find('a');
+                let icon = anchor.find('i');
+                icon.addClass('fa-2x');
+                icon.removeClass('ok');
+                anchor.html(icon);
+                $('#' + headerId).append($(this));
+                foodcoopshop.ModalText.init('#' + headerId + ' a.modal-link-info-box');
+            }
+            if ($(this).find('a').hasClass('modal-link-cart')) {
+                let modifiedCartButton = $(this).clone();
+                let anchor = modifiedCartButton.find('a');
+                let icon = anchor.find('i');
+                anchor.attr('href', ['', __('route_cart'), __('route_cart_show')].join('/'));
+                anchor.addClass('responsive-cart');
+                icon.addClass('fa-2x');
+                icon.removeClass('ok');
+                $('#' + headerId).append(modifiedCartButton);
+            }
+        });
 
         $('#' + headerId).append($('#header .logo-wrapper'));
 
@@ -295,9 +293,10 @@ foodcoopshop.Mobile = {
         cartPage.after($('#cart div.credit-balance-wrapper'));
         cartPage.after($('#cart p.future-orders'));
 
-        var loadLastOrderDetailsDropdown = $('#cart .inner #load-last-order-details');
+        var loadLastOrderDetailsDropdown = $('#cart .inner .load-last-order-details');
         if (loadLastOrderDetailsDropdown.length > 0) {
             cartPage.after(loadLastOrderDetailsDropdown.closest('div.input'));
+            foodcoopshop.ModalLoadLastOrderDetails.init();
         }
 
         // move flash message into header

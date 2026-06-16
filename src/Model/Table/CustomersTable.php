@@ -17,7 +17,6 @@ use App\Model\Entity\OrderDetail;
 use App\Model\Entity\Payment;
 use App\Services\FormatterService;
 use Cake\ORM\TableRegistry;
-use Cake\ORM\Query;
 use Cake\ORM\Query\SelectQuery;
 
 /**

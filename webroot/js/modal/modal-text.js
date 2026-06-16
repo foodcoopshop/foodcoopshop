@@ -33,9 +33,8 @@ foodcoopshop.ModalText = {
             modalSelector,
             '',
             '',
-            [foodcoopshop.Modal.createButton(['btn-outline-light'], __('Close'), null, true)]
+            [foodcoopshop.Modal.createButton(['btn-outline-light'], __('Close'), null, true)],
         );
-
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
@@ -43,11 +42,19 @@ foodcoopshop.ModalText = {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);
         });
 
-        var elementSelector = button.data('element-selector');
-        var heading = $(elementSelector).find('h1').first();
-        $(modalSelector + ' .modal-title').html(heading.html());
-        heading.hide();
-        $(modalSelector + ' .modal-body').append($(elementSelector).html());
+        const elementSelector = button.data('element-selector');
+        var contentWrapper = $(elementSelector).clone();
+        let headingHtml = contentWrapper.find('h1, h3').first().html() || '';
+
+        let contentHtml = contentWrapper.html();
+        if (elementSelector === '#modal-info-box-wrapper') {
+            headingHtml = 'Infos';
+            contentHtml = contentHtml.replace(/h3/g, 'h1');
+        }
+
+        $(modalSelector + ' .modal-body').append(contentHtml);
+        $(modalSelector + ' .modal-title').html(headingHtml);
+
     }
 
 };

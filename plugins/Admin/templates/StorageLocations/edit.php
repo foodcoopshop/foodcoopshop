@@ -64,21 +64,28 @@ echo $this->Form->control('StorageLocations.position', [
     'type' => 'text',
 ]);
 
+echo '<div class="sc"></div>';
+
 if ($this->request->getRequestTarget() != $this->Slug->getStorageLocationAdd()) {
-    echo '<div class="warning">';
-    echo $this->Form->control('StorageLocations.delete_storage_location', [
-        'label' => __('Delete storage location?') .
-            '<span class="after small">' .
-            ($productCount > 0 ?
-                __('Deleting is not possible. There are {0} products associated with this storage location.', $productCount) :
-                __('Check_and_do_not_forget_to_click_save_button._admin')
-            ).
-            '</span>',
-        'disabled' => ($productCount > 0 ? 'disabled' : ''),
-        'type' => 'checkbox',
-        'escape' => false
-    ]);
-    echo '</div>';
+    if ($productCount > 0) {
+        echo $this->Form->hidden('StorageLocations.delete_storage_location', [
+            'value' => 0,
+            'id' => 'storage-locations-delete-storage-location',
+            'class' => 'js-delete-entity-input',
+            'data-delete-label' => __('Delete'),
+            'data-delete-disabled' => 1,
+            'data-delete-disabled-title' => __('Deleting is not possible. There are {0} products associated with this storage location.', $productCount),
+        ]);
+    } else {
+        echo $this->Form->hidden('StorageLocations.delete_storage_location', [
+            'value' => 0,
+            'id' => 'storage-locations-delete-storage-location',
+            'class' => 'js-delete-entity-input',
+            'data-delete-label' => __('Delete'),
+            'data-delete-confirm' => __('Do you really want to delete this storage location?'),
+        ]);
+        $this->Form->unlockField('StorageLocations.delete_storage_location');
+    }
 }
 
 echo $this->Form->end();
