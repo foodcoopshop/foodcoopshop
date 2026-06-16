@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
-use Cake\Core\Configure;
+use Cake\View\View;
 use Cake\View\Helper;
+use Cake\Core\Configure;
 use App\Model\Entity\Customer;
 use Authentication\IdentityInterface;
 
@@ -24,6 +25,15 @@ use Authentication\IdentityInterface;
  */
 class MenuHelper extends Helper
 {
+
+    /**
+     * @param View $View
+     */
+    public function __construct(View $View, array $config = [])
+    {
+        $this->helpers[] = 'MyHtml';
+        parent::__construct($View, $config);
+    }
 
     /**
      * @param array<string, mixed> $array
@@ -89,19 +99,25 @@ class MenuHelper extends Helper
     {
 
         $liClass = [];
+        $liClass = $item['options']['class'] ?? [];
         if (!empty($item['children'])) {
             $liClass[] = 'has-children';
             $liClass[] = 'has-icon';
         }
         $tmpMenuItem = '<li' . (!empty($liClass) ? ' class="' . join(' ', $liClass).'"' : '').'>';
 
-            $tmpMenuItem .= $this->renderMenuElement(
-                $item['slug'],
-                $item['name'],
-                $item['options']['style'] ?? '',
-                $item['options']['class'] ?? [],
-                $item['options']['fa-icon'] ?? ''
-            );
+        if (!empty($item['options']['content'])) {
+                $tmpMenuItem .= $item['options']['content'];
+            } else {
+                $tmpMenuItem .= $this->renderMenuElement(
+                    $item['slug'],
+                    $item['name'],
+                    $item['options']['style'] ?? '',
+                    $item['options']['class'] ?? [],
+                    $item['options']['fa-icon'] ?? '',
+                    $item['options']['data-element-selector'] ?? '',
+                );
+            }
 
             if (!empty($item['children'])) {
                 $tmpMenuItem .= '<ul>';
@@ -119,7 +135,7 @@ class MenuHelper extends Helper
     /**
      * @param list<string> $class
      */
-    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = ''): string
+    private function renderMenuElement(string $slug, string $name, string $style = '', array $class = [], string $fontAwesomeIconClass = '', string $dataElementSelector = '', string $content = ''): string
     {
 
         if ($style != '') {
@@ -154,12 +170,19 @@ class MenuHelper extends Helper
             $fontAwesomeIconString = str_replace('fas ', 'far ', $fontAwesomeIconString);
         }
 
-        $classString = '';
-        if (!empty($class)) {
-            $classString = ' class="' . join(' ', $class). '" ';
-        }
+        $labelString = $name !== '' ? '<span class="menu-item-label">' . $name . '</span>' : '';
 
-        $naviElement = '<a' . $classString . $style.' href="'.$slug.'" title="'.h(strip_tags($name)).'">'.$fontAwesomeIconString.$name.'</a>';
+        $naviElement = $this->MyHtml->link(
+            $fontAwesomeIconString . $labelString,
+            $slug,
+            [
+                'class' => $class,
+                'escape' => false,
+                'title' => h(strip_tags($name)),
+                'style' => $style !== '' ? $style : null,
+                'data-element-selector' => $dataElementSelector !== '' ? $dataElementSelector : null,
+            ],
+        );
 
         return $naviElement;
     }
@@ -182,7 +205,7 @@ class MenuHelper extends Helper
             }
         } else {
             if ($this->getView()->getPlugin() == '') {
-                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in')];
+                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
             }
         }
         return $menuElement;
@@ -198,7 +221,7 @@ class MenuHelper extends Helper
                 'slug' => Configure::read('app.slugHelper')->getMyCreditBalance(),
                 'name' => __('Credit'),
                 'options' => [
-                    'fa-icon' => Configure::read('app.htmlHelper')->getFontAwesomeIconForCurrencyName(),
+                    'fa-icon' => 'fa-wallet ok',
                 ],
             ];
         }

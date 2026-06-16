@@ -74,4 +74,9 @@ class AppTable extends Table
         return new AppMarshaller($this);
     }
 
+    protected function sanitizePlainStringValue(mixed $value): string
+    {
+        return trim(strip_tags(htmlspecialchars_decode((string)$value)));
+    }
+
 }

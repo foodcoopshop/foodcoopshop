@@ -17,12 +17,9 @@ declare(strict_types=1);
 
 namespace TestCase\src\Controller;
 
-use App\Model\Entity\StorageLocation;
-use App\Test\Fixture\StorageLocationsFixture;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\Log\Log;
 
 class StorageLocationsControllerTest extends AppCakeTestCase
 {

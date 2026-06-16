@@ -141,13 +141,14 @@ if (($identity->isSuperadmin() || $identity->isAdmin()) && $this->request->getRe
 }
 
 if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
-    echo '<div class="warning">';
-        echo $this->Form->control('BlogPosts.delete_blog_post', [
-            'label' => __('Delete_blog_post?').' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
-            'type' => 'checkbox',
-            'escape' => false
-        ]);
-    echo '</div>';
+    echo $this->Form->hidden('BlogPosts.delete_blog_post', [
+        'value' => 0,
+        'id' => 'blog-posts-delete-blog-post',
+        'class' => 'js-delete-entity-input',
+        'data-delete-label' => __('Delete'),
+        'data-delete-confirm' => __('Do you really want to delete this blog post?'),
+    ]);
+    $this->Form->unlockField('BlogPosts.delete_blog_post');
 }
 
 echo $this->Form->control('BlogPosts.content', [

@@ -113,13 +113,14 @@ if (isset($feedback->approved_checkbox) && $identity->isSuperadmin()) {
 }
 
 if ($isEditMode) {
-    echo '<div class="warning">';
-        echo $this->Form->control('Feedbacks.delete_feedback', [
-            'label' => __('Delete_feedback?') . ' <span class="after small">'.__('Check_and_do_not_forget_to_click_save_button._admin').'</span>',
-            'type' => 'checkbox',
-            'escape' => false,
-        ]);
-    echo '</div>';
+    echo $this->Form->hidden('Feedbacks.delete_feedback', [
+        'value' => 0,
+        'id' => 'feedbacks-delete-feedback',
+        'class' => 'js-delete-entity-input',
+        'data-delete-label' => __('Delete'),
+        'data-delete-confirm' => __('Do you really want to delete this feedback?'),
+    ]);
+    $this->Form->unlockField('Feedbacks.delete_feedback');
 }
 
 echo '<div class="sc"></div>';

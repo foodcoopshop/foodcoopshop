@@ -67,7 +67,7 @@ class CartsController extends FrontendController
 
     public function detail(): void
     {
-        $this->set('title_for_layout', __('Your_cart'));
+        $this->set('title_for_layout', __('Your cart'));
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 

@@ -21,8 +21,9 @@ use Cake\Core\Configure;
 
         <?php
         $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();
-        "
+            'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
+                Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');
+            ",
         ]);
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#page-'
@@ -54,6 +55,7 @@ echo '<table class="list">';
 
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
+echo '<th>'.__('Image').'</th>';
 echo '<th></th>';
 echo '<th>'.__('Title').'</th>';
 echo '<th>'.__('Menu').'</th>';
@@ -67,12 +69,57 @@ echo '<th>'.__('Active').'</th>';
 echo '<th></th>';
 echo '</tr>';
 
+echo '<tr id="page-home" class="data">';
+echo '<td class="hide">0</td>';
+echo '<td align="center" class="image">';
+$srcLargeImage = $this->Html->getHomeImageSrc('single');
+$srcSmallImage = $this->Html->getHomeImageSrc('home');
+if ($srcSmallImage != '') {
+    echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h(__('homepage')) . '" data-modal-image="' . $srcLargeImage . '">';
+    echo '<img width="90" src="' . $srcSmallImage . '" />';
+    echo '</a>';
+}
+echo '</td>';
+echo '<td>';
+echo $this->Html->link(
+    '<i class="fas fa-pencil-alt ok"></i>',
+    $this->Slug->getPageEditHome(),
+    [
+        'class' => 'btn btn-outline-light',
+        'title' => __('Edit'),
+        'escape' => false,
+    ],
+);
+echo '</td>';
+echo '<td>' . __('homepage') . '</td>';
+echo '<td></td>';
+echo '<td align="center"></td>';
+echo '<td align="center"></td>';
+echo '<td align="center"></td>';
+echo '<td align="center"></td>';
+echo '<td></td>';
+echo '<td></td>';
+echo '<td align="center"><i class="fas fa-check-circle ok"></i></td>';
+echo '<td>';
+echo $this->Html->link(
+    '<i class="fas fa-arrow-right ok"></i>',
+    '/',
+    [
+        'class' => 'btn btn-outline-light',
+        'title' => __('Show_page'),
+        'target' => '_blank',
+        'escape' => false,
+    ],
+);
+echo '</td>';
+echo '</tr>';
+
 echo $this->element('pageTreeRows', [
     'pages' => $pages
 ]);
 
 echo '<tr>';
-echo '<td colspan="12"><b>' . $totalPagesCount . '</b> '.__('{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
+echo '<td colspan="13"><b>' . $totalPagesCount . '</b> '.__('{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
 echo '</tr>';
 
 echo '</table>';

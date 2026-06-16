@@ -120,6 +120,10 @@ body.self_services #content {
     padding-top: 20px;
     position: relative;
 }
+.self-service #login-form {
+    margin-left: auto;
+    margin-right: auto;
+}
 .self-service #login-form hr {
     clear: both;
     width: 100%;
@@ -212,6 +216,10 @@ body.customers.login .self-service .footer {
 body.customers.login .self-service {
     margin-top: -100px ! important;
     min-height: 565px ! important;
+    display: block;
+}
+body.customers.login #content.self-service {
+    display: block;
 }
 body.customers.login .footer .left-wrapper,
 body.customers.login .footer .right-wrapper .btn-add-deposit {
@@ -219,14 +227,24 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service #cart {
     position: static;
-    padding-bottom: 3px;
     border: 1px solid #ccc;
     border-top: none;
     border-right: none;
     width: 100%;
+    font-size: 14px;
+    padding: 5px;
+}
+.self-service #cart span.right {
+    float: none;
+}
+.self-service #cart .delete a.btn {
+    margin-top: 0;
+}
+.self-service #cart .pickup-day-header:first-of-type {
+    margin-top: 5px;
 }
 .self-service .cart span.product-name-wrapper {
-    width: 270px;
+    width: 265px;
 }
 .self-service .pw .pickup-day {
     display: none;
@@ -254,7 +272,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     line-height: 14px;
 }
 .self-service .error-message {
-    font-size: 12px;
+    font-size: 14px;
 }
 .self-service #cancellation-terms,
 .self-service #general-terms-and-conditions {

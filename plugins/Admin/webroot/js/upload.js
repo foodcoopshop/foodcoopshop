@@ -36,6 +36,22 @@ foodcoopshop.Upload = {
         foodcoopshop.Modal.destroy(modalSelector);
     },
 
+    savePageTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        var objectId = $(modalSelector + ' form.mini-upload-form-image').data('objectId');
+        $('body.pages input[name="Pages[tmp_image]"]').val(image.attr('src'));
+        var button = $('body.pages a.add-image-button[data-object-id="' + objectId + '"]');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        $(document).trigger('fcs:page-header-image-updated');
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
     saveManufacturerTmpImageInForm : function (modalSelector) {
         var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
         if (image.length == 0) {
@@ -94,6 +110,24 @@ foodcoopshop.Upload = {
         }
         $('body.sliders input[name="Sliders[tmp_image]"]').val(image.attr('src'));
         var button = $('body.sliders a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
+    saveBlockTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        var form = $(modalSelector + ' form.mini-upload-form-image');
+        var objectId = form.data('objectId');
+        var row = $('body.pages .home-block-row[data-object-id="' + objectId + '"]');
+        row.find('input[name="Blocks[' + objectId + '][tmp_image]"]').val(image.attr('src'));
+        row.find('.home-block-image-position-wrapper').removeClass('hide');
+        var button = row.find('a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
         var newImage = $('<img />').attr('src', image.attr('src'));

@@ -432,6 +432,11 @@ class SlugHelper extends Helper
         return '/admin/pages/add';
     }
 
+    public function getPageEditHome(): string
+    {
+        return '/admin/pages/edit-home';
+    }
+
     public function getPaymentEdit(int $paymentId): string
     {
         return '/admin/payments/edit/'.$paymentId;
@@ -509,14 +514,6 @@ class SlugHelper extends Helper
     public function getSlidersList(): string
     {
         return '/admin/sliders';
-    }
-    public function getSliderEdit(int $slideId): string
-    {
-        return '/admin/sliders/edit/'.$slideId;
-    }
-    public function getSliderAdd(): string
-    {
-        return '/admin/sliders/add';
     }
 
     public function getProductAdmin(string|int|null $manufacturerId = null, ?int $productId = null): string

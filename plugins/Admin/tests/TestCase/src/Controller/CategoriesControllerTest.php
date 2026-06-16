@@ -52,4 +52,27 @@ class CategoriesControllerTest extends AppCakeTestCase
 
     }
 
+    public function testDeleteCategory(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->post(
+            $this->Slug->getCategoryEdit(16),
+            [
+                'Categories' => [
+                    'delete_category' => 1,
+                ],
+            ]
+        );
+
+        $categoriesTable = $this->getTableLocator()->get('Categories');
+        $category = $categoriesTable->find('all',
+            conditions: [
+                'Categories.id_category' => 16,
+            ],
+        )->first();
+
+        $this->assertNull($category);
+
+    }
+
 }

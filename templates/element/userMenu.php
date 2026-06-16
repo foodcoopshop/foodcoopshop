@@ -29,10 +29,51 @@ if ($identity !== null && $identity->isManufacturer()) {
     $adminName = __('Manufacturer_area');
 }
 
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
+    $menu[] = [
+        'slug' => '',
+        'name' => '',
+        'options' => [
+            'class' => ['user-menu-search'],
+            'content' => $this->element('productSearch', [
+                'action' => __('route_search'),
+                'placeholder' => __('Search'),
+                'resetSearchUrl' => $this->Slug->getAllProducts(),
+                'includeCategoriesDropdown' => false,
+                'placement' => 'user-menu',
+            ]),
+        ],
+    ];
+}
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
 ]);
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-moon', 'class' => ['color-mode-toggle']]];
+
+$infoBoxContent = $this->element('globalNoDeliveryDayBox') . $this->element('infoBox');
+if (!empty($infoBoxContent)) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".ModalText.init('#user-menu a.modal-link-info-box');"
+    ]);
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => 'Infos', 'options' => ['fa-icon' => 'ok fa-fw fas fa-info-circle', 'class' => ['modal-link-info-box'], 'data-element-selector' => '#modal-info-box-wrapper']];
+}
+
+if ($identity !== null && !$identity->isManufacturer()) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace').".ModalCart.init('#user-menu a.modal-link-cart');"
+    ]);
+    if ($identity && $this->Html->paymentIsCashless()) {
+        $creditBalanceClasses = [];
+        if ($creditBalance < 0) {
+            $creditBalanceClasses = ['negative'];
+        }
+        $menu[] = ['slug' => $this->Slug->getMyCreditBalance(), 'name' => __('Credit') . ': <span class="' . implode(' ', $creditBalanceClasses) . '">' . $this->MyNumber->formatAsCurrency($creditBalance) . '</span>', 'options' => ['fa-icon' => 'ok fa-fw fa-wallet', 'class' => ['credit-balance']]];
+    }
+    $menu[] = ['slug' => 'javascript:void(0)', 'name' => $this->MyNumber->formatAsCurrency($identity->getProductAndDepositSum()), 'options' => ['fa-icon' => 'ok fa-fw fa fa-shopping-cart', 'class' => ['modal-link-cart'], 'data-element-selector' => '#modal-cart-wrapper']];
+}
+
+$loginMenuIndex = count($menu);
 if ($identity !== null) {
     if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
@@ -42,9 +83,9 @@ if ($identity !== null) {
 }
 
 if ($identity !== null && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
-    $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
+    $menu[$loginMenuIndex]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
     if ($identity->isCustomer()) {
-        $menu[1]['children'] = array_merge($menu[1]['children'], $this->Menu->getCustomerMenuElements($identity));
+        $menu[$loginMenuIndex]['children'] = array_merge($menu[$loginMenuIndex]['children'], $this->Menu->getCustomerMenuElements($identity));
     }
 }
 
@@ -64,13 +105,14 @@ if (!OrderCustomerService::isOrderForDifferentCustomerMode()) {
     $authMenuElement = $this->Menu->getAuthMenuElement($identity);
     if ($identity !== null) {
         if (!is_null($selfServiceMenuElement)) {
-            $menu[1]['children'][] = $selfServiceMenuElement;
+            $menu[$loginMenuIndex]['children'][] = $selfServiceMenuElement;
         }
-        $menu[1]['children'][] = $authMenuElement;
+        $menu[$loginMenuIndex]['children'][] = $authMenuElement;
     } else {
+        $loginMenuIndex = count($menu);
         $menu[] = $authMenuElement;
         if (!is_null($selfServiceMenuElement)) {
-            $menu[1]['children'][] = $selfServiceMenuElement;
+            $menu[$loginMenuIndex]['children'][] = $selfServiceMenuElement;
         }
     }
 

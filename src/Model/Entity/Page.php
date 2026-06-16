@@ -18,4 +18,11 @@ namespace App\Model\Entity;
  */
 class Page extends AppEntity
 {
+
+    public const int PAGE_ID_HOME = 9999;
+    public const int IMAGE_MOBILE_WIDTH = 1200;
+    public const int IMAGE_UPLOAD_MAX_ASPECT_RATIO = 2;
+    public const int IMAGE_UPLOAD_MIN_WIDTH = 2000;
+    public const int IMAGE_UPLOAD_MAX_WIDTH = 3840;
+
 }

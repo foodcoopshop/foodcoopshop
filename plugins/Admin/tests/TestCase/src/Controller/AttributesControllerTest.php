@@ -51,4 +51,42 @@ class AttributesControllerTest extends AppCakeTestCase
 
     }
 
+    public function testDeleteAttribute(): void
+    {
+        $this->loginAsSuperadmin();
+
+        $attributesTable = $this->getTableLocator()->get('Attributes');
+        $attribute = $attributesTable->newEntity([
+            'name' => 'Delete me',
+            'can_be_used_as_unit' => false,
+            'active' => 1,
+        ], [
+            'validate' => false,
+        ]);
+        $attribute = $attributesTable->saveOrFail($attribute, [
+            'validate' => false,
+        ]);
+
+        $this->post(
+            $this->Slug->getAttributeEdit($attribute->id_attribute),
+            [
+                'Attributes' => [
+                    'name' => (string) $attribute->name,
+                    'can_be_used_as_unit' => (bool) $attribute->can_be_used_as_unit,
+                    'active' => (int) $attribute->active,
+                    'delete_attribute' => 1,
+                ],
+            ]
+        );
+
+        $attributeAfterDelete = $attributesTable->find('all',
+            conditions: [
+                'Attributes.id_attribute' => $attribute->id_attribute,
+            ],
+        )->first();
+
+        $this->assertNull($attributeAfterDelete);
+
+    }
+
 }

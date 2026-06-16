@@ -16,14 +16,22 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
+$keyword = $keyword ?? $this->request->getQuery('keyword', '');
+$isUserMenuPlacement = !empty($placement) && $placement === 'user-menu';
+
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initSearchForm();"
 ]);
 ?>
-<div class="product-search-form-wrapper">
+<div class="product-search-form-wrapper<?php echo $isUserMenuPlacement ? ' user-menu-search-form-wrapper' : ''; ?>">
     
     <form id="product-search-1" action="/<?php echo $action;?>">
-        <input placeholder="<?php echo $placeholder; ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+        <div class="product-search-input-wrapper<?php echo $keyword !== '' ? ' has-reset' : ''; ?>">
+            <input placeholder="<?php echo $placeholder; ?>" name="keyword" type="text" required="required" <?php echo $keyword !== '' ? 'value="'.$keyword.'"' : ''; ?> />
+            <?php if ($keyword !== '') { ?>
+                <a href="<?php echo $resetSearchUrl; ?>" class="do-not-change-to-target-blank reset" title="<?php echo __('Reset_search'); ?>"><i class="fas fa-times-circle"></i></a>
+            <?php } ?>
+        </div>
         <button type="submit" class="btn btn-success submit"><i class="fas fa-search"></i></button>
     </form>
 
@@ -41,7 +49,7 @@ $this->element('addScript', ['script' =>
         </form>
     <?php } ?>
 
-    <?php if ( (isset($keyword) && $keyword != '') || ($includeCategoriesDropdown && $categoryId > 0)) { ?>
+    <?php if ($keyword === '' && $includeCategoriesDropdown && $categoryId > 0) { ?>
         <a href="<?php echo $resetSearchUrl; ?>" class="btn btn-success do-not-change-to-target-blank reset" title="<?php echo __('Reset_search'); ?>"><i class="fas fa-backspace"></i></a>
     <?php } ?>
 

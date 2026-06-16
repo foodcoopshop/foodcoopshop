@@ -21,10 +21,9 @@ foodcoopshop.Helper = {
         this.initCookieBanner();
         foodcoopshop.ColorMode.init();
         if (!this.isMobile()) {
-            this.initWindowResize();
+            this.initFixedHeaderOffset();
             this.initScrolltopButton();
             this.initMenuAutoHide();
-            this.adaptionsForHorizontalScrolling();
             this.showContent();
         }
     },
@@ -220,32 +219,79 @@ foodcoopshop.Helper = {
         }, true);
     },
 
+    initFixedHeaderOffset: function () {
+        var header = document.getElementById('header');
+        if (!header) {
+            return;
+        }
+        var apply = function () {
+            document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px');
+        };
+        apply();
+        if (typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(apply).observe(header);
+        } else {
+            $(window).on('resize load', apply);
+        }
+    },
+
     initMenuAutoHide : function() {
 
-        // scroll is still position
+        var header = $('#header');
+        if (!header.length) {
+            return;
+        }
+
+        if ($('body').hasClass('has-page-hero')) {
+            header.removeClass('off-canvas fixed');
+            return;
+        }
+
         var scroll = $(document).scrollTop();
-        var headerHeight = $('#header').height();
+        var headerHeight = header.outerHeight() || 0;
+        var minHideOffset = Math.max(220, Math.round(headerHeight * 1.35));
+        var pageHeaderBanner = $('.page-header-banner');
+        var downDistance = 0;
+        var upDistance = 0;
+
+        if (pageHeaderBanner.length) {
+            minHideOffset = Math.max(
+                minHideOffset,
+                Math.round(pageHeaderBanner.offset().top + pageHeaderBanner.outerHeight()),
+            );
+        }
 
         $(window).scroll(function() {
-            // scrolled is new position just obtained
             var scrolled = $(document).scrollTop();
+            var delta = scrolled - scroll;
 
-            // optionally emulate non-fixed positioning behaviour
-            if (scrolled > headerHeight){
-                $('#header').addClass('off-canvas');
-            } else {
-                $('#header').removeClass('off-canvas');
+            if (scrolled <= headerHeight) {
+                header.removeClass('off-canvas fixed');
+                downDistance = 0;
+                upDistance = 0;
+                scroll = scrolled;
+                return;
             }
 
-            if (scrolled > scroll){
-                // scrolling down
-                $('#header').removeClass('fixed');
-            } else {
-                //scrolling up
-                $('#header').addClass('fixed');
+            if (delta > 0) {
+                downDistance += delta;
+                upDistance = 0;
+
+                if (scrolled > minHideOffset && downDistance >= 24) {
+                    header.addClass('off-canvas').removeClass('fixed');
+                    downDistance = 0;
+                }
+            } else if (delta < 0) {
+                upDistance += Math.abs(delta);
+                downDistance = 0;
+
+                if (upDistance >= 12 || scrolled <= minHideOffset) {
+                    header.removeClass('off-canvas').addClass('fixed');
+                    upDistance = 0;
+                }
             }
 
-            scroll = $(document).scrollTop();
+            scroll = scrolled;
         });
     },
 
@@ -376,37 +422,50 @@ foodcoopshop.Helper = {
         });
     },
 
+    getMaxVisibleBlogPosts: function () {
+        var containerWidth = $('.blog-wrapper').width() || $('#inner-content').width() || 0;
+        var slideWidth = 249; // 229px width + 2*10px padding
+        var gap = 16;
+        return Math.max(1, Math.floor((containerWidth + gap) / (slideWidth + gap)));
+    },
+
     initBlogPostCarousel: function () {
 
         var selector = '.blog-wrapper';
         $(selector).addClass('swiper');
 
         var slides = $(selector).find('.blog-post-wrapper');
-        if (slides.length > 3) {
+        var maxVisible = this.getMaxVisibleBlogPosts();
+
+        if (slides.length > maxVisible) {
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
         }
         $(selector).append('<div class="swiper-wrapper"></div>');
         $(selector).find('.swiper-wrapper').append(slides);
 
-        new Swiper(selector, {
+        var swiperInstance = new Swiper(selector, {
             loop: false,
             speed: 300,
-            centeredSlides: true,
-            slidesPerView: 2,
+            centeredSlides: false,
+            slidesPerView: maxVisible,
             spaceBetween: 16,
             navigation: {
                 nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
+                prevEl: '.swiper-button-prev',
             },
-            breakpoints: {
-                768: {
-                    speed: 1000,
-                    centeredSlides: true,
-                    slidesPerView: 1,
-                    initialSlide: 0,
-                    spaceBetween: 16
-                }
+        });
+
+        var self = this;
+        $(window).on('resize', function () {
+            var newMaxVisible = self.getMaxVisibleBlogPosts();
+            swiperInstance.params.slidesPerView = newMaxVisible;
+            swiperInstance.update();
+
+            if (slides.length > newMaxVisible) {
+                $(selector).find('.swiper-button-prev, .swiper-button-next').show();
+            } else {
+                $(selector).find('.swiper-button-prev, .swiper-button-next').hide();
             }
         });
 
@@ -438,9 +497,8 @@ foodcoopshop.Helper = {
                 form.submit();
             }
         });
-        $('.product-search-form-wrapper a.btn').on('click', function () {
-            console.log('click');
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-backspace');
+        $('.product-search-form-wrapper a.reset').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), $(this).find('.fa-times-circle').length ? 'fa-times-circle' : 'fa-backspace');
             foodcoopshop.Helper.disableButton($(this));
         });
     },
@@ -575,61 +633,6 @@ foodcoopshop.Helper = {
 
     },
 
-    adaptionsForHorizontalScrolling : function() {
-        $('#header').scrollToFixed({'offsetLeft': 2});
-        $('.inner-right').scrollToFixed();
-    },
-
-    initWindowResize: function () {
-        $(window).on('resize', function () {
-            foodcoopshop.Helper.onWindowResize();
-        });
-        foodcoopshop.Helper.onWindowResize();
-    },
-
-    onWindowResize: function () {
-
-        if ($('body').hasClass('self_services')) {
-            return;
-        }
-
-        var difference = 0;
-        var shoppingPriceElement;
-
-        // whole page is called in iframe in order-for-different-customer-mode
-        var orderForDifferentCustomerIframe = window.parent.$('#order-for-different-customer-add .modal-body iframe');
-
-        if (orderForDifferentCustomerIframe.length > 0) {
-            difference = 130;
-            difference += $('.order-for-different-customer-info').height();
-            shoppingPriceElement = $('.shopping-price-info');
-            if (shoppingPriceElement.length > 0) {
-                difference += shoppingPriceElement.height() + 8;
-            }
-            newCartHeight = orderForDifferentCustomerIframe.height();
-        } else {
-            difference = 120;
-            var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
-            if (loadLastOrderDetailsDropdown.length > 0) {
-                difference += loadLastOrderDetailsDropdown.closest('.input').height();
-            }
-            var globalNoDeliveryDayBox = $('#global-no-delivery-day-box');
-            if (globalNoDeliveryDayBox.length > 0) {
-                difference += globalNoDeliveryDayBox.height();
-            }
-            shoppingPriceElement = $('.shopping-price-info');
-            if (shoppingPriceElement.length > 0) {
-                difference += shoppingPriceElement.height() + 8;
-            }
-            var newCartHeight = $(window).height();
-        }
-
-        var sumsWrapperHeight = $('#cart .sums-wrapper').height();
-        var newMaxHeight = parseInt(newCartHeight) - difference - sumsWrapperHeight;
-        $('#cart .products').css('max-height', newMaxHeight);
-
-    },
-
     /**
      * columns property is not rendered correctly in safari
      * so simply turn it off
@@ -712,6 +715,9 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsCurrency: function (float) {
+        if (Math.abs(float) < 0.005) {
+            float = 0;
+        }
         var currency = this.formatFloatAsString(float) + ' ' + foodcoopshop.config.CurrencySymbol;
         if (foodcoopshop.config.defaultLocaleInBCP47 == 'en-US') {
             currency = foodcoopshop.config.CurrencySymbol + this.formatFloatAsString(float);
@@ -1017,7 +1023,7 @@ foodcoopshop.Helper = {
 
         this.removeFlashMessage();
 
-        var root = '#content';
+        var root = '#container';
 
         var responsiveHeaderSelector = '#responsive-header';
         if (foodcoopshop.Helper.isMobile() && $(responsiveHeaderSelector).length == 1) {

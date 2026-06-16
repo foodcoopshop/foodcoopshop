@@ -7,7 +7,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Network\View\Helper\NetworkHelper;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -106,8 +105,6 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getTaxAdd(),
             $this->Slug->getTaxEdit(2),
             $this->Slug->getSlidersList(),
-            $this->Slug->getSliderAdd(),
-            $this->Slug->getSliderEdit(6),
             $this->Slug->getStatistics(),
             $this->Slug->getStatistics(4),
             $this->Network->getSyncDomainAdd(),
@@ -212,6 +209,19 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $this->get($this->Slug->getPageDetail(3, 'Page'));
         $this->assertResponseCode(200);
+    }
+
+    public function testHomeBlocksVisibleOnlyForGuests(): void
+    {
+        $this->get($this->Slug->getHome());
+        $this->assertResponseOk();
+        $this->assertResponseContains('Demo block content');
+
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getHome());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('Demo block content');
+        $this->logout();
     }
 
     public function testPageDetailOfflinePublicLoggedOut(): void

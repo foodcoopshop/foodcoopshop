@@ -98,10 +98,13 @@ $this->element('addScript', [
 
                 echo '<td>';
 
+                $isFontConfig = in_array($configuration->name, ['FCS_FONT_HEADER_PROMO_TITLE', 'FCS_FONT_BLOCK_HEADING']);
                 echo match($configuration->type) {
                     'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
                     'textarea_css' => !empty(trim($configuration->value)) ? __('Custom CSS is available.') : __('No custom CSS available.'),
-                    'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value),
+                    'dropdown' => $isFontConfig
+                        ? $this->Configuration->getFontPreview($configuration->name, $configuration->value)
+                        : $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __('yes') : __('no'),
                     default => '',

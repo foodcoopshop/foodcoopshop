@@ -15,10 +15,11 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-$classes = ['sidebar'];
 if (empty($categoriesForMenu) && empty($manufacturersForMenu)) {
-    $classes[] = 'empty';
+    return;
 }
+
+$classes = ['sidebar'];
 
 ?>
 <div class="<?php echo join(' ', $classes); ?>">

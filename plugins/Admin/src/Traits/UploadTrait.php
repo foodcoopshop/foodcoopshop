@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits;
 
 use Intervention\Image\ImageManager;
+use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\Drivers\Imagick\Driver;
 
 /**
@@ -25,6 +26,9 @@ trait UploadTrait
 
     protected function deleteUploadedImage(int $imageId, string $thumbsPath): void
     {
+        if (!is_dir($thumbsPath)) {
+            return;
+        }
         $dir = new \DirectoryIterator($thumbsPath);
         foreach ($dir as $fileinfo) {
             if (!$fileinfo->isDot()) {
@@ -37,12 +41,21 @@ trait UploadTrait
     }
 
     /**
-     * @param array<string, array{suffix: string}> $imageSizes
+    * @param array<string, array{suffix: string, scaleDown?: bool}> $imageSizes
      */
-    protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string|bool
+    protected function saveUploadedImage(
+        int $imageId,
+        string $filename,
+        string $thumbsPath,
+        array $imageSizes,
+        bool $saveAsWebp = false,
+    ): string|bool
     {
 
         $this->deleteUploadedImage($imageId, $thumbsPath);
+        if (!is_dir($thumbsPath)) {
+            mkdir($thumbsPath, 0755, true);
+        }
 
         // if image was rotated, cut off ?xyz (random string)
         $explodedFilename = explode('?', $filename);
@@ -50,6 +63,9 @@ trait UploadTrait
             $filename = $explodedFilename[0];
         }
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if ($saveAsWebp) {
+            $extension = 'webp';
+        }
         $manager = new ImageManager(new Driver());
 
         foreach ($imageSizes as $thumbSize => $options) {
@@ -58,9 +74,17 @@ trait UploadTrait
             if ($image->height() > $image->width()) {
                 $thumbSize = (int) round((int) $thumbSize * ($image->width() / $image->height()), 0);
             }
-            $image->scale($thumbSize);
+            if (!empty($options['scaleDown'])) {
+                $image->scaleDown($thumbSize);
+            } else {
+                $image->scale($thumbSize);
+            }
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image->save($thumbsFileName, quality: 100);
+            if ($saveAsWebp) {
+                $image->encode(new WebpEncoder(quality: 75))->save($thumbsFileName);
+            } else {
+                $image->save($thumbsFileName, quality: 100);
+            }
         }
 
         if (isset($options)) {

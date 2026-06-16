@@ -19,8 +19,12 @@ echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '
     echo __('Other_initiatives');
 echo '</h1>';
 
+$mapHeight = 500;
+if ($isMobile) {
+    $mapHeight = 300;
+}
 ?>
 
-<iframe src="https://umap.openstreetmap.fr/de/map/verbreitung-foodcoopshop_211165?scaleControl=false&amp;miniMap=false&amp;scrollWheelZoom=true&amp;zoomControl=true&amp;allowEdit=false&amp;moreControl=false&amp;searchControl=null&amp;tilelayersControl=false&amp;embedControl=true&amp;datalayersControl=false&amp;onLoadPanel=undefined&amp;captionBar=false" width="100%" height="400px" frameborder="0"></iframe>
+<iframe src="https://umap.openstreetmap.fr/de/map/verbreitung-foodcoopshop_211165?scaleControl=false&amp;miniMap=false&amp;scrollWheelZoom=true&amp;zoomControl=true&amp;allowEdit=false&amp;moreControl=false&amp;searchControl=null&amp;tilelayersControl=false&amp;embedControl=true&amp;datalayersControl=false&amp;onLoadPanel=undefined&amp;captionBar=false" width="100%" height="<?php echo $mapHeight; ?>px" frameborder="0"></iframe>
 
-<a href="https://foodcoops.at/map/" class="btn btn-outline-light" target="_blank"><?php echo __('Map_with_all_Austrian_foodocops'); ?></a>
+<a href="https://foodcoops.at/map/" class="btn btn-outline-light map-all-austrian-foodcoops-btn" target="_blank"><?php echo __('Map_with_all_Austrian_foodocops'); ?></a>

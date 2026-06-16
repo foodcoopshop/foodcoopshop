@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\StringComponent;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\EventInterface;
-use Cake\Core\Configure;
-use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
-use App\Services\CatalogService;
 use Cake\Http\Response;
+use Cake\Core\Configure;
+use App\Model\Entity\Block;
+use App\Model\Entity\Page;
+use Cake\Event\EventInterface;
+use App\Services\CatalogService;
+use App\Controller\Component\StringComponent;
+use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,15 +44,37 @@ class PagesController extends FrontendController
     public function home(): void
     {
 
+        $headerPromosTable = $this->getTableLocator()->get('HeaderPromos');
+        $headerPromo = $headerPromosTable->find('all', conditions: [
+            'HeaderPromos.page_id' => Page::PAGE_ID_HOME,
+        ])->first();
+        $this->set('headerPromo', $headerPromo);
+
         $blogPostsTable = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
-        $slidersTable = $this->getTableLocator()->get('Sliders');
-        $sliders = $slidersTable->getForHome();
-        $this->set('sliders', $sliders);
+        $homeBlocks = [];
+        if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
+            $homeText = Configure::read('appDb.FCS_HOME_TEXT');
+            $fontBlockHeadingClass = 'font-' . Configure::read('appDb.FCS_FONT_BLOCK_HEADING');
+
+            $homeBlocks[] = (object)[
+                'content' => preg_replace('/<h2>/i', '<h2 class="' . $fontBlockHeadingClass . '">', $homeText),
+                'image_position' => Block::IMAGE_POSITION_LEFT,
+            ];
+        }
+
+        if ($this->identity === null) {
+            $blocksTable = $this->getTableLocator()->get('Blocks');
+            $blocks = $blocksTable->getForHome()->all()->toArray();
+            if (!empty($blocks)) {
+                $homeBlocks = array_merge($homeBlocks, $blocks);
+            }
+        }
+        $this->set('homeBlocks', $homeBlocks);
 
         $products = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
@@ -76,7 +100,8 @@ class PagesController extends FrontendController
         $page = $pagesTable->find('all',
         conditions: $conditions,
         contain: [
-            'Customers'
+            'Customers',
+            'HeaderPromos',
         ])->first();
 
         if (empty($page)) {

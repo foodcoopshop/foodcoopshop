@@ -13,6 +13,59 @@
  */
 foodcoopshop.Editor = {
 
+    tabNavigationBound: false,
+
+    bindTabToJoditEditors: function () {
+        if (this.tabNavigationBound) {
+            return;
+        }
+
+        this.tabNavigationBound = true;
+        $(document).on('keydown', 'input, select, textarea, button, [tabindex]', function (e) {
+            if (e.key !== 'Tab' || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) {
+                return;
+            }
+
+            var current = e.target;
+            if (!current || current.closest('.jodit-container') !== null) {
+                return;
+            }
+
+            var scope = current.form || document;
+            var tabbables = $(scope).find('a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])').filter(':visible');
+            var currentIndex = tabbables.index(current);
+            if (currentIndex === -1) {
+                return;
+            }
+
+            var next = tabbables.get(currentIndex + 1);
+            if (!next || !next.classList || !next.classList.contains('jodit-wysiwyg')) {
+                return;
+            }
+
+            e.preventDefault();
+            next.focus();
+        });
+    },
+
+    initJoditEditor: function (selector, options, startupFocus) {
+        this.bindTabToJoditEditors();
+        const editor = Jodit.make(selector, options);
+
+        // Ensure all editor content areas are reachable via keyboard Tab navigation.
+        if (editor && editor.editor && typeof editor.editor.setAttribute === 'function') {
+            if (editor.editor.getAttribute('tabindex') === null || editor.editor.tabIndex < 0) {
+                editor.editor.setAttribute('tabindex', '0');
+            }
+        }
+
+        if (startupFocus) {
+            editor.selection.focus();
+        }
+
+        return editor;
+    },
+
     getDefaultOptions: function () {
         return {
             controls: {
@@ -43,6 +96,7 @@ foodcoopshop.Editor = {
             showCharsCounter: false,
             showWordsCounter: false,
             showXPathInStatusbar: false,
+            disablePlugins: 'paste',
             defaultActionOnPaste: 'insert_clear_html',
         };
     },
@@ -70,41 +124,34 @@ foodcoopshop.Editor = {
     },
 
     initSmall: function (name, startupFocus) {
-
-        const editor = Jodit.make('textarea#' + name, {
+        return this.initJoditEditor('textarea#' + name, {
             ...this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton()],
+            buttons: ['bold', 'italic', 'eraser'],
             height: 220,
             width: 270,
-        });
-        
-        if (startupFocus) {
-            editor.selection.focus();
-        }
+        }, startupFocus);
+    },
 
-        return editor;
-
+    initSmallWithLink: function (name, startupFocus) {
+        return this.initJoditEditor('textarea#' + name, {
+            ...this.getDefaultOptions(),
+            buttons: ['bold', 'italic', 'link', 'eraser'],
+            height: 220,
+            width: 270,
+        }, startupFocus);
     },
 
     initSmallWithUpload: function (name, startupFocus) {
-
-        const editor = Jodit.make('textarea#' + name, {
+        return this.initJoditEditor('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton(), this.getUploadButton()],
+            buttons: ['bold', 'italic', 'eraser', this.getUploadButton()],
             height: 364,
             width: 270,
-        });
-
-        if (startupFocus) {
-            editor.selection.focus();
-        }
-
-        return editor;
+        }, startupFocus);
     },
 
     initBig: function (name, startupFocus) {
-        
-        const editor = Jodit.make('textarea#' + name, {
+        return this.initJoditEditor('textarea#' + name, {
             ... this.getDefaultOptions(),
             width: 760,
             height: 550,
@@ -115,14 +162,20 @@ foodcoopshop.Editor = {
                 '|', 'left', 'center', 'right', 'link', 'image', this.getUploadButton(),
                 '|', 'source', this.getEmojiButton(),
             ],
-        });
+        }, startupFocus);
+    },
 
-        if (startupFocus) {
-            editor.selection.focus();
-        }
+    initBigReduced: function (name, startupFocus) {
+        return this.initJoditEditor('textarea#' + name, {
+            ... this.getDefaultOptions(),
+            width: 760,
+            height: 550,
+            enter: 'p',
+            buttons: ['bold', 'italic', 'eraser',
+                '|', 'paragraph', 'ul', 'ol', 'link', 'source',
+            ],
 
-        return editor;
-
+        }, startupFocus);
     },
 
 };

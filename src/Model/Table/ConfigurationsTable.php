@@ -212,6 +212,18 @@ class ConfigurationsTable extends AppTable
         return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
     }
 
+    public function validationFcsFontHeaderPromoTitle(Validator $validator): Validator
+    {
+        $values = array_keys(Configure::read('app.configurationHelper')->getFontDropdownOptions());
+        return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
+    }
+
+    public function validationFcsFontBlockHeading(Validator $validator): Validator
+    {
+        $values = array_keys(Configure::read('app.configurationHelper')->getFontDropdownOptions());
+        return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
+    }
+
     public function validationFcsAppName(Validator $validator): Validator
     {
         $validator->notEmptyString('value', __('Please_enter_the_name_of_the_foodcoop.'));

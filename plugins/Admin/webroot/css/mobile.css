@@ -31,7 +31,7 @@
 }
 .filter-container {
     left: 0;
-    width: 100vw;
+    width: 100%;
     max-width: none;
     border-left: none;
 }
@@ -115,7 +115,7 @@ table.list th, table.list td {
 }
 #flashMessage {
     left: 5px;
-    width: 97vw;
+    width: calc(100% - 10px);
 }
 body.manufacturers .holiday-wrapper .description {
     margin-left: 0px;
@@ -158,4 +158,81 @@ body.feedbacks textarea {
 }
 ul.nav-tabs {
     width: 100%;
+}
+
+/* Home page editor: avoid horizontal overflow on narrow screens */
+body.pages.edit_home,
+body.pages.edit_home #container,
+body.pages.edit_home #content,
+body.pages.edit_home .filter-container,
+body.pages.edit_home form#pageEditForm {
+    min-width: 0 ! important;
+    max-width: 100%;
+}
+
+body.pages.edit_home .home-edit-info-text-row,
+body.pages.edit_home .home-block-row-fields,
+body.pages.edit_home .home-block-row-header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+body.pages.edit_home .home-edit-info-text-label,
+body.pages.edit_home .home-block-image-input,
+body.pages.edit_home .home-block-text-inputs {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+body.pages.edit_home .home-block-row,
+body.pages.edit_home .home-block-row-fields,
+body.pages.edit_home .home-block-image-wrapper,
+body.pages.edit_home .home-block-image-wrapper img,
+body.pages.edit_home .home-block-row .input,
+body.pages.edit_home .home-block-row textarea,
+body.pages.edit_home .home-block-row .input.text input,
+body.pages.edit_home .home-block-row .input.email input,
+body.pages.edit_home .home-block-row .input.tel input,
+body.pages.edit_home .home-block-row .input.password input,
+body.pages.edit_home .home-block-row .input.select select,
+body.pages.edit_home .jodit-container,
+body.pages.edit_home .jodit-workplace,
+body.pages.edit_home .jodit-wysiwyg,
+body.pages.edit_home .jodit-status-bar {
+    box-sizing: border-box;
+    width: 100% ! important;
+    max-width: 100%;
+    min-width: 0 ! important;
+}
+
+body.pages.edit_home .home-block-row .input.text input.short {
+    width: 60px;
+}
+
+body.pages.edit_home #pageEditForm .page-image-wrapper {
+    display: block;
+    float: none;
+    width: 100%;
+}
+
+body.pages.edit_home #pageEditForm .page-image-wrapper span {
+    display: block;
+    width: 100% ! important;
+    margin-left: 0;
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+body.pages.edit_home .home-edit-section-header-image .input.checkbox label {
+    width: auto;
+    max-width: 100%;
+}
+
+body.pages.edit_home .home-edit-section-header-image .input.checkbox input[type="checkbox"] {
+    position: static;
+    left: auto;
 }

@@ -53,7 +53,11 @@ echo $this->element('layout/header');
                     </a>
                 <?php } ?>
                 <?php echo $this->element('selfService/addDeposit'); ?>
-                <?php echo $this->element('logo'); ?>
+                <?php
+                    echo $this->element('logo', [
+                        'isLogoLinked' => false,
+                    ]);
+                ?>
             </div>
         </div>
     <?php } ?>

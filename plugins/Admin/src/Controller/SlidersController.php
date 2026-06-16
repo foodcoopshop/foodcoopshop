@@ -3,12 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use Cake\Core\Configure;
-use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
-use App\Services\SanitizeService;
-use App\Model\Entity\Slider;
-use Cake\Http\Response;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,96 +22,6 @@ class SlidersController extends AdminAppController
 {
 
     use UploadTrait;
-
-    public function add(): ?Response
-    {
-        $slidersTable = $this->getTableLocator()->get('Sliders');
-        $slider = $slidersTable->newEntity(
-            [
-                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
-                'active' => APP_ON,
-                'position' => 10,
-            ],
-            ['validate' => false]
-        );
-        $this->set('title_for_layout', __('Add_slider'));
-        $this->_processForm($slider, false);
-
-        if (empty($this->getRequest()->getData())) {
-            return $this->render('edit');
-        }
-        return null;
-    }
-
-    public function edit(int $sliderId): void
-    {
-        $slidersTable = $this->getTableLocator()->get('Sliders');
-        $slider = $slidersTable->find('all', conditions: [
-            'Sliders.id_slider' => $sliderId
-        ])->first();
-
-        if (empty($slider)) {
-            throw new NotFoundException;
-        }
-        $this->set('title_for_layout', __('Edit_slider'));
-        $this->_processForm($slider, true);
-    }
-
-    private function _processForm(Slider $slider, bool $isEditMode): ?Response
-    {
-
-        $this->setFormReferer();
-        $this->set('isEditMode', $isEditMode);
-
-        if (empty($this->getRequest()->getData())) {
-            $this->set('slider', $slider);
-            return null;
-        }
-
-        $sanitizeService = new SanitizeService();
-        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
-
-        $slidersTable = $this->getTableLocator()->get('Sliders');
-        $slider = $slidersTable->patchEntity($slider, $this->getRequest()->getData());
-        if ($slider->hasErrors()) {
-            $this->Flash->error(__('Errors_while_saving!_admin'));
-            $this->set('slider', $slider);
-            return $this->render('edit');
-        } else {
-            $slider = $slidersTable->save($slider);
-
-            if (!$isEditMode) {
-                $messageSuffix = __('created');
-                $actionLogType = 'slider_added';
-            } else {
-                $messageSuffix = __('changed');
-                $actionLogType = 'slider_changed';
-            }
-
-            if (!empty($this->getRequest()->getData('Sliders.tmp_image'))) {
-                $filename = $this->saveUploadedImage($slider->id_slider, $this->getRequest()->getData('Sliders.tmp_image'), Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-                $slider = $slidersTable->patchEntity($slider, ['image' => $filename]);
-                $slidersTable->save($slider);
-            }
-
-            $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            if (!empty($this->getRequest()->getData('Sliders.delete_slider'))) {
-                $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath());
-                $slider = $slidersTable->patchEntity($slider, ['active' => APP_DEL]);
-                $slidersTable->save($slider);
-                $messageSuffix = __('deleted_admin');
-                $actionLogType = 'slider_deleted';
-            }
-            $message = __('The_slider_{0}_has_been_{1}.', ['<b>' . $slider->id_slider . '</b>', $messageSuffix]);
-            $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $slider->id_slider, 'sliders', $message);
-            $this->Flash->success($message);
-
-            $this->getRequest()->getSession()->write('highlightedRowId', $slider->id_slider);
-            return $this->redirect($this->getPreparedReferer());
-        }
-
-    }
 
     public function index(): void
     {

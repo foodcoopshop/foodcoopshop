@@ -92,6 +92,7 @@ body.manufacturers.index span.email {
 }
 body.manufacturers a.uploaded,
 body.blog_posts a.uploaded,
+body.pages a.uploaded,
 body.categories a.uploaded,
 body.customers a.uploaded {
     float: left;
@@ -102,7 +103,8 @@ body.customers a.uploaded img {
     width: 237px;
     height: auto;
 }
-body.blog_posts a.uploaded img {
+body.blog_posts a.uploaded img,
+body.pages a.uploaded img {
     width: 245px;
     height: auto;
 }
@@ -114,6 +116,7 @@ body.sliders a.uploaded img {
 }
 body.manufacturers form.mini-upload-form a.img-delete,
 body.blog_posts form.mini-upload-form a.img-delete,
+body.pages form.mini-upload-form a.img-delete,
 body.categories form.mini-upload-form a.img-delete,
 body.sliders form.mini-upload-form a.img-delete,
 body.customers form.mini-upload-form a.img-delete {

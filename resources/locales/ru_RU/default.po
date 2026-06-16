@@ -1033,6 +1033,12 @@ msgstr "Optional."
 msgid "Configuration_subtext_FCS_CUSTOM_CSS"
 msgstr "CSS для витрины и административной области. Необязательно."
 
+msgid "Configuration_subtext_FCS_FONT_BLOCK_HEADING"
+msgstr "Шрифт для заголовков блоков на главной странице."
+
+msgid "Configuration_subtext_FCS_FONT_HEADER_PROMO_TITLE"
+msgstr "Шрифт для заголовка промо-блока в шапке главной страницы."
+
 msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
 msgstr "Не более 6 символов, включая разделители."
 
@@ -1120,6 +1126,12 @@ msgstr "Способ оформления пополнения кредита"
 msgid "Configuration_text_FCS_CUSTOM_CSS"
 msgstr "Пользовательский CSS"
 
+msgid "Configuration_text_FCS_FONT_BLOCK_HEADING"
+msgstr "Шрифт для заголовков блоков"
+
+msgid "Configuration_text_FCS_FONT_HEADER_PROMO_TITLE"
+msgstr "Шрифт для заголовка промо в шапке"
+
 msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
 msgstr "На каком уровне кредита должно быть отправлено эл.письмо с напоминанием."
 
@@ -1164,9 +1176,6 @@ msgstr "Дополнительный текст для нижнего колон
 
 msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
 msgstr "Активировать API для hellocash.at?"
-
-msgid "Configuration_text_FCS_HOME_TEXT"
-msgstr "Text that is shown on the home page."
 
 msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
 msgstr "Включать товары со склада складских продуктов в счета?"
