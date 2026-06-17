@@ -363,12 +363,6 @@ class ListTcpdfService extends AppTcpdfService
     {
         $colspan = $this->getCorrectColspan($headers);
 
-        // currently used for recognizing if sum-only-mode is used (invoices)
-        $detailsHidden = false;
-        if ($colspan == 2) {
-            $detailsHidden = true;
-        }
-
         $this->addSpacerRow($headers);
 
         $this->table .= '<tr style="font-size:12px;font-weight:bold;">';
@@ -413,6 +407,11 @@ class ListTcpdfService extends AppTcpdfService
      */
     private function addSpacerRow(array $headers): void
     {
+        $detailsHidden = $this->getCorrectColspan($headers) == 2;
+        if ($detailsHidden) {
+            return;
+        }
+
         $columnCount = max(count($headers), 2);
 
         $this->table .= '<tr>';
