@@ -31,7 +31,7 @@ $html .= '</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(7);
 
-$html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="0"><tr>';
+$html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="272">';
     $html .= '<p>';
         $html .= $result->name . '<br />';
