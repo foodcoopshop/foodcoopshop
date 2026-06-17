@@ -25,7 +25,7 @@ use Cake\View\Helper\TextHelper;
 abstract class AppTcpdfService extends TCPDF
 {
 
-    public const string THIN_TABLE_CELL_BORDER_STYLE = 'border:0.1mm solid #000;';
+    public const string THIN_TABLE_CELL_BORDER_STYLE = '0.1mm solid #000';
 
     public string $table = '';
 
@@ -81,7 +81,7 @@ abstract class AppTcpdfService extends TCPDF
             $style .= ';';
         }
 
-        return ' style="' . $style . self::THIN_TABLE_CELL_BORDER_STYLE . '"';
+        return ' style="' . $style . 'border:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';"';
     }
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)

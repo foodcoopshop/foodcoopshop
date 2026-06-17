@@ -225,11 +225,11 @@ class ListTcpdfService extends AppTcpdfService
             if ($i + 1 == count($results)) {
                 if ($groupType == 'customer') {
                     $showUnitSum = false;
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $unitSum, $taxRate, $showPricePerUnitMessage, $showUnitSum);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $unitSum, $taxRate, $showPricePerUnitMessage, $showUnitSum, false);
                 }
                 if ($groupType == 'product') {
                     $showUnitSum = true;
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $unitSum, $taxRate, $showPricePerUnitMessage, $showUnitSum);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $unitSum, $taxRate, $showPricePerUnitMessage, $showUnitSum, false);
                 }
             }
 
@@ -260,6 +260,7 @@ class ListTcpdfService extends AppTcpdfService
         string|float $taxRate = '',
         bool|int $showPricePerUnitMessage=false,
         bool|int $showUnitSum=false,
+        bool $renderSpacer=true,
         ): void
     {
         $colspan = $this->getCorrectColspan($headers);
@@ -319,8 +320,8 @@ class ListTcpdfService extends AppTcpdfService
 
         $this->table .= '</tr>';
 
-        if (! $detailsHidden) {
-            $this->table .= '<tr><td></td></tr>';
+        if (! $detailsHidden && $renderSpacer) {
+            $this->addSpacerRow($headers);
         }
     }
 
@@ -368,9 +369,7 @@ class ListTcpdfService extends AppTcpdfService
             $detailsHidden = true;
         }
 
-        if ($detailsHidden) {
-            $this->table .= '<tr><td></td></tr>';
-        }
+        $this->addSpacerRow($headers);
 
         $this->table .= '<tr style="font-size:12px;font-weight:bold;">';
 
@@ -407,6 +406,22 @@ class ListTcpdfService extends AppTcpdfService
     private function getTableCellStyleAttribute(string $style = ''): string
     {
         return $this->getThinTableCellStyleAttribute($style);
+    }
+
+    /**
+     * @param array<int, string> $headers
+     */
+    private function addSpacerRow(array $headers): void
+    {
+        $columnCount = max(count($headers), 2);
+
+        $this->table .= '<tr>';
+        $this->table .= '<td style="border-left:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';"></td>';
+        if ($columnCount > 2) {
+            $this->table .= '<td colspan="' . ($columnCount - 2) . '"></td>';
+        }
+        $this->table .= '<td style="border-right:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';"></td>';
+        $this->table .= '</tr>';
     }
 
     /**
