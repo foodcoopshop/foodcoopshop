@@ -54,11 +54,11 @@ if (!empty($manufacturers)) {
         }
 
 
-        $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
+        $pdf->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
         $num_headers = count($headers);
         for ($j = 0; $j < $num_headers; ++ $j) {
-            $pdf->table .= '<th style="font-weight:bold;background-color:#cecece" width="' . $widths[$j] . '">' . $headers[$j] . '</th>';
+            $pdf->table .= '<th' . $pdf->getThinTableCellStyleAttribute('font-weight:bold;background-color:#cecece') . ' width="' . $widths[$j] . '">' . $headers[$j] . '</th>';
         }
         $pdf->table .= '</tr></thead>';
 
@@ -87,12 +87,12 @@ if (!empty($manufacturers)) {
 
             $quantityStyle = '';
             if ($orderDetail->product_amount > 1) {
-                $quantityStyle = ' background-color:#cecece;';
+                $quantityStyle = 'background-color:#cecece;';
             }
-            $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;" width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
-            $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
-            $pdf->table .= '<td style="text-align:right;" width="' . $widths[2] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort')) . '</td>';
-            $pdf->table .= '<td style="text-align:right;" width="' . $widths[3] . '">' . $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl) . '</td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute($quantityStyle . 'text-align:center;') . ' width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' width="' . $widths[2] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort')) . '</td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' width="' . $widths[3] . '">' . $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl) . '</td>';
 
             if (Configure::read('app.isDepositEnabled')) {
                 $deposit = $orderDetail->deposit;
@@ -102,7 +102,7 @@ if (!empty($manufacturers)) {
                 } else {
                     $deposit = '';
                 }
-                $pdf->table .= '<td style="text-align: right;" width="' . $widths[4] . '">' . $deposit . '</td>';
+                $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' width="' . $widths[4] . '">' . $deposit . '</td>';
             }
 
             $sumPrice += $orderDetail->total_price_tax_incl;
@@ -114,22 +114,22 @@ if (!empty($manufacturers)) {
 
                 if (Configure::read('app.isDepositEnabled')) {
                     $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                        $pdf->table .= '<td width="' . $widths[0] . '"></td>';
-                        $pdf->table .= '<td width="' . $widths[1] . '"></td>';
-                        $pdf->table .= '<td width="' . $widths[2] . '"></td>';
-                        $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[3] . '"><p>' . $this->MyNumber->formatAsCurrency($sumPrice) . '</p></td>';
+                        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[0] . '"></td>';
+                        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[1] . '"></td>';
+                        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $widths[2] . '"></td>';
+                        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;font-weight:bold;') . ' width="' . $widths[3] . '"><p>' . $this->MyNumber->formatAsCurrency($sumPrice) . '</p></td>';
                     if ($sumDeposit > 0) {
                         $sumDepositAsString = $this->MyNumber->formatAsCurrency($sumDeposit);
                     } else {
                         $sumDepositAsString = '';
                     }
-                        $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[4] . '"><p>' . $sumDepositAsString . '</p></td>';
+                        $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;font-weight:bold;') . ' width="' . $widths[4] . '"><p>' . $sumDepositAsString . '</p></td>';
                     $pdf->table .= '</tr>';
                 }
 
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                    $pdf->table .= '<td colspan="3" style="text-align:right;" width="' . ($widths[0] + $widths[1]) . '"><h3>'.__('Total').'</h3></td>';
-                    $pdf->table .= '<td colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" style="text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';" width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->MyNumber->formatAsCurrency($sumPrice + $sumDeposit) . '</h3></td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' colspan="3" width="' . ($widths[0] + $widths[1]) . '"><h3>'.__('Total').'</h3></td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';') . ' colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->MyNumber->formatAsCurrency($sumPrice + $sumDeposit) . '</h3></td>';
                 $pdf->table .= '</tr>';
             }
         }
