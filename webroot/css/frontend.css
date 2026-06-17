@@ -232,7 +232,8 @@ body.categories div.description-wrapper {
     gap: 6px;
     transition: background .15s;
 }
-#main-menu > li > a:hover {
+#main-menu li > a:hover,
+#main-menu li > a.active {
     background: rgba(0, 0, 0, 0.05);
 }
 #main-menu ul li a.has-icon i {

@@ -326,13 +326,11 @@ body.dark #user-menu .user-menu-search-form-wrapper .btn:hover {
     background: rgba(255, 255, 255, 0.24);
 }
 body.dark #user-menu li ul li a:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.1);
     color: var(--dark-mode-2nd-font-color);
 }
-body.dark #main-menu > li > a:hover {
-    background: rgba(255, 255, 255, 0.06);
+body.dark #main-menu li > a:hover,
+body.dark #main-menu li > a.active {
+    background: rgba(255, 255, 255, 0.1);
     color: var(--dark-mode-2nd-font-color);
-}
-body.dark #main-menu li ul li a:hover {
-    background: rgba(255, 255, 255, 0.05);
 }
