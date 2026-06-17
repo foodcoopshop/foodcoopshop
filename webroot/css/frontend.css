@@ -122,7 +122,7 @@ div.products-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 4px 16px 0 16px;
+    padding: 0px 16px;
     box-sizing: border-box;
     gap: 24px;
     position: relative;
