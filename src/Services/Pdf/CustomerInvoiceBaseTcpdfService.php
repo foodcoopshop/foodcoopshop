@@ -52,10 +52,10 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
     public function prepareTableHeader(): void
     {
 
-        $this->table = '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
+        $this->table = '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
         foreach($this->headers as $header) {
-            $this->table .= '<th style="font-weight:bold;background-color:#cecece" align="' . $header['align'] . '" width="' . $header['width'] . '">' . $header['name'] . '</th>';
+            $this->table .= '<th' . $this->getThinTableCellStyleAttribute('font-weight:bold;background-color:#cecece') . ' align="' . $header['align'] . '" width="' . $header['width'] . '">' . $header['name'] . '</th>';
         }
         $this->table .= '</tr></thead>';
     }
@@ -67,7 +67,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
     {
         $i = 0;
         foreach($values as $value) {
-            $this->table .= '<td align="' . $this->headers[$i]['align'] . '" width="' . $this->headers[$i]['width'] . '">' . $value . '</td>';
+            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[$i]['align'] . '" width="' . $this->headers[$i]['width'] . '">' . $value . '</td>';
             $i++;
         }
     }

@@ -25,6 +25,8 @@ use Cake\View\Helper\TextHelper;
 abstract class AppTcpdfService extends TCPDF
 {
 
+    public const string THIN_TABLE_CELL_BORDER_STYLE = '0.1mm solid #000';
+
     public string $table = '';
 
     public bool $replaceEuroSign = true;
@@ -71,6 +73,15 @@ abstract class AppTcpdfService extends TCPDF
 
         // reset table
         $this->table = '';
+    }
+
+    public function getThinTableCellStyleAttribute(string $style = ''): string
+    {
+        if ($style != '' && !str_ends_with($style, ';')) {
+            $style .= ';';
+        }
+
+        return ' style="' . $style . 'border:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';"';
     }
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)

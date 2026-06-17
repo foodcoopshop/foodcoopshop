@@ -136,14 +136,14 @@ class CustomerInvoiceTcpdfService extends CustomerInvoiceBaseTcpdfService
 
         // total sum
         $this->table .= '<tr style="font-size:12px;">';
-        $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '"></td>';
-        $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '"></td>';
-        $this->table .= '<td style="font-weight:bold;" align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . __('Total_sum') . '</td>';
-        $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '"></td>';
-        $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl) . '</td>';
-        $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumTax) . '</td>';
-        $this->table .= '<td style="font-weight:bold;"  align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceIncl) . '</td>';
-        $this->table .= '<td align="' . $this->headers[7]['align'] . '" width="' . $this->headers[7]['width'] . '"></td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '"></td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '"></td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute('font-weight:bold;') . ' align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . __('Total_sum') . '</td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '"></td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl) . '</td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumTax) . '</td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute('font-weight:bold;') . ' align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceIncl) . '</td>';
+        $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' align="' . $this->headers[7]['align'] . '" width="' . $this->headers[7]['width'] . '"></td>';
         $this->table .= '</tr>';
 
     }
