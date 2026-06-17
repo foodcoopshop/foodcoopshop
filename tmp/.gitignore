@@ -3,5 +3,4 @@
 !seeds/
 seeds/*
 !seeds/images/
-seeds/images/*
-!seeds/images/*.jpg
+!seeds/images/*
