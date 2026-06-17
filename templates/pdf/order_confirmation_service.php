@@ -128,8 +128,13 @@ if (!empty($manufacturers)) {
                 }
 
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' colspan="3" width="' . ($widths[0] + $widths[1]) . '"><h3>'.__('Total').'</h3></td>';
-                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';') . ' colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->MyNumber->formatAsCurrency($sumPrice + $sumDeposit) . '</h3></td>';
+                    $totalLabelColspan = 3;
+                    $totalLabelWidth = $widths[0] + $widths[1] + $widths[2];
+                    $totalValueColspan = Configure::read('app.isDepositEnabled') ? 2 : 1;
+                    $totalValueWidth = Configure::read('app.isDepositEnabled') ? ($widths[3] + $widths[4]) : $widths[3];
+
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:right;') . ' colspan="' . $totalLabelColspan . '" width="' . $totalLabelWidth . '"><h3>'.__('Total').'</h3></td>';
+                    $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute('text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';') . ' colspan="' . $totalValueColspan . '" width="' . $totalValueWidth . '"><h3>' . $this->MyNumber->formatAsCurrency($sumPrice + $sumDeposit) . '</h3></td>';
                 $pdf->table .= '</tr>';
             }
         }
