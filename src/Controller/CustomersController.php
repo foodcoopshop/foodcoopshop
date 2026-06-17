@@ -78,21 +78,23 @@ class CustomersController extends FrontendController
         $extension = strtolower(pathinfo($this->request->getParam('imageSrc'), PATHINFO_EXTENSION));
 
         $customersTable = $this->getTableLocator()->get('Customers');
-        $customer = $customersTable->find('all', conditions: [
-            'Customers.id_customer' => $customerId
-        ])->first();
-        if (empty($customer)) {
-            throw new NotFoundException('customer not found');
-        }
+        $customersTable->get($customerId); // throws an error if customer does not exist
 
         $this->request = $this->request->withParam('_ext', $extension);
-        $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc');
+        $filename = basename($this->request->getParam('imageSrc'));
+        $imagePath = Configure::read('app.customerImagesDir') . DS . $filename;
         if (!file_exists($imagePath)) {
             throw new NotFoundException('image not found');
         }
+
+        $mimeType = mime_content_type($imagePath);
+        if ($mimeType === false || !str_starts_with($mimeType, 'image/')) {
+            throw new NotFoundException('image not found');
+        }
+
         $this->set('imagePath', $imagePath);
 
-        $response = $this->response->withType($extension);
+        $response = $this->response->withType($mimeType);
         $response = $response->withStringBody(file_get_contents($imagePath));
         return $response;
     }

@@ -25,21 +25,13 @@ class AddHomeHeaderPromo extends BaseMigration
             return;
         }
 
-        /** @var HeaderPromosTable $headerPromosTable */
-        $headerPromosTable = TableRegistry::getTableLocator()->get('HeaderPromos');
-
-        $existingPromo = $headerPromosTable->find('all', conditions: [
-            'HeaderPromos.page_id' => Page::PAGE_ID_HOME,
-        ])->first();
-        if ($existingPromo !== null) {
-            return;
-        }
-
         $title = trim((string) Configure::read('appDb.FCS_APP_NAME'));
         if ($title === '') {
             return;
         }
 
+        /** @var HeaderPromosTable $headerPromosTable */
+        $headerPromosTable = TableRegistry::getTableLocator()->get('HeaderPromos');
         $headerPromo = $headerPromosTable->newEntity([
             'page_id' => Page::PAGE_ID_HOME,
             'title' => mb_substr($title, 0, 55),
@@ -51,5 +43,34 @@ class AddHomeHeaderPromo extends BaseMigration
 
         $headerPromosTable->saveOrFail($headerPromo);
 
+        $seedFilenames = [
+            '9999-home-default.webp',
+            '9999-single-default.webp',
+            '9999-mobile-default.webp',
+        ];
+        foreach ($seedFilenames as $seedFilename) {
+            $this->copySeedImageToPageFolder($seedFilename);
+        }
+
     }
+
+    private function copySeedImageToPageFolder(string $seedFilename): void
+    {
+        $sourcePath = ROOT . DS . 'tmp' . DS . 'seeds' . DS . 'images' . DS . $seedFilename;
+        if (!file_exists($sourcePath)) {
+            throw new RuntimeException('Missing seed image: ' . $sourcePath);
+        }
+
+        $targetDir = WWW_ROOT . 'files' . DS . 'images' . DS . 'pages';
+        if (!is_dir($targetDir) && !mkdir($targetDir, 0775, true) && !is_dir($targetDir)) {
+            throw new RuntimeException('Could not create page image directory: ' . $targetDir);
+        }
+
+        $targetPath = $targetDir . DS . $seedFilename;
+
+        if (!copy($sourcePath, $targetPath)) {
+            throw new RuntimeException('Could not copy seed image to: ' . $targetPath);
+        }
+    }
+
 }
