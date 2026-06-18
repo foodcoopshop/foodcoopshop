@@ -174,6 +174,20 @@ class SlugHelper extends Helper
         return '/admin/products/myImport';
     }
 
+    public function getProductPriceUpdate(string|int $manufacturerId = ''): string
+    {
+        $url = '/admin/products/priceUpdate';
+        if ($manufacturerId != '') {
+            $url .= '?manufacturerId=' . $manufacturerId;
+        }
+        return $url;
+    }
+
+    public function getMyProductPriceUpdate(): string
+    {
+        return '/admin/products/myPriceUpdate';
+    }
+
     public function getMyDepositList(): string
     {
         return '/admin/deposits/myIndex';

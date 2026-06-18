@@ -36,6 +36,12 @@ if ($identity->isManufacturer()) {
     $productImportUrl = $this->Slug->getProductImport($manufacturerId);
 }
 $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import"></i> ' . __('Import_products') . '</a>';
+if ($identity->isManufacturer()) {
+    $productPriceUpdateUrl = $this->Slug->getMyProductPriceUpdate();
+} else {
+    $productPriceUpdateUrl = $this->Slug->getProductPriceUpdate($manufacturerId);
+}
+$buttons[] = '<a class="dropdown-item" href="' . $productPriceUpdateUrl . '"><i class="fa-fw fas fa-tags"></i> ' . __('Update_prices') . '</a>';
 if (!empty($products)) {
     $buttons[] = $this->element('productList/button/exportAllProducts');
     $buttons[] = $this->element('productList/button/exportStockProducts');
