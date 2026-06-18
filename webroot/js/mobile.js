@@ -41,26 +41,38 @@ foodcoopshop.Mobile = {
     },
 
     bindToggleLeft : function (controller) {
-        $('.sb-toggle-left').on('click', function (event) {
+        $('.sb-toggle-left').off('click.fcsToggle').on('click.fcsToggle', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            controller.toggle('sb-left', function () {
-                if ($('.sb-left').css('display') == 'block') {
-                    $('body').addClass('slidebar-left-visible');
-                    foodcoopshop.Mobile.changeToogleIcon(true);
-                } else {
-                    $('body').removeClass('slidebar-left-visible');
-                    foodcoopshop.Mobile.changeToogleIcon(false);
-                }
-            });
+
+            var isSlidebarVisible = $('.sb-left').css('display') == 'block';
+            $('body').toggleClass('slidebar-left-visible', !isSlidebarVisible);
+            foodcoopshop.Mobile.changeToogleIcon(!isSlidebarVisible);
+
+            // Disable repeated clicks until Slidebars transition finishes.
+            $('.sb-toggle-left').off('click.fcsToggle');
+
+            controller.toggle('sb-left');
         });
     },
 
     bindCloseSlidebarsOnCanvasClick : function (controller) {
+        $(controller.events).on('closed', function () {
+            $('body').removeClass('slidebar-left-visible');
+            foodcoopshop.Mobile.changeToogleIcon(false);
+            $('html').off('click.fcsSlidebar');
+            foodcoopshop.Mobile.bindToggleLeft(controller);
+        });
+
         $(controller.events).on('opened', function (event, id) {
-            $('html').on('click', function () {
+            $('body').addClass('slidebar-left-visible');
+            foodcoopshop.Mobile.changeToogleIcon(true);
+            foodcoopshop.Mobile.bindToggleLeft(controller);
+
+            $('html').off('click.fcsSlidebar').on('click.fcsSlidebar', function () {
                 controller.close(id);
                 foodcoopshop.Mobile.changeToogleIcon(false);
+                $('body').removeClass('slidebar-left-visible');
             });
             $('.sb-slidebar > *').on('click', function (event) {
                 event.stopPropagation();
