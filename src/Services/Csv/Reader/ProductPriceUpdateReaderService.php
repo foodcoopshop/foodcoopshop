@@ -24,9 +24,9 @@ class ProductPriceUpdateReaderService extends ProductReaderService
 {
 
     /**
-     * @return array{updated: int, inserted: int, deactivated: int, errors: list<mixed>}
+     * @return array{updated: int, inserted: int, deactivated: int, errors: list<mixed>, updated_products: list<string>, inserted_products: list<string>, deactivated_products: list<string>}
      */
-    public function priceUpdate(int $manufacturerId, float $surcharge): array
+    public function priceUpdate(int $manufacturerId, float $surcharge, bool $dryRun = false): array
     {
         $records = $this->getPreparedRecords();
 
@@ -39,6 +39,7 @@ class ProductPriceUpdateReaderService extends ProductReaderService
                 'Products.id_manufacturer' => $manufacturerId,
                 'Products.manufacturer_order_number IS NOT' => null,
                 'Products.manufacturer_order_number !=' => '',
+                'Products.active !=' => APP_DEL,
             ],
             contain: ['StockAvailables'],
         )->toArray();
@@ -52,6 +53,8 @@ class ProductPriceUpdateReaderService extends ProductReaderService
         $errors = [];
         $updatedCount = 0;
         $insertedCount = 0;
+        $updatedProducts = [];
+        $insertedProducts = [];
 
         foreach ($records as $index => $record) {
             $orderNumber = trim((string) ($record[__('Manufacturer_order_number')] ?? ''));
@@ -65,14 +68,17 @@ class ProductPriceUpdateReaderService extends ProductReaderService
 
             if (isset($existingByOrderNumber[$orderNumber])) {
                 $product = $existingByOrderNumber[$orderNumber];
-                $ppEntity = $purchasePriceProductsTable->getEntityToSaveByProductId($product->id_product);
-                $ppEntity->price = $netPriceAndTaxId['netPrice'];
-                $ppEntity->tax_id = $netPriceAndTaxId['taxId'];
-                if (!$purchasePriceProductsTable->save($ppEntity)) {
-                    $errors[] = ['index' => $index, 'errors' => $ppEntity->getErrors()];
-                } else {
-                    $updatedCount++;
+                if (!$dryRun) {
+                    $ppEntity = $purchasePriceProductsTable->getEntityToSaveByProductId($product->id_product);
+                    $ppEntity->price = $netPriceAndTaxId['netPrice'];
+                    $ppEntity->tax_id = $netPriceAndTaxId['taxId'];
+                    if (!$purchasePriceProductsTable->save($ppEntity)) {
+                        $errors[] = ['index' => $index, 'errors' => $ppEntity->getErrors()];
+                        continue;
+                    }
                 }
+                $updatedCount++;
+                $updatedProducts[] = $product->name;
             } else {
                 $entity = $productsTable->getValidatedEntity(
                     $manufacturerId,
@@ -93,37 +99,49 @@ class ProductPriceUpdateReaderService extends ProductReaderService
                     $errors[] = ['index' => $index, 'errors' => $entity->getErrors()];
                     continue;
                 }
-                $savedProduct = $productsTable->save($entity);
-                if ($savedProduct) {
-                    $ppEntity = $purchasePriceProductsTable->getEntityToSaveByProductId($savedProduct->id_product);
-                    $ppEntity->price = $netPriceAndTaxId['netPrice'];
-                    $ppEntity->tax_id = $netPriceAndTaxId['taxId'];
-                    $purchasePriceProductsTable->save($ppEntity);
+                if (!$dryRun) {
+                    $savedProduct = $productsTable->save($entity);
+                    if ($savedProduct) {
+                        $ppEntity = $purchasePriceProductsTable->getEntityToSaveByProductId($savedProduct->id_product);
+                        $ppEntity->price = $netPriceAndTaxId['netPrice'];
+                        $ppEntity->tax_id = $netPriceAndTaxId['taxId'];
+                        $purchasePriceProductsTable->save($ppEntity);
+                        $insertedCount++;
+                        $insertedProducts[] = $entity->name;
+                    }
+                } else {
                     $insertedCount++;
+                    $insertedProducts[] = $entity->name;
                 }
             }
         }
 
         $deactivatedCount = 0;
+        $deactivatedProducts = [];
         foreach ($existingByOrderNumber as $orderNumber => $product) {
             if (!in_array($orderNumber, $csvOrderNumbers)) {
                 if ($product->is_stock_product && !empty($product->stock_available) && $product->stock_available->quantity > 0) {
                     continue;
                 }
-                $patched = $productsTable->patchEntity($product, ['active' => APP_OFF]);
-                $productsTable->save($patched);
+                if (!$dryRun) {
+                    $patched = $productsTable->patchEntity($product, ['active' => APP_OFF]);
+                    $productsTable->save($patched);
+                }
                 $deactivatedCount++;
+                $deactivatedProducts[] = $product->name;
             }
         }
 
-        $allProductEntities = $productsTable->find('all',
-            conditions: ['Products.id_manufacturer' => $manufacturerId],
-            fields: ['id_product'],
-        )->toArray();
-        $allProductIds = array_column($allProductEntities, 'id_product');
-        if (!empty($allProductIds)) {
-            $surchargeResult = $purchasePriceProductsTable->getSellingPricesWithSurcharge($allProductIds, $surcharge);
-            $productsTable->changePrice($surchargeResult['pricesToChange']);
+        if (!$dryRun) {
+            $allProductEntities = $productsTable->find('all',
+                conditions: ['Products.id_manufacturer' => $manufacturerId],
+                fields: ['id_product'],
+            )->toArray();
+            $allProductIds = array_column($allProductEntities, 'id_product');
+            if (!empty($allProductIds)) {
+                $surchargeResult = $purchasePriceProductsTable->getSellingPricesWithSurcharge($allProductIds, $surcharge);
+                $productsTable->changePrice($surchargeResult['pricesToChange']);
+            }
         }
 
         return [
@@ -131,6 +149,9 @@ class ProductPriceUpdateReaderService extends ProductReaderService
             'inserted' => $insertedCount,
             'deactivated' => $deactivatedCount,
             'errors' => $errors,
+            'updated_products' => $updatedProducts,
+            'inserted_products' => $insertedProducts,
+            'deactivated_products' => $deactivatedProducts,
         ];
     }
 

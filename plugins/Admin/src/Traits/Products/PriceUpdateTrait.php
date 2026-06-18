@@ -51,6 +51,9 @@ trait PriceUpdateTrait
         $this->set('manufacturer', $manufacturer);
         $this->set('title_for_layout', __('Price_update_for_{0}', [$manufacturer->name]));
 
+        $session = $this->getRequest()->getSession();
+        $sessionKey = 'PriceUpdate.' . $manufacturerId;
+
         if (!empty($this->getRequest()->getData('upload'))) {
 
             $upload = $this->getRequest()->getData('upload');
@@ -71,7 +74,30 @@ trait PriceUpdateTrait
             $reader = ProductPriceUpdateReaderService::fromString($content);
             $reader->configureType();
 
-            $result = $reader->priceUpdate($manufacturerId, $surcharge);
+            $previewResult = $reader->priceUpdate($manufacturerId, $surcharge, true);
+
+            $session->write($sessionKey, [
+                'csvContent' => $content,
+                'surcharge' => $surcharge,
+            ]);
+
+            $this->set('previewResult', $previewResult);
+            $this->set('surcharge', $surcharge);
+
+        } elseif ($this->getRequest()->getData('confirmed') === '1') {
+
+            $stored = $session->read($sessionKey);
+            $session->delete($sessionKey);
+
+            if (empty($stored['csvContent'])) {
+                $this->Flash->error(__('The_uploaded_file_is_not_valid.'));
+                return;
+            }
+
+            $reader = ProductPriceUpdateReaderService::fromString($stored['csvContent']);
+            $reader->configureType();
+
+            $result = $reader->priceUpdate($manufacturerId, (float) $stored['surcharge']);
 
             if (empty($result['errors'])) {
                 $message = __('Price_update_successful.') . ' '
@@ -86,6 +112,9 @@ trait PriceUpdateTrait
             } else {
                 $this->Flash->error(__('The_uploaded_file_is_not_valid.'));
             }
+
+        } elseif ($this->getRequest()->getData('cancel') === '1') {
+            $session->delete($sessionKey);
         }
     }
 
