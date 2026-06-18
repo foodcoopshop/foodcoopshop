@@ -55,6 +55,7 @@ trait ProductImportTrait
         string $status,
         int $isDeclarationOk,
         string $storageLocationString,
+        string $manufacturerOrderNumber = '',
     ): Product
     {
 
@@ -73,6 +74,7 @@ trait ProductImportTrait
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturerId,
+                'manufacturer_order_number' => $manufacturerOrderNumber !== '' ? $manufacturerOrderNumber : null,
                 'name' => $productName,
                 'delivery_rhythm_send_order_list_weekday' => (new DeliveryRhythmService())->getSendOrderListsWeekday(),
                 'description_short' => $descriptionShort,

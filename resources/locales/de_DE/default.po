@@ -2334,6 +2334,24 @@ msgstr "Bilder bitte nur hochladen, wenn du über die Nutzungsrechte verfügst!"
 msgid "Import_products"
 msgstr "Produkte importieren"
 
+msgid "Manufacturer_order_number"
+msgstr "Bestellnummer"
+
+msgid "Update_prices"
+msgstr "Preise aktualisieren"
+
+msgid "Price_update_for_{0}"
+msgstr "Preis-Update für {0}"
+
+msgid "Price_update_successful."
+msgstr "Das Preis-Update war erfolgreich."
+
+msgid "Price_update_result_{0}_{1}_{2}"
+msgstr "Aktualisiert: {0}, Neu: {1}, Deaktiviert: {2}"
+
+msgid "Price_update_start"
+msgstr "Preis-Update starten"
+
 msgid "Imprint"
 msgstr "Impressum"
 
