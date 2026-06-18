@@ -393,13 +393,13 @@
     }
     #responsive-header .sb-toggle-left {
         float: left ! important;
-        margin: 12px 10px 5px 0 ! important;
+        margin: 9px 10px 5px 0 ! important;
         text-align: center;
         width: 32px;
     }
     #responsive-header .modal-link-info-box {
         float: right ! important;
-        margin: 6px 5px 5px 3px ! important;
+        margin: 5px 5px 5px 3px ! important;
     }
     #slider {
         margin-left: 0 ! important;
