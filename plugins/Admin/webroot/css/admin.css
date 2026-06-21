@@ -18,7 +18,8 @@ body {
 
 #container {
     position: relative;
-    min-width: 1234px; /* 1074px + navi width 155 + border 5px */
+    min-width: 0;
+    width: 100%;
     display: none;
 }
 
@@ -66,7 +67,8 @@ body.taxes.edit #flashMessage {
     top: 3px;
 }
 #content {
-    width: 1074px;
+    width: calc(100% - 155px);
+    max-width: none;
     margin-top: 5px;
     line-height: 20px;
     float: left;
@@ -77,6 +79,7 @@ body.taxes.edit #flashMessage {
     border-top: none;
     border-bottom-right-radius: 15px;
     position: relative;
+    box-sizing: border-box;
 }
 body.pages.home #content {
     background: transparent;
@@ -208,14 +211,15 @@ td.amount .fa-times {
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: 1074px; /* be aware of table border if scrolled */
+    width: calc(100% - 155px);
+    box-sizing: border-box;
     z-index: 100;
     border: 1px solid #efefef;
     border-top: none;
 }
 .filter-container-not-fixed {
   float: left;
-  width: 1035px;
+    width: 100%;
 }
 .filter-container .right,
 .filter-container-not-fixed .right {
