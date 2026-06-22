@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<th style="width:20px;text-align:center;">';
+echo '<th>';
 if ($enabled) {
     echo '<input type="checkbox" id="row-marker-all" />';
 }

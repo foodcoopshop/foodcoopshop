@@ -68,11 +68,11 @@ $activeStates = array_map(
 echo '<div id="stock-products">';
 echo '<table class="list">';
 echo '<tr class="sort">';
-    echo '<th>' . __('Product') . '</th>';
-    echo '<th>' . __('Manufacturer') . '</th>';
-    echo '<th style="text-align:right;">' . __('Amount') . '</th>';
-    echo '<th style="text-align:right;">' . $priceLabel . '</th>';
-    echo '<th style="text-align:right;">' . __('Stock_value') . '</th>';
+    echo '<th class="stretch">' . __('Product') . '</th>';
+    echo '<th class="stretch">' . __('Manufacturer') . '</th>';
+    echo '<th>' . __('Amount') . '</th>';
+    echo '<th>' . $priceLabel . '</th>';
+    echo '<th>' . __('Stock_value') . '</th>';
 echo '</tr>';
 
 foreach ($products as $product) {
@@ -109,16 +109,16 @@ foreach ($products as $product) {
             'product' => $product,
             'alignRight' => true,
         ]);
-        echo '<td style="text-align:right;">' . $this->Number->formatAsDecimal($product->price, 6, true, 2) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</td>';
-        echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($product->stock_value) . '</td>';
+        echo '<td class="right">' . $this->Number->formatAsDecimal($product->price, 6, true, 2) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</td>';
+        echo '<td class="right">' . $this->Number->formatAsCurrency($product->stock_value) . '</td>';
     echo '</tr>';
 }
 
 echo '<tr>';
     $count = count($products);
     echo '<td colspan="2"><b>' . $count . '</b> '.__('{0,plural,=1{record} other{records}}', $count).'</td>';
-    echo '<td colspan="2" style="text-align:right;"><b>' . __('Sum') . '</b></td>';
-    echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($stockValueSum) . '</b></td>';
+    echo '<td colspan="2"><b>' . __('Sum') . '</b></td>';
+    echo '<td><b>' . $this->Number->formatAsCurrency($stockValueSum) . '</b></td>';
 echo '</tr>';
 echo '</table>';
 echo '</div>';

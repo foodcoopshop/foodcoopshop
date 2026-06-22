@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 $imageExists = !empty($product->image);
-echo '<td width="29px;" class="' . ((! empty($product->product_attributes) || isset($product->product_attributes)) && !$imageExists ? 'not-available' : '') . '">';
+echo '<td class="' . ((! empty($product->product_attributes) || isset($product->product_attributes)) && !$imageExists ? 'not-available' : '') . '">';
 if ((! empty($product->product_attributes) || isset($product->product_attributes))) {
     echo $this->Html->link(
         '<i class="fas fa-image ok"></i>',

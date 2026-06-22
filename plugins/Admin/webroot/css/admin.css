@@ -12,8 +12,8 @@
  * @link          https://www.foodcoopshop.com
  */
 body {
-    margin: 0px 5px 15px 0px;
-    font-size: 11pt;
+    margin: 0;
+    font-size: 15px;
 }
 
 #container {
@@ -140,7 +140,7 @@ form.fcs-form .bootstrap-select {
 }
 .vertical.menu a {
     border-right: none;
-    font-size: 14px;
+    font-size: 15px;
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -174,7 +174,7 @@ i.always-available,
 span.purchase-price,
 span.product-name {
     line-height: 21px;
-    margin-left: 3px;
+    margin-left: 6px;
 }
 
 span.purchase-price-list-element {
@@ -211,7 +211,7 @@ td.amount .fa-times {
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: calc(100% - 155px);
+    width: calc(100% - 160px);
     box-sizing: border-box;
     z-index: 100;
     border: 1px solid #efefef;
@@ -273,9 +273,9 @@ td.amount .fa-times {
     font-size: 23px;
 }
 .filter-container input[type="text"] {
-    padding: 4px 6px;
+    padding: 5px 6px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 15px;
 }
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
@@ -317,7 +317,7 @@ td span.storage-location-for-dialog {
     text-align: center;
 }
 input.datepicker {
-    width: 110px;
+    width: 116px;
     text-align: center;
 }
 .ui-datepicker .ui-datepicker-prev,
@@ -375,7 +375,7 @@ body.order_details.index .pickup-day-filter-wrapper {
     align-items: baseline;
 }
 body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
-    width: 330px;
+    width: 345px;
 }
 body.order_details.index .weekday-as-name {
     text-align: right;
@@ -396,10 +396,6 @@ body.order_details.index i.product-feedback-button {
 body.order_details.index td.date-short2,
 body.orders.index td.date-short2 {
     width: 100px;
-}
-body.order_details.index a.change-products-picked-up-button {
-    width: 64px;
-    text-align: left;
 }
 .product-attributes-dropdown {
     width: 400px;
@@ -550,21 +546,10 @@ body.order_details.index td a.pickup-day-comment-edit-button {
     float: right;
 }
 body.products.index .table-cell-wrapper.price {
-    width: 85px;
     text-align: right;
 }
 body.products.index .table-cell-wrapper.deposit {
-    width: 61px;
     text-align: right;
-}
-body.order_details.index .table-cell-wrapper.price {
-    width: 80px;
-}
-.table-cell-wrapper.amount {
-    width: 50px;
-}
-.table-cell-wrapper.group {
-    width: 110px;
 }
 .table-cell-wrapper.group span {
     margin-left: 3px;
@@ -578,9 +563,6 @@ table.list td.amount > .has-separator:after {
 #stock-products table.list td.amount .quantity-limit-for-dialog,
 #stock-products table.list td.amount .sold-out-limit-for-dialog {
     display: none;
-}
-#stock-products table.list td.amount .product-quantity-edit-button {
-    float: left;
 }
 #stock-products table.list td.amount > .quantity-for-dialog.has-separator:after {
     content: '';
@@ -654,7 +636,7 @@ body.payments .bottom-button-container {
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
     padding: 4px 6px 3px 6px;
-    font-size: 14px;
+    font-size: 15px;
 }
 form.fcs-form {
     padding: 10px;
@@ -718,7 +700,7 @@ body.customers .generate-my-member-card-button {
 }
 body.configurations.index td.first {
     vertical-align: top;
-    width: 450px;
+    width: 40%;
     font-weight: 600;
 }
 body.configurations.index td.first div.small {
@@ -743,7 +725,7 @@ form.fcs-form .input.email input,
 form.fcs-form .input.tel input,
 form.fcs-form .input.password input {
     width: 270px;
-    font-size: 14px;
+    font-size: 15px;
 }
 form.fcs-form .input input.long {
     width: 562px;
@@ -1144,8 +1126,8 @@ div.date-field-wrapper {
     margin-right: 3px;
 }
 ul.nav-tabs {
+    width: 100%;
     background: #efefef;
-    width: 1072px;
     padding-bottom: 1px;
 }
 ul.nav-tabs > li > a {
@@ -1166,7 +1148,7 @@ a.btn-arrow {
     width: 15px;
 }
 a.btn-previous-day {
-    right: 94px;
+    right: 100px;
 }
 a.btn-previous-day:nth-of-type(1) {
     left: 1px;
@@ -1175,7 +1157,7 @@ a.btn-next-day {
     right: 5px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 90px;
+    left: 96px;
 }
 a.btn-arrow i {
     font-size: 15px;
@@ -1186,7 +1168,6 @@ body.customers.index span.group-for-dialog {
     display: none;
 }
 body.attributes.index table.list td {
-    padding-top: 3px;
     vertical-align: top;
 }
 body.attributes.index table.list td .toggle-link {
@@ -1205,11 +1186,6 @@ body.manufacturers.index td.name {
 }
 body.manufacturers.index td.name {
     vertical-align: top;
-}
-body.customers.index span.name,
-body.manufacturers.index span.name {
-    float: left;
-    width: 201px;
 }
 body.deposits table.list,
 body.deposits .bottom-button-container {
@@ -1253,7 +1229,6 @@ body.reports.payment i.payment-approval {
 }
 body.payments .payment-approval-comment,
 body.reports.payment .payment-approval-comment {
-    float: left;
     margin-right: 2px;
 }
 body.reports.payment form#csv-upload {
@@ -1398,7 +1373,7 @@ body.products .product-import-wrapper > * {
     float: left;
 }
 .jodit-container {
-    font-size: 14px;
+    font-size: 15px;
 }
 .jodit-container ul {
     padding-left: 20px ! important;

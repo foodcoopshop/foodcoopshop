@@ -73,7 +73,7 @@ echo $this->element('rowMarker/rowMarkerAll', [
     'enabled' => true
 ]);
 echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __('Name')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('CustomerNameForOrder', __('Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __('Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __('Status')) . '</th>';
@@ -118,7 +118,7 @@ foreach ($customers as $customer) {
         'show' => true
     ]);
 
-    echo '<td style="text-align:right;">';
+    echo '<td>';
     echo $customer->id_customer;
     echo '</td>';
 
@@ -193,7 +193,7 @@ foreach ($customers as $customer) {
     echo '<span class="group-for-dialog">' . $customer->id_default_group . '</span>';
     echo '</td>';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
         $classes = ['far fa-envelope ok fa-lg customer-email-button'];
         $title = h($customer->email);
         if ($customer->activate_email_code != null) {
@@ -206,7 +206,7 @@ foreach ($customers as $customer) {
         echo '<i class="'.join(' ', $classes).'" data-email="'.h($customer->email).'" title="'.h($title).'"></i>';
     echo '</td>';
 
-    echo '<td style="text-align:center;width:42px;">';
+    echo '<td>';
 
     if ($customer->active == 1) {
         echo $this->Html->link(
@@ -238,7 +238,7 @@ foreach ($customers as $customer) {
 
     if ($this->Html->paymentIsCashless()) {
         $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
-        echo '<td style="text-align:center" class="' . $negativeClass . '">';
+        echo '<td class="' . $negativeClass . '">';
 
         if ($identity->isSuperadmin()) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
@@ -335,13 +335,13 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-        echo '<td style="text-align:right;">';
+        echo '<td>';
             echo $this->Number->formatAsCurrency($customer->member_fee);
         echo '</td>';
     }
 
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        echo '<td style="text-align:right;">';
+        echo '<td>';
             if ($customer->shopping_price == Customer::PURCHASE_PRICE) {
                 echo __('Purchase_price_abbreviation');
             }
@@ -351,7 +351,7 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    echo '<td style="padding-left: 11px;">';
+    echo '<td>';
         $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __('Add_comment');
         echo $this->Html->link(
             '<i class="fas fa-comment-dots ok"></i>',

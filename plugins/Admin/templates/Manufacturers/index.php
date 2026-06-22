@@ -68,15 +68,15 @@ echo '<tr class="sort">';
     ]);
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __('Name')) . '</th>';
-    echo '<th style="width:83px;">'.__('Products').'</th>';
+    echo '<th class="stretch">' . $this->Paginator->sort('Manufacturers.name', __('Name')) . '</th>';
+    echo '<th>'.__('Products').'</th>';
     if (Configure::read('app.isDepositEnabled')) {
         echo '<th>'.__('Deposit').'</th>';
     }
     echo '<th>' . __('Email') . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __('Stock_products')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __('Delivery_break')) . '</th>';
-    echo '<th style="width:40px;">' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
     echo '<th title="'.__('Sum_of_open_orders_in_given_time_range').'">'.__('Open_orders_abbreviation').'</th>';
     echo '<th>'.__('Settings_abbreviation').'</th>';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
@@ -109,7 +109,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td class="hide">';
         echo $manufacturer->id_manufacturer;
     echo '</td>';
-    echo '<td align="center" class="image">';
+    echo '<td class="center image">';
         $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
         $largeImageExists = preg_match('/de-default-large_default/', $srcLargeImage);
         if (! $largeImageExists) {
@@ -156,7 +156,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '</td>';
 
-    echo '<td style="width:145px;">';
+    echo '<td>';
     $sumProductCount += $manufacturer->product_count;
     $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
 
@@ -193,25 +193,25 @@ foreach ($manufacturers as $manufacturer) {
         echo '</td>';
     }
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
         $classes = ['far fa-envelope ok fa-lg manufacturer-email-button'];
         echo '<i class="'.join(' ', $classes).'" title="'.h($manufacturer->address_manufacturer->email).'" data-email="'.h($manufacturer->address_manufacturer->email).'"></i>';
     echo '</td>';
 
-    echo '<td style="text-align:center;width:42px;">';
+    echo '<td class="center">';
         if ($manufacturer->stock_management_enabled == 1) {
             echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
         $noDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
         if ($noDeliveryDaysString != '') {
             echo '<i class="fas fa-ban not-ok no-delivery-days-button" title="' . __('Delivery_break') . ': ' . h($noDeliveryDaysString) . '"><i>';
         }
     echo '</td>';
 
-    echo '<td align="center">';
+    echo '<td class="center">';
     if ($manufacturer->is_private == 1) {
         echo '<i class="fas fa-check-circle ok"></i>';
     }
@@ -241,7 +241,7 @@ foreach ($manufacturers as $manufacturer) {
         echo '</td>';
     }
 
-    echo '<td style="width:140px;">';
+    echo '<td>';
         $orderListProductBaseLink = '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom;
         $testOrderListLinks = '<div class="generate-order-lists-tooltip">';
         $testOrderListLinks .= '<p><b>' . h($manufacturer->name) . '</b><br />';
@@ -352,7 +352,7 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
-        echo '<td style="width: 29px;">';
+        echo '<td>';
         if ($manufacturer->active) {
             $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
             echo $this->Html->link(

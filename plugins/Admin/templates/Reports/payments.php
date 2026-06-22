@@ -67,17 +67,17 @@ if ($useCsvUpload) {
 }
 $this->Paginator->setPaginated($payments);
 if (in_array($paymentType, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
-    echo '<th style="width:25px;"></th>';
-    echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __('Status')) . '</th>';
+    echo '<th></th>';
+    echo '<th>' . $this->Paginator->sort('Payments.approval', __('Status')) . '</th>';
     $colspan = $colspan + 2;
 }
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Member')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Member')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Payments.date_add', __('Added_on')) . '</th>';
-echo '<th>' . $this->Paginator->sort('CreatedByCustomers.' . Configure::read('app.customerMainNamePart'), __('Added_by')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('CreatedByCustomers.' . Configure::read('app.customerMainNamePart'), __('Added_by')) . '</th>';
 if ($useCsvUpload) {
     echo '<th>' . $this->Paginator->sort('Payments.date_transaction_add', __('Transaction_added_on')) . '</th>';
 }
-echo '<th style="text-align:right;">' . $this->Paginator->sort('Payments.amount', $this->Html->getPaymentText($paymentType)) . '</th>';
+echo '<th class="right">' . $this->Paginator->sort('Payments.amount', $this->Html->getPaymentText($paymentType)) . '</th>';
 if ($showTextColumn) {
     echo '<th>' . $this->Paginator->sort('Payments.text', __('Text')) . '</th>';
 }
@@ -111,7 +111,7 @@ foreach ($payments as $payment) {
             );
         }
         echo '</td>';
-        echo '<td style="text-align:right;width:51px;">';
+        echo '<td>';
         echo match($payment->approval) {
             -1 => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
              0 => '',
@@ -145,7 +145,7 @@ foreach ($payments as $payment) {
     }
     echo '</td>';
 
-    echo '<td style="text-align:right;width:140px;">';
+    echo '<td>';
         echo $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
@@ -156,14 +156,14 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     if ($useCsvUpload) {
-        echo '<td style="text-align:right;width:140px;">';
+        echo '<td>';
             if ($payment->date_transaction_add) {
                 echo $payment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
             }
         echo '</td>';
     }
 
-    echo '<td style="text-align:right;">';
+    echo '<td class="right">';
         echo $this->Number->formatAsCurrency($payment->amount);
     echo '</td>';
 
@@ -182,7 +182,7 @@ foreach ($payments as $payment) {
 
 echo '<tr>';
 echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($paymentSum) . '</b></td>';
+echo '<td class="right"><b>' . $this->Number->formatAsCurrency($paymentSum) . '</b></td>';
 if ($showTextColumn) {
     echo '<td></td>';
 }

@@ -53,8 +53,8 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">'.__('ID').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Attributes.name', __('Name')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Attributes.can_be_used_as_unit', __('Weight')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('Attributes.name', __('Name')) . '</th>';
+echo '<th class="center">' . $this->Paginator->sort('Attributes.can_be_used_as_unit', __('Weight')) . '</th>';
 echo '<th>'.__('Associated_to_active_products?').'</th>';
 echo '<th>'.__('Associated_to_inactive_products?').'</th>';
 echo '<th>' . $this->Paginator->sort('Attributes.modified', __('Modified_on')) . '</th>';
@@ -92,14 +92,14 @@ foreach ($attributes as $attribute) {
     echo $attribute->name;
     echo '</td>';
 
-    echo '<td style="text-align:center;padding-left:5px;width:42px;">';
+    echo '<td class="center">';
         if ($attribute->can_be_used_as_unit) {
             echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';
 
 
-    echo '<td style="width:300px;">';
+    echo '<td>';
     if (! empty($attribute->combination_product['online'])) {
         echo $this->Html->link('<i class="fas fa-plus-square ok"></i> '.__('Associated_products').' (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
@@ -110,7 +110,7 @@ foreach ($attributes as $attribute) {
     }
     echo '</td>';
 
-    echo '<td style="width:300px;">';
+    echo '<td>';
     if (! empty($attribute->combination_product['offline'])) {
         echo $this->Html->link('<i class="fas fa-plus-square ok"></i> '.__('Associated_products').' (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',

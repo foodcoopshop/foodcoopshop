@@ -61,7 +61,7 @@ echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('ActionLogs.id', 'ID') . '</th>';
 echo '<th>' . $this->Paginator->sort('ActionLogs.type', __('Action_log_type')) . '</th>';
 echo '<th>' . $this->Paginator->sort('ActionLogs.date', __('Date')) . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.text', __('Text')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('ActionLogs.text', __('Text')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('User')) . '</th>';
 echo '<th></th>';
 echo '</tr>';

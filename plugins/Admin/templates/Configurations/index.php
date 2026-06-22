@@ -84,7 +84,7 @@ $this->element('addScript', [
                     echo $configuration->fulltext;
                 echo '</td>';
 
-                echo '<td style="width:30px;">';
+                echo '<td>';
                     echo $this->Html->link(
                         '<i class="fas fa-pencil-alt ok"></i>',
                         $this->Slug->getConfigurationEdit($configuration->name),

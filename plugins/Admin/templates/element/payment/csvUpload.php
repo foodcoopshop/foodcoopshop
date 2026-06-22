@@ -51,18 +51,18 @@ $this->element('addScript', [
 ]);
 echo '<table class="list no-clone-last-row">';
 
-echo '<th style="text-align:center;">'.__('Save').'?</th>';
+echo '<th>'.__('Save').'?</th>';
 echo '<th>' . __('Member'). '</th>';
 echo '<th>' . __('Transaction_text'). '</th>';
-echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
-echo '<th style="text-align:right;">' . __('Transaction_added_on'). '</th>';
+echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
+echo '<th>' . __('Transaction_added_on'). '</th>';
 
 $i = 0;
 foreach($csvPayments as $csvPayment) {
 
     echo '<tr class="' . (!$csvPayment->selected ? ' not-selected' : '') . '">';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
     echo $this->Form->control('Payments.'.$i.'.selected', [
         'type' => 'checkbox',
         'label' => '',
@@ -93,7 +93,7 @@ foreach($csvPayments as $csvPayment) {
     }
     echo  '</td>';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
     if ($csvPayment->already_imported) {
         echo '<span style="color:red;float:left;"">'.__('This_transaction_was_already_imported.') . '</span>';
     }
@@ -102,12 +102,12 @@ foreach($csvPayments as $csvPayment) {
     echo $this->Form->hidden('Payments.'.$i.'.already_imported', ['value' => $csvPayment->already_imported]);
     echo '</td>';
 
-    echo '<td style="text-align:right;">';
+    echo '<td>';
     echo $this->Form->hidden('Payments.'.$i.'.amount');
     echo $this->Number->formatAsCurrency($csvPayment->amount);
     echo '</td>';
 
-    echo '<td style="text-align:right;">';
+    echo '<td>';
     echo $this->Form->hidden('Payments.'.$i.'.date');
     $date = new DateTime($csvPayment->date);
     echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));

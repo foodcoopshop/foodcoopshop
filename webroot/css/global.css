@@ -459,7 +459,7 @@ input[type="number"],
 select {
     padding: 3px;
     width: 110px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #ccc;
 }
 form div.error-message {
     color: #fff;
@@ -634,7 +634,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     height: auto ! important;
 }
 .bootstrap-select {
-    width: 177px ! important;
+    width: 200px ! important;
 }
 .bootstrap-select .dropdown-toggle .filter-option-inner {
     padding-right: 12px;
@@ -642,10 +642,10 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .dropdown .dropdown-menu li a span.text,
 .bootstrap-select .no-results {
     color: #262626;
-    font-size: 14px;
+    font-size: 15px;
 }
 .bootstrap-select .bs-searchbox .form-control {
-    font-size: 14px;
+    font-size: 15px;
 }
 .bootstrap-select .form-control:focus {
     box-shadow: inherit;
@@ -683,10 +683,13 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 }
 .dropdown .btn.dropdown-toggle {
     background-color: #fff;
-    border-color: #dfdfdf;
+    border-color: #ccc;
 }
 .dropdown .dropdown-menu li a.opt {
     padding-left: 1.5em;
+}
+.dropdown .dropdown-menu li > * {
+    font-size: 15px;
 }
 .bootstrap-select div.filter-option-inner-inner i.fas {
     position: absolute;

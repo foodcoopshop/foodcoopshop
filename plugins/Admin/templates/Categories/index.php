@@ -52,7 +52,7 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
 echo '<th></th>';
-echo '<th>'.__('Name').'</th>';
+echo '<th class="stretch">'.__('Name').'</th>';
 echo '<th>'.__('Modified_on').'</th>';
 echo '<th>'.__('Active').'</th>';
 echo '<th></th>';

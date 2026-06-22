@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 if ($groupBy == '') {
-    echo '<td style="text-align:center;">';
+    echo '<td>';
         if ($editRecordAllowed) {
             echo $this->Html->link(
                 '<i class="fas fa-times-circle neutral"></i>',

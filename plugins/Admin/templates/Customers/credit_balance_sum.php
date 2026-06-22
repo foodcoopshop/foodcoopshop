@@ -39,9 +39,9 @@ echo $this->element('navTabs/reportNavTabs', [
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-    echo '<th>'.__('Members').'</th>';
-    echo '<th>'.__('Sum_of_credits').'</th>';
-    echo '<th>'.__('Included_deposit').'</th>';
+    echo '<th class="stretch">'.__('Members').'</th>';
+    echo '<th class="right">'.__('Sum_of_credits').'</th>';
+    echo '<th class="right">'.__('Included_deposit').'</th>';
 echo '</tr>';
 
 foreach($customers as $customer) {
@@ -49,10 +49,10 @@ foreach($customers as $customer) {
         echo '<td>';
             echo $customer['customer_type'] . ($customer['count'] > 0 ? ' ('.$customer['count'].')' : '');
         echo '</td>';
-        echo '<td class="' . ($customer['credit_balance'] < 0 ? 'negative' : '') . '">';
+        echo '<td class="right ' . ($customer['credit_balance'] < 0 ? 'negative' : '') . '">';
         echo $this->Number->formatAsCurrency($customer['credit_balance']);
         echo '</td>';
-        echo '<td class="' . ($customer['payment_deposit_delta'] < 0 ? 'negative' : '') . '">';
+        echo '<td class="right ' . ($customer['payment_deposit_delta'] < 0 ? 'negative' : '') . '">';
         echo $this->Number->formatAsCurrency($customer['payment_deposit_delta']);
         echo '</td>';
     echo '</tr>';
@@ -60,10 +60,10 @@ foreach($customers as $customer) {
 
 echo '<tr>';
     echo '<td><b>Summe gesamt:</b></td>';
-    echo '<td class="' . ($sums['credit_balance'] < 0 ? 'negative' : '') . '">';
+    echo '<td class="right ' . ($sums['credit_balance'] < 0 ? 'negative' : '') . '">';
         echo '<b>' . $this->Number->formatAsCurrency(FormatterService::assureCorrectFloat($sums['credit_balance'])) . '</b>';
     echo '</td>';
-    echo '<td class="' . ($sums['deposit_delta'] < 0 ? 'negative' : '') . '">';
+    echo '<td class="right ' . ($sums['deposit_delta'] < 0 ? 'negative' : '') . '">';
         echo '<b>' . $this->Number->formatAsCurrency(FormatterService::assureCorrectFloat($sums['deposit_delta'])) . '</b>';
     echo '</td>';
 echo '</tr>';

@@ -241,6 +241,17 @@ foodcoopshop.Admin = {
             }
         });
 
+        var stretchHeaders = table.find('tr th.stretch');
+        var stretchCount = stretchHeaders.length;
+        if (stretchCount > 0) {
+            var stretchClass = 'stretch stretch-' + stretchCount;
+            stretchHeaders.each(function () {
+                var colIndex = $(this).index() + 1;
+                $(this).addClass(stretchClass);
+                table.find('tr.data td:nth-child(' + colIndex + ')').addClass(stretchClass);
+            });
+        }
+
     },
 
     getProductNameForDialog : function(row) {

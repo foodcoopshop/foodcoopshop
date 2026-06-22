@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td style="text-align: center;">';
+echo '<td>';
 if ($show) {
     echo '<input ' . (isset($id) ? 'id="row-marker-' . $id . '"' : '') . ' type="checkbox" class="row-marker" />';
 }
