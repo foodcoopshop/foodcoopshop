@@ -71,7 +71,7 @@ $this->element('addScript', [
 
             <h2><?php echo __('Price_update_preview'); ?></h2>
 
-            <table class="list">
+            <table class="list no-clone-last-row">
                 <tbody>
                     <tr>
                         <td><?php echo __('Price_update_preview_updated'); ?></td>
