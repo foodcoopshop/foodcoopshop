@@ -150,7 +150,7 @@ body.iframe_self_service_order {
     float: left;
 }
 #product-tax-edit-form label {
-    width: 100px;
+    width: 110px;
     float: left;
     margin-top: 4px;
 }
@@ -293,7 +293,7 @@ body.iframe_self_service_order {
     margin-top: 5px;
     float: left;
     margin-right: 5px;
-    width: 110px;
+    width: 115px;
     clear: both;
 }
 .modal .field-wrapper select,

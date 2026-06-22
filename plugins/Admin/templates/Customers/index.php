@@ -95,7 +95,7 @@ if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmi
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __('Register_date')) . '</th>';
 echo '<th>' . $this->Paginator->sort('last_pickup_day',  __('Last_pickup_day'), ['direction' => 'desc']) . '</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    echo '<th>' . $this->Paginator->sort('member_fee', __('Member_fee')) . '</th>';
+    echo '<th class="right">' . $this->Paginator->sort('member_fee', __('Member_fee')) . '</th>';
 }
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __('Prices')) . '</th>';
@@ -335,7 +335,7 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-        echo '<td>';
+        echo '<td class="right">';
             echo $this->Number->formatAsCurrency($customer->member_fee);
         echo '</td>';
     }

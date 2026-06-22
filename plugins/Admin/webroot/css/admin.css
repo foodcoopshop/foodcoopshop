@@ -11,9 +11,6 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-html {
-    scrollbar-gutter: initial;
-}
 body {
     margin: 0;
     font-size: 15px;
@@ -1174,10 +1171,14 @@ body.attributes.index table.list td {
 body.attributes.index table.list td .toggle-link {
     margin-bottom: 0px;
 }
-body.customers.index .customer-details-wrapper,
 body.manufacturers.index .manufacturer-details-wrapper {
     position: absolute;
-    right: 5px;
+    right: 0;
+    top: 3px;
+}
+body.customers.index .customer-details-wrapper {
+    position: absolute;
+    right: 3px;
     top: 3px;
 }
 body.customers.index td.name,

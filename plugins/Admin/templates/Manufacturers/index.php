@@ -69,25 +69,25 @@ echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
     echo '<th class="stretch">' . $this->Paginator->sort('Manufacturers.name', __('Name')) . '</th>';
-    echo '<th>'.__('Products').'</th>';
+    echo '<th class="right">'.__('Products').'</th>';
     if (Configure::read('app.isDepositEnabled')) {
-        echo '<th>'.__('Deposit').'</th>';
+        echo '<th class="right">'.__('Deposit').'</th>';
     }
     echo '<th>' . __('Email') . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __('Stock_products')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __('Delivery_break')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
-    echo '<th title="'.__('Sum_of_open_orders_in_given_time_range').'">'.__('Open_orders_abbreviation').'</th>';
-    echo '<th>'.__('Settings_abbreviation').'</th>';
+    echo '<th class="right" title="'.__('Sum_of_open_orders_in_given_time_range').'">'.__('Open_orders_abbreviation').'</th>';
+    echo '<th class="right">'.__('Settings_abbreviation').'</th>';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-        echo '<th>%</th>';
+        echo '<th class="right">%</th>';
     }
     echo '<th></th>';
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        echo '<th></th>';
+        echo '<th class="center"></th>';
     }
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
-        echo '<th>'.__('Feedback').'</th>';
+        echo '<th class="center">'.__('Feedback').'</th>';
     }
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
         echo '<th></th>';
@@ -156,7 +156,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="right">';
     $sumProductCount += $manufacturer->product_count;
     $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
 
@@ -173,7 +173,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     if (Configure::read('app.isDepositEnabled')) {
-        echo '<td>';
+        echo '<td class="right">';
         if ($manufacturer->sum_deposit_delivered > 0) {
             $depositCreditBalanceClasses = [];
             if ($manufacturer->deposit_credit_balance < 0) {
@@ -236,7 +236,7 @@ foreach ($manufacturers as $manufacturer) {
     );
 
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-        echo '<td>';
+        echo '<td class="right">';
             echo $manufacturer->variable_member_fee.'%';
         echo '</td>';
     }
