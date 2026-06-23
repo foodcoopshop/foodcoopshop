@@ -61,7 +61,7 @@
     #responsive-header .responsive-cart {
         float: right ! important;
         margin-right: 5px ! important;
-        margin-top: 12px ! important;
+        margin-top: 10px ! important;
     }
     #responsive-header .shopping-limit-reached-info {
         width: 75px;
@@ -74,6 +74,8 @@
     }
     #responsive-header .responsive-cart span {
         font-size: 18px ! important;
+        float: right;
+        margin-top: 11px;
     }
     #flashMessage {
         right: auto ! important;
