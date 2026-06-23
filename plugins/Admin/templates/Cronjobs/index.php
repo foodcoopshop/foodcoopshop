@@ -50,13 +50,13 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>' . __('Name') . '</th>';
+echo '<th class="stretch">' . __('Name') . '</th>';
 echo '<th>' . __('Time_interval') . '</th>';
 echo '<th>' . __('Day_of_month') . '</th>';
 echo '<th>' . __('Weekday') . '</th>';
 echo '<th>' . __('Not_before_time') . '</th>';
 echo '<th>' . __('Active') . '</th>';
-echo '<th>' . __('Last_run') . '</th>';
+echo '<th class="right">' . __('Last_run') . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -125,7 +125,7 @@ foreach ($cronjobs as $cronjob) {
     }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="right">';
     if (!empty($cronjob->cronjob_logs[0])) {
         $name = $cronjob->getOriginalValues()['name'];
         $cronjobFilterString = Inflector::underscore($name);

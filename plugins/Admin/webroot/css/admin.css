@@ -1207,13 +1207,6 @@ body.deposits .add-payment-deposit-wrapper {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-body.taxes.index table.list,
-body.slider.index table.list {
-    width: 400px;
-}
-body.storage_locations.index table.list {
-    width: 400px;
-}
 .accept-updated-terms-of-use-form {
     width: 800px;
     margin: 0 auto;

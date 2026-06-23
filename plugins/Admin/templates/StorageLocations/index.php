@@ -55,7 +55,7 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('StorageLocations.name', __('Name')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('StorageLocations.name', __('Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('StorageLocations.product_count', __('Products')) . '</th>';
 echo '<th>' . $this->Paginator->sort('StorageLocations.position', __('Rank')) . '</th>';
 echo '</tr>';
@@ -85,15 +85,15 @@ foreach ($storageLocations as $storageLocation) {
     echo '</td>';
 
 
-    echo '<td align="left" >';
+    echo '<td >';
     echo $storageLocation->name;
     echo '</td>';
 
-    echo '<td align="center">';
+    echo '<td class="right">';
     echo $storageLocation->product_count;
     echo '</td>';
 
-    echo '<td align="right">';
+    echo '<td class="right">';
     echo $storageLocation->position;
     echo '</td>';
 

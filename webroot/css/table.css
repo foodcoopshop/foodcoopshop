@@ -105,7 +105,7 @@ table.list td.stretch.stretch-4,
 table.list th.stretch.stretch-4 {
   width: 25%;
 }
-table.list td:not(.stretch) {
+table.list:not(.no-stretch) td:not(.stretch) {
   white-space: nowrap;
 }
 table.list th {

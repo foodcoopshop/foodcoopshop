@@ -47,7 +47,7 @@ $this->element('addScript', [
 
     <h2 class="info"><?php echo __('The_following_settings_can_be_changed_in_the_admin_area.'); ?></h2>
 
-    <table class="list no-hover no-clone-last-row">
+    <table class="list no-hover no-clone-last-row no-stretch">
 
         <tr>
             <th><?php echo __('Setting'); ?></th>
@@ -133,7 +133,7 @@ $this->element('addScript', [
                 if (!empty($syncDomains)) {
                     echo '<table class="list">';
                     echo '<tr class="sort">';
-                    echo '<th>'.__('Domain').'</th>';
+                    echo '<th class="stretch">'.__('Domain').'</th>';
                     echo '<th>'.__('Active').'</th>';
                     echo '<th></th>';
                     echo '</th>';
