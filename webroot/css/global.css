@@ -404,7 +404,7 @@ a.toggle-link.collapsed i:before {
     display: block;
 }
 .vertical.menu li.has-children ul a {
-    font-size: 13px;
+    font-size: 14px;
     padding-top: 3px;
     padding-bottom: 3px;
 }
