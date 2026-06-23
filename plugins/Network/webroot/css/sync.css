@@ -69,6 +69,11 @@ form.sync-login-form input.username {
   margin-top: 5px;
 }
 
+form.sync-login-form .password-toggle-wrapper {
+  display: block;
+  width: 100%;
+}
+
 form.sync-login-form input {
   width: 100%;
 }

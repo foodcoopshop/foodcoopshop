@@ -19,6 +19,7 @@ foodcoopshop.SyncBase = {
         foodcoopshop.ColorMode.init();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
+        foodcoopshop.Helper.initPasswordToggle();
         foodcoopshop.ModalLogout.init();
         foodcoopshop.Admin.setMenuFixed();
         foodcoopshop.Admin.adaptContentMargin();
