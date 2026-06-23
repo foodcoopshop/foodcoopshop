@@ -501,8 +501,11 @@ body.customers.index a.edit-link {
     margin-right: 3px;
 }
 body.order_details.index td a.pickup-day-comment-edit-button {
-  float: left;
   margin-right: 5px;
+}
+.customer-name-cell {
+    display: flex;
+    align-items: center;
 }
 .add-payment-form {
     display: none;
