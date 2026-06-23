@@ -57,7 +57,7 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">'.__('ID').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Taxes.rate', __('Tax_rate_admin')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('Taxes.rate', __('Tax_rate_admin')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Taxes.active', __('Active')) . '</th>';
 echo '</tr>';
 

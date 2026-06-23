@@ -12,13 +12,14 @@
  * @link          https://www.foodcoopshop.com
  */
 body {
-    margin: 0px 5px 15px 0px;
-    font-size: 11pt;
+    margin: 0;
+    font-size: 15px;
 }
 
 #container {
     position: relative;
-    min-width: 1234px; /* 1074px + navi width 155 + border 5px */
+    min-width: 0;
+    width: 100%;
     display: none;
 }
 
@@ -66,7 +67,8 @@ body.taxes.edit #flashMessage {
     top: 3px;
 }
 #content {
-    width: 1074px;
+    width: calc(100% - 155px);
+    max-width: none;
     margin-top: 5px;
     line-height: 20px;
     float: left;
@@ -75,12 +77,12 @@ body.taxes.edit #flashMessage {
     background-color: #fff;
     border: 1px solid #efefef;
     border-top: none;
-    border-bottom-right-radius: 15px;
+    border-bottom: none;
     position: relative;
+    box-sizing: border-box;
 }
 body.pages.home #content {
     background: transparent;
-    background-color: rgba(255,255,255,0.15);
     margin-top: 0;
     border-left-color: transparent;
 }
@@ -131,13 +133,13 @@ form.fcs-form .bootstrap-select {
     padding-left: 33px;
 }
 .vertical.menu li.has-children ul a i.fas {
-    font-size: 13px;
+    font-size: 14px;
     left: 13px;
     top: 6px;
 }
 .vertical.menu a {
     border-right: none;
-    font-size: 14px;
+    font-size: 15px;
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -171,7 +173,7 @@ i.always-available,
 span.purchase-price,
 span.product-name {
     line-height: 21px;
-    margin-left: 3px;
+    margin-left: 6px;
 }
 
 span.purchase-price-list-element {
@@ -208,14 +210,15 @@ td.amount .fa-times {
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: 1074px; /* be aware of table border if scrolled */
+    width: calc(100% - 155px);
+    box-sizing: border-box;
     z-index: 100;
     border: 1px solid #efefef;
     border-top: none;
 }
 .filter-container-not-fixed {
   float: left;
-  width: 1035px;
+    width: 100%;
 }
 .filter-container .right,
 .filter-container-not-fixed .right {
@@ -269,9 +272,10 @@ td.amount .fa-times {
     font-size: 23px;
 }
 .filter-container input[type="text"] {
-    padding: 4px 6px;
+    padding: 5px 6px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 15px;
+    color: #333;
 }
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
@@ -313,7 +317,7 @@ td span.storage-location-for-dialog {
     text-align: center;
 }
 input.datepicker {
-    width: 110px;
+    width: 116px;
     text-align: center;
 }
 .ui-datepicker .ui-datepicker-prev,
@@ -371,7 +375,7 @@ body.order_details.index .pickup-day-filter-wrapper {
     align-items: baseline;
 }
 body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
-    width: 330px;
+    width: 345px;
 }
 body.order_details.index .weekday-as-name {
     text-align: right;
@@ -392,10 +396,6 @@ body.order_details.index i.product-feedback-button {
 body.order_details.index td.date-short2,
 body.orders.index td.date-short2 {
     width: 100px;
-}
-body.order_details.index a.change-products-picked-up-button {
-    width: 64px;
-    text-align: left;
 }
 .product-attributes-dropdown {
     width: 400px;
@@ -502,8 +502,11 @@ body.customers.index a.edit-link {
     margin-right: 3px;
 }
 body.order_details.index td a.pickup-day-comment-edit-button {
-  float: left;
   margin-right: 5px;
+}
+.customer-name-cell {
+    display: flex;
+    align-items: center;
 }
 .add-payment-form {
     display: none;
@@ -546,21 +549,10 @@ body.order_details.index td a.pickup-day-comment-edit-button {
     float: right;
 }
 body.products.index .table-cell-wrapper.price {
-    width: 85px;
     text-align: right;
 }
 body.products.index .table-cell-wrapper.deposit {
-    width: 61px;
     text-align: right;
-}
-body.order_details.index .table-cell-wrapper.price {
-    width: 80px;
-}
-.table-cell-wrapper.amount {
-    width: 50px;
-}
-.table-cell-wrapper.group {
-    width: 110px;
 }
 .table-cell-wrapper.group span {
     margin-left: 3px;
@@ -571,12 +563,16 @@ body.order_details.index .table-cell-wrapper.price {
 table.list td.amount > .has-separator:after {
     content: ' / ';
 }
+#stock-products table.list td.amount {
+    display: flex;
+    column-gap: 6px;
+}
+#stock-products table.list td.amount > .quantity-for-dialog {
+    flex: 1 1 auto;
+}
 #stock-products table.list td.amount .quantity-limit-for-dialog,
 #stock-products table.list td.amount .sold-out-limit-for-dialog {
     display: none;
-}
-#stock-products table.list td.amount .product-quantity-edit-button {
-    float: left;
 }
 #stock-products table.list td.amount > .quantity-for-dialog.has-separator:after {
     content: '';
@@ -650,7 +646,7 @@ body.payments .bottom-button-container {
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
     padding: 4px 6px 3px 6px;
-    font-size: 14px;
+    font-size: 15px;
 }
 form.fcs-form {
     padding: 10px;
@@ -714,7 +710,7 @@ body.customers .generate-my-member-card-button {
 }
 body.configurations.index td.first {
     vertical-align: top;
-    width: 450px;
+    width: 40%;
     font-weight: 600;
 }
 body.configurations.index td.first div.small {
@@ -739,7 +735,7 @@ form.fcs-form .input.email input,
 form.fcs-form .input.tel input,
 form.fcs-form .input.password input {
     width: 270px;
-    font-size: 14px;
+    font-size: 15px;
 }
 form.fcs-form .input input.long {
     width: 562px;
@@ -1140,8 +1136,8 @@ div.date-field-wrapper {
     margin-right: 3px;
 }
 ul.nav-tabs {
+    width: 100%;
     background: #efefef;
-    width: 1072px;
     padding-bottom: 1px;
 }
 ul.nav-tabs > li > a {
@@ -1157,12 +1153,12 @@ ul.nav-tabs li.active a {
 a.btn-arrow {
     display: inline-block;
     position: absolute;
-    top: 5px;
+    top: 6px;
     color: #ccc ! important;
     width: 15px;
 }
 a.btn-previous-day {
-    right: 94px;
+    right: 100px;
 }
 a.btn-previous-day:nth-of-type(1) {
     left: 1px;
@@ -1171,7 +1167,7 @@ a.btn-next-day {
     right: 5px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 90px;
+    left: 96px;
 }
 a.btn-arrow i {
     font-size: 15px;
@@ -1182,30 +1178,20 @@ body.customers.index span.group-for-dialog {
     display: none;
 }
 body.attributes.index table.list td {
-    padding-top: 3px;
     vertical-align: top;
 }
 body.attributes.index table.list td .toggle-link {
     margin-bottom: 0px;
 }
-body.customers.index .customer-details-wrapper,
-body.manufacturers.index .manufacturer-details-wrapper {
-    position: absolute;
-    right: 5px;
-    top: 3px;
+body.customers.index td.name > div,
+body.manufacturers.index td.name > div {
+    align-items: center;
+    display: flex;
+    gap: 3px;
 }
-body.customers.index td.name,
-body.manufacturers.index td.name {
-    position: relative;
-    min-width: 260px; /* width does not work on mobile */
-}
-body.manufacturers.index td.name {
-    vertical-align: top;
-}
-body.customers.index span.name,
-body.manufacturers.index span.name {
-    float: left;
-    width: 201px;
+body.customers.index td.name > div span.name,
+body.manufacturers.index td.name > div span.name {
+    flex: 1 1 auto;
 }
 body.deposits table.list,
 body.deposits .bottom-button-container {
@@ -1220,13 +1206,6 @@ body.deposits .add-payment-deposit-wrapper {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
-}
-body.taxes.index table.list,
-body.slider.index table.list {
-    width: 400px;
-}
-body.storage_locations.index table.list {
-    width: 400px;
 }
 .accept-updated-terms-of-use-form {
     width: 800px;
@@ -1249,7 +1228,6 @@ body.reports.payment i.payment-approval {
 }
 body.payments .payment-approval-comment,
 body.reports.payment .payment-approval-comment {
-    float: left;
     margin-right: 2px;
 }
 body.reports.payment form#csv-upload {
@@ -1329,8 +1307,10 @@ body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
     text-align: right;
 }
+body.invoices .top-content {
+    padding-left: 10px;
+}
 body.invoices table.invoices-table {
-    width: 1008px;
     margin-bottom: 15px;
 }
 body.invoices table.invoices-table th:nth-child(1) {
@@ -1352,6 +1332,7 @@ body.invoices table.tax-sum-table td {
 }
 body.invoices h4 {
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 body.invoices tr.data.cancelled {
     text-decoration: line-through;
@@ -1394,7 +1375,7 @@ body.products .product-import-wrapper > * {
     float: left;
 }
 .jodit-container {
-    font-size: 14px;
+    font-size: 15px;
 }
 .jodit-container ul {
     padding-left: 20px ! important;

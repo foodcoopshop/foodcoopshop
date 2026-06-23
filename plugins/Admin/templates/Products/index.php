@@ -189,14 +189,14 @@ use Cake\Core\Configure;
         echo '<th class="hide">ID</th>';
         echo '<th>'.__('Attribute').'</th>';
         echo '<th>' . $sortOrLabel('Images.id_image', __('Image')) . '</th>';
-        echo '<th>' . $sortOrLabel('Products.name', __('Name_and_categories')) . '<span class="product-declaration-header">' . $sortOrLabel('Products.is_declaration_ok', __('Product_declaration_admin')) . '</span></th>';
+        echo '<th class="stretch">' . $sortOrLabel('Products.name', __('Name_and_categories')) . '<span class="product-declaration-header">' . $sortOrLabel('Products.is_declaration_ok', __('Product_declaration_admin')) . '</span></th>';
         if ($manufacturerId == 'all') {
             echo '<th>' . $sortOrLabel('Manufacturers.name', __('Manufacturer')) . '</th>';
         }
         if ($advancedStockManagementEnabled) {
             echo '<th>' . $sortOrLabel('Products.is_stock_product', __('Stock_product')) . '</th>';
         }
-        echo '<th style="width:65px;">'.__('Amount').'</th>';
+        echo '<th>'.__('Amount').'</th>';
 
         $showSellingPriceAndDeposit = false;
         $showSellingPriceTax = false;
@@ -208,9 +208,9 @@ use Cake\Core\Configure;
                 $showPurchasePrice = true;
                 $showSellingPriceTax = true;
                 $showPurchasePriceTax = true;
-                echo '<th style="text-align:right;width:98px;">'.__('Purchase_price_abbreviation') . ' ' . __('gross') . '</th>';
-                echo '<th style="text-align:center;">'.__('Surcharge') . ' ' . __('net') . '</th>';
-                echo '<th style="text-align:right;width:98px;">'.__('Selling_price_abbreviation') . ' ' . __('gross') . '</th>';
+                echo '<th>'.__('Purchase_price_abbreviation') . ' ' . __('gross') . '</th>';
+                echo '<th>'.__('Surcharge') . ' ' . __('net') . '</th>';
+                echo '<th>'.__('Selling_price_abbreviation') . ' ' . __('gross') . '</th>';
             } else {
                 $showSellingPriceAndDeposit = true;
                 $showSellingPriceTax = true;
@@ -231,15 +231,15 @@ use Cake\Core\Configure;
             $taxWidth = 106;
         }
         if ($showSellingPriceTax || $showPurchasePrice) {
-            echo '<th style="width:'.$taxWidth.'px;">' . $sortOrLabel('Taxes.rate', __('Tax_rate_admin')) . '</th>';
+            echo '<th>' . $sortOrLabel('Taxes.rate', __('Tax_rate_admin')) . '</th>';
         }
-        echo '<th class="center" style="width:69px;">' . $sortOrLabel('Products.created', __('New?')) . '</th>';
+        echo '<th class="center">' . $sortOrLabel('Products.created', __('New?')) . '</th>';
         if (Configure::read('app.isDepositEnabled') && $showSellingPriceAndDeposit) {
             echo '<th>'.__('Deposit').'</th>';
         }
-        echo '<th>' . $sortOrLabel('Products.delivery_rhythm_type', __('Delivery_rhythm')) . '</th>';
+        echo '<th class="stretch">' . $sortOrLabel('Products.delivery_rhythm_type', __('Delivery_rhythm')) . '</th>';
         echo '<th>' . $sortOrLabel('Products.active', __('Status')) . '</th>';
-        echo '<th style="width:29px;"></th>';
+        echo '<th></th>';
     echo '</tr>';
 
     $i = 0;

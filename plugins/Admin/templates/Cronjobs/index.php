@@ -50,13 +50,13 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>' . __('Name') . '</th>';
+echo '<th class="stretch">' . __('Name') . '</th>';
 echo '<th>' . __('Time_interval') . '</th>';
-echo '<th style="text-align:center;">' . __('Day_of_month') . '</th>';
+echo '<th>' . __('Day_of_month') . '</th>';
 echo '<th>' . __('Weekday') . '</th>';
-echo '<th style="text-align:center;">' . __('Not_before_time') . '</th>';
+echo '<th>' . __('Not_before_time') . '</th>';
 echo '<th>' . __('Active') . '</th>';
-echo '<th>' . __('Last_run') . '</th>';
+echo '<th class="right">' . __('Last_run') . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -96,7 +96,7 @@ foreach ($cronjobs as $cronjob) {
     echo $this->Time->getTranslatedTimeInterval($cronjob->time_interval);
     echo '</td>';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
     if ($cronjob->day_of_month != '') {
         $cronjobsTable = TableRegistry::getTableLocator()->get('Cronjobs');
         echo $cronjobsTable->getDaysOfMonth()[$cronjob->day_of_month];
@@ -113,11 +113,11 @@ foreach ($cronjobs as $cronjob) {
     }
     echo '</td>';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
     echo $cronjob->not_before_time->i18nFormat($this->Time->getI18Format('TimeShort'));
     echo '</td>';
 
-    echo '<td style="text-align:center;">';
+    echo '<td>';
     if ($cronjob->active == 1) {
         echo '<i class="fas fa-check-circle ok"></i>';
     } else {
@@ -125,7 +125,7 @@ foreach ($cronjobs as $cronjob) {
     }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="right">';
     if (!empty($cronjob->cronjob_logs[0])) {
         $name = $cronjob->getOriginalValues()['name'];
         $cronjobFilterString = Inflector::underscore($name);

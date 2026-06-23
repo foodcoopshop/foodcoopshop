@@ -94,24 +94,24 @@ if ($manufacturerId == 'all') {
 
             echo '<td><b>' . __('Net_turnover_selling_price') . '</b></td>';
             echo '<td>'. __('total') . '</td>';
-            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalNetTurnover) . '</b></td>';
+            echo '<td class="right"><b>' . $this->Number->formatAsCurrency($totalNetTurnover) . '</b></td>';
             echo '</tr><tr>';
             echo '<td></td>';
             echo '<td>'. __('per_month') . '</td>';
-            echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</td>';
+            echo '<td class="right">' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</td>';
             echo '</tr>';
 
             echo '<td><b>' . __('Net_profit') . '</b></td>';
             echo '<td>'. __('total') . '</td>';
-            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b></td>';
+            echo '<td class="right"><b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b></td>';
             echo '</tr><tr>';
             echo '<td></td>';
             echo '<td>'. __('per_month') . '</td>';
-            echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($averageNetProfit) . '</td>';
+            echo '<td class="right">' . $this->Number->formatAsCurrency($averageNetProfit) . '</td>';
             echo '</tr><tr>';
             echo '<td><b>' . __('Surcharge') . '</b></td>';
             echo '<td></td>';
-            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b></td>';
+            echo '<td class="right"><b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b></td>';
             echo '</tr>';
 
         echo '</table>';

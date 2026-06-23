@@ -27,12 +27,11 @@ foodcoopshop.ColorMode = {
         } else {
             this.enableLightMode();
         }
-        this.setBackgroundImage();
+        this.setBackground();
     },
 
-    setBackgroundImage: function() {
+    setBackground: function() {
         var colorMode = this.getColorMode();
-        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '")');
         this.setBackgroundColor(colorMode);
     },
 
@@ -43,7 +42,7 @@ foodcoopshop.ColorMode = {
     setBackgroundColor: function(colorMode) {
         let backgroundColor = '#0f0f0f';
         if (colorMode == this.COLOR_MODE_LIGHT) {
-            backgroundColor = '#e6e6e6';
+            backgroundColor = '#ffffff';
         }
         $('body').css('background-color', backgroundColor);
     },
@@ -59,7 +58,7 @@ foodcoopshop.ColorMode = {
                 localStorage.setItem('color-mode', foodcoopshop.ColorMode.COLOR_MODE_DARK);
                 foodcoopshop.ColorMode.enableDarkMode();
             }
-            foodcoopshop.ColorMode.setBackgroundImage();
+            foodcoopshop.ColorMode.setBackground();
         });
     },
 

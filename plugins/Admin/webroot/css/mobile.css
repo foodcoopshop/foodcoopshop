@@ -156,9 +156,6 @@ table.list tr.fake-th td {
 body.feedbacks textarea {
     width: 100%;
 }
-ul.nav-tabs {
-    width: 100%;
-}
 
 /* Home page editor: avoid horizontal overflow on narrow screens */
 body.pages.edit_home,

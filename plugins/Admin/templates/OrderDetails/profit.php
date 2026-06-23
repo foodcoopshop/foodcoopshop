@@ -59,14 +59,14 @@ echo '<table class="list profit-table">';
 
     echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('OrderDetails.pickup_day', __('Pickup_day')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.product_amount', __('Amount')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('OrderDetails.product_name', __('Product')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __('Weight')) . '</th>';
-        echo '<th>' . __('Manufacturer') . '</th>';
-        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Member')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.total_price_tax_excl', __('Selling_price_admin')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetailPurchasePrices.total_price_tax_excl', __('Purchase_price')) . '</th>';
-        echo '<th style="text-align:right;">' . __('Profit') . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('OrderDetails.product_amount', __('Amount')) . '</th>';
+        echo '<th class="stretch">' . $this->Paginator->sort('OrderDetails.product_name', __('Product')) . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __('Weight')) . '</th>';
+        echo '<th class="stretch">' . __('Manufacturer') . '</th>';
+        echo '<th class="stretch">' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Member')) . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('OrderDetails.total_price_tax_excl', __('Selling_price_admin')) . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('OrderDetailPurchasePrices.total_price_tax_excl', __('Purchase_price')) . '</th>';
+        echo '<th class="right">' . __('Profit') . '</th>';
     echo '</tr>';
 
     foreach($orderDetails as $orderDetail) {
@@ -82,7 +82,7 @@ echo '<table class="list profit-table">';
                 echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
                 echo $this->Number->formatAsDecimal($orderDetail->product_amount, 0) . 'x';
             echo '</td>';
 
@@ -128,11 +128,11 @@ echo '<table class="list profit-table">';
                     ]);
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
                 echo $this->Number->formatAsDecimal($orderDetail->total_price_tax_excl);
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
 
                 echo $this->Html->link(
                     '<i class="fas fa-pencil-alt ok"></i>',
@@ -152,7 +152,7 @@ echo '<table class="list profit-table">';
 
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
                 if (!empty($orderDetail->order_detail_purchase_price)) {
                     echo $this->Number->formatAsDecimal($orderDetail->profit);
                 }
@@ -167,23 +167,23 @@ echo '<table class="list profit-table">';
         echo '<td>';
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td class="right">';
             echo $this->Number->formatAsDecimal($sums['amount'], 0);
         echo '</td>';
 
-        echo '<td colspan="4" style="text-align:right;">';
+        echo '<td colspan="4">';
             echo __('Total_sum');
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td class="right">';
             echo $this->Number->formatAsDecimal($sums['sellingPrice']);
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td class="right">';
             echo $this->Number->formatAsDecimal($sums['purchasePrice']);
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td class="right">';
             echo $this->Number->formatAsDecimal($sums['profit']) . '<br />' . $this->Number->formatAsPercent($sums['surcharge']);
         echo '</td>';
 

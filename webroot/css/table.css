@@ -17,7 +17,7 @@ table.list {
   width: 100%;
   background-color: white;
   display: none;
-  font-size: 14px;
+  font-size: 15px;
 }
 table.list tr td:first-child,
 table.list tr th:first-child {
@@ -61,7 +61,7 @@ table.list tr.line-through {
     text-decoration: line-through;
 }
 table.list tr.sub-row td {
-    font-size: 13px;
+    font-size: 14px;
     font-style: italic;
 }
 table.list td.not-available,
@@ -77,10 +77,6 @@ table.list td.below-minimum-amount {
     background-color: var(--warning-yellow);
     color: white;
 }
-
-table.list td.image {
-  background-color: #fff;
-}
 table.list td.negative,
 b.negative,
 span.negative {
@@ -92,6 +88,25 @@ tr:hover b.negative {
 }
 table.list td.slim {
     line-height: 15px;
+}
+table.list td.stretch.stretch-1,
+table.list th.stretch.stretch-1 {
+  width: 100%;
+}
+table.list td.stretch.stretch-2,
+table.list th.stretch.stretch-2 {
+  width: 50%;
+}
+table.list td.stretch.stretch-3,
+table.list th.stretch.stretch-3 {
+  width: 33.3333%;
+}
+table.list td.stretch.stretch-4,
+table.list th.stretch.stretch-4 {
+  width: 25%;
+}
+table.list:not(.no-stretch) td:not(.stretch) {
+  white-space: nowrap;
 }
 table.list th {
     font-weight: 600;
@@ -106,17 +121,16 @@ table.list th,
 table.list td {
   border: 1px solid #dfdfdf;
   border-top: none;
-  padding: 2px 4px;
+  padding: 6px;
   vertical-align: middle;
 }
 table.list th,
 table.list tr.fake-th td {
   padding: 5px 2px;
-  word-break: break-word;
 }
 table.list th,
 table.list tr.fake-th {
-  line-height: 14px;
+  line-height: 16px;
 }
 table.list tr.fake-th td {
   font-weight: 600;
@@ -128,11 +142,14 @@ table.list th.icon {
   width: 20px;
 }
 table.list a.btn {
-    padding: 0 1px ! important;
+    padding: 2px 4px ! important;
     line-height: 20px;
 }
 table.list a.btn.with-text {
-    padding: 0 4px ! important;
+    white-space: nowrap;
+}
+table.list td.cell-name {
+  line-height: 30px;
 }
 .sort a.asc:before,
 .sort a.desc:before {

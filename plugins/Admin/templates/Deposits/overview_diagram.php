@@ -60,7 +60,7 @@ echo '<h2 style="margin-top:10px;">' . __('Deposit_overview_for_all_manufacturer
     echo '</tr>';
     foreach($years as $year) {
         echo '<tr>';
-            echo '<td style="width:50px;">' . $year . '</td>';
+            echo '<td>' . $year . '</td>';
             $depositDelivered = $yearlyDepositsDelivered[$year] ?? 0;
             echo '<td class="'.($depositDelivered < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelivered) . '</td>';
             echo '<td class="'.($yearlyManufacturerEmptyGlasses[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerEmptyGlasses[$year]) . '</td>';

@@ -22,7 +22,7 @@ use App\Test\Fixture\ProductsFixture;
 class CustomerCsvWriterServiceTest extends AppCakeTestCase
 {
 
-    public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;Gruppe;E-Mail;Status;Guthaben;Bestell-Erinnerung;Guthaben-Aufladung-Erinnerung;Reg.-Datum;"Letzter Abholtag";Kommentar';
+    public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;Gruppe;E-Mail;Status;Guthaben;Bestell-Erinnerung;Guthaben-Erinnerung;Reg.-Datum;"Letzter Abholtag";Kommentar';
 
     public function testWriteDefault(): void
     {

@@ -52,7 +52,7 @@ use Cake\Core\Configure;
 
     echo '<tr class="sort">';
     echo '<th>'.__('Pickup_day').'</th>';
-    echo '<th>'.__('Manufacturer').'</th>';
+    echo '<th class="stretch">'.__('Manufacturer').'</th>';
     echo '<th>'.__('Order_list_by_product').'</th>';
     echo '<th>'.__('Order_list_by_member').'</th>';
     echo '</tr>';

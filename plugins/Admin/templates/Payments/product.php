@@ -39,11 +39,11 @@ if (count($payments) == 0) {
     echo '<table class="list">';
     echo '<tr class="sort">';
         echo '<th>'.__('Date').'</th>';
-        echo '<th>'.__('Text').'</th>';
-        echo '<th style="text-align:right;">' . $column_title . '</th>';
-        echo '<th style="text-align:right;">'.__('Order_value').'</th>';
-        echo '<th ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;">'.__('Deposit').'</th>';
-        echo '<th style="width:25px;"></th>';
+        echo '<th class="stretch">'.__('Text').'</th>';
+        echo '<th class="right">' . $column_title . '</th>';
+        echo '<th class="right">'.__('Order_value').'</th>';
+        echo '<th ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'class="right">'.__('Deposit').'</th>';
+        echo '<th></th>';
     echo '</tr>';
 
     $i = 0;
@@ -95,17 +95,17 @@ if (count($payments) == 0) {
         echo $payment['text'];
         echo '</td>';
 
-        $numberClass = '';
+        $numberClass = ['right'];
         if ($payment['type'] == 'order') {
-            $numberClass = ' class="negative"';
+            $numberClass[] = 'negative';
         }
 
 
-        $productNumberClass = '';
+        $productNumberClass = ['right'];
         if (in_array($payment['type'], [Payment::TYPE_PAYBACK])) {
-            $productNumberClass = ' class="negative"';
+            $productNumberClass[] = 'negative';
         }
-        echo '<td style="text-align:right;" ' . $productNumberClass . '>';
+        echo '<td class="' . implode(' ', $productNumberClass) . '">';
         if (in_array($payment['type'], [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
             if ($payment['type'] == Payment::TYPE_PAYBACK) {
                 $payment['amount'] = $payment['amount'] * -1;
@@ -115,7 +115,7 @@ if (count($payments) == 0) {
         }
         echo '</td>';
 
-        echo '<td style="text-align:right;" ' . $numberClass . '>';
+        echo '<td class="' . implode(' ', $numberClass) . '">';
         if ($payment['type'] == 'order') {
             $sumOrders += $payment['amount'];
             echo $this->Number->formatAsCurrency($payment['amount']);
@@ -124,9 +124,9 @@ if (count($payments) == 0) {
 
         $numberClassDeposit = $numberClass;
         if ($payment['deposit'] > 0) {
-            $numberClassDeposit = '';
+            $numberClassDeposit = [];
         }
-        echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClassDeposit . '>';
+        echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'class="' . implode(' ', $numberClassDeposit) . '">';
         if ($payment['deposit'] != 0) {
             if ($payment['type'] == 'order') {
                 $sumDeposits += $payment['deposit'];
@@ -139,7 +139,7 @@ if (count($payments) == 0) {
         }
         echo '</td>';
 
-        echo '<td style="text-align:center;">';
+        echo '<td class="right">';
         $deletablePaymentTypes = [Payment::TYPE_PRODUCT];
         if ((!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) && Configure::read('app.isDepositEnabled')) {
             $deletablePaymentTypes[] = Payment::TYPE_DEPOSIT;
@@ -168,10 +168,10 @@ if (count($payments) == 0) {
     echo '<tr class="fake-th">';
     echo '<td>Datum</td>';
     echo '<td>Text</td>';
-    echo '<td style="text-align:right;">'.__('Credit').'</td>';
-    echo '<td style="text-align:right;">'.__('Order_value').'</td>';
-    echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;">'.__('Deposit').'</td>';
-    echo '<td style="width:25px;"></td>';
+    echo '<td class="right">'.__('Credit').'</td>';
+    echo '<td class="right">'.__('Order_value').'</td>';
+    echo '<td class="right' . (! $this->Html->paymentIsCashless() ? ' hide' : '') . '">'.__('Deposit').'</td>';
+    echo '<td></td>';
     echo '</tr>';
 
     echo '<tr>';

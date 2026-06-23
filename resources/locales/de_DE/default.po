@@ -955,7 +955,7 @@ msgid "Check_and_do_not_forget_to_click_save_button._network"
 msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 
 msgid "Check_credit_reminder"
-msgstr "Guthaben-Aufladung-Erinnerung"
+msgstr "Guthaben-Erinnerung"
 
 msgid "Check_credit_upload"
 msgstr "Guthaben-Aufladung überprüfen"

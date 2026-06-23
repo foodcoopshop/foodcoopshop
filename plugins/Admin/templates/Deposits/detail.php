@@ -37,8 +37,8 @@ echo '<table class="list no-clone-last-row">';
 echo '<tr class="sort">';
     echo '<th>Datum</th>';
     echo '<th>Text</th>';
-    echo '<th style="text-align:right;">Pfand-Rücknahme</th>';
-    echo '<th style="width:25px;"></th>';
+    echo '<th>Pfand-Rücknahme</th>';
+    echo '<th></th>';
 echo '</tr>';
 
 $sum = 0;
@@ -62,11 +62,11 @@ foreach ($payments as $payment) {
         if ($payment->amount > 0) {
             $classes[] = 'negative';
         }
-        echo '<td style="text-align:right;" class="'.implode(' ', $classes).'">';
+        echo '<td class="'.implode(' ', $classes).'">';
             echo $this->Number->formatAsCurrency($payment->amount * -1);
         echo '</td>';
 
-        echo '<td style="text-align:center;">';
+        echo '<td>';
             echo $this->Html->link(
                 '<i class="fas fa-times-circle not-ok"></i>',
                 'javascript:void(0);',

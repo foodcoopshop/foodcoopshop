@@ -18,11 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 if ($groupBy == '') {
-    $widthStyle = '';
-    if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
-        $widthStyle = 'width:52px;';
-    }
-    echo '<td style="text-align:center;font-size:17px;'.$widthStyle.'">';
+    echo '<td>';
         if (isset($this->MyHtml->getOrderStates()[$orderDetail->order_state])) {
             $title = 'ID: ' .  $orderDetail->id_order_detail;
             $title .= '<br />' . __('Order_state') . ': ' . $this->MyHtml->getOrderStates()[$orderDetail->order_state];

@@ -21,11 +21,11 @@ echo '<th class="right">';
     echo $sortOrLabel('OrderDetails.product_amount', __('Amount'));
 echo '</th>';
 
-echo '<th>';
+echo '<th class="stretch">';
     echo $sortOrLabel('OrderDetails.product_name', __('Product'));
 echo '</th>';
 
-echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
+echo '<th class="' . ($identity->isManufacturer() ? 'hide' : 'stretch') . '">';
     echo $sortOrLabel('Manufacturers.name', __('Manufacturer'));
 echo '</th>';
 
@@ -43,14 +43,14 @@ echo '<th class="right">';
     echo $sortOrLabel('OrderDetailUnits.product_quantity_in_units', __('Weight'));
 echo '</th>';
 
-echo '<th>'.$sortOrLabel('CustomerNameForOrder', __('Member')).'</th>';
+echo '<th class="stretch">'.$sortOrLabel('CustomerNameForOrder', __('Member')).'</th>';
 
 if (count($pickupDay) == 2) {
     echo '<th>'.$sortOrLabel('OrderDetails.pickup_day', __('Pickup_day')) . '</th>';
 }
 
 echo '<th>'.$sortOrLabel('OrderDetails.order_state', __('Status')).'</th>';
-echo '<th style="width:25px;"></th>';
+echo '<th></th>';
 
 
 ?>

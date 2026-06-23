@@ -75,7 +75,6 @@ class AssetsProvider
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
             'jquery.scrollto/jquery.scrollTo.js',
-            'background-image.js',
             'modal/modal.js',
             'modal/modal-logout.js',
             'modal/modal-order-for-different-customer-cancel.js',

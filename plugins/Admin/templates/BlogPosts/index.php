@@ -71,9 +71,9 @@ echo '<th class="hide"></th>';
 echo '<th>'.__('Image').'</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', __('Only_for_members')) . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.title', __('Title')) . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', __('Short_description')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Modified_by')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('BlogPosts.title', __('Title')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('BlogPosts.short_description', __('Short_description')) . '</th>';
+echo '<th class="stretch">' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Modified_by')) . '</th>';
 if (Configure::read('app.showManufacturerListAndDetailPage')) {
     echo '<th>' . $this->Paginator->sort('Manufacturers.name', __('Manufacturer')) . '</th>';
 }

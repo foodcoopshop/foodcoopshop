@@ -65,6 +65,8 @@ if ($isOverviewMode) {
         'dateTo' => $dateTo,
     ]);
 }
+echo '<div class="top-content">';
+    
 echo '<p style="margin-top:15px;"><b>' . __('All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b>';
     if (Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
         echo $this->Html->link(
@@ -111,7 +113,7 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
         [
             'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
             'title' => __('Download_invoices'),
-            'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
+            'style' => 'margin-right:10px;float:left;margin-bottom:3px;',
             'escape' => false,
         ]
     );
@@ -122,27 +124,29 @@ echo $this->Html->link(
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
         'title' => __('Copy_to_clipboard'),
-        'style' => ';clear:both;margin-right:3px;float:left;',
+        'style' => 'clear:both;margin-right:10px;float:left;margin-bottom:10px;',
         'escape' => false,
     ]
 );
+
+echo '</div>';
 
 echo '<table class="list invoices-table no-clone-last-row">';
 $this->Paginator->setPaginated($invoices);
     echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __('Invoice_number_abbreviation_admin')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.created', __('Invoice_date')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Name')) . '</th>';
-        echo '<th style="text-align:right;">' . __('Net') . '</th>';
-        echo '<th style="text-align:right;">' . __('VAT') . '</th>';
-        echo '<th style="text-align:right;">' . __('Gross') . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __('Paid_in_cash')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoices.email_status', __('Email_sent')) . '</th>';
+        echo '<th class="stretch">' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __('Name')) . '</th>';
+        echo '<th class="right">' . __('Net') . '</th>';
+        echo '<th class="right">' . __('VAT') . '</th>';
+        echo '<th class="right">' . __('Gross') . '</th>';
+        echo '<th class="center">' . $this->Paginator->sort('Invoices.paid_in_cash', __('Paid_in_cash')) . '</th>';
+        echo '<th class="center">' . $this->Paginator->sort('Invoices.email_status', __('Email_sent')) . '</th>';
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-            echo '<th>' . __('Receipt') . '</th>';
+            echo '<th class="center">' . __('Receipt') . '</th>';
         }
-        echo '<th>' . __('Invoice') . '</th>';
-        echo '<th>' . __('Cancellation') . '</th>';
+        echo '<th class="center">' . __('Invoice') . '</th>';
+        echo '<th class="center">' . __('Cancellation') . '</th>';
     echo '</tr>';
 
     foreach($invoices as $invoice) {
@@ -161,23 +165,23 @@ $this->Paginator->setPaginated($invoices);
                 echo $this->Html->getNameRespectingIsDeleted($invoice->customer);
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
                 echo $this->Number->formatAsDecimal($invoice->sum_price_excl);
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
                 echo $this->Number->formatAsDecimal($invoice->sum_tax);
             echo '</td>';
 
-            echo '<td style="text-align:right;">';
+            echo '<td class="right">';
                 echo $this->Number->formatAsDecimal($invoice->sum_price_incl);
             echo '</td>';
 
-            echo '<td>';
+            echo '<td class="center">';
                 echo $invoice->paid_in_cash_boolean ? __('yes') : __('no');
             echo '</td>';
 
-            echo '<td style="text-align:center;">';
+            echo '<td class="center">';
                 if (is_null($invoice->email_status)) {
                     echo '<i class="fa fa-times not-ok"></i>';
                 } else {
@@ -195,7 +199,7 @@ $this->Paginator->setPaginated($invoices);
             $invoiceCreatedBeforeHelloCashAccountChangedDate = $invoice->created->greaterThan(DateTime::createFromFormat('Y-m-d', Configure::read('app.helloCashAccountChangedDate')));
 
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                echo '<td style="text-align:center;">';
+                echo '<td class="center">';
                 // hello cash has no filename set
                 if ($invoice->filename == '') {
                     $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
@@ -239,7 +243,7 @@ $this->Paginator->setPaginated($invoices);
                 $invoiceDownloadLink = $this->Slug->getInvoiceDownloadRoute($invoice->filename);
             }
 
-            echo '<td style="text-align:center;">';
+            echo '<td class="center">';
 
             if ($invoiceCreatedBeforeHelloCashAccountChangedDate) {
                 echo $this->Html->link(
@@ -266,7 +270,7 @@ $this->Paginator->setPaginated($invoices);
             }
 
             echo '</td>';
-            echo '<td style="text-align:center;">';
+            echo '<td class="center">';
 
                 if (!empty($invoice->cancellation_invoice)) {
                     echo $invoice->cancellation_invoice->invoice_number;
@@ -291,19 +295,19 @@ $this->Paginator->setPaginated($invoices);
     }
     echo '<tr style="font-weight:bold;">';
 
-        echo '<td colspan="3" style="text-align:right;">';
+        echo '<td colspan="3">';
             echo __('Total_sum');
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td>';
             echo $this->Number->formatAsDecimal($invoiceSums['total_sum_price_excl']);
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td>';
             echo $this->Number->formatAsDecimal($invoiceSums['total_sum_tax']);
         echo '</td>';
 
-        echo '<td style="text-align:right;">';
+        echo '<td>';
             echo $this->Number->formatAsDecimal($invoiceSums['total_sum_price_incl']);
         echo '</td>';
 

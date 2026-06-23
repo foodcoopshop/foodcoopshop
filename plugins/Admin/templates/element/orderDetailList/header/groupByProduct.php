@@ -21,11 +21,11 @@ echo '<th class="right">';
     echo $sortOrLabel('sum_amount', __('Amount'));
 echo '</th>';
 
-echo '<th>';
+echo '<th class="stretch">';
     echo $sortOrLabel('Products.name', __('Product'));
 echo '</th>';
 
-echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
+echo '<th class="' . ($identity->isManufacturer() ? 'hide' : 'stretch') . '">';
     echo $sortOrLabel('Manufacturers.name', __('Manufacturer'));
 echo '</th>';
 

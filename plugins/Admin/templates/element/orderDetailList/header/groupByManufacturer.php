@@ -21,7 +21,7 @@ echo '<th class="right">';
 echo $sortOrLabel('sum_amount', __('Amount'));
 echo '</th>';
 
-echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
+echo '<th class="' . ($identity->isManufacturer() ? 'hide' : 'stretch') . '">';
 echo $sortOrLabel('Manufacturers.name', __('Manufacturer'));
 echo '</th>';
 

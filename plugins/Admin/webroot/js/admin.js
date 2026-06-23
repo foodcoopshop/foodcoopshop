@@ -223,21 +223,35 @@ foodcoopshop.Admin = {
 
     improveTableLayout: function () {
 
-        // copy first row with sums
-        var table = $('table.list');
-        if (!table.hasClass('no-clone-last-row')) {
-            var lastRow = table.find('tr:last-child').clone();
-            table.find('tr:first-child').after(lastRow);
-        }
-        table.show();
+        $('table.list').each(function () {
+            var table = $(this);
 
-        // change color of row on click of checkbox
-        table.find('input.row-marker[type="checkbox"]').on('click', function () {
-            var row = $(this).closest('tr');
-            if (row.hasClass('selected')) {
-                row.removeClass('selected');
-            } else {
-                row.addClass('selected');
+            // copy first row with sums
+            if (!table.hasClass('no-clone-last-row')) {
+                var lastRow = table.find('tr:last-child').clone();
+                table.find('tr:first-child').after(lastRow);
+            }
+            table.show();
+
+            // change color of row on click of checkbox
+            table.find('input.row-marker[type="checkbox"]').on('click', function () {
+                var row = $(this).closest('tr');
+                if (row.hasClass('selected')) {
+                    row.removeClass('selected');
+                } else {
+                    row.addClass('selected');
+                }
+            });
+
+            var stretchHeaders = table.find('tr th.stretch');
+            var stretchCount = stretchHeaders.length;
+            if (stretchCount > 0) {
+                var stretchClass = 'stretch stretch-' + stretchCount;
+                stretchHeaders.each(function () {
+                    var colIndex = $(this).index() + 1;
+                    $(this).addClass(stretchClass);
+                    table.find('tr.data td:nth-child(' + colIndex + ')').addClass(stretchClass);
+                });
             }
         });
 

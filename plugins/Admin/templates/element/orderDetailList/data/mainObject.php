@@ -100,6 +100,7 @@ if ($groupBy == 'manufacturer') {
     echo $groupByObjectLink;
 }
 if ($groupBy == 'customer') {
+    echo '<div class="customer-name-cell">';
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && count($pickupDay) == 1) {
         $commentText = !empty($orderDetail['comment']) ? $orderDetail['comment'] : __('Add_comment');
         echo $this->Html->link(
@@ -120,6 +121,7 @@ if ($groupBy == 'customer') {
         ]).'"></i> ' . $name;
     }
     echo $name;
+    echo '</div>';
 }
 if ($groupBy == 'product') {
     echo $this->MyHtml->link(
@@ -133,7 +135,7 @@ if ($groupBy == 'product') {
 echo '</td>';
 
 if ($groupBy == 'customer') {
-    echo '<td'.(!$isMobile ? ' style="width: 161x;"' : '').'>';
+    echo '<td>';
     echo $this->Html->link(
         '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __('Ordered_products') : ''),
         $groupByObjectHref,

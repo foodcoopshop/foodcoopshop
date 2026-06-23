@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-echo '<th>';
+echo '<th class="stretch">';
 echo __('Member');
 echo '</th>';
 
