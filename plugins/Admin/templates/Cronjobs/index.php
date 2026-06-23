@@ -103,7 +103,7 @@ foreach ($cronjobs as $cronjob) {
     }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="center">';
     if ($cronjob->weekday != '') {
         echo $this->Time->getWeekdayName(
             $this->Time->formatAsWeekday(
@@ -113,11 +113,11 @@ foreach ($cronjobs as $cronjob) {
     }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="center">';
     echo $cronjob->not_before_time->i18nFormat($this->Time->getI18Format('TimeShort'));
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="center">';
     if ($cronjob->active == 1) {
         echo '<i class="fas fa-check-circle ok"></i>';
     } else {
