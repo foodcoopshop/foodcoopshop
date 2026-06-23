@@ -67,12 +67,12 @@ body.taxes.edit #flashMessage {
     top: 3px;
 }
 #content {
-    width: calc(100% - 155px);
+    width: calc(100% - 160px);
     max-width: none;
     margin-top: 5px;
     line-height: 20px;
     float: left;
-    margin-left: 155px;
+    margin-left: 160px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
     border: 1px solid #efefef;
@@ -119,7 +119,7 @@ form.fcs-form .bootstrap-select {
     min-height: 500px;
 }
 .vertical.menu {
-    width: 155px;
+    width: 160px;
 }
 .vertical.menu > li a img.logo {
     padding: 0;
@@ -206,11 +206,11 @@ td.amount .fa-times {
 
 .filter-container {
     position: fixed;
-    left: 155px;
+    left: 160px;
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: calc(100% - 155px);
+    width: calc(100% - 160px);
     box-sizing: border-box;
     z-index: 100;
     border: 1px solid #efefef;
