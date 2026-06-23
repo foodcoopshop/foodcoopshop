@@ -81,7 +81,7 @@ echo $this->Form->control('Payments.amount', [
     'step' => '0.01',
 ]);
 
-if ($identity->isSuperadmin()) {
+if (isset($manufacturerId) && $identity->isSuperadmin()) {
     echo '<p style="margin-top:10px;">' . __('You can enter a negative amount if the manufacturer needs to pay money back to the initiative.') . '</p>';
 }
 
