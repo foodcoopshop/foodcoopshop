@@ -17,9 +17,6 @@ namespace App\Services\Csv\Reader;
 
 use Cake\ORM\TableRegistry;
 
-/**
- * @extends \App\Services\Csv\Reader\ProductReaderService<array<string, scalar|null>>
- */
 class ProductPriceUpdateReaderService extends ProductReaderService
 {
 

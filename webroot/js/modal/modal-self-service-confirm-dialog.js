@@ -24,7 +24,7 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
         }
 
         for(var i=0;i<dialogbuttons.length;i++) {
-           buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton, [dialogbuttons[i].value])];
+            buttons[i] = [foodcoopshop.Modal.createButton([dialogbuttons[i].classes], dialogbuttons[i].title, dialogbuttons[i].faIcon, dialogbuttons[i].isCloseButton, [dialogbuttons[i].value])];
         }
 
         foodcoopshop.Modal.appendModalToDom(
@@ -56,8 +56,8 @@ foodcoopshop.ModalSelfServiceConfirmDialog = {
     },
 
     getSuccessHandler : function() {
-       var selfSForm = $('#SelfServiceForm');
-       selfSForm.submit();
+        var selfSForm = $('#SelfServiceForm');
+        selfSForm.submit();
     },
 
     getOpenHandler : function(modalSelector) {

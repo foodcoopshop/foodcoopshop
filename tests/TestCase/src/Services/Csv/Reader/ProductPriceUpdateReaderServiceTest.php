@@ -24,9 +24,6 @@ class ProductPriceUpdateReaderServiceTest extends AppCakeTestCase
     private const int MANUFACTURER_ID = 5;
     private const float SURCHARGE = 10.0;
 
-    // Tax rate 10% → tax_id=2 in test fixtures
-    private const string TAX_RATE = '10';
-
     private const string BASE_IMPORT_CSV = "Name,Kurze Beschreibung,Beschreibung,Bruttopreis,Steuersatz,Pfand,Menge,Einheit,Status,Produktdeklaration,Lagerort,Bestellnummer\n"
         . "Produkt Unveraendert,kurz,lang,1.10,10,0,0,1 Stück,1,0,Keine Kühlung,UPDATE-001\n"
         . "Produkt Preis Geaendert,kurz,lang,2.20,10,0,0,1 Stück,1,0,Keine Kühlung,UPDATE-002\n"
