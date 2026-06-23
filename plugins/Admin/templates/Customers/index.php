@@ -124,6 +124,8 @@ foreach ($customers as $customer) {
 
     echo '<td class="name">';
 
+        echo '<div>';
+
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
 
         if ($identity->isSuperadmin()) {
@@ -168,6 +170,8 @@ foreach ($customers as $customer) {
                 $customerDetails = $this->Html->getCustomerAddress($customer);
             }
             echo '<i class="'.$fontawesomeClass.' fa-address-card ok fa-lg customer-details-read-button" title="'.h($customerDetails).'"></i>';
+        echo '</div>';
+
         echo '</div>';
 
     echo '</td>';

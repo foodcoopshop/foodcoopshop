@@ -1183,21 +1183,16 @@ body.attributes.index table.list td {
 body.attributes.index table.list td .toggle-link {
     margin-bottom: 0px;
 }
-body.manufacturers.index .manufacturer-details-wrapper,
-body.customers.index .customer-details-wrapper {
-
-}
-body.customers.index td.name,
-body.manufacturers.index td.name {
+body.customers.index td.name > div,
+body.manufacturers.index td.name > div {
     align-items: center;
     display: flex;
     gap: 3px;
 }
-body.customers.index td.name span.name,
-body.manufacturers.index td.name span.name {
+body.customers.index td.name > div span.name,
+body.manufacturers.index td.name > div span.name {
     flex: 1 1 auto;
 }
-
 body.deposits table.list,
 body.deposits .bottom-button-container {
     width: 500px;

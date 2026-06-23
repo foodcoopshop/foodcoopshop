@@ -123,6 +123,8 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td class="name">';
 
+        echo '<div>';
+
         $details = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
         if ($manufacturer->address_manufacturer->phone_mobile != '') {
             $details .= '<br /><a href="tel:'.$manufacturer->address_manufacturer->phone_mobile.'">' . $manufacturer->address_manufacturer->phone_mobile . '</a>';
@@ -153,6 +155,8 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="manufacturer-details-wrapper">';
             echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
+        echo '</div>';
+
         echo '</div>';
 
     echo '</td>';
