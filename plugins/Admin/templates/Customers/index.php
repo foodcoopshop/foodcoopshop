@@ -76,21 +76,21 @@ echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
 echo '<th class="stretch">' . $this->Paginator->sort('CustomerNameForOrder', __('Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __('Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.active', __('Status')) . '</th>';
+echo '<th class="center">' . $this->Paginator->sort('Customers.active', __('Status')) . '</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>' . $this->Paginator->sort('credit_balance',  __('Credit'), ['direction' => 'desc']) . '</th>';
+    echo '<th class="right">' . $this->Paginator->sort('credit_balance',  __('Credit'), ['direction' => 'desc']) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __('Order_reminder')) . '</th>';
+    echo '<th class="center">' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __('Order_reminder')) . '</th>';
 }
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __('Check_credit_reminder')) . '</th>';
+    echo '<th class="center">' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __('Check_credit_reminder')) . '</th>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
-    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __('Newsletter')) . '</th>';
+    echo '<th class="center">' . $this->Paginator->sort('Customers.newsletter_enabled',  __('Newsletter')) . '</th>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
-    echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __('Feedback')) . '</th>';
+    echo '<th class="center">' . $this->Paginator->sort('Feedbacks.modified',  __('Feedback')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __('Register_date')) . '</th>';
 echo '<th>' . $this->Paginator->sort('last_pickup_day',  __('Last_pickup_day'), ['direction' => 'desc']) . '</th>';
@@ -100,7 +100,7 @@ if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __('Prices')) . '</th>';
 }
-echo '<th>'.__('Comment_abbreviation').'</th>';
+echo '<th class="center">'.__('Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
@@ -206,7 +206,7 @@ foreach ($customers as $customer) {
         echo '<i class="'.join(' ', $classes).'" data-email="'.h($customer->email).'" title="'.h($title).'"></i>';
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="center">';
 
     if ($customer->active == 1) {
         echo $this->Html->link(
@@ -238,7 +238,7 @@ foreach ($customers as $customer) {
 
     if ($this->Html->paymentIsCashless()) {
         $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
-        echo '<td class="' . $negativeClass . '">';
+        echo '<td class="right ' . $negativeClass . '">';
 
         if ($identity->isSuperadmin()) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
@@ -351,7 +351,7 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    echo '<td>';
+    echo '<td class="center">';
         $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __('Add_comment');
         echo $this->Html->link(
             '<i class="fas fa-comment-dots ok"></i>',
