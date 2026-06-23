@@ -20,7 +20,7 @@ $html = $this->Html->link(
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
         'title' => __('Copy_to_clipboard'),
-        'style' => 'margin-right:3px;float:left;',
+        'style' => 'margin-right:10px;float:left;',
         'escape' => false,
     ]
 );

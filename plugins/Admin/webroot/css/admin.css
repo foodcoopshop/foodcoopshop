@@ -563,6 +563,13 @@ body.products.index .table-cell-wrapper.deposit {
 table.list td.amount > .has-separator:after {
     content: ' / ';
 }
+#stock-products table.list td.amount {
+    display: flex;
+    column-gap: 6px;
+}
+#stock-products table.list td.amount > .quantity-for-dialog {
+    flex: 1 1 auto;
+}
 #stock-products table.list td.amount .quantity-limit-for-dialog,
 #stock-products table.list td.amount .sold-out-limit-for-dialog {
     display: none;
@@ -1176,24 +1183,21 @@ body.attributes.index table.list td {
 body.attributes.index table.list td .toggle-link {
     margin-bottom: 0px;
 }
-body.manufacturers.index .manufacturer-details-wrapper {
-    position: absolute;
-    right: 0;
-    top: 3px;
-}
+body.manufacturers.index .manufacturer-details-wrapper,
 body.customers.index .customer-details-wrapper {
-    position: absolute;
-    right: 3px;
-    top: 3px;
+
 }
 body.customers.index td.name,
 body.manufacturers.index td.name {
-    position: relative;
-    min-width: 260px; /* width does not work on mobile */
+    align-items: center;
+    display: flex;
+    gap: 3px;
 }
-body.manufacturers.index td.name {
-    vertical-align: top;
+body.customers.index td.name span.name,
+body.manufacturers.index td.name span.name {
+    flex: 1 1 auto;
 }
+
 body.deposits table.list,
 body.deposits .bottom-button-container {
     width: 500px;
@@ -1308,8 +1312,10 @@ body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
     text-align: right;
 }
+body.invoices .top-content {
+    padding-left: 10px;
+}
 body.invoices table.invoices-table {
-    width: 1008px;
     margin-bottom: 15px;
 }
 body.invoices table.invoices-table th:nth-child(1) {
@@ -1331,6 +1337,7 @@ body.invoices table.tax-sum-table td {
 }
 body.invoices h4 {
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 body.invoices tr.data.cancelled {
     text-decoration: line-through;

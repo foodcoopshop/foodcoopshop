@@ -65,6 +65,8 @@ if ($isOverviewMode) {
         'dateTo' => $dateTo,
     ]);
 }
+echo '<div class="top-content">';
+    
 echo '<p style="margin-top:15px;"><b>' . __('All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b>';
     if (Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
         echo $this->Html->link(
@@ -111,7 +113,7 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
         [
             'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
             'title' => __('Download_invoices'),
-            'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
+            'style' => 'margin-right:10px;float:left;margin-bottom:3px;',
             'escape' => false,
         ]
     );
@@ -122,10 +124,12 @@ echo $this->Html->link(
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
         'title' => __('Copy_to_clipboard'),
-        'style' => ';clear:both;margin-right:3px;float:left;',
+        'style' => 'clear:both;margin-right:10px;float:left;margin-bottom:10px;',
         'escape' => false,
     ]
 );
+
+echo '</div>';
 
 echo '<table class="list invoices-table no-clone-last-row">';
 $this->Paginator->setPaginated($invoices);

@@ -130,9 +130,6 @@ foreach ($manufacturers as $manufacturer) {
         if ($manufacturer->address_manufacturer->phone != '') {
             $details .= '<br /><a href="tel:'.$manufacturer->address_manufacturer->phone.'">' . $manufacturer->address_manufacturer->phone . '</a>';
         }
-        echo '<div class="manufacturer-details-wrapper">';
-            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
-        echo '</div>';
 
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
@@ -153,6 +150,10 @@ foreach ($manufacturers as $manufacturer) {
                 echo '<br /><i class="fas fa-fw fa-user" title="' . __('Contact_person_admin') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
             }
         echo '</span>';
+
+        echo '<div class="manufacturer-details-wrapper">';
+            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
+        echo '</div>';
 
     echo '</td>';
 
