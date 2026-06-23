@@ -675,6 +675,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     padding-top: .15rem;
     padding-bottom: .15rem;
 }
+.bootstrap-select div.filter-option-inner-inner,
 .bootstrap-select > .dropdown-toggle.bs-placeholder,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:focus,

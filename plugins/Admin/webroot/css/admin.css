@@ -274,6 +274,7 @@ td.amount .fa-times {
     padding: 5px 6px;
     border-radius: 4px;
     font-size: 15px;
+    color: #333;
 }
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
@@ -1141,7 +1142,7 @@ ul.nav-tabs li.active a {
 a.btn-arrow {
     display: inline-block;
     position: absolute;
-    top: 5px;
+    top: 6px;
     color: #ccc ! important;
     width: 15px;
 }
