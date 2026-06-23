@@ -75,8 +75,8 @@ echo '<tr class="sort">';
     }
     echo '<th>' . __('Email') . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __('Stock_products')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __('Delivery_break')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
+    echo '<th class="center">' . $this->Paginator->sort('Manufacturers.no_delivery_days', __('Delivery_break')) . '</th>';
+    echo '<th class="center">' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
     echo '<th class="right" title="'.__('Sum_of_open_orders_in_given_time_range').'">'.__('Open_orders_abbreviation').'</th>';
     echo '<th class="right">'.__('Settings_abbreviation').'</th>';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
@@ -205,7 +205,7 @@ foreach ($manufacturers as $manufacturer) {
         }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="center">';
         $noDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
         if ($noDeliveryDaysString != '') {
             echo '<i class="fas fa-ban not-ok no-delivery-days-button" title="' . __('Delivery_break') . ': ' . h($noDeliveryDaysString) . '"><i>';
