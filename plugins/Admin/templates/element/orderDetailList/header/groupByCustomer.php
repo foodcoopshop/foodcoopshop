@@ -29,7 +29,7 @@ echo $sortOrLabel('sum_price', __('Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless()) {
-    echo '<th>'.__('Deposit').'</th>';
+    echo '<th class="center">'.__('Deposit').'</th>';
 }
 
 if (count($pickupDay) == 1) {
