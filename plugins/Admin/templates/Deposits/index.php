@@ -81,44 +81,46 @@ echo '<div class="add-payment-deposit-wrapper">';
                     echo $deposit['monthAndYearAsString'];
                 echo '</td>';
 
-                echo '<td class="right">';
-            if (isset($deposit['delivered'])) {
-                echo $this->Html->link(
-                    '<i class="fas fa-search ok"></i> '  . __('Details'),
-                    '/admin/order-details/?manufacturerId='.$manufacturerId.'&pickupDay[]='.$deposit['dateFrom'].'&pickupDay[]='.$deposit['dateTo'].'&deposit=1',
-                    [
-                        'class' => 'btn btn-outline-light',
-                        'title' => __('Show_details'),
-                        'style' => 'float:left;',
-                        'escape' => false
-                    ]
-                );
-                echo '<span style="float:right;">';
-                    echo $this->Number->formatAsCurrency($deposit['delivered']);
-                echo '</span>';
-            }
+                echo '<td>';
+                    if (isset($deposit['delivered'])) {
+                        echo '<div class="td-spanned">';
+                            echo $this->Html->link(
+                                '<i class="fas fa-search ok"></i> '  . __('Details'),
+                                '/admin/order-details/?manufacturerId='.$manufacturerId.'&pickupDay[]='.$deposit['dateFrom'].'&pickupDay[]='.$deposit['dateTo'].'&deposit=1',
+                                [
+                                    'class' => 'btn btn-outline-light',
+                                    'title' => __('Show_details'),
+                                    'escape' => false
+                                ]
+                            );
+                            echo '<span class="right">';
+                                echo $this->Number->formatAsCurrency($deposit['delivered']);
+                            echo '</span>';
+                        }
+                    echo '</div>';
                 echo '</td>';
 
-                $classes = ['right'];
+                $classes = [];
                 if (isset($deposit['returned']) && (float) $deposit['returned'] < 0) {
                     $classes[] = 'negative';
                 }
                 echo '<td class="'.implode(' ', $classes).'">';
-                    if (isset($deposit['returned'])) {
-                        echo $this->Html->link(
-                            '<i class="fas fa-search ok"></i> ' . __('Details'),
-                            $identity->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear),
-                            [
-                                'class' => 'btn btn-outline-light',
-                                'title' => __('Show_details'),
-                                'style' => 'float:left;',
-                                'escape' => false
-                            ]
-                        );
-                        echo '<span style="float: right;">';
-                        echo $this->Number->formatAsCurrency($deposit['returned']);
-                        echo '</span>';
-                    }
+                        if (isset($deposit['returned'])) {
+                            echo '<div class="td-spanned">';
+                                echo $this->Html->link(
+                                    '<i class="fas fa-search ok"></i> ' . __('Details'),
+                                    $identity->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear),
+                                    [
+                                        'class' => 'btn btn-outline-light',
+                                        'title' => __('Show_details'),
+                                        'escape' => false
+                                    ]
+                                );
+                                echo '<span class="right">';
+                                    echo $this->Number->formatAsCurrency($deposit['returned']);
+                                echo '</span>';
+                            echo '</div>';
+                        }
                     echo '</td>';
             echo '</tr>';
         }

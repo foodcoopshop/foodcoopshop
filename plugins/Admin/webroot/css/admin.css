@@ -45,8 +45,10 @@ body.pages.home #content {
     margin: 0 auto;
 }
 #flashMessage {
-    left: 470px;
-    top: 42px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
 }
 body.blog_posts.add #flashMessage,
 body.blog_posts.edit #flashMessage,
@@ -271,10 +273,11 @@ td.amount .fa-times {
     font-size: 23px;
 }
 .filter-container input[type="text"] {
-    padding: 5px 6px;
+    padding: 4px 6px;
     border-radius: 4px;
     font-size: 15px;
     color: #333;
+    line-height: 22.5px;
 }
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
@@ -562,13 +565,6 @@ body.products.index .table-cell-wrapper.deposit {
 table.list td.amount > .has-separator:after {
     content: ' / ';
 }
-#stock-products table.list td.amount {
-    display: flex;
-    column-gap: 6px;
-}
-#stock-products table.list td.amount > .quantity-for-dialog {
-    flex: 1 1 auto;
-}
 #stock-products table.list td.amount .quantity-limit-for-dialog,
 #stock-products table.list td.amount .sold-out-limit-for-dialog {
     display: none;
@@ -644,7 +640,7 @@ body.payments .bottom-button-container {
 }
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
-    padding: 4px 6px 3px 6px;
+    padding: 4px 6px;
     font-size: 15px;
 }
 form.fcs-form {
@@ -1132,7 +1128,7 @@ body.pages.edit_home .home-block-add-button-wrapper {
 div.date-field-wrapper {
     position: relative;
     float: left;
-    margin-right: 3px;
+    margin-right: 4px;
 }
 ul.nav-tabs {
     width: 100%;
@@ -1181,16 +1177,6 @@ body.attributes.index table.list td {
 }
 body.attributes.index table.list td .toggle-link {
     margin-bottom: 0px;
-}
-body.customers.index td.name > div,
-body.manufacturers.index td.name > div {
-    align-items: center;
-    display: flex;
-    gap: 3px;
-}
-body.customers.index td.name > div span.name,
-body.manufacturers.index td.name > div span.name {
-    flex: 1 1 auto;
 }
 body.deposits table.list,
 body.deposits .bottom-button-container {

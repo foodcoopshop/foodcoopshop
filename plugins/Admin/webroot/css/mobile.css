@@ -104,7 +104,7 @@ body.pages.home #content {
     width: 100%;
 }
 table.list th, table.list td {
-    padding: 2px ! important;
+    padding: 4px ! important;
 }
 .input.select, .input.checkbox, .input.text, div.date-field-wrapper {
     margin-top: 2px;

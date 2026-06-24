@@ -51,7 +51,7 @@ $this->element('addScript', [
 
         <tr>
             <th><?php echo __('Setting'); ?></th>
-            <th></th>
+            <th class="center"></th>
             <th><?php echo __('Value'); ?></th>
         </tr>
 
@@ -84,7 +84,7 @@ $this->element('addScript', [
                     echo $configuration->fulltext;
                 echo '</td>';
 
-                echo '<td>';
+                echo '<td class="center">';
                     echo $this->Html->link(
                         '<i class="fas fa-pencil-alt ok"></i>',
                         $this->Slug->getConfigurationEdit($configuration->name),

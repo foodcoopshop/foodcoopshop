@@ -33,32 +33,38 @@ if ($product->stock_available->quantity > 0 && $product->stock_available->sold_o
 
 $style = ($alignRight ?? false) ? ' style="text-align:right;"' : '';
 echo '<td class="' . join(' ', $rowClasses) . '"' . $style . '>';
-    echo $this->Html->link(
-        '<i class="fas fa-pencil-alt ok"></i>',
-        'javascript:void(0);',
-        [
-            'class' => 'btn btn-outline-light product-quantity-edit-button',
-            'title' => __('change_amount'),
-            'escape' => false,
-        ],
-    );
 
-    echo '<span class="quantity-for-dialog">' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName) . '</span>';
+    echo '<div class="td-spanned">';
 
-    if ($product->stock_available->quantity_limit != 0) {
-        $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity_limit, $unitName);
-        echo '<i style="display: none;" class="small quantity-limit-for-dialog">' . $formattedQuantityLimit . '</i>';
-    }
-    if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
-        echo ' <i class="small sold-out-limit-for-dialog">';
-        if (is_null($product->stock_available->sold_out_limit)) {
-            echo '<i class="fas fa-times" title="' . __('No_email_notifications_are_sent_for_this_product.') . '"></i>';
-        } else {
-            $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->sold_out_limit, $unitName);
-            echo $formattedSoldOutLimit;
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light product-quantity-edit-button',
+                'title' => __('change_amount'),
+                'escape' => false,
+            ],
+        );
+
+        echo '<span class="quantity-for-dialog right">' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName) . '</span>';
+
+        if ($product->stock_available->quantity_limit != 0) {
+            $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity_limit, $unitName);
+            echo '<i style="display: none;" class="small quantity-limit-for-dialog">' . $formattedQuantityLimit . '</i>';
         }
-        echo '</i>';
-    }
+        if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
+            echo ' <i class="small sold-out-limit-for-dialog">';
+            if (is_null($product->stock_available->sold_out_limit)) {
+                echo '<i class="fas fa-times" title="' . __('No_email_notifications_are_sent_for_this_product.') . '"></i>';
+            } else {
+                $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->sold_out_limit, $unitName);
+                echo $formattedSoldOutLimit;
+            }
+            echo '</i>';
+        }
+
+        echo '</div>';
+
 echo '</td>';
 
 ?>

@@ -125,10 +125,6 @@ table.list td {
   vertical-align: middle;
 }
 table.list th,
-table.list tr.fake-th td {
-  padding: 5px 2px;
-}
-table.list th,
 table.list tr.fake-th {
   line-height: 16px;
 }
@@ -162,4 +158,13 @@ table.list td.cell-name {
 }
 .sort a.desc:before {
     content: "\f0ab";
+}
+table.list div.td-spanned {
+    display: flex;
+    column-gap: 6px;
+    align-items: center;
+}
+table.list div.td-spanned > .right {
+    flex: 1 1 auto;
+    text-align: right;
 }

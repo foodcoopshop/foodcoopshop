@@ -123,39 +123,39 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td class="name">';
 
-        echo '<div>';
+        echo '<div class="td-spanned">';
 
-        $details = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
-        if ($manufacturer->address_manufacturer->phone_mobile != '') {
-            $details .= '<br /><a href="tel:'.$manufacturer->address_manufacturer->phone_mobile.'">' . $manufacturer->address_manufacturer->phone_mobile . '</a>';
-        }
-        if ($manufacturer->address_manufacturer->phone != '') {
-            $details .= '<br /><a href="tel:'.$manufacturer->address_manufacturer->phone.'">' . $manufacturer->address_manufacturer->phone . '</a>';
-        }
-
-        echo $this->Html->link(
-            '<i class="fas fa-pencil-alt ok"></i>',
-            $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer),
-            [
-                'class' => 'btn btn-outline-light edit-link',
-                'title' => __('Edit'),
-                'escape' => false
-            ]
-        );
-
-        echo '<span class="name">';
-            echo '<b>' . $manufacturer->name . '</b>';
-            if ($manufacturer->address_manufacturer->city != '') {
-                echo '<br />' . $manufacturer->address_manufacturer->city;
+            $details = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
+            if ($manufacturer->address_manufacturer->phone_mobile != '') {
+                $details .= '<br /><a href="tel:'.$manufacturer->address_manufacturer->phone_mobile.'">' . $manufacturer->address_manufacturer->phone_mobile . '</a>';
             }
-            if (!empty($manufacturer->customer)) {
-                echo '<br /><i class="fas fa-fw fa-user" title="' . __('Contact_person_admin') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+            if ($manufacturer->address_manufacturer->phone != '') {
+                $details .= '<br /><a href="tel:'.$manufacturer->address_manufacturer->phone.'">' . $manufacturer->address_manufacturer->phone . '</a>';
             }
-        echo '</span>';
 
-        echo '<div class="manufacturer-details-wrapper">';
-            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
-        echo '</div>';
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer),
+                [
+                    'class' => 'btn btn-outline-light edit-link',
+                    'title' => __('Edit'),
+                    'escape' => false
+                ]
+            );
+
+            echo '<span class="name">';
+                echo '<b>' . $manufacturer->name . '</b>';
+                if ($manufacturer->address_manufacturer->city != '') {
+                    echo '<br />' . $manufacturer->address_manufacturer->city;
+                }
+                if (!empty($manufacturer->customer)) {
+                    echo '<br /><i class="fas fa-fw fa-user" title="' . __('Contact_person_admin') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+                }
+            echo '</span>';
+
+            echo '<div class="manufacturer-details-wrapper right">';
+                echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
+            echo '</div>';
 
         echo '</div>';
 

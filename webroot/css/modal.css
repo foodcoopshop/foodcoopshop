@@ -63,11 +63,7 @@
 }
 .modal #flashMessage {
     opacity: 1;;
-    left: 0;
-    right: 0;
     top: 42px ! important;
-    margin-right: auto;
-    margin-left: auto;
 }
 #order-for-different-customer-add .modal-dialog {
     max-width: 95vw;

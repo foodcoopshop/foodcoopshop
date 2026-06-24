@@ -75,7 +75,7 @@ echo $this->element('rowMarker/rowMarkerAll', [
 echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
 echo '<th class="stretch">' . $this->Paginator->sort('CustomerNameForOrder', __('Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __('Group')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
+echo '<th class="center">' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
 echo '<th class="center">' . $this->Paginator->sort('Customers.active', __('Status')) . '</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th class="right">' . $this->Paginator->sort('credit_balance',  __('Credit'), ['direction' => 'desc']) . '</th>';
@@ -124,7 +124,7 @@ foreach ($customers as $customer) {
 
     echo '<td class="name">';
 
-        echo '<div>';
+        echo '<div class="td-spanned">';
 
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
 
@@ -155,7 +155,7 @@ foreach ($customers as $customer) {
         }
         echo '<span class="name">' . $customerLink . '</span>';
 
-        echo '<div class="customer-details-wrapper">';
+        echo '<div class="customer-details-wrapper right">';
             $imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'small');
             $imageExists = ! preg_match('/de-default-small_default/', $imageSrc);
             $fontawesomeClass = 'far';
@@ -197,7 +197,7 @@ foreach ($customers as $customer) {
     echo '<span class="group-for-dialog">' . $customer->id_default_group . '</span>';
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="center">';
         $classes = ['far fa-envelope ok fa-lg customer-email-button'];
         $title = h($customer->email);
         if ($customer->activate_email_code != null) {
