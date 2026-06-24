@@ -73,7 +73,6 @@ body.taxes.edit #flashMessage {
     line-height: 20px;
     float: left;
     margin-left: 160px;
-    min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
     border: 1px solid #efefef;
     border-top: none;

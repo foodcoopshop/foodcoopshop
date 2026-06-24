@@ -630,6 +630,7 @@ foodcoopshop.Admin = {
         var marginTop = $('.filter-container').outerHeight();
         $('#content').css('margin-top', marginTop);
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
+        $('#content').css('min-height', 'calc(100vh - ' + marginTop + 'px)');
     },
 
     initStickyTableHeader : function() {
