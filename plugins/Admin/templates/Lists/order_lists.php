@@ -30,7 +30,7 @@ use Cake\Core\Configure;
 
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo __('Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
+            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
             <div class="right">
             <?php
                 echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__('docs_route_pick_up_products'))]);
