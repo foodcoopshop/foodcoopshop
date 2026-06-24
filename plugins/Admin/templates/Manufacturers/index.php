@@ -73,7 +73,7 @@ echo '<tr class="sort">';
     if (Configure::read('app.isDepositEnabled')) {
         echo '<th class="right">'.__('Deposit').'</th>';
     }
-    echo '<th>' . __('Email') . '</th>';
+    echo '<th class="center no-wrap">' . __('Email') . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __('Stock_products')) . '</th>';
     echo '<th class="center">' . $this->Paginator->sort('Manufacturers.no_delivery_days', __('Delivery_break')) . '</th>';
     echo '<th class="center">' . $this->Paginator->sort('Manufacturers.is_private', __('Only_for_members')) . '</th>';
@@ -198,7 +198,7 @@ foreach ($manufacturers as $manufacturer) {
         echo '</td>';
     }
 
-    echo '<td>';
+    echo '<td class="center">';
         $classes = ['far fa-envelope ok fa-lg manufacturer-email-button'];
         echo '<i class="'.join(' ', $classes).'" title="'.h($manufacturer->address_manufacturer->email).'" data-email="'.h($manufacturer->address_manufacturer->email).'"></i>';
     echo '</td>';

@@ -75,7 +75,7 @@ echo $this->element('rowMarker/rowMarkerAll', [
 echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
 echo '<th class="stretch">' . $this->Paginator->sort('CustomerNameForOrder', __('Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __('Group')) . '</th>';
-echo '<th class="center">' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
+echo '<th class="center no-wrap">' . $this->Paginator->sort('Customers.email', __('Email')) . '</th>';
 echo '<th class="center">' . $this->Paginator->sort('Customers.active', __('Status')) . '</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th class="right">' . $this->Paginator->sort('credit_balance',  __('Credit'), ['direction' => 'desc']) . '</th>';
