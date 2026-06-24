@@ -1292,8 +1292,9 @@ body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
     text-align: right;
 }
-body.invoices .top-content {
+#content .top-content {
     padding-left: 10px;
+    padding-right: 10px;
 }
 body.invoices table.invoices-table {
     margin-bottom: 15px;

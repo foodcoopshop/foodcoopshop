@@ -86,6 +86,8 @@ if ($manufacturerId == 'all') {
         Configure::read('app.jsNamespace') . ".AppChart.initPieChart(".json_encode($dataPieChart).", ".json_encode($labelsPieChart).", ".json_encode($backgroundColorPieChart).");"
     ]);
 }
+
+echo '<div class="top-content">';
 ?>
 
 <p><?php
@@ -134,11 +136,15 @@ if ($manufacturerId == 'all') {
     }
 ?></p>
 
-<canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>
+<canvas id="myBarChart" height="500" width="1000" style="margin-top:10px;max-width:1700px;max-height:800px;"></canvas>
 <?php if ($range == '' && count($xAxisDataLineChart) > 1) { ?>
-    <canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
+    <canvas id="myLineChart" height="500" width="1000" style="margin-top:30px;max-width:1700px;max-height:800px;"></canvas>
 <?php } ?>
 <?php if ($manufacturerId == 'all') { ?>
-    <canvas id="myPieChart" width="1000" height="500" style="margin-top:30px;margin-bottom:30px;"></canvas>
+    <canvas id="myPieChart" height="500" width="1000" style="margin-top:30px;margin-bottom:30px;max-width:1700px;max-height:800px;"></canvas>
 <?php } ?>
+
+</div>
 <div class="sc"></div>
+
+
