@@ -614,6 +614,65 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
+     * @param list<int> $customerIds
+     * @return array<int, int>
+     */
+    public function getDifferentPickupDayCountByCustomerIds(array $customerIds): array
+    {
+        if (empty($customerIds)) {
+            return [];
+        }
+
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer IN' => $customerIds,
+        ]);
+        $query->select([
+            'OrderDetails.id_customer',
+            'different_pickup_day_count' => $query->func()->count('DISTINCT(OrderDetails.pickup_day)'),
+        ]);
+        $query->groupBy('OrderDetails.id_customer');
+
+        $countMap = [];
+        foreach ($query->toArray() as $result) {
+            $countMap[(int) $result->id_customer] = (int) $result->different_pickup_day_count;
+        }
+
+        return $countMap;
+    }
+
+    /**
+     * @param list<int> $customerIds
+        * @return array<int, OrderDetail>
+     */
+    public function getLastPickupDayByCustomerIds(array $customerIds): array
+    {
+        if (empty($customerIds)) {
+            return [];
+        }
+
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer IN' => $customerIds,
+        ]);
+        $query->select([
+            'OrderDetails.id_customer',
+            'OrderDetails.pickup_day',
+        ]);
+        $query->orderBy([
+            'OrderDetails.id_customer' => 'ASC',
+            'OrderDetails.pickup_day' => 'DESC',
+        ]);
+
+        $lastPickupDayMap = [];
+        foreach ($query->toArray() as $orderDetail) {
+            if (!isset($lastPickupDayMap[$orderDetail->id_customer])) {
+                $lastPickupDayMap[(int) $orderDetail->id_customer] = $orderDetail;
+            }
+        }
+
+        return $lastPickupDayMap;
+    }
+
+    /**
      * @return list<array{SumTotalPaid: float|int|string, SumDeposit: float|int|string, MonthAndYear: string}>
      */
     public function getMonthlySumProductByCustomer(int|string $customerId): array
@@ -671,6 +730,34 @@ class OrderDetailsTable extends AppTable
         return (float) $query->toArray()[0]->SumTotalPaid;
     }
 
+    /**
+     * @param list<int> $customerIds
+     * @return array<int, float>
+     */
+    public function getSumProductByCustomerIds(array $customerIds): array
+    {
+        if (empty($customerIds)) {
+            return [];
+        }
+
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer IN' => $customerIds,
+        ]);
+        $query->where(['OrderDetails.order_state IN' => OrderDetail::ORDER_STATES_CASHLESS]);
+        $query->select([
+            'OrderDetails.id_customer',
+            'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+        ]);
+        $query->groupBy('OrderDetails.id_customer');
+
+        $sumMap = [];
+        foreach ($query->toArray() as $result) {
+            $sumMap[(int) $result->id_customer] = (float) $result->SumTotalPaid;
+        }
+
+        return $sumMap;
+    }
+
     public function getSumDeposit(int $customerId): float
     {
         $query = $this->find('all', conditions: [
@@ -684,6 +771,37 @@ class OrderDetailsTable extends AppTable
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
         );
         return (float) $query->toArray()[0]->SumTotalDeposit;
+    }
+
+    /**
+     * @param list<int> $customerIds
+     * @return array<int, float>
+     */
+    public function getSumDepositByCustomerIds(array $customerIds): array
+    {
+        if (empty($customerIds)) {
+            return [];
+        }
+
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer IN' => $customerIds,
+        ]);
+        $query->where(['OrderDetails.order_state IN' => OrderDetail::ORDER_STATES_CASHLESS]);
+        $query->where(function (QueryExpression $exp) {
+            return $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.depositPaymentCashlessStartDate'));
+        });
+        $query->select([
+            'OrderDetails.id_customer',
+            'SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit'),
+        ]);
+        $query->groupBy('OrderDetails.id_customer');
+
+        $sumMap = [];
+        foreach ($query->toArray() as $result) {
+            $sumMap[(int) $result->id_customer] = (float) $result->SumTotalDeposit;
+        }
+
+        return $sumMap;
     }
 
     public function getVariableMemberFeeReducedPrice(float $price, int $variableMemberFee): float

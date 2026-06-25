@@ -119,23 +119,28 @@ trait CustomersFilterTrait
             'order' => $customersTable->getCustomerOrderClause($this->getRequestQuery('direction') ?? 'ASC'),
         ]);
 
-        $i = 0;
+        $customers = $customers->toArray();
+        $customerIds = Hash::extract($customers, '{n}.id_customer');
+
+        $creditBalanceMap = [];
+        if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+            $creditBalanceMap = $customersTable->getCreditBalanceByCustomerIds($customerIds);
+        }
+        $differentPickupDayCountMap = $orderDetailsTable->getDifferentPickupDayCountByCustomerIds($customerIds);
+        $lastPickupDayMap = $orderDetailsTable->getLastPickupDayByCustomerIds($customerIds);
 
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $customer->credit_balance = $customersTable->getCreditBalance($customer->id_customer);
+                $customer->credit_balance = $creditBalanceMap[$customer->id_customer] ?? 0;
             }
-            $customer->different_pickup_day_count = $orderDetailsTable->getDifferentPickupDayCountByCustomerId($customer->id_customer);
-            $customer->last_pickup_day = $orderDetailsTable->getLastPickupDay($customer->id_customer);
+            $customer->different_pickup_day_count = $differentPickupDayCountMap[$customer->id_customer] ?? 0;
+            $customer->last_pickup_day = $lastPickupDayMap[$customer->id_customer] ?? null;
             $customer->last_pickup_day_sort = '';
             if (!is_null($customer->last_pickup_day)) {
                 $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             }
             $customer->member_fee = $orderDetailsTable->getMemberFee($customer->id_customer, $year);
-            $i ++;
         }
-
-        $customers = $customers->toArray();
 
         if (in_array('sort', array_keys($this->getRequestQueryParams())) 
             && in_array($this->getRequestQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {

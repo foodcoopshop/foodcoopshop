@@ -294,18 +294,37 @@ class PaymentsTable extends AppTable
 
     public function getSum(int $customerId, int $type): float
     {
-        $conditions = [
-            $this->aliasField('id_customer') => $customerId,
+        $sumMap = $this->getSumByCustomerIdsAndType([$customerId], $type);
+        return $sumMap[$customerId] ?? 0;
+    }
+
+    /**
+     * @param list<int> $customerIds
+     * @return array<int, float>
+     */
+    public function getSumByCustomerIdsAndType(array $customerIds, int $type): array
+    {
+        if (empty($customerIds)) {
+            return [];
+        }
+
+        $query = $this->find('all', conditions: [
+            $this->aliasField('id_customer IN') => $customerIds,
             $this->aliasField('id_manufacturer') => 0,
             $this->aliasField('status') => APP_ON,
-        ];
+            $this->aliasField('type') => $type,
+        ]);
+        $query->select([
+            $this->aliasField('id_customer'),
+            'SumAmount' => $query->func()->sum($this->aliasField('amount')),
+        ]);
+        $query->groupBy($this->aliasField('id_customer'));
 
-        $conditions[$this->aliasField('type')] = $type;
+        $sumMap = [];
+        foreach ($query->toArray() as $sum) {
+            $sumMap[(int) $sum->id_customer] = (float) $sum->SumAmount;
+        }
 
-        $query = $this->find('all', conditions: $conditions);
-        $query->select(
-            ['SumAmount' => $query->func()->sum($this->aliasField('amount'))]
-        );
-        return (float) $query->toArray()[0]->SumAmount;
+        return $sumMap;
     }
 }

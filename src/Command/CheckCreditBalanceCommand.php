@@ -19,6 +19,7 @@ namespace App\Command;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use App\Model\Entity\Payment;
@@ -50,6 +51,8 @@ class CheckCreditBalanceCommand extends AppCommand
             'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
         ]);
         $customers = $customersTable->sortByVirtualField($customers, 'name');
+        $customerIds = Hash::extract($customers, '{n}.id_customer');
+        $creditBalanceMap = $customersTable->getCreditBalanceByCustomerIds($customerIds);
 
         $i = 0;
         $deltaSum = 0;
@@ -76,7 +79,7 @@ class CheckCreditBalanceCommand extends AppCommand
         }
 
         foreach ($customers as $customer) {
-            $delta = $customersTable->getCreditBalance($customer->id_customer);
+            $delta = $creditBalanceMap[$customer->id_customer] ?? 0;
             $personalTransactionCode = null;
             if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
                 $personalTransactionCode = $customersTable->getPersonalTransactionCode($customer->id_customer);
