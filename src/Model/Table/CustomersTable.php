@@ -3,21 +3,23 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Authentication\PasswordHasher\DefaultPasswordHasher;
-use App\Controller\Component\StringComponent;
-use Cake\Core\Configure;
-use Cake\Utility\Security;
-use Cake\Validation\Validator;
-use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
+use Cake\Core\Configure;
 use Cake\Routing\Router;
-use App\Model\Entity\Customer;
-use App\Model\Entity\Manufacturer;
-use App\Model\Entity\OrderDetail;
-use App\Model\Entity\Payment;
-use App\Services\FormatterService;
+use Cake\Utility\Security;
 use Cake\ORM\TableRegistry;
+use App\Model\Entity\Payment;
+use App\Model\Entity\Customer;
+use Cake\Validation\Validator;
 use Cake\ORM\Query\SelectQuery;
+use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Manufacturer;
+use App\Model\Table\PaymentsTable;
+use App\Services\FormatterService;
+use App\Model\Table\OrderDetailsTable;
+use App\Controller\Component\StringComponent;
+use Cake\Database\Expression\QueryExpression;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -638,7 +640,11 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance(int $customerId): float
     {
+        /** @var OrderDetailsTable $orderDetailsTable */
+
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+
+        /** @var PaymentsTable $paymentsTable */
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
         $paymentProductSum = $paymentsTable->getSum($customerId, Payment::TYPE_PRODUCT);
         $paymentPaybackSum = $paymentsTable->getSum($customerId, Payment::TYPE_PAYBACK);

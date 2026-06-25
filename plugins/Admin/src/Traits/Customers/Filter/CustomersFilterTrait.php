@@ -7,6 +7,10 @@ use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query\SelectQuery;
+use App\Model\Table\CustomersTable;
+use App\Model\Table\FeedbacksTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\AddressCustomersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,9 +50,16 @@ trait CustomersFilterTrait
     public function getCustomers(int|string $active, int $year, ?bool $newsletter): array
     {
 
+        /** @var CustomersTable $customersTable */
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
+
+        /** @var AddressCustomersTable $addressCustomersTable */
         $addressCustomersTable = TableRegistry::getTableLocator()->get('AddressCustomers');
+
+        /** @var OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+
+        /** @var FeedbacksTable $feedbacksTable */
         $feedbacksTable = TableRegistry::getTableLocator()->get('Feedbacks');
 
         $conditions = [];
