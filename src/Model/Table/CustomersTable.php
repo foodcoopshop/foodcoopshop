@@ -530,21 +530,22 @@ class CustomersTable extends AppTable
     private function getProductBalanceSumForCustomerIds(array $customerIds): float
     {
 
+        /** @var PaymentsTable $paymentsTable */
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+
+        /** @var OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
-        /** @var PaymentsTable $paymentsTable */
-        /** @var OrderDetailsTable $orderDetailsTable */
 
         $productPaymentMap = $paymentsTable->getSumByCustomerIdsAndType($customerIds, Payment::TYPE_PRODUCT);
         $paybackPaymentMap = $paymentsTable->getSumByCustomerIdsAndType($customerIds, Payment::TYPE_PAYBACK);
         $productOrderMap = $orderDetailsTable->getSumProductByCustomerIds($customerIds);
 
-        $productBalanceSum = 0;
+        $productBalanceSum = 0.0;
         foreach($customerIds as $customerId) {
-            $productPaymentSum = $productPaymentMap[$customerId] ?? 0;
-            $paybackPaymentSum = $paybackPaymentMap[$customerId] ?? 0;
-            $productOrderSum = $productOrderMap[$customerId] ?? 0;
+            $productPaymentSum = $productPaymentMap[$customerId] ?? 0.0;
+            $paybackPaymentSum = $paybackPaymentMap[$customerId] ?? 0.0;
+            $productOrderSum = $productOrderMap[$customerId] ?? 0.0;
             $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
             $productBalanceSum += $productBalance;
         }
@@ -620,19 +621,19 @@ class CustomersTable extends AppTable
     private function getDepositBalanceSumForCustomerIds(array $customerIds): float
     {
 
-        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
-        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-
         /** @var PaymentsTable $paymentsTable */
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+
         /** @var OrderDetailsTable $orderDetailsTable */
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $paymentDepositMap = $paymentsTable->getSumByCustomerIdsAndType($customerIds, Payment::TYPE_DEPOSIT);
         $depositOrderMap = $orderDetailsTable->getSumDepositByCustomerIds($customerIds);
 
-        $depositBalanceSum = 0;
+        $depositBalanceSum = 0.0;
         foreach($customerIds as $customerId) {
-            $paymentSumDeposit = $paymentDepositMap[$customerId] ?? 0;
-            $depositSum = $depositOrderMap[$customerId] ?? 0;
+            $paymentSumDeposit = $paymentDepositMap[$customerId] ?? 0.0;
+            $depositSum = $depositOrderMap[$customerId] ?? 0.0;
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;
         }
@@ -644,8 +645,8 @@ class CustomersTable extends AppTable
         $paymentDepositMap = TableRegistry::getTableLocator()->get('Payments')->getSumByCustomerIdsAndType([$customerId], Payment::TYPE_DEPOSIT);
         $depositSumMap = TableRegistry::getTableLocator()->get('OrderDetails')->getSumDepositByCustomerIds([$customerId]);
 
-        $paymentDepositSum = $paymentDepositMap[$customerId] ?? 0;
-        $depositSum = $depositSumMap[$customerId] ?? 0;
+        $paymentDepositSum = $paymentDepositMap[$customerId] ?? 0.0;
+        $depositSum = $depositSumMap[$customerId] ?? 0.0;
 
         $creditBalance = $paymentDepositSum - $depositSum;
         return FormatterService::assureCorrectFloat($creditBalance);
@@ -655,7 +656,7 @@ class CustomersTable extends AppTable
     public function getCreditBalance(int $customerId): float
     {
         $creditBalanceMap = $this->getCreditBalanceByCustomerIds([$customerId]);
-        return $creditBalanceMap[$customerId] ?? 0;
+        return $creditBalanceMap[$customerId] ?? 0.0;
     }
 
     /**
@@ -683,12 +684,12 @@ class CustomersTable extends AppTable
 
         $creditBalanceMap = [];
         foreach ($customerIds as $customerId) {
-            $paymentProductSum = $paymentProductMap[$customerId] ?? 0;
-            $paymentPaybackSum = $paymentPaybackMap[$customerId] ?? 0;
-            $paymentDepositSum = $paymentDepositMap[$customerId] ?? 0;
+            $paymentProductSum = $paymentProductMap[$customerId] ?? 0.0;
+            $paymentPaybackSum = $paymentPaybackMap[$customerId] ?? 0.0;
+            $paymentDepositSum = $paymentDepositMap[$customerId] ?? 0.0;
 
-            $productSum = $productOrderMap[$customerId] ?? 0;
-            $depositSum = $depositOrderMap[$customerId] ?? 0;
+            $productSum = $productOrderMap[$customerId] ?? 0.0;
+            $depositSum = $depositOrderMap[$customerId] ?? 0.0;
 
             $creditBalance = $paymentProductSum - $paymentPaybackSum + $paymentDepositSum - $productSum - $depositSum;
             $creditBalanceMap[$customerId] = FormatterService::assureCorrectFloat($creditBalance);

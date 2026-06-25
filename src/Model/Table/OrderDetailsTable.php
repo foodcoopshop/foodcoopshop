@@ -240,7 +240,7 @@ class OrderDetailsTable extends AppTable
 
     /**
      * @param list<int> $customerIds
-     * @return array<int, float|int>
+     * @return array<int, float>
      */
     public function getMemberFeeByCustomerIds(array $customerIds, int $year): array
     {
@@ -643,7 +643,7 @@ class OrderDetailsTable extends AppTable
 
     /**
      * @param list<int> $customerIds
-        * @return array<int, OrderDetail>
+     * @return array<int, OrderDetail>
      */
     public function getLastPickupDayByCustomerIds(array $customerIds): array
     {
@@ -706,9 +706,8 @@ class OrderDetailsTable extends AppTable
         contain: [
             'Products',
         ]);
-        /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
-
         if ($year != '') {
+            /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
             $query->where(function (QueryExpression $exp) use ($year) {
                 return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
             });

@@ -295,7 +295,7 @@ class PaymentsTable extends AppTable
     public function getSum(int $customerId, int $type): float
     {
         $sumMap = $this->getSumByCustomerIdsAndType([$customerId], $type);
-        return $sumMap[$customerId] ?? 0;
+        return $sumMap[$customerId] ?? 0.0;
     }
 
     /**
