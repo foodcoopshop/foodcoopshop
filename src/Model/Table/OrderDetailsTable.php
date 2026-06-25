@@ -723,11 +723,8 @@ class OrderDetailsTable extends AppTable
 
     public function getSumProduct(int|string $customerId): float
     {
-        $query = $this->prepareSumProduct($customerId);
-        $query->select(
-            ['SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl')]
-        );
-        return (float) $query->toArray()[0]->SumTotalPaid;
+        $sumMap = $this->getSumProductByCustomerIds([(int) $customerId]);
+        return $sumMap[(int) $customerId] ?? 0.0;
     }
 
     /**
@@ -760,17 +757,8 @@ class OrderDetailsTable extends AppTable
 
     public function getSumDeposit(int $customerId): float
     {
-        $query = $this->find('all', conditions: [
-            'OrderDetails.id_customer' => $customerId,
-        ]);
-        $query->where(['OrderDetails.order_state IN' => OrderDetail::ORDER_STATES_CASHLESS]);
-        $query->where(function (QueryExpression $exp) {
-            return $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.depositPaymentCashlessStartDate'));
-        });
-        $query->select(
-            ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
-        );
-        return (float) $query->toArray()[0]->SumTotalDeposit;
+        $sumMap = $this->getSumDepositByCustomerIds([$customerId]);
+        return $sumMap[$customerId] ?? 0.0;
     }
 
     /**
