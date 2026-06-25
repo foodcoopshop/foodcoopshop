@@ -128,14 +128,8 @@ class OrderDetailsTable extends AppTable
 
     public function getLastPickupDay(int $customerId): ?OrderDetail
     {
-        $query = $this->find('all',
-        conditions: [
-            'OrderDetails.id_customer' => $customerId,
-        ],
-        order: [
-            'OrderDetails.pickup_day' => 'DESC'
-        ])->first();
-        return $query;
+        $lastPickupDayMap = $this->getLastPickupDayByCustomerIds([$customerId]);
+        return $lastPickupDayMap[$customerId] ?? null;
     }
 
     private function getLastOrFirstOrderYear(string $manufacturerId, string $sort): ?OrderDetail
@@ -240,35 +234,47 @@ class OrderDetailsTable extends AppTable
 
     public function getMemberFee(int $customerId, int $year): float|int
     {
+        $memberFeeMap = $this->getMemberFeeByCustomerIds([$customerId], $year);
+        return $memberFeeMap[$customerId] ?? 0;
+    }
 
-        $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');
-
-        if ($productIds != '') {
-
-            $conditions = [
-                'OrderDetails.id_customer' => $customerId,
-                'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
-            ];
-            $query = $this->find('all', conditions: $conditions);
-            if ($year !== 0) {
-                $query->where(function (QueryExpression $exp) use ($year) {
-                    return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
-                });
-            }
-            $query->select([
-                'SumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
-            ]);
-            $query->groupBy('OrderDetails.id_customer');
-            $result = $query->toArray();
-
-            if (isset($result[0])) {
-                return $result[0]->SumPriceIncl;
-            }
-
+    /**
+     * @param list<int> $customerIds
+     * @return array<int, float|int>
+     */
+    public function getMemberFeeByCustomerIds(array $customerIds, int $year): array
+    {
+        if (empty($customerIds)) {
+            return [];
         }
 
-        return 0;
+        $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');
+        if ($productIds == '') {
+            return [];
+        }
 
+        $conditions = [
+            'OrderDetails.id_customer IN' => $customerIds,
+            'OrderDetails.product_id IN' => explode(',', $productIds),
+        ];
+        $query = $this->find('all', conditions: $conditions);
+        if ($year !== 0) {
+            $query->where(function (QueryExpression $exp) use ($year) {
+                return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
+            });
+        }
+        $query->select([
+            'OrderDetails.id_customer',
+            'SumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+        ]);
+        $query->groupBy('OrderDetails.id_customer');
+
+        $memberFeeMap = [];
+        foreach ($query->toArray() as $result) {
+            $memberFeeMap[(int) $result->id_customer] = (float) $result->SumPriceIncl;
+        }
+
+        return $memberFeeMap;
     }
 
     /**
@@ -604,13 +610,8 @@ class OrderDetailsTable extends AppTable
 
     public function getDifferentPickupDayCountByCustomerId(int|string $customerId): int
     {
-        $query = $this->find('all', conditions: [
-            'OrderDetails.id_customer' => $customerId,
-        ]);
-        $query->select([
-            'different_pickup_day_count' => $query->func()->count('DISTINCT(OrderDetails.pickup_day)'),
-        ]);
-        return $query->toArray()[0]->different_pickup_day_count;
+        $countMap = $this->getDifferentPickupDayCountByCustomerIds([(int) $customerId]);
+        return $countMap[(int) $customerId] ?? 0;
     }
 
     /**

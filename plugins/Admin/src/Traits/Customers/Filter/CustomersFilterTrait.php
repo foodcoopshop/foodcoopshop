@@ -128,6 +128,7 @@ trait CustomersFilterTrait
         }
         $differentPickupDayCountMap = $orderDetailsTable->getDifferentPickupDayCountByCustomerIds($customerIds);
         $lastPickupDayMap = $orderDetailsTable->getLastPickupDayByCustomerIds($customerIds);
+        $memberFeeMap = $orderDetailsTable->getMemberFeeByCustomerIds($customerIds, $year);
 
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
@@ -139,7 +140,7 @@ trait CustomersFilterTrait
             if (!is_null($customer->last_pickup_day)) {
                 $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             }
-            $customer->member_fee = $orderDetailsTable->getMemberFee($customer->id_customer, $year);
+            $customer->member_fee = $memberFeeMap[$customer->id_customer] ?? 0;
         }
 
         if (in_array('sort', array_keys($this->getRequestQueryParams())) 
