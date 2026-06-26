@@ -38,6 +38,7 @@ if (count($payments) == 0) {
 
     echo '<table class="list">';
     echo '<tr class="sort">';
+        echo '<th class="hide">'.__('Id').'</th>';
         echo '<th>'.__('Date').'</th>';
         echo '<th class="stretch">'.__('Text').'</th>';
         echo '<th class="right">' . $column_title . '</th>';

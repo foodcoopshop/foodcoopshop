@@ -599,7 +599,7 @@ body.payments.product table.list,
 body.payments.overview table.list,
 body.payments .bottom-button-container,
 body.payments h2 {
-    width: 650px;
+    width: 800px;
 }
 body.payments.product h2.personal-transaction-code {
     margin-top: 10px;
