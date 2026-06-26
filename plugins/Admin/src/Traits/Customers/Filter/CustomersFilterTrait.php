@@ -46,9 +46,9 @@ trait CustomersFilterTrait
     }
 
     /**
-    * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>
+    * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -153,7 +153,7 @@ trait CustomersFilterTrait
                 $path .= '_sort';
                 $type = 'locale';
             }
-            $customers = Hash::sort($customers, $path, $this->getRequestQuery('direction'), [
+            $customers = Hash::sort($customers->toArray(), $path, $this->getRequestQuery('direction'), [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);
