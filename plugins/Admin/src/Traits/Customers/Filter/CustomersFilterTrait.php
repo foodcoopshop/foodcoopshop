@@ -11,6 +11,7 @@ use App\Model\Table\CustomersTable;
 use App\Model\Table\FeedbacksTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\AddressCustomersTable;
+use Cake\Datasource\Paging\PaginatedResultSet;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,9 +46,9 @@ trait CustomersFilterTrait
     }
 
     /**
-     * @return list<\App\Model\Entity\Customer>
-     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): array
+    * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>
+    */
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery
     {
 
         /** @var CustomersTable $customersTable */
@@ -100,6 +101,8 @@ trait CustomersFilterTrait
             'member_fee' => 'Customers.id_customer',
         ]);
         $query->select($addressCustomersTable);
+        $customerIds = $query->all()->extract('id_customer')->toList();
+
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
@@ -118,9 +121,6 @@ trait CustomersFilterTrait
             ],
             'order' => $customersTable->getCustomerOrderClause($this->getRequestQuery('direction') ?? 'ASC'),
         ]);
-
-        $customers = $customers->toArray();
-        $customerIds = Hash::extract($customers, '{n}.id_customer');
 
         $creditBalanceMap = [];
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {

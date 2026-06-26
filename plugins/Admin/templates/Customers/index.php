@@ -313,7 +313,7 @@ foreach ($customers as $customer) {
             }
         } else {
             $tooltipContent = __('Create_feedback_for_{0}.', [
-                $customer->name,
+                $customer->name_without_manufacturer_check,
             ]);
             echo $this->Html->link(
                 '<i class="far fa-heart ok"></i>',
