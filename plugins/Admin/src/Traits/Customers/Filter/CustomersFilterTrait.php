@@ -85,10 +85,12 @@ trait CustomersFilterTrait
         }
 
         $query = $customersTable->find('all',
-        conditions: $conditions,
-        contain: $contain);
-        $query = $customersTable->addCustomersNameForOrderSelect($query);
+            conditions: $conditions,
+            contain: $contain
+        );
+
         /** @var SelectQuery<\Cake\Datasource\EntityInterface> $query */
+        $query = $customersTable->addCustomersNameForOrderSelect($query);
         $query->select($customersTable);
         $query->select($addressCustomersTable);
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
