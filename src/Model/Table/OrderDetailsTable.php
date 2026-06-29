@@ -650,19 +650,16 @@ class OrderDetailsTable extends AppTable
             'OrderDetails.id_customer IN' => $customerIds,
         ]);
         $query->select([
-            'OrderDetails.id_customer',
-            'OrderDetails.pickup_day',
+            'id_customer' => 'OrderDetails.id_customer',
+            'max_pickup_day' => $query->func()->max('OrderDetails.pickup_day', ['date']),
         ]);
-        $query->orderBy([
-            'OrderDetails.id_customer' => 'ASC',
-            'OrderDetails.pickup_day' => 'DESC',
-        ]);
+        $query->groupBy(['OrderDetails.id_customer']);
+
+        $results = $query->disableHydration();
 
         $lastPickupDayMap = [];
-        foreach ($query as $orderDetail) {
-            if (!isset($lastPickupDayMap[$orderDetail->id_customer])) {
-                $lastPickupDayMap[(int) $orderDetail->id_customer] = $orderDetail->pickup_day;
-            }
+        foreach ($results as $row) {
+            $lastPickupDayMap[(int) $row['id_customer']] = $row['max_pickup_day'];
         }
 
         return $lastPickupDayMap;
