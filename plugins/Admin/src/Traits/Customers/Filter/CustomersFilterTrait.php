@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Customers\Filter;
 
+use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -139,8 +140,8 @@ trait CustomersFilterTrait
             $customer->different_pickup_day_count = $differentPickupDayCountMap[$customer->id_customer] ?? 0;
             $customer->last_pickup_day = $lastPickupDayMap[$customer->id_customer] ?? null;
             $customer->last_pickup_day_sort = '';
-            if (!is_null($customer->last_pickup_day)) {
-                $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            if (!empty($customer->last_pickup_day)) {
+                $customer->last_pickup_day_sort = $customer->last_pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             }
             $customer->member_fee = $memberFeeMap[$customer->id_customer] ?? 0;
         }

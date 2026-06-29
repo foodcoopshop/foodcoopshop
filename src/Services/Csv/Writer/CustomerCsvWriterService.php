@@ -82,7 +82,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
 
             $lastPickupDay = '';
             if (!empty($customer->last_pickup_day)) {
-                $lastPickupDay = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+                $lastPickupDay = $customer->last_pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             }
 
             $record = [

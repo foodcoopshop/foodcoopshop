@@ -3,18 +3,19 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Services\DeliveryRhythmService;
-use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
+use stdClass;
+use Cake\I18n\Date;
 use Cake\Core\Configure;
-use Cake\Validation\Validator;
-use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
 use App\Model\Entity\Cart;
-use App\Model\Entity\OrderDetail;
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\TableRegistry;
-use stdClass;
 use App\Model\Entity\Customer;
+use Cake\Validation\Validator;
+use Cake\ORM\Query\SelectQuery;
+use App\Model\Entity\OrderDetail;
+use App\Services\DeliveryRhythmService;
+use Cake\Database\Expression\QueryExpression;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -124,12 +125,6 @@ class OrderDetailsTable extends AppTable
             'OrderDetailUnits.unit_name',
         ]);
         return $query;
-    }
-
-    public function getLastPickupDay(int $customerId): ?OrderDetail
-    {
-        $lastPickupDayMap = $this->getLastPickupDayByCustomerIds([$customerId]);
-        return $lastPickupDayMap[$customerId] ?? null;
     }
 
     private function getLastOrFirstOrderYear(string $manufacturerId, string $sort): ?OrderDetail
@@ -643,7 +638,7 @@ class OrderDetailsTable extends AppTable
 
     /**
      * @param list<int> $customerIds
-     * @return array<int, OrderDetail>
+     * @return array<int, Date>
      */
     public function getLastPickupDayByCustomerIds(array $customerIds): array
     {
@@ -664,9 +659,9 @@ class OrderDetailsTable extends AppTable
         ]);
 
         $lastPickupDayMap = [];
-        foreach ($query->toArray() as $orderDetail) {
+        foreach ($query as $orderDetail) {
             if (!isset($lastPickupDayMap[$orderDetail->id_customer])) {
-                $lastPickupDayMap[(int) $orderDetail->id_customer] = $orderDetail;
+                $lastPickupDayMap[(int) $orderDetail->id_customer] = $orderDetail->pickup_day;
             }
         }
 
