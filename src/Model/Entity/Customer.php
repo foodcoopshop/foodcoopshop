@@ -3,15 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use ArrayAccess;
 use Cake\Core\Configure;
 use App\Model\Entity\Cart;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query\SelectQuery;
-use Cake\Datasource\EntityInterface;
 use Authentication\IdentityInterface;
 use App\Services\OrderCustomerService;
-use App\Model\Table\ManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -83,7 +80,7 @@ class Customer extends AppEntity implements IdentityInterface
         return $this->_manufacturer;
     }
 
-    protected function _getName(): string
+    protected function _getNameWithoutManufacturerCheck(): string
     {
         $name = $this->firstname . ' ' . $this->lastname;
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
@@ -94,6 +91,12 @@ class Customer extends AppEntity implements IdentityInterface
             $name = $this->firstname;
         }
 
+        return $name;
+    }
+
+    protected function _getName(): string
+    {
+        $name = $this->name_without_manufacturer_check;
         if ($this->isManufacturer()) {
             $name = $this->manufacturer->name;
         }

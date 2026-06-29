@@ -11,6 +11,7 @@ use App\Model\Table\CustomersTable;
 use App\Model\Table\FeedbacksTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\AddressCustomersTable;
+use Cake\Datasource\Paging\PaginatedResultSet;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,9 +46,9 @@ trait CustomersFilterTrait
     }
 
     /**
-     * @return list<\App\Model\Entity\Customer>
-     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): array
+    * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
+    */
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -84,10 +85,12 @@ trait CustomersFilterTrait
         }
 
         $query = $customersTable->find('all',
-        conditions: $conditions,
-        contain: $contain);
-        $query = $customersTable->addCustomersNameForOrderSelect($query);
+            conditions: $conditions,
+            contain: $contain
+        );
+
         /** @var SelectQuery<\Cake\Datasource\EntityInterface> $query */
+        $query = $customersTable->addCustomersNameForOrderSelect($query);
         $query->select($customersTable);
         $query->select($addressCustomersTable);
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
@@ -100,6 +103,8 @@ trait CustomersFilterTrait
             'member_fee' => 'Customers.id_customer',
         ]);
         $query->select($addressCustomersTable);
+        $customerIds = $query->all()->extract('id_customer')->toList();
+
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
@@ -119,23 +124,26 @@ trait CustomersFilterTrait
             'order' => $customersTable->getCustomerOrderClause($this->getRequestQuery('direction') ?? 'ASC'),
         ]);
 
-        $i = 0;
+        $creditBalanceMap = [];
+        if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+            $creditBalanceMap = $customersTable->getCreditBalanceByCustomerIds($customerIds);
+        }
+        $differentPickupDayCountMap = $orderDetailsTable->getDifferentPickupDayCountByCustomerIds($customerIds);
+        $lastPickupDayMap = $orderDetailsTable->getLastPickupDayByCustomerIds($customerIds);
+        $memberFeeMap = $orderDetailsTable->getMemberFeeByCustomerIds($customerIds, $year);
 
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $customer->credit_balance = $customersTable->getCreditBalance($customer->id_customer);
+                $customer->credit_balance = $creditBalanceMap[$customer->id_customer] ?? 0;
             }
-            $customer->different_pickup_day_count = $orderDetailsTable->getDifferentPickupDayCountByCustomerId($customer->id_customer);
-            $customer->last_pickup_day = $orderDetailsTable->getLastPickupDay($customer->id_customer);
+            $customer->different_pickup_day_count = $differentPickupDayCountMap[$customer->id_customer] ?? 0;
+            $customer->last_pickup_day = $lastPickupDayMap[$customer->id_customer] ?? null;
             $customer->last_pickup_day_sort = '';
-            if (!is_null($customer->last_pickup_day)) {
-                $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            if (!empty($customer->last_pickup_day)) {
+                $customer->last_pickup_day_sort = $customer->last_pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             }
-            $customer->member_fee = $orderDetailsTable->getMemberFee($customer->id_customer, $year);
-            $i ++;
+            $customer->member_fee = $memberFeeMap[$customer->id_customer] ?? 0;
         }
-
-        $customers = $customers->toArray();
 
         if (in_array('sort', array_keys($this->getRequestQueryParams())) 
             && in_array($this->getRequestQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
@@ -145,7 +153,7 @@ trait CustomersFilterTrait
                 $path .= '_sort';
                 $type = 'locale';
             }
-            $customers = Hash::sort($customers, $path, $this->getRequestQuery('direction'), [
+            $customers = Hash::sort($customers->toArray(), $path, $this->getRequestQuery('direction'), [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);

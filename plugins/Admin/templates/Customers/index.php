@@ -313,7 +313,7 @@ foreach ($customers as $customer) {
             }
         } else {
             $tooltipContent = __('Create_feedback_for_{0}.', [
-                $customer->name,
+                $customer->name_without_manufacturer_check,
             ]);
             echo $this->Html->link(
                 '<i class="far fa-heart ok"></i>',
@@ -334,7 +334,7 @@ foreach ($customers as $customer) {
 
     echo '<td>';
         if (!empty($customer->last_pickup_day)) {
-            echo $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
+            echo $customer->last_pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
         }
     echo '</td>';
 

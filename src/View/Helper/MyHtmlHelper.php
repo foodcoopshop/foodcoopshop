@@ -312,7 +312,7 @@ class MyHtmlHelper extends HtmlHelper
         if ($customer === null) {
             return self::getDeletedCustomerName();
         }
-        return $customer->name;
+        return $customer->name_without_manufacturer_check;
     }
 
     public function getDeletedCustomerName(): string
