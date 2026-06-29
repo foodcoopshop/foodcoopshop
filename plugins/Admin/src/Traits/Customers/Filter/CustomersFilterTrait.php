@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Customers\Filter;
 
-use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\Log\Log;
 use Cake\Core\Configure;
 use App\Model\Entity\Cart;
 use Cake\ORM\TableRegistry;
