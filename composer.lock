@@ -1026,16 +1026,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "4.1.4",
+            "version": "4.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "6c467dc011a4e14c13d59c27c70ec9db3fa12317"
+                "reference": "e5256d3e5884d97fd9c6eada513a8f7a1d1027fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/6c467dc011a4e14c13d59c27c70ec9db3fa12317",
-                "reference": "6c467dc011a4e14c13d59c27c70ec9db3fa12317",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/e5256d3e5884d97fd9c6eada513a8f7a1d1027fa",
+                "reference": "e5256d3e5884d97fd9c6eada513a8f7a1d1027fa",
                 "shasum": ""
             },
             "require": {
@@ -1082,7 +1082,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/4.1.4"
+                "source": "https://github.com/Intervention/image/tree/4.1.5"
             },
             "funding": [
                 {
@@ -1098,7 +1098,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2026-06-15T17:58:51+00:00"
+            "time": "2026-06-23T13:22:48+00:00"
         },
         {
             "name": "jaybizzle/crawler-detect",
