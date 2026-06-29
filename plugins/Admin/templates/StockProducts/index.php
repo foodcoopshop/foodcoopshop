@@ -70,9 +70,9 @@ echo '<table class="list">';
 echo '<tr class="sort">';
     echo '<th class="stretch">' . __('Product') . '</th>';
     echo '<th class="stretch">' . __('Manufacturer') . '</th>';
-    echo '<th>' . __('Amount') . '</th>';
-    echo '<th>' . $priceLabel . '</th>';
-    echo '<th>' . __('Stock_value') . '</th>';
+    echo '<th class="right">' . __('Amount') . '</th>';
+    echo '<th class="right">' . $priceLabel . '</th>';
+    echo '<th class="right">' . __('Stock_value') . '</th>';
 echo '</tr>';
 
 foreach ($products as $product) {
@@ -117,8 +117,8 @@ foreach ($products as $product) {
 echo '<tr>';
     $count = count($products);
     echo '<td colspan="2"><b>' . $count . '</b> '.__('{0,plural,=1{record} other{records}}', $count).'</td>';
-    echo '<td colspan="2"><b>' . __('Sum') . '</b></td>';
-    echo '<td><b>' . $this->Number->formatAsCurrency($stockValueSum) . '</b></td>';
+    echo '<td colspan="2" class="right"><b>' . __('Sum') . '</b></td>';
+    echo '<td class="right"><b>' . $this->Number->formatAsCurrency($stockValueSum) . '</b></td>';
 echo '</tr>';
 echo '</table>';
 echo '</div>';
