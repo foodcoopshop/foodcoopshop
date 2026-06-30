@@ -1103,7 +1103,7 @@ body.carts .load-last-order-details,
 .cart span.product-name-wrapper span.unity {
     margin-left: 2px;
     color: #515151;
-    font-size: 11px;
+    font-size: 13px;
 }
 .cart span.amount {
     float: left;
@@ -1270,7 +1270,6 @@ body.carts .cart:not(#cart) span.right .delete {
 }
 body.carts .cart:not(#cart) span.product-name-wrapper span.unity {
     float: left;
-    font-size: 13px;
     margin-top: 1px;
 }
 body.carts .cart:not(#cart) p.deposit-sum-wrapper,
@@ -1323,9 +1322,6 @@ body.carts .cart:not(#cart) .image {
 }
 body.carts .cart:not(#cart) .image img {
     width: 100px;
-}
-body.carts .cart:not(#cart) {
-    font-size: 15px;
 }
 body.carts .cart:not(#cart) span.right {
     position: absolute;
