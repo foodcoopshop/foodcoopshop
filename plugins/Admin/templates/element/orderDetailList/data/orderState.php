@@ -18,7 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 if ($groupBy == '') {
-    echo '<td>';
+    echo '<td class="center">';
         if (isset($this->MyHtml->getOrderStates()[$orderDetail->order_state])) {
             $title = 'ID: ' .  $orderDetail->id_order_detail;
             $title .= '<br />' . __('Order_state') . ': ' . $this->MyHtml->getOrderStates()[$orderDetail->order_state];

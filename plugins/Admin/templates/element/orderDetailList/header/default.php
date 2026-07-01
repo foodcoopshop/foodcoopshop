@@ -49,7 +49,7 @@ if (count($pickupDay) == 2) {
     echo '<th>'.$sortOrLabel('OrderDetails.pickup_day', __('Pickup_day')) . '</th>';
 }
 
-echo '<th>'.$sortOrLabel('OrderDetails.order_state', __('Status')).'</th>';
+echo '<th class="center">'.$sortOrLabel('OrderDetails.order_state', __('Status')).'</th>';
 echo '<th></th>';
 
 

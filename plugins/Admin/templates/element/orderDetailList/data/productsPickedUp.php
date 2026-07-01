@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 if ($groupBy == 'customer' && count($pickupDay) == 1) {
 
-    echo '<td>';
+    echo '<td class="center">';
         if ($orderDetail['products_picked_up']) {
             $buttonText = __('Yes');
             $iconClass = 'fa-home ok';

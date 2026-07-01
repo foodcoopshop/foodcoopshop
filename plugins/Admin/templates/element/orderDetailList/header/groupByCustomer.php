@@ -33,7 +33,7 @@ if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless())
 }
 
 if (count($pickupDay) == 1) {
-    echo '<th>'.__('Picked_up').'</th>';
+    echo '<th class="center">'.__('Picked_up').'</th>';
 }
 
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
