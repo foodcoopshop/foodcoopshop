@@ -125,8 +125,9 @@ class ActionLogsController extends AdminAppController
         ]);
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
-            $exp->gte('DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
-            $exp->lte('DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            $dateToNextDay = date('Y-m-d', strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . ' +1 day'));
+            $exp->gte('ActionLogs.date', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lt('ActionLogs.date', $dateToNextDay);
             return $exp;
         });
 
