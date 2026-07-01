@@ -249,7 +249,7 @@ class PurchasePriceProductsTable extends AppTable
 
         $taxRate = 0;
         if (! empty($tax)) {
-            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
+            $taxRate = $tax->rate;
         }
 
         $entity2Save = $this->getEntityToSaveByProductId($productId);
