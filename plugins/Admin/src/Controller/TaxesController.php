@@ -129,6 +129,13 @@ class TaxesController extends AdminAppController
 
         $this->set('taxes', $taxes);
 
+        $productsTable = $this->getTableLocator()->get('Products');
+        $zeroTaxProductCount = $productsTable->find('all', conditions: [
+            'id_tax' => 0,
+            'active IN' => [APP_ON, APP_OFF],
+        ])->count();
+        $this->set('zeroTaxProductCount', $zeroTaxProductCount);
+
         $this->set('title_for_layout', __('Tax_rates'));
     }
 }
