@@ -243,7 +243,7 @@ trait OrderDetailsFilterTrait
             $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
             $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
             if (!empty($orderDetail->customer)) {
-                $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
+                $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name_without_manufacturer_check));
             } else {
                 $customerName[] = '';
             }

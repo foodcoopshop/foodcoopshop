@@ -143,7 +143,7 @@ foreach ($blogPosts as $blogPost) {
         echo $blogPost->customer->manufacturer->name;
     } else {
         if (!empty($blogPost->customer)) {
-            $customerName = $blogPost->customer->name;
+            $customerName = $this->Html->getNameRespectingIsDeleted($blogPost->customer);
             if ($identity->isManufacturer() && $identity->getManufacturerAnonymizeCustomers()) {
                 $customerName = $this->Html->anonymizeCustomerName($customerName, $blogPost->customer->id_customer);
             }

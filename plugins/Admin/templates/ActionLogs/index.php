@@ -99,7 +99,7 @@ foreach ($actionLogs as $actionLog) {
 
     echo '<td>';
     if ($actionLog->customer) {
-        $name = $actionLog->customer->name;
+        $name = $this->Html->getNameRespectingIsDeleted($actionLog->customer);
         if ($identity->isManufacturer() && $identity->getManufacturerAnonymizeCustomers()) {
             $name = $this->Html->anonymizeCustomerName($name, $actionLog->customer->id_customer);
         }

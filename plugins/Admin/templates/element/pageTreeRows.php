@@ -108,7 +108,7 @@ foreach ($pages as $page) {
 
     echo '<td>';
     if (!empty($page->customer)) {
-        echo $page->customer->name;
+        echo $this->Html->getNameRespectingIsDeleted($page->customer);
     }
     echo '</td>';
 

@@ -78,7 +78,7 @@ echo '<div class="manufacturers-wrapper">';
                     ['class' => 'btn btn-outline-light']
                 );
                 if ($identity !== null && !empty($manufacturer->customer) && !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                    echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name . '</i>';
+                    echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name_without_manufacturer_check . '</i>';
                 }
             echo '</div>';
 

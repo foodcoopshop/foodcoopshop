@@ -742,7 +742,7 @@ class CustomersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($customers as $customer) {
-            $userNameForDropdown = $customer->name;
+            $userNameForDropdown = $customer->name_without_manufacturer_check;
 
             $manufacturerIncluded = false;
             if ($includeManufacturers) {
