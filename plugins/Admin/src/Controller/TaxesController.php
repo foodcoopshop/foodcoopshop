@@ -123,6 +123,7 @@ class TaxesController extends AdminAppController
                 'Taxes.rate', 'Taxes.position', 'Taxes.product_count',
             ],
             'order' => [
+                'Taxes.active' => 'DESC',
                 'Taxes.rate' => 'ASC'
             ]
         ]);
