@@ -105,8 +105,8 @@ class OrderDetailsTable extends AppTable
         ]);
         /** @var SelectQuery<\App\Model\Entity\OrderDetail> $query */
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
-            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
-            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            $exp->gte('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
             return $exp;
         });
         $query->select([
@@ -395,7 +395,7 @@ class OrderDetailsTable extends AppTable
     {
         return [
             'OrderDetails.id_customer' => $customerId,
-            'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
+            'OrderDetails.pickup_day > CURDATE()'
         ];
     }
 
@@ -464,8 +464,8 @@ class OrderDetailsTable extends AppTable
             });
         } else {
             $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
-                $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
-                $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+                $exp->gte('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+                $exp->lte('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
                 return $exp;
             });
         }
@@ -546,7 +546,7 @@ class OrderDetailsTable extends AppTable
         // Date filter condition
         $depositForManufacturersStartDate = Configure::read('app.depositForManufacturersStartDate');
         $query->where(function (QueryExpression $exp) use ($depositForManufacturersStartDate) {
-            return $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $depositForManufacturersStartDate);
+            return $exp->gte('OrderDetails.pickup_day', $depositForManufacturersStartDate);
         });
         
         // Add grouping and ordering based on parameter
@@ -929,10 +929,10 @@ class OrderDetailsTable extends AppTable
 
         $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
-            $conditions[] = $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
-            $conditions[] = $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[1]));
+            $conditions[] = $exp->gte('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
+            $conditions[] = $exp->lte('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[1]));
         } else {
-            $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
+            $conditions[] = $exp->eq('OrderDetails.pickup_day', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
         }
 
         if ($productId != '') {
