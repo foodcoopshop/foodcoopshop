@@ -240,12 +240,14 @@ td.amount .fa-times {
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    clear: both;
 }
 #content .form-buttons-left {
     float: left;
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    clear: both;
 }
 #content .form-buttons-left.has-delete-info {
     width: 100%;
@@ -253,7 +255,7 @@ td.amount .fa-times {
 }
 #content .form-buttons a {
     float: left;
-    margin-left: 3px;
+    margin-left: 5px;
 }
 #content .form-buttons-left a {
     float: left;
@@ -645,6 +647,7 @@ body.payments .bottom-button-container {
 }
 form.fcs-form {
     padding: 10px;
+    max-width: var(--content-small-max-width);
 }
 h2 {
     font-size: 20px;
