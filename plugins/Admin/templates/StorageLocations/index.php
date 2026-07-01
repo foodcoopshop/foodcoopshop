@@ -81,20 +81,19 @@ foreach ($storageLocations as $storageLocation) {
     echo '</td>';
 
     echo '<td class="hide">';
-    echo $storageLocation->id;
+        echo $storageLocation->id;
     echo '</td>';
-
 
     echo '<td >';
-    echo $storageLocation->name;
+        echo $storageLocation->name;
     echo '</td>';
 
     echo '<td class="right">';
-    echo $storageLocation->product_count;
+        echo $this->Number->formatAsDecimal($storageLocation->product_count, 0);
     echo '</td>';
 
     echo '<td class="right">';
-    echo $storageLocation->position;
+        echo $storageLocation->position;
     echo '</td>';
 
     echo '</tr>';

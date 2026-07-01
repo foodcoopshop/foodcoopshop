@@ -30,6 +30,9 @@ class TaxesTable extends AppTable
         $this->setTable('tax');
         parent::initialize($config);
         $this->setPrimaryKey('id_tax');
+        $this->hasMany('Products', [
+            'foreignKey' => 'id_tax'
+        ]);
     }
 
     public function validationDefault(Validator $validator): Validator

@@ -58,6 +58,7 @@ echo '<tr class="sort">';
 echo '<th class="hide">'.__('ID').'</th>';
 echo '<th></th>';
 echo '<th class="stretch">' . $this->Paginator->sort('Taxes.rate', __('Tax_rate_admin')) . '</th>';
+echo '<th class="right">' . $this->Paginator->sort('Taxes.product_count', __('Products')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Taxes.active', __('Active')) . '</th>';
 echo '</tr>';
 
@@ -90,7 +91,11 @@ foreach ($taxes as $tax) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Number->formatAsPercent($tax->rate);
+        echo $this->Number->formatAsPercent($tax->rate);
+    echo '</td>';
+
+    echo '<td class="right">';
+        echo $this->Number->formatAsDecimal($tax->product_count, 0);
     echo '</td>';
 
     echo '<td align="center">';
@@ -105,7 +110,7 @@ foreach ($taxes as $tax) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="5"><b>' . $i . '</b> '.__('{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

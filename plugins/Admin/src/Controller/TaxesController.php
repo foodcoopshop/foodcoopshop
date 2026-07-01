@@ -109,9 +109,18 @@ class TaxesController extends AdminAppController
 
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $query = $taxesTable->find('all', conditions: $conditions);
+        $query->select($taxesTable)
+            ->select([
+                'product_count' => $query->func()->count('Products.id_product')
+            ])
+            ->leftJoinWith('Products', function ($q) {
+                return $q->where(['Products.active IN' => [APP_ON, APP_OFF]]);
+            })
+            ->groupBy(['Taxes.id_tax']);
+
         $taxes = $this->paginate($query, [
             'sortableFields' => [
-                'Taxes.rate', 'Taxes.position'
+                'Taxes.rate', 'Taxes.position', 'Taxes.product_count',
             ],
             'order' => [
                 'Taxes.rate' => 'ASC'
