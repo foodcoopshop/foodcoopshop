@@ -228,8 +228,9 @@ foodcoopshop.Admin = {
 
             // copy first row with sums
             if (!table.hasClass('no-clone-last-row')) {
-                var lastRow = table.find('tr:last-child').clone();
-                table.find('tr:first-child').after(lastRow);
+                var rows = table.find('> tbody > tr, > tr');
+                var lastRow = rows.last().clone();
+                rows.first().after(lastRow);
             }
             table.show();
 
