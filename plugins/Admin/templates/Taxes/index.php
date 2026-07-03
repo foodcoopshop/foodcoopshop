@@ -74,7 +74,7 @@ echo '</td>';
 echo '<td></td>';
 
 echo '<td>';
-    echo $this->Number->formatAsPercent(0);
+    echo $this->Number->formatTaxRate(0) . '%';
 echo '</td>';
 
 echo '<td class="right">';
@@ -114,7 +114,7 @@ foreach ($taxes as $tax) {
     echo '</td>';
 
     echo '<td>';
-        echo $this->Number->formatAsPercent($tax->rate);
+        echo $this->Number->formatTaxRate($tax->rate) . '%';
     echo '</td>';
 
     echo '<td class="right">';

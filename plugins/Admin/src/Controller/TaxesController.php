@@ -91,7 +91,7 @@ class TaxesController extends AdminAppController
             }
 
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
-            $message = __('The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b>', $messageSuffix]);
+            $message = __('The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatTaxRate($tax->rate) . '%</b>', $messageSuffix]);
             $actionLogsTable->customSave($actionLogType, $this->identity->getId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 
