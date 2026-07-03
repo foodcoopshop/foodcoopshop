@@ -361,7 +361,7 @@ class InvoicesTable extends AppTable
             'sumPriceExcl' => $sums['priceExcl'],
             'sumTax' => $sums['tax'],
             'cancelledInvoice' => $cancelledInvoice,
-            'new_invoice_necessary' => !empty($orderDetails) || $orderedDeposit['deposit_amount'] < 0 || $returnedDeposit['deposit_amount'] > 0,
+            'new_invoice_necessary' => !empty($orderDetails) || $returnedDeposit['deposit_incl'] != 0,
         ];
 
         return $preparedData;

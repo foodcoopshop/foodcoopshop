@@ -230,7 +230,7 @@ use Cake\Core\Configure;
         if ($showSellingPriceTax && $showPurchasePrice) {
             $taxWidth = 106;
         }
-        if ($showSellingPriceTax || $showPurchasePrice) {
+        if ($showSellingPriceTax) {
             echo '<th>' . $sortOrLabel('Taxes.rate', __('Tax_rate_admin')) . '</th>';
         }
         echo '<th class="center">' . $sortOrLabel('Products.created', __('New?')) . '</th>';
@@ -249,7 +249,7 @@ use Cake\Core\Configure;
         echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->row_class . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
 
         echo $this->element('rowMarker/rowMarker', [
-            'show' => (!empty($product->product_attributes) || isset($product->product_attributes))
+            'show' => !empty($product->product_attributes)
         ]);
 
         echo $this->element('productList/data/id', [
@@ -297,7 +297,7 @@ use Cake\Core\Configure;
             ]);
         }
 
-        if ($showSellingPriceTax || $showPurchasePrice) {
+        if ($showSellingPriceTax) {
             echo $this->element('productList/data/tax', [
                 'product' => $product,
                 'showPurchasePriceTax' => $showPurchasePriceTax,
@@ -350,7 +350,7 @@ use Cake\Core\Configure;
         $colspan--;
     }
 
-    if (!$showSellingPriceTax && !$showPurchasePrice) {
+    if (!$showSellingPriceTax) {
         $colspan--;
     }
 
