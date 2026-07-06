@@ -64,28 +64,30 @@ echo '</tr>';
 
 $i = 0;
 
-$i ++;
-echo '<tr id="tax-0" class="data">';
+if (Configure::read('app.isZeroTaxEnabled')) {
+    $i ++;
+    echo '<tr id="tax-0" class="data">';
 
-echo '<td class="hide">';
-    echo 0;
-echo '</td>';
+    echo '<td class="hide">';
+        echo 0;
+    echo '</td>';
 
-echo '<td></td>';
+    echo '<td></td>';
 
-echo '<td>';
-    echo $this->Number->formatTaxRate(0) . '%';
-echo '</td>';
+    echo '<td>';
+        echo $this->Number->formatTaxRate(0) . '%';
+    echo '</td>';
 
-echo '<td class="right">';
-    echo $this->Number->formatAsDecimal($zeroTaxProductCount, 0);
-echo '</td>';
+    echo '<td class="right">';
+        echo $this->Number->formatAsDecimal($zeroTaxProductCount, 0);
+    echo '</td>';
 
-echo '<td align="center">';
-    echo '<i class="fas fa-check-circle ok"></i>';
-echo '</td>';
+    echo '<td align="center">';
+        echo '<i class="fas fa-check-circle ok"></i>';
+    echo '</td>';
 
-echo '</tr>';
+    echo '</tr>';
+}
 
 foreach ($taxes as $tax) {
     $i ++;
