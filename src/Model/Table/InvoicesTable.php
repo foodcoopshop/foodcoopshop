@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\Log\Log;
-use Cake\ORM\Query;
 use Cake\I18n\DateTime;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -358,7 +356,7 @@ class InvoicesTable extends AppTable
                 ];
             }
         }
-Log::error(print_r($taxRates, true));
+
         $preparedData = [
             'active_order_details' => $orderDetails,
             'ordered_deposit' => $orderedDeposit,
