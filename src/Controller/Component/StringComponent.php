@@ -35,9 +35,10 @@ class StringComponent extends Component
      */
     public static function cleanForPdfGeneration(string $string): string
     {
-        $pattern = '/[\x{2600}-\x{27BF}]|[\x{1F000}-\x{1F9FF}]|[\x{1F1E0}-\x{1F1FF}]/u';
-
-        return preg_replace($pattern, '', $string);
+        $pattern = '/[\x{2600}-\x{27BF}]|[\x{1F000}-\x{1F9FF}]|[\x{1F1E0}-\x{1F1FF}]|[\x{1F3F3}\x{FE0F}\x{200D}\x{1F308}]/u';
+        $string = preg_replace($pattern, '', $string);
+        $string = str_replace(['🫐', '🫘'], '', $string);
+        return $string;
     }
 
     public static function addProtocolToUrl(?string $url): string
