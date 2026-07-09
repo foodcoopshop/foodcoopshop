@@ -133,7 +133,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
 
         $this->renderSumRow(__('Total_sum_net'), Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl));
         foreach($sumTax as $taxRate => $tax) {
-            $this->renderSumRow(__('Value_added_tax') . ' ' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%', Configure::read('app.numberHelper')->formatAsCurrency($tax['tax']));
+            $this->renderSumRow(__('Value_added_tax') . ' ' . $taxRate . '%', Configure::read('app.numberHelper')->formatAsCurrency($tax['tax']));
         }
         $this->renderSumRow('<b style="font-size:12px;">' . __('Total_sum_gross') . '</b>', '<b style="font-size:12px;">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceIncl) . '</b>');
 

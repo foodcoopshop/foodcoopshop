@@ -382,12 +382,12 @@ class InvoicesTable extends AppTable
     {
 
         $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-        $depositVatRate = (string) number_format($depositVatRate, 3, '.', '');
+        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
         
         $data = [];
 
         foreach ($orderDetails as $orderDetail) {
-            $taxRate = $orderDetail->tax_rate;
+            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);
             if (!isset($data[$taxRate]['priceExcl'])) {
                 $data[$taxRate]['priceExcl'] = 0;
             }
@@ -413,7 +413,8 @@ class InvoicesTable extends AppTable
             }
 
             $result['tax'][$taxRate]['priceExcl'] += $values['priceExcl'];
-            $tax = round($result['tax'][$taxRate]['priceExcl'] * ($taxRate / 100), 2);
+            $taxRateAsFloat = Configure::read('app.numberHelper')->getStringAsFloat((string) $taxRate);
+            $tax = round($result['tax'][$taxRate]['priceExcl'] * ($taxRateAsFloat / 100), 2);
             $result['tax'][$taxRate]['tax'] = $tax;
             $result['tax'][$taxRate]['priceIncl'] = $result['tax'][$taxRate]['priceExcl'] + $tax;
         }
