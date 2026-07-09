@@ -49,9 +49,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService
         $this->setHeaders();
     }
 
-    public function setHeaders(): void
-    {
-    }
+    abstract public function setHeaders(): void;
 
     public function prepareTableHeader(): void
     {

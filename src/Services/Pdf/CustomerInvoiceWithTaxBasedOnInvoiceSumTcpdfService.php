@@ -63,7 +63,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
     }
 
     /**
-     * @param array<float, array{priceIncl: float|int, priceExcl: float|int, tax: float|int}> $sumTax
+     * @param array<string, array{priceIncl: float|int, priceExcl: float|int, tax: float|int}> $sumTax
      */
     public function prepareTableData(
         object $result,
