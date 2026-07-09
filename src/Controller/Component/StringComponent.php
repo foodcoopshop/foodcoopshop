@@ -31,12 +31,14 @@ class StringComponent extends Component
     /**
      * \x{2600}-\x{27BF}   : Miscellaneous Symbols and Dingbats (Hearts, Stars, Weather)
      * \x{1F000}-\x{1F9FF} : Supplemental Symbols (The "Modern" 4-byte Emojis)
+     * \x{1FA00}-\x{1FAFF} : Symbols and Pictographs Extended-A (e.g. 🫐, 🫘, Chess Symbols)
      * \x{1F1E0}-\x{1F1FF} : Flags / Regional Indicators
+     * \x{FE00}-\x{FE0F}   : Variation Selectors (e.g. emoji presentation selector)
+     * \x{200D}            : Zero Width Joiner (used to combine emojis, e.g. flags)
      */
     public static function cleanForPdfGeneration(string $string): string
     {
-        $pattern = '/[\x{2600}-\x{27BF}]|[\x{1F000}-\x{1F9FF}]|[\x{1F1E0}-\x{1F1FF}]/u';
-
+        $pattern = '/[\x{2600}-\x{27BF}]|[\x{1F000}-\x{1F9FF}]|[\x{1FA00}-\x{1FAFF}]|[\x{1F1E0}-\x{1F1FF}]|[\x{FE00}-\x{FE0F}]|[\x{200D}]/u';
         return preg_replace($pattern, '', $string);
     }
 

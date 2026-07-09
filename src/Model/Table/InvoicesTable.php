@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Controller\Component\StringComponent;
-use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\ORM\Query;
-use Cake\ORM\Query\SelectQuery as OrmSelectQuery;
 use Cake\I18n\DateTime;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Invoice;
 use App\Model\Entity\Customer;
+use App\Model\Table\OrderDetailsTable;
+use App\Controller\Component\StringComponent;
+use Cake\Database\Expression\QueryExpression;
+use Cake\ORM\Query\SelectQuery as OrmSelectQuery;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -289,6 +289,8 @@ class InvoicesTable extends AppTable
 
         // prepare delivered deposit
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+
+        /** @var OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
 
@@ -345,11 +347,14 @@ class InvoicesTable extends AppTable
             $sums = $this->getSums($orderDetails, $orderedDeposit, $returnedDeposit);
         } else {
             $sums = $this->getSumsTaxBasedOnNetInvoiceSum($orderDetails, $orderedDeposit, $returnedDeposit);
-            $taxRates[$depositVatRate] = [
-                'sum_price_excl' => $sums['priceExcl'],
-                'sum_tax' => $sums['tax'],
-                'sum_price_incl' => $sums['priceIncl'],
-            ];
+            $taxRates = [];
+            foreach($sums['tax'] as $taxRate => $sum) {
+                $taxRates[$taxRate] = [
+                    'sum_price_excl' => $sum['priceExcl'],
+                    'sum_tax' => $sum['tax'],
+                    'sum_price_incl' => $sum['priceIncl'],
+                ];
+            }
         }
 
         $preparedData = [
@@ -371,28 +376,55 @@ class InvoicesTable extends AppTable
      * @param list<\App\Model\Entity\OrderDetail> $orderDetails
      * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $orderedDeposit
      * @param array{deposit_incl: float|int, deposit_excl: float|int, deposit_tax: float|int, deposit_amount: float|int, entities: list<mixed>} $returnedDeposit
-     * @return array{priceIncl: float|int, priceExcl: float|int, tax: float|int}
+     * @return array{priceIncl: float|int, priceExcl: float|int, tax: array<float, array{priceIncl: float|int, priceExcl: float|int, tax: float|int}>}
      */
     private function getSumsTaxBasedOnNetInvoiceSum(array $orderDetails, array $orderedDeposit, array $returnedDeposit): array
     {
 
+        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+        
+        $data = [];
+
+        foreach ($orderDetails as $orderDetail) {
+            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);
+            if (!isset($data[$taxRate]['priceExcl'])) {
+                $data[$taxRate]['priceExcl'] = 0;
+            }
+            $data[$taxRate]['priceExcl'] += $orderDetail->total_price_tax_excl;
+        }
+
+        if (!isset($data[$depositVatRate]['priceExcl'])) {
+            $data[$depositVatRate]['priceExcl'] = 0;
+        }
+        $data[$depositVatRate]['priceExcl'] += $orderedDeposit['deposit_excl'];
+        $data[$depositVatRate]['priceExcl'] += $returnedDeposit['deposit_excl'];
+
         $result = [
             'priceIncl' => 0,
             'priceExcl' => 0,
-            'tax' => 0,
+            'tax' => [],
         ];
+        
+        foreach($data as $taxRate => $values) {
 
-        foreach ($orderDetails as $orderDetail) {
-            $result['priceExcl'] += $orderDetail->total_price_tax_excl;
+            if (!isset($result['tax'][$taxRate]['priceExcl'])) {
+                $result['tax'][$taxRate]['priceExcl'] = 0;
+            }
+
+            $result['tax'][$taxRate]['priceExcl'] += $values['priceExcl'];
+            $taxRateAsFloat = Configure::read('app.numberHelper')->getStringAsFloat((string) $taxRate);
+            $tax = round($result['tax'][$taxRate]['priceExcl'] * ($taxRateAsFloat / 100), 2);
+            $result['tax'][$taxRate]['tax'] = $tax;
+            $result['tax'][$taxRate]['priceIncl'] = $result['tax'][$taxRate]['priceExcl'] + $tax;
         }
 
-        $result['priceExcl'] += $orderedDeposit['deposit_excl'];
-        $result['priceExcl'] += $returnedDeposit['deposit_excl'];
+        foreach($result['tax'] as $taxRate => $tax) {
+            $result['priceIncl'] += $tax['priceIncl'];
+            $result['priceExcl'] += $tax['priceExcl'];
+        }
 
-        // q&d: taxRate for priceIncl (also contains orderDetails) is taken from FCS_DEPOSIT_TAX_RATE
-        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-        $result['priceIncl'] = round($result['priceExcl'] * (1 + $depositVatRate / 100), 2);
-        $result['tax'] = round($result['priceExcl'] * ($depositVatRate / 100), 2);
+        ksort($result['tax'], SORT_NUMERIC);
 
         return $result;
 

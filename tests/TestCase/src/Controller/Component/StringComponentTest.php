@@ -52,6 +52,10 @@ class StringComponentTest extends AppCakeTestCase
                 'text' => 'Price is 10€',
                 'expected' => 'Price is 10€',
             ],
+            [
+                'text' => 'Blueberries 🫐 and garlic 🫘',
+                'expected' => 'Blueberries  and garlic ',
+            ],
         ];
 
         foreach ($tests as $test) {

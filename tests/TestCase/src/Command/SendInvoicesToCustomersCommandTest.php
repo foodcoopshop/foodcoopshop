@@ -15,14 +15,15 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Test\TestCase\AppCakeTestCase;
-use App\Test\TestCase\Traits\AppIntegrationTestTrait;
-use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
-use Cake\TestSuite\EmailTrait;
-use App\Test\TestCase\Traits\GenerateOrderWithDecimalsInTaxRateTrait;
 use App\Model\Entity\Customer;
+use Cake\TestSuite\EmailTrait;
+use App\Model\Table\OrderDetailsTable;
+use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
+use App\Test\TestCase\Traits\GenerateOrderWithDecimalsInTaxRateTrait;
 
 class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 {
@@ -106,20 +107,19 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
     public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum(): void
     {
 
-        $customerId = Configure::read('test.superadminId');
-
-        $productsTable = $this->getTableLocator()->get('Products');
-        $productsTable->updateAll(['id_tax' => 2], ['active' => APP_ON]);
-        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
-        $orderDetailsTable->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
-        $orderDetailsTable->updateAll(['deposit' => -0.5], ['id_order_detail' => 3]); // deposit can also be returned with a negative deposit of an order detail
-
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
         $this->changeConfiguration('FCS_TAX_BASED_ON_NET_INVOICE_SUM', 1);
+
         $this->loginAsSuperadmin();
 
+        $customerId = Configure::read('test.superadminId');
+        $this->generateOrderWithDecimalsInTaxRate($customerId);
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        /** @var OrderDetailsTable $orderDetailsTable */
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateAll(['deposit' => -0.5], ['id_order_detail' => 3]); // deposit can also be returned with a negative deposit of an order detail
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');

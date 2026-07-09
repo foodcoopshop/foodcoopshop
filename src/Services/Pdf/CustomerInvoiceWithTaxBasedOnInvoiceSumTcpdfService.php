@@ -62,11 +62,14 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
         ];
     }
 
+    /**
+     * @param array<string, array{priceIncl: float|int, priceExcl: float|int, tax: float|int}> $sumTax
+     */
     public function prepareTableData(
         object $result,
         string|float $sumPriceExcl,
         string|float $sumPriceIncl,
-        string|float $sumTax): void
+        array $sumTax): void
     {
 
         foreach($result->active_order_details as $orderDetail) {
@@ -129,7 +132,9 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
         $this->table .= '</tr>';
 
         $this->renderSumRow(__('Total_sum_net'), Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl));
-        $this->renderSumRow(__('Value_added_tax'), Configure::read('app.numberHelper')->formatAsCurrency($sumTax));
+        foreach($sumTax as $taxRate => $tax) {
+            $this->renderSumRow(__('Value_added_tax') . ' ' . $taxRate . '%', Configure::read('app.numberHelper')->formatAsCurrency($tax['tax']));
+        }
         $this->renderSumRow('<b style="font-size:12px;">' . __('Total_sum_gross') . '</b>', '<b style="font-size:12px;">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceIncl) . '</b>');
 
     }

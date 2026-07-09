@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 use App\Services\Pdf\Traits\FooterTrait;
 use App\Services\Pdf\Traits\TaxSumTableTrait;
 
-abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implements CustomerInvoiceTcpdfServiceInterface
+abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService
 {
 
     use FooterTrait;
@@ -48,6 +48,8 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implement
         $this->SetFontSize(10);
         $this->setHeaders();
     }
+
+    abstract public function setHeaders(): void;
 
     public function prepareTableHeader(): void
     {
