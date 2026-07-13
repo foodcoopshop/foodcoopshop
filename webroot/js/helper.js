@@ -1023,7 +1023,9 @@ foodcoopshop.Helper = {
 
         this.removeFlashMessage();
 
-        var root = '#container';
+        const defaultRoot = '#container';
+        const fallbackRoot = '#content'; // for self-service
+        var root = $(defaultRoot).length > 0 ? defaultRoot : fallbackRoot;
 
         var responsiveHeaderSelector = '#responsive-header';
         if (foodcoopshop.Helper.isMobile() && $(responsiveHeaderSelector).length == 1) {
