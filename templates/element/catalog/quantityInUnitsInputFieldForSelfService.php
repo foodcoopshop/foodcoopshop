@@ -26,7 +26,7 @@ if (!($pricePerUnitEnabled && OrderCustomerService::isSelfServiceModeByUrl())) {
 <div class="quantity-in-units-input-field-wrapper">
     <span><?php echo __('Weight_in'); ?> <?php echo $unitName; ?>:</span>
     <input class="calculator-output" type="number" />
-    <a class="calculator-toggle-button" href="javascript:void(0);" style="margin-left:5px;">
+    <a class="calculator-toggle-button" href="javascript:void(0);">
         <i class="fas fa-calculator"></i>
     </a>
     <input class="calculator-input" type="text" placeholder="<?php echo __('Example_given_abbr'); ?> 167+142">
