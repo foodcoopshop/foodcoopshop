@@ -267,7 +267,7 @@ foodcoopshop.Cart = {
                 priceInclPerUnit = foodcoopshop.Helper.getCurrencyAsFloat(priceInclPerUnitElement.html());
             }
 
-            if (orderedQuantityInUnitsWrapper.length > 0 && unitName != '' && priceInclPerUnit != '' && isNaN(orderedQuantityInUnits)) {
+            if (orderedQuantityInUnitsWrapper.length > 0 && unitName != '' && priceInclPerUnit != '' && orderedQuantityInUnits === 0) {
                 foodcoopshop.Helper.enableButton($(this));
                 foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                 foodcoopshop.Helper.removeSpinnerFromButton($(this), foodcoopshop.Cart.cartButtonIcon);
