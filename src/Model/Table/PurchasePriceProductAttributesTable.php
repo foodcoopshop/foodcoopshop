@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductAndAttributeEntityTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
 use Cake\Datasource\EntityInterface;
@@ -25,6 +26,7 @@ use Cake\Datasource\EntityInterface;
 class PurchasePriceProductAttributesTable extends AppTable
 {
 
+    use ProductAndAttributeEntityTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public function initialize(array $config): void

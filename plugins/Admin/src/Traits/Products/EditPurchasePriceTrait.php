@@ -88,9 +88,9 @@ trait EditPurchasePriceTrait
                     }
                     $oldProduct->purchase_price_product->price = $oldPrice;
                     $oldProduct->unit_product = $attribute->unit_product_attribute;
-                    $purchasePriceEntity2Save = $purchasePriceProductsTable->getEntityToSaveByProductAttributeId($ids['attributeId']);
                     /** @var \App\Model\Table\PurchasePriceProductAttributesTable $purchaseTable */
                     $purchaseTable = $this->getTableLocator()->get('PurchasePriceProductAttributes');
+                    $purchasePriceEntity2Save = $purchaseTable->getEntityToSaveByProductAttributeId($ids['attributeId']);
                     /** @var \App\Model\Table\UnitProductAttributesTable $unitTable */
                     $unitTable = $this->getTableLocator()->get('UnitProductAttributes');
                 }

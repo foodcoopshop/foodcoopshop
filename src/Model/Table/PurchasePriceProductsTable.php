@@ -269,7 +269,7 @@ class PurchasePriceProductsTable extends AppTable
                 foreach ($oldProduct->product_attributes as $attribute) {
                     if (!empty($attribute->purchase_price_product_attribute)) {
                         $newNetPrice = $productsTable->getNetPriceForNewTaxRate($attribute->purchase_price_product_attribute->price, $oldPurchasePriceTaxRate, $taxRate);
-                        $entity2Save = $this->getEntityToSaveByProductAttributeId($attribute->id_product_attribute);
+                        $entity2Save = $pppaTable->getEntityToSaveByProductAttributeId($attribute->id_product_attribute);
                         $entity2Save->price = $newNetPrice;
                         $pppaTable->save($entity2Save);
                     }

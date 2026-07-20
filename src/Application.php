@@ -52,8 +52,6 @@ use Authentication\Identifier\PasswordIdentifier;
  *
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
- *
- * @extends \Cake\Http\BaseApplication<\App\Application>
  */
 class Application extends BaseApplication
     implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
