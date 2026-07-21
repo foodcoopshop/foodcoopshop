@@ -317,7 +317,7 @@ h2.info a:not(.btn) {
     text-decoration: underline ! important;
     color: #fff ! important;
 }
-#flashMessage.success a {
+#flashMessage.success a:not(.btn) {
     text-decoration: underline ! important;
     color: #fff ! important;
 }
