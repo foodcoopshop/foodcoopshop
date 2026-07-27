@@ -154,7 +154,7 @@ echo '<table class="list profit-table">';
 
             echo '<td class="right">';
                 if (!empty($orderDetail->order_detail_purchase_price)) {
-                    echo $this->Number->formatAsDecimal($orderDetail->profit);
+                    echo $this->Number->formatAsDecimal($orderDetail->profit ?? 0);
                 }
             echo '</td>';
 
