@@ -29,7 +29,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailPrice($this->orderDetailIdA, 'not-valid-price', $this->editPriceReason, true);
-        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
+        $this->assertEquals($this->getJsonDecodedResponse()->msg, 'Der Preis ist nicht gültig.');
     }
 
     public function testEditOrderDetaiWithNegativePrice(): void

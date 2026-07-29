@@ -153,7 +153,7 @@ class SyncsControllerTest extends AppCakeTestCase
                     'productName' => $productName
                 ]
             ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     private function saveProductRelation(int $localProductId, int $remoteProductId, string $productName, string $domain): ?object
@@ -167,7 +167,7 @@ class SyncsControllerTest extends AppCakeTestCase
                     'productName' => $productName
                 ]
             ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     private function disableVariableMemberFee(): void

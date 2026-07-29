@@ -63,7 +63,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1);
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
@@ -92,7 +92,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $stockAvailablesTable->save($patchedEntity);
 
         $this->addProductToSelfServiceCart($productId, 1, '1,2');
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $expectedErrorMessage = 'Die gewünschte Menge <b>1,2 kg</b> des Produktes <b>Lagerprodukt 2</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 1 kg';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
@@ -110,7 +110,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, 'bla bla');
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
@@ -139,7 +139,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $stockAvailablesTable->save($patchedEntity);
 
         $this->addProductToSelfServiceCart(ProductsFixture::ID_STOCK_PRODUCT_WITH_ATTRIBUTES_0_5KG_PRICE_PER_WEIGHT, 1, '1,3');
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $expectedErrorMessage = 'Die gewünschte Menge <b>1,3 kg</b> der Variante <b>0,5 kg</b> des Produktes <b>Lagerprodukt mit Varianten</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 1,1 kg';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
@@ -163,7 +163,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
         $cartsTable = $this->getTableLocator()->get('Carts');
-        $cart = $cartsTable->find('all', 
+        $cart = $cartsTable->find('all',
         conditions: [
             'Carts.id_customer' => Configure::read('test.customerId'),
             'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,
@@ -195,7 +195,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
         $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
         $cartsTable = $this->getTableLocator()->get('Carts');
-        $cart = $cartsTable->find('all', 
+        $cart = $cartsTable->find('all',
         conditions: [
             'Carts.id_customer' => Configure::read('test.customerId'),
             'Carts.cart_type' => Cart::TYPE_SELF_SERVICE,

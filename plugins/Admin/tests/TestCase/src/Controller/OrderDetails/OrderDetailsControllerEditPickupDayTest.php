@@ -136,7 +136,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
                 'resetOrderState' => $resetOrderState,
             ]
         );
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     /**
@@ -145,7 +145,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     private function assertChangedOrderDetails(array $orderDetailIds, string $newPickupDay, int $orderState): void
     {
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $orderDetailsTable->find()->where([ 
+        $orderDetails = $orderDetailsTable->find()->where([
             'OrderDetails.id_order_detail IN' => $orderDetailIds,
         ]
         )->toArray();

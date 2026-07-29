@@ -414,7 +414,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
         ]);
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all',
@@ -444,7 +444,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
         ]);
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten 2 Jahren: 1.</li>', $response->msg);
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all',

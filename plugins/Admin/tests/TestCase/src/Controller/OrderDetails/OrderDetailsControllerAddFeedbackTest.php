@@ -108,7 +108,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
                 'orderDetailFeedback' => $orderDetailFeedback,
             ]
         );
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
 

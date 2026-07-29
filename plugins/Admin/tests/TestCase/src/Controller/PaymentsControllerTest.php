@@ -174,7 +174,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $this->addCustomerPayment(Configure::read('test.customerId'), '100', Payment::TYPE_DEPOSIT, true);
-        $addResponse = $this->getJsonDecodedContent();
+        $addResponse = $this->getJsonDecodedResponse();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
         $this->assertEquals('Der Maximalbetrag von 20,00 € pro Eintragung wurde überschritten. Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag (100,00 €) trotzdem zu speichern.', $addResponse->msg);
@@ -184,7 +184,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $this->addCustomerPayment(Configure::read('test.customerId'), '100', Payment::TYPE_DEPOSIT, false);
-        $addResponse = $this->getJsonDecodedContent();
+        $addResponse = $this->getJsonDecodedResponse();
         $this->assertEquals(1, $addResponse->status);
     }
 
@@ -224,7 +224,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             true,
         );
 
-        $addResponse = $this->getJsonDecodedContent();
+        $addResponse = $this->getJsonDecodedResponse();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
         $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 0,50 €, das Mitglied hätte nach dem Eintragen insgesamt mehr Pfand zurückgebracht als gekauft. Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag (10,70 €) trotzdem zu speichern.', $addResponse->msg);
@@ -310,7 +310,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 10);
         $this->finishCart(1,1);
         $this->addCustomerPayment(Configure::read('test.customerId'), '2,4', Payment::TYPE_PRODUCT, true);
-        $addResponse = $this->getJsonDecodedContent();
+        $addResponse = $this->getJsonDecodedResponse();
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $paymentsTable->save(
@@ -323,7 +323,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
 
         $this->deletePayment($addResponse->paymentId);
-        $deleteResponse = $this->getJsonDecodedContent();
+        $deleteResponse = $this->getJsonDecodedResponse();
         $this->assertEquals(0, $deleteResponse->status);
         $this->assertRegExpWithUnquotedString('payment id ('.$addResponse->paymentId.') not correct or already approved (approval: 1)', $deleteResponse->msg);
     }
@@ -338,7 +338,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceBeforeAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
 
         $this->addCustomerPayment(Configure::read('test.customerId'), '2,5', Payment::TYPE_PRODUCT, true);
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $this->deletePayment($response->paymentId);
 
         $creditBalanceAfterAddAndDelete = $customersTable->getCreditBalance(Configure::read('test.customerId'));
@@ -456,7 +456,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Payment::TEXT_MONEY,
             true,
         );
-        $addResponse = $this->getJsonDecodedContent();
+        $addResponse = $this->getJsonDecodedResponse();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
         $this->assertEquals('Der Maximalbetrag von 200,00 € pro Eintragung wurde überschritten. Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag (300,00 €) trotzdem zu speichern.', $addResponse->msg);
@@ -479,12 +479,12 @@ class PaymentsControllerTest extends AppCakeTestCase
             Payment::TEXT_MONEY,
             true,
         );
-        $addResponse = $this->getJsonDecodedContent();
+        $addResponse = $this->getJsonDecodedResponse();
         $this->assertEquals(0, $addResponse->status);
         $this->assertEquals(1, $addResponse->confirmSubmit);
         $this->assertEquals('Der Betrag überschreitet den Pfand-Saldo von 5,50 €, der Hersteller hätte nach dem Eintragen insgesamt mehr Pfand zurückgenommen als verkauft. Klicke nochmal auf den Speichern-Button, um den angegebenen Betrag (200,00 €) trotzdem zu speichern.', $addResponse->msg);
     }
-    
+
     private function addDepositToManufacturer(string $depositText, string $actionLogText, ?string $dateAdd, bool $applyAmountTresholdCheck): Payment
     {
         $customersTable = $this->getTableLocator()->get('Customers');
@@ -550,7 +550,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/payments/changeStatus', [
             'paymentId' => $paymentId,
         ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
 }

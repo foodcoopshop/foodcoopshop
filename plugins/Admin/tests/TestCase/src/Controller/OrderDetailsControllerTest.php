@@ -61,7 +61,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
                 'state' => $state,
             ]
         );
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
 }

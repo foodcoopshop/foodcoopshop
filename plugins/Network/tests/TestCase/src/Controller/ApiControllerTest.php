@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace Network\Test\TestCase;
 
-use App\Model\Entity\Product;
 use App\Services\DeliveryRhythmService;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -73,7 +72,7 @@ class ApiControllerTest extends AppCakeTestCase
                 '2020-01-17',
                 '"{{serverName}}"',
             ],
-            $this->_response->getBody()->__toString(),
+            $this->_getBodyAsString(),
         );
 
         $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $preparedResponse);
@@ -153,14 +152,14 @@ class ApiControllerTest extends AppCakeTestCase
             ]
         ]);
         $this->get('/api/getOrders.json?pickupDay=test');
-        $response = json_decode($this->_response->getBody()->__toString());
+        $response = $this->getJsonDecodedResponse();
         $this->assertEquals('wrong pickupDay format', $response->error);
     }
 
     public function testGetOrdersOk(): void
     {
 
-        $this->loginAsSuperadmin();      
+        $this->loginAsSuperadmin();
         $this->addProductToCart(ProductsFixture::ID_TROUT, 2);
         $this->addProductToCart(ProductsFixture::ID_BEEF_0_5KG, 3);
         $this->addProductToCart(ProductsFixture::ID_BRATWURST, 1);
@@ -181,7 +180,7 @@ class ApiControllerTest extends AppCakeTestCase
             ]
         ]);
         $this->get('/api/getOrders.json?pickupDay=' . $nextDeliveryDay);
-        $response = json_decode($this->_response->getBody()->__toString());
+        $response = $this->getJsonDecodedResponse();
 
         $this->assertEquals(4, $response->app->orders[0]->id);
         $this->assertEquals(ProductsFixture::ID_BRATWURST, $response->app->orders[0]->product_id);
@@ -210,7 +209,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertEquals('g', $response->app->orders[2]->unit->name);
         $this->assertEquals(700, $response->app->orders[2]->unit->product_quantity_in_units);
         $this->assertEquals(false, $response->app->orders[2]->unit->mark_as_saved);
-        
+
     }
 
 }

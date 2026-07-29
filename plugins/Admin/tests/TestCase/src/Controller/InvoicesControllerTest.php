@@ -117,7 +117,7 @@ class InvoicesControllerTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
-        $response = json_decode($this->_response->getBody()->__toString());
+        $response = $this->getJsonDecodedResponse();
         $this->runAndAssertQueue();
 
         $invoices = $invoicesTable->find('all',

@@ -83,7 +83,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertResponseCode(200);
 
         $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
-        $receiptHtml = $this->_response->getBody()->__toString();
+        $receiptHtml = $this->_getBodyAsString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Zahlungsart: Bar', $receiptHtml);
@@ -123,7 +123,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $invoice = $invoicesTable->find('all')->first();
 
         $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
-        $receiptHtml = $this->_response->getBody()->__toString();
+        $receiptHtml = $this->_getBodyAsString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Company Name', $receiptHtml);
@@ -234,7 +234,7 @@ class HelloCashServiceTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
-        $response = json_decode($this->_response->getBody()->__toString());
+        $response = $this->getJsonDecodedResponse();
         $this->runAndAssertQueue();
 
         $invoice = $invoicesTable->find('all',
@@ -295,7 +295,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         )->first();
 
         $this->get($this->Slug->getHelloCashReceipt($invoiceB->id, 0));
-        $receiptHtml = $this->_response->getBody()->__toString();
+        $receiptHtml = $this->_getBodyAsString();
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
         $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);

@@ -33,7 +33,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, -1);
-        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
+        $this->assertEquals($this->getJsonDecodedResponse()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminStockProduct(): void
@@ -178,9 +178,9 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, 0.7);
-        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>0,01 €</b> für <b>0,7 g</b>. Bitte überprüfe die Einheit.');
+        $this->assertEquals($this->getJsonDecodedResponse()->msg, 'Der neue Preis wäre <b>0,01 €</b> für <b>0,7 g</b>. Bitte überprüfe die Einheit.');
         $this->editOrderDetailQuantity($orderDetailId, 800000);
-        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
+        $this->assertEquals($this->getJsonDecodedResponse()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminQuantityPriceUnchangedWhenQuantityNotChanged(): void

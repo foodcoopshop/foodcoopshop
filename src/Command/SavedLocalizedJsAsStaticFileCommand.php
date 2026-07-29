@@ -49,7 +49,7 @@ class SavedLocalizedJsAsStaticFileCommand extends AppCommand
     {
         $this->get(SELF::ROUTE);
         $jsFile = fopen(WWW_ROOT . '/cache/localized-javascript-static.js', 'w');
-        fwrite($jsFile, $this->_response->getBody()->__toString());
+        fwrite($jsFile, $this->_getBodyAsString());
         fclose($jsFile);
         return static::CODE_SUCCESS;
     }

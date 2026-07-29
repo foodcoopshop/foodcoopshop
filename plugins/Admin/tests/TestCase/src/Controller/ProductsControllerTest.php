@@ -319,7 +319,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
         $this->changeProductPrice(ProductsFixture::ID_ARTICHOKE, $price);
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
         $this->assertJsonError();
     }
@@ -483,7 +483,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->doPurchasePriceChange(4, '20');
         $this->assertJsonError();
-        $this->assertRegExpWithUnquotedString('product not existing: id 4', $this->getJsonDecodedContent()->msg);
+        $this->assertRegExpWithUnquotedString('product not existing: id 4', $this->getJsonDecodedResponse()->msg);
     }
 
     public function testEditPurchasePriceOfProductAsSuperadminInvalid(): void
@@ -492,7 +492,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->doPurchasePriceChange(ProductsFixture::ID_ARTICHOKE, '-1');
         $this->assertJsonError();
-        $this->assertRegExpWithUnquotedString('Der Preis muss eine positive Zahl sein.', $this->getJsonDecodedContent()->msg);
+        $this->assertRegExpWithUnquotedString('Der Preis muss eine positive Zahl sein.', $this->getJsonDecodedResponse()->msg);
     }
 
     public function testEditPurchasePriceOfProductAsSuperadmin(): void
@@ -1156,9 +1156,9 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->ajaxGet('/admin/products/ajaxGetProductsForDropdown/4');
         $this->assertJsonOk();
-        $this->assertNotEmpty($this->getJsonDecodedContent());
+        $this->assertNotEmpty($this->getJsonDecodedResponse());
         $expectedDropdownData = '<option value="">Alle Produkte</option><optgroup label="online-5"><option value="340">Beuschl - Demo Fleisch-Hersteller</option><option value="103">Bratwürstel - Demo Fleisch-Hersteller</option><option value="347">Forelle - Demo Fleisch-Hersteller</option><option value="102">Frankfurter - Demo Fleisch-Hersteller</option><option value="348">Rindfleisch - Demo Fleisch-Hersteller</option></optgroup>';
-        $this->assertEquals($expectedDropdownData, $this->getJsonDecodedContent()->dropdownData);
+        $this->assertEquals($expectedDropdownData, $this->getJsonDecodedResponse()->dropdownData);
     }
 
     private function deleteProduct(int $productId): ?Product
@@ -1282,7 +1282,7 @@ class ProductsControllerTest extends AppCakeTestCase
         ]);
 
         $this->assertJsonOk();
-        $imageId = $this->getJsonDecodedContent()->imageId;
+        $imageId = $this->getJsonDecodedResponse()->imageId;
 
         $imageIdAsPath = $this->Html->getProductImageIdAsPath($imageId);
         $thumbsPath = $this->Html->getProductThumbsPath($imageIdAsPath);

@@ -325,7 +325,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'upload' => $upload,
             ]
         );
-        $object = json_decode($this->_response->getBody()->__toString());
+        $response = $this->getJsonDecodedResponse();
 
         $manufacturer = [
             'Manufacturers' => [
@@ -340,7 +340,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ];
 
         $manufacturerUploadImage = $manufacturer;
-        $manufacturerUploadImage['Manufacturers']['tmp_image'] = $object->filename;
+        $manufacturerUploadImage['Manufacturers']['tmp_image'] = $response->filename;
         $this->post($this->Slug->getManufacturerEdit($manufacturerId), $manufacturerUploadImage);
         $this->assertFlashMessage('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.');
 

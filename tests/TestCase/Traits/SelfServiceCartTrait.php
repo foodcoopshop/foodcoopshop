@@ -33,7 +33,7 @@ trait SelfServiceCartTrait
                 'orderedQuantityInUnits' => $orderedQuantityInUnits,
             ],
         );
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     private function getSelfServicePostOptions(): void
@@ -76,7 +76,7 @@ trait SelfServiceCartTrait
                 'productId' => $productId,
             ],
         );
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
 }

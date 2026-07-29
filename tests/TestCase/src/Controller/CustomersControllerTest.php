@@ -41,7 +41,7 @@ class CustomersControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="88">Demo Admin</option><option value="87">Demo Mitglied</option><option value="92">Demo Superadmin</option></optgroup><optgroup label="Hersteller: aktiv"><option value="91">Demo Fleisch-Hersteller</option><option value="89">Demo Gemüse-Hersteller</option><option value="90">Demo Milch-Hersteller</option></optgroup><optgroup label="Mitglieder: inaktiv"><option value="93">Demo SB-Kunde</option></optgroup>';
         $this->assertEquals($expectedHtml, $response->dropdownData);
     }
@@ -50,7 +50,7 @@ class CustomersControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="87">Demo Mitglied</option></optgroup>';
         $this->assertEquals($expectedHtml, $response->dropdownData);
     }

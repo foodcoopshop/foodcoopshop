@@ -118,14 +118,14 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
-    protected function getJsonDecodedContent(): ?object
+    protected function getJsonDecodedResponse(): ?object
     {
         return json_decode($this->_getBodyAsString());
     }
 
     protected function assertJsonError(): void
     {
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $this->assertEquals(0, $response->status);
     }
 
@@ -141,7 +141,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertJsonOk(): void
     {
-        $response = $this->getJsonDecodedContent();
+        $response = $this->getJsonDecodedResponse();
         $this->assertEquals(1, $response->status);
     }
 
@@ -195,7 +195,7 @@ abstract class AppCakeTestCase extends TestCase
             'productId' => $productId,
             'amount' => $amount,
         ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     protected function finishCart(int $general_terms_and_conditions_accepted = 1, int $cancellation_terms_accepted = 1, string $comment = '', ?string $pickupDay = null): void
@@ -265,7 +265,7 @@ abstract class AppCakeTestCase extends TestCase
             'priceQuantityInUnits' => $priceQuantityInUnits,
             'priceChangeOpenOrderDetails' => $changeOpenOrderDetails,
         ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     protected function changeProductDeliveryRhythm(
@@ -285,7 +285,7 @@ abstract class AppCakeTestCase extends TestCase
             'deliveryRhythmSendOrderListWeekday' => $deliveryRhythmSendOrderListWeekday,
             'deliveryRhythmSendOrderListDay' => $deliveryRhythmSendOrderListDay,
         ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     protected function addCustomerPayment(int $customerId, float|string $amount, string|int $type, bool $applyAmountTresholdCheck): ?object
@@ -295,7 +295,7 @@ abstract class AppCakeTestCase extends TestCase
             'type' => $type,
             'applyAmountTresholdCheck' => $applyAmountTresholdCheck ? 1 : 0,
         ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     protected function addManufacturerPayment(int $manufacturerId, float|string $amount, string|int $type, ?string $dateAdd, string $text, bool $applyAmountTresholdCheck): ?object
@@ -307,7 +307,7 @@ abstract class AppCakeTestCase extends TestCase
             'dateAdd' => $dateAdd,
             'applyAmountTresholdCheck' => $applyAmountTresholdCheck ? 1 : 0,
         ]);
-        return $this->getJsonDecodedContent();
+        return $this->getJsonDecodedResponse();
     }
 
     protected function changeManufacturer(int $manufacturerId, string $field, string|int|null $value): void

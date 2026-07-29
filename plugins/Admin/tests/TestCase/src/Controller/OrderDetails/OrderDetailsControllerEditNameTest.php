@@ -25,7 +25,7 @@ class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
         $this->editOrderDetailName($this->mockCart->cart_products[1]->order_detail->id_order_detail, '');
-        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Bitte gib einen Namen ein.');
+        $this->assertEquals($this->getJsonDecodedResponse()->msg, 'Bitte gib einen Namen ein.');
     }
 
     public function testEditOrderDetailNameOk(): void
