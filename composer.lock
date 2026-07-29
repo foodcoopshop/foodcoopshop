@@ -191,16 +191,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "5.4.0",
+            "version": "5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "82328ac6bfd47cf7fb62fdba1aa30425c74be6ca"
+                "reference": "52c341146709a5510eb0bf094991e27153f8d5c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/82328ac6bfd47cf7fb62fdba1aa30425c74be6ca",
-                "reference": "82328ac6bfd47cf7fb62fdba1aa30425c74be6ca",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/52c341146709a5510eb0bf094991e27153f8d5c6",
+                "reference": "52c341146709a5510eb0bf094991e27153f8d5c6",
                 "shasum": ""
             },
             "require": {
@@ -312,7 +312,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2026-07-19T15:31:30+00:00"
+            "time": "2026-07-29T02:48:38+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -375,16 +375,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "5.2.4",
+            "version": "5.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "6f5444bb64bf89454a1eeabc25ff030fab796345"
+                "reference": "d40e3572940520efc880a1dbcabe263db0485513"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/6f5444bb64bf89454a1eeabc25ff030fab796345",
-                "reference": "6f5444bb64bf89454a1eeabc25ff030fab796345",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/d40e3572940520efc880a1dbcabe263db0485513",
+                "reference": "d40e3572940520efc880a1dbcabe263db0485513",
                 "shasum": ""
             },
             "require": {
@@ -432,7 +432,7 @@
                 "issues": "https://github.com/cakephp/migrations/issues",
                 "source": "https://github.com/cakephp/migrations"
             },
-            "time": "2026-07-17T18:44:35+00:00"
+            "time": "2026-07-27T15:06:54+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -5282,16 +5282,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "13.2.5",
+            "version": "13.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2beef9f448c9e04914a273c89ff6d039f8b97bc8"
+                "reference": "5d2afe181339a56348ef9a80fa7eb806b7eae508"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2beef9f448c9e04914a273c89ff6d039f8b97bc8",
-                "reference": "2beef9f448c9e04914a273c89ff6d039f8b97bc8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5d2afe181339a56348ef9a80fa7eb806b7eae508",
+                "reference": "5d2afe181339a56348ef9a80fa7eb806b7eae508",
                 "shasum": ""
             },
             "require": {
@@ -5362,7 +5362,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.2.5"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.2.6"
             },
             "funding": [
                 {
@@ -5370,7 +5370,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-07-25T06:59:14+00:00"
+            "time": "2026-07-28T14:00:09+00:00"
         },
         {
             "name": "react/promise",
@@ -7316,16 +7316,16 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.38.1",
+            "version": "v1.41.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "e9247d281d694a5120554d9afaf54e070e88a603"
+                "reference": "bb899c1db0aa8127dc3afe8cda4a67eb24915f8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/e9247d281d694a5120554d9afaf54e070e88a603",
-                "reference": "e9247d281d694a5120554d9afaf54e070e88a603",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/bb899c1db0aa8127dc3afe8cda4a67eb24915f8d",
+                "reference": "bb899c1db0aa8127dc3afe8cda4a67eb24915f8d",
                 "shasum": ""
             },
             "require": {
@@ -7374,7 +7374,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.41.0"
             },
             "funding": [
                 {
@@ -7394,7 +7394,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T05:58:03+00:00"
+            "time": "2026-07-28T08:25:59+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
@@ -7892,16 +7892,16 @@
         },
         {
             "name": "symfony/polyfill-php85",
-            "version": "v1.38.1",
+            "version": "v1.41.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php85.git",
-                "reference": "ba2ba04f3352cfa2dcbbcb90aee13ed967f505b1"
+                "reference": "255fab485aaa1006ed411040c42aecd7b5302d7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php85/zipball/ba2ba04f3352cfa2dcbbcb90aee13ed967f505b1",
-                "reference": "ba2ba04f3352cfa2dcbbcb90aee13ed967f505b1",
+                "url": "https://api.github.com/repos/symfony/polyfill-php85/zipball/255fab485aaa1006ed411040c42aecd7b5302d7a",
+                "reference": "255fab485aaa1006ed411040c42aecd7b5302d7a",
                 "shasum": ""
             },
             "require": {
@@ -7948,7 +7948,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php85/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-php85/tree/v1.41.0"
             },
             "funding": [
                 {
@@ -7968,7 +7968,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T02:25:22+00:00"
+            "time": "2026-07-01T12:47:55+00:00"
         },
         {
             "name": "symfony/process",
