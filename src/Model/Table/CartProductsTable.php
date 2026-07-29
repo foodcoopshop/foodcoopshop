@@ -134,6 +134,7 @@ class CartProductsTable extends AppTable
             $combinedAmount,
             $product->name,
             $isAmountBasedOnQuantityInUnits ? $product->unit_product->name : '',
+            $existingCartProduct !== false,
         );
         if ($message !== true && $amount > 0) {
             return [
@@ -210,6 +211,7 @@ class CartProductsTable extends AppTable
                         $attribute->product_attribute_combination->attribute->name,
                         $product->name,
                         $isAmountBasedOnQuantityInUnits ? $attribute->unit_product_attribute->name : '',
+                        $existingCartProduct !== false,
                     );
                     if ($message !== true && $amount > 0) {
                         return [

@@ -284,7 +284,7 @@ class CartService
             if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
                 $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             }
-    
+
             $orderedQuantityInUnits = $cartProduct['orderedQuantityInUnits'] ?? -1;
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
             if ($isAmountBasedOnQuantityInUnits) {
@@ -302,6 +302,7 @@ class CartService
                 $isAmountBasedOnQuantityInUnits ? $orderedQuantityInUnits : $cartProduct['amount'],
                 $product->name,
                 $isAmountBasedOnQuantityInUnits ? $product->unit_product->name : '',
+                false,
             );
             if ($message !== true) {
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
@@ -347,6 +348,8 @@ class CartService
                             $cartProduct['amount'],
                             $attributeEntity->name,
                             $product->name,
+                            '',
+                            false,
                         );
                         if ($errorMessage !== true) {
                             $message .= $errorMessage;
@@ -752,7 +755,7 @@ class CartService
 
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
-    
+
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
@@ -812,7 +815,7 @@ class CartService
         if (is_null($cart)) {
             return;
         }
-        
+
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');

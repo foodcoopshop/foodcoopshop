@@ -27,12 +27,12 @@ use App\Model\Entity\ProductAttribute;
 trait CartValidatorTrait
 {
 
-    public function isAmountAvailableAttribute(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, string|float $availableQuantity, string|float $amount, string $attributeName, string $productName, string $unitName = ''): bool|string
+    public function isAmountAvailableAttribute(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, string|float $availableQuantity, string|float $amount, string $attributeName, string $productName, string $unitName, bool $isProductExisting): bool|string
     {
         if (!Configure::read('app.selfServiceIsAmountValidationEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
             return true;
         }
-        
+
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $availableQuantity < $amount) {
@@ -42,17 +42,20 @@ trait CartValidatorTrait
                 '<b>' . $productName . '</b>',
                 Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
             ]);
+            if ($isProductExisting) {
+                $result .= '<br />' . __('The product already exists in your cart, the quantity can be adjusted there.');
+            }
         }
-    
+
         return $result;
     }
 
-    public function isAmountAvailableProduct(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, int $attributeId, string|float $availableQuantity, string|float $amount, string $productName, string $unitName = ''): bool|string
+    public function isAmountAvailableProduct(bool $isStockProduct, bool $stockManagementEnabled, bool $alwaysAvailable, int $attributeId, string|float $availableQuantity, string|float $amount, string $productName, string $unitName, bool $isProductExisting): bool|string
     {
         if (!Configure::read('app.selfServiceIsAmountValidationEnabled') && (new OrderCustomerService())->isSelfServiceMode()) {
             return true;
         }
-        
+
         $result = true;
         $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $attributeId == 0 && $availableQuantity < $amount) {
@@ -61,8 +64,11 @@ trait CartValidatorTrait
                 '<b>' . $productName . '</b>',
                 Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
             ]);
+            if ($isProductExisting) {
+                $result .= '<br />' . __('The product already exists in your cart, the quantity can be adjusted there.');
+            }
         }
-        
+
         return $result;
     }
 

@@ -73,7 +73,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testAddWrongAmount(): void
+    public function testAddProductAmountInvalid(): void
     {
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 251);
@@ -81,11 +81,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testAddAmountNotAvailableAnyMore(): void
+    public function testAddProductAmountNotAvailableAnyMore(): void
     {
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 98);
         $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
+        $this->assertJsonError();
+    }
+
+    public function testAddProductAmountNotAvailableAnyMoreProductAlreadyInCart(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId1, 95);
+        $response = $this->addProductToCart($this->productId1, 3);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
+        $this->assertRegExpWithUnquotedString('Das Produkt liegt bereits im Warenkorb, die Menge kann dort angepasst werden.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -331,7 +341,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId2, 1);
 
-        $productsTable = TableRegistry::getTableLocator()->get('Products'); 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $product = $productsTable->get(60);
         $product->active = APP_OFF;
         $productsTable->save($product);
@@ -437,7 +447,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId3, 1);
         $this->checkCartStatus();
 
-        $productsTable = TableRegistry::getTableLocator()->get('Products'); 
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $productsTable->save(
             $productsTable->patchEntity(
                 $productsTable->get($this->productId3),
