@@ -109,6 +109,10 @@ trait ImportTrait
 
             $content = $upload->getStream()->getContents();
             $reader = ProductReaderService::fromString($content);
+
+            if (!mb_check_encoding($content, 'UTF-8')) {
+                $reader->appendStreamFilterOnRead('convert.iconv.ISO-8859-15/UTF-8');
+            }
             $reader->configureType();
 
             $productEntities = $reader->import($manufacturerId);
