@@ -401,7 +401,7 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
                     ?>
 
                     <tr>
-                        <td><?php echo $this->Number->formatAsDecimal($tax->tax_taxRate, 0); ?></td>
+                        <td><?php echo $this->Number->formatTaxRate($tax->tax_taxRate); ?></td>
                         <td><?php echo $this->Number->formatAsDecimal($tax->tax_net, 2); ?></td>
                         <td><?php echo $this->Number->formatAsDecimal($tax->tax_tax, 2); ?></td>
                         <td><?php echo $this->Number->formatAsDecimal($tax->tax_gross, 2); ?></td>
