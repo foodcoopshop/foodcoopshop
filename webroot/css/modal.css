@@ -245,6 +245,11 @@ body.iframe_self_service_order {
     overflow-y: auto;
     text-align: center;
 }
+#modal-cart .modal-body {
+    max-height: calc(100vh - 180px);
+    min-height: 400px;
+    overflow-y: auto;
+}
 #modal-image .modal-dialog img {
     width: auto;
     max-width: 766px;
