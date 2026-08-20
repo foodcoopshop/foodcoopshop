@@ -43,7 +43,7 @@ if (!empty($block['tmp_image'])) {
             echo '<div class="home-block-image-position-wrapper' . ($imageSrc == '' ? ' hide' : '') . '">';
             echo $this->Form->control('Blocks.' . $rowKey . '.image_position', [
                 'type' => 'select',
-                'class' => 'selectpicker-disabled',
+                'class' => 'no-tom-select',
                 'label' => false,
                 'options' => [
                     Block::IMAGE_POSITION_LEFT => __('Left aligned'),

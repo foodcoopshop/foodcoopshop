@@ -156,7 +156,7 @@ foodcoopshop.SelfService = {
             });
 
             if (!foodcoopshop.Helper.isMobile()) {
-                foodcoopshop.Helper.initBootstrapSelect(searchForm);
+                foodcoopshop.TomSelectCustom.initAll(searchForm);
             }
             searchForm.find('select, input[type="text"]').on('change', function() {
                 foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');

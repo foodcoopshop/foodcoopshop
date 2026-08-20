@@ -13,6 +13,10 @@
  */
 @media only screen and (max-device-width: 850px) {
 
+    .ts-dropdown {
+        max-width: 100vw ! important;
+    }
+
     body.self_services #responsive-header a.btn:not(.btn-flash-message),
     body.self_services #responsive-header a.btn:not(.btn-flash-message) i.ok {
         color: #fff ! important;

@@ -81,6 +81,50 @@ body.dark .ui-widget.ui-widget-content {
     color: var(--dark-mode-main-font-color);
     border-color: var(--dark-mode-main-border-color);
 }
+body.dark .ts-wrapper .ts-control {
+    background-color: var(--dark-mode-2nd-bg-color);
+    border-color: var(--dark-mode-main-border-color);
+    color: var(--dark-mode-main-font-color);
+}
+body.dark .ts-wrapper .ts-control > .item,
+body.dark .ts-wrapper .ts-control > .ts-count,
+body.dark .ts-wrapper .ts-control > input.items-placeholder {
+    color: var(--dark-mode-main-font-color);
+}
+body.dark .ts-wrapper .ts-control > input.items-placeholder::placeholder {
+    color: var(--dark-mode-main-font-color);
+    opacity: 1;
+}
+body.dark .ts-wrapper .ts-control:after {
+    border-top-color: var(--dark-mode-main-font-color);
+}
+body.dark .ts-wrapper.plugin-clear_button .clear-button {
+    color: var(--dark-mode-main-font-color);
+}
+body.dark .ts-dropdown {
+    background-color: var(--dark-mode-2nd-bg-color);
+    border-color: var(--dark-mode-main-border-color);
+    color: var(--dark-mode-main-font-color);
+}
+body.dark .ts-dropdown .dropdown-input-wrap input.dropdown-input {
+    background-color: var(--dark-mode-2nd-bg-color);
+    color: var(--dark-mode-main-font-color);
+    border-color: var(--dark-mode-main-border-color);
+}
+body.dark .ts-dropdown .ts-dropdown-content .option,
+body.dark .ts-dropdown .ts-dropdown-content .no-results {
+    color: var(--dark-mode-main-font-color);
+}
+/* keep selected options readable: no theme-color fill (checkmark already marks selection) */
+body.dark .ts-dropdown .ts-dropdown-content .option.selected,
+body.dark .ts-dropdown .ts-dropdown-content .option.active.selected {
+    color: var(--dark-mode-main-font-color);
+    background-color: transparent;
+}
+body.dark .ts-dropdown .ts-dropdown-content .option.active:not(.selected) {
+    color: var(--dark-mode-main-font-color);
+    background-color: var(--dark-mode-main-border-color);
+}
 body.dark #footer,
 body.dark .self-service .footer {
     background-color: var(--dark-mode-2nd-bg-color);

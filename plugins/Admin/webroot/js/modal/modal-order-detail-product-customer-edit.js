@@ -91,12 +91,9 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         var customerDropdownSelector = '#dialogOrderDetailEditCustomerId';
         $(customerDropdownSelector).find('option[value=""]').remove();
 
-        $(customerDropdownSelector).selectpicker({
-            liveSearch: true,
-            size: 7,
-            title: __('Please_select_new_member.')
+        foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector, null, {
+            placeholder: __('Please_select_new_member.')
         });
-        foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();

@@ -29,19 +29,27 @@ trait GetProductsForDropdownTrait
         $products = $productsTable->getForDropdown($manufacturerId);
         $productsForDropdown = [];
         foreach ($products as $key => $ps) {
-            $productsForDropdown[] = '<optgroup label="' . $key . '">';
+            $options = [];
             foreach ($ps as $pId => $p) {
-                $productsForDropdown[] = '<option value="' . $pId . '">' . $p . '</option>';
+                $options[] = [
+                    'value' => (string) $pId,
+                    'text' => $p,
+                ];
             }
-            $productsForDropdown[] = '</optgroup>';
+            $productsForDropdown[] = [
+                'label' => $key,
+                'options' => $options,
+            ];
         }
 
-        $emptyElement = ['<option value="">' . __('All_products') . '</option>'];
-        $productsForDropdown = array_merge($emptyElement, $productsForDropdown);
+        array_unshift($productsForDropdown, [
+            'value' => '',
+            'text' => __('All_products'),
+        ]);
 
         $this->set([
             'status' => 1,
-            'dropdownData' => join('', $productsForDropdown),
+            'dropdownData' => $productsForDropdown,
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'dropdownData']);
     }

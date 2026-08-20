@@ -42,8 +42,23 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
         $response = $this->getJsonDecodedResponse();
-        $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="88">Demo Admin</option><option value="87">Demo Mitglied</option><option value="92">Demo Superadmin</option></optgroup><optgroup label="Hersteller: aktiv"><option value="91">Demo Fleisch-Hersteller</option><option value="89">Demo Gemüse-Hersteller</option><option value="90">Demo Milch-Hersteller</option></optgroup><optgroup label="Mitglieder: inaktiv"><option value="93">Demo SB-Kunde</option></optgroup>';
-        $this->assertEquals($expectedHtml, $response->dropdownData);
+        $expectedDropdownData = json_decode(json_encode([
+            ['value' => '', 'text' => 'alle Mitglieder'],
+            ['label' => 'Mitglieder: aktiv', 'options' => [
+                ['value' => '88', 'text' => 'Demo Admin'],
+                ['value' => '87', 'text' => 'Demo Mitglied'],
+                ['value' => '92', 'text' => 'Demo Superadmin'],
+            ]],
+            ['label' => 'Hersteller: aktiv', 'options' => [
+                ['value' => '91', 'text' => 'Demo Fleisch-Hersteller'],
+                ['value' => '89', 'text' => 'Demo Gemüse-Hersteller'],
+                ['value' => '90', 'text' => 'Demo Milch-Hersteller'],
+            ]],
+            ['label' => 'Mitglieder: inaktiv', 'options' => [
+                ['value' => '93', 'text' => 'Demo SB-Kunde'],
+            ]],
+        ]));
+        $this->assertEquals($expectedDropdownData, $response->dropdownData);
     }
 
     public function testGetCustomersForDropdownAsCustomerWithAllManufacturers(): void
@@ -51,8 +66,13 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
         $response = $this->getJsonDecodedResponse();
-        $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="87">Demo Mitglied</option></optgroup>';
-        $this->assertEquals($expectedHtml, $response->dropdownData);
+        $expectedDropdownData = json_decode(json_encode([
+            ['value' => '', 'text' => 'alle Mitglieder'],
+            ['label' => 'Mitglieder: aktiv', 'options' => [
+                ['value' => '87', 'text' => 'Demo Mitglied'],
+            ]],
+        ]));
+        $this->assertEquals($expectedDropdownData, $response->dropdownData);
     }
 
     public function testEditGroupAsSuperadmin(): void
