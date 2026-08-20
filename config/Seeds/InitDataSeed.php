@@ -79,7 +79,7 @@ class InitDataSeed extends BaseSeed
             (1,'FCS_INVOICE_NUMBER_PREFIX','','readonly',586),
             (1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','0','readonly',585),
             (1,'FCS_NEWSLETTER_ENABLED','0','boolean',3400),
-            (1,'FCS_USER_FEEDBACK_ENABLED','0','boolean',3500),
+            (1,'FCS_USER_FEEDBACK_ENABLED','0','boolean',3500)
             ";
             // FCS_HOME_TEXT added in Migration AddConfigurationTextForHome
             // FCS_CUSTOM_CSS added in Migration AddConfigurationCustomCss

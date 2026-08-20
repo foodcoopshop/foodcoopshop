@@ -43,6 +43,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(10, $records[0]['Steuersatz']);
         $this->assertEquals(0.5, $records[0]['Pfand']);
         $this->assertEquals('10', $records[0]['Menge']);
+        $this->assertEquals('TEST-001', $records[0]['Bestellnummer']);
     }
 
     public function testImportWithErrors(): void
@@ -97,6 +98,7 @@ class ProductReaderServiceTest extends AppCakeTestCase
         // first product
         $this->assertEquals($manufacturerId, $productEntities[0]->id_manufacturer);
         $this->assertEquals('Brombeeren', $productEntities[0]->name);
+        $this->assertEquals('TEST-001', $productEntities[0]->manufacturer_order_number);
         $this->assertEquals('frisch geerntet alert(\'evil\')', $productEntities[0]->description_short);
         $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $productEntities[0]->description);
         $this->assertEquals('1 kg', $productEntities[0]->unity);

@@ -26,6 +26,7 @@ use Admin\Traits\Products\ExportTrait;
 use Admin\Traits\Products\GenerateProductCardsTrait;
 use Admin\Traits\Products\GetProductsForDropdownTrait;
 use Admin\Traits\Products\ImportTrait;
+use Admin\Traits\Products\PriceUpdateTrait;
 use Admin\Traits\Products\IndexTrait;
 use Admin\Traits\Products\SaveUploadedImageTrait;
 use Cake\Event\EventInterface;
@@ -69,6 +70,7 @@ class ProductsController extends AdminAppController
     use GetProductsForDropdownTrait;
     use IndexTrait;
     use ImportTrait;
+    use PriceUpdateTrait;
     use ExportTrait;
     use SaveUploadedImageTrait;
     use DuplicateTrait;

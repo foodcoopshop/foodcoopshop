@@ -158,6 +158,7 @@
             "created": "2015-08-19T09:35:46+02:00",
             "modified": "2015-08-19T09:35:45+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 686,
@@ -279,6 +280,7 @@
             "created": "2015-09-07T12:05:38+02:00",
             "modified": "2015-02-26T13:54:07+01:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 674,
@@ -392,6 +394,7 @@
             "created": "2015-10-05T17:22:40+02:00",
             "modified": "2015-07-06T10:24:44+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 680,
@@ -505,6 +508,7 @@
             "created": "2018-08-16T12:15:48+02:00",
             "modified": "2018-08-16T12:16:51+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 708,
@@ -643,6 +647,7 @@
             "created": "2019-06-05T15:09:53+02:00",
             "modified": "2019-06-05T15:10:08+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 713,
@@ -781,6 +786,7 @@
             "created": "2019-06-05T15:09:53+02:00",
             "modified": "2019-06-05T15:10:08+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 714,
@@ -919,6 +925,7 @@
             "created": "2018-08-16T12:19:06+02:00",
             "modified": "2018-08-16T12:19:23+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [
                 {
                     "id_product_attribute": 13,
@@ -1300,6 +1307,7 @@
             "created": "2014-07-12T20:41:43+02:00",
             "modified": "2017-07-26T13:24:10+02:00",
             "new": null,
+            "manufacturer_order_number": null,
             "product_attributes": [],
             "stock_available": {
                 "id_stock_available": 318,
