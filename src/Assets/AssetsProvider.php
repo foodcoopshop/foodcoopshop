@@ -69,6 +69,7 @@ class AssetsProvider
             '@popperjs/core/dist/umd/popper.js',
             'bootstrap/dist/js/bootstrap.min.js',
             'tom-select/dist/js/tom-select.complete.js',
+            'asset-separator.js',
             'jquery-ui/dist/jquery-ui.js',
             'blueimp-file-upload/js/jquery.fileupload.js',
             'jquery-backstretch/jquery.backstretch.js',
