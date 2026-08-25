@@ -813,9 +813,9 @@ foodcoopshop.Admin = {
                     $(selector).data('suppressFilterChange', false);
                 },
                 onError: function (data) {
+                    $(selector).next('.ts-wrapper').find('i.fa-circle-notch').remove();
                     $(selector).data('optionsLoading', false);
                     $(selector).data('suppressFilterChange', false);
-                    console.log(data.msg);
                 }
             });
     },
