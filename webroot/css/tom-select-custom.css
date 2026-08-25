@@ -144,11 +144,10 @@
     background-color: #fff;
     box-sizing: border-box;
     overflow-x: hidden;
-    /* above .modal (100000) / backdrop (99991) */
     z-index: 100050;
 }
 .ts-dropdown .ts-dropdown-content {
-    max-height: 50vh;
+    max-height: 65vh;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0 0 8px 0;
