@@ -100,6 +100,7 @@
 /* multi: clear (x) is always visible when items are selected */
 .ts-wrapper.plugin-clear_button.has-items .clear-button {
     opacity: 1;
+    overflow: hidden;
 }
 .ts-dropdown .no-results {
     color: #262626;
@@ -180,17 +181,20 @@
     line-height: 1;
     float: right;
     padding-left: 8px;
+    padding-top: 2px;
 }
 .ts-dropdown .ts-dropdown-content .optgroup .option {
     padding-left: 22.5px;
 }
 .ts-dropdown .ts-dropdown-content .optgroup-header {
-    font-size: 11px;
+    font-size: 16px;
     padding: 8px 16px;
     line-height: 20px;
     color: #6c757d;
     white-space: nowrap;
     background-color: transparent;
+    border-top: 1px solid #6c757d;
+    margin-top: 10px;
 }
 .ts-dropdown .ts-dropdown-content [data-disabled],
 .ts-dropdown .ts-dropdown-content [data-disabled] .option {
