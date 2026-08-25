@@ -193,7 +193,7 @@
     color: #6c757d;
     white-space: nowrap;
     background-color: transparent;
-    border-top: 1px solid #6c757d;
+    border-top: 1px solid rgba(0,0,0,0.175);
     margin-top: 10px;
 }
 .ts-dropdown .ts-dropdown-content [data-disabled],
