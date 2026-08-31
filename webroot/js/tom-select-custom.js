@@ -156,10 +156,6 @@ foodcoopshop.TomSelectCustom = {
         instance.refreshOptions(false);
     },
 
-    /**
-     * multiple dropdowns need to be selected manually
-     * therefore data-val must be set!
-     */
     setMultipleDropdowns : function(selector) {
         $(selector).each(function () {
             var val = $(this).data('val');
