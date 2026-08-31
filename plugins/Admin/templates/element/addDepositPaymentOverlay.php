@@ -42,7 +42,7 @@ if (isset($customerId)) {
         echo $this->Form->control('Payments.customerId', [
             'type' => 'select',
             'label' => '',
-            'class' => 'no-bootstrap-select',
+            'class' => 'no-tom-select',
             'value' => $customerId,
         ]);
     } else {

@@ -8,6 +8,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## unreleased
 
+- Das Bootstrap-Select ist in die Jahre gekommen und wurde durch Tom Select ersetzt. [I#1267](https://github.com/foodcoopshop/foodcoopshop/issues/1267) / [PR#1272](https://github.com/foodcoopshop/foodcoopshop/pull/1272) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Umsatzsteuer auf Basis der Nettosumme - mehrere Steuersätze sind jetzt möglich: [I#1265](https://github.com/foodcoopshop/foodcoopshop/issues/1265) / [PR#1266](https://github.com/foodcoopshop/foodcoopshop/pull/1266) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Mitglieder-Liste im Admin-Bereich lädt jetzt deutlich schneller. [I#1263](https://github.com/foodcoopshop/foodcoopshop/issues/1263) / [PR#1264](https://github.com/foodcoopshop/foodcoopshop/pull/1264) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Admin-Bereich verwendet jetzt die volle Breite des Bildschirms. Schriftgröße und Abstände wurden optimiert. [I#1258](https://github.com/foodcoopshop/foodcoopshop/issues/1258) / [PR#1262](https://github.com/foodcoopshop/foodcoopshop/pull/1262) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>

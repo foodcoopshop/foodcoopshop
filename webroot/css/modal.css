@@ -90,7 +90,7 @@
 #modal-image .modal-footer {
     display: none;
 }
-#order-for-different-customer-add .bootstrap-select {
+#order-for-different-customer-add .ts-wrapper {
     width: 300px ! important;
 }
 #order-for-different-customer-add .modal-header .start span.title {
@@ -98,7 +98,7 @@
     line-height: 30px;
     margin-right: 5px;
 }
-#order-for-different-customer-add .bootstrap-select div.filter-option-inner-inner i.fas {
+#order-for-different-customer-add .ts-wrapper .ts-control i.fas {
     top: 10px;
 }
 #order-for-different-customer-add .message-container select#customersDropdown {
@@ -124,13 +124,13 @@ body.iframe_self_service_order {
     margin-top: 0 ! important;
     border: none;
 }
-#order-detail-customer-edit-form .bootstrap-select,
-#payment-deposit-add .bootstrap-select,
-#modal-product-attribute-add .bootstrap-select,
+#order-detail-customer-edit-form .ts-wrapper,
+#payment-deposit-add .ts-wrapper,
+#modal-product-attribute-add .ts-wrapper,
 #payment-deposit-add .input.select {
     width: 100% ! important;
 }
-#payment-deposit-add .bootstrap-select {
+#payment-deposit-add .ts-wrapper {
     margin-bottom: 10px;
 }
 .modal .categories-checkboxes {

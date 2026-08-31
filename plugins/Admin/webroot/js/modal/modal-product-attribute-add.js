@@ -42,10 +42,7 @@ foodcoopshop.ModalProductAttributeAdd = {
                 html
             );
 
-            $('.product-attributes-dropdown').selectpicker({
-                liveSearch: true,
-                size: 7
-            });
+            foodcoopshop.TomSelectCustom.init('.product-attributes-dropdown');
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                 foodcoopshop.ModalProductAttributeAdd.getSuccessHandler(modalSelector, productId);

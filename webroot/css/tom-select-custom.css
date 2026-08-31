@@ -1,0 +1,217 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 4.3.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+.ts-wrapper {
+    display: inline-block;
+    width: 200px ! important;
+    vertical-align: middle;
+}
+.ts-wrapper .ts-control,
+.ts-wrapper.multi.has-items .ts-control {
+    min-height: 32px;
+    height: 32px;
+    padding: 0 22px 0 6px ! important;
+    font-size: 15px;
+    line-height: 22.5px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: hidden ! important;
+    scrollbar-width: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.ts-wrapper .ts-control::-webkit-scrollbar {
+    display: none;
+}
+/* multi with clear button needs more space for the x next to the caret */
+.ts-wrapper.multi.plugin-clear_button .ts-control {
+    padding-right: 36px ! important;
+}
+/* dropdown caret */
+.ts-wrapper .ts-control:after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -2px;
+    border-top: 4px solid #333;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.ts-wrapper .ts-control > .item,
+.ts-wrapper .ts-control > .ts-count {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+    font-size: 15px;
+    line-height: 22.5px;
+}
+.ts-wrapper .ts-control > input.items-placeholder {
+    flex: 1 1 auto;
+    min-width: 0 ! important;
+    width: auto;
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+}
+.ts-wrapper .ts-control > input.items-placeholder::placeholder {
+    color: #333;
+    opacity: 1;
+}
+/* multi: keep the always hidden dummy items out of the flex layout */
+.ts-wrapper.multi .ts-control > .ts-hidden-item {
+    display: none;
+}
+/* multi: clear (x) absolutely positioned left of the caret */
+.ts-wrapper.multi.plugin-clear_button .clear-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    margin-right: 0 ! important;
+    color: #333;
+    font-size: 18px;
+    line-height: 1;
+}
+.ts-wrapper.single.plugin-clear_button .clear-button {
+    right: 20px;
+    color: #333;
+    font-size: 18px;
+    line-height: 1;
+}
+/* multi: clear (x) is always visible when items are selected */
+.ts-wrapper.plugin-clear_button.has-items .clear-button {
+    opacity: 1;
+    overflow: hidden;
+}
+.ts-dropdown .no-results {
+    color: #262626;
+    font-size: 15px;
+}
+.ts-dropdown .dropdown-input-wrap {
+    padding: 8px;
+}
+.ts-dropdown .dropdown-input-wrap input.dropdown-input {
+    display: block;
+    width: 100%;
+    font-size: 15px;
+    line-height: 22.5px;
+    margin: 0;
+    padding: 6px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #333;
+    background-color: #fff;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+.ts-dropdown .dropdown-input-wrap input.dropdown-input:focus {
+    box-shadow: none;
+    border-color: #dfdfdf ! important;
+    outline: none;
+}
+.ts-wrapper.focus .ts-control {
+	outline: 1px dotted #333 ! important;
+    outline-offset: 0;
+    box-shadow: none;
+}
+.ts-dropdown {
+    width: max-content;
+    min-width: 100%;
+    max-width: 90vw;
+    margin: 3px 0 0;
+    font-size: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.176);
+    border-radius: 6px;
+    background-color: #fff;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    z-index: 100050;
+}
+.ts-dropdown .ts-dropdown-content {
+    max-height: 65vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0 8px 0;
+    box-sizing: border-box;
+}
+.ts-dropdown .ts-dropdown-content .option {
+    padding: 2.4px 16px;
+    font-size: 15px;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+.ts-dropdown .ts-dropdown-content .option.active:not(.selected) {
+    color: #333;
+    background-color: #e9ecef;
+}
+.ts-dropdown .ts-dropdown-content .option.selected {
+    color: #fff;
+    background-color: var(--theme-color);
+}
+/* tick mark for selected options in the open list (multi + single) */
+.ts-dropdown .ts-dropdown-content .option.selected:after {
+    content: "\2713";
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    float: right;
+    padding-left: 8px;
+    padding-top: 2px;
+}
+.ts-dropdown .ts-dropdown-content .optgroup .option {
+    padding-left: 22.5px;
+}
+.ts-dropdown .ts-dropdown-content .optgroup-header {
+    font-size: 16px;
+    padding: 8px 16px;
+    line-height: 20px;
+    color: #6c757d;
+    white-space: nowrap;
+    background-color: transparent;
+    border-top: 1px solid rgba(0,0,0,0.175);
+    margin-top: 10px;
+}
+.ts-dropdown .ts-dropdown-content [data-disabled],
+.ts-dropdown .ts-dropdown-content [data-disabled] .option {
+    color: #999;
+    cursor: default;
+}
+.ts-dropdown .ts-dropdown-content .no-results {
+    padding: 12px 16px;
+    color: #333;
+    font-size: 15px;
+}
+.ts-wrapper.big {
+    width: 250px ! important;
+}
+/* ajax loading spinner inside the closed control (lazy dropdowns) */
+.ts-wrapper .ts-control i.fas.fa-circle-notch {
+    position: absolute;
+    right: 25px;
+    top: 8px;
+    font-size: 15px;
+}
