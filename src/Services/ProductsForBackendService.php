@@ -214,7 +214,9 @@ class ProductsForBackendService
         }
 
         $contain = [
-            'CategoryProducts',
+            'CategoryProducts' => [
+                'strategy' => 'select',
+            ],
             'CategoryProducts.Categories',
             'DepositProducts',
             'Images',
@@ -226,7 +228,9 @@ class ProductsForBackendService
                     'StockAvailables.id_product_attribute' => 0
                 ]
             ],
-            'ProductAttributes',
+            'ProductAttributes' => [
+                'strategy' => 'select',
+            ],
             'ProductAttributes.StockAvailables' => [
                 'conditions' => [
                     'StockAvailables.id_product_attribute > 0'

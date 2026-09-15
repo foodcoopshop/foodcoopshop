@@ -36,8 +36,6 @@ trait IndexTrait
             }
         }
 
-        $productsTable = $this->getTableLocator()->get('Products');
-
         // always filter by manufacturer id so that no other products than the own are shown
         if ($this->identity->isManufacturer()) {
             $manufacturerId = $this->identity->getManufacturerId();
