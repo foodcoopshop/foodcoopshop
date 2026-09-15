@@ -76,6 +76,9 @@
     color: #333;
     opacity: 1;
 }
+.ts-wrapper.plugin-dropdown_input:not(.has-items) .ts-control > input.items-placeholder {
+    display: inline-block ! important;
+}
 /* multi: keep the always hidden dummy items out of the flex layout */
 .ts-wrapper.multi .ts-control > .ts-hidden-item {
     display: none;
