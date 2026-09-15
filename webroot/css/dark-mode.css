@@ -82,9 +82,9 @@ body.dark .ui-widget.ui-widget-content {
     border-color: var(--dark-mode-main-border-color);
 }
 body.dark .ts-wrapper .ts-control {
-    background-color: var(--dark-mode-2nd-bg-color);
-    border-color: var(--dark-mode-main-border-color);
-    color: var(--dark-mode-main-font-color);
+    background-color: var(--dark-mode-2nd-bg-color) !important;
+    border-color: var(--dark-mode-main-border-color) !important;
+    color: var(--dark-mode-main-font-color) ;
 }
 body.dark .ts-wrapper .ts-control > .item,
 body.dark .ts-wrapper .ts-control > .ts-count,
@@ -101,15 +101,11 @@ body.dark .ts-wrapper .ts-control:after {
 body.dark .ts-wrapper.plugin-clear_button .clear-button {
     color: var(--dark-mode-main-font-color);
 }
-body.dark .ts-dropdown {
-    background-color: var(--dark-mode-2nd-bg-color);
-    border-color: var(--dark-mode-main-border-color);
-    color: var(--dark-mode-main-font-color);
-}
+body.dark .ts-dropdown,
 body.dark .ts-dropdown .dropdown-input-wrap input.dropdown-input {
     background-color: var(--dark-mode-2nd-bg-color);
-    color: var(--dark-mode-main-font-color);
     border-color: var(--dark-mode-main-border-color);
+    color: var(--dark-mode-main-font-color);
 }
 body.dark .ts-dropdown .ts-dropdown-content .option,
 body.dark .ts-dropdown .ts-dropdown-content .no-results {
