@@ -18,7 +18,6 @@
     "@fortawesome/fontawesome-free": "^7.3.1",
     "blueimp-file-upload": "^10.32.0",
     "bootstrap": "^5.3.8",
-    "bootstrap-select": "^1.14.0-beta3",
     "chart.js": "^4.5.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "clipboard": "^2.0.11",
@@ -36,6 +35,7 @@
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "swiper": "^14.1.0",
+    "tom-select": "^2.6.2",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.19.3",
     "webrtc-adapter": "^9.0.6"

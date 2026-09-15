@@ -5400,3 +5400,15 @@ msgstr "{0} {1} could not be associated."
 
 msgid "{0}_{1}_was_successfully_associated."
 msgstr "{0} {1} was successfully associated."
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "No results found"
+msgstr "No results found"
+
+msgid "Nothing selected"
+msgstr "Nothing selected"
+
+msgid "{0} selected"
+msgstr "{0} selected"

@@ -74,12 +74,6 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
         var customerDropdownSelector = '#' + customerDropdownId;
 
-        $(customerDropdownSelector).selectpicker({
-            liveSearch: true,
-            size: 7,
-            title: __('Please_select...'),
-        });
-
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
         var customerId = $('#customerid').val();
         foodcoopshop.Admin.initCustomerDropdown(customerId, 0, 0, customerDropdownSelector, function () {
@@ -93,6 +87,8 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
             $(modalSelector + ' iframe').on('load', function() {
                 foodcoopshop.Helper.removeLoader(targetForLoader);
             });
+        }, {
+            placeholder: __('Please_select...'),
         });
 
         $(customerDropdownSelector).show();

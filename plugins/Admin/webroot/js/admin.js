@@ -99,14 +99,17 @@ foodcoopshop.Admin = {
         });
     },
 
-    disableSelectpickerItems : function (selector, ids) {
+    disableSelectItems : function (selector, ids) {
         $(selector).find('option').each(function () {
             var currentId = parseInt($(this).val());
             if ($.inArray(currentId, ids) !== -1) {
                 $(this).attr('disabled', 'disabled');
             }
         });
-        $(selector).selectpicker('render');
+        var instance = foodcoopshop.TomSelectCustom.get(selector);
+        if (instance) {
+            instance.sync();
+        }
     },
 
     addLoaderToSyncProductDataButton : function (button) {
@@ -191,30 +194,16 @@ foodcoopshop.Admin = {
             }
         });
 
-        foodcoopshop.Helper.initBootstrapSelect(filterContainer);
+        foodcoopshop.TomSelectCustom.initAll(filterContainer);
 
-        this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
-
+        foodcoopshop.TomSelectCustom.setMultipleDropdowns('.filter-container select[multiple="multiple"]');
         filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
+            if ($(this).data('optionsLoading') || $(this).data('suppressFilterChange')) {
+                return;
+            }
             foodcoopshop.Admin.triggerFilter();
         });
 
-    },
-
-    /**
-     * multiple dropdowns need to be selected manually
-     * therefore data-val must be set!
-     */
-    setSelectPickerMultipleDropdowns : function (selector) {
-        $(selector).each(function () {
-            var val = $(this).data('val');
-            if (val) {
-                var valAsArray = val.toString().split(',');
-                $(this).selectpicker().val(valAsArray);
-                $(this).selectpicker('destroy');
-                $(this).selectpicker('render');
-            }
-        });
     },
 
     submitFilterForm: function () {
@@ -415,9 +404,8 @@ foodcoopshop.Admin = {
             }
         });
 
-        form.find('select').not('.selectpicker-disabled').selectpicker({
-            liveSearch: true,
-            showIcon: true
+        form.find('select').not('.no-tom-select').each(function () {
+            foodcoopshop.TomSelectCustom.init(this);
         });
 
         var afterLabelElement = form.find('label span.after');
@@ -707,111 +695,137 @@ foodcoopshop.Admin = {
         });
     },
 
+    /**
+     * Product/customer dropdowns are initialized empty and their data is only fetched
+     * via AJAX the first time the dropdown is opened (or immediately, if a value should
+     * be preselected). The fetch hook is attached via the Tom Select "dropdown_open" event.
+     */
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
         manufacturerId = manufacturerId || 0;
-        var productDropdown = $('select#productid').closest('.bootstrap-select').find('.dropdown-toggle');
+        var selector = 'select#productid';
 
-        if (selectedProductId > 0) {
-            this.populateDropdownWithProducts(productDropdown, selectedProductId, manufacturerId);
-        }
-
-        productDropdown.on('click', function () {
-            if ($('select#productid optgroup').length == 0) {
-                foodcoopshop.Admin.populateDropdownWithProducts($(this), selectedProductId, manufacturerId);
+        foodcoopshop.TomSelectCustom.init(selector, {}, {
+            dropdown_open: function () {
+                if (!$(selector).data('optionsLoaded') && !$(selector).data('optionsLoading')) {
+                    foodcoopshop.Admin.populateDropdownWithProducts(selector, selectedProductId, manufacturerId);
+                }
             }
         });
 
+        if (selectedProductId > 0) {
+            this.populateDropdownWithProducts(selector, selectedProductId, manufacturerId);
+        }
+
     },
 
-    populateDropdownWithProducts : function(productDropdown, selectedProductId, manufacturerId) {
+    populateDropdownWithProducts : function(selector, selectedProductId, manufacturerId) {
         this.populateDropdownWithData(
             '/admin/products/ajaxGetProductsForDropdown/' + '/' + manufacturerId,
-            'select#productid',
-            productDropdown,
+            selector,
             selectedProductId
         );
     },
 
-    initCustomerDropdown: function (selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange) {
+    initCustomerDropdown: function (selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange, settings) {
 
         selector = selector || 'select#customerid';
-        var customerDropdown = $(selector).closest('.bootstrap-select').find('.dropdown-toggle');
 
-        if (selectedCustomerId > 0) {
-            this.populateDropdownWithCustomers(customerDropdown, [selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
-        }
-
-        customerDropdown.on('click', function () {
-            if ($(selector + ' optgroup').length == 0) {
-                foodcoopshop.Admin.populateDropdownWithCustomers($(this), [selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
+        foodcoopshop.TomSelectCustom.init(selector, settings || {}, {
+            dropdown_open: function () {
+                if (!$(selector).data('optionsLoaded') && !$(selector).data('optionsLoading')) {
+                    foodcoopshop.Admin.populateDropdownWithCustomers([selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
+                }
             }
         });
+
+        if (selectedCustomerId > 0) {
+            this.populateDropdownWithCustomers([selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
+        }
 
     },
 
     initCustomerMultiDropdown: function (selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange) {
 
         selector = selector || 'select#customerids';
-        var customerDropdown = $(selector).closest('.bootstrap-select').find('.dropdown-toggle');
-        
-        if (selectedCustomerIds.length > 0) {
-            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
-        }
 
-        customerDropdown.on('click', function () {
-            if ($(selector + ' optgroup').length == 0) {
-                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
+        foodcoopshop.TomSelectCustom.init(selector, {}, {
+            dropdown_open: function () {
+                if (!$(selector).data('optionsLoaded') && !$(selector).data('optionsLoading')) {
+                    foodcoopshop.Admin.populateDropdownWithCustomers(selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
+                }
             }
         });
 
+        if (selectedCustomerIds.length > 0) {
+            this.populateDropdownWithCustomers(selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
+        }
+
     },
 
-    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange) {
+    populateDropdownWithCustomers : function(selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange) {
         this.populateDropdownWithData(
             '/admin/customers/getCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
             selector,
-            customerDropdown,
             selectedCustomerIds,
             onChange
         );
     },
 
-    populateDropdownWithData : function(ajaxMethod, selector, dropdown, selectedIndex, onChange) {
-        dropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
+    populateDropdownWithData : function(ajaxMethod, selector, selectedValue, onChange) {
+        var instance = foodcoopshop.TomSelectCustom.get(selector);
+        // fetch the options via AJAX only once per page load; every later call (e.g. re-opening
+        // the dropdown) reuses the already-fetched data instead of triggering another request
+        if (!instance || $(selector).data('optionsLoaded') || $(selector).data('optionsLoading')) {
+            return;
+        }
+        $(selector).data('optionsLoading', true);
+        $(selector).data('suppressFilterChange', true);
+        $(selector).next('.ts-wrapper').find('.ts-control').append('<i class="fas fa-circle-notch fa-spin"></i>');
         foodcoopshop.Helper.ajaxCall(
             ajaxMethod, {}, {
                 onOk: function (data) {
-                    var select = $(selector);
-                    select.append(data.dropdownData);
-                    select.attr('disabled', false);
+                    // setData and setValue emit native change events; keep suppress flags until
+                    // after those synchronous updates so filter forms are not submitted
+                    foodcoopshop.TomSelectCustom.setData(instance, data.dropdownData);
+                    instance.enable();
+                    $(selector).data('optionsLoaded', true);
                     if (onChange) {
-                        select.on('change', function() {
+                        $(selector).off('change.populateDropdownWithData').on('change.populateDropdownWithData', function() {
                             onChange();
                         });
                     }
-                    if (selectedIndex) {
-                        select.selectpicker().val(selectedIndex);
+                    // only preselect (and notify onChange) if a real value was passed; merely
+                    // opening a lazy-loaded dropdown without any preselection must not fire a change
+                    var selectedValueAsArray = (Array.isArray(selectedValue) ? selectedValue : [selectedValue]).filter(function (value) {
+                        return value !== null && value !== undefined && value !== '' && parseInt(value, 10) > 0;
+                    });
+                    if (selectedValueAsArray.length > 0) {
+                        // second arg true: silent, do not trigger change; page already
+                        // reflects the preselected filter from the URL
+                        instance.setValue(selectedValueAsArray.map(String), true);
                         if (onChange) {
-                            select.trigger('change');
+                            onChange();
                         }
                     }
-                    select.selectpicker('refresh');
-                    select.selectpicker('render');
-                    select.find('i.fa-circle-notch').remove();
+                    $(selector).next('.ts-wrapper').find('i.fa-circle-notch').remove();
+                    $(selector).data('optionsLoading', false);
+                    $(selector).data('suppressFilterChange', false);
                 },
                 onError: function (data) {
-                    console.log(data.msg);
+                    $(selector).next('.ts-wrapper').find('i.fa-circle-notch').remove();
+                    $(selector).data('optionsLoading', false);
+                    $(selector).data('suppressFilterChange', false);
                 }
             });
     },
 
     initCsvUploadPaymentsCustomerDropdowns: function() {
         let selector = '#csv-records .select-member';
-        $(selector).selectpicker({
-            liveSearch: true,
-            size: 7,
-            title: __('Please_select_a_member.'),
+        $(selector).each(function () {
+            foodcoopshop.TomSelectCustom.init(this, {
+                placeholder: __('Please_select_a_member.')
+            });
         });
     },
 

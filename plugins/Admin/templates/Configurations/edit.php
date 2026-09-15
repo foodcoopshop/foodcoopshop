@@ -116,7 +116,7 @@ switch ($configuration->type) {
         break;
     case 'multiple_dropdown':
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#configurations-value');"
+            Configure::read('app.jsNamespace') . ".TomSelectCustom.setMultipleDropdowns('#configurations-value');"
         ]);
         // keep all checkmarks if one day does not validate
         $value = $configuration->value;
@@ -127,7 +127,6 @@ switch ($configuration->type) {
             'type' => 'select',
             'multiple' => true,
             'data-val' => $value,
-            'data-live-search' => true,
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),
             'escape' => false,

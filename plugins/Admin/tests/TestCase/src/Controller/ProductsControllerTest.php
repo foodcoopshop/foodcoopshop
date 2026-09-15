@@ -1157,7 +1157,16 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->ajaxGet('/admin/products/ajaxGetProductsForDropdown/4');
         $this->assertJsonOk();
         $this->assertNotEmpty($this->getJsonDecodedResponse());
-        $expectedDropdownData = '<option value="">Alle Produkte</option><optgroup label="online-5"><option value="340">Beuschl - Demo Fleisch-Hersteller</option><option value="103">Bratwürstel - Demo Fleisch-Hersteller</option><option value="347">Forelle - Demo Fleisch-Hersteller</option><option value="102">Frankfurter - Demo Fleisch-Hersteller</option><option value="348">Rindfleisch - Demo Fleisch-Hersteller</option></optgroup>';
+        $expectedDropdownData = json_decode(json_encode([
+            ['value' => '', 'text' => 'Alle Produkte'],
+            ['label' => 'online-5', 'options' => [
+                ['value' => '340', 'text' => 'Beuschl - Demo Fleisch-Hersteller'],
+                ['value' => '103', 'text' => 'Bratwürstel - Demo Fleisch-Hersteller'],
+                ['value' => '347', 'text' => 'Forelle - Demo Fleisch-Hersteller'],
+                ['value' => '102', 'text' => 'Frankfurter - Demo Fleisch-Hersteller'],
+                ['value' => '348', 'text' => 'Rindfleisch - Demo Fleisch-Hersteller'],
+            ]],
+        ]));
         $this->assertEquals($expectedDropdownData, $this->getJsonDecodedResponse()->dropdownData);
     }
 

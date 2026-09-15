@@ -67,12 +67,9 @@ foodcoopshop.ModalPaymentAdd = {
         var customerDropdownSelector = modalSelector + ' #payments-customerid';
         if ($(customerDropdownSelector).length > 0) {
             $(customerDropdownSelector).find('option[value=""]').remove();
-            $(customerDropdownSelector).selectpicker({
-                liveSearch: true,
-                size: 7,
-                title: __('Please_select...'),
+            foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector, null, {
+                placeholder: __('Please_select...'),
             });
-            foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
         }
     },
 

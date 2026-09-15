@@ -37,19 +37,27 @@ trait GetCustomersForDropdownTrait
         $customers = $customerTable->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {
-            $customersForDropdown[] = '<optgroup label="' . $key . '">';
+            $options = [];
             foreach ($ps as $pId => $p) {
-                $customersForDropdown[] = '<option value="' . $pId . '">' . $p . '</option>';
+                $options[] = [
+                    'value' => (string) $pId,
+                    'text' => $p,
+                ];
             }
-            $customersForDropdown[] = '</optgroup>';
+            $customersForDropdown[] = [
+                'label' => $key,
+                'options' => $options,
+            ];
         }
 
-        $emptyElement = ['<option value="">' . __('all_members') . '</option>'];
-        $customersForDropdown = array_merge($emptyElement, $customersForDropdown);
+        array_unshift($customersForDropdown, [
+            'value' => '',
+            'text' => __('all_members'),
+        ]);
 
         $this->set([
             'status' => 1,
-            'dropdownData' => join('', $customersForDropdown),
+            'dropdownData' => $customersForDropdown,
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'dropdownData']);
     }

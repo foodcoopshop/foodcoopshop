@@ -108,7 +108,7 @@ a.btn-outline-light.help {
   padding-left: 5px;
   padding-right: 5px;
 }
-form.fcs-form .bootstrap-select {
+form.fcs-form .ts-wrapper {
     width: 250px ! important;
 }
 #menu {
@@ -1234,7 +1234,7 @@ body.reports.payment form#csv-records table.list {
     margin-top: 20px;
     margin-bottom: 10px;
 }
-body.reports.payment form#csv-records .bootstrap-select.select-member {
+body.reports.payment form#csv-records .ts-wrapper.select-member {
     width: 270px ! important;
 }
 body.reports.payment form#csv-records .error-message {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Assets;
 
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,7 +33,8 @@ class AssetsProvider
             'reset.css',
             'jquery-ui/dist/themes/smoothness/jquery-ui.css',
             'table.css',
-            'bootstrap-select/dist/css/bootstrap-select.css',
+            'tom-select/dist/css/tom-select.css',
+            'tom-select-custom.css',
             '@fortawesome/fontawesome-free/css/all.css',
             'dark-mode.css',
             'global.css',
@@ -68,10 +68,10 @@ class AssetsProvider
             'jquery/dist/jquery.js',
             '@popperjs/core/dist/umd/popper.js',
             'bootstrap/dist/js/bootstrap.min.js',
-            'bootstrap-select/dist/js/bootstrap-select.js',
+            'tom-select/dist/js/tom-select.complete.js',
+            'asset-separator.js',
             'jquery-ui/dist/jquery-ui.js',
             'blueimp-file-upload/js/jquery.fileupload.js',
-            'bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js',
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
             'jquery.scrollto/jquery.scrollTo.js',

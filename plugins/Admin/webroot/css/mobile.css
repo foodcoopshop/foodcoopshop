@@ -49,8 +49,8 @@ form h2 {
   letter-spacing: 0;
   font-size: 16px;
 }
-form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within fcs-forms */
-.bootstrap-select {
+form.fcs-form .ts-wrapper, /* sic! necessary for select widgets within fcs-forms */
+.ts-wrapper {
     width: 150px ! important;
 }
 .fcs-form .error-message {
@@ -150,7 +150,7 @@ table.list tr.fake-th td {
 #modal-elfinder .modal-dialog {
     width: 100%;
 }
-#order-for-different-customer-add .bootstrap-select {
+#order-for-different-customer-add .ts-wrapper {
     width: 100% ! important;
 }
 body.feedbacks textarea {

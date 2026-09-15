@@ -16,3 +16,4 @@
 - Never run `asset_compress build` locally
 - Avoid code duplication. If you find yourself copying and pasting code, consider refactoring to create a reusable function or component.
 - Always put javascript functions in the appropriate existing files and not directly in the template files
+- Never write javascript tests

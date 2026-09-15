@@ -68,7 +68,7 @@ echo '<h2>'.__('Visibility_of_the_products').'</h2>';
 
     if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-no-delivery-days');"
+            Configure::read('app.jsNamespace') . ".TomSelectCustom.setMultipleDropdowns('#manufacturers-no-delivery-days');"
         ]);
         echo $this->Form->control('Manufacturers.no_delivery_days', [
             'type' => 'select',
@@ -228,7 +228,7 @@ echo '<h2>'.__('Visibility_of_the_products').'</h2>';
     if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
         $this->element('addScript', [
             'script' =>
-                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-enabled-sync-domains');
+                Configure::read('app.jsNamespace') . ".TomSelectCustom.setMultipleDropdowns('#manufacturers-enabled-sync-domains');
             "
         ]);
         echo $this->Form->control('Manufacturers.enabled_sync_domains', [

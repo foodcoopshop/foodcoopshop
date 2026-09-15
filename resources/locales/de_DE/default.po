@@ -5717,3 +5717,15 @@ msgstr "Möchtest du diesen Lagerort wirklich löschen?"
 
 msgid "Do you really want to delete this remote foodcoop?"
 msgstr "Möchtest du diese Remote-Foodcoop wirklich löschen?"
+
+msgid "Clear"
+msgstr "Leeren"
+
+msgid "No results found"
+msgstr "Keine Ergebnisse gefunden"
+
+msgid "Nothing selected"
+msgstr "Keine Auswahl"
+
+msgid "{0} selected"
+msgstr "{0} ausgewählt"
