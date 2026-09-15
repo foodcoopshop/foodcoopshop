@@ -82,6 +82,15 @@ foodcoopshop.TomSelectCustom = {
             };
         }
         var instance = new TomSelect(element, $.extend({}, defaultSettings, settings || {}));
+        instance.hook('after', 'positionDropdown', function() {
+            if (instance.settings.dropdownParent !== 'body') {
+                instance.dropdown.style.left = '';
+            }
+            if (window.matchMedia('(max-device-width: 850px)').matches) {
+                var left = parseFloat(instance.dropdown.style.left) || 0;
+                instance.dropdown.style.left = (left - instance.dropdown.getBoundingClientRect().left) + 'px';
+            }
+        });
         // the search input inside the dropdown gets settings.placeholder copied at setup -
         // clear it, "Nothing selected" is no useful placeholder for a search field
         if (instance.control_input) {
