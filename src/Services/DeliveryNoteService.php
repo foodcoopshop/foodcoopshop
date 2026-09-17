@@ -114,7 +114,7 @@ class DeliveryNoteService
                 $netPerPiece = round($orderDetail->SumPurchasePriceNet / $orderDetail->SumAmount, 2);
             }
 
-            $taxRate = $orderDetail->PurchasePriceTaxRate;
+            $taxRate = $orderDetail->PurchasePriceTaxRate ?? '';
             if (!isset($taxRates[$taxRate])) {
                 $taxRates[$taxRate] = $defaultTaxArray;
             }

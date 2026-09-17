@@ -34,8 +34,8 @@ class OrderDetailsPolicy implements RequestPolicyInterface
         }
 
         switch ($request->getParam('action')) {
-            case 'profit';
-            case 'editPurchasePrice';
+            case 'profit':
+            case 'editPurchasePrice':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $identity->isSuperadmin();
             case 'initInstantOrder':
             case 'initSelfServiceOrder':
@@ -50,7 +50,7 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 return false;
             case 'editProductName':
                 return $identity->isSuperadmin();
-            case 'addFeedback';
+            case 'addFeedback':
                 if (!Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
                     return false;
                 }
