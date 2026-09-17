@@ -43,6 +43,9 @@ foodcoopshop.TomSelectCustom = {
     init : function(selectElement, settings, events) {
         var $select = $(selectElement);
         var element = $select.get(0);
+        if (!element) {
+            return null;
+        }
         var existingInstance = element.tomselect;
         if (existingInstance) {
             existingInstance.destroy();
