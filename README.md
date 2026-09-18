@@ -60,7 +60,7 @@
 ## ✔ Requirements
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
-* PHP >= 8.4.1
+* PHP >= 8.5
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP Imagick and GD extension
 * PHP mbstring and curl

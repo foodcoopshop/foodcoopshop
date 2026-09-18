@@ -3,7 +3,7 @@
 ## When Suggesting Code
 - Run all commands inside Docker container `fcs.php`
 - Respect CakePHP conventions
-- Use PHP 8.4 features appropriately
+- Use PHP features appropriate for the currently used PHP version.
 - Include type hints
 - Follow existing code style in the file
 - Verify against PHPStan rules (call `composer phpstan`)
