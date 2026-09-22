@@ -156,6 +156,18 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
     }
 
+    public function testAccountingNotificationIsSentToMultipleEmails(): void
+    {
+        $this->prepareSendInvoices();
+        $this->changeConfiguration('FCS_ACCOUNTING_EMAIL', 'accounting-one@example.com,accounting-two@example.com');
+
+        $this->exec('send_invoices_to_manufacturers "2018-03-11 10:20:30"');
+        $this->runAndAssertQueue();
+
+        $this->assertMailSentToAt(1, 'accounting-one@example.com');
+        $this->assertMailSentToAt(1, 'accounting-two@example.com');
+    }
+
     private function prepareSendInvoices(): void
     {
         $this->loginAsSuperadmin();

@@ -144,7 +144,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
         if ($accountingEmail != '') {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
-            $email->setTo($accountingEmail)
+            $email->setTo(explode(',', $accountingEmail))
                 ->setSubject(__('Invoices_for_{0}_have_been_sent', [$invoicePeriodMonthAndYear]))
                 ->setViewVars([
                 'dateFrom' => $dateFrom,

@@ -94,7 +94,11 @@ class ConfigurationsTable extends AppTable
     public function validationFcsAccountingEmail(Validator $validator): Validator
     {
         $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
-        $validator->email('value', true, __('The_email_address_is_not_valid.'));
+        $validator->add('value', 'multipleEmails', [
+            'rule' => 'ruleMultipleEmails',
+            'provider' => 'table',
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma.')
+        ]);
         return $validator;
     }
 

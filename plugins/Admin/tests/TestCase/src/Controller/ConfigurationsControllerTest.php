@@ -101,6 +101,22 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $this->assertEquals($configuration->value, 'office@rothauer-it.com,office@foodcoopshop.com');
     }
 
+    public function testConfigurationEditFormAccountingEmails(): void
+    {
+        $newValue = 'accounting-one@example.com,accounting-two@example.com';
+        $this->changeConfigurationEditForm('FCS_ACCOUNTING_EMAIL', $newValue);
+        $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
+
+        $configuration = $this->getTableLocator()->get('Configurations')->get('FCS_ACCOUNTING_EMAIL');
+        $this->assertSame($newValue, $configuration->value);
+    }
+
+    public function testConfigurationEditFormAccountingEmailsRejectsInvalidAddress(): void
+    {
+        $this->changeConfigurationEditForm('FCS_ACCOUNTING_EMAIL', 'accounting@example.com,invalid');
+        $this->assertResponseContains('Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen.');
+    }
+
     public function testShowProductsForGuestsEnabledAndLoggedOut(): void
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 1);

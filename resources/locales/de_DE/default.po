@@ -1060,7 +1060,7 @@ msgid "Compensation_payments"
 msgstr "Ausgleichszahlungen"
 
 msgid "Configuration_subtext_FCS_ACCOUNTING_EMAIL"
-msgstr "Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?"
+msgstr "Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand? Mehrere E-Mail-Adressen mit Komma trennen."
 
 msgid "Configuration_subtext_FCS_APP_ADDRESS"
 msgstr "Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet."
