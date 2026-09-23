@@ -316,7 +316,7 @@ td span.storage-location-for-dialog {
     margin-left: 3px;
     margin-bottom: 5px;
 }
-#customers-list input:not(.datepicker):not(.form-control) {
+#customers-list input:not(.datepicker):not(.form-control):not(.dropdown-input) {
     width: 35px;
     text-align: center;
 }
