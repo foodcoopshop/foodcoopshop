@@ -420,7 +420,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.defaultTax</td>
-            <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __('activated_admin') : __('deactivated_admin'); ?></td>
+            <td><?php echo $defaultTax ? $this->Number->formatAsPercent($defaultTax->rate) . ' - ' . ($defaultTax->active ? __('activated_admin') : __('deactivated_admin')) : '-'; ?></td>
         </tr>
 
         <tr>

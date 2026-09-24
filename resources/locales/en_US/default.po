@@ -2248,6 +2248,24 @@ msgstr "Please upload images only if you have the rights to use!"
 msgid "Import_products"
 msgstr "Import products"
 
+msgid "Manufacturer_order_number"
+msgstr "Manufacturer order number"
+
+msgid "Update_prices"
+msgstr "Update prices"
+
+msgid "Price_update_for_{0}"
+msgstr "Price update for {0}"
+
+msgid "Price_update_successful."
+msgstr "The price update was successful."
+
+msgid "Price_update_result_{0}_{1}_{2}"
+msgstr "Updated: {0}, New: {1}, Deactivated: {2}"
+
+msgid "Price_update_start"
+msgstr "Start price update"
+
 msgid "Imprint"
 msgstr "Imprint"
 

@@ -2334,6 +2334,48 @@ msgstr "Bilder bitte nur hochladen, wenn du über die Nutzungsrechte verfügst!"
 msgid "Import_products"
 msgstr "Produkte importieren"
 
+msgid "Manufacturer_order_number"
+msgstr "Bestellnummer"
+
+msgid "Update_prices"
+msgstr "Preise aktualisieren"
+
+msgid "Price_update_for_{0}"
+msgstr "Preis-Update für {0}"
+
+msgid "Price_update_successful."
+msgstr "Das Preis-Update war erfolgreich."
+
+msgid "Price_update_result_{0}_{1}_{2}"
+msgstr "Aktualisiert: {0}, Neu: {1}, Deaktiviert: {2}"
+
+msgid "Price_update_start"
+msgstr "Preis-Update starten"
+
+msgid "Price_update_preview"
+msgstr "Vorschau der Änderungen"
+
+msgid "Price_update_preview_updated"
+msgstr "Zu aktualisierende Produkte"
+
+msgid "Price_update_preview_inserted"
+msgstr "Neue Produkte"
+
+msgid "Price_update_preview_deactivated"
+msgstr "Zu deaktivierende Produkte"
+
+msgid "Price_update_preview_errors"
+msgstr "Fehler"
+
+msgid "Price_update_preview_row_{0}"
+msgstr "Zeile {0}"
+
+msgid "Price_update_apply"
+msgstr "Änderungen übernehmen"
+
+msgid "Price_update_cancel"
+msgstr "Abbrechen"
+
 msgid "Imprint"
 msgstr "Impressum"
 

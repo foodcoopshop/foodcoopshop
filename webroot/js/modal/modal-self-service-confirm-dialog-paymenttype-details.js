@@ -14,8 +14,8 @@
 foodcoopshop.ModalSelfServicePaymenttypeDetailsDialog = {
 
     getSuccessHandler : function() {
-       var selfSForm = $('#SelfServiceForm');
-       selfSForm.submit();
+        var selfSForm = $('#SelfServiceForm');
+        selfSForm.submit();
     },
 
     getOpenHandler : function(modalSelector, paymentName, paymentText) {

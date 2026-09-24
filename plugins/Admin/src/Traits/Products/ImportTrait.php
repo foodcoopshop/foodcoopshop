@@ -49,6 +49,7 @@ trait ImportTrait
             __('Status') => 'active',
             __('Product_declaration_admin') => 'is_declaration_ok',
             __('Storage_location') => 'id_storage_location',
+            __('Manufacturer_order_number') => 'manufacturer_order_number',
         ];
     }
 

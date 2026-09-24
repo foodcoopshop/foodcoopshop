@@ -32,7 +32,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
       MYSQL_DATABASE: foodcoopshop-dev
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_TCP_PORT: 3320
     volumes:
       - db-dev-data:/var/lib/mysql
@@ -50,7 +50,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
       MYSQL_DATABASE: foodcoopshop-test
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_TCP_PORT: 3321
     networks:
       - fcs

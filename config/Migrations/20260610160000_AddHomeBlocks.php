@@ -39,8 +39,8 @@ class AddHomeBlocks extends BaseMigration
                 'image_position' => Block::IMAGE_POSITION_LEFT,
                 'heading' => "So funktioniert's!",
                 'content' => '<p>Als Mitglied kannst du jede Woche bis Dienstag Mitternacht bequem online deine Lebensmittel bestellen und sie freitags gesammelt im Abholraum abholen. Du hilfst bei kleinen organisatorischen Aufgaben mit - zum Beispiel bei der Ausgabe, Planung oder Kommunikation. Dadurch bleibt die FoodCoop unabhängig und gemeinschaftlich organisiert. Du musst kein Profi sein: Jede Person bringt ein, was möglich ist.<br></p>',
-                'primary_label' => 'Jetzt anmelden!',
-                'primary_href' => Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getLogin(),
+                'primary_label' => $this->getValidLoginUrl() !== null ? 'Jetzt anmelden!' : null,
+                'primary_href' => $this->getValidLoginUrl(),
                 'secondary_label' => null,
                 'secondary_href' => null,
                 'position' => 1,
@@ -104,6 +104,12 @@ class AddHomeBlocks extends BaseMigration
 
             $this->copySeedImageToBlockFolder((int)$savedBlock->id, $seedImage);
         }
+    }
+
+    private function getValidLoginUrl(): ?string
+    {
+        $url = Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getLogin();
+        return \Cake\Validation\Validation::url($url, true) ? $url : null;
     }
 
     private function hasExistingBlocks(): bool

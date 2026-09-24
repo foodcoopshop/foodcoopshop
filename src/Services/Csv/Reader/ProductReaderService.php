@@ -26,7 +26,7 @@ use Cake\ORM\TableRegistry;
 class ProductReaderService extends Reader {
 
     public const ALLOWED_UPLOAD_MIME_TYPES = ['text/csv'];
-    public const COLUMN_COUNT = 11;
+    public const COLUMN_COUNT = 12;
 
     public function configureType(): void
     {
@@ -115,6 +115,7 @@ class ProductReaderService extends Reader {
                 $record[__('Status')] ?? '',
                 (int) ($record[__('Product_declaration')] ?? 0),
                 $record[__('Storage_location')] ?? '',
+                (string) ($record[__('Manufacturer_order_number')] ?? ''),
             );
         }
 
