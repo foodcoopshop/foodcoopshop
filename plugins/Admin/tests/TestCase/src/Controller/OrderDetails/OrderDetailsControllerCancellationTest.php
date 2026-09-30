@@ -202,7 +202,6 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
      */
     private function deleteAndAssertRemoveFromDatabase(array $orderDetailIds): void
     {
-        $orderDetailIds = array_values($orderDetailIds);
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
         $orderDetails = $this->getOrderDetailsFromDatabase($orderDetailIds);
         $this->assertEmpty($orderDetails);

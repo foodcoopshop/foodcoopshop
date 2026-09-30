@@ -42,8 +42,6 @@ class Customer extends AppEntity implements IdentityInterface
     const PURCHASE_PRICE = 'PP';
     const ZERO_PRICE = 'ZP';
 
-    const NOT_YET_LOADED = 'not-yet-loaded';
-
     private ?Manufacturer $_manufacturer = null;
     private bool $_manufacturerLoaded = false;
 

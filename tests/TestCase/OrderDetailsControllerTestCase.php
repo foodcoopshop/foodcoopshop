@@ -84,7 +84,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     }
 
     /**
-     * @param list<int> $orderDetailIds
+     * @param int[] $orderDetailIds
      * @return list<\App\Model\Entity\OrderDetail>
      */
     protected function getOrderDetailsFromDatabase(array $orderDetailIds): array
