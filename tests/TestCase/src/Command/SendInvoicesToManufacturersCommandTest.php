@@ -41,6 +41,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'manufacturerInvoice.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
     }
@@ -86,6 +87,7 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId='.$meatManufacturerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'manufacturerInvoiceWithVariableMemberFee.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
 
         $this->assertResponseContains($expectedResult);

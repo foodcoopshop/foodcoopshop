@@ -29,7 +29,7 @@ if ($identity === null || $identity->isManufacturer()) {
 
 if ($identity->getProducts() !== null) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($identity->getProducts()))."');"
+        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($identity->getProducts(), JSON_THROW_ON_ERROR))."');"
     ]);
 
     if (!empty($cartErrors)) {
@@ -38,7 +38,7 @@ if ($identity->getProducts() !== null) {
             $javascriptClass = 'SelfService';
         }
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".".$javascriptClass.".initCartErrors('".addslashes(json_encode($cartErrors))."');"
+            Configure::read('app.jsNamespace').".".$javascriptClass.".initCartErrors('".addslashes(json_encode($cartErrors, JSON_THROW_ON_ERROR))."');"
         ]);
     }
     if ($this->name == 'Carts' && in_array($this->request->getParam('action'), ['finish', 'detail'])) {

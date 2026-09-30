@@ -174,7 +174,7 @@ class ProductsForBackendService
             }
         }
 
-        $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
+        $preparedProducts = json_decode(json_encode($preparedProducts, JSON_THROW_ON_ERROR), false); // convert array recursively into object
         return $preparedProducts;
     }
 

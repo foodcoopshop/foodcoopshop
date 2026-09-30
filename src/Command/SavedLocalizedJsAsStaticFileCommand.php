@@ -49,6 +49,10 @@ class SavedLocalizedJsAsStaticFileCommand extends AppCommand
     {
         $this->get(SELF::ROUTE);
         $jsFile = fopen(WWW_ROOT . '/cache/localized-javascript-static.js', 'w');
+        if ($jsFile === false) {
+            $io->err('Could not open the localized JavaScript file for writing.');
+            return static::CODE_ERROR;
+        }
         fwrite($jsFile, $this->_getBodyAsString());
         fclose($jsFile);
         return static::CODE_SUCCESS;

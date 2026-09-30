@@ -89,7 +89,11 @@ class EmailOrderReminderCommand extends AppCommand
 
         $deliveryRhythmService = new DeliveryRhythmService();
         $sendOrderListWeekday = ($deliveryRhythmService->getSendOrderListsWeekday() -1) % 7;
-        $cronjobRunWeekday = date('N', strtotime($this->cronjobRunDay)) % 7;
+        $cronjobRunTimestamp = strtotime($this->cronjobRunDay);
+        if ($cronjobRunTimestamp === false) {
+            throw new \InvalidArgumentException('Invalid cronjob run day: ' . $this->cronjobRunDay);
+        }
+        $cronjobRunWeekday = date('N', $cronjobRunTimestamp) % 7;
         $lastOrderDayDiff = $sendOrderListWeekday - $cronjobRunWeekday;
 
         $lastOrderDayAsString = match($lastOrderDayDiff) {

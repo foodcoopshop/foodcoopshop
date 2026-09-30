@@ -127,7 +127,7 @@ class SyncsController extends AppController
                 'domain' => Configure::read('App.fullBaseUrl')
             ]
         ];
-        $localResponse = json_decode(json_encode($localResponse), true);
+        $localResponse = json_decode(json_encode($localResponse, JSON_THROW_ON_ERROR), true, flags: JSON_THROW_ON_ERROR);
         $this->set('localResponse', $localResponse);
 
         $syncedProductsCount = 0;

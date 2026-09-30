@@ -28,7 +28,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails(), JSON_THROW_ON_ERROR))."');"
 ]);
 
 $this->element('selfService/initCartFinishDialog');

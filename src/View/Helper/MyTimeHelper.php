@@ -31,6 +31,15 @@ class MyTimeHelper extends TimeHelper
     const FRIDAY = 5;
     const SATURDAY = 6;
 
+    public function getTimestamp(string $date, ?int $baseTimestamp = null): int
+    {
+        $timestamp = strtotime($date, $baseTimestamp);
+        if ($timestamp === false) {
+            throw new \InvalidArgumentException('Invalid date: ' . $date);
+        }
+        return $timestamp;
+    }
+
     public function isDifferenceGreaterThanTwoYears(string $startDate, string $endDate): bool
     {
         $startDateTimestamp = strtotime($startDate);
@@ -106,7 +115,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC(string $time): DateTime
     {
-        return DateTime::createFromTimestamp(strtotime($time), 'UTC');
+        return DateTime::createFromTimestamp($this->getTimestamp($time), 'UTC');
     }
 
     public function getTimezoneDiffInSeconds(int $timestamp): string
@@ -121,12 +130,12 @@ class MyTimeHelper extends TimeHelper
 
     public function getLastDayOfGivenMonth(string $monthAndYear): string
     {
-        return date('t', strtotime($monthAndYear));
+        return date('t', $this->getTimestamp($monthAndYear));
     }
 
     public function getYearFromDbDate(string $dbDate): string
     {
-        return date('Y', strtotime($dbDate));
+        return date('Y', $this->getTimestamp($dbDate));
     }
 
     public function getCurrentDateTimeForDatabase(): string
@@ -174,7 +183,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getInXDaysForDatabase(int $days): string
     {
-        return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +' . $days . ' days'));
+        return date(Configure::read('DateFormat.DatabaseAlt'), $this->getTimestamp($this->getCurrentDateForDatabase() . ' +' . $days . ' days'));
     }
 
     /**
@@ -183,12 +192,12 @@ class MyTimeHelper extends TimeHelper
     public function getWeekdayFormattedDaysList(string $day, int $maxDays, int $factor): array
     {
         $days = [
-            $day => $this->getDateFormattedWithWeekday(strtotime($day))
+            $day => $this->getDateFormattedWithWeekday($this->getTimestamp($day))
         ];
         $count = 1;
         while($count < $maxDays) {
-            $nextCalculatedDay = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($day . ' + ' . $count * $factor . ' day'));
-            $days[$nextCalculatedDay] = $this->getDateFormattedWithWeekday(strtotime($nextCalculatedDay));
+            $nextCalculatedDay = date(Configure::read('DateFormat.DatabaseAlt'), $this->getTimestamp($day . ' + ' . $count * $factor . ' day'));
+            $days[$nextCalculatedDay] = $this->getDateFormattedWithWeekday($this->getTimestamp($nextCalculatedDay));
             $count++;
         }
         return $days;
@@ -200,7 +209,7 @@ class MyTimeHelper extends TimeHelper
      */
     public function getLastCalendarWeekOfYear(int $year): int
     {
-        return (int) date('W', strtotime($year . '-12-28'));
+        return (int) date('W', $this->getTimestamp($year . '-12-28'));
     }
 
     /**
@@ -334,30 +343,31 @@ class MyTimeHelper extends TimeHelper
     public function getLastNDays(int $n, string $startDate): array
     {
 
-        $startDate = strtotime($startDate);
+        $startDate = $this->getTimestamp($startDate);
 
         $days = [];
         for ($i=1; $i<=$n; $i++) {
             $deltaString = '-' . $i . ' days';
-            $weekday = (int) date('w', strtotime($deltaString, $startDate));
-            $days[date(Configure::read('DateFormat.DatabaseWithTimeAlt'), strtotime($deltaString, $startDate))] = $this->getWeekdayName($weekday) . ', ' . date($this->getI18Format('DateShortAlt'), strtotime($deltaString, $startDate));
+            $timestamp = $this->getTimestamp($deltaString, $startDate);
+            $weekday = (int) date('w', $timestamp);
+            $days[date(Configure::read('DateFormat.DatabaseWithTimeAlt'), $timestamp)] = $this->getWeekdayName($weekday) . ', ' . date($this->getI18Format('DateShortAlt'), $timestamp);
         }
         return $days;
     }
 
     public function getFirstDayOfThisYear(): string
     {
-        return date($this->getI18Format('DateShortAlt'), strtotime('first day of january'));
+        return date($this->getI18Format('DateShortAlt'), $this->getTimestamp('first day of january'));
     }
 
     public function getLastDayOfThisYear(): string
     {
-        return date($this->getI18Format('DateShortAlt'), strtotime('last day of december'));
+        return date($this->getI18Format('DateShortAlt'), $this->getTimestamp('last day of december'));
     }
 
     public function getLastMonthNameAndYear(): string
     {
-        return $this->getMonthNameAndYear(strtotime('first day of previous month'));
+        return $this->getMonthNameAndYear($this->getTimestamp('first day of previous month'));
     }
 
     public function getMonthNameAndYear(int $timestamp): string
@@ -368,22 +378,22 @@ class MyTimeHelper extends TimeHelper
 
     public function getFirstDayOfThisMonth(): string
     {
-        return date($this->getI18Format('DateShortAlt'), strtotime('first day of this month'));
+        return date($this->getI18Format('DateShortAlt'), $this->getTimestamp('first day of this month'));
     }
 
     public function getLastDayOfThisMonth(): string
     {
-        return date($this->getI18Format('DateShortAlt'), strtotime('last day of this month'));
+        return date($this->getI18Format('DateShortAlt'), $this->getTimestamp('last day of this month'));
     }
 
     public function getFirstDayOfLastMonth(string $date): string
     {
-        return date($this->getI18Format('DateShortAlt'), strtotime($date . ' first day of previous month'));
+        return date($this->getI18Format('DateShortAlt'), $this->getTimestamp($date . ' first day of previous month'));
     }
 
     public function getLastDayOfLastMonth(string $date): string
     {
-        return date($this->getI18Format('DateShortAlt'), strtotime($date . ' last day of previous month'));
+        return date($this->getI18Format('DateShortAlt'), $this->getTimestamp($date . ' last day of previous month'));
     }
 
     public function getNumberOfDays(int $timestamp): string
@@ -408,10 +418,10 @@ class MyTimeHelper extends TimeHelper
 
     public function formatToDateShort(string $dbString): string
     {
-        $timestamp = strtotime($dbString);
         if ($dbString == '') {
             return '';
         }
+        $timestamp = $this->getTimestamp($dbString);
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
 

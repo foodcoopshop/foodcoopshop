@@ -69,6 +69,7 @@ trait UploadTrait
         $manager = new ImageManager(new Driver());
 
         foreach ($imageSizes as $thumbSize => $options) {
+            $thumbSize = (int) $thumbSize;
             $image = $manager->decodePath(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($image->height() > $image->width()) {

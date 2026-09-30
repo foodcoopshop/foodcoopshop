@@ -238,15 +238,12 @@ class ManufacturersTable extends AppTable
         return $ccRecipients;
     }
 
-    /**
-     * @return Customer|array<never>|null
-     */
-    public function getCustomerRecord(string $email): Customer|array|null
+    public function getCustomerRecord(string $email): ?Customer
     {
         $customersTable = TableRegistry::getTableLocator()->get('Customers');
 
         if (empty($email)) {
-            return [];
+            return null;
         }
 
         $customer = $customersTable->find('all',
@@ -260,7 +257,7 @@ class ManufacturersTable extends AppTable
         }
 
         if (!empty($customer->address_customer)) {
-            return [];
+            return null;
         }
 
         return $customer;

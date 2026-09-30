@@ -529,6 +529,7 @@ class CustomersTable extends AppTable
      */
     private function getProductBalanceSumForCustomerIds(array $customerIds): float
     {
+        $customerIds = array_values($customerIds);
 
         /** @var PaymentsTable $paymentsTable */
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -623,6 +624,7 @@ class CustomersTable extends AppTable
      */
     private function getDepositBalanceSumForCustomerIds(array $customerIds): float
     {
+        $customerIds = array_values($customerIds);
 
         /** @var PaymentsTable $paymentsTable */
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');

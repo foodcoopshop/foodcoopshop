@@ -67,7 +67,7 @@ class SyncDomainsTable extends AppTable
     }
 
     /**
-     * @return array<int, string>
+    * @return list<string>
      */
     public function getActiveSyncDomainHosts(): array
     {

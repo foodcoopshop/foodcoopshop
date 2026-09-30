@@ -94,7 +94,7 @@ class CatalogService
 
         if ($products === null) {
             $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, $randomize);
-            $products = $query->toArray();
+            $products = array_values($query->toArray());
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
             $products = $this->removeProductIfShowOnlyProductsForNextWeekEnabled($products);

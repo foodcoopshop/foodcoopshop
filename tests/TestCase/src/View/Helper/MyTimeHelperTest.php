@@ -38,6 +38,19 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertEquals($result, '2018-06-12');
     }
 
+    public function testGetTimestamp(): void
+    {
+        $this->assertSame(0, $this->MyTimeHelper->getTimestamp('1970-01-01 00:00:00 UTC'));
+        $this->assertSame(86400, $this->MyTimeHelper->getTimestamp('+1 day', 0));
+    }
+
+    public function testGetTimestampInvalidDate(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid date: not-a-date');
+        $this->MyTimeHelper->getTimestamp('not-a-date');
+    }
+
     public function testFormatToDbFormatDateEn(): void
     {
         $result = $this->MyTimeHelper->formatToDbFormatDate('06/12/2018');

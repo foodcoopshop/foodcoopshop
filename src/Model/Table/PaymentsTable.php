@@ -70,7 +70,11 @@ class PaymentsTable extends AppTable
                     $formattedValue = $value->format(Configure::read('DateFormat.DatabaseAlt'));
                 }
                 if (is_string($value)) {
-                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                    $timestamp = strtotime($value);
+                    if ($timestamp === false) {
+                        return false;
+                    }
+                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), $timestamp);
                 }
                 if (isset($formattedValue)) {
                     if ($formattedValue == '1970-01-01') {
@@ -286,7 +290,7 @@ class PaymentsTable extends AppTable
         }
     }
 
-    public function linkReturnedDepositWithInvoice(stdClass|Customer $data, int $invoiceId): void
+    public function linkReturnedDepositWithInvoice(object $data, int $invoiceId): void
     {
         foreach($data->returned_deposit['entities'] as $payment) {
             // important to get a fresh payment entity as amount field could be changed for cancellation invoices

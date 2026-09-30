@@ -114,7 +114,7 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\Invoice> $invoices
+    * @param array<\App\Model\Entity\Invoice> $invoices
      * @return array{
     *   taxRates: array<string, array<int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
      *   taxRatesSums: array<string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>
@@ -478,7 +478,7 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param array<float, array<string, float>> $taxRates
+    * @param array<array<string, float>> $taxRates
      */
     public function saveInvoice(
         null|int|string $invoiceId,

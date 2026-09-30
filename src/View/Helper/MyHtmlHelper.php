@@ -975,7 +975,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderListLink(string $manufacturerName, int $manufacturerId, string $deliveryDay, string $groupTypeLabel, string $currentDate, bool $isAnonymized): string
     {
         $url = Configure::read('app.folder_order_lists');
-        $url .= DS . date('Y', strtotime($deliveryDay)) . DS . date('m', strtotime($deliveryDay)) . DS;
+        $timestamp = Configure::read('app.timeHelper')->getTimestamp($deliveryDay);
+        $url .= DS . date('Y', $timestamp) . DS . date('m', $timestamp) . DS;
         if ($isAnonymized) {
             $url .= 'anonymized' . DS;
         }
@@ -988,7 +989,8 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getInvoiceLink(string $name, int $id, string $invoiceDate, string $invoiceNumber): string
     {
-        $url = Configure::read('app.folder_invoices') . DS . date('Y', strtotime($invoiceDate)) . DS . date('m', strtotime($invoiceDate)) . DS;
+        $timestamp = Configure::read('app.timeHelper')->getTimestamp($invoiceDate);
+        $url = Configure::read('app.folder_invoices') . DS . date('Y', $timestamp) . DS . date('m', $timestamp) . DS;
         $url .= $invoiceDate . '_' . StringComponent::slugify($name) . '_' . $id . __('_Invoice_filename_') . $invoiceNumber . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }

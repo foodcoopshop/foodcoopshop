@@ -182,7 +182,7 @@ class CartsTable extends AppTable
         )->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId);
+            $cart->pickup_day_entities = $cartProductsTable->setPickupDays(array_values($cartProducts), $customerId);
         }
 
         $preparedCart = [

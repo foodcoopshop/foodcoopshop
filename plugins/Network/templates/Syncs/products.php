@@ -24,7 +24,7 @@ use Cake\Core\Configure;
             'script' =>
                 Configure::read('app.jsNamespace') . ".SyncBase.init();".
                 Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Meine Produkte');" .
-                Configure::read('app.jsNamespace') . ".SyncProducts.showLocalProductList('".addslashes(json_encode($localResponse))."');".
+                Configure::read('app.jsNamespace') . ".SyncProducts.showLocalProductList('".addslashes(json_encode($localResponse, JSON_THROW_ON_ERROR))."');".
                 Configure::read('app.jsNamespace') . ".SyncProducts.init();".
                 Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-outline-light'));"
         ]);

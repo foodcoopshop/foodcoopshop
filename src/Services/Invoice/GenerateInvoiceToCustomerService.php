@@ -59,7 +59,7 @@ class GenerateInvoiceToCustomerService
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
-        $invoicePdfFileForDatabase = str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
+        $invoicePdfFileForDatabase = str_replace((string) Configure::read('app.folder_invoices'), '', (string) $invoicePdfFile);
         $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
         $newInvoice = $invoicesTable->saveInvoice(
             null,

@@ -227,7 +227,7 @@ class ToolsController extends AdminAppController
         // get all config keys "*ImageSizes"
         $imageSizes = Configure::read('app');
         foreach (array_keys($imageSizes) as $appKey) {
-            if (strlen($appKey) < strlen($confKey) // prevent warnings of strrpos()
+            if (!is_string($appKey) || strlen($appKey) < strlen($confKey) // prevent warnings of strrpos()
                 || strrpos($appKey, $confKey, strlen($confKey) * (-1)) === false
                 || !is_array($imageSizes[$appKey])
             ) {

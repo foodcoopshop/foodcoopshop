@@ -553,7 +553,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
         $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
-        $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>');
+        $pickupTimestamp = strtotime($pickupDay);
+        $this->assertNotFalse($pickupTimestamp);
+        $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday($pickupTimestamp) . '</b>');
         $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>this is the comment</b>"');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }

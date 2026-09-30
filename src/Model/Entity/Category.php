@@ -15,6 +15,7 @@ namespace App\Model\Entity;
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
+ * @property array<\App\Model\Entity\Category> $children
  */
 class Category extends AppEntity
 {

@@ -74,9 +74,13 @@ trait ProductTrait
     {
         $customersTable = $this->getTableLocator()->get('Customers');
         $paymentsAssociation = $customersTable->getAssociation('Payments');
+        $paymentConditions = $paymentsAssociation->getConditions();
+        if (!is_array($paymentConditions)) {
+            throw new \UnexpectedValueException('Payment association conditions must be an array.');
+        }
         $paymentsAssociation->setConditions(
             array_merge(
-                $paymentsAssociation->getConditions(),
+                $paymentConditions,
                 ['type IN' => $this->allowedPaymentTypes]
             )
         );
@@ -128,7 +132,7 @@ trait ProductTrait
                         'date' => $dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                         'year' => $monthAndYear[0],
                         'amount' => $orderDetail->SumTotalPaid * - 1,
-                        'deposit' => strtotime($dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail->SumDeposit * - 1 : 0,
+                        'deposit' => strtotime((string) $dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail->SumDeposit * - 1 : 0,
                         'type' => 'order',
                         'text' => Configure::read('app.htmlHelper')->link(
                             __('Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],

@@ -102,7 +102,9 @@ trait CustomersFilterTrait
             'member_fee' => 'Customers.id_customer',
         ]);
         $query->select($addressCustomersTable);
-        $customerIds = $query->all()->extract('id_customer')->toList();
+        $customerIds = array_values(array_map('intval', $query->all()->extract('id_customer')->toList()));
+        $direction = $this->getRequestQuery('direction');
+        $direction = is_string($direction) ? $direction : 'ASC';
 
         /** @var PaginatedInterface<int, \App\Model\Entity\Customer>|SelectQuery<\App\Model\Entity\Customer> $customers */
         $customers = $this->paginate($query, [
@@ -121,7 +123,7 @@ trait CustomersFilterTrait
                 'member_fee',
                 'last_pickup_day',
             ],
-            'order' => $customersTable->getCustomerOrderClause($this->getRequestQuery('direction') ?? 'ASC'),
+            'order' => $customersTable->getCustomerOrderClause($direction),
         ]);
 
         $creditBalanceMap = [];
@@ -154,7 +156,7 @@ trait CustomersFilterTrait
                 $type = 'locale';
             }
             /** @var array<int, \App\Model\Entity\Customer> $customers */
-            $customers = Hash::sort($customers->toArray(), $path, $this->getRequestQuery('direction'), [
+            $customers = Hash::sort($customers->toArray(), $path, $direction, [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);

@@ -72,7 +72,11 @@ class BackupDatabaseCommand extends AppCommand
         $dump = new \Druidfi\Mysqldump\Mysqldump($dsnString, $dbConfig['username'], $dbConfig['password'], $settings);
         $dump->start($filename);
 
-        $message = __('Database_backup_successful') . ' ('.Number::toReadableSize(filesize($filename)).').';
+        $fileSize = filesize($filename);
+        if ($fileSize === false) {
+            throw new \RuntimeException('Could not determine the database backup file size.');
+        }
+        $message = __('Database_backup_successful') . ' ('.Number::toReadableSize($fileSize).').';
 
         // email zipped file via Mailer (to avoid queue's max 16MB mediumtext limit of AppMailer)
         $email = new Mailer(null);

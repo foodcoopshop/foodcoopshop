@@ -808,7 +808,7 @@ class CartService
     }
 
     /**
-     * @param array<string, mixed>|null $cart
+    * @param array{Cart: \App\Model\Entity\Cart, CartProducts: list<array<string, mixed>>, CartDepositSum?: float, CartProductSum?: float, CartTaxSum?: float, CartProductSumExcl?: float, ProductsWithUnitCount?: int}|null $cart
      */
     private function sendConfirmationEmailToCustomerSelfService(?array $cart): void
     {

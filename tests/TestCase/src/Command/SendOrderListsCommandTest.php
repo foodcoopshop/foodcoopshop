@@ -426,11 +426,13 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnit.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
     }
@@ -442,11 +444,13 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnitAndPurchasePriceEnabled.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnitAndPurchasePriceEnabled.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
@@ -523,11 +527,13 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithPricePerUnit.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithPricePerUnit.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
@@ -609,6 +615,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     private function assertGenerationOfOrderLists(string $datePath, array $clearText, array $anonymous): void
     {
         $path = realpath(Configure::read('app.folder_order_lists') . DS . $datePath);
+        $this->assertNotFalse($path);
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
         $files = [];

@@ -440,7 +440,14 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
                     $signatureCode = $helloCashInvoice->signature->signature_cancellation_code;
                 }
                 $barcodeobj = new TCPDF2DBarcode($signatureCode, 'QRCODE,L');
-                $imgBase64Encoded = base64_encode($barcodeobj->getBarcodePngData(6, 6, [0,0,0]));
+                $barcodePngData = $barcodeobj->getBarcodePngData(6, 6, [0,0,0]);
+                if (is_object($barcodePngData)) {
+                    $barcodePngData = $barcodePngData->getImageBlob();
+                }
+                if ($barcodePngData === false) {
+                    throw new \RuntimeException('Could not generate the receipt QR code.');
+                }
+                $imgBase64Encoded = base64_encode($barcodePngData);
                 echo '<img alt="QR-Code" style="padding:10px;width:110px" src="data:image/png;base64,' . $imgBase64Encoded . '">';
             
                 if (!$isCancellationInvoice) {

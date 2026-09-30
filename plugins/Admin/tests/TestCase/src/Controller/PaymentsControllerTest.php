@@ -350,12 +350,14 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $uploadFile = self::BANKING_READER_CSV_FILE_PATH . 'raiffeisen.csv';
+        $fileSize = filesize($uploadFile);
+        $this->assertNotFalse($fileSize);
         $this->post(
             Configure::read('app.slugHelper')->getReport(Payment::TYPE_PRODUCT),
             [
                 'upload' => new UploadedFile(
                     $uploadFile,
-                    filesize($uploadFile),
+                    $fileSize,
                     UPLOAD_ERR_OK,
                     'raiffeisen.csv',
                     'text/csv',

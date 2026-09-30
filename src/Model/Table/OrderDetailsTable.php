@@ -289,7 +289,7 @@ class OrderDetailsTable extends AppTable
         if ($customerCanSelectPickupDay) {
             $query->where(['OrderDetails.pickup_day' => $pickupDay]);
         } else {
-            $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
+            $cronjobRunDayWeekday = date('w', Configure::read('app.timeHelper')->getTimestamp($cronjobRunDay));
             $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
                 return $exp->or([
                     $query->expr()->and([
@@ -363,8 +363,8 @@ class OrderDetailsTable extends AppTable
         $i = 1;
         while($foundOrders < $ordersToLoad) {
 
-            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime((new DeliveryRhythmService())->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime((new DeliveryRhythmService())->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = Configure::read('app.timeHelper')->getTimestamp('- '.$i * 7 . 'day', Configure::read('app.timeHelper')->getTimestamp((new DeliveryRhythmService())->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = Configure::read('app.timeHelper')->getTimestamp('- '.$i * 7 . 'day', Configure::read('app.timeHelper')->getTimestamp((new DeliveryRhythmService())->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
             // stop trying to search for valid orders if year is two years ago
             // one year is not enough for usage in first weeks of january
@@ -799,7 +799,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+    * @param array<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByProduct(array $orderDetails): array
@@ -826,7 +826,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+    * @param array<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByManufacturer(array $orderDetails): array
@@ -854,7 +854,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+    * @param array<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByCustomer(array $orderDetails): array
@@ -905,7 +905,7 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function updateOrderDetails(stdClass|Customer $data, int|string $invoiceId): void
+    public function updateOrderDetails(object $data, int|string $invoiceId): void
     {
         foreach($data->active_order_details as $orderDetail) {
             // important to get a fresh order detail entity as price fields could be changed for cancellation invoices

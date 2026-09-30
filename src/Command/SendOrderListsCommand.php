@@ -46,7 +46,11 @@ class SendOrderListsCommand extends AppCommand
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
         } else {
-            $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay(strtotime($this->cronjobRunDay));
+            $cronjobRunTimestamp = strtotime($this->cronjobRunDay);
+            if ($cronjobRunTimestamp === false) {
+                throw new \InvalidArgumentException('Invalid cronjob run day: ' . $this->cronjobRunDay);
+            }
+            $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay($cronjobRunTimestamp);
         }
 
         // 1) get all manufacturers (not only active ones)
@@ -118,7 +122,7 @@ class SendOrderListsCommand extends AppCommand
             foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
                 $orderDetailPriceSum = array_sum(Hash::extract($orderDetails, '{n}.total_price_tax_incl'));
                 if ($orderDetailPriceSum < $manufacturer->min_order_value) {
-                    $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
+                    $orderDetailIds = array_values(array_map(intval(...), Hash::extract($orderDetails, '{n}.id_order_detail')));
                     $orderDetailCancellationService->delete($orderDetailIds, __('Minimum order value not reached'));
                     $groupedOrderDetails[$pickupDayDbFormat] = []; // unset to prevent sending order list
                 }

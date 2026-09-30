@@ -177,10 +177,14 @@ class ProductsTable extends AppTable
                             break;
                     }
 
-                    $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($context['data']['delivery_rhythm_first_delivery_day'])));
+                    $firstDeliveryDay = strtotime($context['data']['delivery_rhythm_first_delivery_day']);
+                    if ($firstDeliveryDay === false) {
+                        return false;
+                    }
+                    $deliveryDayAsWeekdayInEnglish = strtolower(date('l', $firstDeliveryDay));
 
                     if (isset($ordinal)) {
-                        $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+                        $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->getTimestamp($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
                     }
 
                     $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName((new DeliveryRhythmService())->getDeliveryWeekday());
@@ -709,7 +713,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function isMainProduct(stdClass $product): bool
+    public function isMainProduct(object $product): bool
     {
         return (bool) preg_match('/main-product/', $product->row_class);
     }

@@ -120,7 +120,7 @@ if (!empty($newProducts)) {
 
     if ($identity !== null) {
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
+            Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails(), JSON_THROW_ON_ERROR))."');"
         ]);
     }
 

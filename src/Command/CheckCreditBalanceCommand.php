@@ -51,7 +51,7 @@ class CheckCreditBalanceCommand extends AppCommand
             'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
         ]);
         $customers = $customersTable->sortByVirtualField($customers, 'name');
-        $customerIds = Hash::extract($customers, '{n}.id_customer');
+        $customerIds = array_values(array_map(intval(...), Hash::extract($customers, '{n}.id_customer')));
         $creditBalanceMap = $customersTable->getCreditBalanceByCustomerIds($customerIds);
 
         $i = 0;

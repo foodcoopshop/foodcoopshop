@@ -95,7 +95,11 @@ class CustomersController extends FrontendController
         $this->set('imagePath', $imagePath);
 
         $response = $this->response->withType($mimeType);
-        $response = $response->withStringBody(file_get_contents($imagePath));
+        $imageContent = file_get_contents($imagePath);
+        if ($imageContent === false) {
+            throw new \RuntimeException('Could not read the customer image.');
+        }
+        $response = $response->withStringBody($imageContent);
         return $response;
     }
 

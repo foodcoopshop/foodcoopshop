@@ -74,7 +74,7 @@ class CategoriesTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\Category> $categories
+    * @param array<\App\Model\Entity\Category> $categories
      * @return array<int, string>
      */
     private function flattenNestedArrayWithChildren(array $categories, bool $renderParentIdAndChildrenIdContainers, string $separator = ''): array

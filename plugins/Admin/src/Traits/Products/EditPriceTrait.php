@@ -25,7 +25,7 @@ trait EditPriceTrait
 {
 
     /**
-     * @param array<int> $ids
+    * @param array{productId: int, attributeId: int} $ids
      */
     private function applyPriceChangeToOpenOrders(array $ids, float $price): string
     {

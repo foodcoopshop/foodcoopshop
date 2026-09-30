@@ -98,6 +98,9 @@ trait EditPurchasePriceTrait
 
             if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
                 $entity2Save = clone $oldProduct->unit_product;
+                if (!$entity2Save instanceof \Cake\Datasource\EntityInterface) {
+                    throw new \UnexpectedValueException('Product unit is not an entity.');
+                }
                 /** @var \App\Model\Entity\UnitProductAttribute $patchedEntity */
                 $patchedEntity = $unitTable->patchEntity(
                     $entity2Save,

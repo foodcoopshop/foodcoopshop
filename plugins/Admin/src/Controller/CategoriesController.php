@@ -100,7 +100,7 @@ class CategoriesController extends AdminAppController
             $this->set('category', $category);
             return $this->render('edit');
         } else {
-            $category = $categoriesTable->save($category);
+            $category = $categoriesTable->saveOrFail($category);
 
             if (!$isEditMode) {
                 $messageSuffix = __('created');

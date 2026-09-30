@@ -36,7 +36,7 @@ use Cake\Database\Expression\QueryExpression;
 class CronjobsTable extends AppTable
 {
 
-    public DateTime|string|int $cronjobRunDay;
+    public int $cronjobRunDay;
 
     public function initialize(array $config): void
     {

@@ -93,7 +93,7 @@ class MenuHelper extends Helper
     }
 
     /**
-     * @param array{name:string, slug:string, options:array<string, mixed>|null, children:list<array{name:string, slug:string, options?:array<string, mixed>, children?:list<array{name:string, slug:string}>}>|null} $item
+    * @param array{name:string, slug:string, options?:array<string, mixed>|null, children?:list<array{name:string, slug:string, options?:array<string, mixed>, children?:list<array{name:string, slug:string}>}>|null} $item
      */
     private function buildMenuItem(array $item): string
     {

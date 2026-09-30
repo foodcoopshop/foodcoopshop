@@ -42,6 +42,9 @@ class FolderService
             return;
         }
         $objects = scandir($dir);
+        if ($objects === false) {
+            throw new \RuntimeException('Could not read directory: ' . $dir);
+        }
         foreach ($objects as $object) {
             if ($object != '.' && $object != '..') {
                 if (filetype($dir . '/' . $object) == 'dir') {

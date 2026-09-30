@@ -42,6 +42,9 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(23.3, $records[0]['Bruttopreis']);
         $this->assertEquals(10, $records[0]['Steuersatz']);
         $this->assertEquals(0.5, $records[0]['Pfand']);
+        $this->assertSame('float', get_debug_type($records[0]['Bruttopreis']));
+        $this->assertSame('float', get_debug_type($records[0]['Steuersatz']));
+        $this->assertSame('float', get_debug_type($records[0]['Pfand']));
         $this->assertEquals('10', $records[0]['Menge']);
     }
 

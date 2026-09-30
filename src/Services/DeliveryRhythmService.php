@@ -84,14 +84,14 @@ class DeliveryRhythmService
         }
 
         if ($deliveryRhythmType == 'individual') {
-            $result = strtotime($deliveryRhythmOrderPossibleUntil->i18nFormat(Configure::read('DateFormat.Database')));
+            $result = $this->Time->getTimestamp((string) $deliveryRhythmOrderPossibleUntil->i18nFormat(Configure::read('DateFormat.Database')));
         } else {
             $lastOrderWeekday = $this->Time->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
             $tmpLocale = I18n::getLocale();
             I18n::setLocale('en_US');
             $weekdayAsNameInEnglish = $this->Time->getWeekdayName($lastOrderWeekday);
             I18n::setLocale($tmpLocale);
-            $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
+            $result = $this->Time->getTimestamp('last ' . $weekdayAsNameInEnglish, $this->Time->getTimestamp($nextDeliveryDay));
         }
 
         $result = date(Configure::read('DateFormat.DatabaseAlt'), $result);
@@ -104,7 +104,7 @@ class DeliveryRhythmService
         if (is_null($sendOrderListsWeekday)) {
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
-        $pickupDay = $this->getDeliveryDay(strtotime($date), $sendOrderListsWeekday, $deliveryRhythmType, $deliveryRhythmCount);
+        $pickupDay = $this->getDeliveryDay($this->Time->getTimestamp($date), $sendOrderListsWeekday, $deliveryRhythmType, $deliveryRhythmCount);
         $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
         return $pickupDay;
     }
@@ -112,15 +112,15 @@ class DeliveryRhythmService
     public function getFormattedNextDeliveryDay(int $day): string
     {
         if (!$this->hasSaturdayToWednesdayOrThursdayConfig()) {
-            $day = strtotime('-2 days', $day);
+            $day = $this->Time->getTimestamp('-2 days', $day);
         }
-        return date($this->Time->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
+        return date($this->Time->getI18Format('DateShortAlt'), $this->Time->getTimestamp($this->getNextDeliveryDay($day)));
     }
 
     public function getOrderPeriodFirstDayByDeliveryDay(int $deliveryDay): string
     {
         if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
-            $deliveryDay = strtotime('-7 days', $deliveryDay);
+            $deliveryDay = $this->Time->getTimestamp('-7 days', $deliveryDay);
         }
         return $this->getOrderPeriodFirstDay($deliveryDay);
     }
@@ -128,7 +128,7 @@ class DeliveryRhythmService
     public function getOrderPeriodLastDayByDeliveryDay(int $deliveryDay): string
     {
         if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
-            $deliveryDay = strtotime('-7 days', $deliveryDay);
+            $deliveryDay = $this->Time->getTimestamp('-7 days', $deliveryDay);
         }
         return $this->getOrderPeriodLastDay($deliveryDay);
     }
@@ -136,11 +136,11 @@ class DeliveryRhythmService
     public function getNextDeliveryDay(int $day): string
     {
         $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
-        $deliveryDay = date($this->Time->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
+        $deliveryDay = date($this->Time->getI18Format('DatabaseAlt'), $this->getDeliveryDay($this->Time->getTimestamp($orderPeriodFirstDay)));
         if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $deliveryDay = date(
                 $this->Time->getI18Format('DatabaseAlt'),
-                strtotime($deliveryDay . '-7 days'),
+                $this->Time->getTimestamp($deliveryDay . '-7 days'),
             );
         }
         return $deliveryDay;
@@ -193,7 +193,7 @@ class DeliveryRhythmService
 
         $currentWeekday = $this->Time->formatAsWeekday($day);
         $dateDiff = 7 - $this->getSendOrderListsWeekday() + $currentWeekday;
-        $date = strtotime('-' . $dateDiff . ' day ', $day);
+        $date = $this->Time->getTimestamp('-' . $dateDiff . ' day ', $day);
 
         if ($this->hasSaturdayToWednesdayOrThursdayConfig()) {
             $addOneWeekCondition = in_array($currentWeekday, [6,7]) && $this->getDeliveryWeekday();
@@ -202,7 +202,7 @@ class DeliveryRhythmService
         }
 
         if ($addOneWeekCondition) {
-            $date = strtotime('+7 day', $date);
+            $date = $this->Time->getTimestamp('+7 day', $date);
         }
 
         $date = date($this->Time->getI18Format('DateShortAlt'), $date);
@@ -250,7 +250,7 @@ class DeliveryRhythmService
             $dateDiff += 7;
         }
 
-        $date = date($this->Time->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
+        $date = date($this->Time->getI18Format('DateShortAlt'), $this->Time->getTimestamp($dateDiff . ' day ', $day));
 
         return $date;
     }
@@ -298,7 +298,7 @@ class DeliveryRhythmService
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat($this->Time->getI18Format('Database'));
                 while($calculatedPickupDay < $pickupDay) {
-                    $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
+                    $calculatedPickupDay = $this->Time->getTimestamp($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
                     $calculatedPickupDay = date($this->Time->getI18Format('DatabaseAlt'), $calculatedPickupDay);
                 }
 
@@ -321,15 +321,15 @@ class DeliveryRhythmService
                 0 => 'last',
                 default => '',
             };
-            $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
-            $calculatedPickupDay = date($this->Time->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+            $deliveryDayAsWeekdayInEnglish = strtolower(date('l', $this->Time->getTimestamp($pickupDay)));
+            $calculatedPickupDay = date($this->Time->getI18Format('DatabaseAlt'), $this->Time->getTimestamp($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
 
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat($this->Time->getI18Format('Database'));
             }
 
             while($calculatedPickupDay < $pickupDay) {
-                $calculatedPickupDay = date($this->Time->getI18Format('DatabaseAlt'), strtotime($calculatedPickupDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
+                $calculatedPickupDay = date($this->Time->getI18Format('DatabaseAlt'), $this->Time->getTimestamp($calculatedPickupDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
             }
             $pickupDay = $calculatedPickupDay;
         }

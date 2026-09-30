@@ -89,7 +89,7 @@ class SyncDomainsController extends AppController
             return $this->render('edit');
         } else {
             $syncDomain->domain = mb_strtolower($syncDomain->domain);
-            $syncDomain = $syncDomainsTable->save($syncDomain);
+            $syncDomain = $syncDomainsTable->saveOrFail($syncDomain);
 
             if (!$isEditMode) {
                 $messageSuffix = __('created');

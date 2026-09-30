@@ -34,7 +34,7 @@ class AppMarshaller extends Marshaller
     {
         $errors = parent::_validate($data, $validator, $isNew);
         if (!empty($errors) && !(PHP_SAPI == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
-            Log::write('error', json_encode($errors));
+            Log::write('error', json_encode($errors, JSON_THROW_ON_ERROR));
         }
         return $errors;
     }

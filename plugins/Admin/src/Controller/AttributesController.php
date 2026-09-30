@@ -81,7 +81,7 @@ class AttributesController extends AdminAppController
             $this->set('attribute', $attribute);
             return $this->render('edit');
         } else {
-            $attribute = $attributesTable->save($attribute);
+            $attribute = $attributesTable->saveOrFail($attribute);
 
             if (!$isEditMode) {
                 $messageSuffix = __('created');

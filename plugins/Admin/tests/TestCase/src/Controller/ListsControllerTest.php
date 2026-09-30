@@ -89,6 +89,7 @@ class ListsControllerTest extends AppCakeTestCase
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
         $path = realpath(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
+        $this->assertNotFalse($path);
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
         $files = [];
@@ -167,6 +168,7 @@ class ListsControllerTest extends AppCakeTestCase
         $listPageUrl = $this->Slug->getManufacturerInvoices();
 
         $path = realpath(Configure::read('app.folder_invoices'));
+        $this->assertNotFalse($path);
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
         $files = [];

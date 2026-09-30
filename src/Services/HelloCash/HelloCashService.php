@@ -253,7 +253,7 @@ class HelloCashService
     }
 
     /**
-     * @return array<string|float|int, array{sum_price_excl: float|int, sum_price_incl: float|int, sum_tax: float|int}>
+    * @return array<array{sum_price_excl: float, sum_price_incl: float, sum_tax: float}>
      */
     protected function prepareTaxesFromResponse($responseObject, $cancellation): array
     {
@@ -267,9 +267,9 @@ class HelloCashService
         $taxRates = [];
         foreach($responseObject->taxes as $tax) {
             $taxRates[$tax->tax_taxRate] = [
-                'sum_price_excl' => $tax->tax_net * $cancellationFactor,
-                'sum_price_incl' => $tax->tax_gross * $cancellationFactor,
-                'sum_tax' => $tax->tax_tax * $cancellationFactor,
+                'sum_price_excl' => (float) $tax->tax_net * $cancellationFactor,
+                'sum_price_incl' => (float) $tax->tax_gross * $cancellationFactor,
+                'sum_tax' => (float) $tax->tax_tax * $cancellationFactor,
             ];
         }
         return $taxRates;

@@ -18,6 +18,8 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
+/** @var \App\Model\Entity\Feedback|null $feedback */
+
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
