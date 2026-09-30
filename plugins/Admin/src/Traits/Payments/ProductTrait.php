@@ -117,18 +117,18 @@ trait ProductTrait
 
             if (! empty($orderDetailsGroupedByMonth)) {
                 foreach ($orderDetailsGroupedByMonth as $orderDetail) {
-                    $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
+                    $monthAndYear = explode('-', $orderDetail->MonthAndYear);
                     $monthAndYear[0] = (int) $monthAndYear[0];
                     $monthAndYear[1] = (int) $monthAndYear[1];
                     $dateFrom = Date::create($monthAndYear[0], $monthAndYear[1], 1);
-                    $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
+                    $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail->MonthAndYear);
                     $dateTo = Date::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                     $payments[] = [
                         'dateRaw' => $dateFrom,
                         'date' => $dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                         'year' => $monthAndYear[0],
-                        'amount' => $orderDetail['SumTotalPaid'] * - 1,
-                        'deposit' => strtotime($dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
+                        'amount' => $orderDetail->SumTotalPaid * - 1,
+                        'deposit' => strtotime($dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail->SumDeposit * - 1 : 0,
                         'type' => 'order',
                         'text' => Configure::read('app.htmlHelper')->link(
                             __('Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],

@@ -168,7 +168,7 @@ class PaymentsTable extends AppTable
     }
 
     /**
-     * @return list<array{YearWeek: string, SumAmount: float|int|string}>
+    * @return list<\App\Model\Entity\Payment>
      */
     public function getManufacturerDepositSumByCalendarWeekAndType(string $type): array
     {
@@ -186,9 +186,9 @@ class PaymentsTable extends AppTable
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
         $query->groupBy($formattedDate);
-        $result = $query->toArray();
+        $result = $query->all()->toList();
 
-        return $result;
+        return array_values($result);
     }
 
     /**
@@ -202,12 +202,12 @@ class PaymentsTable extends AppTable
             'Payments.type' => Payment::TYPE_DEPOSIT,
             'Payments.id_manufacturer' => 0,
             'Payments.id_customer' => $customerId,
-        ])->toArray();
-        return $payments;
+        ])->all()->toList();
+        return array_values($payments);
     }
 
     /**
-     * @return list<array{YearWeek: string, SumAmount: float|int|string}>
+    * @return list<\App\Model\Entity\Payment>
      */
     public function getCustomerDepositSumByCalendarWeek(): array
     {
@@ -222,9 +222,9 @@ class PaymentsTable extends AppTable
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
         $query->groupBy($formattedDate);
-        $result = $query->toArray();
+        $result = $query->all()->toList();
 
-        return $result;
+        return array_values($result);
     }
 
     public function getManufacturerDepositMoneySum(): float|int
@@ -247,7 +247,7 @@ class PaymentsTable extends AppTable
     }
 
     /**
-    * @return list<array{sumDepositReturned: float, monthAndYear?: string}>
+        * @return list<\App\Model\Entity\Payment>
      */
     public function getMonthlyDepositSumByManufacturer(int $manufacturerId, bool $groupByMonth): array
     {
@@ -272,7 +272,7 @@ class PaymentsTable extends AppTable
         foreach ($results as $result) {
             $result->sumDepositReturned = (float) $result->sumDepositReturned;
         }
-        return $results;
+        return array_values($results);
     }
 
     /**

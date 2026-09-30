@@ -33,7 +33,6 @@ parameters:
             - plugins/Admin/src/Controller/HelloCashController.php
         # START LEVEL 7 ERRORS
         - identifier: argument.type
-        - identifier: return.type
         # END LEVEL 7 ERRORS
 
 rules:

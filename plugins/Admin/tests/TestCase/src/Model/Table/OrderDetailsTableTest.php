@@ -29,8 +29,8 @@ class OrderDetailsTableTest extends AppCakeTestCase
 
         $this->assertNotEmpty($delivered);
         $this->assertNotEmpty($returned);
-        $this->assertSame('float', get_debug_type($delivered[0]['sumDepositDelivered']));
-        $this->assertSame('float', get_debug_type($returned[0]['sumDepositReturned']));
+        $this->assertSame('float', get_debug_type($delivered[0]->sumDepositDelivered));
+        $this->assertSame('float', get_debug_type($returned[0]->sumDepositReturned));
     }
 
     public function testGetDepositTaxA(): void

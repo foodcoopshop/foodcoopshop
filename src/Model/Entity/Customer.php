@@ -44,7 +44,8 @@ class Customer extends AppEntity implements IdentityInterface
 
     const NOT_YET_LOADED = 'not-yet-loaded';
 
-    private Manufacturer|string|null $_manufacturer = self::NOT_YET_LOADED;
+    private ?Manufacturer $_manufacturer = null;
+    private bool $_manufacturerLoaded = false;
 
     public function getIdentifier(): int|null
     {
@@ -62,7 +63,7 @@ class Customer extends AppEntity implements IdentityInterface
             return null;
         }
 
-        if ($this->_manufacturer === self::NOT_YET_LOADED) {
+        if (!$this->_manufacturerLoaded) {
             $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
             /** @var Manufacturer|null $manufacturer */
             $manufacturer = $manufacturersTable->find('all',
@@ -76,6 +77,7 @@ class Customer extends AppEntity implements IdentityInterface
                 ]
             )->first();
             $this->_manufacturer = $manufacturer;
+            $this->_manufacturerLoaded = true;
         }
         return $this->_manufacturer;
     }

@@ -611,7 +611,10 @@ class CustomersTable extends AppTable
             conditions: $conditions,
         );
 
-        $customerIds = Hash::extract($query->toArray(), '{n}.id_customer');
+        $customerIds = [];
+        foreach ($query as $customer) {
+            $customerIds[] = (int) $customer->id_customer;
+        }
         return $customerIds;
     }
 

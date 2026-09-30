@@ -11,7 +11,7 @@ use App\Model\Table\CustomersTable;
 use App\Model\Table\FeedbacksTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\AddressCustomersTable;
-use Cake\Datasource\Paging\PaginatedResultSet;
+use Cake\Datasource\Paging\PaginatedInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,9 +46,9 @@ trait CustomersFilterTrait
     }
 
     /**
-    * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
+    * @return \Cake\Datasource\Paging\PaginatedInterface<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery|array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedInterface|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -89,7 +89,6 @@ trait CustomersFilterTrait
             contain: $contain
         );
 
-        /** @var SelectQuery<\Cake\Datasource\EntityInterface> $query */
         $query = $customersTable->addCustomersNameForOrderSelect($query);
         $query->select($customersTable);
         $query->select($addressCustomersTable);
@@ -105,6 +104,7 @@ trait CustomersFilterTrait
         $query->select($addressCustomersTable);
         $customerIds = $query->all()->extract('id_customer')->toList();
 
+        /** @var PaginatedInterface<int, \App\Model\Entity\Customer>|SelectQuery<\App\Model\Entity\Customer> $customers */
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
@@ -153,6 +153,7 @@ trait CustomersFilterTrait
                 $path .= '_sort';
                 $type = 'locale';
             }
+            /** @var array<int, \App\Model\Entity\Customer> $customers */
             $customers = Hash::sort($customers->toArray(), $path, $this->getRequestQuery('direction'), [
                 'type' => $type,
                 'ignoreCase' => true,

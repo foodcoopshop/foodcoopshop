@@ -38,9 +38,9 @@ class HelloCashService
         return Client::createFromUrl($this->restEndpoint);
     }
 
-    protected function encodeData($data): string
+    protected function encodeData(mixed $data): string
     {
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
+        return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     }
 
     public function cancelInvoice($customerId, $originalInvoiceId, $currentDay): object

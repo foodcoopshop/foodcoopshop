@@ -98,7 +98,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
                 'OrderDetailUnits',
             ],
         )->toArray();
-        return $orderDetails;
+        return array_values($orderDetails);
     }
 
     protected function generateAndGetCart(int $productAAmount = 1, int $productBAmount = 1): Cart

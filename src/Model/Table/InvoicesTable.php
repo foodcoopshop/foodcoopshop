@@ -94,12 +94,14 @@ class InvoicesTable extends AppTable
 
         }
 
-        return $invoices;
+        return array_values($invoices);
     }
 
     /**
-     * @param array<int|string, array<string, float|int>> $data
-     * @return array<int|string, array<string, float|int>>
+        * @template TKey of array-key
+        * @template TAmounts of array<string, float|int>
+        * @param array<TKey, TAmounts> $data
+        * @return array<TKey, TAmounts>
      */
     public function clearZeroArray(array $data): array
     {
@@ -114,7 +116,7 @@ class InvoicesTable extends AppTable
     /**
      * @param list<\App\Model\Entity\Invoice> $invoices
      * @return array{
-     *   taxRates: array<string, array<float|int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
+    *   taxRates: array<string, array<int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
      *   taxRatesSums: array<string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>
      * }
      */
@@ -242,7 +244,7 @@ class InvoicesTable extends AppTable
      *   tax_rates: array<mixed>,
      *   sumPriceIncl: float|int,
      *   sumPriceExcl: float|int,
-     *   sumTax: float|int,
+    *   sumTax: float|int|array<int, array{priceIncl: float|int, priceExcl: float|int, tax: float|int}>,
      *   cancelledInvoice: \App\Model\Entity\Invoice|null,
      *   new_invoice_necessary: bool
      * }
@@ -487,7 +489,7 @@ class InvoicesTable extends AppTable
         string $currentDay,
         int|bool|string $paidInCash,
         int|bool|string $invoicesPerEmailEnabled,
-        ): Invoice|false
+        ): Invoice
     {
 
         $invoiceData = [
@@ -514,7 +516,7 @@ class InvoicesTable extends AppTable
         }
         $invoiceEntity = $this->newEntity($invoiceData);
 
-        $newInvoice = $this->save($invoiceEntity, [
+        $newInvoice = $this->saveOrFail($invoiceEntity, [
             'associated' => [
                 'InvoiceTaxes',
             ],

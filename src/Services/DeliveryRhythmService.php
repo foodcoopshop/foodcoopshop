@@ -34,7 +34,7 @@ class DeliveryRhythmService
 
     public function getSendOrderListsWeekday(): int
     {
-        $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
+        $sendOrderListsWeekday = (int) Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - (int) Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
         if ($sendOrderListsWeekday < 0) {
             $sendOrderListsWeekday += 7;
         }
@@ -161,6 +161,9 @@ class DeliveryRhythmService
 
         $daysToAddToOrderPeriodLastDay = $this->getDaysToAddToOrderPeriodLastDay();
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        if ($deliveryDate === false) {
+            throw new \InvalidArgumentException('Invalid delivery date.');
+        }
 
         $weekdayOrderDay = $this->Time->formatAsWeekday($orderDay);
         $weekdayOrderDay = $weekdayOrderDay % 7;
@@ -177,6 +180,9 @@ class DeliveryRhythmService
         if ($calculateNextDeliveryDay && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->Time->getI18Format('DateShortAlt'), $orderDay);
             $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . ' ' . $weekdayStringDeliveryDate);
+            if ($deliveryDate === false) {
+                throw new \InvalidArgumentException('Invalid delivery rhythm.');
+            }
         }
 
         return $deliveryDate;

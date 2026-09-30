@@ -429,7 +429,7 @@ class OrderDetailsTable extends AppTable
             ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
         );
         $query->groupBy('OrderDetails.pickup_day');
-        return $query->toArray();
+        return array_values($query->all()->toList());
     }
 
     /**
@@ -511,7 +511,7 @@ class OrderDetailsTable extends AppTable
             return $exp;
         })->toArray();
 
-        return $orderDetails;
+        return array_values($orderDetails);
     }
 
     public function deleteOrderDetail(OrderDetail $orderDetail): void
@@ -531,7 +531,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-    * @return list<array{sumDepositDelivered: float, monthAndYear?: string, Year?: string}>
+        * @return list<\App\Model\Entity\OrderDetail>
      */
     public function getDepositSum(int|string|false $manufacturerId, int|string|false $groupBy): array
     {
@@ -566,7 +566,7 @@ class OrderDetailsTable extends AppTable
         foreach ($results as $result) {
             $result->sumDepositDelivered = (float) $result->sumDepositDelivered;
         }
-        return $results;
+        return array_values($results);
     }
 
     public function getOpenOrderDetailSum(int|string $manufacturerId, string $dateFrom): float|int
@@ -670,7 +670,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-    * @return list<array{SumTotalPaid: float, SumDeposit: float, MonthAndYear: string}>
+        * @return list<\App\Model\Entity\OrderDetail>
      */
     public function getMonthlySumProductByCustomer(int|string $customerId): array
     {
@@ -686,7 +686,7 @@ class OrderDetailsTable extends AppTable
             $result->SumTotalPaid = (float) $result->SumTotalPaid;
             $result->SumDeposit = (float) $result->SumDeposit;
         }
-        return $results;
+        return array_values($results);
     }
 
     /**

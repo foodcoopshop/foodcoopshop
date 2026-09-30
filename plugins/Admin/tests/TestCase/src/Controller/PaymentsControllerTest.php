@@ -495,7 +495,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
-        $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
+        $this->assertEmpty($manufacturerDepositSum[0]->sumDepositReturned);
 
         $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, $amountToAdd, Payment::TYPE_DEPOSIT, $dateAdd, $depositText, $applyAmountTresholdCheck);
         $payment = $paymentsTable->find('all',
@@ -507,7 +507,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, $payment->status);
         $this->assertEquals($depositText, $payment->text);
         $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
-        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
+        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]->sumDepositReturned);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
             'payment_deposit_manufacturer_added',

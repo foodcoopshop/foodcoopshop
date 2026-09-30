@@ -159,7 +159,7 @@ class CartsTable extends AppTable
                 'cart_type' => $cartType,
             ];
             $newCartEntity = $this->newEntity($cart2save, ['validate' => false]);
-            $cart = $this->save($newCartEntity);
+            $cart = $this->saveOrFail($newCartEntity);
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
@@ -242,10 +242,10 @@ class CartsTable extends AppTable
 
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
-        $preparedCart['CartDepositSum'] = 0;
-        $preparedCart['CartProductSum'] = 0;
-        $preparedCart['CartProductSumExcl'] = 0;
-        $preparedCart['CartTaxSum'] = 0;
+        $preparedCart['CartDepositSum'] = 0.0;
+        $preparedCart['CartProductSum'] = 0.0;
+        $preparedCart['CartProductSumExcl'] = 0.0;
+        $preparedCart['CartTaxSum'] = 0.0;
         foreach ($preparedCart['CartProducts'] as $p) {
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
@@ -312,15 +312,14 @@ class CartsTable extends AppTable
     }
 
     /**
-     * @param array<string, mixed> $productData
-     * @return array<string, mixed>
+     * @return array{purchasePriceInclPerUnit?: mixed}
      */
-    private function addPurchasePricePerUnitProductData(array $productData, UnitProduct|UnitProductAttribute $unitProduct): array
+    private function getPurchasePricePerUnitProductData(UnitProduct|UnitProductAttribute $unitProduct): array
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $productData['purchasePriceInclPerUnit'] = $unitProduct->purchase_price_incl_per_unit;
+            return ['purchasePriceInclPerUnit' => $unitProduct->purchase_price_incl_per_unit,];
         }
-        return $productData;
+        return [];
     }
 
     /**
@@ -530,7 +529,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProduct);
+            $productData += $this->getPurchasePricePerUnitProductData($unitProduct);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -657,7 +656,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProductAttribute);
+            $productData += $this->getPurchasePricePerUnitProductData($unitProductAttribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

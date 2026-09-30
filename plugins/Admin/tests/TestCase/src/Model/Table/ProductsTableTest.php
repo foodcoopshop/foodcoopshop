@@ -110,12 +110,10 @@ class ProductsTableTest extends AppCakeTestCase
             [ProductsFixture::ID_ARTICHOKE => 'https://localhost:8080/img/tests/test-image.jpg']
         ];
 
-        try {
-            $productsTable = $this->getTableLocator()->get('Products');
-            $productsTable->changeImage($products);
-        } catch (Exception $e) {
-            $this->assertEquals('invalid host', $e->getMessage());
-        }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('invalid host');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeImage($products);
     }
 
     public function testChangeImageNonExistingFile(): void

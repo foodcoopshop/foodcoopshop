@@ -93,8 +93,8 @@ trait ManufacturersFilterTrait
             $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $orderDetailsTable->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
-            $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
-            $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
+            $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]->sumDepositDelivered;
+            $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]->sumDepositDelivered - $sumDepositReturned[0]->sumDepositReturned;
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturer->variable_member_fee = $manufacturersTable->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             }
