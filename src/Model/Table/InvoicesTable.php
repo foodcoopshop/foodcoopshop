@@ -297,22 +297,22 @@ class InvoicesTable extends AppTable
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->deposit > 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $orderedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                $orderedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $orderedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
+                $orderedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
             if ($orderDetail->deposit < 0) {
                 $returnedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
+                $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
                 $returnedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
 
         foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
-            $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($deposit->amount, 1, $depositTaxRate) * -1;
-            $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($deposit->amount, 1, $depositTaxRate) * -1;
+            $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet((float) $deposit->amount, 1.0, (float) $depositTaxRate) * -1;
+            $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax((float) $deposit->amount, 1.0, (float) $depositTaxRate) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }

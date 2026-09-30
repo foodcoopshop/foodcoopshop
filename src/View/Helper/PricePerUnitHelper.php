@@ -99,9 +99,9 @@ class PricePerUnitHelper extends Helper
     }
 
     public function getPricePerUnitForFrontend(
-        string|float $priceInclPerUnit,
-        string|float $quantityInUnits,
-        string|float $amount,
+        float $priceInclPerUnit,
+        float $quantityInUnits,
+        float $amount,
         string $title,
         ): string
     {
@@ -111,21 +111,21 @@ class PricePerUnitHelper extends Helper
     }
 
     public function getPricePerUnit(
-        string|float $priceInclPerUnit,
-        string|float $quantityInUnits,
-        string|float $amount,
+        float $priceInclPerUnit,
+        float $quantityInUnits,
+        float $amount,
         ): float
     {
         return $priceInclPerUnit * $quantityInUnits / $amount;
     }
 
     public function getPrice(
-        string|float $priceInclPerUnit,
-        string|float $unitAmount,
-        string|float $productQuantity,
+        float $priceInclPerUnit,
+        float $unitAmount,
+        float $productQuantity,
         ): float
     {
-        return round((float) $priceInclPerUnit / $unitAmount * $productQuantity, 2);
+        return round($priceInclPerUnit / $unitAmount * $productQuantity, 2);
     }
 
     public function getPricePerUnitInfoText(

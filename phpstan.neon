@@ -34,7 +34,6 @@ parameters:
         # START LEVEL 7 ERRORS
         - identifier: argument.type
         - identifier: return.type
-        - identifier: binaryOp.invalid
         # END LEVEL 7 ERRORS
 
 rules:

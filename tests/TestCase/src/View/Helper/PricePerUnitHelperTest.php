@@ -19,6 +19,16 @@ use App\Test\TestCase\AppCakeTestCase;
 class PricePerUnitHelperTest extends AppCakeTestCase
 {
 
+    public function testGetPricePerUnitWithFractionalQuantity(): void
+    {
+        $this->assertSame(4.5, $this->PricePerUnit->getPricePerUnit(18.0, 0.5, 2.0));
+    }
+
+    public function testGetPriceRoundsToTwoDecimals(): void
+    {
+        $this->assertSame(6.67, $this->PricePerUnit->getPrice(10.0, 3.0, 2.0));
+    }
+
     public function testGetQuantityInUnitsStringForAttributesA(): void
     {
         $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('500 g', true, true, 500, 'g', 2);

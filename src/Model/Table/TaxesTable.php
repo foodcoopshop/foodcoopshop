@@ -96,7 +96,7 @@ class TaxesTable extends AppTable
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         return [
-            'netPrice' => $productsTable->getNetPrice($grossPrice, $calculatedTaxRate),
+            'netPrice' => $productsTable->getNetPrice((float) $grossPrice, (float) $calculatedTaxRate),
             'taxId' => $taxId,
         ];
 

@@ -457,7 +457,7 @@ class ProductsTable extends AppTable
                 'Taxes',
             ])->first();
 
-            $netPrice = $this->getNetPrice($price, $productEntity->tax_rate);
+            $netPrice = $this->getNetPrice((float) $price, (float) $productEntity->tax_rate);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -778,7 +778,7 @@ class ProductsTable extends AppTable
         return $productsForDropdown;
     }
 
-    public function getUnitTax(string|float $grossPrice, string|float $netPrice, float $quantity): float
+    public function getUnitTax(float $grossPrice, float $netPrice, float $quantity): float
     {
         if ($quantity == 0) {
             return 0;
@@ -786,19 +786,19 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    public function getGrossPrice(string|float|null $netPrice, string|float $taxRate): float
+    public function getGrossPrice(float $netPrice, float $taxRate): float
     {
-        return CalculationService::getGrossPrice((float) $netPrice, (float) $taxRate);
+        return CalculationService::getGrossPrice($netPrice, $taxRate);
     }
 
-    public function getNetPrice(string|float|null|false $grossPrice, string|float $taxRate): float
+    public function getNetPrice(float $grossPrice, float $taxRate): float
     {
         $netPrice = $grossPrice / (100 + $taxRate) * 100;
         $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 
-    public function getNetPriceForNewTaxRate(string|float|null $netPrice, string|float $oldTaxRate, string|float $newTaxRate): float
+    public function getNetPriceForNewTaxRate(float $netPrice, float $oldTaxRate, float $newTaxRate): float
     {
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);

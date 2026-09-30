@@ -75,14 +75,14 @@ trait EditPurchasePriceTrait
 
             $grossPrice = $productsTable->getGrossPrice(
                 round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2),
-                $orderDetail->order_detail_purchase_price->tax_rate,
+                (float) $orderDetail->order_detail_purchase_price->tax_rate,
             );
 
             $unitPriceExcl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2) / $orderDetail->product_amount;
             $unitTaxAmount = $productsTable->getUnitTax(
                 $grossPrice,
                 $unitPriceExcl,
-                $orderDetail->product_amount,
+                (float) $orderDetail->product_amount,
             );
 
             $totalTaxAmount = $unitTaxAmount * $orderDetail->product_amount;

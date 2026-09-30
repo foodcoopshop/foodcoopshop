@@ -112,7 +112,7 @@ trait EditPurchasePriceTrait
                 $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit ?? 0, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
                 $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             } else {
-                $purchasePrice2Save = $productsTable->getNetPrice($purchaseGrossPrice, $taxRate);
+                $purchasePrice2Save = $productsTable->getNetPrice((float) $purchaseGrossPrice, (float) $taxRate);
                 $patchedEntity = $purchaseTable->patchEntity(
                     $purchasePriceEntity2Save,
                     [
@@ -123,7 +123,7 @@ trait EditPurchasePriceTrait
                     throw new \Exception(join(' ', $productsTable->getAllValidationErrors($patchedEntity)));
                 }
                 $purchaseTable->save($patchedEntity);
-                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($productsTable->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));
+                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($productsTable->getGrossPrice((float) $oldProduct->purchase_price_product->price, (float) $taxRate));
                 $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
             }
         } catch (\Exception $e) {

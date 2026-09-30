@@ -26,14 +26,14 @@ if ($showProductPrice) {
     if ($identity === null || $identity->shopping_price != Customer::SELLING_PRICE) {
         $sellingPrice = $product->selling_prices['gross_price'];
         if ($product->unit_product->price_per_unit_enabled) {
-            $sellingPrice = $this->PricePerUnit->getPricePerUnit($product->selling_prices['price_incl_per_unit'], $product->unit_product->quantity_in_units, $product->unit_product->amount);
+            $sellingPrice = $this->PricePerUnit->getPricePerUnit((float) $product->selling_prices['price_incl_per_unit'], (float) $product->unit_product->quantity_in_units, (float) $product->unit_product->amount);
         }
         $tooltip .= '<br />' . __('Selling_price') . ': ' . $this->Number->formatAsCurrency($sellingPrice);
     }
     $priceHtml =  '<div class="price" title="' . h($tooltip) .  '">' . $this->Number->formatAsCurrency($product->gross_price) . '</div>';
     $pricePerUnitInfoText = '';
     if ($product->unit_product->price_per_unit_enabled) {
-        $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->unit_product->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount, $tooltip);
+        $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend((float) $product->unit_product->price_incl_per_unit, (float) $product->unit_product->quantity_in_units, (float) $product->unit_product->amount, $tooltip);
         $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
             $product->unit_product->price_incl_per_unit,
             $product->unit_product->name,

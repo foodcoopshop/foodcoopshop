@@ -1229,7 +1229,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits, $changeOpenOrderDetails);
         $this->assertJsonOk();
         $productsTable = TableRegistry::getTableLocator()->get('Products');
-        $netPrice = $productsTable->getNetPrice($price, $taxRate);
+        $netPrice = $productsTable->getNetPrice((float) $price, (float) $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 

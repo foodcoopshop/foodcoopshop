@@ -448,7 +448,7 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
                 } else {
                     $signatureText = $helloCashInvoice->signature->signature_cancellation_text;
                 }
-                $signatureText = str_replace('RKSV number:', 'RKSV Nummer:', $signatureText);
+                $signatureText = str_replace('RKSV number:', 'RKSV Nummer:', (string) $signatureText);
                 $signatureText = str_replace('Cash register ID:', 'Kassen-ID:', $signatureText);
                 echo '<br />' . $signatureText;
             }

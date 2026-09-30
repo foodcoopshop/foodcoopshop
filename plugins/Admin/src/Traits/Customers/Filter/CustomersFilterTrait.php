@@ -145,11 +145,11 @@ trait CustomersFilterTrait
             $customer->member_fee = $memberFeeMap[$customer->id_customer] ?? 0;
         }
 
-        if (in_array('sort', array_keys($this->getRequestQueryParams())) 
-            && in_array($this->getRequestQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
-            $path = '{n}.' .$this->getRequestQuery('sort');
+        $sort = $this->getRequestQuery('sort');
+        if (in_array($sort, ['credit_balance', 'member_fee', 'last_pickup_day',], true)) {
+            $path = '{n}.' . $sort;
             $type = 'numeric';
-            if ($this->getRequestQuery('sort') == 'last_pickup_day') {
+            if ($sort == 'last_pickup_day') {
                 $path .= '_sort';
                 $type = 'locale';
             }

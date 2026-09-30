@@ -247,7 +247,7 @@ class PaymentsTable extends AppTable
     }
 
     /**
-     * @return list<array{sumDepositReturned: float|int|string, monthAndYear?: string}>
+    * @return list<array{sumDepositReturned: float, monthAndYear?: string}>
      */
     public function getMonthlyDepositSumByManufacturer(int $manufacturerId, bool $groupByMonth): array
     {
@@ -268,7 +268,11 @@ class PaymentsTable extends AppTable
             );
         }
 
-        return $query->toArray();
+        $results = $query->toArray();
+        foreach ($results as $result) {
+            $result->sumDepositReturned = (float) $result->sumDepositReturned;
+        }
+        return $results;
     }
 
     /**

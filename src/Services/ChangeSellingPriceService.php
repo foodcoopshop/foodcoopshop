@@ -71,9 +71,9 @@ class ChangeSellingPriceService
             }
 
             $grossPriceTotal = Configure::read('app.pricePerUnitHelper')->getPrice(
-                $grossPrice,
-                $unitAmount,
-                $openOrderDetail->order_detail_unit->product_quantity_in_units,
+                (float) $grossPrice,
+                (float) $unitAmount,
+                (float) $openOrderDetail->order_detail_unit->product_quantity_in_units,
             );
 
             $unitChangeFactor = 1;
@@ -141,8 +141,8 @@ class ChangeSellingPriceService
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $productsTable = TableRegistry::getTableLocator()->get('Products');
 
-        $unitPriceExcl = $productsTable->getNetPrice($grossPrice / $productAmount, $orderDetail->tax_rate);
-        $unitTaxAmount = $productsTable->getUnitTax($grossPrice, $unitPriceExcl, $productAmount);
+        $unitPriceExcl = $productsTable->getNetPrice($grossPrice / $productAmount, (float) $orderDetail->tax_rate);
+        $unitTaxAmount = $productsTable->getUnitTax((float) $grossPrice, $unitPriceExcl, (float) $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
         $totalPriceTaxExcl = $grossPrice - $totalTaxAmount;
 

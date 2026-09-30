@@ -334,7 +334,7 @@ class OrderDetailsTable extends AppTable
     }
 
 
-    public function getDepositTax(string|float $depositGross, string|float $amount, string|float $taxRate): float
+    public function getDepositTax(float $depositGross, float $amount, float $taxRate): float
     {
         $depositGrossPerPiece = round($depositGross / $amount, 2);
         $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $taxRate / 100), 2);
@@ -342,7 +342,7 @@ class OrderDetailsTable extends AppTable
         return $depositTax;
     }
 
-    public function getDepositNet(string|float $depositGross, string|float $amount, string|float $taxRate): float
+    public function getDepositNet(float $depositGross, float $amount, float $taxRate): float
     {
         $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount, $taxRate);
         return $depositNet;
@@ -531,7 +531,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @return list<array{sumDepositDelivered: float|int|string, monthAndYear?: string, Year?: string}>
+    * @return list<array{sumDepositDelivered: float, monthAndYear?: string, Year?: string}>
      */
     public function getDepositSum(int|string|false $manufacturerId, int|string|false $groupBy): array
     {
@@ -562,7 +562,11 @@ class OrderDetailsTable extends AppTable
             $query->orderBy(['OrderDetails.pickup_day' => 'DESC']);
         }
         
-        return $query->toArray();
+        $results = $query->toArray();
+        foreach ($results as $result) {
+            $result->sumDepositDelivered = (float) $result->sumDepositDelivered;
+        }
+        return $results;
     }
 
     public function getOpenOrderDetailSum(int|string $manufacturerId, string $dateFrom): float|int
@@ -666,7 +670,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @return list<array{SumTotalPaid: float|int|string, SumDeposit: float|int|string, MonthAndYear: string}>
+    * @return list<array{SumTotalPaid: float, SumDeposit: float, MonthAndYear: string}>
      */
     public function getMonthlySumProductByCustomer(int|string $customerId): array
     {
@@ -677,7 +681,12 @@ class OrderDetailsTable extends AppTable
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
-        return $query->toArray();
+        $results = $query->toArray();
+        foreach ($results as $result) {
+            $result->SumTotalPaid = (float) $result->SumTotalPaid;
+            $result->SumDeposit = (float) $result->SumDeposit;
+        }
+        return $results;
     }
 
     /**

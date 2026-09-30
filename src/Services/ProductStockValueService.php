@@ -73,7 +73,7 @@ class ProductStockValueService
         }
 
         if ($product->unit && $product->unit->price_per_unit_enabled) {
-            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($pricePerUnit, $product->unit->quantity_in_units, $product->unit->amount);
+            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnit((float) $pricePerUnit, (float) $product->unit->quantity_in_units, (float) $product->unit->amount);
         }
 
         return $price * $availableQuantity;

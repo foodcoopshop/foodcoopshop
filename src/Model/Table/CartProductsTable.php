@@ -164,12 +164,12 @@ class CartProductsTable extends AppTable
 
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $prices = $cartsTable->getPricesRespectingPricePerUnit(
-            $price,
+            (float) $price,
             $unitObject,
-            $amount,
-            $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
-            $deposit,
-            $product->tax_rate,
+            (float) $amount,
+            $orderedQuantityInUnits == -1 ? null : (float) $orderedQuantityInUnits,
+            (float) $deposit,
+            (float) $product->tax_rate,
         );
 
         $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit']);

@@ -339,22 +339,22 @@ class CartsTable extends AppTable
 
     /**
      * @return array{
-     *   net_per_piece: float|int|string|null,
+    *   net_per_piece: float,
      *   gross_per_piece: float,
      *   gross: float,
      *   net: float,
      *   tax: float,
-     *   tax_per_piece: float|int|string,
-     *   gross_with_deposit: float|int|string
+    *   tax_per_piece: float,
+    *   gross_with_deposit: float
      * }
      */
     public function getPricesRespectingPricePerUnit(
-        string|float|null $netPricePerPiece,
+        float $netPricePerPiece,
         UnitProduct|UnitProductAttribute|null $unitProduct,
-        string|float $amount,
-        string|float|null $orderedQuantityInUnits,
-        string|float $deposit,
-        string|float $taxRate,
+        float $amount,
+        ?float $orderedQuantityInUnits,
+        float $deposit,
+        float $taxRate,
         ): array
     {
 
@@ -464,12 +464,12 @@ class CartsTable extends AppTable
         // END override shopping with purchase prices / zero prices
 
         $prices = $this->getPricesRespectingPricePerUnit(
-            $cartProduct->product->price,
+            (float) $cartProduct->product->price,
             $unitProduct,
-            $cartProduct->amount,
-            $orderedQuantityInUnits,
-            $cartProduct->product->deposit,
-            $cartProduct->product->tax_rate,
+            (float) $cartProduct->amount,
+            $orderedQuantityInUnits === null ? null : (float) $orderedQuantityInUnits,
+            (float) $cartProduct->product->deposit,
+            (float) $cartProduct->product->tax_rate,
         );
 
         $productData = [
@@ -593,12 +593,12 @@ class CartsTable extends AppTable
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
         $prices = $this->getPricesRespectingPricePerUnit(
-            $cartProduct->product_attribute->price,
+            (float) $cartProduct->product_attribute->price,
             $unitProductAttribute,
-            $cartProduct->amount,
-            $orderedQuantityInUnits,
-            $cartProduct->product_attribute->deposit,
-            $cartProduct->product->tax_rate,
+            (float) $cartProduct->amount,
+            $orderedQuantityInUnits === null ? null : (float) $orderedQuantityInUnits,
+            (float) $cartProduct->product_attribute->deposit,
+            (float) $cartProduct->product->tax_rate,
         );
 
         $productData = [

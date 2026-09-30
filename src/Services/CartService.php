@@ -599,12 +599,12 @@ class CartService
                     if ($attribute->price_per_unit_enabled) {
                         $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
                         $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
-                        $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxExcl = $productsTable->getNetPrice((float) $totalPurchasePriceTaxIncl, (float) $purchasePriceTaxRate);
                         $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                     } else {
                         $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
                         $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
-                        $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice((float) $totalPurchasePriceTaxExcl, (float) $purchasePriceTaxRate);
                         $totalPurchasePriceTaxIncl *= $amount;
                         $totalPurchasePriceTaxExcl *= $amount;
                     }
@@ -616,19 +616,19 @@ class CartService
             if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                 $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
                 $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
-                $totalPurchasePriceTaxExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxExcl = $productsTable->getNetPrice((float) $totalPurchasePriceTaxIncl, (float) $purchasePriceTaxRate);
                 $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
             } else {
                 $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
                 $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
-                $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxIncl = $productsTable->getGrossPrice((float) $totalPurchasePriceTaxExcl, (float) $purchasePriceTaxRate);
                 $totalPurchasePriceTaxIncl *= $amount;
                 $totalPurchasePriceTaxExcl *= $amount;
             }
         }
 
-        $unitPurchasePriceExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl / $amount, $purchasePriceTaxRate);
-        $unitPurchasePriceTaxAmount = $productsTable->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $amount);
+        $unitPurchasePriceExcl = $productsTable->getNetPrice($totalPurchasePriceTaxIncl / $amount, (float) $purchasePriceTaxRate);
+        $unitPurchasePriceTaxAmount = $productsTable->getUnitTax((float) $totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, (float) $amount);
         $totalPurchasePriceTaxAmount = $unitPurchasePriceTaxAmount * $amount;
 
         $result = [
