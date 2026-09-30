@@ -103,6 +103,7 @@ class ProductReaderService extends Reader {
         $validatedProductEntities = [];
         foreach($records as $record) {
             $grossPrice = $record[__('Gross_price')] ?? 0;
+            $taxRate = $record[__('Tax_rate')] ?? 0;
             $deposit = $record[__('Deposit')] ?? 0;
             $validatedProductEntities[] = $productsTable->getValidatedEntity(
                 $manufacturerId,
@@ -111,7 +112,7 @@ class ProductReaderService extends Reader {
                 (string) ($record[__('Description')] ?? ''),
                 (string) ($record[__('Unit')] ?? ''),
                 $grossPrice === false ? false : (float) $grossPrice,
-                (float) ($record[__('Tax_rate')] ?? 0),
+                $taxRate === false ? false : (float) $taxRate,
                 $deposit === false ? false : (float) $deposit,
                 (string) ($record[__('Amount')] ?? ''),
                 (string) ($record[__('Status')] ?? ''),
