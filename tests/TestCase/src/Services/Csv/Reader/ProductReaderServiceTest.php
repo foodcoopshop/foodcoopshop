@@ -42,6 +42,9 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $this->assertEquals(23.3, $records[0]['Bruttopreis']);
         $this->assertEquals(10, $records[0]['Steuersatz']);
         $this->assertEquals(0.5, $records[0]['Pfand']);
+        $this->assertSame('float', get_debug_type($records[0]['Bruttopreis']));
+        $this->assertSame('float', get_debug_type($records[0]['Steuersatz']));
+        $this->assertSame('float', get_debug_type($records[0]['Pfand']));
         $this->assertEquals('10', $records[0]['Menge']);
     }
 
@@ -78,6 +81,38 @@ class ProductReaderServiceTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $this->assertCount(14, $productsTable->find('all'));
 
+    }
+
+    public function testImportWithMalformedTaxRate(): void
+    {
+        $this->reader = ProductReaderService::fromString("Name,Bruttopreis,Steuersatz,Menge,Status\nTestprodukt,10,abc,0,1\nSteuerfrei,10,0,0,1\n");
+        $this->reader->configureType();
+        $records = $this->reader->getPreparedRecords();
+        $this->assertFalse($records[0]['Steuersatz']);
+
+        $productEntities = $this->reader->import(5);
+
+        $this->assertCount(2, $productEntities);
+        $this->assertEquals('Folgende Werte sind gültig: 0, 10, 13, 20', $productEntities[0]->getErrors()['id_tax']['inList']);
+        $this->assertFalse($productEntities[1]->hasErrors());
+        $this->assertFalse($this->reader->areAllEntitiesValid($productEntities));
+        $this->assertCount(14, $this->getTableLocator()->get('Products')->find('all'));
+    }
+
+    public function testImportWithZeroAndEmptyTaxRates(): void
+    {
+        $this->reader = ProductReaderService::fromString("Name,Bruttopreis,Steuersatz,Menge,Status\nSteuerfrei,10,0,0,1\nStandard,10,,0,1\n");
+        $this->reader->configureType();
+
+        $productEntities = $this->reader->import(5);
+
+        $this->assertCount(2, $productEntities);
+        $this->assertTrue($this->reader->areAllEntitiesValid($productEntities));
+        foreach ($productEntities as $productEntity) {
+            $this->assertSame(0, $productEntity->id_tax);
+            $this->assertEquals(10, $productEntity->price);
+        }
+        $this->assertCount(16, $this->getTableLocator()->get('Products')->find('all'));
     }
 
     public function testImportSuccessful(): void

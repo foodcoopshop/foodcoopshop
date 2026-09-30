@@ -93,7 +93,7 @@ class ProductReaderService extends Reader {
     }
 
     /**
-     * @return list<\App\Model\Entity\Product|false>
+    * @return list<\App\Model\Entity\Product>
      */
     public function import(int $manufacturerId): array
     {
@@ -102,19 +102,22 @@ class ProductReaderService extends Reader {
 
         $validatedProductEntities = [];
         foreach($records as $record) {
+            $grossPrice = $record[__('Gross_price')] ?? 0;
+            $taxRate = $record[__('Tax_rate')] ?? 0;
+            $deposit = $record[__('Deposit')] ?? 0;
             $validatedProductEntities[] = $productsTable->getValidatedEntity(
                 $manufacturerId,
-                $record[__('Name')] ?? '',
-                $record[__('Description_short')] ?? '',
-                $record[__('Description')] ?? '',
-                $record[__('Unit')] ?? '',
-                $record[__('Gross_price')] ?? '',
-                $record[__('Tax_rate')] ?? '',
-                $record[__('Deposit')] ?? '',
-                $record[__('Amount')] ?? '',
-                $record[__('Status')] ?? '',
+                (string) ($record[__('Name')] ?? ''),
+                (string) ($record[__('Description_short')] ?? ''),
+                (string) ($record[__('Description')] ?? ''),
+                (string) ($record[__('Unit')] ?? ''),
+                $grossPrice === false ? false : (float) $grossPrice,
+                $taxRate === false ? false : (float) $taxRate,
+                $deposit === false ? false : (float) $deposit,
+                (string) ($record[__('Amount')] ?? ''),
+                (string) ($record[__('Status')] ?? ''),
                 (int) ($record[__('Product_declaration')] ?? 0),
-                $record[__('Storage_location')] ?? '',
+                (string) ($record[__('Storage_location')] ?? ''),
             );
         }
 
@@ -122,7 +125,7 @@ class ProductReaderService extends Reader {
         if ($allProductEntitiesValid) {
             $savedProductEntities = [];
             foreach($validatedProductEntities as $validatedProductEntity) {
-                $savedProductEntities[] = $productsTable->save($validatedProductEntity);
+                $savedProductEntities[] = $productsTable->saveOrFail($validatedProductEntity);
             }
             return $savedProductEntities;
         }

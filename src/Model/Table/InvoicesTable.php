@@ -94,12 +94,14 @@ class InvoicesTable extends AppTable
 
         }
 
-        return $invoices;
+        return array_values($invoices);
     }
 
     /**
-     * @param array<int|string, array<string, float|int>> $data
-     * @return array<int|string, array<string, float|int>>
+        * @template TKey of array-key
+        * @template TAmounts of array<string, float|int>
+        * @param array<TKey, TAmounts> $data
+        * @return array<TKey, TAmounts>
      */
     public function clearZeroArray(array $data): array
     {
@@ -112,9 +114,9 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\Invoice> $invoices
+    * @param array<\App\Model\Entity\Invoice> $invoices
      * @return array{
-     *   taxRates: array<string, array<float|int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
+    *   taxRates: array<string, array<int|string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>>,
      *   taxRatesSums: array<string, array{sum_price_excl: float|int, sum_tax: float|int, sum_price_incl: float|int}>
      * }
      */
@@ -242,7 +244,7 @@ class InvoicesTable extends AppTable
      *   tax_rates: array<mixed>,
      *   sumPriceIncl: float|int,
      *   sumPriceExcl: float|int,
-     *   sumTax: float|int,
+    *   sumTax: float|int|array<int, array{priceIncl: float|int, priceExcl: float|int, tax: float|int}>,
      *   cancelledInvoice: \App\Model\Entity\Invoice|null,
      *   new_invoice_necessary: bool
      * }
@@ -297,22 +299,22 @@ class InvoicesTable extends AppTable
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->deposit > 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $orderedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                $orderedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $orderedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
+                $orderedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
             if ($orderDetail->deposit < 0) {
                 $returnedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
+                $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax((float) $orderDetail->deposit, (float) $orderDetail->product_amount, (float) $depositTaxRate);
                 $returnedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
 
         foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
-            $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet($deposit->amount, 1, $depositTaxRate) * -1;
-            $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax($deposit->amount, 1, $depositTaxRate) * -1;
+            $returnedDeposit['deposit_excl'] += $orderDetailsTable->getDepositNet((float) $deposit->amount, 1.0, (float) $depositTaxRate) * -1;
+            $returnedDeposit['deposit_tax'] += $orderDetailsTable->getDepositTax((float) $deposit->amount, 1.0, (float) $depositTaxRate) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }
@@ -476,7 +478,7 @@ class InvoicesTable extends AppTable
     }
 
     /**
-     * @param array<float, array<string, float>> $taxRates
+    * @param array<array<string, float>> $taxRates
      */
     public function saveInvoice(
         null|int|string $invoiceId,
@@ -487,7 +489,7 @@ class InvoicesTable extends AppTable
         string $currentDay,
         int|bool|string $paidInCash,
         int|bool|string $invoicesPerEmailEnabled,
-        ): Invoice|false
+        ): Invoice
     {
 
         $invoiceData = [
@@ -514,7 +516,7 @@ class InvoicesTable extends AppTable
         }
         $invoiceEntity = $this->newEntity($invoiceData);
 
-        $newInvoice = $this->save($invoiceEntity, [
+        $newInvoice = $this->saveOrFail($invoiceEntity, [
             'associated' => [
                 'InvoiceTaxes',
             ],

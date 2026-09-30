@@ -134,7 +134,7 @@ class DepositsController extends AdminAppController
 
         $depositsDeliveredSum = 0;
         foreach($depositsDeliveredByYear as $depositDelivered) {
-            $year = $depositDelivered['Year'] ?? null;
+            $year = $depositDelivered->Year ?? null;
             if ($year === null) {
                 continue;
             }
@@ -144,8 +144,8 @@ class DepositsController extends AdminAppController
             if (!isset($yearlyOverallDeltas[$year])) {
                 $yearlyOverallDeltas[$year] = 0;
             }
-            $yearlyDepositsDelivered[$year] = $depositDelivered['sumDepositDelivered'];
-            $yearlyOverallDeltas[$year] -= $depositDelivered['sumDepositDelivered'];
+            $yearlyDepositsDelivered[$year] = $depositDelivered->sumDepositDelivered;
+            $yearlyOverallDeltas[$year] -= $depositDelivered->sumDepositDelivered;
         }
 
         $this->set('xAxisData1LineChart', $xAxisData1LineChart);
@@ -234,9 +234,9 @@ class DepositsController extends AdminAppController
         foreach ($monthsAndYear as $monthAndYear => $monthAndYearAsString) {
             $recordFound = false;
             foreach ($depositsDelivered as $depositDelivered) {
-                $depositDeliveredMonthAndYear = $depositDelivered['monthAndYear'] ?? null;
+                $depositDeliveredMonthAndYear = $depositDelivered->monthAndYear ?? null;
                 if ($depositDeliveredMonthAndYear == $monthAndYear) {
-                    $deliveredValue = $depositDelivered['sumDepositDelivered'];
+                    $deliveredValue = $depositDelivered->sumDepositDelivered;
                     if ($deliveredValue > 0) {
                         $deposits[$monthAndYear]['delivered'] = $deliveredValue;
                         $sumDepositsDelivered += $deliveredValue;
@@ -246,9 +246,9 @@ class DepositsController extends AdminAppController
                 }
             }
             foreach ($depositsReturned as $depositReturned) {
-                $depositReturnedMonthAndYear = $depositReturned['monthAndYear'] ?? null;
+                $depositReturnedMonthAndYear = $depositReturned->monthAndYear ?? null;
                 if ($depositReturnedMonthAndYear == $monthAndYear) {
-                    $returnValue = $depositReturned['sumDepositReturned'] * -1;
+                    $returnValue = $depositReturned->sumDepositReturned * -1;
                     $deposits[$monthAndYear]['returned'] = $returnValue;
                     $sumDepositsReturned += $returnValue;
                     $recordFound = true;

@@ -62,7 +62,7 @@ class UnitsTable extends AppTable
         string|int $amount,
         string|float $quantityInUnits,
         bool|int|string $useWeightAsAmount,
-        ): EntityInterface|false
+        ): Unit|false
     {
 
         if ($productAttributeId > 0) {

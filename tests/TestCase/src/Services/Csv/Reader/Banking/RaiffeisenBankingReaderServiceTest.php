@@ -25,6 +25,7 @@ class RaiffeisenBankingReaderServiceTest extends AppCakeTestCase
     {
         $reader = RaiffeisenBankingReaderService::from(self::BANKING_READER_CSV_FILE_PATH . 'raiffeisen.csv');
         $records = $reader->getPreparedRecords();
+        $this->assertSame([0, 1, 2], array_keys($records));
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
         }

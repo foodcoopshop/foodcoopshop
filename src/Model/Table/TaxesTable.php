@@ -75,15 +75,15 @@ class TaxesTable extends AppTable
     /**
      * @return array{netPrice: float, taxId: int|false}
      */
-    public function getNetPriceAndTaxId(float|false $grossPrice, float $taxRate): array
+    public function getNetPriceAndTaxId(float|false $grossPrice, float|false $taxRate): array
     {
 
         $taxId = false;
         $calculatedTaxRate = 0;
 
-        if ($taxRate == 0) {
+        if ($taxRate === 0.0) {
             $taxId = 0;
-        } else {
+        } elseif ($taxRate !== false) {
             $tax = $this->find('all', conditions: [
                 'Taxes.active' => APP_ON,
                 'Taxes.rate' => $taxRate,
@@ -96,7 +96,7 @@ class TaxesTable extends AppTable
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
         return [
-            'netPrice' => $productsTable->getNetPrice($grossPrice, $calculatedTaxRate),
+            'netPrice' => $productsTable->getNetPrice((float) $grossPrice, (float) $calculatedTaxRate),
             'taxId' => $taxId,
         ];
 

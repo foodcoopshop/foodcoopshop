@@ -874,6 +874,8 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
         );
 
+        $this->assertJsonOk();
+
         $copies = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('name LIKE') => __('{0} - copy {1}', [
@@ -935,6 +937,8 @@ class ProductsControllerTest extends AppCakeTestCase
                 'copyAmount' => 2,
             ],
         );
+        $this->assertJsonOk();
+
         $copies = $productsTable->find('all',
             conditions: [
                 $productsTable->aliasField('name LIKE') => __('{0} - copy {1}', [
@@ -1166,7 +1170,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 ['value' => '102', 'text' => 'Frankfurter - Demo Fleisch-Hersteller'],
                 ['value' => '348', 'text' => 'Rindfleisch - Demo Fleisch-Hersteller'],
             ]],
-        ]));
+        ], JSON_THROW_ON_ERROR));
         $this->assertEquals($expectedDropdownData, $this->getJsonDecodedResponse()->dropdownData);
     }
 
@@ -1225,11 +1229,12 @@ class ProductsControllerTest extends AppCakeTestCase
     ): void
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
+        $priceInclPerUnit = Configure::read('app.numberHelper')->parseFloatRespectingLocale($priceInclPerUnit);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits, $changeOpenOrderDetails);
         $this->assertJsonOk();
         $productsTable = TableRegistry::getTableLocator()->get('Products');
-        $netPrice = $productsTable->getNetPrice($price, $taxRate);
+        $netPrice = $productsTable->getNetPrice((float) $price, (float) $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 

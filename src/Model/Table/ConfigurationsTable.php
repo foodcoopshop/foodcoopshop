@@ -66,7 +66,14 @@ class ConfigurationsTable extends AppTable
             throw new \Exception('version file not found: ' . $versionFileWithPath);
         }
         $file = fopen($versionFileWithPath, "r");
+        if ($file === false) {
+            throw new \RuntimeException('version file could not be opened: ' . $versionFileWithPath);
+        }
         $version = fgets($file);
+        fclose($file);
+        if ($version === false) {
+            throw new \RuntimeException('version file could not be read: ' . $versionFileWithPath);
+        }
         return $version;
     }
 

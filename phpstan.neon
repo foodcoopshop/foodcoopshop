@@ -31,11 +31,6 @@ parameters:
           paths:
             - src/Services/HelloCash/HelloCashService.php
             - plugins/Admin/src/Controller/HelloCashController.php
-        # START LEVEL 7 ERRORS
-        - identifier: argument.type
-        - identifier: return.type
-        - identifier: binaryOp.invalid
-        # END LEVEL 7 ERRORS
 
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

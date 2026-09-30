@@ -329,8 +329,8 @@ class CustomersTable extends AppTable
 
             if (!empty($purchasePrices->unit_product) && !is_null($purchasePrices->unit_product->purchase_price_incl_per_unit)) {
                 $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
-                $priceInclPerUnitNet = $productsTable->getNetPrice($purchasePrices->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                $priceInclPerUnitGrossWithSellingPriceTax = $productsTable->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                $priceInclPerUnitNet = $productsTable->getNetPrice((float) $purchasePrices->unit_product->purchase_price_incl_per_unit, (float) $purchasePriceTaxRate);
+                $priceInclPerUnitGrossWithSellingPriceTax = $productsTable->getGrossPrice($priceInclPerUnitNet, (float) $taxRate);
                 $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
             }
         }
@@ -391,8 +391,8 @@ class CustomersTable extends AppTable
                 }
                 if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && !is_null($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit)) {
                     $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
-                    $priceInclPerUnitNet = $productsTable->getNetPrice($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                    $priceInclPerUnitGrossWithSellingPriceTax = $productsTable->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                    $priceInclPerUnitNet = $productsTable->getNetPrice((float) $foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, (float) $purchasePriceTaxRate);
+                    $priceInclPerUnitGrossWithSellingPriceTax = $productsTable->getGrossPrice($priceInclPerUnitNet, (float) $taxRate);
                     $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
                 }
             }
@@ -529,6 +529,7 @@ class CustomersTable extends AppTable
      */
     private function getProductBalanceSumForCustomerIds(array $customerIds): float
     {
+        $customerIds = array_values($customerIds);
 
         /** @var PaymentsTable $paymentsTable */
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
@@ -611,7 +612,10 @@ class CustomersTable extends AppTable
             conditions: $conditions,
         );
 
-        $customerIds = Hash::extract($query->toArray(), '{n}.id_customer');
+        $customerIds = [];
+        foreach ($query as $customer) {
+            $customerIds[] = (int) $customer->id_customer;
+        }
         return $customerIds;
     }
 
@@ -620,6 +624,7 @@ class CustomersTable extends AppTable
      */
     private function getDepositBalanceSumForCustomerIds(array $customerIds): float
     {
+        $customerIds = array_values($customerIds);
 
         /** @var PaymentsTable $paymentsTable */
         $paymentsTable = TableRegistry::getTableLocator()->get('Payments');

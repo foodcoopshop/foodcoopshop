@@ -99,7 +99,7 @@ trait EditTaxTrait
                     $productAttributesTable = $this->getTableLocator()->get('ProductAttributes');
                     // update net price of all attributes
                     foreach ($oldProduct->product_attributes as $attribute) {
-                        $newNetPrice = $productsTable->getNetPriceForNewTaxRate($attribute->price, $oldProduct->tax->rate, $newTaxRate);
+                        $newNetPrice = $productsTable->getNetPriceForNewTaxRate((float) $attribute->price, (float) $oldProduct->tax->rate, (float) $newTaxRate);
                         $productAttributesTable->updateAll([
                             'price' => $newNetPrice
                         ], [
@@ -108,7 +108,7 @@ trait EditTaxTrait
                     }
                 } else {
                     // update price of product without attributes
-                    $newNetPrice = $productsTable->getNetPriceForNewTaxRate($oldProduct->price, $oldProduct->tax->rate, $newTaxRate);
+                    $newNetPrice = $productsTable->getNetPriceForNewTaxRate((float) $oldProduct->price, (float) $oldProduct->tax->rate, (float) $newTaxRate);
                     $product2update = [
                         'price' => $newNetPrice
                     ];

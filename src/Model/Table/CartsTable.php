@@ -159,7 +159,7 @@ class CartsTable extends AppTable
                 'cart_type' => $cartType,
             ];
             $newCartEntity = $this->newEntity($cart2save, ['validate' => false]);
-            $cart = $this->save($newCartEntity);
+            $cart = $this->saveOrFail($newCartEntity);
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
@@ -182,7 +182,7 @@ class CartsTable extends AppTable
         )->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId);
+            $cart->pickup_day_entities = $cartProductsTable->setPickupDays(array_values($cartProducts), $customerId);
         }
 
         $preparedCart = [
@@ -242,10 +242,10 @@ class CartsTable extends AppTable
 
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
-        $preparedCart['CartDepositSum'] = 0;
-        $preparedCart['CartProductSum'] = 0;
-        $preparedCart['CartProductSumExcl'] = 0;
-        $preparedCart['CartTaxSum'] = 0;
+        $preparedCart['CartDepositSum'] = 0.0;
+        $preparedCart['CartProductSum'] = 0.0;
+        $preparedCart['CartProductSumExcl'] = 0.0;
+        $preparedCart['CartTaxSum'] = 0.0;
         foreach ($preparedCart['CartProducts'] as $p) {
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
@@ -312,15 +312,14 @@ class CartsTable extends AppTable
     }
 
     /**
-     * @param array<string, mixed> $productData
-     * @return array<string, mixed>
+     * @return array{purchasePriceInclPerUnit?: mixed}
      */
-    private function addPurchasePricePerUnitProductData(array $productData, UnitProduct|UnitProductAttribute $unitProduct): array
+    private function getPurchasePricePerUnitProductData(UnitProduct|UnitProductAttribute $unitProduct): array
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $productData['purchasePriceInclPerUnit'] = $unitProduct->purchase_price_incl_per_unit;
+            return ['purchasePriceInclPerUnit' => $unitProduct->purchase_price_incl_per_unit,];
         }
-        return $productData;
+        return [];
     }
 
     /**
@@ -339,22 +338,22 @@ class CartsTable extends AppTable
 
     /**
      * @return array{
-     *   net_per_piece: float|int|string|null,
+    *   net_per_piece: float,
      *   gross_per_piece: float,
      *   gross: float,
      *   net: float,
      *   tax: float,
-     *   tax_per_piece: float|int|string,
-     *   gross_with_deposit: float|int|string
+    *   tax_per_piece: float,
+    *   gross_with_deposit: float
      * }
      */
     public function getPricesRespectingPricePerUnit(
-        string|float|null $netPricePerPiece,
+        float $netPricePerPiece,
         UnitProduct|UnitProductAttribute|null $unitProduct,
-        string|float $amount,
-        string|float|null $orderedQuantityInUnits,
-        string|float $deposit,
-        string|float $taxRate,
+        float $amount,
+        ?float $orderedQuantityInUnits,
+        float $deposit,
+        float $taxRate,
         ): array
     {
 
@@ -464,12 +463,12 @@ class CartsTable extends AppTable
         // END override shopping with purchase prices / zero prices
 
         $prices = $this->getPricesRespectingPricePerUnit(
-            $cartProduct->product->price,
+            (float) $cartProduct->product->price,
             $unitProduct,
-            $cartProduct->amount,
-            $orderedQuantityInUnits,
-            $cartProduct->product->deposit,
-            $cartProduct->product->tax_rate,
+            (float) $cartProduct->amount,
+            $orderedQuantityInUnits === null ? null : (float) $orderedQuantityInUnits,
+            (float) $cartProduct->product->deposit,
+            (float) $cartProduct->product->tax_rate,
         );
 
         $productData = [
@@ -530,7 +529,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProduct);
+            $productData += $this->getPurchasePricePerUnitProductData($unitProduct);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -593,12 +592,12 @@ class CartsTable extends AppTable
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
         $prices = $this->getPricesRespectingPricePerUnit(
-            $cartProduct->product_attribute->price,
+            (float) $cartProduct->product_attribute->price,
             $unitProductAttribute,
-            $cartProduct->amount,
-            $orderedQuantityInUnits,
-            $cartProduct->product_attribute->deposit,
-            $cartProduct->product->tax_rate,
+            (float) $cartProduct->amount,
+            $orderedQuantityInUnits === null ? null : (float) $orderedQuantityInUnits,
+            (float) $cartProduct->product_attribute->deposit,
+            (float) $cartProduct->product->tax_rate,
         );
 
         $productData = [
@@ -657,7 +656,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProductAttribute);
+            $productData += $this->getPurchasePricePerUnitProductData($unitProductAttribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

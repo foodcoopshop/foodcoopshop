@@ -70,7 +70,11 @@ class PaymentsTable extends AppTable
                     $formattedValue = $value->format(Configure::read('DateFormat.DatabaseAlt'));
                 }
                 if (is_string($value)) {
-                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                    $timestamp = strtotime($value);
+                    if ($timestamp === false) {
+                        return false;
+                    }
+                    $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), $timestamp);
                 }
                 if (isset($formattedValue)) {
                     if ($formattedValue == '1970-01-01') {
@@ -168,7 +172,7 @@ class PaymentsTable extends AppTable
     }
 
     /**
-     * @return list<array{YearWeek: string, SumAmount: float|int|string}>
+    * @return list<\App\Model\Entity\Payment>
      */
     public function getManufacturerDepositSumByCalendarWeekAndType(string $type): array
     {
@@ -186,9 +190,9 @@ class PaymentsTable extends AppTable
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
         $query->groupBy($formattedDate);
-        $result = $query->toArray();
+        $result = $query->all()->toList();
 
-        return $result;
+        return array_values($result);
     }
 
     /**
@@ -202,12 +206,12 @@ class PaymentsTable extends AppTable
             'Payments.type' => Payment::TYPE_DEPOSIT,
             'Payments.id_manufacturer' => 0,
             'Payments.id_customer' => $customerId,
-        ])->toArray();
-        return $payments;
+        ])->all()->toList();
+        return array_values($payments);
     }
 
     /**
-     * @return list<array{YearWeek: string, SumAmount: float|int|string}>
+    * @return list<\App\Model\Entity\Payment>
      */
     public function getCustomerDepositSumByCalendarWeek(): array
     {
@@ -222,9 +226,9 @@ class PaymentsTable extends AppTable
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
         $query->groupBy($formattedDate);
-        $result = $query->toArray();
+        $result = $query->all()->toList();
 
-        return $result;
+        return array_values($result);
     }
 
     public function getManufacturerDepositMoneySum(): float|int
@@ -247,7 +251,7 @@ class PaymentsTable extends AppTable
     }
 
     /**
-     * @return list<array{sumDepositReturned: float|int|string, monthAndYear?: string}>
+        * @return list<\App\Model\Entity\Payment>
      */
     public function getMonthlyDepositSumByManufacturer(int $manufacturerId, bool $groupByMonth): array
     {
@@ -268,7 +272,11 @@ class PaymentsTable extends AppTable
             );
         }
 
-        return $query->toArray();
+        $results = $query->toArray();
+        foreach ($results as $result) {
+            $result->sumDepositReturned = (float) $result->sumDepositReturned;
+        }
+        return array_values($results);
     }
 
     /**
@@ -282,7 +290,7 @@ class PaymentsTable extends AppTable
         }
     }
 
-    public function linkReturnedDepositWithInvoice(stdClass|Customer $data, int $invoiceId): void
+    public function linkReturnedDepositWithInvoice(object $data, int $invoiceId): void
     {
         foreach($data->returned_deposit['entities'] as $payment) {
             // important to get a fresh payment entity as amount field could be changed for cancellation invoices

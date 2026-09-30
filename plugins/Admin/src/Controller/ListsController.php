@@ -31,6 +31,9 @@ class ListsController extends AdminAppController
     {
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $path = realpath(Configure::read('app.folder_invoices'));
+        if ($path === false) {
+            throw new \RuntimeException('Invoice directory not found.');
+        }
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
@@ -123,6 +126,9 @@ class ListsController extends AdminAppController
 
         $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
         $path = realpath(Configure::read('app.folder_order_lists'));
+        if ($path === false) {
+            throw new \RuntimeException('Order list directory not found.');
+        }
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -241,6 +247,9 @@ class ListsController extends AdminAppController
 
         // remove part after $positionOrderListsString (foodcoop name and file ending)
         $positionOrderListsString = strpos($manufacturerString, __('_Order_list_filename_') . $ending);
+        if ($positionOrderListsString === false) {
+            throw new InvalidParameterException('Invalid order list filename.');
+        }
         $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
         $splittedManufacturerString = explode('_', $manufacturerString);
 
@@ -286,6 +295,9 @@ class ListsController extends AdminAppController
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isCustomer()) {
             $string = h($this->getRequest()->getQuery('file'));
             $positionInvoiceString = strpos($string, '_' . __('Invoice') . '_');
+            if ($positionInvoiceString === false) {
+                throw new InvalidParameterException('Invalid invoice filename.');
+            }
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
             $customerId = end($splittedFileName);
             if ($customerId != $this->identity->getId()) {
@@ -296,6 +308,9 @@ class ListsController extends AdminAppController
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isManufacturer()) {
             $string = h($this->getRequest()->getQuery('file'));
             $positionInvoiceString = strpos($string, '_' . __('Invoice') . '_');
+            if ($positionInvoiceString === false) {
+                throw new InvalidParameterException('Invalid invoice filename.');
+            }
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
             $manufacturerId = (int) explode('_', $string)[2];
             if ($manufacturerId != $this->identity->getManufacturerId()) {

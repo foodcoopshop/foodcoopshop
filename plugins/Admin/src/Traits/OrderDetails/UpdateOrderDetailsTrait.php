@@ -39,8 +39,8 @@ trait UpdateOrderDetailsTrait
     private function changeOrderDetailPurchasePrice(Entity $purchasePriceObject, float $productPurchasePrice, int $productAmount): void
     {
         $productsTable = TableRegistry::getTableLocator()->get('Products');
-        $unitPriceExcl = $productsTable->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
-        $unitTaxAmount = $productsTable->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
+        $unitPriceExcl = $productsTable->getNetPrice($productPurchasePrice / $productAmount, (float) $purchasePriceObject->tax_rate);
+        $unitTaxAmount = $productsTable->getUnitTax((float) $productPurchasePrice, $unitPriceExcl, (float) $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
         $totalPriceTaxExcl = $productPurchasePrice - $totalTaxAmount;
         $orderDetailPurchasePrice2save = [

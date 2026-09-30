@@ -75,8 +75,7 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
         $records = iterator_to_array($records);
         $records = $this->equalizeStructure($records);
 
-    /** @var list<array{content:string,amount:float,date:string,original_id_customer:int|string}> $preparedRecords */
-    $preparedRecords = [];
+        $preparedRecords = [];
         foreach($records as $record) {
 
             // never import negative transactions
@@ -102,9 +101,7 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
 
         }
 
-        $preparedRecords = Hash::sort($preparedRecords, '{n}.date', 'desc');
-
-        return $preparedRecords;
+        return array_values(Hash::sort($preparedRecords, '{n}.date', 'desc'));
     }
 
     public function checkStructure(): bool

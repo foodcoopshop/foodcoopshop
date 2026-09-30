@@ -57,7 +57,7 @@ class CustomersControllerTest extends AppCakeTestCase
             ['label' => 'Mitglieder: inaktiv', 'options' => [
                 ['value' => '93', 'text' => 'Demo SB-Kunde'],
             ]],
-        ]));
+        ], JSON_THROW_ON_ERROR));
         $this->assertEquals($expectedDropdownData, $response->dropdownData);
     }
 
@@ -71,7 +71,7 @@ class CustomersControllerTest extends AppCakeTestCase
             ['label' => 'Mitglieder: aktiv', 'options' => [
                 ['value' => '87', 'text' => 'Demo Mitglied'],
             ]],
-        ]));
+        ], JSON_THROW_ON_ERROR));
         $this->assertEquals($expectedDropdownData, $response->dropdownData);
     }
 

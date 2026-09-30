@@ -352,6 +352,7 @@ abstract class AppCakeTestCase extends TestCase
         FolderService::rrmdir($contentFolder);
         mkdir($contentFolder, 0755, true);
         $file = fopen($contentFolder . DS . '.gitignore', 'w');
+        $this->assertIsResource($file);
         fwrite($file, '/*
 !.gitignore');
         fclose($file);

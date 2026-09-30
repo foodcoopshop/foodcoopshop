@@ -20,6 +20,19 @@ use App\Test\TestCase\AppCakeTestCase;
 class OrderDetailsTableTest extends AppCakeTestCase
 {
 
+    public function testDepositSumsAreFloats(): void
+    {
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $paymentsTable = $this->getTableLocator()->get('Payments');
+        $delivered = $orderDetailsTable->getDepositSum(0, false);
+        $returned = $paymentsTable->getMonthlyDepositSumByManufacturer(0, false);
+
+        $this->assertNotEmpty($delivered);
+        $this->assertNotEmpty($returned);
+        $this->assertSame('float', get_debug_type($delivered[0]->sumDepositDelivered));
+        $this->assertSame('float', get_debug_type($returned[0]->sumDepositReturned));
+    }
+
     public function testGetDepositTaxA(): void
     {
         $this->assertGetDepositTax(1, 1, 0.17);

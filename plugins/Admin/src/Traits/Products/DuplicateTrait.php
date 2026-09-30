@@ -102,7 +102,7 @@ trait DuplicateTrait
             for ($i = 0; $i < $copyAmount; $i++) {
                 $copy = $this->deepCopyProduct($srcProduct, $associations, ($amountOfPreCopies + $i));
 
-                $copy = $productsTable->save($copy);
+                $copy = $productsTable->saveOrFail($copy);
                 $copies[] = $copy;
 
                 $this->checkPurchasePrices($srcProduct, $copy);
@@ -255,6 +255,10 @@ trait DuplicateTrait
                 $tableAssociationName = Inflector::pluralize($tableAssociationName);
                 $product[$tableAssociationName] = $this->removeHasManyAssociationKeys($product[$tableAssociationName]);
                 continue;
+            }
+
+            if (!is_string($primaryKey)) {
+                throw new \InvalidArgumentException('A single primary key is required for product associations.');
             }
 
             $product[$tableAssociationName] = $this->removeHasOneAssociationKeys($product[$tableAssociationName], $primaryKey);

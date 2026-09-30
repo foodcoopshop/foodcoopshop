@@ -223,8 +223,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturerId = 15;
         $noDeliveryDays = date('Y-m-d', strtotime('friday next week'));
-        $noDeliveryDayA = date('Y-m-d', strtotime($noDeliveryDays . ' + 10 day'));
-        $noDeliveryDayB = date('Y-m-d', strtotime($noDeliveryDays . ' + 11 day'));
+        $noDeliveryTimestampA = strtotime($noDeliveryDays . ' + 10 day');
+        $noDeliveryTimestampB = strtotime($noDeliveryDays . ' + 11 day');
+        $this->assertNotFalse($noDeliveryTimestampA);
+        $this->assertNotFalse($noDeliveryTimestampB);
+        $noDeliveryDayA = date('Y-m-d', $noDeliveryTimestampA);
+        $noDeliveryDayB = date('Y-m-d', $noDeliveryTimestampB);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $productsTable = $this->getTableLocator()->get('Products');
@@ -312,9 +316,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         copy($uploadFile, $newFile);
 
         // 2) upload image
+        $fileSize = filesize($newFile);
+        $this->assertNotFalse($fileSize);
         $upload = new UploadedFile(
             $newFile,
-            filesize($newFile),
+            $fileSize,
             UPLOAD_ERR_OK,
             'random-image-name.jpg',
         );

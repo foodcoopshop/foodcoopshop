@@ -63,7 +63,7 @@ trait GetOrderListTrait
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $orderDetailsTable->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
-        $orderDetailIds = $orderDetails->all()->extract('id_order_detail')->toArray();
+        $orderDetailIds = array_values(array_map('intval', $orderDetails->all()->extract('id_order_detail')->toArray()));
 
         if (empty($orderDetailIds)) {
             // do not throw exception because no debug mails wanted

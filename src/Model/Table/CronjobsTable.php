@@ -36,7 +36,7 @@ use Cake\Database\Expression\QueryExpression;
 class CronjobsTable extends AppTable
 {
 
-    public DateTime|string|int $cronjobRunDay;
+    public int $cronjobRunDay;
 
     public function initialize(array $config): void
     {
@@ -256,10 +256,6 @@ class CronjobsTable extends AppTable
         $executedCronjobs = [];
 
         foreach($cronjobs as $cronjob) {
-
-            if (!$cronjob instanceof Cronjob) {
-                continue;
-            }
 
             $cronjobRunDayObject = new DateTime($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone

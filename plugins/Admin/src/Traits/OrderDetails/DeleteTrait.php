@@ -41,7 +41,7 @@ trait DeleteTrait
         }
 
         $orderDetailCancellationService = new OrderDetailCancellationService();
-        $flashMessage = $orderDetailCancellationService->delete($orderDetailIds, $cancellationReason);
+        $flashMessage = $orderDetailCancellationService->delete(array_values(array_map('intval', $orderDetailIds)), $cancellationReason);
         $this->Flash->success($flashMessage);
 
         $this->set([

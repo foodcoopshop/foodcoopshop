@@ -59,7 +59,7 @@ class CatalogService
     }
 
     /**
-     * @return list<\App\Model\Entity\Product>|int
+        * @return ($countMode is true ? int : list<\App\Model\Entity\Product>)
      */
     public function getProducts(
         int|string $categoryId,
@@ -94,7 +94,7 @@ class CatalogService
 
         if ($products === null) {
             $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, $randomize);
-            $products = $query->toArray();
+            $products = array_values($query->toArray());
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
             $products = $this->removeProductIfShowOnlyProductsForNextWeekEnabled($products);
@@ -115,7 +115,7 @@ class CatalogService
     }
 
     /**
-     * @return list<\App\Model\Entity\Product>|int
+        * @return ($countMode is true ? int : list<\App\Model\Entity\Product>)
      */
     public function getProductsByManufacturerId(int $manufacturerId, bool $countMode = false, int $page = 1): array|int
     {
@@ -705,7 +705,7 @@ class CatalogService
             );
 
             $products[$i]->selling_prices = [
-                'gross_price' => $productsTable->getGrossPrice($products[$i]->price, $taxRate),
+                'gross_price' => $productsTable->getGrossPrice((float) $products[$i]->price, (float) $taxRate),
                 'price_incl_per_unit' => $products[$i]->unit_product->price_incl_per_unit,
             ];
 
@@ -714,10 +714,10 @@ class CatalogService
             $products[$i]->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
             // END: override shopping with purchase prices / zero prices
 
-            $grossPrice = $productsTable->getGrossPrice($products[$i]->price, $taxRate);
+            $grossPrice = $productsTable->getGrossPrice((float) $products[$i]->price, (float) $taxRate);
 
             $products[$i]->gross_price = $grossPrice;
-            $products[$i]->calculated_tax = $grossPrice - $products[$i]->price;
+            $products[$i]->calculated_tax = $grossPrice - (float) $products[$i]->price;
             $products[$i]->tax->rate = $taxRate;
 
             if (!Configure::read('app.isDepositEnabled')) {
@@ -747,7 +747,7 @@ class CatalogService
                 $modifiedAttributePricesByShoppingPrice = $customersTable->getModifiedAttributePricesByShoppingPrice($attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
 
                 $attribute->selling_prices = [
-                    'gross_price' => $productsTable->getGrossPrice($attribute->price, $taxRate),
+                    'gross_price' => $productsTable->getGrossPrice((float) $attribute->price, (float) $taxRate),
                     'price_incl_per_unit' => $attribute->unit_product_attribute->price_incl_per_unit,
                 ];
 
@@ -756,10 +756,10 @@ class CatalogService
                 $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
                 // END: override shopping with purchase prices / zero prices
 
-                $grossPrice = $productsTable->getGrossPrice($attribute->price, $taxRate);
+                $grossPrice = $productsTable->getGrossPrice((float) $attribute->price, (float) $taxRate);
 
                 $attribute->gross_price = $grossPrice;
-                $attribute->calculated_tax = $grossPrice - $attribute->price;
+                $attribute->calculated_tax = $grossPrice - (float) $attribute->price;
 
             }
 

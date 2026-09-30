@@ -51,6 +51,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForPerson.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
@@ -85,6 +86,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForCompany.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
@@ -100,6 +102,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerWithDecimalsInTaxRate.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
     }
@@ -123,6 +126,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');
+        $this->assertNotFalse($expectedResult);
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
     }

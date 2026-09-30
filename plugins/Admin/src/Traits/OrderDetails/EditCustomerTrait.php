@@ -113,7 +113,7 @@ trait EditCustomerTrait
             $newEntity->setNew(true);
             unset($newEntity->id_order_detail);
             $newEntity->id_customer = $customerId;
-            $savedEntity = $orderDetailsTable->save($newEntity, [
+            $savedEntity = $orderDetailsTable->saveOrFail($newEntity, [
                 'associated' => false
             ]);
 

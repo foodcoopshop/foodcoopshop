@@ -67,7 +67,7 @@ class SyncDomainsTable extends AppTable
     }
 
     /**
-     * @return array<int, string>
+    * @return list<string>
      */
     public function getActiveSyncDomainHosts(): array
     {
@@ -76,10 +76,11 @@ class SyncDomainsTable extends AppTable
             return [];
         }
         $syncDomains = Hash::extract($syncDomains, '{n}.domain');
-        $syncDomainHosts = array_map(function ($syncDomain) {
-            return parse_url($syncDomain, PHP_URL_HOST);
+        $syncDomainHosts = array_map(function ($syncDomain): string {
+            $host = parse_url($syncDomain, PHP_URL_HOST);
+            return is_string($host) ? $host : '';
         }, $syncDomains);
-        return $syncDomainHosts;
+        return array_values($syncDomainHosts);
     }
 
     public function isAllowedEditManufacturerOptionsDropdown(?IdentityInterface $identity): bool

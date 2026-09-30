@@ -58,7 +58,7 @@ class PagesTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\Page> $pages
+    * @param array<\App\Model\Entity\Page> $pages
      * @return array<int, string>
      */
     private function flattenNestedArrayWithChildren(array $pages, string $separator = ''): array

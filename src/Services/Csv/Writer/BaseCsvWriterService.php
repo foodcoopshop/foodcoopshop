@@ -104,6 +104,9 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		$records = $this->getRecords();
 
 		if (!empty($records)) {
+			$records = array_map(static function(array $record): array {
+				return array_map(static fn($value) => is_bool($value) ? (string) $value : $value, $record);
+			}, $records);
 			$this->writer->insertAll($records);
 		}
 	}

@@ -62,8 +62,11 @@ trait EditProductQuantityTrait
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
+        if (!$objectOrderDetailUnit instanceof \App\Model\Entity\OrderDetailUnit) {
+            throw new \UnexpectedValueException('Order detail unit not found.');
+        }
 
-        $newProductPrice = Configure::read('app.pricePerUnitHelper')->getPrice($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_amount, $productQuantity);
+        $newProductPrice = Configure::read('app.pricePerUnitHelper')->getPrice((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit, (float) $oldOrderDetail->order_detail_unit->unit_amount, (float) $productQuantity);
         if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
             $toleranceFactor = 100;
             $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;

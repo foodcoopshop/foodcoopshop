@@ -31,7 +31,7 @@ class FeedbacksController extends AdminAppController
 
     private function getCustomerId(): int
     {
-        $customerId = '';
+        $customerId = 0;
         if (!empty($this->getRequest()->getQuery('customerId'))) {
             $customerId = (int) h($this->getRequest()->getQuery('customerId'));
         }

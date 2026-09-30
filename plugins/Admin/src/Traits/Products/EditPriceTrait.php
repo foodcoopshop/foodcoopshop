@@ -25,7 +25,7 @@ trait EditPriceTrait
 {
 
     /**
-     * @param array<int> $ids
+    * @param array{productId: int, attributeId: int} $ids
      */
     private function applyPriceChangeToOpenOrders(array $ids, float $price): string
     {
@@ -142,7 +142,7 @@ trait EditPriceTrait
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($productsTable->getGrossPrice($oldProduct->price, $oldProduct->tax_rate));
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($productsTable->getGrossPrice((float) $oldProduct->price, (float) $oldProduct->tax_rate));
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {

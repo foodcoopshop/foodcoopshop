@@ -1131,26 +1131,34 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     private function assertGetOrderPeriodFirstDay(string $currentDay, string $expected): void
     {
-        $result = (new DeliveryRhythmService())->getOrderPeriodFirstDay(strtotime($currentDay));
+        $timestamp = strtotime($currentDay);
+        $this->assertNotFalse($timestamp);
+        $result = (new DeliveryRhythmService())->getOrderPeriodFirstDay($timestamp);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetOrderPeriodLastDay(string $currentDay, string $expected): void
     {
-        $result = (new DeliveryRhythmService())->getOrderPeriodLastDay(strtotime($currentDay));
+        $timestamp = strtotime($currentDay);
+        $this->assertNotFalse($timestamp);
+        $result = (new DeliveryRhythmService())->getOrderPeriodLastDay($timestamp);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetDeliveryDay(string $currentDay, string $expected): void
     {
-        $result = (new DeliveryRhythmService())->getDeliveryDay(strtotime($currentDay));
+        $timestamp = strtotime($currentDay);
+        $this->assertNotFalse($timestamp);
+        $result = (new DeliveryRhythmService())->getDeliveryDay($timestamp);
         $result = date($this->MyTimeHelper->getI18Format('DateShortAlt'), $result);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetFormattedNextDeliveryDay(string $currentDay, string $expected): void
     {
-        $result = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(strtotime($currentDay));
+        $timestamp = strtotime($currentDay);
+        $this->assertNotFalse($timestamp);
+        $result = (new DeliveryRhythmService())->getFormattedNextDeliveryDay($timestamp);
         $this->assertEquals($expected, $result);
     }
 

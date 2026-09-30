@@ -125,7 +125,11 @@ class ActionLogsController extends AdminAppController
         ]);
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
-            $dateToNextDay = date('Y-m-d', strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . ' +1 day'));
+            $dateToTimestamp = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . ' +1 day');
+            if ($dateToTimestamp === false) {
+                throw new \InvalidArgumentException('Invalid end date: ' . $dateTo);
+            }
+            $dateToNextDay = date('Y-m-d', $dateToTimestamp);
             $exp->gte('ActionLogs.date', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
             $exp->lt('ActionLogs.date', $dateToNextDay);
             return $exp;

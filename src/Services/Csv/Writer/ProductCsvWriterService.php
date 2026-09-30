@@ -156,7 +156,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
     private function getSellingPricePerUnit(stdClass $product): float
     {
         if ($product->unit && $product->unit->price_per_unit_enabled) {
-            return Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount);
+            return Configure::read('app.pricePerUnitHelper')->getPricePerUnit((float) $product->unit->price_incl_per_unit, (float) $product->unit->quantity_in_units, (float) $product->unit->amount);
         }
         return $product->gross_price;
     }

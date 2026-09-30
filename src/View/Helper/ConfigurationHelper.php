@@ -103,7 +103,11 @@ class ConfigurationHelper extends Helper
 
     public function getConfigurationDropdownOption(string $name, string $value): string
     {
-        return self::getConfigurationDropdownOptions($name)[$value];
+        $option = self::getConfigurationDropdownOptions($name)[$value];
+        if (is_array($option)) {
+            throw new \InvalidArgumentException('A dropdown option group cannot be used as a label.');
+        }
+        return (string) $option;
     }
 
     public function getFontPreview(string $name, string $value): string

@@ -11,7 +11,7 @@ use App\Model\Table\CustomersTable;
 use App\Model\Table\FeedbacksTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\AddressCustomersTable;
-use Cake\Datasource\Paging\PaginatedResultSet;
+use Cake\Datasource\Paging\PaginatedInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,9 +46,9 @@ trait CustomersFilterTrait
     }
 
     /**
-    * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
+    * @return \Cake\Datasource\Paging\PaginatedInterface<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery|array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedInterface|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -89,7 +89,6 @@ trait CustomersFilterTrait
             contain: $contain
         );
 
-        /** @var SelectQuery<\Cake\Datasource\EntityInterface> $query */
         $query = $customersTable->addCustomersNameForOrderSelect($query);
         $query->select($customersTable);
         $query->select($addressCustomersTable);
@@ -103,8 +102,11 @@ trait CustomersFilterTrait
             'member_fee' => 'Customers.id_customer',
         ]);
         $query->select($addressCustomersTable);
-        $customerIds = $query->all()->extract('id_customer')->toList();
+        $customerIds = array_values(array_map('intval', $query->all()->extract('id_customer')->toList()));
+        $direction = $this->getRequestQuery('direction');
+        $direction = is_string($direction) ? $direction : 'ASC';
 
+        /** @var PaginatedInterface<int, \App\Model\Entity\Customer>|SelectQuery<\App\Model\Entity\Customer> $customers */
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
@@ -121,7 +123,7 @@ trait CustomersFilterTrait
                 'member_fee',
                 'last_pickup_day',
             ],
-            'order' => $customersTable->getCustomerOrderClause($this->getRequestQuery('direction') ?? 'ASC'),
+            'order' => $customersTable->getCustomerOrderClause($direction),
         ]);
 
         $creditBalanceMap = [];
@@ -145,15 +147,16 @@ trait CustomersFilterTrait
             $customer->member_fee = $memberFeeMap[$customer->id_customer] ?? 0;
         }
 
-        if (in_array('sort', array_keys($this->getRequestQueryParams())) 
-            && in_array($this->getRequestQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
-            $path = '{n}.' .$this->getRequestQuery('sort');
+        $sort = $this->getRequestQuery('sort');
+        if (in_array($sort, ['credit_balance', 'member_fee', 'last_pickup_day',], true)) {
+            $path = '{n}.' . $sort;
             $type = 'numeric';
-            if ($this->getRequestQuery('sort') == 'last_pickup_day') {
+            if ($sort == 'last_pickup_day') {
                 $path .= '_sort';
                 $type = 'locale';
             }
-            $customers = Hash::sort($customers->toArray(), $path, $this->getRequestQuery('direction'), [
+            /** @var array<int, \App\Model\Entity\Customer> $customers */
+            $customers = Hash::sort($customers->toArray(), $path, $direction, [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);

@@ -266,7 +266,7 @@ if ($identity->isManufacturer()) {
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $sumDepositDelivered = $orderDetailsTable->getDepositSum($identity->getManufacturerId(), false);
-        if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
+        if ($sumDepositDelivered[0]->sumDepositDelivered > 0) {
             $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
                 'name' => __('Deposit_account'),

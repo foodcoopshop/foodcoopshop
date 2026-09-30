@@ -253,6 +253,9 @@ class CartsController extends FrontendController
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
 
         $formattedDeliveryDate = strtotime($deliveryDate);
+        if ($formattedDeliveryDate === false) {
+            throw new \InvalidArgumentException('Invalid delivery date: ' . $deliveryDate);
+        }
 
         $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));

@@ -86,8 +86,9 @@ class ProductAttributeCombinationsTable extends AppTable
                 }
             }
         }
-        $result['online'] = Hash::sort($result['online'], '{n}.name', 'asc');
-        $result['offline'] = Hash::sort($result['offline'], '{n}.name', 'asc');
+        $sortByName = static fn(array $first, array $second): int => strcmp($first['name'], $second['name']);
+        usort($result['online'], $sortByName);
+        usort($result['offline'], $sortByName);
         
         return $result;
     }

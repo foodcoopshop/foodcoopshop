@@ -51,7 +51,7 @@ class RaiffeisenBankingReaderService extends BankingReaderService {
 
     /**
      * @param array<int, array<int|string, mixed>> $records
-     * @return array<int, array<string, mixed>>
+    * @return list<array<int|string, mixed>>
      */
     public function equalizeStructure(array $records): array
     {

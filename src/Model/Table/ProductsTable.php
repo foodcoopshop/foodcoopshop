@@ -177,10 +177,14 @@ class ProductsTable extends AppTable
                             break;
                     }
 
-                    $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($context['data']['delivery_rhythm_first_delivery_day'])));
+                    $firstDeliveryDay = strtotime($context['data']['delivery_rhythm_first_delivery_day']);
+                    if ($firstDeliveryDay === false) {
+                        return false;
+                    }
+                    $deliveryDayAsWeekdayInEnglish = strtolower(date('l', $firstDeliveryDay));
 
                     if (isset($ordinal)) {
-                        $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+                        $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->getTimestamp($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
                     }
 
                     $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName((new DeliveryRhythmService())->getDeliveryWeekday());
@@ -457,7 +461,7 @@ class ProductsTable extends AppTable
                 'Taxes',
             ])->first();
 
-            $netPrice = $this->getNetPrice($price, $productEntity->tax_rate);
+            $netPrice = $this->getNetPrice((float) $price, (float) $productEntity->tax_rate);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -709,7 +713,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function isMainProduct(stdClass $product): bool
+    public function isMainProduct(object $product): bool
     {
         return (bool) preg_match('/main-product/', $product->row_class);
     }
@@ -778,7 +782,7 @@ class ProductsTable extends AppTable
         return $productsForDropdown;
     }
 
-    public function getUnitTax(string|float $grossPrice, string|float $netPrice, float $quantity): float
+    public function getUnitTax(float $grossPrice, float $netPrice, float $quantity): float
     {
         if ($quantity == 0) {
             return 0;
@@ -786,19 +790,19 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    public function getGrossPrice(string|float|null $netPrice, string|float $taxRate): float
+    public function getGrossPrice(float $netPrice, float $taxRate): float
     {
-        return CalculationService::getGrossPrice((float) $netPrice, (float) $taxRate);
+        return CalculationService::getGrossPrice($netPrice, $taxRate);
     }
 
-    public function getNetPrice(string|float|null|false $grossPrice, string|float $taxRate): float
+    public function getNetPrice(float $grossPrice, float $taxRate): float
     {
         $netPrice = $grossPrice / (100 + $taxRate) * 100;
         $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 
-    public function getNetPriceForNewTaxRate(string|float|null $netPrice, string|float $oldTaxRate, string|float $newTaxRate): float
+    public function getNetPriceForNewTaxRate(float $netPrice, float $oldTaxRate, float $newTaxRate): float
     {
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);

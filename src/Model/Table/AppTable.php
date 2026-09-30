@@ -23,6 +23,7 @@ use Cake\ORM\Table;
  * @link          https://www.foodcoopshop.com
  * 
  * @template TEntity of \Cake\Datasource\EntityInterface
+ * @extends \Cake\ORM\Table<array{}, TEntity>
  * @method TEntity newEmptyEntity()
  * @method TEntity newEntity(array<string, mixed> $data, array<string, mixed> $options = [])
  * @method array<TEntity> newEntities(array<array<string, mixed>> $data, array<string, mixed> $options = [])

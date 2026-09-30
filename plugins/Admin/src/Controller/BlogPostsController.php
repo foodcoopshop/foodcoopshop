@@ -120,7 +120,7 @@ class BlogPostsController extends AdminAppController
             $this->set('blogPost', $blogPost);
             return $this->render('edit');
         } else {
-            $blogPost = $blogPostsTable->save($blogPost);
+            $blogPost = $blogPostsTable->saveOrFail($blogPost);
 
             if (!$isEditMode) {
                 $messageSuffix = __('created');

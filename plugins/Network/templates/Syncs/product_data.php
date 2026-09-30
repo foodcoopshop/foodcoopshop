@@ -30,7 +30,7 @@ use Cake\Core\Configure;
         if (!empty($localSyncProducts)) {
             $this->element('addScript', [
                 'script' =>
-                    Configure::read('app.jsNamespace') . ".SyncProductData.init('".addslashes(json_encode($syncProducts))."', '".addslashes(json_encode($localSyncProducts))."');".
+                    Configure::read('app.jsNamespace') . ".SyncProductData.init('".addslashes(json_encode($syncProducts, JSON_THROW_ON_ERROR))."', '".addslashes(json_encode($localSyncProducts, JSON_THROW_ON_ERROR))."');".
                     Configure::read('app.jsNamespace') . ".SyncProductData.showLocalProductList();"
             ]);
         }

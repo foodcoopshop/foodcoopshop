@@ -28,6 +28,16 @@ class ProductsTableTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
+    public function testPriceCalculationsWithFloatInputs(): void
+    {
+        $productsTable = $this->getTableLocator()->get('Products');
+        $this->assertSame(12.0, $productsTable->getGrossPrice(10.0, 20.0));
+        $this->assertSame(10.0, $productsTable->getNetPrice(12.0, 20.0));
+        $this->assertSame(2.0, $productsTable->getUnitTax(36.0, 10.0, 3.0));
+        $this->assertSame(0.0, $productsTable->getUnitTax(0.0, 10.0, 0.0));
+        $this->assertSame(11.0, $productsTable->getNetPriceForNewTaxRate(10.0, 21.0, 10.0));
+    }
+
     public function testChangeImageValidImageAndDeleteImage(): void
     {
         // add image
@@ -100,12 +110,10 @@ class ProductsTableTest extends AppCakeTestCase
             [ProductsFixture::ID_ARTICHOKE => 'https://localhost:8080/img/tests/test-image.jpg']
         ];
 
-        try {
-            $productsTable = $this->getTableLocator()->get('Products');
-            $productsTable->changeImage($products);
-        } catch (Exception $e) {
-            $this->assertEquals('invalid host', $e->getMessage());
-        }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('invalid host');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->changeImage($products);
     }
 
     public function testChangeImageNonExistingFile(): void
@@ -850,7 +858,7 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0];
             }
-            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice($resultEntity->price, $changedProduct->tax_rate));
+            $this->assertEquals($expectedPrice, $productsTable->getGrossPrice((float) $resultEntity->price, (float) $changedProduct->tax_rate));
         }
     }
 

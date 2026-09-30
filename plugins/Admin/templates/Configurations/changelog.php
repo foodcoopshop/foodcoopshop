@@ -30,6 +30,9 @@ if (!file_exists($changelogFile)) {
     return;
 }
 $content = file_get_contents($changelogFile);
+if ($content === false) {
+    throw new \RuntimeException('Could not read the changelog.');
+}
 $content = str_replace('Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).', '', $content);
 $content = str_replace('# Changelog v4.x und v3.x', '', $content);
 $content = str_replace('## unreleased', '', $content);

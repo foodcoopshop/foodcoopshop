@@ -49,7 +49,7 @@ trait ProductImportTrait
         string $description,
         string $unity,
         float|false $grossPrice,
-        float $taxRate,
+        float|false $taxRate,
         float|false $deposit,
         string $quantity,
         string $status,

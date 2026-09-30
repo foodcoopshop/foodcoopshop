@@ -289,7 +289,7 @@ class OrderDetailsTable extends AppTable
         if ($customerCanSelectPickupDay) {
             $query->where(['OrderDetails.pickup_day' => $pickupDay]);
         } else {
-            $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
+            $cronjobRunDayWeekday = date('w', Configure::read('app.timeHelper')->getTimestamp($cronjobRunDay));
             $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
                 return $exp->or([
                     $query->expr()->and([
@@ -334,7 +334,7 @@ class OrderDetailsTable extends AppTable
     }
 
 
-    public function getDepositTax(string|float $depositGross, string|float $amount, string|float $taxRate): float
+    public function getDepositTax(float $depositGross, float $amount, float $taxRate): float
     {
         $depositGrossPerPiece = round($depositGross / $amount, 2);
         $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $taxRate / 100), 2);
@@ -342,7 +342,7 @@ class OrderDetailsTable extends AppTable
         return $depositTax;
     }
 
-    public function getDepositNet(string|float $depositGross, string|float $amount, string|float $taxRate): float
+    public function getDepositNet(float $depositGross, float $amount, float $taxRate): float
     {
         $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount, $taxRate);
         return $depositNet;
@@ -363,8 +363,8 @@ class OrderDetailsTable extends AppTable
         $i = 1;
         while($foundOrders < $ordersToLoad) {
 
-            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime((new DeliveryRhythmService())->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime((new DeliveryRhythmService())->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = Configure::read('app.timeHelper')->getTimestamp('- '.$i * 7 . 'day', Configure::read('app.timeHelper')->getTimestamp((new DeliveryRhythmService())->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = Configure::read('app.timeHelper')->getTimestamp('- '.$i * 7 . 'day', Configure::read('app.timeHelper')->getTimestamp((new DeliveryRhythmService())->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
             // stop trying to search for valid orders if year is two years ago
             // one year is not enough for usage in first weeks of january
@@ -429,7 +429,7 @@ class OrderDetailsTable extends AppTable
             ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
         );
         $query->groupBy('OrderDetails.pickup_day');
-        return $query->toArray();
+        return array_values($query->all()->toList());
     }
 
     /**
@@ -511,7 +511,7 @@ class OrderDetailsTable extends AppTable
             return $exp;
         })->toArray();
 
-        return $orderDetails;
+        return array_values($orderDetails);
     }
 
     public function deleteOrderDetail(OrderDetail $orderDetail): void
@@ -531,7 +531,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @return list<array{sumDepositDelivered: float|int|string, monthAndYear?: string, Year?: string}>
+        * @return list<\App\Model\Entity\OrderDetail>
      */
     public function getDepositSum(int|string|false $manufacturerId, int|string|false $groupBy): array
     {
@@ -562,7 +562,11 @@ class OrderDetailsTable extends AppTable
             $query->orderBy(['OrderDetails.pickup_day' => 'DESC']);
         }
         
-        return $query->toArray();
+        $results = $query->toArray();
+        foreach ($results as $result) {
+            $result->sumDepositDelivered = (float) $result->sumDepositDelivered;
+        }
+        return array_values($results);
     }
 
     public function getOpenOrderDetailSum(int|string $manufacturerId, string $dateFrom): float|int
@@ -666,7 +670,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @return list<array{SumTotalPaid: float|int|string, SumDeposit: float|int|string, MonthAndYear: string}>
+        * @return list<\App\Model\Entity\OrderDetail>
      */
     public function getMonthlySumProductByCustomer(int|string $customerId): array
     {
@@ -677,7 +681,12 @@ class OrderDetailsTable extends AppTable
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
-        return $query->toArray();
+        $results = $query->toArray();
+        foreach ($results as $result) {
+            $result->SumTotalPaid = (float) $result->SumTotalPaid;
+            $result->SumDeposit = (float) $result->SumDeposit;
+        }
+        return array_values($results);
     }
 
     /**
@@ -790,7 +799,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+    * @param array<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByProduct(array $orderDetails): array
@@ -817,7 +826,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+    * @param array<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByManufacturer(array $orderDetails): array
@@ -845,7 +854,7 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param list<\App\Model\Entity\OrderDetail> $orderDetails
+    * @param array<\App\Model\Entity\OrderDetail> $orderDetails
      * @return list<array<string, mixed>>
      */
     public function prepareOrderDetailsGroupedByCustomer(array $orderDetails): array
@@ -896,7 +905,7 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function updateOrderDetails(stdClass|Customer $data, int|string $invoiceId): void
+    public function updateOrderDetails(object $data, int|string $invoiceId): void
     {
         foreach($data->active_order_details as $orderDetail) {
             // important to get a fresh order detail entity as price fields could be changed for cancellation invoices

@@ -350,12 +350,14 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', Configuration::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $uploadFile = self::BANKING_READER_CSV_FILE_PATH . 'raiffeisen.csv';
+        $fileSize = filesize($uploadFile);
+        $this->assertNotFalse($fileSize);
         $this->post(
             Configure::read('app.slugHelper')->getReport(Payment::TYPE_PRODUCT),
             [
                 'upload' => new UploadedFile(
                     $uploadFile,
-                    filesize($uploadFile),
+                    $fileSize,
                     UPLOAD_ERR_OK,
                     'raiffeisen.csv',
                     'text/csv',
@@ -495,7 +497,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
         $paymentsTable = $this->getTableLocator()->get('Payments');
         $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
-        $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
+        $this->assertEmpty($manufacturerDepositSum[0]->sumDepositReturned);
 
         $jsonDecodedContent = $this->addManufacturerPayment($manufacturerId, $amountToAdd, Payment::TYPE_DEPOSIT, $dateAdd, $depositText, $applyAmountTresholdCheck);
         $payment = $paymentsTable->find('all',
@@ -507,7 +509,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, $payment->status);
         $this->assertEquals($depositText, $payment->text);
         $manufacturerDepositSum = $paymentsTable->getMonthlyDepositSumByManufacturer($manufacturerId, false);
-        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
+        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]->sumDepositReturned);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
             'payment_deposit_manufacturer_added',
