@@ -13,6 +13,7 @@ use App\Services\SanitizeService;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
 use App\Services\CssConfigurationService;
+use App\Services\ConfigurationDropdownOptionsService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -77,7 +78,11 @@ class ConfigurationsController extends AdminAppController
         }
         if (in_array($configuration->type, ['multiple_dropdown'])) {
             if ($this->getRequest()->getData('Configurations.value') != '') {
-                $this->setRequest($this->getRequest()->withData('Configurations.value', implode(',', $this->getRequest()->getData('Configurations.value'))));
+                $values = (new ConfigurationDropdownOptionsService())->sortSelectedValues(
+                    $configuration->name,
+                    $this->getRequest()->getData('Configurations.value'),
+                );
+                $this->setRequest($this->getRequest()->withData('Configurations.value', implode(',', $values)));
             }
         }
 

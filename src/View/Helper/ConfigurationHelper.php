@@ -6,7 +6,7 @@ namespace App\View\Helper;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
-use App\Services\DeliveryRhythmService;
+use App\Services\ConfigurationDropdownOptionsService;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Configuration;
 
@@ -52,20 +52,13 @@ class ConfigurationHelper extends Helper
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
-                if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $values = (new DeliveryRhythmService())->getNextDailyDeliveryDays(365);
-                } else {
-                    $values = (new DeliveryRhythmService())->getNextWeeklyDeliveryDays();
-                }
-                return $values;
+            case 'FCS_MEMBER_FEE_PRODUCTS':
+                return (new ConfigurationDropdownOptionsService())->getMultipleDropdownOptions($name);
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();
             case 'FCS_FONT_HEADER_PROMO_TITLE':
             case 'FCS_FONT_BLOCK_HEADING':
                 return $this->getFontDropdownOptions();
-            case 'FCS_MEMBER_FEE_PRODUCTS':
-                $productsTable = TableRegistry::getTableLocator()->get('Products');
-                return $productsTable->getForDropdown(0);
         }
 
         return [];
