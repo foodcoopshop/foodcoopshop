@@ -731,7 +731,7 @@ foodcoopshop.Admin = {
 
         selector = selector || 'select#customerid';
 
-        foodcoopshop.TomSelectCustom.init(selector, settings || {}, {
+        foodcoopshop.TomSelectCustom.init(selector, $.extend({lockOptgroupOrder: true}, settings || {}), {
             dropdown_open: function () {
                 if (!$(selector).data('optionsLoaded') && !$(selector).data('optionsLoading')) {
                     foodcoopshop.Admin.populateDropdownWithCustomers([selectedCustomerId], includeManufacturers, includeOfflineCustomers, selector, onChange);
@@ -749,7 +749,7 @@ foodcoopshop.Admin = {
 
         selector = selector || 'select#customerids';
 
-        foodcoopshop.TomSelectCustom.init(selector, {}, {
+        foodcoopshop.TomSelectCustom.init(selector, {lockOptgroupOrder: true}, {
             dropdown_open: function () {
                 if (!$(selector).data('optionsLoaded') && !$(selector).data('optionsLoading')) {
                     foodcoopshop.Admin.populateDropdownWithCustomers(selectedCustomerIds, includeManufacturers, includeOfflineCustomers, selector, onChange);
