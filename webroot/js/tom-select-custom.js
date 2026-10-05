@@ -83,6 +83,23 @@ foodcoopshop.TomSelectCustom = {
                 item.className = 'ts-hidden-item';
                 return item;
             };
+            defaultSettings.onInitialize = function() {
+                var instance = this;
+                var selectOption = instance.onOptionSelect;
+                instance.onOptionSelect = function(event, option) {
+                    if (option.parentElement && option.parentElement.matches('[data-disabled]')) {
+                        return;
+                    }
+                    var value = option.getAttribute('data-value');
+                    if (value !== null && instance.items.indexOf(value) !== -1) {
+                        instance.removeItem(value);
+                        instance.refreshOptions(false);
+                        instance.setActiveOption(instance.getOption(value));
+                        return;
+                    }
+                    selectOption.call(instance, event, option);
+                };
+            };
         }
         var instance = new TomSelect(element, $.extend({}, defaultSettings, settings || {}));
         instance.hook('after', 'positionDropdown', function() {
