@@ -8,6 +8,7 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/node
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 RUN apk update && \
+    apk add --no-cache libatomic && \
     npm install -g npm-check-updates && \
     npm install -g eslint
 
