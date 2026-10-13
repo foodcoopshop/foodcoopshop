@@ -54,7 +54,7 @@ class ConfigurationsTable extends AppTable
     {
         $request = Router::getRequest();
         $configurationName = $request?->getParam('pass')[0] ?? '';
-        if (in_array($configurationName , ['FCS_REGISTRATION_NOTIFICATION_EMAILS'])) {
+        if (in_array($configurationName , ['FCS_REGISTRATION_NOTIFICATION_EMAILS', 'FCS_ACCOUNTING_EMAIL', 'FCS_BACKUP_EMAIL_ADDRESS_BCC',])) {
             $data['value'] = StringComponent::removeWhitespace($data['value']);
         }
     }

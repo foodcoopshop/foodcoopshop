@@ -104,7 +104,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormAccountingEmails(): void
     {
         $newValue = 'accounting-one@example.com,accounting-two@example.com';
-        $this->changeConfigurationEditForm('FCS_ACCOUNTING_EMAIL', $newValue);
+        $this->changeConfigurationEditForm('FCS_ACCOUNTING_EMAIL', ' accounting-one@example.com , accounting-two@example.com ');
         $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
 
         $configuration = $this->getTableLocator()->get('Configurations')->get('FCS_ACCOUNTING_EMAIL');
@@ -115,6 +115,15 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     {
         $this->changeConfigurationEditForm('FCS_ACCOUNTING_EMAIL', 'accounting@example.com,invalid');
         $this->assertResponseContains('Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere mit Komma trennen.');
+    }
+
+    public function testConfigurationEditFormBackupEmailAddressBccRemoveWhitespace(): void
+    {
+        $this->changeConfigurationEditForm('FCS_BACKUP_EMAIL_ADDRESS_BCC', ' backup-one@example.com , backup-two@example.com ');
+        $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
+
+        $configuration = $this->getTableLocator()->get('Configurations')->get('FCS_BACKUP_EMAIL_ADDRESS_BCC');
+        $this->assertSame('backup-one@example.com,backup-two@example.com', $configuration->value);
     }
 
     public function testShowProductsForGuestsEnabledAndLoggedOut(): void
