@@ -214,9 +214,9 @@ foodcoopshop.Helper = {
     },
 
     initCookieBanner: function() {
-        new CookiesEuBanner(function () {
-            // callback when cookies are accepted
-        }, true);
+        CookiesEuBanner.createCookiesBanner({
+            onAccept: function () {},
+        });
     },
 
     initFixedHeaderOffset: function () {

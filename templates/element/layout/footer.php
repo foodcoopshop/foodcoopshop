@@ -51,11 +51,14 @@ use App\Services\OrderCustomerService;
     }
 
 ?>
-<div id="cookies-eu-banner">
-    <p><b><?php echo __('This_page_uses_cookies'); ?></b></p>
-    <p><?php echo __('Cookies_explaination_text'); ?></p>
-    <button id="cookies-eu-accept"><?php echo __('Accept_cookies'); ?> </button>
-</div>
+<template id="cookies-eu-banner-template">
+    <div id="cookies-eu-banner">
+        <p><b><?php echo __('This_page_uses_cookies'); ?></b></p>
+        <p><?php echo __('Cookies_explaination_text'); ?></p>
+        <button id="cookies-eu-reject" hidden></button>
+        <button id="cookies-eu-accept"><?php echo __('Accept_cookies'); ?></button>
+    </div>
+</template>
 
 </body>
 </html>
