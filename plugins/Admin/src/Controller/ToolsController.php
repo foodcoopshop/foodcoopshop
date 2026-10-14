@@ -54,8 +54,7 @@ class ToolsController extends AdminAppController
             return;
         }
 
-        $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
-        $filename = StringComponent::createRandomString(10) . '.' . $extension;
+        $filename = StringComponent::createRandomString(10) . '.pdf';
         $filenameWithPath = Configure::read('app.tmpUploadFilesDir') . DS . $filename;
 
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
