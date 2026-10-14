@@ -87,9 +87,11 @@ class ToolsController extends AdminAppController
         // check if uploaded file is image file
         $upload = $this->getRequest()->getData('upload');
         $uploadedFile = (string) $upload->getStream()->getMetadata('uri');
+        $mimeType = mime_content_type($uploadedFile);
+        $extension = array_search($mimeType, Configure::read('app.allowedImageMimeTypes'), true);
 
         // non-image files will return false
-        if (!in_array(mime_content_type($uploadedFile), Configure::read('app.allowedImageMimeTypes'))) {
+        if ($extension === false) {
             $message = __('The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
             $this->set([
                 'status' => 0,
@@ -140,11 +142,7 @@ class ToolsController extends AdminAppController
             return;
         }
 
-        $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
-        if ($extension == 'jpeg') {
-            $extension = 'jpg';
-        }
-        $filename = StringComponent::createRandomString(10) . '.' . $extension;
+        $filename = StringComponent::createRandomString(10) . '.' . strtolower((string) $extension);
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
 
