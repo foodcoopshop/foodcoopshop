@@ -45,10 +45,19 @@ trait CustomersFilterTrait
         return null;
     }
 
+    public function getInfoChannelFilter(string $channel): ?bool
+    {
+        if (!Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
+            return null;
+        }
+        $value = $this->getRequestQuery('info_' . $channel);
+        return $value === null || $value === '' ? null : (bool) $value;
+    }
+
     /**
     * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery|array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter, ?bool $infoSignal = null, ?bool $infoWhatsApp = null,): PaginatedResultSet|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -70,6 +79,13 @@ trait CustomersFilterTrait
 
         if ($newsletter !== null) {
             $conditions['Customers.newsletter_enabled'] = $newsletter;
+        }
+
+        if ($infoSignal !== null) {
+            $conditions['Customers.info_signal_enabled'] = $infoSignal;
+        }
+        if ($infoWhatsApp !== null) {
+            $conditions['Customers.info_whatsapp_enabled'] = $infoWhatsApp;
         }
 
         $conditions[] = $customersTable->getConditionToExcludeHostingUser();
@@ -116,6 +132,8 @@ trait CustomersFilterTrait
                 'Customers.check_credit_reminder_enabled',
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
+                'Customers.info_signal_enabled',
+                'Customers.info_whatsapp_enabled',
                 'Feedbacks.modified',
                 'credit_balance',
                 'member_fee',

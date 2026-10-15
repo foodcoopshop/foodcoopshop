@@ -44,6 +44,11 @@ class Customer extends AppEntity implements IdentityInterface
 
     const NOT_YET_LOADED = 'not-yet-loaded';
 
+    const INFO_CHANNELS = [
+        'signal' => 'Info Signal',
+        'whatsapp' => 'Info WhatsApp',
+    ];
+
     private Manufacturer|string|null $_manufacturer = self::NOT_YET_LOADED;
 
     public function getIdentifier(): int|null

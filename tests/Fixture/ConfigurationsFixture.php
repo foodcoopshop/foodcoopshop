@@ -398,6 +398,20 @@ class ConfigurationsFixture extends AppFixture
         ],
         [
             'active' => 1,
+            'name' => 'FCS_INFO_SIGNAL_ENABLED',
+            'value' => '0',
+            'type' => 'boolean',
+            'position' => 3410,
+        ],
+        [
+            'active' => 1,
+            'name' => 'FCS_INFO_WHATSAPP_ENABLED',
+            'value' => '0',
+            'type' => 'boolean',
+            'position' => 3420,
+        ],
+        [
+            'active' => 1,
             'name' => 'FCS_USER_FEEDBACK_ENABLED',
             'value' => '0',
             'type' => 'boolean',

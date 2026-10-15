@@ -1113,6 +1113,12 @@ msgstr "<a href=\"https://foodcoopshop.github.io/netzwerk-modul\" target=\"_blan
 msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
 msgstr "Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a>"
 
+msgid "Configuration_subtext_FCS_INFO_SIGNAL_ENABLED"
+msgstr "Zeigt die optionale Checkbox Info Signal bei der Registrierung und im Profil sowie eine Spalte und einen Filter in der Mitglieder-Liste."
+
+msgid "Configuration_subtext_FCS_INFO_WHATSAPP_ENABLED"
+msgstr "Zeigt die optionale Checkbox Info WhatsApp bei der Registrierung und im Profil sowie eine Spalte und einen Filter in der Mitglieder-Liste."
+
 msgid "Configuration_subtext_FCS_NO_DELIVERY_DAYS_GLOBAL"
 msgstr "Hier können lieferfreie Tage (z.B. Feiertage) für die gesamte Foodcoop festgelegt werden."
 
@@ -1280,6 +1286,12 @@ msgstr "Netzwerk-Modul aktiviert?"
 
 msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
 msgstr "Newsletter-Funktion aktiv?"
+
+msgid "Configuration_text_FCS_INFO_SIGNAL_ENABLED"
+msgstr "Info Signal aktiv?"
+
+msgid "Configuration_text_FCS_INFO_WHATSAPP_ENABLED"
+msgstr "Info WhatsApp aktiv?"
 
 msgid "Configuration_text_FCS_NO_DELIVERY_DAYS_GLOBAL"
 msgstr "Lieferpause für alle Hersteller?"
@@ -2801,6 +2813,12 @@ msgstr "Aktuelles"
 
 msgid "Newsletter"
 msgstr "Newsletter"
+
+msgid "Info Signal"
+msgstr "Info Signal"
+
+msgid "Info WhatsApp"
+msgstr "Info WhatsApp"
 
 msgid "No"
 msgstr "Nein"
@@ -5646,8 +5664,8 @@ msgstr "{0} {1} konnte <b>nicht</b> zugeordnet werden."
 msgid "{0}_{1}_was_successfully_associated."
 msgstr "{0} {1} wurde erfolgreich zugeordnet."
 
-msgid "Join signal support group"
-msgstr "Signal-Support-Gruppe beitreten"
+msgid "Join software signal support group"
+msgstr "Signal-Support-Gruppe der Software beitreten"
 
 msgid "Header infos"
 msgstr "Header-Infos"
@@ -5735,3 +5753,15 @@ msgstr "Keine Auswahl"
 
 msgid "{0} selected"
 msgstr "{0} ausgewählt"
+
+msgid "Copy mobile numbers"
+msgstr "Markierte Handynummern kopieren"
+
+msgid "{0} mobile numbers have been copied successfully to your clipboard."
+msgstr "{0} Handynummern wurden erfolgreich in die Zwischenablage kopiert."
+
+msgid "1 mobile number has been copied successfully to your clipboard."
+msgstr "1 Handynummer wurde erfolgreich in die Zwischenablage kopiert."
+
+msgid "I would like to receive information via {0}."
+msgstr "Ich möchte Informationen über {0} erhalten."

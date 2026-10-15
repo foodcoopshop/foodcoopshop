@@ -15,9 +15,16 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $buttons[] = $this->element('copyEmailButton', [
     'object' => 'customer',
 ]);
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".Admin.initCopySelectedContactDetailsToClipboard('customer', 'mobile');",
+]);
+$buttons[] = '<a class="btn-clipboard-mobile dropdown-item"><i class="fas fa-mobile-alt"></i> ' . __('Copy mobile numbers') . '</a>';
+
 $buttons[] = $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
 $buttons[] = $this->element('customerList/button/exportCustomers');
 

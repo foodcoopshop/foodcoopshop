@@ -153,6 +153,16 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
+    public function validationFcsInfoSignalEnabled(Validator $validator): Validator
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
+    public function validationFcsInfoWhatsappEnabled(Validator $validator): Validator
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
     public function validationFcsShowProductsForGuests(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);

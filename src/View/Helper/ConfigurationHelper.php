@@ -46,6 +46,8 @@ class ConfigurationHelper extends Helper
             case 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS':
             case 'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY':
             case 'FCS_NEWSLETTER_ENABLED':
+            case 'FCS_INFO_SIGNAL_ENABLED':
+            case 'FCS_INFO_WHATSAPP_ENABLED':
             case 'FCS_USER_FEEDBACK_ENABLED':
             case 'FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();

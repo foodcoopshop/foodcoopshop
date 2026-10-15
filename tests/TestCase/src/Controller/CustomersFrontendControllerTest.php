@@ -74,6 +74,67 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('maxlength="32"');
     }
 
+    public function testRegistrationInfoChannelsHiddenByDefault(): void
+    {
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('name="Customers[info_signal_enabled]"');
+        $this->assertResponseNotContains('name="Customers[info_whatsapp_enabled]"');
+    }
+
+    public function testRegistrationInfoChannelVisibilityMatchesConfiguration(): void
+    {
+        foreach ([[0, 0,], [1, 0,], [0, 1,], [1, 1,],] as [$signalEnabled, $whatsappEnabled]) {
+            $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', $signalEnabled);
+            $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', $whatsappEnabled);
+            $this->get($this->Slug->getLogin());
+            $this->assertResponseOk();
+            foreach (['signal' => $signalEnabled, 'whatsapp' => $whatsappEnabled,] as $channel => $enabled) {
+                $field = 'name="Customers[info_' . $channel . '_enabled]"';
+                if ($enabled) {
+                    $this->assertResponseContains($field);
+                } else {
+                    $this->assertResponseNotContains($field);
+                }
+            }
+        }
+    }
+
+    public function testRegistrationInfoChannelsUncheckedByDefault(): void
+    {
+        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseOk();
+        foreach (Customer::INFO_CHANNELS as $channel => $label) {
+            $this->assertResponseContains($label);
+            $this->assertMatchesRegularExpression('/<input(?=[^>]*type="checkbox")(?=[^>]*name="Customers\[info_' . $channel . '_enabled\]")(?![^>]*checked)[^>]*>/', (string) $this->_response->getBody());
+        }
+    }
+
+    public function testRegistrationInfoChannelsDefaultOff(): void
+    {
+        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, 'new-info-member@mailinator.com');
+        $this->assertFalse((bool) $customer->info_signal_enabled);
+        $this->assertFalse((bool) $customer->info_whatsapp_enabled);
+    }
+
+    public function testRegistrationInfoChannelsOptIn(): void
+    {
+        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $data = $this->registrationDataEmpty;
+        $data['Customers']['info_signal_enabled'] = 1;
+        $data['Customers']['info_whatsapp_enabled'] = 1;
+        $customer = $this->saveAndCheckValidCustomer($data, 'new-info-member@mailinator.com');
+        $this->assertTrue((bool) $customer->info_signal_enabled);
+        $this->assertTrue((bool) $customer->info_whatsapp_enabled);
+    }
+
     public function testProfileImagePrivacyForGuests(): void
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();

@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Model\Entity\Customer;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
@@ -197,6 +198,16 @@ if ($this->getRequest()->is('get')) {
                       if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
                         echo $this->Form->control('Customers.newsletter_enabled', ['label' => __('Want_to_receive_the_newsletter?'), 'type' => 'checkbox']);
                         }
+
+                      foreach (Customer::INFO_CHANNELS as $channel => $label) {
+                          if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
+                              echo $this->Form->control('Customers.info_' . $channel . '_enabled', [
+                                  'label' => __($label),
+                                  'type' => 'checkbox',
+                                  'default' => false,
+                              ]);
+                          }
+                      }
 
                       if (Configure::read('app.emailOrderReminderEnabled')) {
                           echo $this->Form->control('Customers.email_order_reminder_enabled', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);

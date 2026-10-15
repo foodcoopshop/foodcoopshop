@@ -18,6 +18,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\Writer\CustomerCsvWriterService;
 use League\Csv\Bom;
 use App\Test\Fixture\ProductsFixture;
+use Cake\Core\Configure;
 
 class CustomerCsvWriterServiceTest extends AppCakeTestCase
 {
@@ -44,6 +45,8 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
     {
 
         $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', true);
+        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', true);
+        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', true);
         $this->changeConfiguration('FCS_MEMBER_FEE_PRODUCTS', ProductsFixture::ID_ARTICHOKE);
         $writerService = new CustomerCsvWriterService();
         $writerService->setRequestQueryParams(['year' => '2018']);
@@ -52,9 +55,29 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
         $lines  = explode("\n", $result);
 
         $this->assertEquals(5, count($lines));
-        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader . ';Newsletter;"Mitgliedsbeitrag 2018"', $lines[0]);
-        $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;;0;1,82', $lines[3]);
+        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader . ';Newsletter;"Info Signal";"Info WhatsApp";"Mitgliedsbeitrag 2018"', $lines[0]);
+        $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;;0;0;0;1,82', $lines[3]);
 
+    }
+
+    public function testWriteInfoChannelFilters(): void
+    {
+        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', true);
+        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', true);
+        $this->changeCustomer(Configure::read('test.customerId'), 'info_signal_enabled', 1);
+        $this->changeCustomer(Configure::read('test.adminId'), 'info_whatsapp_enabled', 1);
+        $writerService = new CustomerCsvWriterService();
+        $writerService->setRequestQueryParams(['info_signal' => '1', 'info_whatsapp' => '0',]);
+        $records = $writerService->getRecords();
+        $this->assertCount(1, $records);
+        $this->assertEquals(Configure::read('test.customerId'), $records[0][0]);
+        $this->assertEquals([1, 0,], array_slice($records[0], -2));
+
+        $writerService->setRequestQueryParams(['info_signal' => '0', 'info_whatsapp' => '1',]);
+        $records = $writerService->getRecords();
+        $this->assertCount(1, $records);
+        $this->assertEquals(Configure::read('test.adminId'), $records[0][0]);
+        $this->assertEquals([0, 1,], array_slice($records[0], -2));
     }
 
 }
