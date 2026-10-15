@@ -324,8 +324,12 @@ foodcoopshop.Admin = {
     },
 
     initCopySelectedEmailsToClipboard: function(object) {
+        this.initCopySelectedContactDetailsToClipboard(object, 'email');
+    },
 
-        var btnSelector = '.btn-clipboard';
+    initCopySelectedContactDetailsToClipboard: function(object, contactType) {
+
+        var btnSelector = '.btn-clipboard-' + contactType;
         var button = $(btnSelector);
 
         foodcoopshop.Helper.disableButton(button);
@@ -338,21 +342,32 @@ foodcoopshop.Admin = {
             {
                 text: function(trigger) {
                     var ids = foodcoopshop.Admin.getSelectedIds();
-                    var emails = [];
+                    var contacts = [];
                     for(var i=0; i < ids.length; i++) {
-                        var email = $('tr.data[data-' + object + '-id="'+ids[i]+'"]').find('i.' + object + '-email-button').data('email');
-                        emails.push(email);
+                        var row = $('tr.data[data-' + object + '-id="'+ids[i]+'"]');
+                        var contact = contactType === 'mobile' ? row.attr('data-mobile') : row.find('i.' + object + '-email-button').data('email');
+                        if (contact) {
+                            contacts.push(contact);
+                        }
                     }
-                    return emails.join(',');
+                    return contacts.join(',');
                 }
             }
         );
 
         clipboard.on('success', function(e) {
-            var emailAddressesCount = e.text.split(',').length;
-            var response = __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.', emailAddressesCount);
-            if (emailAddressesCount == 1) {
-                response = __('1_email_address_has_been_copied_successfully_to_your_clipboard.');
+            var contactsCount = e.text === '' ? 0 : e.text.split(',').length;
+            var response;
+            if (contactType === 'mobile') {
+                response = __('{0} mobile numbers have been copied successfully to your clipboard.', contactsCount);
+                if (contactsCount === 1) {
+                    response = __('1 mobile number has been copied successfully to your clipboard.');
+                }
+            } else {
+                response = __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.', contactsCount);
+                if (contactsCount === 1) {
+                    response = __('1_email_address_has_been_copied_successfully_to_your_clipboard.');
+                }
             }
             foodcoopshop.Helper.showSuccessMessage(response);
         });

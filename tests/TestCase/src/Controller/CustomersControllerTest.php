@@ -37,6 +37,143 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertResponseContains('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;');
     }
 
+    public function testInfoChannelsDisplayedInConfigurations(): void
+    {
+        $this->loginAsSuperadmin();
+        foreach (['1,2,3' => 'WhatsApp, Signal, SMS', '2' => 'Signal', '' => 'Keiner',] as $channels => $label) {
+            $this->changeConfiguration('FCS_INFO_CHANNELS', (string) $channels);
+            $this->get('/admin/configurations');
+            $this->assertResponseOk();
+            $this->assertResponseContains('<td>' . $label . '</td>');
+        }
+    }
+
+    public function testInfoChannelColumnsAndFilters(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->changeCustomer(Configure::read('test.customerId'), 'info_channel', 2);
+        $this->changeCustomer(Configure::read('test.adminId'), 'info_channel', 1);
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers?info_channel=2');
+        $this->assertResponseOk();
+        $this->assertResponseContains('Customers.info_channel');
+        $this->assertResponseContains('name="info_channel"');
+        $this->assertResponseContains('<td class="center">Signal</td>');
+        $this->assertResponseContains('data-customer-id="87"');
+        $this->assertResponseNotContains('data-customer-id="88"');
+        $this->assertResponseNotContains('data-customer-id="92"');
+
+        $this->get('/admin/customers?info_channel=1&sort=Customers.info_channel&direction=desc');
+        $this->assertResponseOk();
+        $this->assertResponseContains('data-customer-id="88"');
+        $this->assertResponseNotContains('data-customer-id="87"');
+        $this->assertResponseNotContains('data-customer-id="92"');
+
+        $this->get('/admin/customers?info_channel=0');
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('<td class="center">Keiner</td>');
+        $this->assertResponseContains('<option value="0" selected="selected">---</option>');
+        $this->assertResponseContains('data-customer-id="92"');
+        $this->assertResponseNotContains('data-customer-id="87"');
+        $this->assertResponseNotContains('data-customer-id="88"');
+
+        $this->get('/admin/customers?info_channel=');
+        $this->assertResponseOk();
+        $this->assertResponseContains('data-customer-id="87"');
+        $this->assertResponseContains('data-customer-id="88"');
+        $this->assertResponseContains('data-customer-id="92"');
+    }
+
+    public function testInfoChannelHiddenWhenNoChannelsConfigured(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers?info_channel=1');
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('Customers.info_channel');
+        $this->assertResponseNotContains('name="info_channel"');
+        $this->assertResponseNotContains('btn-clipboard-mobile');
+        $this->assertResponseContains('data-customer-id="87"');
+
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '3');
+        $this->get('/admin/customers');
+        $this->assertResponseOk();
+        $this->assertResponseContains('Customers.info_channel');
+        $this->assertResponseContains('name="info_channel"');
+        $this->assertResponseContains('btn-clipboard-mobile');
+        $this->assertResponseContains('data-mobile="0664/000000000"');
+    }
+
+    public function testProfileInfoChannelVisibilityMatchesConfiguration(): void
+    {
+        $this->loginAsCustomer();
+        foreach (['', '1', '2', '3', '1,2,3',] as $channels) {
+            $this->changeConfiguration('FCS_INFO_CHANNELS', $channels);
+            $this->get($this->Slug->getCustomerProfile());
+            $this->assertResponseOk();
+            if ($channels === '') {
+                $this->assertResponseNotContains('name="Customers[info_channel]"');
+                continue;
+            }
+            $this->assertResponseContains('name="Customers[info_channel]"');
+            foreach (Customer::CHANNEL_TYPE as $channel => $label) {
+                $option = '<option value="' . $channel . '">' . $label . '</option>';
+                if (in_array((string) $channel, explode(',', $channels), true)) {
+                    $this->assertResponseContains($option);
+                } else {
+                    $this->assertResponseNotContains($option);
+                }
+            }
+        }
+    }
+
+    public function testInfoChannelsEditableInOwnProfile(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getCustomerProfile());
+        $this->assertResponseOk();
+        $this->assertResponseContains('name="Customers[info_channel]"');
+
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customerId = Configure::read('test.customerId');
+        $data = [
+            'Customers' => [
+                'firstname' => 'Demo',
+                'lastname' => 'Mitglied',
+                'info_channel' => 2,
+                'address_customer' => ['email' => Configure::read('test.loginEmailCustomer'),],
+            ],
+            'referer' => '/',
+        ];
+        $this->post($this->Slug->getCustomerProfile(), $data);
+        $this->assertResponseCode(302);
+        $customer = $customersTable->get($customerId);
+        $this->assertEquals(2, $customer->info_channel);
+
+        $this->get($this->Slug->getCustomerProfile());
+        $this->assertResponseContains('<option value="2" selected="selected">Signal</option>');
+        foreach ([1, 3, 0,] as $channel) {
+            $data['Customers']['info_channel'] = $channel;
+            $this->post($this->Slug->getCustomerProfile(), $data);
+            $this->assertResponseCode(302);
+            $this->assertEquals($channel, $customersTable->get($customerId)->info_channel);
+        }
+
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1');
+        $data['Customers']['info_channel'] = 2;
+        $this->post($this->Slug->getCustomerProfile(), $data);
+        $this->assertResponseContains('Der Infokanal ist nicht gültig.');
+        $this->assertEquals(0, $customersTable->get($customerId)->info_channel);
+    }
+
+    public function testInfoChannelDescriptionsInProfile(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getCustomerProfile());
+        $this->assertResponseOk();
+    }
+
     public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers(): void
     {
         $this->loginAsSuperadmin();

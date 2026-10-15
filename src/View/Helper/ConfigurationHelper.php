@@ -27,7 +27,7 @@ use App\Model\Entity\Configuration;
 class ConfigurationHelper extends Helper
 {
     /**
-     * @return array<string, string|int|array<int, string>>
+    * @return array<int|string, string|int|array<int, string>>
      */
     public function getConfigurationDropdownOptions(string $name): array
     {
@@ -53,6 +53,7 @@ class ConfigurationHelper extends Helper
                 return Configure::read('app.implementedLocales');
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
             case 'FCS_MEMBER_FEE_PRODUCTS':
+            case 'FCS_INFO_CHANNELS':
                 return (new ConfigurationDropdownOptionsService())->getMultipleDropdownOptions($name);
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();
@@ -110,6 +111,10 @@ class ConfigurationHelper extends Helper
     public function getConfigurationMultipleDropdownOptions(string $name, string $value): string
     {
         switch($name) {
+            case 'FCS_INFO_CHANNELS':
+                $options = $this->getConfigurationDropdownOptions($name);
+                $selected = array_intersect_key($options, array_flip(explode(',', $value)));
+                return $selected === [] ? __('None') : implode(', ', $selected);
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 $formattedAndCleanedDeliveryDays = Configure::read('app.htmlHelper')->getFormattedAndCleanedDeliveryDays($value);
                 return join(', ', $formattedAndCleanedDeliveryDays);

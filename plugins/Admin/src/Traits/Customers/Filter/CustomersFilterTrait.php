@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query\SelectQuery;
 use App\Model\Table\CustomersTable;
+use App\Model\Entity\Customer;
 use App\Model\Table\FeedbacksTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\AddressCustomersTable;
@@ -45,10 +46,22 @@ trait CustomersFilterTrait
         return null;
     }
 
+    public function getInfoChannelFilter(): ?int
+    {
+        if (Customer::getEnabledInfoChannels() === []) {
+            return null;
+        }
+        $value = $this->getRequestQuery('info_channel');
+        if (!is_int($value) && !is_string($value)) {
+            return null;
+        }
+        return (string) $value === '0' || isset(Customer::CHANNEL_TYPE[$value]) ? (int) $value : null;
+    }
+
     /**
     * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter): PaginatedResultSet|SelectQuery|array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter, ?int $infoChannel,): PaginatedResultSet|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -70,6 +83,10 @@ trait CustomersFilterTrait
 
         if ($newsletter !== null) {
             $conditions['Customers.newsletter_enabled'] = $newsletter;
+        }
+
+        if ($infoChannel !== null) {
+            $conditions['Customers.info_channel'] = $infoChannel;
         }
 
         $conditions[] = $customersTable->getConditionToExcludeHostingUser();
@@ -116,6 +133,7 @@ trait CustomersFilterTrait
                 'Customers.check_credit_reminder_enabled',
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
+                'Customers.info_channel',
                 'Feedbacks.modified',
                 'credit_balance',
                 'member_fee',

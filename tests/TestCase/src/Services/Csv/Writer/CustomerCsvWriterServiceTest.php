@@ -16,8 +16,11 @@ declare(strict_types=1);
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\Writer\CustomerCsvWriterService;
+use App\Model\Entity\Customer;
 use League\Csv\Bom;
+use League\Csv\Reader;
 use App\Test\Fixture\ProductsFixture;
+use Cake\Core\Configure;
 
 class CustomerCsvWriterServiceTest extends AppCakeTestCase
 {
@@ -44,6 +47,7 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
     {
 
         $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', true);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
         $this->changeConfiguration('FCS_MEMBER_FEE_PRODUCTS', ProductsFixture::ID_ARTICHOKE);
         $writerService = new CustomerCsvWriterService();
         $writerService->setRequestQueryParams(['year' => '2018']);
@@ -52,9 +56,77 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
         $lines  = explode("\n", $result);
 
         $this->assertEquals(5, count($lines));
-        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader . ';Newsletter;"Mitgliedsbeitrag 2018"', $lines[0]);
-        $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;;0;1,82', $lines[3]);
+        $this->assertEquals(Bom::Utf8->value . $this->defaultHeader . ';Newsletter;Infokanal;"Mitgliedsbeitrag 2018"', $lines[0]);
+        $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;;0;;1,82', $lines[3]);
 
+    }
+
+    public function testInfoChannelValuesMatchCsvHeader(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->changeCustomer(Configure::read('test.customerId'), 'info_channel', 2);
+        foreach ([0, 1,] as $newsletterEnabled) {
+            foreach (['', (string) ProductsFixture::ID_ARTICHOKE,] as $memberFeeProducts) {
+                $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', $newsletterEnabled);
+                $this->changeConfiguration('FCS_MEMBER_FEE_PRODUCTS', $memberFeeProducts);
+                $writerService = new CustomerCsvWriterService();
+                $writerService->setRequestQueryParams(['info_channel' => '2', 'year' => '2018',]);
+                $writerService->render();
+                $reader = Reader::fromString($writerService->toString());
+                $reader->setDelimiter(';');
+                $reader->setHeaderOffset(0);
+                $records = iterator_to_array($reader->getRecords());
+                $this->assertCount(1, $records);
+                foreach ($records as $record) {
+                    $this->assertSame('Signal', $record[__('Info channel')]);
+                    $this->assertSame('', $record[__('Comment')]);
+                    if ($newsletterEnabled) {
+                        $this->assertSame('0', $record[__('Newsletter')]);
+                    }
+                    if ($memberFeeProducts !== '') {
+                        $this->assertArrayHasKey(__('Member_fee') . ' 2018', $record);
+                    }
+                }
+            }
+        }
+    }
+
+    public function testInfoChannelFilterUsesEntityValues(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', implode(',', array_keys(Customer::CHANNEL_TYPE)));
+        $writerService = new CustomerCsvWriterService();
+        foreach ([0, ...array_keys(Customer::CHANNEL_TYPE),] as $channel) {
+            $writerService->setRequestQueryParams(['info_channel' => (string) $channel,]);
+            $this->assertSame($channel, $writerService->getInfoChannelFilter());
+        }
+        foreach ([null, '', '01', '-1', '1.0', 'invalid', ['1',],] as $value) {
+            $writerService->setRequestQueryParams(['info_channel' => $value,]);
+            $this->assertNull($writerService->getInfoChannelFilter());
+        }
+    }
+
+    public function testWriteInfoChannelFilters(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->changeCustomer(Configure::read('test.customerId'), 'info_channel', 2);
+        $this->changeCustomer(Configure::read('test.adminId'), 'info_channel', 1);
+        $writerService = new CustomerCsvWriterService();
+        $writerService->setRequestQueryParams(['info_channel' => '2',]);
+        $records = $writerService->getRecords();
+        $this->assertCount(1, $records);
+        $this->assertEquals(Configure::read('test.customerId'), $records[0][0]);
+        $this->assertEquals('Signal', $records[0][17]);
+
+        $writerService->setRequestQueryParams(['info_channel' => '1',]);
+        $records = $writerService->getRecords();
+        $this->assertCount(1, $records);
+        $this->assertEquals(Configure::read('test.adminId'), $records[0][0]);
+        $this->assertEquals('WhatsApp', $records[0][17]);
+
+        $writerService->setRequestQueryParams(['info_channel' => '0',]);
+        $records = $writerService->getRecords();
+        $this->assertCount(1, $records);
+        $this->assertSame('', $records[0][17]);
     }
 
 }

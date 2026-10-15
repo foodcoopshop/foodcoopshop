@@ -44,6 +44,9 @@ trait IndexTrait
         }
         $this->set('newsletter', $newsletter);
 
+        $infoChannel = $this->getInfoChannelFilter();
+        $this->set('infoChannel', $infoChannel);
+
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
         $firstOrderYear = $orderDetailsTable->getFirstOrderYear();
@@ -56,7 +59,7 @@ trait IndexTrait
         }
         $this->set('years', $years);
 
-        $customers = $this->getCustomers($active, $year, $newsletter);
+        $customers = $this->getCustomers($active, $year, $newsletter, $infoChannel,);
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __('Members'));

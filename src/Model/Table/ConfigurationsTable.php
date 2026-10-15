@@ -153,6 +153,18 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
+    public function validationFcsInfoChannels(Validator $validator): Validator
+    {
+        $validator->allowEmptyString('value');
+        $validator->add('value', 'channels', [
+            'rule' => static function (string $value): bool {
+                return array_diff(explode(',', $value), ['1', '2', '3',]) === [];
+            },
+            'message' => __('The info channel is not valid.'),
+        ]);
+        return $validator;
+    }
+
     public function validationFcsShowProductsForGuests(Validator $validator): Validator
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);

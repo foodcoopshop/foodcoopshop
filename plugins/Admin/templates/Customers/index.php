@@ -54,6 +54,15 @@ use Cake\ORM\TableRegistry;
                         'default' => $newsletter,
                     ]);
                 }
+                if (Customer::getEnabledInfoChannels() !== []) {
+                    echo $this->Form->control('info_channel', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __('Info channel'),
+                        'options' => Customer::getInfoChannelOptions(),
+                        'default' => $infoChannel,
+                    ]);
+                }
             ?>
             <div class="right">
                 <?php
@@ -89,6 +98,9 @@ if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th class="center">' . $this->Paginator->sort('Customers.newsletter_enabled',  __('Newsletter')) . '</th>';
 }
+if (Customer::getEnabledInfoChannels() !== []) {
+    echo '<th class="center">' . $this->Paginator->sort('Customers.info_channel', __('Info channel')) . '</th>';
+}
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
     echo '<th class="center">' . $this->Paginator->sort('Feedbacks.modified',  __('Feedback')) . '</th>';
 }
@@ -112,7 +124,11 @@ $sumFeedbackNotApproved = 0;
 foreach ($customers as $customer) {
     $i ++;
 
-    echo '<tr class="data" data-customer-id="'.$customer->id_customer.'">';
+    echo '<tr class="data" data-customer-id="'.$customer->id_customer.'"';
+    if (Customer::getEnabledInfoChannels() !== []) {
+        echo ' data-mobile="' . h($customer->address_customer->phone_mobile) . '"';
+    }
+    echo '>';
 
     echo $this->element('rowMarker/rowMarker', [
         'show' => true
@@ -291,6 +307,10 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
+    if (Customer::getEnabledInfoChannels() !== []) {
+        echo '<td class="center">' . h(Customer::CHANNEL_TYPE[$customer->info_channel] ?? '') . '</td>';
+    }
+
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
         echo '<td align="center">';
         if (!empty($customer->feedback)) {
@@ -386,6 +406,9 @@ if ($this->Html->paymentIsCashless()) {
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
+}
+if (Customer::getEnabledInfoChannels() !== []) {
+    echo '<td></td>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
     echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';

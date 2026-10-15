@@ -112,6 +112,13 @@ class CustomersTable extends AppTable
             'message' => __('Please_enter_your_last_name.'),
         ]);
         $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_shopping_price_is_not_valid.'));
+        $validator->add('info_channel', 'channel', [
+            'rule' => static function (mixed $value): bool {
+                return (is_int($value) || is_string($value))
+                    && in_array((string) $value, array_map('strval', array_keys(Customer::getInfoChannelOptions())), true);
+            },
+            'message' => __('The info channel is not valid.'),
+        ]);
         return $validator;
     }
 

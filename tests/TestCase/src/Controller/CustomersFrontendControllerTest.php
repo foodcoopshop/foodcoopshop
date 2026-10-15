@@ -74,6 +74,61 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('maxlength="32"');
     }
 
+    public function testRegistrationInfoChannelsHiddenByDefault(): void
+    {
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('name="Customers[info_channel]"');
+    }
+
+    public function testRegistrationInfoChannelVisibilityMatchesConfiguration(): void
+    {
+        foreach (['', '1', '2', '3', '1,2,3',] as $channels) {
+            $this->changeConfiguration('FCS_INFO_CHANNELS', $channels);
+            $this->get($this->Slug->getLogin());
+            $this->assertResponseOk();
+            if ($channels === '') {
+                $this->assertResponseNotContains('name="Customers[info_channel]"');
+                continue;
+            }
+            $this->assertResponseContains('name="Customers[info_channel]"');
+            foreach (Customer::CHANNEL_TYPE as $channel => $label) {
+                $option = '<option value="' . $channel . '">' . $label . '</option>';
+                if (in_array((string) $channel, explode(',', $channels), true)) {
+                    $this->assertResponseContains($option);
+                } else {
+                    $this->assertResponseNotContains($option);
+                }
+            }
+        }
+    }
+
+    public function testRegistrationInfoChannelNoneByDefault(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseOk();
+        $this->assertResponseContains('<option value="0" selected="selected">---</option>');
+    }
+
+    public function testRegistrationInfoChannelsDefaultOff(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, 'new-info-member@mailinator.com');
+        $this->assertEquals(0, $customer->info_channel);
+    }
+
+    public function testRegistrationInfoChannelsOptIn(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $data = $this->registrationDataEmpty;
+        $data['Customers']['info_channel'] = 3;
+        $customer = $this->saveAndCheckValidCustomer($data, 'new-info-member@mailinator.com');
+        $this->assertEquals(3, $customer->info_channel);
+    }
+
     public function testProfileImagePrivacyForGuests(): void
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();

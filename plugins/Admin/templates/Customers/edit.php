@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Model\Entity\Customer;
 use Cake\Core\Configure;
 
 $this->element('addScript', [
@@ -189,9 +190,18 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     ]);
 }
 
+if (Customer::getEnabledInfoChannels() !== []) {
+    echo $this->Form->control('Customers.info_channel', [
+        'label' => __('Info channel'),
+        'type' => 'select',
+        'options' => Customer::getInfoChannelOptions(),
+        'escape' => false,
+    ]);
+}
+
 if ($customer->isAdmin() || $customer->isSuperadmin()) {
     echo '<div class="sc"></div>';
-    echo '<a target="_blank" style="margin-bottom: 10px;" class="btn btn-outline-light" href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN"><i class="fa-brands fa-signal-messenger"></i> ' . __('Join signal support group') . '</a>';
+    echo '<a target="_blank" style="margin-bottom: 10px;" class="btn btn-outline-light" href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN"><i class="fa-brands fa-signal-messenger"></i> ' . __('Join software signal support group') . '</a>';
 }
 
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')

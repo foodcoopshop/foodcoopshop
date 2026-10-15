@@ -398,6 +398,13 @@ class ConfigurationsFixture extends AppFixture
         ],
         [
             'active' => 1,
+            'name' => 'FCS_INFO_CHANNELS',
+            'value' => '',
+            'type' => 'multiple_dropdown',
+            'position' => 3410,
+        ],
+        [
+            'active' => 1,
             'name' => 'FCS_USER_FEEDBACK_ENABLED',
             'value' => '0',
             'type' => 'boolean',

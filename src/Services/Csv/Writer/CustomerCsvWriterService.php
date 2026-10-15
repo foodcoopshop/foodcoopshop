@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Services\Csv\Writer;
 
 use Admin\Traits\Customers\Filter\CustomersFilterTrait;
+use App\Model\Entity\Customer;
 use Cake\Core\Configure;
 
 class CustomerCsvWriterService extends BaseCsvWriterService
@@ -52,6 +53,9 @@ class CustomerCsvWriterService extends BaseCsvWriterService
         if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
             $header[] = __('Newsletter');
         }
+        if (Customer::getEnabledInfoChannels() !== []) {
+            $header[] = __('Info channel');
+        }
         if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
             $header[] = __('Member_fee') . ' ' . h($this->getRequestQuery('year', $this->getDefaultYear()));
         }
@@ -76,7 +80,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             $newsletter = (bool) $newsletter;
         }
 
-        $customers = $this->getCustomers($active, $year, $newsletter);
+        $customers = $this->getCustomers($active, $year, $newsletter, $this->getInfoChannelFilter(),);
         $records = [];
         foreach($customers as $customer) {
 
@@ -107,6 +111,10 @@ class CustomerCsvWriterService extends BaseCsvWriterService
 
             if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
                 $record[] = $customer->newsletter_enabled;
+            }
+
+            if (Customer::getEnabledInfoChannels() !== []) {
+                $record[] = Customer::CHANNEL_TYPE[$customer->info_channel] ?? '';
             }
 
             if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
