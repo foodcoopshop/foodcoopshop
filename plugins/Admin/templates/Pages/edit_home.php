@@ -180,6 +180,22 @@ echo $this->Form->control('Configurations.FCS_FOODCOOPS_MAP_ENABLED', [
 ]);
 echo '</section>';
 
+echo '<section class="home-edit-section home-edit-section-metadata">';
+    echo '<h2>' . __('Search engine metadata') . '</h2>';
+    echo $this->Form->control('Configurations.FCS_HOME_META_TITLE', [
+        'type' => 'text',
+        'label' => __('Title'),
+        'placeholder' => $this->Html->getDefaultHomeTitle(),
+        'value' => $this->request->getData('Configurations.FCS_HOME_META_TITLE', $homeMetadata['FCS_HOME_META_TITLE'] ?? ''),
+    ]);
+    echo $this->Form->control('Configurations.FCS_HOME_META_DESCRIPTION', [
+        'type' => 'textarea',
+        'label' => __('Meta description'),
+        'rows' => 3,
+        'value' => $this->request->getData('Configurations.FCS_HOME_META_DESCRIPTION', $homeMetadata['FCS_HOME_META_DESCRIPTION'] ?? ''),
+    ]);
+echo '</section>';
+
 echo $this->Form->end();
 
 ?>

@@ -28,6 +28,8 @@ class AdminPagesControllerTest extends AppCakeTestCase
 
     public function testEditHomeGet(): void
     {
+        $this->changeConfiguration('FCS_HOME_META_TITLE', 'Regional | Local farms');
+        $this->changeConfiguration('FCS_HOME_META_DESCRIPTION', 'Fresh food from local farms.');
         $this->loginAsSuperadmin();
 
         $this->get($this->Slug->getPageEditHome());
@@ -35,6 +37,25 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('id="pages-content"');
         $this->assertResponseContains('Blöcke (nur für uneingeloggte User)');
+        $this->assertResponseContains('name="Configurations[FCS_HOME_META_TITLE]"');
+        $this->assertResponseContains('for="configurations-fcs-home-meta-title">Titel</label>');
+        $this->assertResponseContains('home-edit-section-metadata');
+        $this->assertResponseRegExp('/home-edit-section-map.*<\/section>\s*<section class="home-edit-section home-edit-section-metadata">\s*<hr>\s*<h2>.*<\/form>/s');
+        $this->assertResponseContains('value="Regional | Local farms"');
+        $this->assertResponseContains('Fresh food from local farms.');
+    }
+
+    public function testEditHomeEmptyTitleShowsDefaultPlaceholder(): void
+    {
+        $this->changeConfiguration('FCS_APP_NAME', 'Demo Shop');
+        $this->changeConfiguration('FCS_HOME_META_TITLE', '');
+        $this->loginAsSuperadmin();
+
+        $this->get($this->Slug->getPageEditHome());
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('placeholder="' . __('Welcome') . ' - Demo Shop"');
+        $this->assertSame('', $this->getTableLocator()->get('Configurations')->get('FCS_HOME_META_TITLE')->value);
     }
 
     public function testEditHomePost(): void
@@ -61,6 +82,8 @@ class AdminPagesControllerTest extends AppCakeTestCase
             ],
             'Configurations' => [
                 'FCS_FOODCOOPS_MAP_ENABLED' => 0,
+                'FCS_HOME_META_TITLE' => '  Regional | Local farms  ',
+                'FCS_HOME_META_DESCRIPTION' => '  Fresh food from local farms.  ',
             ],
             'HeaderPromo' => [
                 'title' => 'Startseiten Titel',
@@ -83,6 +106,10 @@ class AdminPagesControllerTest extends AppCakeTestCase
         ])->first();
 
         $this->assertEquals('<p>Neue Startseite</p>', $configuration->value);
+        $this->assertSame('Regional | Local farms', $configurationsTable->get('FCS_HOME_META_TITLE')->value);
+        $this->assertSame('Fresh food from local farms.', $configurationsTable->get('FCS_HOME_META_DESCRIPTION')->value);
+        $this->assertSame('hidden', $configurationsTable->get('FCS_HOME_META_TITLE')->type);
+        $this->assertSame('hidden', $configurationsTable->get('FCS_HOME_META_DESCRIPTION')->type);
 
         $blocksTable = $this->getTableLocator()->get('Blocks');
         $block = $blocksTable->get(1);
@@ -116,6 +143,35 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertSame('https://www.example.com', $headerPromo->secondary_href);
     }
 
+    public function testEditHomeMetadataPreservesAmpersands(): void
+    {
+        $this->loginAsSuperadmin();
+        $metadata = [
+            'FCS_HOME_META_TITLE' => 'Food & farms | Regional',
+            'FCS_HOME_META_DESCRIPTION' => 'Fresh food & local farms "nearby".',
+        ];
+
+        foreach ([1, 2] as $attempt) {
+            $this->post($this->Slug->getPageEditHome(), [
+                'Pages' => ['content' => ''],
+                'Configurations' => $metadata,
+                'referer' => '/',
+            ]);
+            $this->assertRedirect('/');
+
+            $configurationsTable = $this->getTableLocator()->get('Configurations');
+            foreach ($metadata as $name => $value) {
+                $this->assertSame($value, $configurationsTable->get($name)->value);
+            }
+
+            $this->get($this->Slug->getPageEditHome());
+            $this->assertResponseOk();
+            $this->assertResponseContains('value="Food &amp; farms | Regional"');
+            $this->assertResponseContains('Fresh food &amp; local farms &quot;nearby&quot;.');
+            $this->assertResponseNotContains('&amp;amp;');
+        }
+    }
+
     public function testEditHomePostShowsHeaderPromoTitleValidationError(): void
     {
         $this->loginAsSuperadmin();
@@ -136,6 +192,8 @@ class AdminPagesControllerTest extends AppCakeTestCase
             ],
             'Configurations' => [
                 'FCS_FOODCOOPS_MAP_ENABLED' => 0,
+                'FCS_HOME_META_TITLE' => 'Retained title',
+                'FCS_HOME_META_DESCRIPTION' => 'Retained description.',
             ],
             'header_promo' => [
                 'title' => str_repeat('x', 56),
@@ -145,6 +203,29 @@ class AdminPagesControllerTest extends AppCakeTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('Bitte gib für den Titel maximal 55 Zeichen ein.');
+        $this->assertResponseContains('value="Retained title"');
+        $this->assertResponseContains('Retained description.');
+    }
+
+    public function testEditHomeClearsMetadata(): void
+    {
+        $this->changeConfiguration('FCS_HOME_META_TITLE', 'Regional | Local farms');
+        $this->changeConfiguration('FCS_HOME_META_DESCRIPTION', 'Fresh food.');
+        $this->loginAsSuperadmin();
+
+        $this->post($this->Slug->getPageEditHome(), [
+            'Pages' => ['content' => ''],
+            'Configurations' => [
+                'FCS_HOME_META_TITLE' => '',
+                'FCS_HOME_META_DESCRIPTION' => '',
+            ],
+            'referer' => '/',
+        ]);
+
+        $this->assertRedirect('/');
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        $this->assertSame('', $configurationsTable->get('FCS_HOME_META_TITLE')->value);
+        $this->assertSame('', $configurationsTable->get('FCS_HOME_META_DESCRIPTION')->value);
     }
 
     public function testEditPagePostSavesHeaderPromo(): void

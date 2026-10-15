@@ -211,6 +211,38 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(200);
     }
 
+    public function testHomeMetadata(): void
+    {
+        $this->changeConfiguration('FCS_APP_NAME', 'Demo & Shop');
+        $this->changeConfiguration('FCS_HOME_META_TITLE', 'Regional <food> & farms');
+        $this->changeConfiguration('FCS_HOME_META_DESCRIPTION', 'Fresh "food" & more <daily>');
+
+        $this->get($this->Slug->getHome());
+        $this->assertResponseOk();
+        $this->assertResponseContains('<title>Regional &lt;food&gt; &amp; farms</title>');
+        $this->assertResponseContains('<meta name="title" content="Regional &lt;food&gt; &amp; farms">');
+        $this->assertSame('Regional <food> & farms', $this->viewVariable('title_for_layout'));
+        $this->assertSame('Regional <food> & farms', $this->viewVariable('metaTitle'));
+        $this->assertResponseContains('<meta name="description" content="Fresh &quot;food&quot; &amp; more &lt;daily&gt;">');
+
+        $this->get($this->Slug->getPageDetail(3, 'Page'));
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('Regional &lt;food&gt;');
+        $this->assertResponseNotContains('<meta name="description"');
+    }
+
+    public function testEmptyHomeMetadataUsesDefaultTitle(): void
+    {
+        $this->changeConfiguration('FCS_APP_NAME', 'Demo Shop');
+        $this->get($this->Slug->getHome());
+        $this->assertResponseOk();
+        $this->assertResponseContains('<title>' . __('Welcome') . ' - Demo Shop</title>');
+        $this->assertResponseContains('<meta name="title" content="' . __('Welcome') . ' - Demo Shop">');
+        $this->assertSame(__('Welcome') . ' - Demo Shop', $this->viewVariable('title_for_layout'));
+        $this->assertSame(__('Welcome') . ' - Demo Shop', $this->viewVariable('metaTitle'));
+        $this->assertResponseNotContains('<meta name="description"');
+    }
+
     public function testHomeBlocksVisibleOnlyForGuests(): void
     {
         $this->get($this->Slug->getHome());

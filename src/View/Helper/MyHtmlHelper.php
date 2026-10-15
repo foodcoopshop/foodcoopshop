@@ -50,6 +50,11 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getDefaultHomeTitle(): string
+    {
+        return __('Welcome') . ' - ' . Configure::read('appDb.FCS_APP_NAME');
+    }
+
     public function getSortOrLabelCallback(bool $isPaginatedResultAvailable): \Closure
     {
         return function (string $field, string $label) use ($isPaginatedResultAvailable): string {

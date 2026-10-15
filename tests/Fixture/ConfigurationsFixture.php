@@ -411,6 +411,20 @@ class ConfigurationsFixture extends AppFixture
             'position' => 1290,
         ],
         [
+            'active' => 1,
+            'name' => 'FCS_HOME_META_TITLE',
+            'value' => '',
+            'type' => 'hidden',
+            'position' => 1291,
+        ],
+        [
+            'active' => 1,
+            'name' => 'FCS_HOME_META_DESCRIPTION',
+            'value' => '',
+            'type' => 'hidden',
+            'position' => 1292,
+        ],
+        [
             'name' => 'FCS_SHOW_ONLY_PRODUCTS_FOR_NEXT_WEEK_FILTER_ENABLED',
             'active' => 1,
             'value' => 0,

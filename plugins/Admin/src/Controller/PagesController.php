@@ -104,6 +104,15 @@ class PagesController extends AdminAppController
             throw new NotFoundException();
         }
 
+        $metadataConfigurations = $configurationsTable->find('all', conditions: [
+            'Configurations.name IN' => ['FCS_HOME_META_TITLE', 'FCS_HOME_META_DESCRIPTION'],
+        ])->toArray();
+        $homeMetadata = [];
+        foreach ($metadataConfigurations as $metadataConfiguration) {
+            $homeMetadata[$metadataConfiguration->name] = $metadataConfiguration->value;
+        }
+        $this->set('homeMetadata', $homeMetadata);
+
         $homeBlocks = $blocksTable->find('all', order: [
             'Blocks.position' => 'ASC',
             'Blocks.id' => 'ASC',
@@ -133,7 +142,17 @@ class PagesController extends AdminAppController
 
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content', 'text'])));
+        $sanitizedData = $sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content', 'text']);
+        foreach (['FCS_HOME_META_TITLE', 'FCS_HOME_META_DESCRIPTION'] as $metadataName) {
+            if (isset($sanitizedData['Configurations'][$metadataName])) {
+                $sanitizedData['Configurations'][$metadataName] = html_entity_decode(
+                    (string) $sanitizedData['Configurations'][$metadataName],
+                    ENT_QUOTES | ENT_HTML5,
+                    'UTF-8',
+                );
+            }
+        }
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizedData));
 
         $homeText = (string) $this->getRequest()->getData('Pages.content');
         $submittedBlocksRaw = (array) $this->getRequest()->getData('Blocks');
@@ -191,6 +210,14 @@ class PagesController extends AdminAppController
         );
 
         $headerPromoData = $this->getHeaderPromoDataFromRequest();
+        foreach ($metadataConfigurations as $metadataConfiguration) {
+            $configurationsTable->patchEntity($metadataConfiguration, [
+                'value' => (string) $this->getRequest()->getData('Configurations.' . $metadataConfiguration->name),
+            ], [
+                'validate' => false,
+            ]);
+        }
+
         $hasHeaderPromoData = $this->hasHeaderPromoData($headerPromoData);
         $headerPromo = $this->resolveHeaderPromo($headerPromosTable, Page::PAGE_ID_HOME);
         if ($hasHeaderPromoData) {
@@ -232,7 +259,8 @@ class PagesController extends AdminAppController
 
         $saved = $configurationsTable->save($configuration);
         $mapSaved = $configurationsTable->save($mapConfiguration);
-        if (empty($saved) || empty($mapSaved)) {
+        $metadataSaved = $configurationsTable->saveMany($metadataConfigurations);
+        if (empty($saved) || empty($mapSaved) || $metadataSaved === false) {
             return $this->renderEditHomeError($homeText, (bool) $foodcoopsMapEnabled, $blockEntities, $page);
         }
 

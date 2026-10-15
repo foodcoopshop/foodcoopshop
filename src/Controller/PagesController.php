@@ -54,7 +54,13 @@ class PagesController extends FrontendController
         $blogPosts = $blogPostsTable->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $this->set('title_for_layout', __('Welcome'));
+        $title = trim((string) Configure::read('appDb.FCS_HOME_META_TITLE'));
+        if ($title === '') {
+            $title = Configure::read('app.htmlHelper')->getDefaultHomeTitle();
+        }
+        $this->set('title_for_layout', $title);
+        $this->set('metaTitle', $title);
+        $this->set('metaDescription', trim((string) Configure::read('appDb.FCS_HOME_META_DESCRIPTION')));
 
         $homeBlocks = [];
         if (Configure::read('appDb.FCS_HOME_TEXT') != '') {

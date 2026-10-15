@@ -1,6 +1,12 @@
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link nur für Superadmins)."
 
+msgid "Search engine metadata"
+msgstr "Suchmaschinen-Metadaten"
+
+msgid "Meta description"
+msgstr "Meta-Beschreibung"
+
 msgid "1_day_ahead"
 msgstr "1 Tag zurück"
 
