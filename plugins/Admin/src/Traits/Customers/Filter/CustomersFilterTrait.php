@@ -52,17 +52,16 @@ trait CustomersFilterTrait
             return null;
         }
         $value = $this->getRequestQuery('info_channel');
-        $allowedValues = array_map('strval', [0, ...array_keys(Customer::CHANNEL_TYPE),]);
-        if ($value === null || is_array($value) || $value === '' || !in_array((string) $value, $allowedValues, true)) {
+        if (!is_int($value) && !is_string($value)) {
             return null;
         }
-        return (int) $value;
+        return (string) $value === '0' || isset(Customer::CHANNEL_TYPE[$value]) ? (int) $value : null;
     }
 
     /**
     * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter, ?int $infoChannel = null,): PaginatedResultSet|SelectQuery|array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter, ?int $infoChannel,): PaginatedResultSet|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
