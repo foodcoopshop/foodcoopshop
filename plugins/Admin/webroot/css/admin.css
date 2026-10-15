@@ -783,6 +783,21 @@ body.pages.edit_home .home-edit-section:first-of-type {
     margin-top: 12px;
 }
 
+body.pages.edit_home .home-edit-section-metadata .input {
+    width: 100%;
+}
+body.pages.edit_home .home-edit-section-metadata input,
+body.pages.edit_home .home-edit-section-metadata textarea {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+body.pages.edit_home .home-edit-section-metadata .input label {
+    display: block;
+    float: none;
+    width: 100%;
+}
+
 body.pages.edit .page-header-layout,
 body.pages.edit_home .page-header-layout {
     clear: both;

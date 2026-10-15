@@ -30,6 +30,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
     header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
     header('Pragma: no-cache');
 }
+$metaTitle = ($metaTitle ?? '') !== '' ? $metaTitle : $title_for_layout . ' - ' . Configure::read('appDb.FCS_APP_NAME');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
@@ -39,7 +40,11 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrfToken" content="<?php echo $this->request->getAttribute('csrfToken'); ?>">
 
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
+    <title><?php echo h($metaTitle); ?></title>
+    <meta name="title" content="<?php echo h($metaTitle); ?>">
+    <?php if (!empty($metaDescription)) { ?>
+        <meta name="description" content="<?php echo h($metaDescription); ?>">
+    <?php } ?>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">

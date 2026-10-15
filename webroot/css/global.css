@@ -461,6 +461,9 @@ select {
     width: 110px;
     border: 1px solid #ccc;
 }
+textarea {
+    border: 1px solid #ccc;
+}
 form div.error-message {
     color: #fff;
     background-color: #f3515c;
