@@ -15,7 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
 use Cake\Utility\Security;
 use Migrations\Migrations;
 use Migrations\TestSuite\Migrator;
@@ -40,13 +39,12 @@ $markAsMigratedMigrations = [
     '20260530113000_AddHomeHeaderPromo',
     '20260610160000_AddHomeBlocks',
     '20260612120000_AddConfigurationFontsForHomeTexts',
-    '20261015120000_AddConfigurationHomeMetadata',
+    '20261015140100_AddConfigurationInfoChannels',
 ];
 foreach($markAsMigratedMigrations as $markAsMigratedMigration) {
     $migrations->markMigrated($markAsMigratedMigration, ['connection' => 'test']);
 }
 $migrations->migrate(['connection' => 'test']);
-ConnectionManager::get('test')->execute("DELETE FROM fcs_configuration WHERE name = 'FCS_INFO_CHANNELS'");
 
 Configure::write('appDb.FCS_DEFAULT_LOCALE', 'de_DE'); // manually set locale as fixtures are not loaded yet
 require dirname(__DIR__) . '/config/bootstrap_locale.php';

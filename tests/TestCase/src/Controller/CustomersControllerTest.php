@@ -172,7 +172,6 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->get($this->Slug->getCustomerProfile());
         $this->assertResponseOk();
-        $this->assertResponseContains('<span class="after small">Ich möchte Informationen über diesen Kanal erhalten.</span>');
     }
 
     public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers(): void

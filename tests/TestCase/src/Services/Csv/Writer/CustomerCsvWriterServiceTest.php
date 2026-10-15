@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\Writer\CustomerCsvWriterService;
+use App\Model\Entity\Customer;
 use League\Csv\Bom;
 use League\Csv\Reader;
 use App\Test\Fixture\ProductsFixture;
@@ -87,6 +88,20 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
                     }
                 }
             }
+        }
+    }
+
+    public function testInfoChannelFilterUsesEntityValues(): void
+    {
+        $this->changeConfiguration('FCS_INFO_CHANNELS', implode(',', array_keys(Customer::CHANNEL_TYPE)));
+        $writerService = new CustomerCsvWriterService();
+        foreach ([0, ...array_keys(Customer::CHANNEL_TYPE),] as $channel) {
+            $writerService->setRequestQueryParams(['info_channel' => (string) $channel,]);
+            $this->assertSame($channel, $writerService->getInfoChannelFilter());
+        }
+        foreach ([null, '', '01', '-1', '1.0', 'invalid', ['1',],] as $value) {
+            $writerService->setRequestQueryParams(['info_channel' => $value,]);
+            $this->assertNull($writerService->getInfoChannelFilter());
         }
     }
 

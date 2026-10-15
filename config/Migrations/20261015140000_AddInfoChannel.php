@@ -11,9 +11,5 @@ class AddInfoChannel extends BaseMigration
             'default' => 0,
             'null' => false,
         ])->update();
-
-        $this->table('fcs_configuration')->insert([
-            ['name' => 'FCS_INFO_CHANNELS', 'active' => 1, 'value' => '', 'type' => 'multiple_dropdown', 'position' => 3410,],
-        ])->saveData();
     }
 }

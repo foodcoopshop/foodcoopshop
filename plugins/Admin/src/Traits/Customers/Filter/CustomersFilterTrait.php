@@ -52,7 +52,8 @@ trait CustomersFilterTrait
             return null;
         }
         $value = $this->getRequestQuery('info_channel');
-        if ($value === null || is_array($value) || $value === '' || !in_array((string) $value, ['0', '1', '2', '3',], true)) {
+        $allowedValues = array_map('strval', [0, ...array_keys(Customer::CHANNEL_TYPE),]);
+        if ($value === null || is_array($value) || $value === '' || !in_array((string) $value, $allowedValues, true)) {
             return null;
         }
         return (int) $value;
