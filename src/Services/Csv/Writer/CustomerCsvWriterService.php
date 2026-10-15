@@ -53,10 +53,8 @@ class CustomerCsvWriterService extends BaseCsvWriterService
         if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
             $header[] = __('Newsletter');
         }
-        foreach (Customer::INFO_CHANNELS as $channel => $label) {
-            if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-                $header[] = __($label);
-            }
+        if (Customer::getEnabledInfoChannels() !== []) {
+            $header[] = __('Info channel');
         }
         if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
             $header[] = __('Member_fee') . ' ' . h($this->getRequestQuery('year', $this->getDefaultYear()));
@@ -82,7 +80,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             $newsletter = (bool) $newsletter;
         }
 
-        $customers = $this->getCustomers($active, $year, $newsletter, $this->getInfoChannelFilter('signal'), $this->getInfoChannelFilter('whatsapp'),);
+        $customers = $this->getCustomers($active, $year, $newsletter, $this->getInfoChannelFilter(),);
         $records = [];
         foreach($customers as $customer) {
 
@@ -115,10 +113,8 @@ class CustomerCsvWriterService extends BaseCsvWriterService
                 $record[] = $customer->newsletter_enabled;
             }
 
-            foreach (Customer::INFO_CHANNELS as $channel => $label) {
-                if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-                    $record[] = $customer->get('info_' . $channel . '_enabled');
-                }
+            if (Customer::getEnabledInfoChannels() !== []) {
+                $record[] = Customer::CHANNEL_TYPE[$customer->info_channel] ?? '';
             }
 
             if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {

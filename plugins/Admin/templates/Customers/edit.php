@@ -190,16 +190,13 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     ]);
 }
 
-foreach (Customer::INFO_CHANNELS as $channel => $label) {
-    if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-        echo $this->Form->control('Customers.info_' . $channel . '_enabled', [
-            'label' => __($label) . '<span class="after small">' . __('I would like to receive information via {0}.', [
-                $channel === 'signal' ? 'Signal' : 'WhatsApp',
-            ]) . '</span>',
-            'type' => 'checkbox',
-            'escape' => false,
-        ]);
-    }
+if (Customer::getEnabledInfoChannels() !== []) {
+    echo $this->Form->control('Customers.info_channel', [
+        'label' => __('Info channel'),
+        'type' => 'select',
+        'options' => Customer::getInfoChannelOptions(),
+        'escape' => false,
+    ]);
 }
 
 if ($customer->isAdmin() || $customer->isSuperadmin()) {

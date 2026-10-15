@@ -54,16 +54,14 @@ use Cake\ORM\TableRegistry;
                         'default' => $newsletter,
                     ]);
                 }
-                foreach (Customer::INFO_CHANNELS as $channel => $label) {
-                    if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-                        echo $this->Form->control('info_' . $channel, [
-                            'type' => 'select',
-                            'label' => '',
-                            'empty' => __($label),
-                            'options' => $this->Html->getYesNoArray(),
-                            'default' => $channel === 'signal' ? $infoSignal : $infoWhatsApp,
-                        ]);
-                    }
+                if (Customer::getEnabledInfoChannels() !== []) {
+                    echo $this->Form->control('info_channel', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __('Info channel'),
+                        'options' => Customer::getInfoChannelOptions(),
+                        'default' => $infoChannel,
+                    ]);
                 }
             ?>
             <div class="right">
@@ -100,10 +98,8 @@ if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th class="center">' . $this->Paginator->sort('Customers.newsletter_enabled',  __('Newsletter')) . '</th>';
 }
-foreach (Customer::INFO_CHANNELS as $channel => $label) {
-    if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-        echo '<th class="center">' . $this->Paginator->sort('Customers.info_' . $channel . '_enabled', __($label)) . '</th>';
-    }
+if (Customer::getEnabledInfoChannels() !== []) {
+    echo '<th class="center">' . $this->Paginator->sort('Customers.info_channel', __('Info channel')) . '</th>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
     echo '<th class="center">' . $this->Paginator->sort('Feedbacks.modified',  __('Feedback')) . '</th>';
@@ -123,14 +119,13 @@ $i = 0;
 $sumOrderReminders = 0;
 $sumCreditReminders = 0;
 $sumNewsletter = 0;
-$sumInfoChannels = array_fill_keys(array_keys(Customer::INFO_CHANNELS), 0);
 $sumFeedback = 0;
 $sumFeedbackNotApproved = 0;
 foreach ($customers as $customer) {
     $i ++;
 
     echo '<tr class="data" data-customer-id="'.$customer->id_customer.'"';
-    if (Configure::read('appDb.FCS_INFO_SIGNAL_ENABLED') || Configure::read('appDb.FCS_INFO_WHATSAPP_ENABLED')) {
+    if (Customer::getEnabledInfoChannels() !== []) {
         echo ' data-mobile="' . h($customer->address_customer->phone_mobile) . '"';
     }
     echo '>';
@@ -312,15 +307,8 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    foreach (Customer::INFO_CHANNELS as $channel => $label) {
-        if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-            echo '<td class="center">';
-            if ($customer->get('info_' . $channel . '_enabled')) {
-                echo '<i class="fas fa-check-circle ok"></i>';
-                $sumInfoChannels[$channel]++;
-            }
-            echo '</td>';
-        }
+    if (Customer::getEnabledInfoChannels() !== []) {
+        echo '<td class="center">' . h(Customer::CHANNEL_TYPE[$customer->info_channel] ?? '') . '</td>';
     }
 
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
@@ -419,10 +407,8 @@ if ($this->Html->paymentIsCashless()) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
-foreach (Customer::INFO_CHANNELS as $channel => $label) {
-    if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-        echo '<td class="center"><b>' . $sumInfoChannels[$channel] . '</b></td>';
-    }
+if (Customer::getEnabledInfoChannels() !== []) {
+    echo '<td></td>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
     echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';

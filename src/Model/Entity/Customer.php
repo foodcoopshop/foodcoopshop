@@ -44,12 +44,30 @@ class Customer extends AppEntity implements IdentityInterface
 
     const NOT_YET_LOADED = 'not-yet-loaded';
 
-    const INFO_CHANNELS = [
-        'signal' => 'Info Signal',
-        'whatsapp' => 'Info WhatsApp',
+    const CHANNEL_TYPE = [
+        1 => 'WhatsApp',
+        2 => 'Signal',
+        3 => 'SMS',
     ];
 
     private Manufacturer|string|null $_manufacturer = self::NOT_YET_LOADED;
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getEnabledInfoChannels(): array
+    {
+        $values = explode(',', (string) Configure::read('appDb.FCS_INFO_CHANNELS'));
+        return array_intersect_key(self::CHANNEL_TYPE, array_flip($values));
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getInfoChannelOptions(): array
+    {
+        return [0 => '---',] + self::getEnabledInfoChannels();
+    }
 
     public function getIdentifier(): int|null
     {

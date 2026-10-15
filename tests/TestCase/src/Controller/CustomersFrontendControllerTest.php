@@ -78,61 +78,55 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     {
         $this->get($this->Slug->getLogin());
         $this->assertResponseOk();
-        $this->assertResponseNotContains('name="Customers[info_signal_enabled]"');
-        $this->assertResponseNotContains('name="Customers[info_whatsapp_enabled]"');
+        $this->assertResponseNotContains('name="Customers[info_channel]"');
     }
 
     public function testRegistrationInfoChannelVisibilityMatchesConfiguration(): void
     {
-        foreach ([[0, 0,], [1, 0,], [0, 1,], [1, 1,],] as [$signalEnabled, $whatsappEnabled]) {
-            $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', $signalEnabled);
-            $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', $whatsappEnabled);
+        foreach (['', '1', '2', '3', '1,2,3',] as $channels) {
+            $this->changeConfiguration('FCS_INFO_CHANNELS', $channels);
             $this->get($this->Slug->getLogin());
             $this->assertResponseOk();
-            foreach (['signal' => $signalEnabled, 'whatsapp' => $whatsappEnabled,] as $channel => $enabled) {
-                $field = 'name="Customers[info_' . $channel . '_enabled]"';
-                if ($enabled) {
-                    $this->assertResponseContains($field);
+            if ($channels === '') {
+                $this->assertResponseNotContains('name="Customers[info_channel]"');
+                continue;
+            }
+            $this->assertResponseContains('name="Customers[info_channel]"');
+            foreach (Customer::CHANNEL_TYPE as $channel => $label) {
+                $option = '<option value="' . $channel . '">' . $label . '</option>';
+                if (in_array((string) $channel, explode(',', $channels), true)) {
+                    $this->assertResponseContains($option);
                 } else {
-                    $this->assertResponseNotContains($field);
+                    $this->assertResponseNotContains($option);
                 }
             }
         }
     }
 
-    public function testRegistrationInfoChannelsUncheckedByDefault(): void
+    public function testRegistrationInfoChannelNoneByDefault(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
         $this->get($this->Slug->getLogin());
         $this->assertResponseOk();
-        foreach (Customer::INFO_CHANNELS as $channel => $label) {
-            $this->assertResponseContains($label);
-            $this->assertMatchesRegularExpression('/<input(?=[^>]*type="checkbox")(?=[^>]*name="Customers\[info_' . $channel . '_enabled\]")(?![^>]*checked)[^>]*>/', (string) $this->_response->getBody());
-        }
+        $this->assertResponseContains('<option value="0" selected="selected">---</option>');
     }
 
     public function testRegistrationInfoChannelsDefaultOff(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
         $this->registrationDataEmpty['antiSpam'] = 4;
         $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, 'new-info-member@mailinator.com');
-        $this->assertFalse((bool) $customer->info_signal_enabled);
-        $this->assertFalse((bool) $customer->info_whatsapp_enabled);
+        $this->assertEquals(0, $customer->info_channel);
     }
 
     public function testRegistrationInfoChannelsOptIn(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
         $this->registrationDataEmpty['antiSpam'] = 4;
         $data = $this->registrationDataEmpty;
-        $data['Customers']['info_signal_enabled'] = 1;
-        $data['Customers']['info_whatsapp_enabled'] = 1;
+        $data['Customers']['info_channel'] = 3;
         $customer = $this->saveAndCheckValidCustomer($data, 'new-info-member@mailinator.com');
-        $this->assertTrue((bool) $customer->info_signal_enabled);
-        $this->assertTrue((bool) $customer->info_whatsapp_enabled);
+        $this->assertEquals(3, $customer->info_channel);
     }
 
     public function testProfileImagePrivacyForGuests(): void

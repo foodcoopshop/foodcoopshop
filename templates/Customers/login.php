@@ -194,19 +194,18 @@ if ($this->getRequest()->is('get')) {
 
                       echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('Mobile')]);
                       echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
+ 
+                      if (Customer::getEnabledInfoChannels() !== []) {
+                          echo $this->Form->control('Customers.info_channel', [
+                              'label' => __('Info channel'),
+                              'type' => 'select',
+                              'options' => Customer::getInfoChannelOptions(),
+                              'default' => 0,
+                          ]);
+                      }
 
                       if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
                         echo $this->Form->control('Customers.newsletter_enabled', ['label' => __('Want_to_receive_the_newsletter?'), 'type' => 'checkbox']);
-                        }
-
-                      foreach (Customer::INFO_CHANNELS as $channel => $label) {
-                          if (Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
-                              echo $this->Form->control('Customers.info_' . $channel . '_enabled', [
-                                  'label' => __($label),
-                                  'type' => 'checkbox',
-                                  'default' => false,
-                              ]);
-                          }
                       }
 
                       if (Configure::read('app.emailOrderReminderEnabled')) {

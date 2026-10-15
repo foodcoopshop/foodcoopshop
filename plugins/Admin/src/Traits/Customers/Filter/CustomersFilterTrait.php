@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Query\SelectQuery;
 use App\Model\Table\CustomersTable;
+use App\Model\Entity\Customer;
 use App\Model\Table\FeedbacksTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\AddressCustomersTable;
@@ -45,19 +46,22 @@ trait CustomersFilterTrait
         return null;
     }
 
-    public function getInfoChannelFilter(string $channel): ?bool
+    public function getInfoChannelFilter(): ?int
     {
-        if (!Configure::read('appDb.FCS_INFO_' . strtoupper($channel) . '_ENABLED')) {
+        if (Customer::getEnabledInfoChannels() === []) {
             return null;
         }
-        $value = $this->getRequestQuery('info_' . $channel);
-        return $value === null || $value === '' ? null : (bool) $value;
+        $value = $this->getRequestQuery('info_channel');
+        if ($value === null || is_array($value) || $value === '' || !in_array((string) $value, ['0', '1', '2', '3',], true)) {
+            return null;
+        }
+        return (int) $value;
     }
 
     /**
     * @return \Cake\Datasource\Paging\PaginatedResultSet<int, \App\Model\Entity\Customer>|\Cake\ORM\Query\SelectQuery<\App\Model\Entity\Customer>|array<int, \App\Model\Entity\Customer>
     */
-    public function getCustomers(int|string $active, int $year, ?bool $newsletter, ?bool $infoSignal = null, ?bool $infoWhatsApp = null,): PaginatedResultSet|SelectQuery|array
+    public function getCustomers(int|string $active, int $year, ?bool $newsletter, ?int $infoChannel = null,): PaginatedResultSet|SelectQuery|array
     {
 
         /** @var CustomersTable $customersTable */
@@ -81,11 +85,8 @@ trait CustomersFilterTrait
             $conditions['Customers.newsletter_enabled'] = $newsletter;
         }
 
-        if ($infoSignal !== null) {
-            $conditions['Customers.info_signal_enabled'] = $infoSignal;
-        }
-        if ($infoWhatsApp !== null) {
-            $conditions['Customers.info_whatsapp_enabled'] = $infoWhatsApp;
+        if ($infoChannel !== null) {
+            $conditions['Customers.info_channel'] = $infoChannel;
         }
 
         $conditions[] = $customersTable->getConditionToExcludeHostingUser();
@@ -132,8 +133,7 @@ trait CustomersFilterTrait
                 'Customers.check_credit_reminder_enabled',
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
-                'Customers.info_signal_enabled',
-                'Customers.info_whatsapp_enabled',
+                'Customers.info_channel',
                 'Feedbacks.modified',
                 'credit_balance',
                 'member_fee',

@@ -37,77 +37,90 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertResponseContains('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;');
     }
 
+    public function testInfoChannelsDisplayedInConfigurations(): void
+    {
+        $this->loginAsSuperadmin();
+        foreach (['1,2,3' => 'WhatsApp, Signal, SMS', '2' => 'Signal', '' => 'Keiner',] as $channels => $label) {
+            $this->changeConfiguration('FCS_INFO_CHANNELS', (string) $channels);
+            $this->get('/admin/configurations');
+            $this->assertResponseOk();
+            $this->assertResponseContains('<td>' . $label . '</td>');
+        }
+    }
+
     public function testInfoChannelColumnsAndFilters(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
-        $this->changeCustomer(Configure::read('test.customerId'), 'info_signal_enabled', 1);
-        $this->changeCustomer(Configure::read('test.adminId'), 'info_whatsapp_enabled', 1);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
+        $this->changeCustomer(Configure::read('test.customerId'), 'info_channel', 2);
+        $this->changeCustomer(Configure::read('test.adminId'), 'info_channel', 1);
         $this->loginAsSuperadmin();
-        $this->get('/admin/customers?info_signal=1');
+        $this->get('/admin/customers?info_channel=2');
         $this->assertResponseOk();
-        $this->assertResponseContains('Customers.info_signal_enabled');
-        $this->assertResponseContains('Customers.info_whatsapp_enabled');
-        $this->assertResponseContains('name="info_signal"');
-        $this->assertResponseContains('name="info_whatsapp"');
+        $this->assertResponseContains('Customers.info_channel');
+        $this->assertResponseContains('name="info_channel"');
+        $this->assertResponseContains('<td class="center">Signal</td>');
         $this->assertResponseContains('data-customer-id="87"');
         $this->assertResponseNotContains('data-customer-id="88"');
         $this->assertResponseNotContains('data-customer-id="92"');
 
-        $this->get('/admin/customers?info_signal=0&info_whatsapp=1&sort=Customers.info_whatsapp_enabled&direction=desc');
+        $this->get('/admin/customers?info_channel=1&sort=Customers.info_channel&direction=desc');
         $this->assertResponseOk();
         $this->assertResponseContains('data-customer-id="88"');
         $this->assertResponseNotContains('data-customer-id="87"');
         $this->assertResponseNotContains('data-customer-id="92"');
 
-        $this->get('/admin/customers?info_signal=&info_whatsapp=');
+        $this->get('/admin/customers?info_channel=0');
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('<td class="center">Keiner</td>');
+        $this->assertResponseContains('<option value="0" selected="selected">---</option>');
+        $this->assertResponseContains('data-customer-id="92"');
+        $this->assertResponseNotContains('data-customer-id="87"');
+        $this->assertResponseNotContains('data-customer-id="88"');
+
+        $this->get('/admin/customers?info_channel=');
         $this->assertResponseOk();
         $this->assertResponseContains('data-customer-id="87"');
         $this->assertResponseContains('data-customer-id="88"');
         $this->assertResponseContains('data-customer-id="92"');
     }
 
-    public function testInfoChannelConfigurationSwitchesAreIndependent(): void
+    public function testInfoChannelHiddenWhenNoChannelsConfigured(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->get('/admin/customers?info_whatsapp=1');
+        $this->get('/admin/customers?info_channel=1');
         $this->assertResponseOk();
-        $this->assertResponseContains('Customers.info_signal_enabled');
-        $this->assertResponseNotContains('Customers.info_whatsapp_enabled');
-        $this->assertResponseContains('name="info_signal"');
-        $this->assertResponseNotContains('name="info_whatsapp"');
-        $this->assertResponseContains('btn-clipboard-mobile');
-        $this->assertResponseContains('data-mobile="0664/000000000"');
+        $this->assertResponseNotContains('Customers.info_channel');
+        $this->assertResponseNotContains('name="info_channel"');
+        $this->assertResponseNotContains('btn-clipboard-mobile');
         $this->assertResponseContains('data-customer-id="87"');
 
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 0);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
-        $this->get('/admin/customers?info_signal=1');
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '3');
+        $this->get('/admin/customers');
         $this->assertResponseOk();
-        $this->assertResponseNotContains('Customers.info_signal_enabled');
-        $this->assertResponseContains('Customers.info_whatsapp_enabled');
-        $this->assertResponseNotContains('name="info_signal"');
-        $this->assertResponseContains('name="info_whatsapp"');
+        $this->assertResponseContains('Customers.info_channel');
+        $this->assertResponseContains('name="info_channel"');
         $this->assertResponseContains('btn-clipboard-mobile');
         $this->assertResponseContains('data-mobile="0664/000000000"');
-        $this->assertResponseContains('data-customer-id="87"');
     }
 
     public function testProfileInfoChannelVisibilityMatchesConfiguration(): void
     {
         $this->loginAsCustomer();
-        foreach ([[0, 0,], [1, 0,], [0, 1,], [1, 1,],] as [$signalEnabled, $whatsappEnabled]) {
-            $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', $signalEnabled);
-            $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', $whatsappEnabled);
+        foreach (['', '1', '2', '3', '1,2,3',] as $channels) {
+            $this->changeConfiguration('FCS_INFO_CHANNELS', $channels);
             $this->get($this->Slug->getCustomerProfile());
             $this->assertResponseOk();
-            foreach (['signal' => $signalEnabled, 'whatsapp' => $whatsappEnabled,] as $channel => $enabled) {
-                $field = 'name="Customers[info_' . $channel . '_enabled]"';
-                if ($enabled) {
-                    $this->assertResponseContains($field);
+            if ($channels === '') {
+                $this->assertResponseNotContains('name="Customers[info_channel]"');
+                continue;
+            }
+            $this->assertResponseContains('name="Customers[info_channel]"');
+            foreach (Customer::CHANNEL_TYPE as $channel => $label) {
+                $option = '<option value="' . $channel . '">' . $label . '</option>';
+                if (in_array((string) $channel, explode(',', $channels), true)) {
+                    $this->assertResponseContains($option);
                 } else {
-                    $this->assertResponseNotContains($field);
+                    $this->assertResponseNotContains($option);
                 }
             }
         }
@@ -115,13 +128,11 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public function testInfoChannelsEditableInOwnProfile(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
         $this->loginAsCustomer();
         $this->get($this->Slug->getCustomerProfile());
         $this->assertResponseOk();
-        $this->assertResponseContains('name="Customers[info_signal_enabled]"');
-        $this->assertResponseContains('name="Customers[info_whatsapp_enabled]"');
+        $this->assertResponseContains('name="Customers[info_channel]"');
 
         $customersTable = $this->getTableLocator()->get('Customers');
         $customerId = Configure::read('test.customerId');
@@ -129,8 +140,7 @@ class CustomersControllerTest extends AppCakeTestCase
             'Customers' => [
                 'firstname' => 'Demo',
                 'lastname' => 'Mitglied',
-                'info_signal_enabled' => 1,
-                'info_whatsapp_enabled' => 0,
+                'info_channel' => 2,
                 'address_customer' => ['email' => Configure::read('test.loginEmailCustomer'),],
             ],
             'referer' => '/',
@@ -138,29 +148,31 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->post($this->Slug->getCustomerProfile(), $data);
         $this->assertResponseCode(302);
         $customer = $customersTable->get($customerId);
-        $this->assertTrue((bool) $customer->info_signal_enabled);
-        $this->assertFalse((bool) $customer->info_whatsapp_enabled);
+        $this->assertEquals(2, $customer->info_channel);
 
         $this->get($this->Slug->getCustomerProfile());
-        $this->assertMatchesRegularExpression('/<input(?=[^>]*name="Customers\[info_signal_enabled\]")(?=[^>]*checked)[^>]*>/', (string) $this->_response->getBody());
-        $data['Customers']['info_signal_enabled'] = 0;
-        $data['Customers']['info_whatsapp_enabled'] = 1;
+        $this->assertResponseContains('<option value="2" selected="selected">Signal</option>');
+        foreach ([1, 3, 0,] as $channel) {
+            $data['Customers']['info_channel'] = $channel;
+            $this->post($this->Slug->getCustomerProfile(), $data);
+            $this->assertResponseCode(302);
+            $this->assertEquals($channel, $customersTable->get($customerId)->info_channel);
+        }
+
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1');
+        $data['Customers']['info_channel'] = 2;
         $this->post($this->Slug->getCustomerProfile(), $data);
-        $this->assertResponseCode(302);
-        $customer = $customersTable->get($customerId);
-        $this->assertFalse((bool) $customer->info_signal_enabled);
-        $this->assertTrue((bool) $customer->info_whatsapp_enabled);
+        $this->assertResponseContains('Der Infokanal ist nicht gültig.');
+        $this->assertEquals(0, $customersTable->get($customerId)->info_channel);
     }
 
     public function testInfoChannelDescriptionsInProfile(): void
     {
-        $this->changeConfiguration('FCS_INFO_SIGNAL_ENABLED', 1);
-        $this->changeConfiguration('FCS_INFO_WHATSAPP_ENABLED', 1);
+        $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
         $this->loginAsCustomer();
         $this->get($this->Slug->getCustomerProfile());
         $this->assertResponseOk();
-        $this->assertResponseContains('<span class="after small">Ich möchte Informationen über Signal erhalten.</span>');
-        $this->assertResponseContains('<span class="after small">Ich möchte Informationen über WhatsApp erhalten.</span>');
+        $this->assertResponseContains('<span class="after small">Ich möchte Informationen über diesen Kanal erhalten.</span>');
     }
 
     public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers(): void

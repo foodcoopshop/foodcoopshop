@@ -44,10 +44,8 @@ trait IndexTrait
         }
         $this->set('newsletter', $newsletter);
 
-        $infoSignal = $this->getInfoChannelFilter('signal');
-        $infoWhatsApp = $this->getInfoChannelFilter('whatsapp');
-        $this->set('infoSignal', $infoSignal);
-        $this->set('infoWhatsApp', $infoWhatsApp);
+        $infoChannel = $this->getInfoChannelFilter();
+        $this->set('infoChannel', $infoChannel);
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 
@@ -61,7 +59,7 @@ trait IndexTrait
         }
         $this->set('years', $years);
 
-        $customers = $this->getCustomers($active, $year, $newsletter, $infoSignal, $infoWhatsApp,);
+        $customers = $this->getCustomers($active, $year, $newsletter, $infoChannel,);
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __('Members'));

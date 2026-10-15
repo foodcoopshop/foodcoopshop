@@ -1063,11 +1063,8 @@ msgstr "<a href=\"https://foodcoopshop.github.io/netzwerk-modul\" target=\"_blan
 msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
 msgstr "Shows newsletter checkbox on registration."
 
-msgid "Configuration_subtext_FCS_INFO_SIGNAL_ENABLED"
-msgstr "Shows the optional Info Signal checkbox during registration and in the profile, plus a column and filter in the member list."
-
-msgid "Configuration_subtext_FCS_INFO_WHATSAPP_ENABLED"
-msgstr "Shows the optional Info WhatsApp checkbox during registration and in the profile, plus a column and filter in the member list."
+msgid "Configuration_subtext_FCS_INFO_CHANNELS"
+msgstr "Available info channels during registration and in the profile. With no selection, the feature is disabled."
 
 msgid "Configuration_subtext_FCS_NO_DELIVERY_DAYS_GLOBAL"
 msgstr "Here you can define delivery-free days for the whole food-coop."
@@ -1225,11 +1222,8 @@ msgstr "Network module activated?"
 msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
 msgstr "Newsletter enabled?"
 
-msgid "Configuration_text_FCS_INFO_SIGNAL_ENABLED"
-msgstr "Info Signal enabled?"
-
-msgid "Configuration_text_FCS_INFO_WHATSAPP_ENABLED"
-msgstr "Info WhatsApp enabled?"
+msgid "Configuration_text_FCS_INFO_CHANNELS"
+msgstr "Available info channels"
 
 msgid "Configuration_text_FCS_NO_DELIVERY_DAYS_GLOBAL"
 msgstr "Delivery break for all manufacturers?"

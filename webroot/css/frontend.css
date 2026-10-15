@@ -548,6 +548,11 @@ body.customers.new_password_request .input {
     display: none;
     float: left;
 }
+#RegistrationForm .input.select select,
+#RegistrationForm .input.select .ts-wrapper {
+    width: 255px ! important;
+    max-width: 100%;
+}
 #login-form div.input {
     text-align: left;
 }
@@ -1203,7 +1208,7 @@ body.carts #CartsDetailForm {
 }
 #RegistrationForm .input.checkbox label {
     padding-left: 80px;
-    width: 350px;
+    width: 355px;
     text-align: left;
 }
 .h1-registration {
