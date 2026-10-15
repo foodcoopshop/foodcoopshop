@@ -40,7 +40,7 @@ class AdminPagesControllerTest extends AppCakeTestCase
         $this->assertResponseContains('name="Configurations[FCS_HOME_META_TITLE]"');
         $this->assertResponseContains('for="configurations-fcs-home-meta-title">Titel</label>');
         $this->assertResponseContains('home-edit-section-metadata');
-        $this->assertResponseRegExp('/home-edit-section-map.*<\/section>\s*<section class="home-edit-section home-edit-section-metadata">\s*<hr>\s*<h2>.*<\/form>/s');
+        $this->assertResponseRegExp('/home-edit-section-map.*<\/section>\s*<section class="home-edit-section home-edit-section-metadata">\s*<h2>.*<\/form>/s');
         $this->assertResponseContains('value="Regional | Local farms"');
         $this->assertResponseContains('Fresh food from local farms.');
     }

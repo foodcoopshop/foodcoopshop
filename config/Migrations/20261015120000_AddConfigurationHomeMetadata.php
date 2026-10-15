@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Migrations\BaseMigration;
 
-class AddHomeMetadata extends BaseMigration
+class AddConfigurationHomeMetadata extends BaseMigration
 {
     public function change(): void
     {
