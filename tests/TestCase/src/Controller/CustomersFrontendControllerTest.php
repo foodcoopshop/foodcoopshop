@@ -81,6 +81,52 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('name="Customers[info_channel]"');
     }
 
+    public function testRegistrationMemberTypeVisibility(): void
+    {
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('name="Customers[member_type]"');
+
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseOk();
+        $this->assertResponseContains('name="Customers[member_type]"');
+        $this->assertResponseContains('<option value="" selected="selected">---</option>');
+    }
+
+    public function testMemberTypeOptionalWhenDisabled(): void
+    {
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customer = $customersTable->newEntity([], ['validate' => 'edit',]);
+        $this->assertEmpty($customer->getError('member_type'));
+    }
+
+    public function testMemberTypeValidation(): void
+    {
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        foreach ([[], ['member_type' => null,], ['member_type' => '',], ['member_type' => 0,], ['member_type' => 3,],] as $data) {
+            $customer = $customersTable->newEntity($data, ['validate' => 'edit',]);
+            $this->assertNotEmpty($customer->getError('member_type'));
+        }
+        foreach (array_keys(Customer::MEMBER_TYPE_MAP) as $memberType) {
+            $customer = $customersTable->newEntity(['member_type' => (string) $memberType,], ['validate' => 'edit',]);
+            $this->assertEmpty($customer->getError('member_type'));
+        }
+    }
+
+    public function testRegistrationMemberTypesSaved(): void
+    {
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        foreach (array_keys(Customer::MEMBER_TYPE_MAP) as $memberType) {
+            $data = $this->registrationDataEmpty;
+            $data['Customers']['member_type'] = $memberType;
+            $customer = $this->saveAndCheckValidCustomer($data, 'new-member-' . $memberType . '@mailinator.com');
+            $this->assertSame($memberType, $customer->member_type);
+        }
+    }
+
     public function testRegistrationInfoChannelVisibilityMatchesConfiguration(): void
     {
         foreach (['', '1', '2', '3', '1,2,3',] as $channels) {
@@ -117,6 +163,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->registrationDataEmpty['antiSpam'] = 4;
         $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, 'new-info-member@mailinator.com');
         $this->assertEquals(0, $customer->info_channel);
+        $this->assertNull($customer->member_type);
     }
 
     public function testRegistrationInfoChannelsOptIn(): void

@@ -150,7 +150,12 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsNewsletterEnabled(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
+    }
+
+    public function validationFcsMemberTypesEnabled(Validator $validator): Validator
+    {
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsInfoChannels(Validator $validator): Validator
@@ -167,47 +172,47 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsShowProductsForGuests(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsSaveStorageLocationForProducts(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsUserFeedbackEnabled(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsShowProductPriceForGuests(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsDefaultNewMemberActive(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsShowFoodcoopshopBacklink(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsFeedbackToProductsEnabled(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsOrderCommentEnabled(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsAllowOrdersForDeliveryRhythmOneOrTwoWeeksOnlyInWeekBeforeDelivery(Validator $validator): Validator
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        return $this->getBooleanValidator($validator, 'value');
     }
 
     public function validationFcsProductAvailabilityLow(Validator $validator): Validator

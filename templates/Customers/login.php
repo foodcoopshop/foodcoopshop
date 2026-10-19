@@ -204,6 +204,17 @@ if ($this->getRequest()->is('get')) {
                           ]);
                       }
 
+                      if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+                          echo $this->Form->control('Customers.member_type', [
+                              'label' => __('Member type'),
+                              'type' => 'select',
+                              'options' => Customer::getMemberTypeOptions(),
+                              'empty' => '---',
+                              'default' => '',
+                              'required' => true,
+                          ]);
+                      }
+
                       if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
                         echo $this->Form->control('Customers.newsletter_enabled', ['label' => __('Want_to_receive_the_newsletter?'), 'type' => 'checkbox']);
                       }

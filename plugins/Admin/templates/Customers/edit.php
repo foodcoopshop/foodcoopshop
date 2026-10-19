@@ -199,6 +199,16 @@ if (Customer::getEnabledInfoChannels() !== []) {
     ]);
 }
 
+if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+    echo $this->Form->control('Customers.member_type', [
+        'label' => __('Member type'),
+        'type' => 'select',
+        'options' => Customer::getMemberTypeOptions(),
+        'empty' => '---',
+        'required' => true,
+    ]);
+}
+
 if ($customer->isAdmin() || $customer->isSuperadmin()) {
     echo '<div class="sc"></div>';
     echo '<a target="_blank" style="margin-bottom: 10px;" class="btn btn-outline-light" href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN"><i class="fa-brands fa-signal-messenger"></i> ' . __('Join software signal support group') . '</a>';

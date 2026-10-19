@@ -44,6 +44,14 @@ class Customer extends AppEntity implements IdentityInterface
 
     const NOT_YET_LOADED = 'not-yet-loaded';
 
+    const MEMBER_TYPE_ACTIVE = 1;
+    const MEMBER_TYPE_PASSIVE = 2;
+
+    const MEMBER_TYPE_MAP = [
+        self::MEMBER_TYPE_ACTIVE => 'Active',
+        self::MEMBER_TYPE_PASSIVE => 'Passive',
+    ];
+
     const CHANNEL_TYPE = [
         1 => 'WhatsApp',
         2 => 'Signal',
@@ -51,6 +59,14 @@ class Customer extends AppEntity implements IdentityInterface
     ];
 
     private Manufacturer|string|null $_manufacturer = self::NOT_YET_LOADED;
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getMemberTypeOptions(): array
+    {
+        return array_map(static fn (string $label): string => __($label), self::MEMBER_TYPE_MAP);
+    }
 
     /**
      * @return array<int, string>

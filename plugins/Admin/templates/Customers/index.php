@@ -54,6 +54,15 @@ use Cake\ORM\TableRegistry;
                         'default' => $newsletter,
                     ]);
                 }
+                if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+                    echo $this->Form->control('member_type', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __('Member type'),
+                        'options' => Customer::getMemberTypeOptions(),
+                        'default' => $memberType,
+                    ]);
+                }
                 if (Customer::getEnabledInfoChannels() !== []) {
                     echo $this->Form->control('info_channel', [
                         'type' => 'select',
@@ -100,6 +109,9 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
 }
 if (Customer::getEnabledInfoChannels() !== []) {
     echo '<th class="center">' . $this->Paginator->sort('Customers.info_channel', __('Info channel')) . '</th>';
+}
+if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+    echo '<th class="center">' . $this->Paginator->sort('Customers.member_type', __('Member type')) . '</th>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
     echo '<th class="center">' . $this->Paginator->sort('Feedbacks.modified',  __('Feedback')) . '</th>';
@@ -309,6 +321,9 @@ foreach ($customers as $customer) {
 
     if (Customer::getEnabledInfoChannels() !== []) {
         echo '<td class="center">' . h(Customer::CHANNEL_TYPE[$customer->info_channel] ?? '') . '</td>';
+    }
+    if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+        echo '<td class="center">' . h(Customer::getMemberTypeOptions()[$customer->member_type] ?? '') . '</td>';
     }
 
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {

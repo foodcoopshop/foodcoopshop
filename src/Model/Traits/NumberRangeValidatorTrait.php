@@ -21,6 +21,11 @@ use Cake\Validation\Validator;
 trait NumberRangeValidatorTrait
 {
 
+    public function getBooleanValidator(Validator $validator, string $field,): Validator
+    {
+        return $this->getNumberRangeValidator($validator, $field, 0, 1);
+    }
+
     public function getNumberRangeValidator(Validator $validator, string $field, int $min, int $max, string $additionalErrorMessageSuffix='', bool $showDefaultErrorMessage=true): Validator
     {
         $message = __('Please_enter_a_number_between_{0}_and_{1}.', [

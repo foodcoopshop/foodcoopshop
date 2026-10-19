@@ -91,6 +91,55 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
         }
     }
 
+    public function testMemberTypeValuesMatchCsvHeader(): void
+    {
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $this->changeCustomer(Configure::read('test.customerId'), 'member_type', Customer::MEMBER_TYPE_ACTIVE);
+        $this->changeCustomer(Configure::read('test.adminId'), 'member_type', Customer::MEMBER_TYPE_PASSIVE);
+        $expected = [
+            Configure::read('test.customerId') => Customer::getMemberTypeOptions()[Customer::MEMBER_TYPE_ACTIVE],
+            Configure::read('test.adminId') => Customer::getMemberTypeOptions()[Customer::MEMBER_TYPE_PASSIVE],
+            Configure::read('test.superadminId') => '',
+        ];
+        foreach ([0, 1,] as $newsletterEnabled) {
+            foreach (['', '1,2,3',] as $infoChannels) {
+                foreach (['', (string) ProductsFixture::ID_ARTICHOKE,] as $memberFeeProducts) {
+                    $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', $newsletterEnabled);
+                    $this->changeConfiguration('FCS_INFO_CHANNELS', $infoChannels);
+                    $this->changeConfiguration('FCS_MEMBER_FEE_PRODUCTS', $memberFeeProducts);
+                    $writerService = new CustomerCsvWriterService();
+                    $writerService->setRequestQueryParams(['year' => '2018',]);
+                    $writerService->render();
+                    $reader = Reader::fromString($writerService->toString());
+                    $reader->setDelimiter(';');
+                    $reader->setHeaderOffset(0);
+                    $records = iterator_to_array($reader->getRecords());
+                    $this->assertCount(3, $records);
+                    foreach ($records as $record) {
+                        $this->assertSame($expected[$record[__('Id')]], $record[__('Member type')]);
+                        if ($memberFeeProducts !== '') {
+                            $this->assertArrayHasKey(__('Member_fee') . ' 2018', $record);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function testWriteMemberTypeFilters(): void
+    {
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $this->changeCustomer(Configure::read('test.customerId'), 'member_type', Customer::MEMBER_TYPE_ACTIVE);
+        $this->changeCustomer(Configure::read('test.adminId'), 'member_type', Customer::MEMBER_TYPE_PASSIVE);
+        $writerService = new CustomerCsvWriterService();
+        foreach (Customer::getMemberTypeOptions() as $memberType => $label) {
+            $writerService->setRequestQueryParams(['member_type' => (string) $memberType,]);
+            $records = $writerService->getRecords();
+            $this->assertCount(1, $records);
+            $this->assertSame($label, $records[0][17]);
+        }
+    }
+
     public function testInfoChannelFilterUsesEntityValues(): void
     {
         $this->changeConfiguration('FCS_INFO_CHANNELS', implode(',', array_keys(Customer::CHANNEL_TYPE)));
