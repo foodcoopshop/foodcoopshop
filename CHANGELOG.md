@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## unreleased
+## v4.3
 
 - Neue Einstellung „Aktive / Passive Mitglieder“: Nach Aktivierung ist die Auswahl bei der Registrierung und im Profil verpflichtend. In der Mitgliederverwaltung kann nach der dem Mitglieder-Typ gefiltert werden. Standardmäßig ist die Funktion deaktiviert. [I#1283](https://github.com/foodcoopshop/foodcoopshop/issues/1283) / [PR#1284](https://github.com/foodcoopshop/foodcoopshop/pull/1284) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Mitglieder können bei der Registrierung und im Profil einen optionalen Infokanal (WhatsApp, Signal oder SMS) auswählen. Die Funktion muss zuerst in den Einstellungen aktiviert werden. [I#1281](https://github.com/foodcoopshop/foodcoopshop/issues/1281) / [PR#1282](https://github.com/foodcoopshop/foodcoopshop/pull/1282) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -21,6 +21,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Falls Lagerprodukte verwendet werden: Neuer Menüpunkt "Lagerprodukte" unter Hersteller / Produkte: Der aktuelle Lagerwert von Lagerprodukten wird angezeigt, es sind folgende Filter möglich: Hersteller, Produkt-Status-Filter angezeigt und Lagerstand. Die Seite ist für Admins und Superadmins verfügbar. [I#1238](https://github.com/foodcoopshop/foodcoopshop/issues/1238) <a href="https://github.com/Koope04177"><img src="https://github.com/Koope04177.png" width="20"></a> / [PR#1250](https://github.com/foodcoopshop/foodcoopshop/pull/1250) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Eigenes CSS kann jetzt direkt in den Einstellungen bearbeitet werden. [I#1248](https://github.com/foodcoopshop/foodcoopshop/issues/1248) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [PR#1249](https://github.com/foodcoopshop/foodcoopshop/pull/1249) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+Datum: 19.10.2026 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.2.0...v4.3.0)
 
 ## v4.2
 
