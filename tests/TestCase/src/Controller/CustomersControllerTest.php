@@ -48,6 +48,133 @@ class CustomersControllerTest extends AppCakeTestCase
         }
     }
 
+    public function testMemberTypeFilter(): void
+    {
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $this->changeCustomer(Configure::read('test.customerId'), 'member_type', Customer::MEMBER_TYPE_ACTIVE);
+        $this->changeCustomer(Configure::read('test.adminId'), 'member_type', Customer::MEMBER_TYPE_PASSIVE);
+        $this->loginAsSuperadmin();
+
+        $this->get('/admin/customers?member_type=' . Customer::MEMBER_TYPE_ACTIVE);
+        $this->assertResponseOk();
+        $this->assertResponseContains('name="member_type"');
+        $this->assertResponseContains('Customers.member_type');
+        $this->assertResponseContains('<td class="center">' . Customer::getMemberTypeOptions()[Customer::MEMBER_TYPE_ACTIVE] . '</td>');
+        $this->assertResponseContains('data-customer-id="87"');
+        $this->assertResponseNotContains('data-customer-id="88"');
+        $this->assertResponseNotContains('data-customer-id="92"');
+
+        $this->get('/admin/customers?member_type=' . Customer::MEMBER_TYPE_PASSIVE);
+        $this->assertResponseOk();
+        $this->assertResponseContains('<td class="center">' . Customer::getMemberTypeOptions()[Customer::MEMBER_TYPE_PASSIVE] . '</td>');
+        $this->assertResponseContains('data-customer-id="88"');
+        $this->assertResponseNotContains('data-customer-id="87"');
+
+        $this->get('/admin/customers?sort=Customers.member_type&direction=desc');
+        $this->assertResponseOk();
+        $this->assertResponseRegExp('/data-customer-id="88".*data-customer-id="87"/s');
+
+        foreach (['', 'invalid', '0', '3',] as $value) {
+            $this->get('/admin/customers?member_type=' . $value);
+            $this->assertResponseOk();
+            $this->assertResponseContains('data-customer-id="87"');
+            $this->assertResponseContains('data-customer-id="88"');
+            $this->assertResponseContains('data-customer-id="92"');
+        }
+    }
+
+    public function testMemberTypeFilterDisabledByDefault(): void
+    {
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers?member_type=' . Customer::MEMBER_TYPE_ACTIVE);
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('name="member_type"');
+        $this->assertResponseNotContains('Customers.member_type');
+        $this->assertResponseContains('data-customer-id="87"');
+        $this->assertResponseContains('data-customer-id="88"');
+        $this->assertResponseContains('data-customer-id="92"');
+    }
+
+    public function testMemberTypesEditableInOwnProfile(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getCustomerProfile());
+        $this->assertResponseOk();
+        $this->assertResponseNotContains('name="Customers[member_type]"');
+
+        $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', '1');
+        $this->get($this->Slug->getCustomerProfile());
+        $this->assertResponseOk();
+        $this->assertResponseContains('name="Customers[member_type]"');
+        $data = [
+            'Customers' => [
+                'firstname' => 'Demo',
+                'lastname' => 'Mitglied',
+                'address_customer' => ['email' => Configure::read('test.loginEmailCustomer'),],
+            ],
+            'referer' => '/',
+        ];
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $customerId = Configure::read('test.customerId');
+        foreach (Customer::getMemberTypeOptions() as $memberType => $label) {
+            $data['Customers']['member_type'] = $memberType;
+            $this->post($this->Slug->getCustomerProfile(), $data);
+            $this->assertResponseCode(302);
+            $this->assertSame($memberType, $customersTable->get($customerId)->member_type);
+            $this->get($this->Slug->getCustomerProfile());
+            $this->assertResponseContains('<option value="' . $memberType . '" selected="selected">' . $label . '</option>');
+        }
+        foreach (['', 0, 3,] as $value) {
+            $data['Customers']['member_type'] = $value;
+            $this->post($this->Slug->getCustomerProfile(), $data);
+            $this->assertResponseCode(200);
+            $this->assertSame(Customer::MEMBER_TYPE_PASSIVE, $customersTable->get($customerId)->member_type);
+            $this->assertResponseContains($value === '' ? 'Bitte wähle eine Mitgliedsart aus.' : 'Die Mitgliedsart ist nicht gültig.');
+        }
+        unset($data['Customers']['member_type']);
+        $this->post($this->Slug->getCustomerProfile(), $data);
+        $this->assertResponseContains('Bitte wähle eine Mitgliedsart aus.');
+        $this->assertSame(Customer::MEMBER_TYPE_PASSIVE, $customersTable->get($customerId)->member_type);
+    }
+
+    public function testMemberTypesDisplayedInConfigurations(): void
+    {
+        $this->loginAsSuperadmin();
+        foreach (['0' => __('no'), '1' => __('yes'),] as $value => $label) {
+            $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', (string) $value);
+            $this->get('/admin/configurations');
+            $this->assertResponseOk();
+            $this->assertResponseContains('Mitgliedsart: Aktiv / Passiv');
+            $this->assertResponseContains('<td>' . $label . '</td>');
+        }
+    }
+
+    public function testMemberTypesConfigurationValidation(): void
+    {
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
+        foreach ([
+            'fcsMemberTypesEnabled',
+            'fcsNewsletterEnabled',
+            'fcsShowProductsForGuests',
+            'fcsSaveStorageLocationForProducts',
+            'fcsUserFeedbackEnabled',
+            'fcsShowProductPriceForGuests',
+            'fcsDefaultNewMemberActive',
+            'fcsShowFoodcoopshopBacklink',
+            'fcsFeedbackToProductsEnabled',
+            'fcsOrderCommentEnabled',
+            'fcsAllowOrdersForDeliveryRhythmOneOrTwoWeeksOnlyInWeekBeforeDelivery',
+        ] as $validatorName) {
+            $validator = $configurationsTable->getValidator($validatorName);
+            foreach ([0, 1, '0', '1',] as $value) {
+                $this->assertEmpty($validator->validate(['value' => $value,]));
+            }
+            foreach ([-1, 2, 'invalid', '', null,] as $value) {
+                $this->assertNotEmpty($validator->validate(['value' => $value,]));
+            }
+        }
+    }
+
     public function testInfoChannelColumnsAndFilters(): void
     {
         $this->changeConfiguration('FCS_INFO_CHANNELS', '1,2,3');
@@ -115,7 +242,7 @@ class CustomersControllerTest extends AppCakeTestCase
                 continue;
             }
             $this->assertResponseContains('name="Customers[info_channel]"');
-            foreach (Customer::CHANNEL_TYPE as $channel => $label) {
+            foreach (Customer::CHANNEL_TYPE_MAP as $channel => $label) {
                 $option = '<option value="' . $channel . '">' . $label . '</option>';
                 if (in_array((string) $channel, explode(',', $channels), true)) {
                     $this->assertResponseContains($option);

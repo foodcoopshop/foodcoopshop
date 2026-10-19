@@ -39,7 +39,9 @@ $markAsMigratedMigrations = [
     '20260530113000_AddHomeHeaderPromo',
     '20260610160000_AddHomeBlocks',
     '20260612120000_AddConfigurationFontsForHomeTexts',
+    '20261015120000_AddConfigurationHomeMetadata',
     '20261015140100_AddConfigurationInfoChannels',
+    '20261019120000_AddConfigurationMemberTypesEnabled',
 ];
 foreach($markAsMigratedMigrations as $markAsMigratedMigration) {
     $migrations->markMigrated($markAsMigratedMigration, ['connection' => 'test']);

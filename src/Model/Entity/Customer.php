@@ -44,7 +44,15 @@ class Customer extends AppEntity implements IdentityInterface
 
     const NOT_YET_LOADED = 'not-yet-loaded';
 
-    const CHANNEL_TYPE = [
+    const MEMBER_TYPE_ACTIVE = 1;
+    const MEMBER_TYPE_PASSIVE = 2;
+
+    const MEMBER_TYPE_MAP = [
+        self::MEMBER_TYPE_ACTIVE => 'Active',
+        self::MEMBER_TYPE_PASSIVE => 'Passive',
+    ];
+
+    const CHANNEL_TYPE_MAP = [
         1 => 'WhatsApp',
         2 => 'Signal',
         3 => 'SMS',
@@ -55,10 +63,18 @@ class Customer extends AppEntity implements IdentityInterface
     /**
      * @return array<int, string>
      */
+    public static function getMemberTypeOptions(): array
+    {
+        return array_map(static fn (string $label): string => __($label), self::MEMBER_TYPE_MAP);
+    }
+
+    /**
+     * @return array<int, string>
+     */
     public static function getEnabledInfoChannels(): array
     {
         $values = explode(',', (string) Configure::read('appDb.FCS_INFO_CHANNELS'));
-        return array_intersect_key(self::CHANNEL_TYPE, array_flip($values));
+        return array_intersect_key(self::CHANNEL_TYPE_MAP, array_flip($values));
     }
 
     /**

@@ -119,6 +119,12 @@ class CustomersTable extends AppTable
             },
             'message' => __('The info channel is not valid.'),
         ]);
+        if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+            $validator
+                ->requirePresence('member_type', true, __('Please select a member type.'))
+                ->notEmptyString('member_type', __('Please select a member type.'))
+                ->inList('member_type', array_keys(Customer::MEMBER_TYPE_MAP), __('The member type is not valid.'));
+        }
         return $validator;
     }
 

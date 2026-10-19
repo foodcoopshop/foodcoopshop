@@ -56,6 +56,9 @@ class CustomerCsvWriterService extends BaseCsvWriterService
         if (Customer::getEnabledInfoChannels() !== []) {
             $header[] = __('Info channel');
         }
+        if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+            $header[] = __('Member type');
+        }
         if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
             $header[] = __('Member_fee') . ' ' . h($this->getRequestQuery('year', $this->getDefaultYear()));
         }
@@ -114,7 +117,11 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             }
 
             if (Customer::getEnabledInfoChannels() !== []) {
-                $record[] = Customer::CHANNEL_TYPE[$customer->info_channel] ?? '';
+                $record[] = Customer::CHANNEL_TYPE_MAP[$customer->info_channel] ?? '';
+            }
+
+            if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+                $record[] = Customer::getMemberTypeOptions()[$customer->member_type ?? 0] ?? '';
             }
 
             if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {

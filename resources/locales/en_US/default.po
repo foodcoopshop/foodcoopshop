@@ -1,6 +1,13 @@
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link only works for superadmins)."
 
+msgid "Configuration_text_FCS_MEMBER_TYPES_ENABLED"
+msgstr "Member type: Active / Passive enabled?"
+
+msgid "Configuration_subtext_FCS_MEMBER_TYPES_ENABLED"
+msgstr "Enables mandatory member type selection during registration and in the profile."
+
+
 msgid "1_day_ahead"
 msgstr "1 day ahead"
 

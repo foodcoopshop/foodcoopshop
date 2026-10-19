@@ -405,6 +405,13 @@ class ConfigurationsFixture extends AppFixture
         ],
         [
             'active' => 1,
+            'name' => 'FCS_MEMBER_TYPES_ENABLED',
+            'value' => '0',
+            'type' => 'boolean',
+            'position' => 3420,
+        ],
+        [
+            'active' => 1,
             'name' => 'FCS_USER_FEEDBACK_ENABLED',
             'value' => '0',
             'type' => 'boolean',

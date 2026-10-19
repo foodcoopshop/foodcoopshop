@@ -46,6 +46,7 @@ trait IndexTrait
 
         $infoChannel = $this->getInfoChannelFilter();
         $this->set('infoChannel', $infoChannel);
+        $this->set('memberType', $this->getMemberTypeFilter());
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
 

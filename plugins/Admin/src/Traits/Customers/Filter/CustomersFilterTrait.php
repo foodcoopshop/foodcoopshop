@@ -55,7 +55,19 @@ trait CustomersFilterTrait
         if (!is_int($value) && !is_string($value)) {
             return null;
         }
-        return (string) $value === '0' || isset(Customer::CHANNEL_TYPE[$value]) ? (int) $value : null;
+        return (string) $value === '0' || isset(Customer::CHANNEL_TYPE_MAP[$value]) ? (int) $value : null;
+    }
+
+    public function getMemberTypeFilter(): ?int
+    {
+        if (!Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+            return null;
+        }
+        $value = $this->getRequestQuery('member_type');
+        if (!is_int($value) && !is_string($value)) {
+            return null;
+        }
+        return isset(Customer::MEMBER_TYPE_MAP[$value]) ? (int) $value : null;
     }
 
     /**
@@ -87,6 +99,11 @@ trait CustomersFilterTrait
 
         if ($infoChannel !== null) {
             $conditions['Customers.info_channel'] = $infoChannel;
+        }
+
+        $memberType = $this->getMemberTypeFilter();
+        if ($memberType !== null) {
+            $conditions['Customers.member_type'] = $memberType;
         }
 
         $conditions[] = $customersTable->getConditionToExcludeHostingUser();
@@ -134,6 +151,7 @@ trait CustomersFilterTrait
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
                 'Customers.info_channel',
+                'Customers.member_type',
                 'Feedbacks.modified',
                 'credit_balance',
                 'member_fee',

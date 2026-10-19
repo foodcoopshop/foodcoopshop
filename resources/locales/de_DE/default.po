@@ -1,6 +1,24 @@
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link nur für Superadmins)."
 
+msgid "Configuration_text_FCS_MEMBER_TYPES_ENABLED"
+msgstr "Mitgliedsart: Aktiv / Passiv aktiviert?"
+
+msgid "Configuration_subtext_FCS_MEMBER_TYPES_ENABLED"
+msgstr "Aktiviert die verpflichtende Auswahl der Mitgliedsart bei der Registrierung und im Profil."
+
+msgid "Member type"
+msgstr "Mitgliedsart"
+
+msgid "Passive"
+msgstr "Passiv"
+
+msgid "Please select a member type."
+msgstr "Bitte wähle eine Mitgliedsart aus."
+
+msgid "The member type is not valid."
+msgstr "Die Mitgliedsart ist nicht gültig."
+
 msgid "Search engine metadata"
 msgstr "Suchmaschinen-Metadaten"
 
