@@ -121,7 +121,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             }
 
             if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
-                $record[] = Customer::getMemberTypeOptions()[$customer->member_type] ?? '';
+                $record[] = Customer::getMemberTypeOptions()[$customer->member_type ?? 0] ?? '';
             }
 
             if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
