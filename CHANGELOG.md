@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## unreleased
+## v4.3
 
 - Die Software ist jetzt kompatibel mit PHP 8.5 (ältere PHP-Versionen werden nicht mehr unterstützt). [I#1274](https://github.com/foodcoopshop/foodcoopshop/issues/1274) / [PR#1275](https://github.com/foodcoopshop/foodcoopshop/pull/1275) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Das Bootstrap-Select ist in die Jahre gekommen und wurde durch Tom Select ersetzt. [I#1267](https://github.com/foodcoopshop/foodcoopshop/issues/1267) / [PR#1272](https://github.com/foodcoopshop/foodcoopshop/pull/1272) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -18,6 +18,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Falls Lagerprodukte verwendet werden: Neuer Menüpunkt "Lagerprodukte" unter Hersteller / Produkte: Der aktuelle Lagerwert von Lagerprodukten wird angezeigt, es sind folgende Filter möglich: Hersteller, Produkt-Status-Filter angezeigt und Lagerstand. Die Seite ist für Admins und Superadmins verfügbar. [I#1238](https://github.com/foodcoopshop/foodcoopshop/issues/1238) <a href="https://github.com/Koope04177"><img src="https://github.com/Koope04177.png" width="20"></a> / [PR#1250](https://github.com/foodcoopshop/foodcoopshop/pull/1250) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Eigenes CSS kann jetzt direkt in den Einstellungen bearbeitet werden. [I#1248](https://github.com/foodcoopshop/foodcoopshop/issues/1248) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [PR#1249](https://github.com/foodcoopshop/foodcoopshop/pull/1249) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+Datum: 19.10.2026 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.2.0...v4.3.0)
 
 ## v4.2
 
