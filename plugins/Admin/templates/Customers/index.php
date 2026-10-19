@@ -422,6 +422,9 @@ if ($this->Html->paymentIsCashless()) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
+if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
+    echo '<td></td>';
+}
 if (Customer::getEnabledInfoChannels() !== []) {
     echo '<td></td>';
 }
