@@ -129,11 +129,11 @@ class CustomersControllerTest extends AppCakeTestCase
             $this->post($this->Slug->getCustomerProfile(), $data);
             $this->assertResponseCode(200);
             $this->assertSame(Customer::MEMBER_TYPE_PASSIVE, $customersTable->get($customerId)->member_type);
-            $this->assertResponseContains($value === '' ? 'Bitte wähle einen Mitgliedstyp aus.' : 'Der Mitgliedstyp ist nicht gültig.');
+            $this->assertResponseContains($value === '' ? 'Bitte wähle eine Mitgliedsart aus.' : 'Die Mitgliedsart ist nicht gültig.');
         }
         unset($data['Customers']['member_type']);
         $this->post($this->Slug->getCustomerProfile(), $data);
-        $this->assertResponseContains('Bitte wähle einen Mitgliedstyp aus.');
+        $this->assertResponseContains('Bitte wähle eine Mitgliedsart aus.');
         $this->assertSame(Customer::MEMBER_TYPE_PASSIVE, $customersTable->get($customerId)->member_type);
     }
 
@@ -144,7 +144,7 @@ class CustomersControllerTest extends AppCakeTestCase
             $this->changeConfiguration('FCS_MEMBER_TYPES_ENABLED', (string) $value);
             $this->get('/admin/configurations');
             $this->assertResponseOk();
-            $this->assertResponseContains('Mitgliedstyp: Aktiv / Passiv');
+            $this->assertResponseContains('Mitgliedsart: Aktiv / Passiv');
             $this->assertResponseContains('<td>' . $label . '</td>');
         }
     }
