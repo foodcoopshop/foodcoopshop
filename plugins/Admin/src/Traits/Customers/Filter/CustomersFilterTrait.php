@@ -55,7 +55,7 @@ trait CustomersFilterTrait
         if (!is_int($value) && !is_string($value)) {
             return null;
         }
-        return (string) $value === '0' || isset(Customer::CHANNEL_TYPE[$value]) ? (int) $value : null;
+        return (string) $value === '0' || isset(Customer::CHANNEL_TYPE_MAP[$value]) ? (int) $value : null;
     }
 
     public function getMemberTypeFilter(): ?int

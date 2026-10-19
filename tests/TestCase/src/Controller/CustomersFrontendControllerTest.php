@@ -138,7 +138,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
                 continue;
             }
             $this->assertResponseContains('name="Customers[info_channel]"');
-            foreach (Customer::CHANNEL_TYPE as $channel => $label) {
+            foreach (Customer::CHANNEL_TYPE_MAP as $channel => $label) {
                 $option = '<option value="' . $channel . '">' . $label . '</option>';
                 if (in_array((string) $channel, explode(',', $channels), true)) {
                     $this->assertResponseContains($option);

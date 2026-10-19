@@ -320,7 +320,7 @@ foreach ($customers as $customer) {
     }
 
     if (Customer::getEnabledInfoChannels() !== []) {
-        echo '<td class="center">' . h(Customer::CHANNEL_TYPE[$customer->info_channel] ?? '') . '</td>';
+        echo '<td class="center">' . h(Customer::CHANNEL_TYPE_MAP[$customer->info_channel] ?? '') . '</td>';
     }
     if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {
         echo '<td class="center">' . h(Customer::getMemberTypeOptions()[$customer->member_type] ?? '') . '</td>';

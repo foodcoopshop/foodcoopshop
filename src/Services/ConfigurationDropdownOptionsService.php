@@ -16,7 +16,7 @@ class ConfigurationDropdownOptionsService
     {
         switch ($name) {
             case 'FCS_INFO_CHANNELS':
-                return Customer::CHANNEL_TYPE;
+                return Customer::CHANNEL_TYPE_MAP;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     return (new DeliveryRhythmService())->getNextDailyDeliveryDays(365);

@@ -117,7 +117,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             }
 
             if (Customer::getEnabledInfoChannels() !== []) {
-                $record[] = Customer::CHANNEL_TYPE[$customer->info_channel] ?? '';
+                $record[] = Customer::CHANNEL_TYPE_MAP[$customer->info_channel] ?? '';
             }
 
             if (Configure::read('appDb.FCS_MEMBER_TYPES_ENABLED')) {

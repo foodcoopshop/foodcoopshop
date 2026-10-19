@@ -142,9 +142,9 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
 
     public function testInfoChannelFilterUsesEntityValues(): void
     {
-        $this->changeConfiguration('FCS_INFO_CHANNELS', implode(',', array_keys(Customer::CHANNEL_TYPE)));
+        $this->changeConfiguration('FCS_INFO_CHANNELS', implode(',', array_keys(Customer::CHANNEL_TYPE_MAP)));
         $writerService = new CustomerCsvWriterService();
-        foreach ([0, ...array_keys(Customer::CHANNEL_TYPE),] as $channel) {
+        foreach ([0, ...array_keys(Customer::CHANNEL_TYPE_MAP),] as $channel) {
             $writerService->setRequestQueryParams(['info_channel' => (string) $channel,]);
             $this->assertSame($channel, $writerService->getInfoChannelFilter());
         }
