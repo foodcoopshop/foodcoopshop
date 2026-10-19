@@ -6,11 +6,14 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## v4.3
+## unreleased
 
 - Neue Einstellung „Aktive / Passive Mitglieder“: Nach Aktivierung ist die Auswahl bei der Registrierung und im Profil verpflichtend. In der Mitgliederverwaltung kann nach der dem Mitglieder-Typ gefiltert werden. Standardmäßig ist die Funktion deaktiviert. [I#1283](https://github.com/foodcoopshop/foodcoopshop/issues/1283) / [PR#1284](https://github.com/foodcoopshop/foodcoopshop/pull/1284) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Mitglieder können bei der Registrierung und im Profil einen optionalen Infokanal (WhatsApp, Signal oder SMS) auswählen. Die Funktion muss zuerst in den Einstellungen aktiviert werden. [I#1281](https://github.com/foodcoopshop/foodcoopshop/issues/1281) / [PR#1282](https://github.com/foodcoopshop/foodcoopshop/pull/1282) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Titel und Meta-Beschreibung der Startseite können jetzt im Admin-Bereich bearbeitet werden. [I#1279](https://github.com/foodcoopshop/foodcoopshop/issues/1279) / [PR#1280](https://github.com/foodcoopshop/foodcoopshop/pull/1280) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+## v4.3
+
 - Die Software ist jetzt kompatibel mit PHP 8.5 (ältere PHP-Versionen werden nicht mehr unterstützt). [I#1274](https://github.com/foodcoopshop/foodcoopshop/issues/1274) / [PR#1275](https://github.com/foodcoopshop/foodcoopshop/pull/1275) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Das Bootstrap-Select ist in die Jahre gekommen und wurde durch Tom Select ersetzt. [I#1267](https://github.com/foodcoopshop/foodcoopshop/issues/1267) / [PR#1272](https://github.com/foodcoopshop/foodcoopshop/pull/1272) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Umsatzsteuer auf Basis der Nettosumme - mehrere Steuersätze sind jetzt möglich: [I#1265](https://github.com/foodcoopshop/foodcoopshop/issues/1265) / [PR#1266](https://github.com/foodcoopshop/foodcoopshop/pull/1266) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
