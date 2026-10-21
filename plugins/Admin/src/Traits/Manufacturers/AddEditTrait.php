@@ -6,6 +6,7 @@ namespace Admin\Traits\Manufacturers;
 use App\Services\SanitizeService;
 use App\Controller\Component\StringComponent;
 use App\Model\Entity\Manufacturer;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Core\Configure;
 use Cake\Http\Response;
@@ -180,10 +181,20 @@ trait AddEditTrait
 
     private function saveUploadedGeneralTermsAndConditions(int $manufacturerId, string $filename): void
     {
+        $uploadPath = realpath(WWW_ROOT . Configure::read('app.tmpUploadFilesDir'));
+        $sourcePath = realpath(WWW_ROOT . $filename);
+        if ($uploadPath === false || $sourcePath === false || dirname($sourcePath) !== $uploadPath ||
+            !is_file($sourcePath) || !is_readable($sourcePath) ||
+            mime_content_type($sourcePath) !== 'application/pdf') {
+            throw new BadRequestException(__('The_uploaded_file_needs_to_have_the_format:_{0}', ['PDF']));
+        }
+
         $newFilename = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
         $path = dirname(WWW_ROOT . $newFilename);
-        mkdir($path, 0755, true);
-        copy(WWW_ROOT . $filename, WWW_ROOT . $newFilename);
+        if (!is_dir($path)) {
+            mkdir($path, 0755, true);
+        }
+        copy($sourcePath, WWW_ROOT . $newFilename);
     }
 
     private function deleteUploadedGeneralTermsAndConditions(int $manufacturerId): void
