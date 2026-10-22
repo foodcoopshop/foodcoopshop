@@ -19,7 +19,6 @@ use Cake\Core\Configure;
 
 $pdf->setTextHelper($this->Text);
 $pdf->setLeftMargin(16);
-$pdf->addPage();
 
 $title = $results[0]['ManufacturerName'] . ': '.__('Order_list_grouped_by').' ' . $groupTypeLabel;
 $deliveryDateString = __('Delivery_day').': ' . $this->MyTime->getWeekdayName((int) date('N', strtotime($results[0]['OrderDetailPickupDay'])));
@@ -27,6 +26,7 @@ $deliveryDateString .= ', ' . date(Configure::read('app.timeHelper')->getI18Form
 
 $pdf->infoTextForFooter = $results[0]['ManufacturerName'] . ', ' . $deliveryDateString;
 $pdf->setTitle($title);
+$pdf->addPage();
 
 $html = '<h2>' . $title . '</h2>';
 $html .= '<p><b>' . $deliveryDateString . '</b>';

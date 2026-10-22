@@ -66,13 +66,6 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected bool $applyHalfLeading = false;
 
-    protected bool $pagesDecorated = false;
-
-    /**
-     * @var array<int, string>
-     */
-    protected array $footerTexts = [];
-
     /**
      * @var array<int, float>
      */
@@ -95,6 +88,7 @@ abstract class AppTcpdfService extends Tcpdf
         mb_internal_encoding('UTF-8');
         $this->setCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->setAuthor(Configure::read('appDb.FCS_APP_NAME'));
+        $this->enableDefaultPageContent();
     }
 
     public function setTextHelper(TextHelper $textHelper): void
@@ -158,9 +152,6 @@ abstract class AppTcpdfService extends Tcpdf
     {
         if ($pid < 0) {
             $pid = (int) $this->page->getPageId();
-        }
-        if ($pid > 0 && !isset($this->footerTexts[$pid - 1])) {
-            $this->footerTexts[$pid - 1] = $this->infoTextForFooter;
         }
         $this->pageLeftMargins[$pid] = $this->leftMargin;
         parent::setPageContext($pid);
@@ -381,7 +372,7 @@ abstract class AppTcpdfService extends Tcpdf
         return '';
     }
 
-    protected function getPageFooter(int $pid, int $pageCount): string
+    protected function getPageFooter(int $pid): string
     {
         return '';
     }
@@ -407,9 +398,9 @@ abstract class AppTcpdfService extends Tcpdf
     /**
      * @param callable(): string $callback
      */
-    protected function withFont(float $size, callable $callback): string
+    protected function withFont(float $size, callable $callback, string $family = self::FONT_FAMILY): string
     {
-        $font = $this->font->insert($this->pon, self::FONT_FAMILY, '', $size);
+        $font = $this->font->insert($this->pon, $family, '', $size);
         $out = $font['out'] . $callback();
         $this->font->popLastFont();
         return $out;
@@ -452,35 +443,22 @@ abstract class AppTcpdfService extends Tcpdf
         return parent::getTextCell($text, $posx, $top, $width, 0, 0, 0, 'T', $align, self::ZEROCELL);
     }
 
-    protected function decoratePages(): void
+    public function defaultPageContent(int $pid = -1): string
     {
-        if ($this->pagesDecorated) {
-            return;
-        }
-        $this->pagesDecorated = true;
-        $pages = $this->page->getPages();
-        $pageCount = count($pages);
         $currentPageId = (int) $this->page->getPageId();
-        $lastPageId = (int) array_key_last($pages);
-        if (!isset($this->footerTexts[$lastPageId])) {
-            $this->footerTexts[$lastPageId] = $this->infoTextForFooter;
+        if ($pid < 0) {
+            $pid = $currentPageId;
         }
-        foreach (array_keys($pages) as $pid) {
-            $pid = (int) $pid;
-            $this->setCurrentPage($pid);
+        $this->setCurrentPage($pid);
+        try {
             $out = $this->graph->getStartTransform();
             $out .= $this->getPageHeader($pid);
-            $out .= $this->getPageFooter($pid, $pageCount);
+            $out .= $this->getPageFooter($pid);
             $out .= $this->graph->getStopTransform();
-            $this->page->addContent($out, $pid);
+            return $out;
+        } finally {
+            $this->setCurrentPage($currentPageId);
         }
-        $this->setCurrentPage($currentPageId);
-    }
-
-    public function getOutPDFString(): string
-    {
-        $this->decoratePages();
-        return parent::getOutPDFString();
     }
 
 }

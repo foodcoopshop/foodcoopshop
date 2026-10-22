@@ -52,9 +52,8 @@ if (!empty($manufacturers)) {
                 continue;
             }
 
-            $pdf->addPage();
-
             $pdf->infoTextForFooter = __('Withdrawal_form');
+            $pdf->addPage();
 
             $html = '<h1>'.__('Withdrawal_form').'</h1>';
             $pdf->writeHTML($html);

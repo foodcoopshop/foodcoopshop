@@ -22,9 +22,8 @@ $pdf->setLeftMargin(16);
 if (!empty($manufacturers)) {
 
     foreach ($manufacturers as $manufacturerId => $details) {
-        $pdf->addPage();
-
         $pdf->infoTextForFooter = __('Order_overview') . ' ' . $details['Manufacturer']->name;
+        $pdf->addPage();
 
         $pdf->writeHTML('<h3>' . __('Order') . ': '. $identity->name.', ' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2')).'</h3>');
         $pdf->ln(8);

@@ -18,8 +18,8 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 $pdf->setLeftMargin(16);
-$pdf->addPage();
 $pdf->infoTextForFooter = __('Orders');
+$pdf->addPage();
 
 $j = 1;
 foreach ($orderDetails as $od) {

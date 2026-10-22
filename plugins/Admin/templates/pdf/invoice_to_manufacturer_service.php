@@ -20,6 +20,11 @@ use Cake\ORM\TableRegistry;
 
 $pdf->setTextHelper($this->Text);
 $pdf->setLeftMargin(12);
+$pdf->infoTextForFooter = $productResults[0]['ManufacturerName'];
+if ($productResults[0]['ManufacturerUidNumber'] != '') {
+    $pdf->infoTextForFooter .= ', ' . __('VAT_number') . ': ' . $productResults[0]['ManufacturerUidNumber'];
+}
+$pdf->infoTextForFooter .= ', '.__('Invoice_number_abbreviation_admin').' ' . $newInvoiceNumber;
 $pdf->addPage();
 
 $html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="7"><tr>';
@@ -39,12 +44,6 @@ $html .= '<h3>'.__('Invoice_date').': ' . $invoiceDate . '</h3>';
 $html .= '</td>';
 $html .= '</tr></table>';
 $pdf->writeHTML($html);
-
-$pdf->infoTextForFooter = $productResults[0]['ManufacturerName'];
-if ($productResults[0]['ManufacturerUidNumber'] != '') {
-    $pdf->infoTextForFooter .= ', ' . __('VAT_number') . ': ' . $productResults[0]['ManufacturerUidNumber'];
-}
-$pdf->infoTextForFooter .= ', '.__('Invoice_number_abbreviation_admin').' ' . $newInvoiceNumber;
 
 // product list start
 $widths = [
