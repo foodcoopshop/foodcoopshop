@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 
 $pdf->setTextHelper($this->Text);
 $pdf->infoTextForFooter = __('Invoice_number_abbreviation_admin').': ' . $newInvoiceNumber;
-$pdf->AddPage();
+$pdf->addPage();
 
 $html = '<h2>';
 if ($result->cancelledInvoice) {
@@ -28,8 +28,8 @@ if ($result->cancelledInvoice) {
     $html .=__('Invoice');
 }
 $html .= '</h2>';
-$pdf->writeHTML($html, true, false, true, false, '');
-$pdf->Ln(7);
+$pdf->writeHTML($html);
+$pdf->ln(7);
 
 $html = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 $html .= '<td width="272">';
@@ -51,7 +51,7 @@ $html .= '<td width="230" align="right">';
     $html .= '</td>';
 $html .= '</tr></table>';
 
-$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html);
 
 $pdf->prepareTableHeader();
 $pdf->prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax);
@@ -60,18 +60,18 @@ $pdf->renderTable();
 $pdf->renderTaxSumTable($result->tax_rates);
 
 if (!$result->cancelledInvoice) {
-    $pdf->Ln(3);
+    $pdf->ln(3);
     $html = '<p>'.__('{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
-    $pdf->writeHTML($html, true, false, true, false, '');
+    $pdf->writeHTML($html);
 }
 
 if (Configure::read('app.additionalTextForInvoice') != '') {
-    $pdf->Ln(3);
-    $pdf->writeHTML('<p>' . Configure::read('app.additionalTextForInvoice') . '</p>', true, false, true, false, '');
+    $pdf->ln(3);
+    $pdf->writeHTML('<p>' . Configure::read('app.additionalTextForInvoice') . '</p>');
 }
 
 if (!$result->cancelledInvoice && $paidInCash) {
-    $pdf->Ln(3);
+    $pdf->ln(3);
     $html = '<p>'.__('Paid_in_cash_on_{0}.', [$invoiceDate]).'</p>';
-    $pdf->writeHTML($html, true, false, true, false, '');
+    $pdf->writeHTML($html);
 }

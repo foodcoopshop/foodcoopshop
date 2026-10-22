@@ -30,10 +30,10 @@ trait TaxSumTableTrait
 
             $taxRatesTableColumnWidth = 85;
 
-            $this->Ln(3);
+            $this->ln(3);
             $html = '<p><b>'.__('Tax_rates_overview_table').'</b></p>';
-            $this->Ln(3);
-            $this->writeHTML($html, true, false, true, false, '');
+            $this->ln(3);
+            $this->writeHTML($html);
 
             $html = '<table cellspacing="0" cellpadding="1" style="font-size:8px;border-collapse:collapse;">';
 
@@ -61,8 +61,8 @@ trait TaxSumTableTrait
 
             $html .= '</table>';
 
-            $this->Ln(3);
-            $this->writeHTML($html, true, false, true, false, '');
+            $this->ln(3);
+            $this->writeHTML($html);
         }
 
     }

@@ -18,7 +18,7 @@ namespace App\Services\PdfWriter;
 
 use Cake\Utility\Inflector;
 use Cake\View\ViewBuilder;
-use TCPDF;
+use App\Services\Pdf\AppTcpdfService;
 
 abstract class PdfWriterService
 {
@@ -27,12 +27,12 @@ abstract class PdfWriterService
      * @var array<string, mixed>
      */
     protected array $data = [];
-    protected mixed $pdfLibrary;
+    protected AppTcpdfService $pdfLibrary;
     protected ?string $plugin = null;
     protected string $filename = '';
     public ?string $templateFile = null;
 
-    public function setPdfLibrary(TCPDF $pdfLibrary): static
+    public function setPdfLibrary(AppTcpdfService $pdfLibrary): static
     {
         $this->pdfLibrary = $pdfLibrary;
         return $this;
@@ -84,13 +84,15 @@ abstract class PdfWriterService
     public function writeInline(): string
     {
         $this->setContent();
-        return $this->pdfLibrary->Output($this->getFilename(), 'I');
+        $this->pdfLibrary->setPDFFilename(basename($this->getFilename()));
+        $this->pdfLibrary->renderPDF($this->pdfLibrary->getOutPDFString());
+        return '';
     }
 
     public function writeAttachment(): string
     {
         $this->setContent();
-        return $this->pdfLibrary->Output('', 'S');
+        return $this->pdfLibrary->getOutPDFString();
     }
 
     public function writeFile(): string
@@ -107,7 +109,9 @@ abstract class PdfWriterService
             mkdir($path, 0755, true);
         }
 
-        return $this->pdfLibrary->Output($this->getFilename(), 'F');
+        $this->pdfLibrary->setPDFFilename(basename($this->getFilename()));
+        $this->pdfLibrary->savePDF($path, $this->pdfLibrary->getOutPDFString());
+        return '';
     }
 
     public function writeHtml(): string

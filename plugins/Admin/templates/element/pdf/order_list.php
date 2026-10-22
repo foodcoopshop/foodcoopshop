@@ -18,15 +18,15 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 $pdf->setTextHelper($this->Text);
-$pdf->SetLeftMargin(16);
-$pdf->AddPage();
+$pdf->setLeftMargin(16);
+$pdf->addPage();
 
 $title = $results[0]['ManufacturerName'] . ': '.__('Order_list_grouped_by').' ' . $groupTypeLabel;
 $deliveryDateString = __('Delivery_day').': ' . $this->MyTime->getWeekdayName((int) date('N', strtotime($results[0]['OrderDetailPickupDay'])));
 $deliveryDateString .= ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($results[0]['OrderDetailPickupDay']));
 
 $pdf->infoTextForFooter = $results[0]['ManufacturerName'] . ', ' . $deliveryDateString;
-$pdf->SetTitle($title);
+$pdf->setTitle($title);
 
 $html = '<h2>' . $title . '</h2>';
 $html .= '<p><b>' . $deliveryDateString . '</b>';
@@ -34,8 +34,8 @@ if (Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
     $html .= Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS');
 }
 $html .= '</p>';
-$pdf->writeHTML($html, true, false, true, false, '');
-$pdf->Ln(5);
+$pdf->writeHTML($html);
+$pdf->ln(5);
 
 $widths = [
     33,
@@ -69,8 +69,7 @@ $pdf->addLastSumRow(
 
 $pdf->renderTable();
 
-$pdf->Ln(5);
+$pdf->ln(5);
 $html = '<p>'.__('Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
-$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html);
 
-$pdf->lastPage();

@@ -50,9 +50,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForPerson.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerInvoiceForPerson.html');
 
     }
 
@@ -84,9 +82,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForCompany.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerInvoiceForCompany.html');
 
     }
 
@@ -99,9 +95,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerWithDecimalsInTaxRate.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerWithDecimalsInTaxRate.html');
     }
 
     public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum(): void
@@ -122,9 +116,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $orderDetailsTable->updateAll(['deposit' => -0.5], ['id_order_detail' => 3]); // deposit can also be returned with a negative deposit of an order detail
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerInvoiceWithTaxBasedOnInvoiceSum.html');
     }
 
     public function testSendInvoicesWithExcludedFutureOrder(): void

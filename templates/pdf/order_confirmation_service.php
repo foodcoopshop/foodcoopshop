@@ -17,20 +17,20 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$pdf->SetLeftMargin(16);
+$pdf->setLeftMargin(16);
 
 if (!empty($manufacturers)) {
 
     foreach ($manufacturers as $manufacturerId => $details) {
-        $pdf->AddPage();
+        $pdf->addPage();
 
         $pdf->infoTextForFooter = __('Order_overview') . ' ' . $details['Manufacturer']->name;
 
-        $pdf->writeHTML('<h3>' . __('Order') . ': '. $identity->name.', ' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2')).'</h3>', true, false, true, false, '');
-        $pdf->Ln(8);
+        $pdf->writeHTML('<h3>' . __('Order') . ': '. $identity->name.', ' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2')).'</h3>');
+        $pdf->ln(8);
 
-        $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');
-        $pdf->Ln(6);
+        $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false));
+        $pdf->ln(6);
 
         $widths = [
             45,
@@ -141,8 +141,8 @@ if (!empty($manufacturers)) {
 
         $pdf->renderTable();
 
-        $pdf->writeHTML('<p>' . __('Prices_are_including_vat.') . '</p>', true, false, true, false, '');
-        $pdf->Ln(3);
-        $pdf->writeHTML('<p>' . __('Including_vat') . ': ' . $this->MyNumber->formatAsCurrency($sumOrderDetailTax) . '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p>' . __('Prices_are_including_vat.') . '</p>');
+        $pdf->ln(3);
+        $pdf->writeHTML('<p>' . __('Including_vat') . ': ' . $this->MyNumber->formatAsCurrency($sumOrderDetailTax) . '</p>');
     }
 }

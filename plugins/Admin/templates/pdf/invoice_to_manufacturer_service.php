@@ -19,8 +19,8 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 $pdf->setTextHelper($this->Text);
-$pdf->SetLeftMargin(12);
-$pdf->AddPage();
+$pdf->setLeftMargin(12);
+$pdf->addPage();
 
 $html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="200">';
@@ -38,7 +38,7 @@ $html .= '<h3>'.__('Orders_from').' ' . $period . '</h3>';
 $html .= '<h3>'.__('Invoice_date').': ' . $invoiceDate . '</h3>';
 $html .= '</td>';
 $html .= '</tr></table>';
-$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html);
 
 $pdf->infoTextForFooter = $productResults[0]['ManufacturerName'];
 if ($productResults[0]['ManufacturerUidNumber'] != '') {
@@ -103,15 +103,15 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $html .= '</tr>';
 
     $html .= '</table>';
-    $pdf->writeHTML($html, true, false, true, false, '');
+    $pdf->writeHTML($html);
 
     $html = '<p>'.__('The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible.', [$variableMemberFee]).'</p>';
-    $pdf->Ln(3);
-    $pdf->writeHTML($html, true, false, true, false, '');
+    $pdf->ln(3);
+    $pdf->writeHTML($html);
 } else {
     $html = '<p>'.__('The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible.').'</p>';
-    $pdf->Ln(3);
-    $pdf->writeHTML($html, true, false, true, false, '');
+    $pdf->ln(3);
+    $pdf->writeHTML($html);
 }
 
 $taxRates = $pdf->prepareTaxSumData($productResults);
@@ -119,19 +119,19 @@ $pdf->renderTaxSumTable($taxRates);
 
 if ($productResults[0]['ManufacturerAdditionalTextForInvoice'] != '') {
     $html = '<p>' . nl2br($productResults[0]['ManufacturerAdditionalTextForInvoice']) . '</p>';
-    $pdf->Ln(3);
-    $pdf->writeHTML($html, true, false, true, false, '');
+    $pdf->ln(3);
+    $pdf->writeHTML($html);
 }
 
-$pdf->Ln(3);
+$pdf->ln(3);
 $html = '<p>'.__('Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
-$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html);
 
 // Detailübersicht Start
-$pdf->AddPage();
+$pdf->addPage();
 $html = '<h2>'.__('Detail_view').'</h2>';
-$pdf->writeHTML($html, true, false, true, false, '');
-$pdf->Ln(5);
+$pdf->writeHTML($html);
+$pdf->ln(5);
 
 $widths = [
     33,
@@ -157,4 +157,3 @@ $pdf->renderDetailedOrderList($customerResults, $widths, $headers, 'customer');
 $pdf->renderTable();
 // Detailübersicht End
 
-$pdf->lastPage();

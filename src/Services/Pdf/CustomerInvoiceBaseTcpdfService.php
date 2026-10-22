@@ -26,26 +26,20 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService
     use FooterTrait;
     use TaxSumTableTrait;
 
-    public string $headerRight;
-
     public bool $replaceEuroSign = false;
-
-    public string $infoTextForFooter = '';
 
     /**
      * @var array<int, array<string, int|string>>
      */
     public array $headers = [];
 
-    public ?string $html;
-
-    public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
+    public function __construct(string $orientation = 'P')
     {
-        parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
-        $this->SetTopMargin(48);
-        $this->SetRightMargin(0);
-        $this->SetLeftMargin(18);
-        $this->SetFontSize(10);
+        parent::__construct($orientation);
+        $this->setTopMargin(48);
+        $this->setRightMargin(0);
+        $this->setLeftMargin(18);
+        $this->setFontSize(10);
         $this->setHeaders();
     }
 
@@ -54,7 +48,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService
     public function prepareTableHeader(): void
     {
 
-        $this->table = '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+        $this->table = '<table width="' . array_sum(array_column($this->headers, 'width')) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
         foreach($this->headers as $header) {
             $this->table .= '<th' . $this->getThinTableCellStyleAttribute('font-weight:bold;background-color:#cecece') . ' align="' . $header['align'] . '" width="' . $header['width'] . '">' . $header['name'] . '</th>';
@@ -74,31 +68,18 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService
         }
     }
 
-    /**
-     * parent class is overriden although it's name is Header() (capital letter)
-     * php functions are case insensitive
-     */
-    public function header(): void
+    protected function getPageHeader(int $pid): string
     {
-        $this->SetY(4);
-
-        $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', false, 0, null, null, true, 0, true);
-        $this->setFontSize(10);
-
-        $convertedHeaderRight = Configure::read('appDb.FCS_INVOICE_HEADER_TEXT');
-
-        // add additional line break(s) on top
-        $lineCount = substr_count($convertedHeaderRight, '<br />');
+        $leftMargin = $this->pageLeftMargins[$pid] ?? $this->leftMargin;
+        $out = $this->getLogo($leftMargin, 4, 50);
+        $headerRight = Configure::read('appDb.FCS_INVOICE_HEADER_TEXT');
+        $lineCount = substr_count($headerRight, '<br />');
         if ($lineCount < 6) {
-            $convertedHeaderRight = str_repeat('<br />', 6 - $lineCount) . $convertedHeaderRight;
+            $headerRight = str_repeat('<br />', 6 - $lineCount) . $headerRight;
         }
-
-        $this->headerRight = $convertedHeaderRight;
-
-        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', false, 1, null, null, true, 0, true);
-
-        $this->SetY(36);
-        $this->drawLine();
+        $out .= $this->getHeaderRightText($headerRight, 194);
+        $out .= $this->drawLine(36);
+        return $out;
     }
 
 }

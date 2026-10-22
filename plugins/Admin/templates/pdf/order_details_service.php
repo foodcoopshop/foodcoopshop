@@ -17,25 +17,25 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$pdf->SetLeftMargin(16);
-$pdf->AddPage();
+$pdf->setLeftMargin(16);
+$pdf->addPage();
 $pdf->infoTextForFooter = __('Orders');
 
 $j = 1;
 foreach ($orderDetails as $od) {
 
-    $pdf->Ln(5);
+    $pdf->ln(5);
     $customerHtml = '<h1 style="font-size:24px;">' . $od[0]->customer->name . '</h1>';
-    $pdf->writeHTML($customerHtml, true, false, true, false, '');
-    $pdf->writeHTML('<h3>' .__('Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML($customerHtml);
+    $pdf->writeHTML('<h3>' .__('Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ID: ' . $od[0]->customer->id_customer . '</h3>');
 
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !empty($od[0]->pickup_day_entity) && $od[0]->pickup_day_entity->comment != '') {
-        $pdf->SetRightMargin(16);
-        $pdf->Ln(2);
-        $pdf->writeHTML('<p><b>'.__('Comment').': </b>' . $od[0]->pickup_day_entity->comment . '</p>', true, false, true, false, '');
+        $pdf->setRightMargin(16);
+        $pdf->ln(2);
+        $pdf->writeHTML('<p><b>'.__('Comment').': </b>' . $od[0]->pickup_day_entity->comment . '</p>');
     }
 
-    $pdf->Ln(5);
+    $pdf->ln(5);
 
     $widths = [
         35,
@@ -59,7 +59,7 @@ foreach ($orderDetails as $od) {
         $widths[4] = 0;
     }
 
-    $pdf->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+    $pdf->table .= '<table width="' . array_sum($widths) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
     $num_headers = count($headers);
     for ($i = 0; $i < $num_headers; ++ $i) {
@@ -77,7 +77,7 @@ foreach ($orderDetails as $od) {
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && $order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
             $pdf->table .= '<tr style="background-color:#cecece;">';
-            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="'.array_sum($widths).'"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' colspan="' . count($widths) . '"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
             $pdf->table .= '</tr>';
         }
 
@@ -170,18 +170,18 @@ foreach ($orderDetails as $od) {
 
     if ($usesQuantityInUnits > 0) {
         $html = '<p>* '.__('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly._admin').'</p>';
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->writeHTML($html);
     }
 
-    $pdf->Ln(2);
+    $pdf->ln(2);
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') {
         $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
-        $pdf->writeHTML($html, true, false, true, false, '');
-        $pdf->Ln(2);
+        $pdf->writeHTML($html);
+        $pdf->ln(2);
     }
 
     if ($j < count($orderDetails)) {
-        $pdf->AddPage();
+        $pdf->addPage();
     }
 
     $j ++;

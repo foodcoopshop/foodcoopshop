@@ -326,9 +326,10 @@ abstract class AppCakeTestCase extends TestCase
         $customersTable->save($newCustomer);
     }
 
-    protected function getCorrectedLogoPathInHtmlForPdfs(string $html): string
+    protected function assertResponseContainsPdfHtml(string $fixtureFile): void
     {
-        return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
+        $path = TESTS . 'config' . DS . 'data' . DS . $fixtureFile;
+        $this->assertResponseContains((string) file_get_contents($path));
     }
 
     protected function prepareSendingOrderLists(): void

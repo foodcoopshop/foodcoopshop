@@ -26,18 +26,12 @@ class ListTcpdfService extends AppTcpdfService
     use FooterTrait;
     use TaxSumTableTrait;
 
-    public string $headerRight;
-
-    public string $infoTextForFooter = '';
-
-    public ?string $html;
-
-    public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, int|false $pdfa = false)
+    public function __construct(string $orientation = 'P')
     {
-        parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
-        $this->SetTopMargin(43);
-        $this->SetRightMargin(0);
-        $this->SetFontSize(10);
+        parent::__construct($orientation);
+        $this->setTopMargin(43);
+        $this->setRightMargin(0);
+        $this->setFontSize(10);
     }
 
     /**
@@ -80,7 +74,7 @@ class ListTcpdfService extends AppTcpdfService
     public function renderDetailedOrderList(array $results, array $widths, array $headers, string $groupType, bool $onlyShowSums = false): void
     {
 
-        $this->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+        $this->table .= '<table width="' . array_sum($widths) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
 
         $isOrderList = $this->isOrderList($headers);
 
@@ -423,31 +417,14 @@ class ListTcpdfService extends AppTcpdfService
         $this->table .= '</tr>';
     }
 
-    /**
-     * parent class is overriden although it's name is Header() (capital letter)
-     * php functions are case insensitive
-     */
-    public function header(): void
+    protected function getPageHeader(int $pid): string
     {
-        $this->SetY(4);
-
-        $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', false, 0, null, null, true, 0, true);
-        $this->setFontSize(10);
-
-        $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');
-
-        // add additional line break on top if short address
-        $lineCount = substr_count($convertedHeaderRight, "\n");
-        if ($lineCount < 5) {
-            $convertedHeaderRight = '<br />' . $convertedHeaderRight;
-        }
-
-        $this->headerRight = $convertedHeaderRight;
-
-        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', false, 1, null, null, true, 0, true);
-
-        $this->SetY(36);
-        $this->drawLine();
+        $leftMargin = $this->pageLeftMargins[$pid] ?? $this->leftMargin;
+        $out = $this->getLogo($leftMargin, 4, 50);
+        $headerRight = '<br /><br />' . Configure::read('appDb.FCS_APP_NAME') . '<br />' . Configure::read('appDb.FCS_APP_ADDRESS') . '<br />' . Configure::read('appDb.FCS_APP_EMAIL');
+        $out .= $this->getHeaderRightText($headerRight, 194);
+        $out .= $this->drawLine(36);
+        return $out;
     }
 
 }

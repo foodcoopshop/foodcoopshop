@@ -425,14 +425,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByProductWithoutPricePerUnit.html');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByCustomerWithoutPricePerUnit.html');
     }
 
     public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled(): void
@@ -441,14 +437,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnitAndPurchasePriceEnabled.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByProductWithoutPricePerUnitAndPurchasePriceEnabled.html');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnitAndPurchasePriceEnabled.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByCustomerWithoutPricePerUnitAndPurchasePriceEnabled.html');
 
     }
 
@@ -522,14 +514,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         }
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByProductWithPricePerUnit.html');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByCustomerWithPricePerUnit.html');
 
     }
 

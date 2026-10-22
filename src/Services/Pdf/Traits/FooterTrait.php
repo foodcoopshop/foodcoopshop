@@ -21,29 +21,27 @@ use Cake\I18n\DateTime;
 trait FooterTrait
 {
 
-    /**
-     * parent class is overriden although it's name is Header() (capital letter)
-     * php functions are case insensitive
-     */
-    public function footer(): void
+    protected function getPageFooter(int $pid, int $pageCount): string
     {
-        $this->SetFont('freesans');
-        $this->SetY(-19);
-        $this->drawLine();
-        $this->SetFontSize(10);
-        $this->Cell(0, 10, $this->infoTextForFooter , 0, 0, 'L', false, '', 0, false, 'T', 'M');
-        $this->Ln(4);
-        $now = new DateTime();
-        $textForFooterRight =
-        __('Generated_on_{0}', [
-            $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
-        ])
-        . ', ' .
-        __('Page_{0}_of_{1}', [
-            $this->getAliasNumPage(), $this->getAliasNbPages()
-        ]);
-        $this->Cell(0, 10, $textForFooterRight, 0, 0, 'R', false, '', 0, false, 'T', 'M');
-        $this->SetFontSize(12);
+        $page = $this->page->getPage($pid);
+        $posy = $page['height'] - 19;
+        $out = $this->drawLine($posy);
+        $footerText = $this->footerTexts[$pid] ?? $this->infoTextForFooter;
+        $out .= $this->withFont(10, function () use ($page, $posy, $pid, $pageCount, $footerText): string {
+            $now = new DateTime();
+            $generatedOn = __('Generated_on_{0}', [
+                $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs')),
+            ]);
+            $textRight = $generatedOn . ', ' . __('Page_{0}_of_{1}', [$pid + 1, $pageCount]);
+            // the former tcpdf library aligned the text using the width of its page number aliases
+            $aliasText = $generatedOn . ', ' . __('Page_{0}_of_{1}', ['{{:pnp:}}', '{{:ptp:}}']);
+            $aliasShift = $this->getStringWidth($aliasText) - $this->getStringWidth($textRight);
+            $width = $page['width'] - $this->rightMargin - $aliasShift;
+            $out = $this->getTcpdfCellText($footerText, $this->leftMargin, $posy, 10, 'L', $width - $this->leftMargin);
+            $out .= $this->getTcpdfCellText($textRight, 0, $posy + 4, 10, 'R', $width);
+            return $out;
+        });
+        return $out;
     }
 
 }

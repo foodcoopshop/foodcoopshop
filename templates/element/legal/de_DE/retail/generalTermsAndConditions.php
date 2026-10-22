@@ -37,7 +37,7 @@ use Cake\Core\Configure;
 
 <p>2.3. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p>
 
-<p>2.4. Vor Abgabe der Vertragserklärung werden die Gesamtkosten dargestellt.
+<p style="margin-bottom:0;">2.4. Vor Abgabe der Vertragserklärung werden die Gesamtkosten dargestellt.</p>
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 

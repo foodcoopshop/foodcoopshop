@@ -16,6 +16,8 @@ declare(strict_types=1);
  */
 namespace App\Services\Pdf;
 
+use Com\Tecnick\Barcode\Barcode;
+
 class BarCodeTcpdfService extends AppTcpdfService
 {
 
@@ -38,17 +40,25 @@ class BarCodeTcpdfService extends AppTcpdfService
         'stretchtext' => 4
     ];
 
-    public ?string $html = '';
-
-    public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
+    public function __construct(string $orientation = 'P')
     {
-        parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
-        $this->SetFontSize(10);
+        parent::__construct($orientation);
+        $this->setFontSize(10);
     }
 
-    public function header(): void
+    /**
+     * barcode image sized like the former tcpdf library: one pixel equals one point, downscaled to the cell width
+     */
+    public function getBarcodeImageTag(string $code, float $moduleWidth, int $height, float $cellWidth): string
     {
-        // use empty header
+        $barcodeFactory = new Barcode();
+        $modules = $barcodeFactory->getBarcodeObj('C39', $code)->getArray()['ncols'] + 1;
+        $widthPx = (int) floor($modules * $moduleWidth);
+        $barcode = $barcodeFactory->getBarcodeObj('C39', $code, $widthPx, $height);
+        $scale = min(1, $cellWidth / $widthPx);
+        $widthMm = $this->toUnit($widthPx * $scale);
+        $heightMm = $this->toUnit($height * $scale);
+        return '<img style="width:' . round($widthMm, 2) . 'mm;height:' . round($heightMm, 2) . 'mm;" src="data:image/png;base64,' . base64_encode($barcode->getPngData()) . '">';
     }
 
 }
