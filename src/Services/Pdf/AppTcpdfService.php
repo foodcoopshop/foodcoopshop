@@ -21,10 +21,6 @@ use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
 use Cake\View\Helper\TextHelper;
 use Com\Tecnick\Pdf\Tcpdf;
-use Com\Tecnick\Pdf\TextFitMode;
-use Com\Tecnick\Pdf\TextHAlign;
-use Com\Tecnick\Pdf\TextVAlign;
-use Com\Tecnick\Unicode\TextDirection;
 
 abstract class AppTcpdfService extends Tcpdf
 {
@@ -63,8 +59,6 @@ abstract class AppTcpdfService extends Tcpdf
     protected float $cursorY = 0.0;
 
     protected bool $fontInitialized = false;
-
-    protected bool $applyHalfLeading = false;
 
     /**
      * @var array<int, float>
@@ -177,12 +171,7 @@ abstract class AppTcpdfService extends Tcpdf
 
         $page = $this->page->getPage();
         $width = $page['width'] - $this->leftMargin - $this->rightMargin;
-        $this->applyHalfLeading = true;
-        try {
-            $this->addHTMLCell($this->getHtmlDefaultStyles() . $this->prepareHtmlForRendering($html), $this->leftMargin, $this->cursorY, $width);
-        } finally {
-            $this->applyHalfLeading = false;
-        }
+        $this->addHTMLCell($this->getHtmlDefaultStyles() . $this->prepareHtmlForRendering($html), $this->leftMargin, $this->cursorY, $width);
         $end = $this->getLastHTMLCellEnd();
         $this->setCurrentPage($end['page']);
         $this->cursorY = $end['y'] - $this->getTrailingBlockMargin($html) + $this->getTrailingTableGap($html);
@@ -254,6 +243,8 @@ abstract class AppTcpdfService extends Tcpdf
     {
         $lineHeight = $this->fontSize * self::CELL_HEIGHT_RATIO;
         $css = '*,p,h1,h2,h3,h4,h5,h6,div,span,b,i,u,strong,em,a,td,th,tr,table,li,ul,ol{line-height:125%;orphans:1;widows:1;}';
+        $css .= 'td,th{vertical-align:middle;}';
+        $css .= 'td,th,td *,th *{line-height:normal;}';
         $css .= 'th{text-align:left;}';
         $css .= 'a{color:#0000ff;text-decoration:underline;}';
         $css .= 'td > *:last-child,th > *:last-child{margin-bottom:0;}';
@@ -295,61 +286,6 @@ abstract class AppTcpdfService extends Tcpdf
         }
 
         return ' style="' . $style . 'border:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';"';
-    }
-
-    /**
-     * text is shifted by the half leading to get the same baseline as the former tcpdf library
-     */
-    public function getTextCell(
-        string $txt,
-        float $posx = 0,
-        float $posy = 0,
-        float $width = 0,
-        float $height = 0,
-        float $offset = 0,
-        float $linespace = 0,
-        string|TextVAlign $valign = 'C',
-        string|TextHAlign $halign = 'C',
-        ?array $cell = null,
-        array $styles = [],
-        float $strokewidth = 0,
-        float $wordspacing = 0,
-        float $leading = 0,
-        float $rise = 0,
-        bool $jlast = true,
-        bool $fill = true,
-        bool $stroke = false,
-        bool $underline = false,
-        bool $linethrough = false,
-        bool $overline = false,
-        bool $clip = false,
-        bool $drawcell = true,
-        string|TextDirection $forcedir = '',
-        ?array $shadow = null,
-        string|TextFitMode $fit = '',
-    ): string {
-        $shift = 0.0;
-        if ($this->applyHalfLeading) {
-            $font = $this->font->getCurrentFont();
-            $shift = $this->toUnit(($font['size'] * self::CELL_HEIGHT_RATIO - $font['height']) / 2);
-            $posy += $shift;
-        }
-        $lastKeys = [
-            'bbox' => array_key_last($this->bbox),
-            'textbbox' => array_key_last($this->textbbox),
-            'cellbbox' => array_key_last($this->cellbbox),
-        ];
-        $out = parent::getTextCell($txt, $posx, $posy, $width, $height, $offset, $linespace, $valign, $halign, $cell, $styles, $strokewidth, $wordspacing, $leading, $rise, $jlast, $fill, $stroke, $underline, $linethrough, $overline, $clip, $drawcell, $forcedir, $shadow, $fit);
-        if ($shift != 0.0) {
-            // layout calculations must not be affected by the shift
-            foreach ($lastKeys as $property => $lastKey) {
-                $key = array_key_last($this->$property);
-                if ($key !== null && $key !== $lastKey) {
-                    $this->$property[$key]['y'] -= $shift;
-                }
-            }
-        }
-        return $out;
     }
 
     /**
