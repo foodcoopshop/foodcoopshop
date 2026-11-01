@@ -44,6 +44,7 @@ use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
 
+// should be defined by PHP
 if (!defined('IMAGETYPE_SWC')) {
     define('IMAGETYPE_SWC', 13);
 }
