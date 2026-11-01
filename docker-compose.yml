@@ -42,6 +42,7 @@ services:
   database-test:
     image: mysql:8.0
     container_name: fcs.database.test
+    command: --skip-log-bin
     restart: always
     tmpfs: /var/lib/mysql:exec,size=1G #smaller size (eg. 256M) lead to failing tests
     ports:
