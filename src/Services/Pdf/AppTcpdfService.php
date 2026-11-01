@@ -33,6 +33,8 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected const float DEFAULT_MARGIN = 10.0;
 
+    protected const string HTML_DEFAULT_STYLES = '<style>body{line-height:125%;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
+
     public string $table = '';
 
     public bool $replaceEuroSign = true;
@@ -68,10 +70,6 @@ abstract class AppTcpdfService extends Tcpdf
     {
         $this->orientation = $orientation;
         parent::__construct(
-            unit: 'mm',
-            isunicode: true,
-            subsetfont: true,
-            compress: true,
             fileOptions: [
                 'allowedPaths' => array_merge($this->defaultFileAllowedPaths(), [ROOT . DS . 'webroot', ROOT . DS . 'files_private']),
             ],
@@ -168,15 +166,10 @@ abstract class AppTcpdfService extends Tcpdf
 
         $page = $this->page->getPage();
         $width = $page['width'] - $this->leftMargin - $this->rightMargin;
-        $this->addHTMLCell($this->getHtmlDefaultStyles() . $html, $this->leftMargin, $this->cursorY, $width);
+        $this->addHTMLCell(self::HTML_DEFAULT_STYLES . $html, $this->leftMargin, $this->cursorY, $width);
         $end = $this->getLastHTMLCellEnd();
         $this->setCurrentPage($end['page']);
         $this->cursorY = $end['y'];
-    }
-
-    protected function getHtmlDefaultStyles(): string
-    {
-        return '<style>body{line-height:125%;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
     }
 
     public function getHtml(): string
