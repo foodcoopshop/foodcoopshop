@@ -191,19 +191,13 @@ abstract class AppTcpdfService extends Tcpdf
         return ' style="' . $style . 'border:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';"';
     }
 
-    /**
-     * former tcpdf library treated px as pt
-     * @param array{'font': array{'rootsize': float, 'size': float, 'xheight': float, 'zerowidth': float}, 'page': array{'height': float, 'width': float}, 'parent': float, 'viewport': array{'height': float, 'width': float}} $ref
-     */
     protected function getUnitValuePoints(string|float|int $val, array $ref = self::REFUNITVAL, string $defunit = 'px'): float
     {
-        if (is_string($val) && preg_match('/^\s*([0-9.\-+]+)\s*px\s*$/', $val, $matches)) {
-            return parent::getUnitValuePoints($matches[1], $ref, 'pt');
-        }
-        if (is_numeric($val) && $defunit === 'px') {
-            $defunit = 'pt';
-        }
-        return parent::getUnitValuePoints($val, $ref, $defunit);
+        return parent::getUnitValuePoints(
+            is_string($val) ? str_replace('px', 'pt', $val) : $val,
+            $ref,
+            $defunit === 'px' ? 'pt' : $defunit,
+        );
     }
 
     protected function getPageHeader(int $pid): string
