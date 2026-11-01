@@ -57,8 +57,6 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected float $cursorY = 0.0;
 
-    protected bool $fontInitialized = false;
-
     /**
      * @var array<int, float>
      */
@@ -74,6 +72,7 @@ abstract class AppTcpdfService extends Tcpdf
                 'allowedPaths' => array_merge($this->defaultFileAllowedPaths(), [ROOT . DS . 'webroot', ROOT . DS . 'files_private']),
             ],
         );
+        $this->font->insert($this->pon, self::FONT_FAMILY, '', $this->fontSize);
         mb_internal_encoding('UTF-8');
         $this->setCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->setAuthor(Configure::read('appDb.FCS_APP_NAME'));
@@ -103,8 +102,8 @@ abstract class AppTcpdfService extends Tcpdf
     public function setFontSize(float $size): void
     {
         $this->fontSize = $size;
-        if ($this->fontInitialized) {
-            $font = $this->font->insert($this->pon, self::FONT_FAMILY, '', $size);
+        $font = $this->font->insert($this->pon, self::FONT_FAMILY, '', $size);
+        if ($this->page->getPageId() >= 0) {
             $this->page->addContent($font['out']);
         }
     }
@@ -128,11 +127,6 @@ abstract class AppTcpdfService extends Tcpdf
             ];
         }
         $page = parent::addPage($data);
-        if (!$this->fontInitialized) {
-            $font = $this->font->insert($this->pon, self::FONT_FAMILY, '', $this->fontSize);
-            $this->page->addContent($font['out']);
-            $this->fontInitialized = true;
-        }
         $this->cursorY = $this->topMargin;
         return $page;
     }
