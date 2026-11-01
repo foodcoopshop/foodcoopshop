@@ -29,9 +29,6 @@ abstract class AppTcpdfService extends Tcpdf
 
     public const string FONT_FAMILY = 'freesans';
 
-    // line height relative to the font size (as in the former tcpdf library)
-    protected const float CELL_HEIGHT_RATIO = 1.25;
-
     protected const float PAGE_BREAK_MARGIN = 20.0;
 
     protected const float DEFAULT_MARGIN = 10.0;
@@ -171,97 +168,15 @@ abstract class AppTcpdfService extends Tcpdf
 
         $page = $this->page->getPage();
         $width = $page['width'] - $this->leftMargin - $this->rightMargin;
-        $this->addHTMLCell($this->getHtmlDefaultStyles() . $this->prepareHtmlForRendering($html), $this->leftMargin, $this->cursorY, $width);
+        $this->addHTMLCell($this->getHtmlDefaultStyles() . $html, $this->leftMargin, $this->cursorY, $width);
         $end = $this->getLastHTMLCellEnd();
         $this->setCurrentPage($end['page']);
-        $this->cursorY = $end['y'] - $this->getTrailingBlockMargin($html) + $this->getTrailingTableGap($html);
+        $this->cursorY = $end['y'];
     }
 
-    /**
-     * the former tcpdf library added the height of its last rendered line after a table (values measured)
-     */
-    protected function getTrailingTableGap(string $html): float
-    {
-        if (!preg_match('/<\/table>\s*$/i', $html)) {
-            return 0.0;
-        }
-        $lastRowPos = strripos($html, '<tr');
-        $tablePos = strripos(substr($html, 0, $lastRowPos === false ? strlen($html) : $lastRowPos), '<table');
-        $cellPadding = 0.0;
-        if ($tablePos !== false && preg_match('/^<table[^>]*cellpadding="([0-9.]+)"/i', substr($html, $tablePos), $matches)) {
-            $cellPadding = (float) $matches[1];
-        }
-        $hasCellPadding = $cellPadding > 0;
-        $lineHeight = $this->fontSize * self::CELL_HEIGHT_RATIO;
-        $gap = $hasCellPadding ? 14.5 : $lineHeight;
-        if ($lastRowPos !== false) {
-            $lastRow = substr($html, $lastRowPos);
-            if ($cellPadding > 1 && preg_match_all('/<h([1-6])[\s>]/i', $lastRow, $matches)) {
-                $headingFontSize = $this->fontSize + (4 - (int) end($matches[1])) * 2;
-                $gap += $headingFontSize * self::CELL_HEIGHT_RATIO - 3;
-            }
-            if (preg_match('/<br\s*\/?>(\s*<\/(?!td|th)[a-z0-9]+>)*\s*<\/t[dh]>/i', $lastRow)) {
-                $gap += $lineHeight;
-            }
-        }
-        return $this->toUnit($gap);
-    }
-
-    /**
-     * the former tcpdf library rendered table rows without content with the height of one line
-     */
-    protected function prepareHtmlForRendering(string $html): string
-    {
-        return (string) preg_replace_callback('/<tr(?:\s[^>]*)?>(?:(?!<tr|<table|<\/tr>).)*<\/tr>/is', function (array $matches): string {
-            if (trim(strip_tags($matches[0], '<img>')) !== '') {
-                return $matches[0];
-            }
-            return (string) preg_replace('/(<t[dh](?:\s[^>]*)?>)(<\/t[dh]>)/', '$1&nbsp;$2', $matches[0]);
-        }, $html);
-    }
-
-    /**
-     * the former tcpdf library did not add the bottom margin of the last block element
-     */
-    protected function getTrailingBlockMargin(string $html): float
-    {
-        if (!preg_match('/<\/(p|h[1-6])>\s*$/i', $html, $matches)) {
-            return 0.0;
-        }
-        $tag = strtolower($matches[1]);
-        if ($tag === 'p') {
-            return $this->toUnit($this->fontSize * self::CELL_HEIGHT_RATIO);
-        }
-        $headingFontSize = $this->fontSize + (4 - (int) substr($tag, 1)) * 2;
-        return $this->toUnit($headingFontSize * self::CELL_HEIGHT_RATIO * 0.6);
-    }
-
-    /**
-     * emulates the vertical spacing and line height of the former tcpdf library
-     */
     protected function getHtmlDefaultStyles(): string
     {
-        $lineHeight = $this->fontSize * self::CELL_HEIGHT_RATIO;
-        $css = '*,p,h1,h2,h3,h4,h5,h6,div,span,b,i,u,strong,em,a,td,th,tr,table,li,ul,ol{line-height:125%;orphans:1;widows:1;}';
-        $css .= 'td,th{vertical-align:middle;}';
-        $css .= 'td,th,td *,th *{line-height:normal;}';
-        $css .= 'th{text-align:left;}';
-        $css .= 'a{color:#0000ff;text-decoration:underline;}';
-        $css .= 'td > *:last-child,th > *:last-child{margin-bottom:0;}';
-        // the former tcpdf library used an additional point of right padding in table cells
-        $alignedCells = [];
-        foreach (['td', 'th'] as $cell) {
-            foreach (['right', 'center'] as $align) {
-                $alignedCells[] = 'table[cellpadding="1"] ' . $cell . '[align="' . $align . '"]';
-            }
-        }
-        $css .= implode(',', $alignedCells) . '{padding-right:2pt;}';
-        $css .= 'p{margin-top:' . $lineHeight . 'pt;margin-bottom:' . $lineHeight . 'pt;}';
-        foreach ([1, 2, 3, 4, 5, 6] as $level) {
-            $headingLineHeight = ($this->fontSize + (4 - $level) * 2) * self::CELL_HEIGHT_RATIO;
-            $css .= 'h' . $level . '{margin-top:' . ($headingLineHeight * 0.6) . 'pt;margin-bottom:' . ($headingLineHeight * 0.6) . 'pt;}';
-        }
-        return '<style>' . $css . '</style>';
+        return '<style>body{line-height:125%;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
     }
 
     public function getHtml(): string
@@ -342,41 +257,13 @@ abstract class AppTcpdfService extends Tcpdf
         return $out;
     }
 
-    /**
-     * renders html lines (separated by br) right aligned like the former tcpdf MultiCell
-     */
     protected function getHeaderRightText(string $html, float $rightEdge): string
     {
-        $lines = explode('<br />', $html);
-        if ($lines[0] === '') {
-            array_shift($lines);
+        $text = html_entity_decode(strip_tags(str_replace('<br />', "\n", $html)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if (str_starts_with($text, "\n")) {
+            $text = substr($text, 1);
         }
-        return $this->withFont(10, function () use ($lines, $rightEdge): string {
-            $font = $this->font->getCurrentFont();
-            $lineHeight = $this->toUnit($font['size'] * self::CELL_HEIGHT_RATIO);
-            $halfLeading = $this->toUnit(($font['size'] * self::CELL_HEIGHT_RATIO - $font['height']) / 2);
-            $out = '';
-            foreach ($lines as $i => $line) {
-                $text = trim(html_entity_decode(strip_tags($line), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-                if ($text === '') {
-                    continue;
-                }
-                $out .= parent::getTextCell($text, 0, 4 + $i * $lineHeight + $halfLeading, $rightEdge, 0, 0, 0, 'T', 'R', self::ZEROCELL);
-            }
-            return $out;
-        });
-    }
-
-    /**
-     * draws a single line of text with the baseline positioned like the former tcpdf library (valign middle)
-     */
-    protected function getTcpdfCellText(string $text, float $posx, float $posy, float $height, string $align, float $width): string
-    {
-        $font = $this->font->getCurrentFont();
-        $ascent = $this->toUnit($font['ascent']);
-        $descent = $this->toUnit(abs($font['descent']));
-        $top = $posy + ($height - $ascent - $descent) / 2;
-        return parent::getTextCell($text, $posx, $top, $width, 0, 0, 0, 'T', $align, self::ZEROCELL);
+        return $this->withFont(10, fn(): string => $this->getTextCell($text, 0, 4, $rightEdge, halign: 'R', cell: self::ZEROCELL,));
     }
 
     public function defaultPageContent(int $pid = -1): string

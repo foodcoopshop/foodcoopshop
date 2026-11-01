@@ -426,9 +426,23 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $this->assertResponseContainsPdfHtml('orderListByProductWithoutPricePerUnit.html');
+        $this->assertResponseContains('height:4mm;border-left:0.1mm solid #000;">&nbsp;</td>');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $this->assertResponseContainsPdfHtml('orderListByCustomerWithoutPricePerUnit.html');
+    }
+
+    public function testOrderListSpacerRowHeight(): void
+    {
+        $list = new \App\Services\Pdf\ListTcpdfService();
+        $list->addLastSumRow([__('Amount'), __('Product'), __('Price'), __('Member'), ''], '1', null, null, null);
+        $spacer = explode('</tr>', $list->table, 2)[0] . '</tr>';
+        $pdf = new class extends \App\Services\Pdf\AppTcpdfService {};
+        $pdf->addPage();
+        $pdf->writeHTML('<table>' . $spacer . '</table>');
+
+        $this->assertGreaterThanOrEqual(14.0, $pdf->getLastHTMLCellEnd()['y']);
+        $this->assertLessThan(16.0, $pdf->getLastHTMLCellEnd()['y']);
     }
 
     public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled(): void

@@ -38,10 +38,10 @@ trait FooterTrait
             $textX = $page['width'] - $this->rightMargin - $this->getStringWidth($aliasText);
             $totalX = $textX + $this->getStringWidth($textRight);
             $width = $page['width'] - $this->rightMargin;
-            $out = $this->getTcpdfCellText($footerText, $this->leftMargin, $posy, 10, 'L', $width - $this->leftMargin);
-            $out .= $this->getTcpdfCellText($textRight, $textX, $posy + 4, 10, 'L', $width - $textX);
+            $out = $this->getTextCell($footerText, $this->leftMargin, $posy, $width - $this->leftMargin, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
+            $out .= $this->getTextCell($textRight, $textX, $posy + 4, $width - $textX, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
             $out .= $this->withFont(10, function () use ($totalX, $posy, $width): string {
-                return $this->getTcpdfCellText(\Com\Tecnick\Pdf\Page\Page::PAGE_TOT, $totalX, $posy + 4, 10, 'L', $width - $totalX);
+                return $this->getTextCell(\Com\Tecnick\Pdf\Page\Page::PAGE_TOT, $totalX, $posy + 4, $width - $totalX, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
             }, 'freesanslatin');
             return $out;
         });
