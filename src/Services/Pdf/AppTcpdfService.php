@@ -19,6 +19,7 @@ namespace App\Services\Pdf;
 use App\Controller\Component\StringComponent;
 use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 use Cake\View\Helper\TextHelper;
 use Com\Tecnick\Pdf\Tcpdf;
 
@@ -27,7 +28,7 @@ abstract class AppTcpdfService extends Tcpdf
 
     public const string THIN_TABLE_CELL_BORDER_STYLE = '0.1mm solid #000';
 
-    public const string FONT_FAMILY = 'freesans';
+    public const string FONT_FAMILY = 'freesans'; // freesans supports cyrillic characters
 
     protected const float PAGE_BREAK_MARGIN = 20.0;
 
@@ -246,6 +247,7 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected function getHeaderRightText(string $html, float $rightEdge): string
     {
+        $html = str_replace(["\r", "\n"], '', $html);
         $text = html_entity_decode(strip_tags(str_replace('<br />', "\n", $html)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         if (str_starts_with($text, "\n")) {
             $text = substr($text, 1);
