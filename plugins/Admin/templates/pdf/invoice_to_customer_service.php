@@ -29,7 +29,7 @@ if ($result->cancelledInvoice) {
 }
 $html .= '</h2>';
 $pdf->writeHTML($html);
-$pdf->ln(7);
+$pdf->ln(3);
 
 $html = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 $html .= '<td width="272">';
@@ -52,6 +52,7 @@ $html .= '<td width="230" align="right">';
 $html .= '</tr></table>';
 
 $pdf->writeHTML($html);
+$pdf->ln(8);
 
 $pdf->prepareTableHeader();
 $pdf->prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax);

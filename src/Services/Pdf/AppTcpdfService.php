@@ -19,7 +19,6 @@ namespace App\Services\Pdf;
 use App\Controller\Component\StringComponent;
 use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
-use Cake\Log\Log;
 use Cake\View\Helper\TextHelper;
 use Com\Tecnick\Pdf\Tcpdf;
 
@@ -34,7 +33,7 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected const float DEFAULT_MARGIN = 10.0;
 
-    protected const string HTML_DEFAULT_STYLES = '<style>body{line-height:125%;}p{margin-bottom:0;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
+    final protected const string HTML_DEFAULT_STYLES = '<style>body{line-height:125%;}p{margin-bottom:0;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
 
     public string $table = '';
 

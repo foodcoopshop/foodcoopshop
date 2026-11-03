@@ -40,6 +40,27 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareSendingInvoices();
     }
 
+    public function testInvoiceLineSpacing(): void
+    {
+        foreach ([3, 8] as $spacing) {
+            $pdf = new \App\Services\Pdf\CustomerInvoiceTcpdfService();
+            $pdf->addPage();
+            $pdf->writeHTML('<h2>' . __('Invoice') . '</h2>');
+            $html = '<table border="0" cellspacing="0" cellpadding="0"><tr><td>Name<br />Address</td></tr></table>';
+            $pdf->writeHTML($html);
+            $unspacedEnd = $pdf->getLastHTMLCellEnd()['y'];
+
+            $pdf->addPage();
+            $pdf->writeHTML('<h2>' . __('Invoice') . '</h2>');
+            $pdf->ln($spacing);
+            $pdf->writeHTML($html);
+
+            $this->assertEqualsWithDelta($spacing, $pdf->getLastHTMLCellEnd()['y'] - $unspacedEnd, 0.001);
+        }
+        $constant = new \ReflectionClassConstant(\App\Services\Pdf\AppTcpdfService::class, 'HTML_DEFAULT_STYLES');
+        $this->assertTrue($constant->isFinal());
+    }
+
     public function testContentOfInvoiceForPerson(): void
     {
 
