@@ -426,7 +426,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $this->assertResponseContainsPdfHtml('orderListByProductWithoutPricePerUnit.html');
-        $this->assertResponseContains('height:4mm;border-left:0.1mm solid #000;">&nbsp;</td>');
+        $this->assertResponseContains('border-left:0.1mm solid #000;">&nbsp;</td>');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $this->assertResponseContainsPdfHtml('orderListByCustomerWithoutPricePerUnit.html');

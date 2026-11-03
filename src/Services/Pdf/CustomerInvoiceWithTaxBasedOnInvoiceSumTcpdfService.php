@@ -127,8 +127,8 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoic
             $this->table .= '</tr>';
         }
 
-        $this->table .= '<tr style="font-size:12px;">';
-            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' colspan="7"></td>';
+        $this->table .= '<tr>';
+            $this->table .= '<td' . $this->getThinTableCellStyleAttribute() . ' colspan="7">&nbsp;</td>';
         $this->table .= '</tr>';
 
         $this->renderSumRow(__('Total_sum_net'), Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl));

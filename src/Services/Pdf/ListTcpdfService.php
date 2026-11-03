@@ -409,7 +409,7 @@ class ListTcpdfService extends AppTcpdfService
         $columnCount = max(count($headers), 2);
 
         $this->table .= '<tr>';
-        $this->table .= '<td style="height:4mm;border-left:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';">&nbsp;</td>';
+        $this->table .= '<td style="border-left:' . self::THIN_TABLE_CELL_BORDER_STYLE . ';">&nbsp;</td>';
         if ($columnCount > 2) {
             $this->table .= '<td colspan="' . ($columnCount - 2) . '"></td>';
         }
