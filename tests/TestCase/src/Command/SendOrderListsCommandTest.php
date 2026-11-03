@@ -438,6 +438,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $list->addLastSumRow([__('Amount'), __('Product'), __('Price'), __('Member'), ''], '1', null, null, null);
         $spacer = explode('</tr>', $list->table, 2)[0] . '</tr>';
         $pdf = new class extends \App\Services\Pdf\AppTcpdfService {};
+        $pdf->setHtmlVSpace([]);
         $pdf->addPage();
         $pdf->writeHTML('<table>' . $spacer . '</table>');
 

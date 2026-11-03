@@ -34,7 +34,7 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected const float DEFAULT_MARGIN = 10.0;
 
-    protected const string HTML_DEFAULT_STYLES = '<style>body{line-height:125%;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
+    protected const string HTML_DEFAULT_STYLES = '<style>body{line-height:125%;}p{margin-bottom:0;}td,th{vertical-align:middle;}td,th,td *,th *{line-height:normal;}th{text-align:left;}a{color:#0000ff;text-decoration:underline;}</style>';
 
     public string $table = '';
 
@@ -74,6 +74,7 @@ abstract class AppTcpdfService extends Tcpdf
             ],
         );
         $this->font->insert($this->pon, self::FONT_FAMILY, '', $this->fontSize);
+        $this->setHtmlVSpace(['table' => [1 => ['n' => 1]]]);
         mb_internal_encoding('UTF-8');
         $this->setCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->setAuthor(Configure::read('appDb.FCS_APP_NAME'));
