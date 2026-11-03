@@ -19,6 +19,7 @@ namespace App\Services\PdfWriter;
 use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
 use App\Controller\Component\StringComponent;
+use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 class OrderDetailsPdfWriterService extends PdfWriterService
@@ -39,6 +40,9 @@ class OrderDetailsPdfWriterService extends PdfWriterService
      */
     public function prepareAndSetData(array $pickupDay, ?string $order): void
     {
+
+        $pickupDate = new Date(Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
+        $this->setFilename(__('Orders') . '-' . $pickupDate->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '.pdf');
 
         /** @var \App\Model\Table\OrderDetailsTable $orderDetailsTable */
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -89,7 +93,7 @@ class OrderDetailsPdfWriterService extends PdfWriterService
             'orderDetails' => $preparedOrderDetails,
             'order' => $order,
         ]);
-        
+
     }
 
 }

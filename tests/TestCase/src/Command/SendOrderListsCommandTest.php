@@ -425,14 +425,25 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByProductWithoutPricePerUnit.html');
+        $this->assertResponseContains('border-left:0.1mm solid #000;">&nbsp;</td>');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByCustomerWithoutPricePerUnit.html');
+    }
+
+    public function testOrderListSpacerRowHeight(): void
+    {
+        $list = new \App\Services\Pdf\ListTcpdfService();
+        $list->addLastSumRow([__('Amount'), __('Product'), __('Price'), __('Member'), ''], '1', null, null, null);
+        $spacer = explode('</tr>', $list->table, 2)[0] . '</tr>';
+        $pdf = new class extends \App\Services\Pdf\AppTcpdfService {};
+        $pdf->setHtmlVSpace([]);
+        $pdf->addPage();
+        $pdf->writeHTML('<table>' . $spacer . '</table>');
+
+        $this->assertGreaterThanOrEqual(14.0, $pdf->getLastHTMLCellEnd()['y']);
+        $this->assertLessThan(16.0, $pdf->getLastHTMLCellEnd()['y']);
     }
 
     public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled(): void
@@ -441,14 +452,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnitAndPurchasePriceEnabled.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByProductWithoutPricePerUnitAndPurchasePriceEnabled.html');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnitAndPurchasePriceEnabled.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByCustomerWithoutPricePerUnitAndPurchasePriceEnabled.html');
 
     }
 
@@ -522,14 +529,10 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         }
 
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByProductWithPricePerUnit.html');
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithPricePerUnit.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('orderListByCustomerWithPricePerUnit.html');
 
     }
 

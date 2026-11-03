@@ -17,14 +17,14 @@ declare(strict_types=1);
 
 use Cake\I18n\I18n;
 
-$pdf->SetLeftMargin(12);
-$pdf->SetRightMargin(12);
+$pdf->setLeftMargin(12);
+$pdf->setRightMargin(12);
 
 $title = __('Terms_of_use');
-$pdf->SetTitle($title);
+$pdf->setTitle($title);
 $pdf->infoTextForFooter = $title;
 
-$pdf->AddPage();
+$pdf->addPage();
 
 $html = $this->element('legal/'.I18n::getLocale(). '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
-$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html);

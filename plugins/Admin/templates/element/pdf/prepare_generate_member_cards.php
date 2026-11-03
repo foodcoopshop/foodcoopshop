@@ -17,10 +17,10 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$pdf->SetLeftMargin(16);
-$pdf->SetTopMargin(54);
+$pdf->setLeftMargin(16);
+$pdf->setTopMargin(54);
 
-$pdf->AddPage();
+$pdf->addPage();
 
 $i = 0;
 $pdf->table = '<table border="0" cellspacing="0" cellpadding="4">';
@@ -35,7 +35,7 @@ foreach($customers as $customer) {
         // START ROW logo and name block
         $pdf->table .= '<tr>';
             $pdf->table .= '<td style="width:80px;">';
-                $pdf->table .= '<img src="' . $pdf->logoPath .'">';
+                $pdf->table .= '<img style="width:80px;" src="' . $pdf->logoPath .'">';
             $pdf->table .= '</td>';
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between logo and top right name block
             $pdf->table .= '<td style="width:138px;">';
@@ -56,16 +56,12 @@ foreach($customers as $customer) {
         // END ROW with logo and name block
 
         // START ROW barcode and customer image
-        $pdf->table .= '<tr>';
+        $pdf->table .= '<tr><td colspan="3"><table border="0" cellspacing="0" cellpadding="0"><tr>';
             $pdf->table .= '<td style="width:5px;"></td>'; //spacer left of barcode
             $pdf->table .= '<td style="width:120px;" border="0">';
-            $barcodeObject = new TCPDFBarcode($customer->system_bar_code, 'C39');
-            //https://stackoverflow.com/a/54520065/2100184
-            /** @phpstan-ignore-next-line */
-            $imgBase64Encoded = @base64_encode($barcodeObject->getBarcodePngData(1.5, 102));
             // move barcode to bottom
             $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:6px;"></td></tr></table>';
-            $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
+            $pdf->table .= $pdf->getBarcodeImageTag((string) $customer->system_bar_code, 1.5, 102, 120);
             $pdf->table .= '</td>';
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
             // move user image to bottom
@@ -82,12 +78,12 @@ foreach($customers as $customer) {
                             $width = $height / $ratio;
                             // move image to bottom
                             $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:3px;"></td></tr></table>';
-                            $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $customerImageBase64Encoded) . '">';
+                            $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="data:image/jpeg;base64,' . $customerImageBase64Encoded . '">';
                         }
                     }
                 }
             $pdf->table .= '</td>';
-        $pdf->table .= '</tr>';
+        $pdf->table .= '</tr></table></td></tr>';
         // END ROW barcode and customer image
 
     $pdf->table .= '</table>';
@@ -98,4 +94,4 @@ foreach($customers as $customer) {
     $i++;
 }
 $pdf->table .= '</table>';
-$pdf->writeHTML($pdf->table, true, false, true, false, '');
+$pdf->writeHTML($pdf->table);

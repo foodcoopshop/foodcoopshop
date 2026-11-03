@@ -30,9 +30,22 @@ class BackupDatabaseCommand extends AppCommand
     public function execute(Arguments $args, ConsoleIo $io): int
     {
 
-        ini_set('max_execution_time', 300);
-        ini_set('memory_limit', '256M');
+        $maxExecutionTime = ini_set('max_execution_time', 300);
+        $memoryLimit = ini_set('memory_limit', '256M');
+        try {
+            return $this->backupDatabase($args, $io,);
+        } finally {
+            if ($maxExecutionTime !== false) {
+                ini_set('max_execution_time', $maxExecutionTime);
+            }
+            if ($memoryLimit !== false) {
+                ini_set('memory_limit', $memoryLimit);
+            }
+        }
+    }
 
+    private function backupDatabase(Arguments $args, ConsoleIo $io): int
+    {
         $this->startTimeLogging();
 
         $connection = 'default';
