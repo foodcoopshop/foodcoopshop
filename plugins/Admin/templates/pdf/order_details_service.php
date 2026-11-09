@@ -77,7 +77,7 @@ foreach ($orderDetails as $od) {
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && $order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
             $pdf->table .= '<tr style="background-color:#cecece;">';
-            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' colspan="' . count($widths) . '"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
+            $pdf->table .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' colspan="' . $num_headers . '"><b>' . __('Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
             $pdf->table .= '</tr>';
         }
 
