@@ -83,21 +83,21 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
 
     $html .= '<tr>';
     $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $firstColumnWidth . '">';
-    $html .= '<h3> - ' . $variableMemberFee . '% '.__('variable_member_fee').'</h3>';
+    $html .= '<h3 style="margin:0;"> - ' . $variableMemberFee . '% '.__('variable_member_fee').'</h3>';
     $html .= '</td>';
 
     $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3> - ' . $this->MyNumber->formatAsDecimal($compensatedPrice) . '</h3>';
+    $html .= '<h3 style="margin:0;"> - ' . $this->MyNumber->formatAsDecimal($compensatedPrice) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
     $html .= '<tr>';
     $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $firstColumnWidth . '">';
-    $html .= '<h3>'.__('New_total_sum').'</h3>';
+    $html .= '<h3 style="margin:0;">'.__('New_total_sum').'</h3>';
     $html .= '</td>';
 
     $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3>' . $this->MyNumber->formatAsDecimal($newSumPriceIncl) . '</h3>';
+    $html .= '<h3 style="margin:0;">' . $this->MyNumber->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
