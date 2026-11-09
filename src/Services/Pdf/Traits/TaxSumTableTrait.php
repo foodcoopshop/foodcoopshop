@@ -35,7 +35,7 @@ trait TaxSumTableTrait
             $this->ln(3);
             $this->writeHTML($html);
 
-            $html = '<table cellspacing="0" cellpadding="1" style="font-size:8px;border-collapse:collapse;">';
+            $html = '<table cellspacing="0" cellpadding="2" style="font-size:8px;border-collapse:collapse;">';
 
             $html .= '<tr style="font-weight:bold;background-color:#cecece">';
             $html .= '<th' . $this->getThinTableCellStyleAttribute() . ' align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Tax_rate').'</th>';

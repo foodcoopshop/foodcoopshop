@@ -48,7 +48,7 @@ abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService
     public function prepareTableHeader(): void
     {
 
-        $this->table = '<table width="' . array_sum(array_column($this->headers, 'width')) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+        $this->table = '<table width="' . array_sum(array_column($this->headers, 'width')) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="2"><thead><tr>';
 
         foreach($this->headers as $header) {
             $this->table .= '<th' . $this->getThinTableCellStyleAttribute('font-weight:bold;background-color:#cecece') . ' align="' . $header['align'] . '" width="' . $header['width'] . '">' . $header['name'] . '</th>';

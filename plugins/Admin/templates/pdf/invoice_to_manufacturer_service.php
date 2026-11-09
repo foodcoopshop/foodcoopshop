@@ -79,7 +79,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $firstColumnWidth = 365;
     $secondColumnWidth = 165;
 
-    $html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="1">';
+    $html = '<table style="border-collapse:collapse;" cellspacing="0" cellpadding="2">';
 
     $html .= '<tr>';
     $html .= '<td' . $pdf->getThinTableCellStyleAttribute() . ' width="' . $firstColumnWidth . '">';

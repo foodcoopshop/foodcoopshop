@@ -59,7 +59,7 @@ foreach ($orderDetails as $od) {
         $widths[4] = 0;
     }
 
-    $pdf->table .= '<table width="' . array_sum($widths) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+    $pdf->table .= '<table width="' . array_sum($widths) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="2"><thead><tr>';
 
     $num_headers = count($headers);
     for ($i = 0; $i < $num_headers; ++ $i) {

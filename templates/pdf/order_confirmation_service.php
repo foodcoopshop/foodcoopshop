@@ -53,7 +53,7 @@ if (!empty($manufacturers)) {
         }
 
 
-        $pdf->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+        $pdf->table .= '<table style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="2"><thead><tr>';
 
         $num_headers = count($headers);
         for ($j = 0; $j < $num_headers; ++ $j) {

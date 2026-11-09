@@ -74,7 +74,7 @@ class ListTcpdfService extends AppTcpdfService
     public function renderDetailedOrderList(array $results, array $widths, array $headers, string $groupType, bool $onlyShowSums = false): void
     {
 
-        $this->table .= '<table width="' . array_sum($widths) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="1"><thead><tr>';
+        $this->table .= '<table width="' . array_sum($widths) . '" style="font-size:8px;border-collapse:collapse;" cellspacing="0" cellpadding="2"><thead><tr>';
 
         $isOrderList = $this->isOrderList($headers);
 
