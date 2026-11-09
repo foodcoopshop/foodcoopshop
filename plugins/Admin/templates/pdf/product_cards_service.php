@@ -16,42 +16,28 @@ declare(strict_types=1);
  */
 
 $pdf->setLeftMargin(16);
-$pdf->setTopMargin(15);
+$pdf->setTopMargin(8);
+$pdf->setHtmlVSpace([]);
 
 $pdf->addPage();
 
-$i = 0;
-$pdf->table = '<table border="0" cellspacing="0" cellpadding="4">';
-foreach($products as $product) {
-    $pairRecord = $i % 2 == 0;
-    if ($pairRecord) {
-        $pdf->table .= '<tr>';
-    }
-    $pdf->table .= '<td style="width:375px;border:1px solid #E6E6E3;">'; // roughly 85,60mm x 53,98mm
-    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
-
-    // START ROW logo and name block
-    $pdf->table .= '<tr>';
-    $pdf->table .= '<td>';
+$pdf->table = '<style>td{vertical-align:top;} .product-card-details,.product-card-details *{line-height:125%;}</style>';
+foreach (array_chunk($products, 2) as $productPair) {
+    $pdf->table .= '<table nobr="true" border="0" cellspacing="0" cellpadding="4"><tr>';
+    foreach ($productPair as $product) {
+    $pdf->table .= '<td colspan="2" style="width:375px;height:48px;border-top:1px solid #E6E6E3;border-left:1px solid #E6E6E3;border-right:1px solid #E6E6E3;">';
+    $pdf->table .= '<div class="product-card-details">';
     $pdf->table .= '<b style="font-size:12px;">' . $product->name . '</b> <br />';
     $pdf->table .= __('Price') . ': ' . $product->prepared_price . '<br />';
-    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:5px;">'.__('Manufacturer') . ': <b>' . $product->manufacturer->name . '</b> / ' . __('Product_ID') . ': <b>' . $product->id_product . '</b></td></tr></table>';
+    $pdf->table .= __('Manufacturer') . ': <b>' . $product->manufacturer->name . '</b> / ' . __('Product_ID') . ': <b>' . $product->id_product . '</b>';
+    $pdf->table .= '</div>';
     $pdf->table .= '</td>';
-    $pdf->table .= '</tr>';
-    // END ROW with logo and name block
-
-    // START ROW barcode and product image
-    $pdf->table .= '<tr><td><table border="0" cellspacing="0" cellpadding="0"><tr>';
-    $pdf->table .= '<td style="width:5px;"></td>'; //spacer left of barcode
-    $pdf->table .= '<td style="width:255px;">';
-    // move barcode to bottom
-    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:6px;"></td></tr></table>';
+    }
+    $pdf->table .= '</tr><tr>';
+    foreach ($productPair as $product) {
+    $pdf->table .= '<td style="width:275px;height:120px;border-left:1px solid #E6E6E3;border-bottom:1px solid #E6E6E3;padding-left:9px;padding-top:7.5px;font-size:0;line-height:0;">';
     $pdf->table .= $pdf->getBarcodeImageTag((string) $product->system_bar_code, 1.3, 108, 255);
-    $pdf->table .= '</td>';
-    $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
-    // move user image to bottom
-    $pdf->table .= '<td style="width:90px;" align="right">';
-
+    $pdf->table .= '</td><td style="width:100px;height:120px;border-right:1px solid #E6E6E3;border-bottom:1px solid #E6E6E3;padding-top:15px;text-align:right;font-size:0;line-height:0;">';
     if ($product->image) {
         $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'thickbox');
         $srcProductImage = $this->Html->removeTimestampFromFile($srcProductImage);
@@ -64,25 +50,15 @@ foreach($products as $product) {
                 $productImageContents = file_get_contents($productImage);
                 if ($productImageContents !== false) {
                     $productImageBase64Encoded = base64_encode($productImageContents);
-                    $height = 100;
+                    $height = min(100, 90 * $ratio);
                     $width = $height / $ratio;
-                    // move image to bottom
-                    $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:12px;"></td></tr></table>';
                     $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="data:image/jpeg;base64,' . $productImageBase64Encoded . '">';
                 }
             }
         }
     }
     $pdf->table .= '</td>';
-    $pdf->table .= '</tr></table></td></tr>';
-    // END ROW barcode and customer image
-
-    $pdf->table .= '</table>';
-    $pdf->table .= '</td>';
-    if (!$pairRecord || $i==count($products)-1) {
-        $pdf->table .= '</tr>';
     }
-    $i++;
+    $pdf->table .= '</tr></table>';
 }
-$pdf->table .= '</table>';
 $pdf->writeHTML($pdf->table);
