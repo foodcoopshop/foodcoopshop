@@ -12,12 +12,18 @@
  * @link          https://www.foodcoopshop.com
  */
 
- @media print {
+@media print {
+    @page {
+        margin: 12mm;
+    }
+
     body {
         color: #000 ! important;
+        background: #fff ! important;
     }
     body.admin table.list tr td a:not(.btn),
-    body.dark.admin table.list tr td a:not(.btn) {
+    body.dark.admin table.list tr td a:not(.btn),
+    body.admin table.list th a {
         color: #000 ! important;
         text-decoration: none ! important;
     }
@@ -26,24 +32,107 @@
     }
     #logo,
     .btn-arrow,
-    #menu {
+    #menu,
+    body.admin .btn,
+    body.admin .dropdown-menu,
+    body.admin .pagination,
+    body.admin .filter-container .right,
+    body.admin .filter-container .input.select,
+    body.admin .filter-container .ts-wrapper,
+    body.admin #flashMessage,
+    body.admin #full-page-loader {
         display: none ! important;
     }
     #content {
         margin-left: 0;
     }
-    input[type="text"], select {
-        width: 95px ! important;
-    }
     a.btn {
         display: none;
     }
-    .filter-container {
-        position: static;
-        margin-top: -80px;
-        font-size: 1.3rem;
+    body.admin #container,
+    body.admin #content {
+        display: block ! important;
+        position: static ! important;
+        float: none ! important;
+        width: 100% ! important;
+        min-width: 0 ! important;
+        max-width: none ! important;
+        min-height: 0 ! important;
+        height: auto ! important;
+        margin: 0 ! important;
+        padding: 0 ! important;
+        border: 0 ! important;
+        background: #fff ! important;
+        overflow: visible ! important;
     }
-    table td {
-        font-size: 1.3rem;
+    body.admin .filter-container,
+    body.admin .filter-container-not-fixed {
+        position: static ! important;
+        float: none ! important;
+        width: 100% ! important;
+        margin: 0 0 4mm ! important;
+        padding: 0 ! important;
+        border: 0 ! important;
+        background: #fff ! important;
+        color: #000 ! important;
+        font-size: 10pt;
     }
- }
+    body.admin .filter-container h1 {
+        float: none;
+        margin: 0 0 2mm;
+    }
+    body.admin .filter-container input[type="text"] {
+        width: 25mm ! important;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: #fff ! important;
+        color: #000 ! important;
+        font-size: 10pt;
+    }
+    body.admin table.list {
+        display: table ! important;
+        width: 100% ! important;
+        border-collapse: collapse;
+        font-size: 10pt;
+    }
+    body.admin table.list thead {
+        display: table-header-group;
+    }
+    body.admin table.list tfoot {
+        display: table-row-group;
+    }
+    body.admin table.list tr {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    body.admin table.list th,
+    body.admin table.list td {
+        position: static ! important;
+        padding: 1.5mm 2mm ! important;
+        border: 1px solid #999 ! important;
+        box-shadow: none ! important;
+        background: #fff ! important;
+        color: #000 ! important;
+        font-size: 10pt ! important;
+        line-height: 1.25 ! important;
+        width: auto ! important;
+        white-space: normal ! important;
+        overflow-wrap: normal;
+    }
+    body.admin table.list th,
+    body.admin table.list td.right,
+    body.admin table.list td.slim,
+    body.admin table.list td.icon {
+        white-space: nowrap ! important;
+    }
+    body.admin table.list tr.selected a:not(.btn),
+    body.admin table.list tr:hover a:not(.btn) {
+        color: #000 ! important;
+    }
+    body.admin table.list .sort a:before {
+        display: none;
+    }
+}
