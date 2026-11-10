@@ -26,7 +26,7 @@ if (!empty($manufacturers)) {
         $pdf->addPage();
 
         $pdf->writeHTML('<h3>' . __('Order') . ': '. $identity->name.', ' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2')).'</h3>');
-        $pdf->ln(8);
+        $pdf->ln(2);
 
         $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false));
         $pdf->ln(6);
