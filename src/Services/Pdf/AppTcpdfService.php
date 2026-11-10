@@ -241,10 +241,8 @@ abstract class AppTcpdfService extends Tcpdf
 
     protected function getHeaderRightText(string $html, float $rightEdge): string
     {
-        $text = html_entity_decode(strip_tags(str_replace('<br />', "\n", $html)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        if (str_starts_with($text, "\n")) {
-            $text = substr($text, 1);
-        }
+        $html = preg_replace('/<br\s*\/?>\s*/i', "\n", $html);
+        $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         return $this->withFont(10, fn(): string => $this->getTextCell($text, 0, 4, $rightEdge, halign: 'R', cell: self::ZEROCELL,));
     }
 
