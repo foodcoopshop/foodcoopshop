@@ -40,9 +40,7 @@ trait FooterTrait
             $width = $page['width'] - $this->rightMargin;
             $out = $this->getTextCell($footerText, $this->leftMargin, $posy, $width - $this->leftMargin, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
             $out .= $this->getTextCell($textRight, $textX, $posy + 4, $width - $textX, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
-            $out .= $this->withFont(10, function () use ($totalX, $posy, $width): string {
-                return $this->getTextCell(\Com\Tecnick\Pdf\Page\Page::PAGE_TOT, $totalX, $posy + 4, $width - $totalX, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
-            }, 'freesanslatin');
+            $out .= $this->getTextCell((string) count($this->page->getPages()), $totalX, $posy + 4, $width - $totalX, 10, halign: 'L', cell: \Com\Tecnick\Pdf\Text::ZEROCELL,);
             return $out;
         });
         return $out;

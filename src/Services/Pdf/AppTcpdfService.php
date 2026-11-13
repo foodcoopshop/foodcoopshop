@@ -64,10 +64,13 @@ abstract class AppTcpdfService extends Tcpdf
 
     private string $htmlLog = '';
 
+    private bool $footersRendered = false;
+
     public function __construct(string $orientation = 'P')
     {
         $this->orientation = $orientation;
         parent::__construct(
+            subsetfont: true,
             fileOptions: [
                 'allowedPaths' => array_merge($this->defaultFileAllowedPaths(), [ROOT . DS . 'webroot', ROOT . DS . 'files_private']),
             ],
@@ -210,6 +213,31 @@ abstract class AppTcpdfService extends Tcpdf
         return '';
     }
 
+    public function getOutPDFString(): string
+    {
+        if (!$this->footersRendered) {
+            $currentPageId = (int) $this->page->getPageId();
+            $leftMargin = $this->leftMargin;
+            try {
+                foreach ($this->page->getPages() as $pid => $page) {
+                    $this->setCurrentPage($pid);
+                    $this->graph->setPageWidth($page['width']);
+                    $this->graph->setPageHeight($page['height']);
+                    $this->leftMargin = $this->pageLeftMargins[$pid] ?? $leftMargin;
+                    $this->page->addContent(
+                        $this->graph->getStartTransform() . $this->getPageFooter($pid) . $this->graph->getStopTransform(),
+                        $pid,
+                    );
+                }
+                $this->footersRendered = true;
+            } finally {
+                $this->leftMargin = $leftMargin;
+                $this->setCurrentPage($currentPageId);
+            }
+        }
+        return parent::getOutPDFString();
+    }
+
     protected function drawLine(float $posy): string
     {
         $page = $this->page->getPage();
@@ -256,7 +284,6 @@ abstract class AppTcpdfService extends Tcpdf
         try {
             $out = $this->graph->getStartTransform();
             $out .= $this->getPageHeader($pid);
-            $out .= $this->getPageFooter($pid);
             $out .= $this->graph->getStopTransform();
             return $out;
         } finally {
