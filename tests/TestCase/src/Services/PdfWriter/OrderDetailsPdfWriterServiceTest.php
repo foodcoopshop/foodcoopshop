@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
+use App\Services\Pdf\ListTcpdfService;
 
 class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
 {
@@ -31,6 +32,10 @@ class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
         $pdfWriter->prepareAndSetData($pickupDay, $order);
         $html = $pdfWriter->writeHtml();
 
+        $this->assertSame('Bestellungen-02.02.2018.pdf', $pdfWriter->getFilename());
+        $pdfLibrary = new ListTcpdfService();
+        $pdfLibrary->setPDFFilename($pdfWriter->getFilename());
+        $this->assertSame('Bestellungen-02_02_2018.pdf', $pdfLibrary->getPDFFilename());
         $this->assertRegExpWithUnquotedString('<b>Lagerort: Keine Kühlung', $html);
         $this->assertRegExpWithUnquotedString('7,98', $html);
         $this->assertRegExpWithUnquotedString('Abholtag: 02.02.2018 / ID: 92', $html);

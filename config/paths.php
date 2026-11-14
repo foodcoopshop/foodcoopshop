@@ -94,3 +94,7 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'c
  */
 define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
+/**
+ * Font definitions for tecnickcom/tc-lib-pdf
+ */
+define('K_PATH_FONTS', ROOT . DS . 'resources' . DS . 'fonts' . DS);

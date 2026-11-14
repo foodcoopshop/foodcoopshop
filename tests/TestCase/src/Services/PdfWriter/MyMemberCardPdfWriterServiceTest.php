@@ -33,7 +33,7 @@ class MyMemberCardPdfWriterServiceTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Mitgliedskarte: <b>FoodCoop Test</b>', $html);
         $this->assertRegExpWithUnquotedString('Mitglieds-Nr.: <b>87</b>', $html);
         $this->assertRegExpWithUnquotedString('Reg.-Datum: 02.12.2014', $html);
-        $this->assertRegExpWithUnquotedString('<img src="@iVBORw0KGgoAAAANSUhEUgAAAMAAAABmAQMAAACnVwy3AAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADRJREFUSIljaKp8Ms/R5lOFyidHm8kHQWge5xOgIMOoxKjEqMSoxKjEqMSoxKjEqMTwkQAAyiX7oxzbA4UAAAAASUVORK5CYII=">', $html);
+        $this->assertRegExpWithUnquotedString('<img style="width:42.33mm;height:22.49mm;" src="data:image/png;base64,iVBOR', $html);
     }
 
 }

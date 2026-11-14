@@ -936,6 +936,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
         $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
+        $this->assertMailContainsAttachment('Bestelluebersicht.pdf');
 
     }
 

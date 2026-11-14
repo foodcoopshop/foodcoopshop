@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Core\Configure;
+use Com\Tecnick\Barcode\Barcode;
 
 $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $helloCashInvoice->invoice_cancellation == 1;
 
@@ -439,8 +440,8 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
                 } else {
                     $signatureCode = $helloCashInvoice->signature->signature_cancellation_code;
                 }
-                $barcodeobj = new TCPDF2DBarcode($signatureCode, 'QRCODE,L');
-                $imgBase64Encoded = base64_encode($barcodeobj->getBarcodePngData(6, 6, [0,0,0]));
+                $barcodeObject = (new Barcode())->getBarcodeObj('QRCODE,L', $signatureCode, -6, -6, 'black');
+                $imgBase64Encoded = base64_encode($barcodeObject->getPngData());
                 echo '<img alt="QR-Code" style="padding:10px;width:110px" src="data:image/png;base64,' . $imgBase64Encoded . '">';
             
                 if (!$isCancellationInvoice) {

@@ -12,6 +12,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Mitglieder können bei der Registrierung und im Profil einen optionalen Infokanal (WhatsApp, Signal oder SMS) auswählen. Die Funktion muss zuerst in den Einstellungen aktiviert werden. [I#1281](https://github.com/foodcoopshop/foodcoopshop/issues/1281) / [PR#1282](https://github.com/foodcoopshop/foodcoopshop/pull/1282) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bessere Druck-Ansicht für die Admin-Listen [I#1285](https://github.com/foodcoopshop/foodcoopshop/issues/1285) / [PR#1288](https://github.com/foodcoopshop/foodcoopshop/pull/1288) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Titel und Meta-Beschreibung der Startseite können jetzt im Admin-Bereich bearbeitet werden. [I#1279](https://github.com/foodcoopshop/foodcoopshop/issues/1279) / [PR#1280](https://github.com/foodcoopshop/foodcoopshop/pull/1280) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die PDF-Bibliothek TCPDF wurde durch den Nachfolger tc-lib-pdf ersetzt. [I#1260](https://github.com/foodcoopshop/foodcoopshop/issues/1260) / [PR#1286](https://github.com/foodcoopshop/foodcoopshop/pull/1286) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 ## v4.3
 

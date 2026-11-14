@@ -40,6 +40,27 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareSendingInvoices();
     }
 
+    public function testInvoiceLineSpacing(): void
+    {
+        foreach ([3, 8] as $spacing) {
+            $pdf = new \App\Services\Pdf\CustomerInvoiceTcpdfService();
+            $pdf->addPage();
+            $pdf->writeHTML('<h2>' . __('Invoice') . '</h2>');
+            $html = '<table border="0" cellspacing="0" cellpadding="0"><tr><td>Name<br />Address</td></tr></table>';
+            $pdf->writeHTML($html);
+            $unspacedEnd = $pdf->getLastHTMLCellEnd()['y'];
+
+            $pdf->addPage();
+            $pdf->writeHTML('<h2>' . __('Invoice') . '</h2>');
+            $pdf->ln($spacing);
+            $pdf->writeHTML($html);
+
+            $this->assertEqualsWithDelta($spacing, $pdf->getLastHTMLCellEnd()['y'] - $unspacedEnd, 0.001);
+        }
+        $constant = new \ReflectionClassConstant(\App\Services\Pdf\AppTcpdfService::class, 'HTML_DEFAULT_STYLES');
+        $this->assertTrue($constant->isFinal());
+    }
+
     public function testContentOfInvoiceForPerson(): void
     {
 
@@ -50,9 +71,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForPerson.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerInvoiceForPerson.html');
 
     }
 
@@ -84,9 +103,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForCompany.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerInvoiceForCompany.html');
 
     }
 
@@ -99,9 +116,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerWithDecimalsInTaxRate.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerWithDecimalsInTaxRate.html');
     }
 
     public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum(): void
@@ -122,9 +137,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $orderDetailsTable->updateAll(['deposit' => -0.5], ['id_order_detail' => 3]); // deposit can also be returned with a negative deposit of an order detail
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->assertResponseContainsPdfHtml('customerInvoiceWithTaxBasedOnInvoiceSum.html');
     }
 
     public function testSendInvoicesWithExcludedFutureOrder(): void
