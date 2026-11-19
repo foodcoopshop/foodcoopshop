@@ -95,6 +95,13 @@ foreach ($actionLogs as $actionLog) {
 
     echo '<td class="text">';
     echo $actionLog->text;
+    if ($actionLog->type == 'cronjob_send_invoices' && ($identity->isSuperadmin() || $identity->isAdmin())) {
+        echo $this->Html->link(
+            '<i class="fas fa-print ok"></i> ' . __('Print all invoices'),
+            $this->Slug->getMergedInvoicesRoute($actionLog->date->i18nFormat('yyyy-MM')),
+            ['class' => 'btn btn-outline-light float-end mt-2', 'target' => '_blank', 'escape' => false],
+        );
+    }
     echo '</td>';
 
     echo '<td>';

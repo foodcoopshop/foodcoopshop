@@ -10,6 +10,8 @@ use App\Services\DeliveryRhythmService;
 use Cake\Controller\Exception\InvalidParameterException;
 use Cake\Log\Log;
 use Cake\Http\Response;
+use Cake\Http\Exception\NotFoundException;
+use setasign\Fpdi\Fpdi;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -305,6 +307,34 @@ class ListsController extends AdminAppController
         }
 
         return $this->getFile($filenameWithPath);
+    }
+
+    public function getMergedInvoices(): Response
+    {
+        $yearAndMonth = (string) $this->getRequest()->getQuery('yearAndMonth');
+        if (!preg_match('/^(\d{4})-(\d{2})$/', $yearAndMonth, $matches)) {
+            throw new InvalidParameterException('yearAndMonth not valid');
+        }
+
+        $files = glob(Configure::read('app.folder_invoices') . DS . $matches[1] . DS . $matches[2] . DS . '*' . __('_Invoice_filename_') . '*.pdf');
+        if (empty($files)) {
+            throw new NotFoundException('no invoices found');
+        }
+
+        $pdf = new Fpdi();
+        foreach ($files as $file) {
+            $pageCount = $pdf->setSourceFile($file);
+            for ($i = 1; $i <= $pageCount; $i++) {
+                $pdf->AddPage();
+                $pdf->useTemplate($pdf->importPage($i), ['adjustPageSize' => true]);
+            }
+        }
+
+        $this->disableAutoRender();
+        return $this->response
+            ->withType('pdf')
+            ->withStringBody($pdf->Output('S'))
+            ->withHeader('Content-Disposition', 'inline; filename="' . __('Invoices') . '_' . $yearAndMonth . '.pdf"');
     }
 
     /**

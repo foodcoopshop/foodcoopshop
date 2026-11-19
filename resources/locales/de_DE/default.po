@@ -3516,6 +3516,9 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 msgid "Print"
 msgstr "Drucken"
 
+msgid "Print all invoices"
+msgstr "Alle Rechnungen gesammelt drucken"
+
 msgid "Print_page"
 msgstr "Seite drucken"
 

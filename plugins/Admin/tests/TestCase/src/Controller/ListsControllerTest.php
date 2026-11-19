@@ -198,11 +198,26 @@ class ListsControllerTest extends AppCakeTestCase
         $this->get($invoiceDownloadUrlMilkManufacturer);
         $this->assertResponseCode(401);
 
+        // check merged invoices as manufacturer
+        $mergedInvoicesUrl = Configure::read('app.slugHelper')->getMergedInvoicesRoute('2018-03');
+        $this->get($mergedInvoicesUrl);
+        $this->assertAccessDeniedFlashMessage();
+
         // check downloadable file as admin
         $this->loginAsAdmin();
         $this->get($invoiceDownloadUrlMeatManufacturer);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
+
+        // check merged invoices as admin
+        $this->get($mergedInvoicesUrl);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+        $this->assertResponseContains('%PDF');
+
+        // check link in action log
+        $this->get($this->Slug->getActionLogsList() . '?types[]=cronjob_send_invoices&dateFrom=11.03.2018&dateTo=11.03.2018');
+        $this->assertResponseContains($mergedInvoicesUrl);
 
     }
 

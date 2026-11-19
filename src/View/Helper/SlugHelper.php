@@ -50,6 +50,11 @@ class SlugHelper extends Helper
         return '/admin/lists/getInvoice?file=' . $filename;
     }
 
+    public function getMergedInvoicesRoute(string $yearAndMonth): string
+    {
+        return '/admin/lists/getMergedInvoices?yearAndMonth=' . $yearAndMonth;
+    }
+
     public function getOrderListDownloadRoute(string $filename): string
     {
         return '/admin/lists/getOrderList?file=' . $filename;
