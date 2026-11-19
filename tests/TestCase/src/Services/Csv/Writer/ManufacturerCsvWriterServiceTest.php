@@ -21,7 +21,7 @@ use League\Csv\Bom;
 class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
 {
 
-    public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;E-Mail;Status;Pfandkonto;Lagerprodukte;"Nur für Mitglieder";Ansprechperson';
+    public string $defaultHeader = 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;E-Mail;Status;Pfandkonto;Lagerprodukte;"Nur für Mitglieder";Ansprechperson;Kontoinhaber;IBAN;BIC';
 
     public function testWriteDefault(): void
     {
@@ -35,10 +35,10 @@ class ManufacturerCsvWriterServiceTest extends AppCakeTestCase
         $this->assertEquals(6, count($lines));
         $this->assertEquals(Bom::Utf8->value . $this->defaultHeader, $lines[0]);
         
-        $this->assertEquals('4;"Demo Fleisch-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-fleisch-hersteller@mailinator.com;1;;0;0;', $lines[1]);
-        $this->assertEquals('5;"Demo Gemüse-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-gemuese-hersteller@mailinator.com;1;0,50;1;0;"Demo Admin"', $lines[2]);
-        $this->assertEquals('15;"Demo Milch-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-milch-hersteller@mailinator.com;1;0,50;0;0;', $lines[3]);
-        $this->assertEquals('16;"Hersteller ohne Customer-Eintrag";4644;Scharnstein;"Demostrasse 4";;;;fcs-hersteller-ohne-customer-eintrag@mailinator.com;1;;0;0;', $lines[4]);
+        $this->assertEquals('4;"Demo Fleisch-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-fleisch-hersteller@mailinator.com;1;;0;0;;"Fleisch GmbH";;', $lines[1]);
+        $this->assertEquals('5;"Demo Gemüse-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-gemuese-hersteller@mailinator.com;1;0,50;1;0;"Demo Admin";;;', $lines[2]);
+        $this->assertEquals('15;"Demo Milch-Hersteller";4644;Scharnstein;"Demostrasse 4";;;;fcs-demo-milch-hersteller@mailinator.com;1;0,50;0;0;;;;', $lines[3]);
+        $this->assertEquals('16;"Hersteller ohne Customer-Eintrag";4644;Scharnstein;"Demostrasse 4";;;;fcs-hersteller-ohne-customer-eintrag@mailinator.com;1;;0;0;;;;', $lines[4]);
 
     }
 

@@ -44,6 +44,9 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
             __('Stock_products'),
             __('Only_for_members'),
             __('Contact_person'),
+            __('Account holder'),
+            __('IBAN'),
+            __('BIC'),
         ];
 
         return $header;
@@ -83,6 +86,9 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
                 $manufacturer->stock_management_enabled,
                 $manufacturer->is_private,
                 !empty($manufacturer->customer) ? $manufacturer->customer->name : '',
+                $manufacturer->bank_account_holder,
+                $manufacturer->iban,
+                $manufacturer->bic,
             ];
 
             $records[] = $record;
