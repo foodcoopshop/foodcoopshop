@@ -60,6 +60,8 @@ abstract class AppFixture extends ChecksumTestFixture {
         'app.PurchasePrices',
         'app.QueuedJobs',
         'app.QueueProcesses',
+        'app.ShoppingLists',
+        'app.ShoppingListProducts',
         'app.Sliders',
         'app.StockAvailables',
         'app.StorageLocations',

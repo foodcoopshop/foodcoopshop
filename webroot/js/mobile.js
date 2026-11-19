@@ -227,6 +227,10 @@ foodcoopshop.Mobile = {
             }
         });
 
+        $('.sidebar ul#shopping-lists-menu > li').each(function () {
+            menuItems.push($(this).clone());
+        });
+
         $('.sidebar ul#filters-menu > li').each(function () {
             menuItems.push($(this).clone());
         });

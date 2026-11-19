@@ -571,6 +571,10 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
             ]
         )->first();
         $this->assertEmpty($customer);
+
+        $shoppingListsTable = $this->getTableLocator()->get('ShoppingLists');
+        $this->assertCount(0, $shoppingListsTable->find('ownedBy', customerId: Configure::read('test.customerId'))->all());
+        $this->assertCount(0, $shoppingListsTable->ShoppingListProducts->find()->where(['shopping_list_id' => \App\Test\Fixture\ShoppingListsFixture::ID_CUSTOMER_WEEKLY])->all());
     }
 
     public function testLogin(): void

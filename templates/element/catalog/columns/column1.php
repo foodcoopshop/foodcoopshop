@@ -15,6 +15,10 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Services\OrderCustomerService;
+use App\Services\ShoppingListAccessService;
+
+
 $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback(
     !empty($product->image) ? $product->image->id_image : 0,
     $product->id_manufacturer,
@@ -37,5 +41,12 @@ if ($product->is_new) {
     }
     echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-outline-light" title="'.__('New').'">';
         echo '<i class="fas fa-star gold"></i> '.__('New');
+    echo '</a>';
+}
+
+if (ShoppingListAccessService::isEnabled($identity, $this->request) && !OrderCustomerService::isSelfServiceModeByUrl()) {
+    // product id is taken from the active entity wrapper (main product or selected attribute) in modal-shopping-list.js
+    echo '<a href="javascript:void(0);" class="btn btn-outline-light btn-shopping-list hide" title="' . h(__('Add_to_shopping_list')) . '" aria-label="' . h(__('Add_to_shopping_list')) . '">';
+        echo '<i class="fas fa-heart"></i>';
     echo '</a>';
 }

@@ -96,6 +96,10 @@
         float: right;
         margin-top: 10px;
     }
+    h1.shopping-list-heading .shopping-list-buttons {
+        height: auto;
+        margin-bottom: 0;
+    }
     #cart,
     .sidebar,
     #header,

@@ -5482,3 +5482,115 @@ msgstr "Individual order deadline"
 
 msgid "Bulk_orders"
 msgstr "Bulk orders"
+
+
+msgid "Edit_shopping_list"
+msgstr "Edit shopping list"
+
+msgid "Do_you_really_want_to_delete_the_shopping_list_{0}?"
+msgstr "Do you really want to delete the shopping list \"{0}\"?"
+
+
+msgid "The_shopping_list_{0}_has_been_changed."
+msgstr "The shopping list {0} has been changed."
+
+msgid "The_shopping_list_{0}_has_been_deleted."
+msgstr "The shopping list {0} has been deleted."
+
+msgid "The_shopping_list_{0}_has_been_loaded_into_your_cart."
+msgstr "The shopping list {0} has been loaded into your cart."
+
+msgid "Saved_on_shopping_list"
+msgstr "Saved on shopping list"
+
+msgid "My_shopping_list"
+msgstr "My shopping list"
+
+msgid "A_shopping_list_with_this_name_already_exists."
+msgstr "A shopping list with this name already exists."
+
+msgid "Shopping_list_new_name_placeholder"
+msgstr "Enter the name of the new shopping list here"
+
+msgid "saved_on_the_shopping_list_{0}"
+msgstr "saved on the shopping list {0}"
+
+msgid "saved_on_the_shopping_lists_{0}"
+msgstr "saved on the shopping lists {0}"
+
+msgid "removed_from_the_shopping_list_{0}"
+msgstr "removed from the shopping list {0}"
+
+msgid "removed_from_the_shopping_lists_{0}"
+msgstr "removed from the shopping lists {0}"
+
+msgid "The_product_{0}_has_been_{1}."
+msgstr "The product {0} has been {1}."
+
+msgid "The_product_{0}_has_been_{1}_and_{2}."
+msgstr "The product {0} has been {1} and {2}."
+
+msgid "The_shopping_lists_of_the_product_{0}_have_not_been_changed."
+msgstr "The shopping lists of the product {0} have not been changed."
+
+msgid "Will_be_added"
+msgstr "Product will be added to this shopping list"
+
+msgid "Will_be_removed"
+msgstr "Product will be removed from this shopping list"
+
+msgid "Amount_will_be_changed_from_{0}_to_{1}"
+msgstr "Amount of the product will be changed: {0}x → {1}x"
+
+msgid "Add_to_shopping_list"
+msgstr "Add to shopping list"
+
+msgid "Create_new_shopping_list_and_add_product"
+msgstr "Create a new shopping list and add the product"
+
+msgid "Product_is_already_saved_in_this_shopping_list"
+msgstr "Product is already saved in this shopping list"
+
+msgid "Default_shopping_list"
+msgstr "Default list"
+
+msgid "Default_shopping_list_description"
+msgstr "Is preselected when clicking the heart if the product is not on any list yet."
+
+msgid "route_shopping_list"
+msgstr "shopping-list"
+
+msgid "route_shopping_lists"
+msgstr "shopping-lists"
+
+msgid "Load_shopping_list_into_cart"
+msgstr "Load list into cart"
+
+msgid "This_shopping_list_is_empty_add_products_with_the_heart."
+msgstr "This shopping list is empty. Click on the heart {0} of a product to add it."
+
+msgid "The_following_products_of_this_shopping_list_cannot_be_ordered_at_the_moment:"
+msgstr "The following products of this shopping list cannot be ordered at the moment:"
+
+msgid "Remove_these_products_from_the_shopping_list"
+msgstr "Remove these products from the shopping list"
+
+msgid "Delete_shopping_list"
+msgstr "Delete shopping list"
+
+
+
+msgid "{0,plural,=1{1_product_has} other{#_products_have}}_been_removed_from_the_shopping_list."
+msgstr "{0,plural,=1{1 product has} other{# products have}} been removed from the shopping list."
+
+msgid "{0,plural,=1{1_deleted_product} other{#_deleted_products}}"
+msgstr "{0,plural,=1{1 deleted product} other{# deleted products}}"
+
+msgid "On_this_shopping_list"
+msgstr "On this list"
+
+msgid "Create_another_shopping_list_and_add_product"
+msgstr "Create another shopping list and add the product"
+
+msgid "My_shopping_lists"
+msgstr "My shopping lists"

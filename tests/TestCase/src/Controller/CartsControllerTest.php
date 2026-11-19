@@ -27,6 +27,7 @@ use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
 use Cake\ORM\TableRegistry;
 use App\Test\Fixture\ProductsFixture;
+use App\Test\Fixture\ShoppingListsFixture;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -1286,6 +1287,56 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.');
 
      }
+
+    public function testAddShoppingListToCart(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart(ProductsFixture::ID_GARLIC, 1);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertRedirect($this->Slug->getCartDetail());
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde in deinen Warenkorb geladen.');
+
+        // products are added to the existing cart (cart is not emptied)
+        $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+        $cartProducts = $cartProductsTable->find()
+            ->innerJoinWith('Carts', fn($q) => $q->where(['Carts.id_customer' => Configure::read('test.customerId'), 'Carts.status' => APP_ON]))
+            ->all();
+        $amounts = [];
+        foreach ($cartProducts as $cartProduct) {
+            $amounts[$cartProduct->id_product . '-' . $cartProduct->id_product_attribute] = $cartProduct->amount;
+        }
+        $this->assertEquals(1, $amounts[ProductsFixture::ID_GARLIC . '-0']);
+        $this->assertEquals(2, $amounts[ProductsFixture::ID_ARTICHOKE . '-0']);
+        $this->assertEquals(1, $amounts['60-10']);
+    }
+
+    public function testAddShoppingListToCartWithNotAvailableProduct(): void
+    {
+        $this->loginAsCustomer();
+        $this->getTableLocator()->get('Products')->updateAll(['active' => APP_OFF], ['id_product' => ProductsFixture::ID_ARTICHOKE]);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde in deinen Warenkorb geladen.<div class="error"><b>1 Produkt ist nicht mehr verfügbar. </b><ul><li>Das Produkt <b>Artischocke</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar.</li></ul></div>');
+    }
+
+    public function testAddShoppingListToCartOfOtherCustomer(): void
+    {
+        $this->loginAsCustomer();
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_SUPERADMIN));
+        $this->assertResponseCode(404);
+    }
+
+    public function testAddShoppingListToCartWithGetNotAllowed(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertResponseCode(405);
+    }
+
+    public function testAddShoppingListToCartLoggedOut(): void
+    {
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertRedirectToLoginPage();
+    }
 
     protected function addAllDifferentProductTypesToCart(): void
     {

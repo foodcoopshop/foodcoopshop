@@ -5844,3 +5844,115 @@ msgstr "Individueller Bestellschluss"
 
 msgid "Bulk_orders"
 msgstr "Sammelbestellungen"
+
+
+msgid "Edit_shopping_list"
+msgstr "Einkaufsliste bearbeiten"
+
+msgid "Do_you_really_want_to_delete_the_shopping_list_{0}?"
+msgstr "Möchtest du die Einkaufsliste \"{0}\" wirklich löschen?"
+
+
+msgid "The_shopping_list_{0}_has_been_changed."
+msgstr "Die Einkaufsliste {0} wurde geändert."
+
+msgid "The_shopping_list_{0}_has_been_deleted."
+msgstr "Die Einkaufsliste {0} wurde gelöscht."
+
+msgid "The_shopping_list_{0}_has_been_loaded_into_your_cart."
+msgstr "Die Einkaufsliste {0} wurde in deinen Warenkorb geladen."
+
+msgid "Saved_on_shopping_list"
+msgstr "Auf Einkaufsliste gespeichert"
+
+msgid "My_shopping_list"
+msgstr "Meine Einkaufsliste"
+
+msgid "A_shopping_list_with_this_name_already_exists."
+msgstr "Eine Einkaufsliste mit diesem Namen gibt es schon."
+
+msgid "Shopping_list_new_name_placeholder"
+msgstr "Hier den Namen der neuen Einkaufsliste eintragen"
+
+msgid "saved_on_the_shopping_list_{0}"
+msgstr "auf der Einkaufsliste {0} gespeichert"
+
+msgid "saved_on_the_shopping_lists_{0}"
+msgstr "auf den Einkaufslisten {0} gespeichert"
+
+msgid "removed_from_the_shopping_list_{0}"
+msgstr "von der Einkaufsliste {0} entfernt"
+
+msgid "removed_from_the_shopping_lists_{0}"
+msgstr "von den Einkaufslisten {0} entfernt"
+
+msgid "The_product_{0}_has_been_{1}."
+msgstr "Das Produkt {0} wurde {1}."
+
+msgid "The_product_{0}_has_been_{1}_and_{2}."
+msgstr "Das Produkt {0} wurde {1} und {2}."
+
+msgid "The_shopping_lists_of_the_product_{0}_have_not_been_changed."
+msgstr "Die Einkaufslisten des Produktes {0} wurden nicht geändert."
+
+msgid "Will_be_added"
+msgstr "Produkt wird zu dieser Einkaufsliste hinzugefügt"
+
+msgid "Will_be_removed"
+msgstr "Produkt wird aus dieser Einkaufsliste entfernt"
+
+msgid "Amount_will_be_changed_from_{0}_to_{1}"
+msgstr "Menge des Produktes wird geändert: {0}x → {1}x"
+
+msgid "Add_to_shopping_list"
+msgstr "Zur Einkaufsliste hinzufügen"
+
+msgid "Create_new_shopping_list_and_add_product"
+msgstr "Neue Einkaufsliste erstellen und Produkt hinzufügen"
+
+msgid "Product_is_already_saved_in_this_shopping_list"
+msgstr "Produkt ist bereits in dieser Einkaufsliste gespeichert"
+
+msgid "Default_shopping_list"
+msgstr "Standard-Liste"
+
+msgid "Default_shopping_list_description"
+msgstr "Wird beim Klick aufs Herz vorausgewählt, wenn das Produkt noch auf keiner Liste ist."
+
+msgid "route_shopping_list"
+msgstr "einkaufsliste"
+
+msgid "route_shopping_lists"
+msgstr "einkaufslisten"
+
+msgid "Load_shopping_list_into_cart"
+msgstr "Einkaufsliste in den Warenkorb laden"
+
+msgid "This_shopping_list_is_empty_add_products_with_the_heart."
+msgstr "Diese Einkaufsliste ist leer. Klicke bei einem Produkt auf das Herz {0}, um es hinzuzufügen."
+
+msgid "The_following_products_of_this_shopping_list_cannot_be_ordered_at_the_moment:"
+msgstr "Folgende Produkte dieser Einkaufsliste sind derzeit nicht bestellbar:"
+
+msgid "Remove_these_products_from_the_shopping_list"
+msgstr "Diese Produkte von der Einkaufsliste entfernen"
+
+msgid "Delete_shopping_list"
+msgstr "Einkaufsliste löschen"
+
+
+
+msgid "{0,plural,=1{1_product_has} other{#_products_have}}_been_removed_from_the_shopping_list."
+msgstr "{0,plural,=1{1 Produkt wurde} other{# Produkte wurden}} von der Einkaufsliste entfernt."
+
+msgid "{0,plural,=1{1_deleted_product} other{#_deleted_products}}"
+msgstr "{0,plural,=1{1 gelöschtes Produkt} other{# gelöschte Produkte}}"
+
+msgid "On_this_shopping_list"
+msgstr "Auf dieser Liste"
+
+msgid "Create_another_shopping_list_and_add_product"
+msgstr "Weitere Einkaufsliste erstellen und Produkt hinzufügen"
+
+msgid "My_shopping_lists"
+msgstr "Meine Einkaufslisten"

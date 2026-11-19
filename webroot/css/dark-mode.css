@@ -378,3 +378,8 @@ body.dark #main-menu li > a.active {
 body.dark .pickup-day-exception-info {
     color: var(--warning-yellow);
 }
+body.dark #modal-shopping-list .shopping-list-rows,
+body.dark #modal-shopping-list .shopping-list-row + .shopping-list-row,
+body.dark #modal-shopping-list-edit .shopping-list-rows {
+    border-color: var(--dark-mode-2nd-bg-color);
+}

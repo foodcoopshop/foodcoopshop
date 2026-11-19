@@ -503,6 +503,31 @@ class SlugHelper extends Helper
         return '/admin/manufacturers/add';
     }
 
+    public function getShoppingListDetail(int $shoppingListId, string $name): string
+    {
+        return '/' . __('route_shopping_list') . '/' . $shoppingListId . '-' . StringComponent::slugify($name);
+    }
+
+    public function getShoppingListEdit(int $shoppingListId): string
+    {
+        return '/' . __('route_shopping_lists') . '/edit/' . $shoppingListId;
+    }
+
+    public function getShoppingListDelete(int $shoppingListId): string
+    {
+        return '/' . __('route_shopping_lists') . '/delete/' . $shoppingListId;
+    }
+
+    public function getShoppingListRemoveUnavailableProducts(int $shoppingListId): string
+    {
+        return '/' . __('route_shopping_lists') . '/removeUnavailableProducts/' . $shoppingListId;
+    }
+
+    public function getAddShoppingListToCart(int $shoppingListId): string
+    {
+        return '/' . __('route_cart') . '/addShoppingListToCart/' . $shoppingListId;
+    }
+
     public function getStorageLocationsList(): string
     {
         return '/admin/storage-locations';

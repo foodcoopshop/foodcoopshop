@@ -59,6 +59,10 @@ return function (RouteBuilder $routes) {
         $routes->connect('/'.__('route_cart').'/'.__('route_cart_finish'), ['controller' => 'Carts', 'action' => 'finish']);
         $routes->connect('/'.__('route_cart').'/'.__('route_cart_finished').'/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
         $routes->connect('/'.__('route_cart').'/{action}/*', ['controller' => 'Carts']);
+        $routes->connect('/'.__('route_shopping_list').'/{idAndSlug}', ['controller' => 'ShoppingLists', 'action' => 'detail'])
+            ->setPatterns(['idAndSlug' => '[0-9]+(-[a-zA-Z0-9-]*)?'])
+            ->setPass(['idAndSlug']);
+        $routes->connect('/'.__('route_shopping_lists').'/{action}/*', ['controller' => 'ShoppingLists']);
 
         if (Configure::read('app.discourseSsoEnabled')) {
             $routes->connect('/discourse/sso', ['controller' => 'Pages', 'action' => 'discourseSso']);

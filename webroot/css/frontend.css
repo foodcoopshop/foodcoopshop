@@ -63,7 +63,8 @@ div.products-wrapper {
         position: relative;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        column-gap: 30px;
+        /* divider is in the middle of the gap => 10px on both sides, same as the gap to the sidebar */
+        column-gap: 20px;
         align-items: start;
     }
     div.products-wrapper::after,
@@ -2099,4 +2100,207 @@ body.has-page-banner #content {
 .pickup-day-exception-info {
     display: block;
     color: var(--warning-red);
+}
+.pw .btn-shopping-list {
+    position: absolute;
+    left: 0;
+    top: -10px;
+}
+.pw .btn-shopping-list.hide {
+    display: none;
+}
+.pw .btn-shopping-list i.fa-heart {
+    color: #c8c8c8;
+    transition: color .15s ease-in-out, transform .15s ease-in-out;
+}
+.pw .btn-shopping-list:hover i.fa-heart,
+.pw .btn-shopping-list.is-on-shopping-list i.fa-heart {
+    color: var(--theme-color);
+}
+.pw .btn-shopping-list:hover i.fa-heart {
+    transform: scale(1.1);
+}
+#modal-shopping-list .product-name {
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+#modal-shopping-list .shopping-list-rows,
+#modal-shopping-list-edit .shopping-list-rows {
+    border: 1px solid #d6d4d4;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+#modal-shopping-list .shopping-list-row,
+#modal-shopping-list-edit .shopping-list-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+}
+#modal-shopping-list .shopping-list-row + .shopping-list-row {
+    border-top: 1px solid #d6d4d4;
+}
+#modal-shopping-list .shopping-list-row input[type="checkbox"],
+#modal-shopping-list-edit .shopping-list-row input[type="checkbox"] {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+#modal-shopping-list .shopping-list-row label,
+#modal-shopping-list-edit .shopping-list-row label {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    cursor: pointer;
+}
+#modal-shopping-list .shopping-list-row .name,
+#modal-shopping-list-edit .shopping-list-row .name {
+    display: block;
+    overflow-wrap: anywhere;
+}
+#modal-shopping-list .shopping-list-row:not(.is-checked) .name {
+    color: #888;
+}
+#modal-shopping-list .shopping-list-row .status,
+#modal-shopping-list-edit .shopping-list-row .status {
+    display: block;
+    font-size: 13px;
+    color: #888;
+}
+#modal-shopping-list .shopping-list-row .status:empty {
+    display: none;
+}
+#modal-shopping-list .shopping-list-row.state-saved .status i,
+#modal-shopping-list .shopping-list-row.state-added .status {
+    color: #5cb85c;
+}
+#modal-shopping-list .shopping-list-row.state-changed .status {
+    color: var(--theme-color);
+}
+#modal-shopping-list .shopping-list-row.state-removed .status {
+    color: #dc3545;
+}
+#modal-shopping-list .shopping-list-row.state-removed .name {
+    text-decoration: line-through;
+}
+#modal-shopping-list .amount-wrapper {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+#modal-shopping-list .amount-wrapper .amount-label {
+    font-size: 13px;
+    color: #888;
+}
+#modal-shopping-list .amount-wrapper input {
+    width: 70px;
+    text-align: right;
+}
+#modal-shopping-list .amount-wrapper input:disabled {
+    opacity: .4;
+}
+#modal-shopping-list .shopping-list-new {
+    /* + padding of .modal-body (16px) = same as the space above (margin-bottom of .shopping-list-rows) */
+    margin-bottom: 4px;
+}
+#modal-shopping-list .shopping-list-new label {
+    display: block;
+    margin-bottom: 5px;
+}
+#modal-shopping-list .shopping-list-new.is-collapsed .shopping-list-new-row {
+    display: none;
+}
+#modal-shopping-list .shopping-list-new-toggle {
+    display: inline-block;
+    margin-bottom: 8px;
+    text-decoration: none;
+}
+#modal-shopping-list .shopping-list-new.is-collapsed .shopping-list-new-toggle {
+    margin-bottom: 0;
+}
+#modal-shopping-list .shopping-list-new-row {
+    /* aligned with the rows above (border + padding) */
+    padding: 0 11px;
+}
+#modal-shopping-list .shopping-list-new .shopping-list-new-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+}
+h1.shopping-list-heading .shopping-list-buttons {
+    /* height 0: the buttons must not increase the height of the heading (and move the line down),
+       they overflow upwards from the line instead */
+    align-self: flex-end;
+    height: 0;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    font-size: 15px;
+    line-height: normal;
+}
+h1.shopping-list-heading .shopping-list-buttons form {
+    margin: 0;
+}
+h1.shopping-list-heading .shopping-list-buttons .btn {
+    padding: 4px 10px;
+    font-size: 15px;
+    line-height: 22px;
+}
+.shopping-list-empty i.fa-heart {
+    color: var(--theme-color);
+}
+.shopping-list-unavailable-products {
+    float: left;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #d6d4d4;
+    border-radius: 5px;
+}
+.shopping-list-unavailable-products p {
+    margin-bottom: 8px;
+}
+#modal-shopping-list-edit .edit-field {
+    margin-bottom: 15px;
+}
+#modal-shopping-list-edit .edit-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+#modal-shopping-list-edit .edit-field input {
+    width: 100%;
+}
+#modal-shopping-list-edit .edit-field input.shopping-list-edit-position {
+    width: 100px;
+}
+#modal-shopping-list-edit .shopping-list-rows {
+    margin-bottom: 0;
+}
+#modal-shopping-list-edit .btn-delete-shopping-list {
+    color: #dc3545;
+}
+.pw label.attribute-button.is-on-shopping-list {
+    font-weight: 600;
+}
+.pw label.attribute-button.is-on-shopping-list::after {
+    content: '\f004';
+    font-family: 'Font Awesome 7 Free';
+    font-weight: 900;
+    margin-left: 5px;
+    font-size: 12px;
+    color: var(--theme-color);
+}
+.pw .shopping-list-variants-info {
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 14px;
+}
+.pw .shopping-list-variants-info i.fa-heart {
+    color: var(--theme-color);
 }

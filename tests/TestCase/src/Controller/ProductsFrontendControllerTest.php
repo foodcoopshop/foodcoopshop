@@ -33,6 +33,27 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', true);
     }
 
+    public function testShoppingListButtonLoggedOut(): void
+    {
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_ARTICHOKE, 'Artischocke'));
+        $this->assertResponseNotContains('btn-shopping-list');
+    }
+
+    public function testShoppingListButtonAsCustomer(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_ARTICHOKE, 'Artischocke'));
+        $this->assertResponseContains('class="btn btn-outline-light btn-shopping-list hide"');
+        $this->assertResponseContains('ModalShoppingList.init(');
+    }
+
+    public function testShoppingListButtonAsManufacturer(): void
+    {
+        $this->loginAsVegetableManufacturer();
+        $this->get($this->Slug->getProductDetail(ProductsFixture::ID_ARTICHOKE, 'Artischocke'));
+        $this->assertResponseNotContains('btn-shopping-list');
+    }
+
     public function testProductDetailOfflineManufacturerPublicLoggedOut(): void
     {
         $productId = 60;
