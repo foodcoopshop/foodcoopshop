@@ -1,16 +1,6 @@
 # Security Policy
 
-## Supported Versions
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 4.3.x   | :white_check_mark: |
-| 4.2.x   | :white_check_mark: |
-| 4.1.x   | :x:                |
-| 4.0.x   | :x:                |
-| 3.x     | :x:                |
-| 2.x     | :x:                |
-| 1.x     | :x:                |
+Due to limited resources and an increase in AI-detected security issues, only the *latest stable version* receives security updates.
 
 ## Reporting a Vulnerability
 
