@@ -115,6 +115,9 @@ class ConfigurationsController extends AdminAppController
             $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__('The_setting_has_been_changed_successfully.'));
             $actionLogsTable->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __('The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
+            if ($configuration->name == PickupDayExceptionService::CONFIGURATION_NAME) {
+                return $this->redirect(Configure::read('app.slugHelper')->getConfigurationEdit($configuration->name));
+            }
             return $this->redirect($this->getPreparedReferer());
         }
 
