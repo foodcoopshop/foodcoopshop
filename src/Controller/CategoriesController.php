@@ -53,8 +53,8 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
-        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, countMode: true, page: $page);
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, page: $page);
+        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, countMode: true);
         $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
