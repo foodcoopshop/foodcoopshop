@@ -36,7 +36,9 @@
         "cakephp/authentication": "^4.0",
         "cakephp/authorization": "^3.0",
         "sabberworm/php-css-parser": "^9.0",
-        "tecnickcom/tc-lib-pdf": "^8.81"
+        "tecnickcom/tc-lib-pdf": "^8.81",
+        "setasign/fpdi": "^2.6",
+        "setasign/fpdf": "^1.9"
     },
     "require-dev": {
         "cakephp/debug_kit": "5.*",

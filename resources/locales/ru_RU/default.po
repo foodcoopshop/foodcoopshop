@@ -3307,6 +3307,9 @@ msgstr "Цены включают НДС."
 msgid "Print"
 msgstr "Распечатать"
 
+msgid "Print all invoices"
+msgstr "Распечатать все счета"
+
 msgid "Print_page"
 msgstr "Распечатать страницу"
 
