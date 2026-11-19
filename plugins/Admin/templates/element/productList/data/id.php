@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td class="hide cell-id">';
+echo '<td class="cell-id">';
     echo $product->id_product;
 echo '</td>';
 

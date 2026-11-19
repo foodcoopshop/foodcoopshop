@@ -186,7 +186,7 @@ use Cake\Core\Configure;
         echo $this->element('rowMarker/rowMarkerAll', [
             'enabled' => !empty($products)
         ]);
-        echo '<th class="hide">ID</th>';
+        echo '<th>ID</th>';
         echo '<th>'.__('Attribute').'</th>';
         echo '<th>' . $sortOrLabel('Images.id_image', __('Image')) . '</th>';
         echo '<th class="stretch">' . $sortOrLabel('Products.name', __('Name_and_categories')) . '<span class="product-declaration-header">' . $sortOrLabel('Products.is_declaration_ok', __('Product_declaration_admin')) . '</span></th>';
