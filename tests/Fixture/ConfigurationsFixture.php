@@ -76,6 +76,13 @@ class ConfigurationsFixture extends AppFixture
         ],
         [
             'active' => 1,
+            'name' => 'FCS_PICKUP_DAY_EXCEPTIONS',
+            'value' => '',
+            'type' => 'json',
+            'position' => 110,
+        ],
+        [
+            'active' => 1,
             'name' => 'FCS_ACCOUNTING_EMAIL',
             'value' => 'fcs-demo-superadmin@mailinator.com',
             'type' => 'text',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Traits;
 
 use App\Services\DeliveryRhythmService;
+use App\Services\PickupDayExceptionService;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -26,7 +27,9 @@ trait AllowOnlyOneWeekdayValidatorTrait
     {
         $validator->add($field, 'allow-only-one-weekday', [
             'rule' => function ($value, $context) {
-            if ((new DeliveryRhythmService())->getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
+            // "Sammelbestellungen" can be delivered on moved pickup days
+            $isMovedPickupDay = ($context['data']['delivery_rhythm_type'] ?? '') == 'individual' && !is_null((new PickupDayExceptionService())->getByPickupDay((string) $value));
+            if (!$isMovedPickupDay && (new DeliveryRhythmService())->getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
                 return false;
             }
             return true;

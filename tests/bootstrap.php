@@ -42,6 +42,7 @@ $markAsMigratedMigrations = [
     '20261015120000_AddConfigurationHomeMetadata',
     '20261015140100_AddConfigurationInfoChannels',
     '20261019120000_AddConfigurationMemberTypesEnabled',
+    '20261118120000_AddConfigurationPickupDayExceptions',
 ];
 foreach($markAsMigratedMigrations as $markAsMigratedMigration) {
     $migrations->markMigrated($markAsMigratedMigration, ['connection' => 'test']);

@@ -2096,3 +2096,7 @@ body.has-page-banner #content {
         height: 160px;
     }
 }
+.pickup-day-exception-info {
+    display: block;
+    color: var(--warning-red);
+}

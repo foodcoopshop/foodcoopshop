@@ -273,9 +273,10 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
+     * @param array<string, list<int>> $pickupDaysWithSendOrderListWeekdays pickup day => send order list weekdays of products (not used if customer can select pickup day)
      * @return SelectQuery<\App\Model\Entity\OrderDetail>
      */
-    public function getOrderDetailsForSendingOrderLists(string $pickupDay, string $cronjobRunDay, bool $customerCanSelectPickupDay): SelectQuery
+    public function getOrderDetailsForSendingOrderLists(string $pickupDay, array $pickupDaysWithSendOrderListWeekdays, string $cronjobRunDay, bool $customerCanSelectPickupDay): SelectQuery
     {
         $query = $this->find('all', contain: [
             'Products.Manufacturers',
@@ -289,14 +290,20 @@ class OrderDetailsTable extends AppTable
         if ($customerCanSelectPickupDay) {
             $query->where(['OrderDetails.pickup_day' => $pickupDay]);
         } else {
-            $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
-            $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
-                return $exp->or([
-                    $query->expr()->and([
+            $query->where(function ($exp, $query) use ($cronjobRunDay, $pickupDaysWithSendOrderListWeekdays) {
+                $conditions = [];
+                foreach($pickupDaysWithSendOrderListWeekdays as $pickupDay => $sendOrderListWeekdays) {
+                    if (empty($sendOrderListWeekdays)) {
+                        continue;
+                    }
+                    $conditions[] = $query->expr()->and([
                         'Products.delivery_rhythm_type <> "individual"',
-                        $query->expr()->eq('Products.delivery_rhythm_send_order_list_weekday', $cronjobRunDayWeekday),
-                        $query->expr()->eq('OrderDetails.pickup_day', $pickupDay),
-                    ]),
+                        $query->expr()->in('Products.delivery_rhythm_send_order_list_weekday', $sendOrderListWeekdays),
+                        $query->expr()->eq('OrderDetails.pickup_day', (string) $pickupDay),
+                    ]);
+                }
+                return $exp->or([
+                    ...$conditions,
                     $query->expr()->and([
                         'Products.delivery_rhythm_type = "individual"',
                         $query->expr()->eq('Products.delivery_rhythm_send_order_list_day', $cronjobRunDay),

@@ -5783,3 +5783,61 @@ msgstr "Keiner"
 
 msgid "The info channel is not valid."
 msgstr "Der Infokanal ist nicht gültig."
+
+msgid "Configuration_text_FCS_PICKUP_DAY_EXCEPTIONS"
+msgstr "Abholtag-Ausnahmen (z.B. für Feiertage)"
+
+msgid "Configuration_subtext_FCS_PICKUP_DAY_EXCEPTIONS"
+msgstr "Einzelne Abholtage können auf einen früheren Tag verschoben werden (z.B. wegen Weihnachten oder Neujahr)."
+
+msgid "Regular_pickup_day"
+msgstr "Regulärer Abholtag"
+
+msgid "No_pickup_day_exceptions"
+msgstr "Keine Abholtag-Ausnahmen"
+
+msgid "{0}_moved_to_{1}_order_possible_until_{2}"
+msgstr "{0} verschoben auf {1}, Bestellschluss: {2}"
+
+msgid "Please_select_the_regular_pickup_day,_the_new_pickup_day_and_the_order_possible_until_date."
+msgstr "Bitte wähle den regulären Abholtag, den neuen Abholtag und den Bestellschluss aus."
+
+msgid "The_regular_pickup_day_is_not_valid."
+msgstr "Der reguläre Abholtag ist nicht gültig."
+
+msgid "Add_pickup_day_exception"
+msgstr "Neue Abholtag-Ausnahme hinzufügen"
+
+msgid "Pickup_day_moved_regular_pickup_day_{0}"
+msgstr "Abholtag verschoben (regulär: {0})"
+
+msgid "The_new_pickup_day_needs_to_be_one_or_two_days_before_the_regular_pickup_day."
+msgstr "Der neue Abholtag muss 1 oder 2 Tage vor dem regulären Abholtag liegen."
+
+msgid "The_order_possible_until_date_needs_to_be_two_or_three_days_before_the_new_pickup_day."
+msgstr "Der Bestellschluss muss 2 oder 3 Tage vor dem neuen Abholtag liegen."
+
+msgid "The_regular_pickup_day_was_already_selected."
+msgstr "Der reguläre Abholtag wurde bereits ausgewählt."
+
+msgid "A_delivery_break_for_all_manufacturers_is_set_for_this_pickup_day."
+msgstr "Für diesen Abholtag ist eine Lieferpause für alle Hersteller eingetragen."
+
+msgid "Bulk_orders_with_regular_pickup_day_{0}_are_not_moved:"
+msgstr "Folgende Sammelbestellungen mit regulärem Abholtag {0} werden nicht automatisch verschoben. Den Abholtag der Produkte kannst du über den Lieferrhythmus, die Bestellungen über „Aktionen - Abholtag ändern“ anpassen."
+
+msgid "{0}:_{1}_bulk_order_products_with_{2}_ordered_products_and_order_value_{3}"
+msgstr "{0}: {1,plural,=1{1 Produkt} other{# Produkte}}, {2} bereits bestellt, Bestellwert {3}"
+
+
+msgid "Products_with_own_order_deadline_for_regular_pickup_day_{0}_moved_forward:"
+msgstr "Bei folgenden Produkten mit individuellem Bestellschluss wird der Bestellschluss für den regulären Abholtag {0} vorgezogen:"
+
+msgid "{0}:_{1}_products_order_deadline_{2}_moved_to_{3}"
+msgstr "{0}: {1,plural,=1{1 Produkt} other{# Produkte}}, Bestellschluss {2} → {3}"
+
+msgid "Individual_order_deadline"
+msgstr "Individueller Bestellschluss"
+
+msgid "Bulk_orders"
+msgstr "Sammelbestellungen"

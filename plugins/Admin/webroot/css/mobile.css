@@ -233,3 +233,61 @@ body.pages.edit_home .home-edit-section-header-image .input.checkbox input[type=
     position: static;
     left: auto;
 }
+/* pickup day exceptions: one card per exception */
+form.fcs-form .pickup-day-exceptions-table-wrapper > label {
+    margin-bottom: 15px;
+}
+.pickup-day-exceptions-table-wrapper {
+    display: block;
+    max-width: none;
+}
+.pickup-day-exceptions-table-wrapper .add-pickup-day-exception-button {
+    float: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+#pickup-day-exceptions,
+#pickup-day-exceptions tbody {
+    display: block;
+    width: 100%;
+}
+#pickup-day-exceptions tr.header {
+    display: none ! important;
+}
+#pickup-day-exceptions tr.exception-row:not(.hide) {
+    display: block;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(127, 127, 127, 0.3);
+    border-radius: 6px;
+}
+#pickup-day-exceptions tr.exception-row td {
+    display: block;
+    padding: 0 0 8px 0;
+}
+#pickup-day-exceptions tr.exception-row td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+#pickup-day-exceptions tr.exception-row td:last-child {
+    padding-bottom: 0;
+    text-align: right;
+}
+#pickup-day-exceptions tr.exception-row .input {
+    display: block;
+}
+form.fcs-form #pickup-day-exceptions .ts-wrapper {
+    width: 100% ! important;
+}
+#pickup-day-exceptions tr.exception-info {
+    display: block;
+    margin: -6px 0 12px 0;
+}
+#pickup-day-exceptions tr.exception-info td {
+    display: block;
+    padding: 0;
+}

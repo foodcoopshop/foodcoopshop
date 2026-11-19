@@ -880,6 +880,76 @@ foodcoopshop.Admin = {
         });
     },
 
+    /**
+     * @param int nextIndex index for new rows
+     * @param array pickupDayOffsets allowed new pickup days, relative to the regular pickup day
+     * @param array orderPossibleUntilOffsets allowed order deadlines, relative to the new pickup day
+     */
+    initPickupDayExceptions: function (nextIndex, pickupDayOffsets, orderPossibleUntilOffsets) {
+
+        var table = $('#pickup-day-exceptions');
+
+        var getAllowedDays = function (day, offsets) {
+            if (!day) {
+                return [];
+            }
+            return offsets.map(function (offset) {
+                var date = new Date(day + 'T12:00:00Z');
+                date.setUTCDate(date.getUTCDate() + offset);
+                return date.toISOString().substring(0, 10);
+            });
+        };
+
+        var setAllowedOptions = function (select, allowedValues) {
+            var instance = select.get(0).tomselect;
+            var value = select.val();
+            instance.clear(true);
+            instance.clearOptions();
+            instance.addOptions($.grep(select.data('options'), function (option) {
+                return option.value === '' || allowedValues.includes(option.value);
+            }));
+            instance.setValue(allowedValues.includes(value) ? value : '', true);
+        };
+
+        var updateRow = function (row) {
+            var pickupDaySelect = row.find('select.pickup_day');
+            setAllowedOptions(pickupDaySelect, getAllowedDays(row.find('select.original_pickup_day').val(), pickupDayOffsets));
+            setAllowedOptions(row.find('select.order_possible_until'), getAllowedDays(pickupDaySelect.val(), orderPossibleUntilOffsets));
+        };
+
+        var initRow = function (row) {
+            row.find('select').each(function () {
+                $(this).data('options', $(this).find('option').map(function (i, option) {
+                    return {value: option.value, text: option.text};
+                }).get());
+                foodcoopshop.TomSelectCustom.init(this);
+            }).on('change', function () {
+                updateRow(row);
+            });
+            row.find('.delete-button').on('click', function () {
+                row.add(row.next('tr.exception-info')).remove();
+                table.find('tr.header').toggle(table.find('tr.exception-row:not(.template)').length > 0);
+            });
+            updateRow(row);
+        };
+
+        table.find('tr.exception-row:not(.template)').each(function () {
+            initRow($(this));
+        });
+
+        $('.add-pickup-day-exception-button').on('click', function () {
+            var row = table.find('tr.template').clone().removeClass('template hide');
+            var index = nextIndex++;
+            row.find('select').attr('name', function (i, name) {
+                return name.replace('__INDEX__', index);
+            });
+            table.find('tr.template').before(row);
+            initRow(row);
+            table.find('tr.header').show();
+        });
+
+    },
+
     initFontPreview: function () {
         var fontConfigSelect = $('#font-config-select');
         if (fontConfigSelect.length === 0) {

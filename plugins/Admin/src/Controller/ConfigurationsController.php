@@ -14,6 +14,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
 use App\Services\CssConfigurationService;
 use App\Services\ConfigurationDropdownOptionsService;
+use App\Services\PickupDayExceptionService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -48,7 +49,7 @@ class ConfigurationsController extends AdminAppController
             'Configurations.type NOT IN' => ['hidden', 'readonly'],
         ])->first();
 
-        if (empty($configuration)) {
+        if (empty($configuration) || ($name == PickupDayExceptionService::CONFIGURATION_NAME && !PickupDayExceptionService::isAvailable())) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', __('Edit_setting'));
@@ -75,6 +76,9 @@ class ConfigurationsController extends AdminAppController
         }
         if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
             $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addProtocolToUrl($this->getRequest()->getData('Configurations.value'))));
+        }
+        if ($configuration->name == PickupDayExceptionService::CONFIGURATION_NAME) {
+            $this->setRequest($this->getRequest()->withData('Configurations.value', (new PickupDayExceptionService())->prepareValueFromRequest($this->getRequest()->getData('Configurations.value'))));
         }
         if (in_array($configuration->type, ['multiple_dropdown'])) {
             if ($this->getRequest()->getData('Configurations.value') != '') {

@@ -1437,3 +1437,80 @@ body.configurations.edit form.fcs-form .textarea-css {
     width: 100%;
     height: 500px;
 }
+form.fcs-form .pickup-day-exceptions-wrapper {
+    float: none;
+    width: 100%;
+}
+form.fcs-form .pickup-day-exceptions-table-wrapper > label {
+    float: none;
+    display: block;
+    width: auto;
+    margin-bottom: 20px;
+}
+form.fcs-form .pickup-day-exceptions-table-wrapper > label .small {
+    float: none;
+}
+.pickup-day-exceptions-table-wrapper {
+    max-width: 830px; /* 3 x 260px + delete button */
+}
+.pickup-day-exceptions-table-wrapper .add-pickup-day-exception-button {
+    float: right;
+    margin-bottom: 10px;
+}
+#pickup-day-exceptions {
+    clear: both;
+    width: 100%;
+}
+#pickup-day-exceptions th {
+    padding: 0 10px 5px 0;
+}
+#pickup-day-exceptions th:not(:last-child) {
+    width: 260px;
+    min-width: 260px;
+}
+#pickup-day-exceptions td {
+    padding: 4px 10px 4px 0;
+    vertical-align: middle;
+}
+#pickup-day-exceptions td:last-child {
+    padding-right: 0;
+    text-align: right;
+}
+#pickup-day-exceptions .input {
+    float: none;
+    margin: 0;
+}
+#pickup-day-exceptions tr.exception-info td {
+    padding: 2px 0 12px 0;
+    text-align: left;
+}
+#pickup-day-exceptions tr.exception-info .info-section {
+    /* do not widen the table: use the width of the dropdown columns */
+    width: 0;
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-left: 3px solid var(--warning-yellow);
+    background-color: rgba(127, 127, 127, 0.08);
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+#pickup-day-exceptions tr.exception-info .info-section:last-child {
+    margin-bottom: 0;
+}
+#pickup-day-exceptions tr.exception-info h4 {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+    border: none;
+    padding: 0;
+}
+#pickup-day-exceptions tr.exception-info h4 i {
+    width: 18px;
+}
+#pickup-day-exceptions tr.exception-info ul {
+    margin: 4px 0 0 0;
+    padding-left: 18px;
+}

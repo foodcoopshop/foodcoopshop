@@ -18,6 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use App\Model\Entity\Configuration;
 use App\Services\DeliveryRhythmService;
+use App\Services\PickupDayExceptionService;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
@@ -78,6 +79,10 @@ $this->element('addScript', [
                 continue;
             }
 
+            if ($configuration->name == PickupDayExceptionService::CONFIGURATION_NAME && !PickupDayExceptionService::isAvailable()) {
+                continue;
+            }
+
             echo '<tr>';
 
                 echo '<td class="first">';
@@ -107,6 +112,7 @@ $this->element('addScript', [
                         : $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __('yes') : __('no'),
+                    'json' => $this->Configuration->getPickupDayExceptionsAsString($configuration->value),
                     default => '',
                 };
 

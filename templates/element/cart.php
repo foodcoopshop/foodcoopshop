@@ -18,6 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use App\Model\Entity\Customer;
 use App\Services\OrderCustomerService;
+use App\Services\PickupDayExceptionService;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
@@ -26,6 +27,12 @@ $this->element('addScript', ['script' =>
 if ($identity === null || $identity->isManufacturer()) {
     return;
 }
+
+$movedPickupDayInfos = [];
+foreach((new PickupDayExceptionService())->getExceptions() as $exception) {
+    $movedPickupDayInfos[$this->Time->getDateFormattedWithWeekday(strtotime($exception['pickup_day']))] = (new PickupDayExceptionService())->getMovedPickupDayInfo($exception['pickup_day']);
+}
+$this->element('addScript', ['script' => Configure::read('app.jsNamespace') . ".Cart.movedPickupDayInfos = " . json_encode($movedPickupDayInfos, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT) . ";"]);
 
 if ($identity->getProducts() !== null) {
     $this->element('addScript', ['script' =>

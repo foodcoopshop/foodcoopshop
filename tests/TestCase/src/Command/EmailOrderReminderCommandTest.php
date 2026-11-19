@@ -76,6 +76,15 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>Dienstag Mitternacht</b> bestellt werden.');
     }
 
+    public function testPickupDayException(): void
+    {
+        // 2024-02-16 (friday) moved to 2024-02-15, order possible until monday 2024-02-12
+        $this->changeConfiguration('FCS_PICKUP_DAY_EXCEPTIONS', '[{"original_pickup_day":"2024-02-16","pickup_day":"2024-02-15","order_possible_until":"2024-02-12"}]');
+        $this->exec('email_order_reminder 2024-02-12'); // called on a monday
+        $this->runAndAssertQueue();
+        $this->assertMailContainsHtmlAt(0, 'heute ist der letzte Bestelltag und es kann bis <b>heute Mitternacht</b> bestellt werden.');
+    }
+
     public function testDeliveryBreakGlobalEnabledAndNextDeliveryDay(): void
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');

@@ -43,8 +43,7 @@ class DeliveryRhythmService
 
     public function getDeliveryDateByCurrentDayForDb(): string
     {
-        $deliveryDate = $this->getDeliveryDayByCurrentDay();
-        $deliveryDate = date($this->Time->getI18Format('DatabaseAlt'), $deliveryDate);
+        $deliveryDate = date($this->Time->getI18Format('DatabaseAlt'), $this->getDeliveryDay($this->Time->getCurrentDay()));
         return $deliveryDate;
     }
 
@@ -68,7 +67,63 @@ class DeliveryRhythmService
 
     public function getDeliveryDayByCurrentDay(): int
     {
-        return $this->getDeliveryDay($this->Time->getCurrentDay());
+        return $this->getDeliveryDayWithPickupDayExceptions($this->Time->getCurrentDay());
+    }
+
+    public function getDeliveryDayWithPickupDayExceptions(int $orderDay): int
+    {
+        $regularPickupDay = date('Y-m-d', $this->getDeliveryDay($orderDay));
+        return strtotime($this->applyPickupDayException($regularPickupDay, date('Y-m-d', $orderDay), $this->getSendOrderListsWeekday(),
+            fn($nextOrderDay) => date('Y-m-d', $this->getDeliveryDayWithPickupDayExceptions(strtotime($nextOrderDay))),
+        ));
+    }
+
+    /**
+     * the earlier order deadline (product or exception) is used
+     * if the order deadline is over, the order is assigned to the following pickup day
+     * @param callable(string): string $getPickupDayForNextOrderPeriod
+     */
+    private function applyPickupDayException(string $regularPickupDay, string $orderDay, int $sendOrderListsWeekday, callable $getPickupDayForNextOrderPeriod): string
+    {
+        $exception = (new PickupDayExceptionService())->getByOriginalPickupDay($regularPickupDay);
+        if (is_null($exception)) {
+            return $regularPickupDay;
+        }
+        $orderDay = date('Y-m-d', strtotime($orderDay));
+        $regularLastOrderDay = $this->getLastOrderDay($regularPickupDay, 'week', $sendOrderListsWeekday, null);
+        if ($orderDay <= min($regularLastOrderDay, $exception['order_possible_until'])) {
+            return $exception['pickup_day'];
+        }
+        return $getPickupDayForNextOrderPeriod((new PickupDayExceptionService())->addDays(max($orderDay, $regularLastOrderDay), 1));
+    }
+
+    /**
+     * @return array<string, list<int>> pickup day => send order list weekdays of the products whose order lists are sent at the given day
+     */
+    public function getPickupDaysForSendingOrderLists(string $cronjobRunDay): array
+    {
+        $pickupDayExceptionService = new PickupDayExceptionService();
+        $runDay = date('Y-m-d', strtotime($cronjobRunDay));
+        $result = [];
+
+        $regularPickupDay = $this->getNextDeliveryDay(strtotime($runDay));
+        $exception = $pickupDayExceptionService->getByOriginalPickupDay($regularPickupDay);
+        if (is_null($exception)) {
+            $result[$regularPickupDay] = [(int) date('w', strtotime($runDay))];
+        } elseif ($runDay <= $exception['order_possible_until']) {
+            // products with an earlier order deadline keep their send day
+            $result[$exception['pickup_day']] = [(int) date('w', strtotime($runDay))];
+        }
+
+        foreach($pickupDayExceptionService->getExceptions() as $exception) {
+            if ($pickupDayExceptionService->addDays($exception['order_possible_until'], 1) == $runDay) {
+                // all products whose regular send day is not before the send day of the exception
+                for ($day = $runDay; $day < $exception['original_pickup_day']; $day = $pickupDayExceptionService->addDays($day, 1)) {
+                    $result[$exception['pickup_day']][] = (int) date('w', strtotime($day));
+                }
+            }
+        }
+        return $result;
     }
 
     public function getDeliveryWeekday(): int
@@ -81,6 +136,11 @@ class DeliveryRhythmService
 
         if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
             return '';
+        }
+
+        $exception = (new PickupDayExceptionService())->getByPickupDay($nextDeliveryDay);
+        if ($deliveryRhythmType != 'individual' && !is_null($exception)) {
+            return min($this->getLastOrderDay($exception['original_pickup_day'], $deliveryRhythmType, $deliveryRhythmSendOrderListWeekday, null), $exception['order_possible_until']);
         }
 
         if ($deliveryRhythmType == 'individual') {
@@ -267,6 +327,18 @@ class DeliveryRhythmService
         if (is_null($currentDay)) {
             $currentDay = $this->Time->getCurrentDateForDatabase();
         }
+
+        $pickupDay = $this->getRegularNextPickupDayForProduct($product, $currentDay);
+        if ($pickupDay == 'delivery-rhythm-triggered-delivery-break' || $product->delivery_rhythm_type == 'individual') {
+            return $pickupDay;
+        }
+        return $this->applyPickupDayException($pickupDay, $currentDay, $product->delivery_rhythm_send_order_list_weekday ?? $this->getSendOrderListsWeekday(),
+            fn($nextOrderDay) => $this->getNextPickupDayForProduct($product, $nextOrderDay),
+        );
+    }
+
+    private function getRegularNextPickupDayForProduct(Product $product, string $currentDay): string
+    {
 
         $sendOrderListsWeekday = null;
         if (!is_null($product->delivery_rhythm_send_order_list_weekday)) {
