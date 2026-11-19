@@ -87,17 +87,15 @@ if ($identity->getProducts() !== null) {
 
         if ($showLoadLastOrderDetailsDropdown && !OrderCustomerService::isOrderForDifferentCustomerMode()) {
             $lastOrderDetails = $identity->getLastOrderDetailsForDropdown();
-            if (!empty($lastOrderDetails)) {
-                $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
-                echo $this->Form->control('load-last-order-details', [
-                    'label' => '',
-                    'id' => null,
-                    'class' => 'load-last-order-details',
-                    'type' => 'select',
-                    'empty' => __('Load_past_orders').'...',
-                    'options' => $lastOrderDetails,
-                ]);
-            }
+            $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
+            echo $this->Form->control('load-last-order-details', [
+                'label' => '',
+                'id' => null,
+                'class' => 'load-last-order-details',
+                'type' => 'select',
+                'empty' => __('Load_past_orders').'...',
+                'options' => $lastOrderDetails,
+            ]);
         }
 
         if ($identity && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
