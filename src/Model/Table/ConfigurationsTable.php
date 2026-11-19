@@ -14,6 +14,7 @@ use Cake\Event\EventInterface;
 use ArrayObject;
 use App\Controller\Component\StringComponent;
 use Cake\Routing\Router;
+use App\Services\PickupDayExceptionService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -144,6 +145,15 @@ class ConfigurationsTable extends AppTable
         $validator->add('value', 'noDeliveryDaysOrdersExist', [
             'provider' => 'table',
             'rule' => 'noDeliveryDaysOrdersExist'
+        ]);
+        return $validator;
+    }
+
+    public function validationFcsPickupDayExceptions(Validator $validator): Validator
+    {
+        $validator->allowEmptyString('value');
+        $validator->add('value', 'pickupDayExceptions', [
+            'rule' => fn($value) => implode('<br />', (new PickupDayExceptionService())->validate((string) $value)) ?: true,
         ]);
         return $validator;
     }

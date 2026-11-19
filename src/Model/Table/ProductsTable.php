@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use App\Services\FolderService;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
+use App\Services\PickupDayExceptionService;
 use App\Services\RemoteFileService;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
@@ -209,6 +210,8 @@ class ProductsTable extends AppTable
 
     private function deliveryBreakEnabledBase(string|null $noDeliveryDaysAsString, string $deliveryDate): bool
     {
+        // delivery breaks are saved for the regular pickup day
+        $deliveryDate = (new PickupDayExceptionService())->getByPickupDay($deliveryDate)['original_pickup_day'] ?? $deliveryDate;
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
     }
 

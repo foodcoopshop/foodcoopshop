@@ -7,7 +7,6 @@ msgstr "Member type: Active / Passive enabled?"
 msgid "Configuration_subtext_FCS_MEMBER_TYPES_ENABLED"
 msgstr "Enables mandatory member type selection during registration and in the profile."
 
-
 msgid "1_day_ahead"
 msgstr "1 day ahead"
 
@@ -5425,3 +5424,61 @@ msgstr "Nothing selected"
 
 msgid "{0} selected"
 msgstr "{0} selected"
+
+msgid "Configuration_text_FCS_PICKUP_DAY_EXCEPTIONS"
+msgstr "Pickup day exceptions (e.g. for holidays)"
+
+msgid "Configuration_subtext_FCS_PICKUP_DAY_EXCEPTIONS"
+msgstr "Single pickup days can be moved to an earlier day (e.g. because of Christmas or New Year)."
+
+msgid "Regular_pickup_day"
+msgstr "Regular pickup day"
+
+msgid "No_pickup_day_exceptions"
+msgstr "No pickup day exceptions"
+
+msgid "{0}_moved_to_{1}_order_possible_until_{2}"
+msgstr "{0} moved to {1}, order deadline: {2}"
+
+msgid "Please_select_the_regular_pickup_day,_the_new_pickup_day_and_the_order_possible_until_date."
+msgstr "Please select the regular pickup day, the new pickup day and the order deadline."
+
+msgid "The_regular_pickup_day_is_not_valid."
+msgstr "The regular pickup day is not valid."
+
+msgid "Add_pickup_day_exception"
+msgstr "Add new pickup day exception"
+
+msgid "Pickup_day_moved_regular_pickup_day_{0}"
+msgstr "Pickup day moved (regular: {0})"
+
+msgid "The_new_pickup_day_needs_to_be_one_or_two_days_before_the_regular_pickup_day."
+msgstr "The new pickup day needs to be one or two days before the regular pickup day."
+
+msgid "The_order_possible_until_date_needs_to_be_two_or_three_days_before_the_new_pickup_day."
+msgstr "The order deadline needs to be two or three days before the new pickup day."
+
+msgid "The_regular_pickup_day_was_already_selected."
+msgstr "The regular pickup day was already selected."
+
+msgid "A_delivery_break_for_all_manufacturers_is_set_for_this_pickup_day."
+msgstr "A delivery break for all manufacturers is set for this pickup day."
+
+msgid "Bulk_orders_with_regular_pickup_day_{0}_are_not_moved:"
+msgstr "The following bulk orders with regular pickup day {0} are not moved automatically. You can change the pickup day of the products via the delivery rhythm and the pickup day of the orders via \"Actions - Change pickup day\"."
+
+msgid "{0}:_{1}_bulk_order_products_with_{2}_ordered_products_and_order_value_{3}"
+msgstr "{0}: {1,plural,=1{1 product} other{# products}}, {2} already ordered, order value {3}"
+
+
+msgid "Products_with_own_order_deadline_for_regular_pickup_day_{0}_moved_forward:"
+msgstr "For the following products with their own order deadline, the order deadline for the regular pickup day {0} is moved forward:"
+
+msgid "{0}:_{1}_products_order_deadline_{2}_moved_to_{3}"
+msgstr "{0}: {1,plural,=1{1 product} other{# products}}, order deadline {2} → {3}"
+
+msgid "Individual_order_deadline"
+msgstr "Individual order deadline"
+
+msgid "Bulk_orders"
+msgstr "Bulk orders"

@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use App\Services\DeliveryRhythmService;
+use App\Services\PickupDayExceptionService;
 use Cake\Core\Configure;
 use App\Services\OrderCustomerService;
 
@@ -50,6 +51,11 @@ echo '</div>';
 
 if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
+    $movedPickupDayInfo = '';
+    if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !OrderCustomerService::isSelfServiceModeByUrl() && $product->delivery_rhythm_type != 'individual') {
+        $movedPickupDayInfo = (new PickupDayExceptionService())->getMovedPickupDayInfo((string) $product->next_delivery_day);
+    }
+
     if (!OrderCustomerService::isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
         $lastOrderDay = (new DeliveryRhythmService())->getLastOrderDay(
@@ -59,10 +65,10 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $product->delivery_rhythm_order_possible_until,
         );
 
-        if (!($product->delivery_rhythm_type == 'week'
+        if ((!($product->delivery_rhythm_type == 'week'
             && $product->delivery_rhythm_count == 1
             && (new DeliveryRhythmService())->getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
-            )
+            ) || $movedPickupDayInfo != '')
             && $lastOrderDay != ''
             ) {
                 echo '<span class="last-order-day">';
@@ -106,6 +112,9 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     echo ' - <b>'. __('{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}', [$fullWeeks, $days]) . '</b>';
                 }
             }
+    }
+    if ($movedPickupDayInfo != '') {
+        echo '<span class="pickup-day-exception-info">' . h($movedPickupDayInfo) . '</span>';
     }
 }
 

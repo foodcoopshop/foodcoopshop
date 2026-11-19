@@ -375,3 +375,6 @@ body.dark #main-menu li > a.active {
     background: rgba(255, 255, 255, 0.1);
     color: var(--dark-mode-2nd-font-color);
 }
+body.dark .pickup-day-exception-info {
+    color: var(--warning-yellow);
+}

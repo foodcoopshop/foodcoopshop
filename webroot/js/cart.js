@@ -21,6 +21,8 @@ foodcoopshop.Cart = {
 
     cartButtonIcon : '',
 
+    movedPickupDayInfos : {},
+
     getPickupDayHeaderSelector : function(pickupDay) {
         return '.cart .pickup-day-header:contains("' + pickupDay + '")';
     },
@@ -28,7 +30,8 @@ foodcoopshop.Cart = {
     addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
         var pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay));
         if (pickupDayHeader.length == 0) {
-            $('.cart .products').append('<div class="pickup-day-header"><span class="label">' + __('Pickup_day') + ': <b>' + pickupDay + '</b></span></div>');
+            var movedPickupDayInfo = this.movedPickupDayInfos[pickupDay] ? '<span class="pickup-day-exception-info">' + this.movedPickupDayInfos[pickupDay] + '</span>' : '';
+            $('.cart .products').append('<div class="pickup-day-header"><span class="label">' + __('Pickup_day') + ': <b>' + pickupDay + '</b>' + movedPickupDayInfo + '</span></div>');
             pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay)); // re-init after append
         }
         pickupDayHeader.append(

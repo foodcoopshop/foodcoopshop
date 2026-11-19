@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Services\DeliveryRhythmService;
+use App\Services\PickupDayExceptionService;
 use App\Mailer\AppMailer;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
@@ -91,6 +92,12 @@ class EmailOrderReminderCommand extends AppCommand
         $sendOrderListWeekday = ($deliveryRhythmService->getSendOrderListsWeekday() -1) % 7;
         $cronjobRunWeekday = date('N', strtotime($this->cronjobRunDay)) % 7;
         $lastOrderDayDiff = $sendOrderListWeekday - $cronjobRunWeekday;
+
+        if (!is_null((new PickupDayExceptionService())->getByPickupDay($nextDeliveryDay))) {
+            $lastOrderDay = $deliveryRhythmService->getLastOrderDay($nextDeliveryDay, 'week', $deliveryRhythmService->getSendOrderListsWeekday(), null);
+            $lastOrderDayDiff = (int) round((strtotime($lastOrderDay) - strtotime(date('Y-m-d', strtotime($this->cronjobRunDay)))) / 86400);
+            $sendOrderListWeekday = (int) date('w', strtotime($lastOrderDay));
+        }
 
         $lastOrderDayAsString = match($lastOrderDayDiff) {
             0 => __('today'),

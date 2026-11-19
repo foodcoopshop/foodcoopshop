@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
 use App\Services\ConfigurationDropdownOptionsService;
+use App\Services\PickupDayExceptionService;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Configuration;
 
@@ -107,6 +108,20 @@ class ConfigurationHelper extends Helper
         $previewClass = 'font-' . h($value);
         $previewText = h(__('All human beings are born free and equal in dignity and rights.'));
         return $label . '<p class="' . $previewClass . '" style="margin-top:5px;margin-bottom:5px;font-size:1.3em">' . $previewText . '</p>';
+    }
+
+    public function getPickupDayExceptionsAsString(string $value): string
+    {
+        $timeHelper = Configure::read('app.timeHelper');
+        $result = [];
+        foreach((new PickupDayExceptionService())->decode($value) as $exception) {
+            $result[] = __('{0}_moved_to_{1}_order_possible_until_{2}', [
+                $timeHelper->getDateFormattedWithWeekday(strtotime($exception['original_pickup_day'])),
+                '<b>' . $timeHelper->getDateFormattedWithWeekday(strtotime($exception['pickup_day'])) . '</b>',
+                $timeHelper->getDateFormattedWithWeekday(strtotime($exception['order_possible_until'])),
+            ]);
+        }
+        return empty($result) ? __('No_pickup_day_exceptions') : implode('<br />', $result);
     }
 
     public function getConfigurationMultipleDropdownOptions(string $name, string $value): string

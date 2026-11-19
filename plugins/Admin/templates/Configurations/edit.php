@@ -114,6 +114,9 @@ switch ($configuration->type) {
             echo '<div id="font-preview" class="' . $previewClass . '" style="margin-top:15px;margin-bottom:15px;font-size:1.3em;padding:10px;">' . $previewText . '</div>';
         }
         break;
+    case 'json':
+        echo $this->element('configurations/pickupDayExceptions', ['label' => $label]);
+        break;
     case 'multiple_dropdown':
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".TomSelectCustom.setMultipleDropdowns('#configurations-value');"
