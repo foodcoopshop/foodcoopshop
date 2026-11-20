@@ -5899,7 +5899,7 @@ msgid "Amount_will_be_changed_from_{0}_to_{1}"
 msgstr "Menge des Produktes wird geändert: {0}x → {1}x"
 
 msgid "Add_to_shopping_list"
-msgstr "Zur Einkaufsliste hinzufügen"
+msgstr "Zu Einkaufsliste hinzufügen"
 
 msgid "Create_new_shopping_list_and_add_product"
 msgstr "Neue Einkaufsliste erstellen und Produkt hinzufügen"
