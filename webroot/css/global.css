@@ -143,10 +143,6 @@ button,
     background-color: #fff;
     border-color: #ccc;
 }
-.btn-outline-light.disabled {
-    color: #333;
-    border-color: #ccc;
-}
 .btn-outline-light:hover,
 .btn-outline-light.active,
 .btn-outline-light:active:focus {
@@ -162,9 +158,23 @@ button,
 .btn-outline-light:active:focus {
     background-color: #cec8c8 ! important;
 }
-.btn-outline-light.disabled,
-.btn-outline-light:disabled {
-    background-color: #fff;
+/* disabled buttons are grey everywhere (important: overrides the colors of the different button types and their hover state)
+   - not for red buttons (eg. delivery break): the color is the information there
+   - not for icon buttons without a button type (eg. +/- in the cart): they have no background and are only greyed out by bootstrap */
+.btn-success.disabled,
+.btn-success:disabled,
+.btn-outline-light.disabled:not(.btn-danger),
+.btn-outline-light:disabled:not(.btn-danger),
+.btn-warning.disabled,
+.btn-warning:disabled {
+    background-color: var(--light-grey) ! important;
+    border-color: var(--light-grey) ! important;
+    color: #fff ! important;
+}
+/* buttons are blocked by the disabled attribute: pointer events are needed for the cursor (links are only blocked by bootstrap's pointer-events: none) */
+button.btn:disabled {
+    pointer-events: auto;
+    cursor: not-allowed;
 }
 
 .btn-danger:hover,

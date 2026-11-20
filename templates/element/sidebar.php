@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-if (empty($categoriesForMenu) && empty($manufacturersForMenu)) {
+if (empty($categoriesForMenu) && empty($manufacturersForMenu) && empty($shoppingListsForMenu)) {
     return;
 }
 
@@ -24,6 +24,7 @@ $classes = ['sidebar'];
 ?>
 <div class="<?php echo join(' ', $classes); ?>">
     <?php
+    echo $this->element('shoppingList/sidebarMenu', ['shoppingListsForMenu' => $shoppingListsForMenu ?? []]);
     if (!empty($filtersForMenu)) {
         echo $this->Menu->render($filtersForMenu, ['id' => 'filters-menu', 'class' => 'vertical menu', 'header' => __('Filters')]);
     }

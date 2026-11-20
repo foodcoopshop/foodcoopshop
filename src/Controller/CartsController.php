@@ -8,8 +8,8 @@ use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
-use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
+use App\Services\ShoppingListAccessService;
 use Cake\View\JsonView;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
@@ -68,6 +68,10 @@ class CartsController extends FrontendController
     public function detail(): void
     {
         $this->set('title_for_layout', __('Your cart'));
+
+        if (ShoppingListAccessService::isEnabled($this->identity, $this->getRequest())) {
+            $this->set('newShoppingListName', $this->fetchTable('ShoppingLists')->getDefaultName($this->identity->getId()));
+        }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 
@@ -250,48 +254,61 @@ class CartsController extends FrontendController
     {
 
         $this->cartService->doEmptyCart();
-        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-
-        $formattedDeliveryDate = strtotime($deliveryDate);
-
-        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
-        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
         $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $orderDetailsTable->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getId());
+        $orderDetails = $orderDetailsTable->getOrderDetailsForDeliveryDayAndCustomerId($deliveryDate, $this->identity->getId());
 
-        $errorMessages = [];
-        $loadedProducts = count($orderDetails);
-        if (count($orderDetails) > 0) {
-            foreach($orderDetails as $orderDetail) {
-                $result = $cartProductsTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
-                if (is_array($result)) {
-                    $errorMessages[] = $result['msg'];
-                    $loadedProducts--;
-                }
-            }
+        $items = [];
+        foreach($orderDetails as $orderDetail) {
+            $items[] = [
+                'productId' => $orderDetail->product_id,
+                'attributeId' => $orderDetail->product_attribute_id,
+                'amount' => $orderDetail->product_amount,
+            ];
         }
+        $errorMessages = $this->cartService->addProducts($items);
 
         $message = __('Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart.');
         $message .= '<br />';
         $message .= __('You_can_add_more_products_now.');
-
-        if (!empty($errorMessages)) {
-            $message .= '<div class="error">';
-                $removedProducts = count($orderDetails) - $loadedProducts;
-                $message .= '<b>';
-                if ($removedProducts == 1) {
-                    $message .= __('1_product_is_not_available_any_more.');
-                } else {
-                    $message .= __('{0}_products_are_not_available_any_more.', [$removedProducts]);
-                }
-                $message .= ' </b>';
-                $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
-            $message .= '</div>';
-        }
+        $message .= $this->cartService->getNotAvailableProductsMessage($errorMessages);
 
         $this->Flash->success($message);
 
+    }
+
+    public function addShoppingListToCart(int $shoppingListId): Response
+    {
+        $this->getRequest()->allowMethod(['post']);
+
+        $shoppingListsTable = $this->fetchTable('ShoppingLists');
+        $shoppingList = $shoppingListsTable->find('ownedBy', customerId: $this->identity->getId())
+            ->contain(['ShoppingListProducts'])
+            ->where(['ShoppingLists.id' => $shoppingListId])
+            ->firstOrFail();
+
+        $items = [];
+        foreach ($shoppingList->shopping_list_products as $shoppingListProduct) {
+            $items[] = [
+                'productId' => $shoppingListProduct->id_product,
+                'attributeId' => $shoppingListProduct->id_product_attribute,
+                'amount' => $shoppingListProduct->amount,
+            ];
+        }
+        $emptyCart = (bool) $this->getRequest()->getData('emptyCart');
+        if ($emptyCart) {
+            $this->cartService->doEmptyCart();
+        }
+        $errorMessages = $this->cartService->addProducts($items);
+
+        $shoppingListName = '<b>' . h($shoppingList->name) . '</b>';
+        $message = $emptyCart
+            ? __('Your_cart_has_been_emptied_and_the_shopping_list_{0}_has_been_loaded_into_your_cart.', [$shoppingListName])
+            : __('The_shopping_list_{0}_has_been_added_to_your_cart.', [$shoppingListName]);
+        $message .= $this->cartService->getNotAvailableProductsMessage($errorMessages);
+        $this->Flash->success($message);
+
+        return $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
     }
 
     public function addLastOrderToCart(): Response

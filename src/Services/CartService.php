@@ -66,6 +66,47 @@ class CartService
     }
 
     /**
+     * adds multiple products to the cart (eg. from a past order or from a shopping list)
+     *
+     * @param iterable<array{productId: int, attributeId: int, amount: int}> $items
+     * @return list<string> error messages of the products that could not be added
+     */
+    public function addProducts(iterable $items): array
+    {
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $errorMessages = [];
+        foreach ($items as $item) {
+            $result = $cartProductsTable->add($item['productId'], $item['attributeId'], $item['amount']);
+            if (is_array($result)) {
+                $errorMessages[] = $result['msg'];
+            }
+        }
+        return $errorMessages;
+    }
+
+    /**
+     * @param list<string> $errorMessages
+     */
+    public function getNotAvailableProductsMessage(array $errorMessages): string
+    {
+        if (empty($errorMessages)) {
+            return '';
+        }
+        $removedProducts = count($errorMessages);
+        $message = '<div class="error">';
+            $message .= '<b>';
+            if ($removedProducts == 1) {
+                $message .= __('1_product_is_not_available_any_more.');
+            } else {
+                $message .= __('{0}_products_are_not_available_any_more.', [$removedProducts]);
+            }
+            $message .= ' </b>';
+            $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
+        $message .= '</div>';
+        return $message;
+    }
+
+    /**
      * @return list<string>
      */
     protected function getProductContain(): array

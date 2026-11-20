@@ -27,6 +27,7 @@ use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
 use Cake\ORM\TableRegistry;
 use App\Test\Fixture\ProductsFixture;
+use App\Test\Fixture\ShoppingListsFixture;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -1286,6 +1287,106 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.');
 
      }
+
+    public function testAddShoppingListToCart(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart(ProductsFixture::ID_GARLIC, 1);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertRedirect($this->Slug->getCartDetail());
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde zu deinem Warenkorb hinzugefügt.');
+
+        // products are added to the existing cart (cart is not emptied)
+        $this->assertEquals([
+            ProductsFixture::ID_GARLIC . '-0' => 1,
+            ProductsFixture::ID_ARTICHOKE . '-0' => 2,
+            '60-10' => 1,
+        ], $this->getCartAmountsOfCustomer());
+    }
+
+    public function testAddShoppingListToCartAndEmptyCart(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart(ProductsFixture::ID_GARLIC, 1);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY), ['emptyCart' => 1]);
+        $this->assertRedirect($this->Slug->getCartDetail());
+        $this->assertFlashMessage('Dein Warenkorb wurde geleert und die Einkaufsliste <b>Wocheneinkauf</b> in den Warenkorb geladen.');
+
+        // garlic was removed with emptying the cart
+        $this->assertEquals([
+            ProductsFixture::ID_ARTICHOKE . '-0' => 2,
+            '60-10' => 1,
+        ], $this->getCartAmountsOfCustomer());
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function getCartAmountsOfCustomer(): array
+    {
+        $cartProducts = $this->getTableLocator()->get('CartProducts')->find()
+            ->innerJoinWith('Carts', fn($q) => $q->where(['Carts.id_customer' => Configure::read('test.customerId'), 'Carts.status' => APP_ON]))
+            ->orderBy(['CartProducts.id_cart_product' => 'ASC'])
+            ->all();
+        $amounts = [];
+        foreach ($cartProducts as $cartProduct) {
+            $amounts[$cartProduct->id_product . '-' . $cartProduct->id_product_attribute] = $cartProduct->amount;
+        }
+        return $amounts;
+    }
+
+    public function testAddShoppingListToCartWithNotAvailableProduct(): void
+    {
+        $this->loginAsCustomer();
+        $this->getTableLocator()->get('Products')->updateAll(['active' => APP_OFF], ['id_product' => ProductsFixture::ID_ARTICHOKE]);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde zu deinem Warenkorb hinzugefügt.<div class="error"><b>1 Produkt ist nicht mehr verfügbar. </b><ul><li>Das Produkt <b>Artischocke</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar.</li></ul></div>');
+    }
+
+    public function testAddShoppingListToCartWithDeletedProduct(): void
+    {
+        $this->loginAsCustomer();
+        // products are deleted by manufacturers by setting active to APP_DEL
+        $this->getTableLocator()->get('Products')->updateAll(['active' => APP_DEL], ['id_product' => ProductsFixture::ID_ARTICHOKE]);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde zu deinem Warenkorb hinzugefügt.<div class="error"><b>1 Produkt ist nicht mehr verfügbar. </b><ul><li>Das Produkt <b>Artischocke</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar.</li></ul></div>');
+    }
+
+    public function testAddShoppingListToCartWithDeletedAttribute(): void
+    {
+        $this->loginAsCustomer();
+        $this->getTableLocator()->get('ProductAttributes')->deleteProductAttribute(60, 10);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde zu deinem Warenkorb hinzugefügt.<div class="error"><b>1 Produkt ist nicht mehr verfügbar. </b><ul><li>Die Variante existiert nicht: 60-10</li></ul></div>');
+    }
+
+    public function testAddShoppingListToCartWithNotExistingProduct(): void
+    {
+        $this->loginAsCustomer();
+        $this->getTableLocator()->get('Products')->deleteAll(['id_product' => ProductsFixture::ID_ARTICHOKE]);
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertFlashMessage('Die Einkaufsliste <b>Wocheneinkauf</b> wurde zu deinem Warenkorb hinzugefügt.<div class="error"><b>1 Produkt ist nicht mehr verfügbar. </b><ul><li>Das Produkt mit der ID 346 ist nicht vorhanden.</li></ul></div>');
+    }
+
+    public function testAddShoppingListToCartOfOtherCustomer(): void
+    {
+        $this->loginAsCustomer();
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_SUPERADMIN));
+        $this->assertResponseCode(404);
+    }
+
+    public function testAddShoppingListToCartWithGetNotAllowed(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertResponseCode(405);
+    }
+
+    public function testAddShoppingListToCartLoggedOut(): void
+    {
+        $this->post($this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertRedirectToLoginPage();
+    }
 
     protected function addAllDifferentProductTypesToCart(): void
     {

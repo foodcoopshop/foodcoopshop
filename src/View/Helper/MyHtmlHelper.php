@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use App\Services\ShoppingListAccessService;
 use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
@@ -100,6 +101,7 @@ class MyHtmlHelper extends HtmlHelper
             'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0), /** @phpstan-ignore-line */
             'isSelfServiceModeByUrl-' . (OrderCustomerService::isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . (OrderCustomerService::isOrderForDifferentCustomerMode() ? 1 : 0),
+            'shoppingListsEnabled-' . (ShoppingListAccessService::isEnabled($identity, $this->getView()->getRequest()) ? 1 : 0),
             ($identity != null ? $identity->shopping_price : Customer::SELLING_PRICE),
             'date-' . date('Y-m-d'),
         ]);

@@ -96,6 +96,10 @@
         float: right;
         margin-top: 10px;
     }
+    h1.shopping-list-heading .shopping-list-buttons {
+        height: auto;
+        margin-bottom: 0;
+    }
     #cart,
     .sidebar,
     #header,
@@ -129,6 +133,15 @@
     }
     .image-badge {
         right: -10px ! important;
+    }
+    /* button "save as shopping list" below the heading */
+    .cart-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    /* the image column is too narrow for the heart and the full "new" badge */
+    .pw .c1:has(.btn-shopping-list:not(.hide)) .image-badge-text {
+        display: none;
     }
     body.pages.home .home-block-text,
     .header-promo-text {

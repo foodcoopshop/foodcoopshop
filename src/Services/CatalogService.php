@@ -59,6 +59,7 @@ class CatalogService
     }
 
     /**
+     * @param list<int> $productIds
      * @return list<\App\Model\Entity\Product>|int
      */
     public function getProducts(
@@ -71,6 +72,7 @@ class CatalogService
         int $manufacturerId = 0,
         int $page = 1,
         bool $randomize = false,
+        array $productIds = [],
         ): array|int
     {
 
@@ -85,6 +87,7 @@ class CatalogService
             'keywords-' . substr(md5($keyword), 0, 10),
             'pId-' . $productId,
             'mId-' . $manufacturerId,
+            'pIds-' . substr(md5(join(',', $productIds)), 0, 10),
             'gosp-' . $this->getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts),
             'page-' . $page,
             'cm-' . $countMode,
@@ -93,7 +96,7 @@ class CatalogService
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-            $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, $randomize);
+            $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId, $randomize, $productIds);
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
@@ -136,6 +139,7 @@ class CatalogService
     }
 
     /**
+     * @param list<int> $productIds
      * @return SelectQuery<\App\Model\Entity\Product>
      */
     protected function getQuery(
@@ -146,6 +150,7 @@ class CatalogService
         bool $getOnlyStockProducts,
         int $manufacturerId,
         bool $randomize=false,
+        array $productIds = [],
         ): SelectQuery
     {
 
@@ -166,7 +171,10 @@ class CatalogService
         $query = $this->addDefaultConditions($query);
         $query = $this->addSelectFields($query);
         $query = $this->addPurchasePriceIsSetFilter($query);
-        $query = $this->addProductIdFilter($query, $productId);
+        if ($productId > 0) {
+            $productIds[] = $productId;
+        }
+        $query = $this->addProductIdsFilter($query, $productIds);
         $query = $this->addCategoryIdFilter($query, $categoryId);
         $query = $this->addManufacturerIdFilter($query, $manufacturerId);
 
@@ -330,16 +338,17 @@ class CatalogService
     /**
      * @template T of array|\Cake\Datasource\EntityInterface
      * @param SelectQuery<T> $query
+     * @param list<int> $productIds
      * @return SelectQuery<T>
      */
-    protected function addProductIdFilter(SelectQuery $query, int $productId): SelectQuery
+    protected function addProductIdsFilter(SelectQuery $query, array $productIds): SelectQuery
     {
-        if ($productId == 0) {
+        if (empty($productIds)) {
             return $query;
         }
 
         $query->where([
-            'Products.id_product' => $productId,
+            'Products.id_product IN' => $productIds,
         ]);
 
         return $query;

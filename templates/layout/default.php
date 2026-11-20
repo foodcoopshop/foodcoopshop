@@ -92,6 +92,14 @@ $identity = $this->request->getAttribute('identity');
 
 </div>
 
+<?php
+if (isset($shoppingListProductIds)) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace') . ".ModalShoppingList.init(" . json_encode($shoppingListProductIds, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT) . ");"
+    ]);
+}
+?>
+
 <?php echo $this->element('scrollToTopButton'); ?>
 
 <div class="sc"></div>

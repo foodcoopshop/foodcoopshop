@@ -11,6 +11,7 @@ use Cake\Routing\Router;
 use Cake\Cache\Cache;
 use App\Model\Entity\Cart;
 use App\Services\CartService;
+use App\Services\ShoppingListAccessService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,6 +62,12 @@ class FrontendController extends AppController
         }
 
         $this->resetOriginalLoggedCustomer();
+
+        if (ShoppingListAccessService::isEnabled($this->identity, $this->getRequest()) && !OrderCustomerService::isSelfServiceModeByUrl()) {
+            $shoppingListsTable = $this->fetchTable('ShoppingLists');
+            $this->set('shoppingListProductIds', $shoppingListsTable->getCompositeProductIdsForCustomer($this->identity->getId()));
+            $this->set('shoppingListsForMenu', $shoppingListsTable->getForMenu($this->identity->getId()));
+        }
 
         $catalogService = new CatalogService();
 

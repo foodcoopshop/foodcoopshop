@@ -29,6 +29,15 @@ foodcoopshop.Helper = {
     },
 
     // https://stackoverflow.com/questions/2367979/pass-post-data-with-window-location-href
+    /**
+     * submit buttons with the attribute data-confirm-message only submit their form after a (simple javascript) confirmation
+     */
+    initConfirmButtons: function () {
+        $('button[data-confirm-message]').on('click', function () {
+            return confirm($(this).data('confirm-message'));
+        });
+    },
+
     postFormInNewWindow: function(path, params, method) {
         method = method || 'post';
     

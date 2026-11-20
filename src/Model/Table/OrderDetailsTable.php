@@ -485,6 +485,22 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
+     * returns the order details of the order period that belongs to the given delivery day
+     * (delivery day is formatted like the keys of getLastOrderDetailsForDropdown())
+     *
+     * @return list<\App\Model\Entity\OrderDetail>
+     */
+    public function getOrderDetailsForDeliveryDayAndCustomerId(string $deliveryDay, int $customerId): array
+    {
+        $formattedDeliveryDay = strtotime($deliveryDay);
+        $deliveryRhythmService = new DeliveryRhythmService();
+        $timeHelper = Configure::read('app.timeHelper');
+        $dateFrom = strtotime($timeHelper->formatToDbFormatDate($deliveryRhythmService->getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDay)));
+        $dateTo = strtotime($timeHelper->formatToDbFormatDate($deliveryRhythmService->getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDay)));
+        return $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
+    }
+
+    /**
      * @return list<\App\Model\Entity\OrderDetail>
      */
     public function getOrderDetailQueryForPeriodAndCustomerId(int $dateFrom, int $dateTo, int $customerId): array

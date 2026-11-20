@@ -7,6 +7,7 @@ use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Authorization\Policy\ResultInterface;
 use Authorization\IdentityInterface;
+use App\Services\ShoppingListAccessService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,6 +28,8 @@ class CartsPolicy implements RequestPolicyInterface
     public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
         switch ($request->getParam('action')) {
+            case 'addShoppingListToCart':
+                return ShoppingListAccessService::isEnabled($identity, $request);
             case 'emptyCart':
             case 'addOrderToCart':
             case 'addLastOrderToCart':

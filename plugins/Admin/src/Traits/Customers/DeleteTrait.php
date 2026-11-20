@@ -104,6 +104,8 @@ trait DeleteTrait
         $feedbacksTable = $this->getTableLocator()->get('Feedbacks');
         $addressCustomersTable->deleteAll(['id_customer' => $customerId]);
         $feedbacksTable->deleteAll(['customer_id' => $customerId]);
+        $shoppingListsTable = $this->getTableLocator()->get('ShoppingLists');
+        $shoppingListsTable->deleteMany($shoppingListsTable->find('ownedBy', customerId: $customerId)->all());
 
         $actionLogsTable = $this->getTableLocator()->get('ActionLogs');
         $actionLogsTable->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
