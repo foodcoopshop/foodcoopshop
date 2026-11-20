@@ -5859,8 +5859,6 @@ msgstr "Die Einkaufsliste {0} wurde geändert."
 msgid "The_shopping_list_{0}_has_been_deleted."
 msgstr "Die Einkaufsliste {0} wurde gelöscht."
 
-msgid "The_shopping_list_{0}_has_been_loaded_into_your_cart."
-msgstr "Die Einkaufsliste {0} wurde in deinen Warenkorb geladen."
 
 msgid "Saved_on_shopping_list"
 msgstr "Auf Einkaufsliste gespeichert"
@@ -5925,8 +5923,6 @@ msgstr "einkaufsliste"
 msgid "route_shopping_lists"
 msgstr "einkaufslisten"
 
-msgid "Load_shopping_list_into_cart"
-msgstr "Einkaufsliste in den Warenkorb laden"
 
 msgid "This_shopping_list_is_empty_add_products_with_the_heart."
 msgstr "Diese Einkaufsliste ist leer. Klicke bei einem Produkt auf das Herz {0}, um es hinzuzufügen."
@@ -5956,3 +5952,38 @@ msgstr "Weitere Einkaufsliste erstellen und Produkt hinzufügen"
 
 msgid "My_shopping_lists"
 msgstr "Meine Einkaufslisten"
+
+
+
+msgid "The_shopping_list_{0}_has_been_added_to_your_cart."
+msgstr "Die Einkaufsliste {0} wurde zu deinem Warenkorb hinzugefügt."
+
+msgid "Your_cart_has_been_emptied_and_the_shopping_list_{0}_has_been_loaded_into_your_cart."
+msgstr "Dein Warenkorb wurde geleert und die Einkaufsliste {0} in den Warenkorb geladen."
+
+msgid "Load_shopping_list_into_cart"
+msgstr "Einkaufsliste in den Warenkorb hinzufügen"
+
+msgid "Replace_cart_with_shopping_list"
+msgstr "Warenkorb durch Einkaufsliste ersetzen"
+
+msgid "Your_current_cart_will_be_emptied_first."
+msgstr "Dein aktueller Warenkorb wird vorher geleert."
+
+msgid "deleted_attribute"
+msgstr "gelöschte Variante"
+
+msgid "Remove_all_products_from_the_shopping_list"
+msgstr "Alle Produkte aus dieser Einkaufsliste entfernen"
+
+msgid "Do_you_really_want_to_remove_all_products_from_the_shopping_list_{0}?"
+msgstr "Willst du wirklich alle Produkte aus dieser Einkaufsliste {0} entfernen?"
+
+msgid "Save_as_shopping_list"
+msgstr "Als Einkaufsliste speichern"
+
+msgid "Do_you_want_to_save_your_cart_as_shopping_list_{0}?"
+msgstr "Willst du deinen Warenkorb als Einkaufsliste „{0}“ speichern?"
+
+msgid "Your_cart_has_been_saved_as_shopping_list_{0}."
+msgstr "Dein Warenkorb wurde als Einkaufsliste {0} gespeichert."

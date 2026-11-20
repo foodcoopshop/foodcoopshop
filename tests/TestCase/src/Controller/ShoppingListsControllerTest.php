@@ -67,7 +67,8 @@ class ShoppingListsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Wocheneinkauf');
         $this->assertResponseContains('Artischocke');
         $this->assertResponseContains('Milch');
-        $this->assertResponseContains('Einkaufsliste in den Warenkorb laden');
+        $this->assertResponseContains('in den Warenkorb dazuladen');
+        $this->assertResponseContains('Warenkorb durch Einkaufsliste ersetzen');
         // amounts of the list are preset via javascript
         $expectedAmounts = json_encode([(string) ProductsFixture::ID_ARTICHOKE => 2, ProductsFixture::ID_MILK_0_5L => 1], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_FORCE_OBJECT);
         $this->assertResponseContains('ShoppingListPage.init(' . ShoppingListsFixture::ID_CUSTOMER_WEEKLY . ', ' . $expectedAmounts . ')');
@@ -116,16 +117,125 @@ class ShoppingListsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Folgende Produkte dieser Einkaufsliste sind derzeit nicht bestellbar: <b>Artischocke</b>');
     }
 
+    public function testDetailShowsDeletedProducts(): void
+    {
+        $this->changeProductStatus(ProductsFixture::ID_ARTICHOKE, APP_DEL);
+        $this->loginAsCustomer();
+        $this->get($this->getWeeklyListUrl());
+        $this->assertResponseContains('Folgende Produkte dieser Einkaufsliste sind derzeit nicht bestellbar: <b>Artischocke</b>');
+    }
+
+    public function testDetailShowsDeletedAttributes(): void
+    {
+        $this->getTableLocator()->get('ProductAttributes')->deleteProductAttribute(60, 10);
+        $this->loginAsCustomer();
+        $this->get($this->getWeeklyListUrl());
+        $this->assertResponseContains('Folgende Produkte dieser Einkaufsliste sind derzeit nicht bestellbar: <b>Milch : gelöschte Variante</b>');
+    }
+
+    public function testRemoveUnavailableAttribute(): void
+    {
+        $this->getTableLocator()->get('ProductAttributes')->deleteProductAttribute(60, 10);
+        $this->loginAsCustomer();
+        $this->post($this->Slug->getShoppingListRemoveUnavailableProducts(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertFlashMessage('1 Produkt wurde von der Einkaufsliste entfernt.');
+        $this->assertEquals([(string) ProductsFixture::ID_ARTICHOKE], $this->getShoppingListsTable()->getCompositeProductIdsForCustomer(Configure::read('test.customerId')));
+    }
+
     public function testRemoveUnavailableProducts(): void
     {
         $this->changeProductStatus(ProductsFixture::ID_ARTICHOKE, APP_OFF);
         $this->loginAsCustomer();
-        $this->post($this->Slug->getShoppingListRemoveUnavailableProducts(ShoppingListsFixture::ID_CUSTOMER_WEEKLY), [
-            'productIds' => [ProductsFixture::ID_ARTICHOKE],
-        ]);
+        $this->post($this->Slug->getShoppingListRemoveUnavailableProducts(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
         $this->assertRedirect($this->getWeeklyListUrl());
         $this->assertFlashMessage('1 Produkt wurde von der Einkaufsliste entfernt.');
         $this->assertEquals([ProductsFixture::ID_MILK_0_5L], $this->getShoppingListsTable()->getCompositeProductIdsForCustomer(Configure::read('test.customerId')));
+    }
+
+    public function testRemoveAllProducts(): void
+    {
+        $this->loginAsCustomer();
+        $this->post($this->Slug->getShoppingListRemoveAllProducts(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertRedirect($this->getWeeklyListUrl());
+        $this->assertFlashMessage('2 Produkte wurden von der Einkaufsliste entfernt.');
+        $this->assertEquals([], $this->getShoppingListsTable()->getCompositeProductIdsForCustomer(Configure::read('test.customerId')));
+        // list itself is not deleted
+        $this->assertEquals(1, $this->getShoppingListsTable()->find()->where(['id' => ShoppingListsFixture::ID_CUSTOMER_WEEKLY])->count());
+    }
+
+    public function testRemoveAllProductsOfOtherCustomer(): void
+    {
+        $this->loginAsCustomer();
+        $this->post($this->Slug->getShoppingListRemoveAllProducts(ShoppingListsFixture::ID_SUPERADMIN));
+        $this->assertResponseCode(404);
+    }
+
+    public function testRemoveAllProductsWithGetNotAllowed(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getShoppingListRemoveAllProducts(ShoppingListsFixture::ID_CUSTOMER_WEEKLY));
+        $this->assertResponseCode(405);
+    }
+
+    public function testCartDetailShowsSaveAsShoppingListButton(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 1);
+        $this->get($this->Slug->getCartDetail());
+        $this->assertResponseContains('Als Einkaufsliste speichern');
+        $this->assertResponseContains('Willst du deinen Warenkorb als Einkaufsliste „Meine Einkaufsliste“ speichern?');
+    }
+
+    public function testCartDetailHidesSaveAsShoppingListButtonIfCartIsEmpty(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getCartDetail());
+        $this->assertResponseNotContains('Als Einkaufsliste speichern');
+    }
+
+    public function testSaveCart(): void
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart(ProductsFixture::ID_ARTICHOKE, 3);
+        $this->addProductToCart(ProductsFixture::ID_MILK_0_5L, 2);
+        $this->post($this->Slug->getSaveCartAsShoppingList());
+
+        $shoppingList = $this->getShoppingListsTable()->find()
+            ->where(['id_customer' => Configure::read('test.customerId'), 'name' => 'Meine Einkaufsliste'])
+            ->firstOrFail();
+        $this->assertRedirect($this->Slug->getShoppingListDetail($shoppingList->id, $shoppingList->name));
+        $this->assertFlashMessage('Dein Warenkorb wurde als Einkaufsliste <b>Meine Einkaufsliste</b> gespeichert.');
+        $this->assertEquals([
+            (string) ProductsFixture::ID_ARTICHOKE => 3,
+            ProductsFixture::ID_MILK_0_5L => 2,
+        ], $this->getShoppingListsTable()->getAmountsByCompositeProductId($shoppingList));
+
+        // second time: automatic name with number
+        $this->post($this->Slug->getSaveCartAsShoppingList());
+        $this->assertFlashMessage('Dein Warenkorb wurde als Einkaufsliste <b>Meine Einkaufsliste #2</b> gespeichert.');
+    }
+
+    public function testSaveCartWithEmptyCart(): void
+    {
+        $this->loginAsCustomer();
+        $this->post($this->Slug->getSaveCartAsShoppingList());
+        $this->assertRedirect($this->Slug->getCartDetail());
+        $this->assertFlashMessage('Dein Warenkorb ist leer.');
+        $this->assertEquals(1, $this->getShoppingListsTable()->find()->where(['id_customer' => Configure::read('test.customerId')])->count());
+    }
+
+    public function testSaveCartWithGetNotAllowed(): void
+    {
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getSaveCartAsShoppingList());
+        $this->assertResponseCode(405);
+    }
+
+    public function testSaveCartAsManufacturer(): void
+    {
+        $this->loginAsVegetableManufacturer();
+        $this->post($this->Slug->getSaveCartAsShoppingList());
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEdit(): void

@@ -19,7 +19,8 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".ModalText.init('.cart .input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Cart.initCartFinish();"
+    Configure::read('app.jsNamespace').".Cart.initCartFinish();".
+    Configure::read('app.jsNamespace').".Helper.initConfirmButtons();"
 ]);
 
 if (!empty($identity->getProducts())) {
@@ -35,7 +36,23 @@ if (!$identity->termsOfUseAccepted()) {
 }
 ?>
 
-<h1><?php echo $title_for_layout; ?></h1>
+<div class="cart-heading">
+    <h1><?php echo $title_for_layout; ?></h1>
+    <?php
+    if (isset($newShoppingListName) && !empty($identity->getProducts())) {
+        echo $this->Form->create(null, [
+            'url' => $this->Slug->getSaveCartAsShoppingList(),
+            'class' => 'save-cart-as-shopping-list',
+        ]);
+        echo $this->Form->button('<i class="fas fa-heart"></i> ' . __('Save_as_shopping_list'), [
+            'class' => 'btn btn-outline-light',
+            'escapeTitle' => false,
+            'data-confirm-message' => __('Do_you_want_to_save_your_cart_as_shopping_list_{0}?', [$newShoppingListName]),
+        ]);
+        echo $this->Form->end();
+    }
+    ?>
+</div>
 
 <?php
 $classes = ['cart'];

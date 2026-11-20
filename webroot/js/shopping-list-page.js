@@ -40,6 +40,7 @@ foodcoopshop.ShoppingListPage = {
             foodcoopshop.ShoppingListPage.renderProduct(mainProductId, true);
         });
         this.initDeleteButton();
+        foodcoopshop.Helper.initConfirmButtons();
 
         // heart buttons depend on the selected attribute
         foodcoopshop.ModalShoppingList.updateButtons();
@@ -149,7 +150,7 @@ foodcoopshop.ShoppingListPage = {
 
         if (Object.keys(this.amounts).length === 0) {
             $('.shopping-list-empty').removeClass('hide');
-            $('.btn-load-shopping-list-into-cart').addClass('hide');
+            $('.shopping-list-actions').addClass('hide');
         }
     }
 

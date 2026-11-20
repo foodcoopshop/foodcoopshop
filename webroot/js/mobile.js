@@ -193,6 +193,18 @@ foodcoopshop.Mobile = {
 
     },
 
+    getShoppingListsMenuItems: function () {
+        return $('.sidebar ul#shopping-lists-menu > li').clone().addClass('shopping-lists-menu-item').toArray();
+    },
+
+    /**
+     * called after the sidebar menu of the shopping lists was updated
+     */
+    updateShoppingListsMenu: function () {
+        $('.sb-left li.shopping-lists-menu-item').remove();
+        $('.sb-left li.shopping-lists-menu-marker').after(this.getShoppingListsMenuItems());
+    },
+
     initMenusFrontend: function () {
 
         $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
@@ -227,9 +239,9 @@ foodcoopshop.Mobile = {
             }
         });
 
-        $('.sidebar ul#shopping-lists-menu > li').each(function () {
-            menuItems.push($(this).clone());
-        });
+        // marker: the shopping lists are re-inserted after it if they change (see updateShoppingListsMenu)
+        menuItems.push('<li class="shopping-lists-menu-marker hide"></li>');
+        menuItems = $.merge(menuItems, this.getShoppingListsMenuItems());
 
         $('.sidebar ul#filters-menu > li').each(function () {
             menuItems.push($(this).clone());
@@ -304,7 +316,11 @@ foodcoopshop.Mobile = {
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add special infos to cart page
-        var cartPage = $('body.carts #inner-content h1:first');
+        // the heading of the cart detail page is wrapped (with the button "save as shopping list")
+        var cartPage = $('body.carts #inner-content .cart-heading');
+        if (cartPage.length === 0) {
+            cartPage = $('body.carts #inner-content h1:first');
+        }
         cartPage.after($('#cart p.cart-extra-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
         cartPage.after($('#cart p.future-orders'));

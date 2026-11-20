@@ -43,20 +43,7 @@ if ($identity !== null) {
     </span>
     <span class="middle"></span>
     <span class="right shopping-list-buttons">
-        <?php
-        if (!empty($amounts)) {
-            echo $this->Form->create(null, [
-                'url' => $this->Slug->getAddShoppingListToCart($shoppingList->id),
-                'class' => 'btn-load-shopping-list-into-cart',
-            ]);
-            echo $this->Form->button('<i class="fas fa-cart-plus"></i> ' . __('Load_shopping_list_into_cart'), [
-                'class' => 'btn btn-success',
-                'escapeTitle' => false,
-            ]);
-            echo $this->Form->end();
-        }
-        ?>
-        <a href="javascript:void(0);" class="btn btn-outline-light btn-edit-shopping-list" data-bs-toggle="modal" data-bs-target="#modal-shopping-list-edit" title="<?php echo h(__('Edit_shopping_list')); ?>">
+        <a href="javascript:void(0);" class="btn btn-outline-light edit-shortcut-button btn-edit-shopping-list" data-bs-toggle="modal" data-bs-target="#modal-shopping-list-edit" title="<?php echo h(__('Edit_shopping_list')); ?>">
             <i class="fas fa-pencil-alt"></i>
         </a>
     </span>
@@ -64,18 +51,48 @@ if ($identity !== null) {
 
 <?php
 
+if (!empty($amounts)) {
+    echo '<div class="shopping-list-actions">';
+        echo $this->Form->create(null, [
+            'url' => $this->Slug->getAddShoppingListToCart($shoppingList->id),
+            'class' => 'btn-load-shopping-list-into-cart',
+        ]);
+        echo $this->Form->button('<i class="fas fa-cart-plus"></i> ' . __('Load_shopping_list_into_cart'), [
+            'name' => 'emptyCart',
+            'value' => 0,
+            'class' => 'btn btn-cart btn-outline-light',
+            'escapeTitle' => false,
+        ]);
+        echo $this->Form->button('<i class="fas fa-rotate"></i> ' . __('Replace_cart_with_shopping_list'), [
+            'name' => 'emptyCart',
+            'value' => 1,
+            'title' => __('Your_current_cart_will_be_emptied_first.'),
+            'class' => 'btn btn-cart btn-outline-light',
+            'escapeTitle' => false,
+        ]);
+        echo $this->Form->end();
+        echo $this->Form->create(null, [
+            'url' => $this->Slug->getShoppingListRemoveAllProducts($shoppingList->id),
+            'class' => 'shopping-list-remove-all-products',
+        ]);
+        echo $this->Form->button('<i class="fas fa-trash-alt"></i> ' . __('Remove_all_products_from_the_shopping_list'), [
+            'class' => 'btn btn-outline-light',
+            'escapeTitle' => false,
+            'data-confirm-message' => __('Do_you_really_want_to_remove_all_products_from_the_shopping_list_{0}?', [$shoppingList->name]),
+        ]);
+        echo $this->Form->end();
+    echo '</div>';
+}
+
 // always rendered: is shown by javascript if the last product is removed
 echo '<p class="shopping-list-empty' . (empty($amounts) ? '' : ' hide') . '">' . __('This_shopping_list_is_empty_add_products_with_the_heart.', ['<i class="fas fa-heart"></i>']) . '</p>';
 
-if (!empty($unavailableProductIds)) {
+if (!empty($unavailableCompositeProductIds)) {
     echo '<div class="shopping-list-unavailable-products">';
         echo '<p>' . __('The_following_products_of_this_shopping_list_cannot_be_ordered_at_the_moment:') . ' <b>' . join(', ', array_map('h', $unavailableProductNames)) . '</b></p>';
         echo $this->Form->create(null, [
             'url' => $this->Slug->getShoppingListRemoveUnavailableProducts($shoppingList->id),
         ]);
-        foreach ($unavailableProductIds as $index => $unavailableProductId) {
-            echo $this->Form->hidden('productIds.' . $index, ['value' => $unavailableProductId]);
-        }
         echo $this->Form->button('<i class="fas fa-trash-alt"></i> ' . __('Remove_these_products_from_the_shopping_list'), [
             'class' => 'btn btn-outline-light btn-sm',
             'escapeTitle' => false,

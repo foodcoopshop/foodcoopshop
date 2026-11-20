@@ -5497,8 +5497,6 @@ msgstr "The shopping list {0} has been changed."
 msgid "The_shopping_list_{0}_has_been_deleted."
 msgstr "The shopping list {0} has been deleted."
 
-msgid "The_shopping_list_{0}_has_been_loaded_into_your_cart."
-msgstr "The shopping list {0} has been loaded into your cart."
 
 msgid "Saved_on_shopping_list"
 msgstr "Saved on shopping list"
@@ -5563,8 +5561,6 @@ msgstr "shopping-list"
 msgid "route_shopping_lists"
 msgstr "shopping-lists"
 
-msgid "Load_shopping_list_into_cart"
-msgstr "Load list into cart"
 
 msgid "This_shopping_list_is_empty_add_products_with_the_heart."
 msgstr "This shopping list is empty. Click on the heart {0} of a product to add it."
@@ -5594,3 +5590,38 @@ msgstr "Create another shopping list and add the product"
 
 msgid "My_shopping_lists"
 msgstr "My shopping lists"
+
+
+
+msgid "The_shopping_list_{0}_has_been_added_to_your_cart."
+msgstr "The shopping list {0} has been added to your cart."
+
+msgid "Your_cart_has_been_emptied_and_the_shopping_list_{0}_has_been_loaded_into_your_cart."
+msgstr "Your cart has been emptied and the shopping list {0} has been loaded into your cart."
+
+msgid "Load_shopping_list_into_cart"
+msgstr "Load list into cart"
+
+msgid "Replace_cart_with_shopping_list"
+msgstr "Replace cart with list"
+
+msgid "Your_current_cart_will_be_emptied_first."
+msgstr "Your current cart will be emptied first."
+
+msgid "deleted_attribute"
+msgstr "deleted variant"
+
+msgid "Remove_all_products_from_the_shopping_list"
+msgstr "Remove all products from the list"
+
+msgid "Do_you_really_want_to_remove_all_products_from_the_shopping_list_{0}?"
+msgstr "Do you really want to remove all products from the shopping list {0}?"
+
+msgid "Save_as_shopping_list"
+msgstr "Save as shopping list"
+
+msgid "Do_you_want_to_save_your_cart_as_shopping_list_{0}?"
+msgstr "Do you want to save your cart as shopping list “{0}”?"
+
+msgid "Your_cart_has_been_saved_as_shopping_list_{0}."
+msgstr "Your cart has been saved as shopping list {0}."

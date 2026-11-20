@@ -70,7 +70,8 @@ i.fa.ok, i.fas.ok, i.far.ok,
 body.carts .cart:not(#cart) span.amount .btn,
 #full-page-loader i,
 .btn-cart i.fa-cart-plus,
-.btn-cart i.fa-shopping-bag {
+.btn-cart i.fa-shopping-bag,
+.btn-load-shopping-list-into-cart .btn-cart i {
     color: var(--theme-color);
 }
 
@@ -95,8 +96,7 @@ h1.middle-line span.middle {
 
 .btn-success:hover,
 .btn-success:focus,
-.btn-success:active,
-.btn-success.disabled {
+.btn-success:active {
     background-color: var(--theme-color) ! important;
     border-color: var(--theme-color);
 }

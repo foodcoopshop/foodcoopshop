@@ -523,6 +523,16 @@ class SlugHelper extends Helper
         return '/' . __('route_shopping_lists') . '/removeUnavailableProducts/' . $shoppingListId;
     }
 
+    public function getShoppingListRemoveAllProducts(int $shoppingListId): string
+    {
+        return '/' . __('route_shopping_lists') . '/removeAllProducts/' . $shoppingListId;
+    }
+
+    public function getSaveCartAsShoppingList(): string
+    {
+        return '/' . __('route_shopping_lists') . '/saveCart';
+    }
+
     public function getAddShoppingListToCart(int $shoppingListId): string
     {
         return '/' . __('route_cart') . '/addShoppingListToCart/' . $shoppingListId;

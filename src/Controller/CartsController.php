@@ -9,6 +9,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use App\Services\OrderCustomerService;
+use App\Services\ShoppingListAccessService;
 use Cake\View\JsonView;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
@@ -67,6 +68,10 @@ class CartsController extends FrontendController
     public function detail(): void
     {
         $this->set('title_for_layout', __('Your cart'));
+
+        if (ShoppingListAccessService::isEnabled($this->identity, $this->getRequest())) {
+            $this->set('newShoppingListName', $this->fetchTable('ShoppingLists')->getDefaultName($this->identity->getId()));
+        }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 
@@ -290,9 +295,16 @@ class CartsController extends FrontendController
                 'amount' => $shoppingListProduct->amount,
             ];
         }
+        $emptyCart = (bool) $this->getRequest()->getData('emptyCart');
+        if ($emptyCart) {
+            $this->cartService->doEmptyCart();
+        }
         $errorMessages = $this->cartService->addProducts($items);
 
-        $message = __('The_shopping_list_{0}_has_been_loaded_into_your_cart.', ['<b>' . h($shoppingList->name) . '</b>']);
+        $shoppingListName = '<b>' . h($shoppingList->name) . '</b>';
+        $message = $emptyCart
+            ? __('Your_cart_has_been_emptied_and_the_shopping_list_{0}_has_been_loaded_into_your_cart.', [$shoppingListName])
+            : __('The_shopping_list_{0}_has_been_added_to_your_cart.', [$shoppingListName]);
         $message .= $this->cartService->getNotAvailableProductsMessage($errorMessages);
         $this->Flash->success($message);
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Model\Entity\Product;
 use App\Model\Entity\ShoppingList;
 use App\Services\CatalogService;
 use Cake\Core\Configure;
@@ -45,31 +46,10 @@ class ShoppingListsController extends FrontendController
             return $this->redirect(Configure::read('app.slugHelper')->getShoppingListDetail($shoppingList->id, $shoppingList->name));
         }
 
-        $amounts = $this->fetchTable('ShoppingLists')->getAmountsByCompositeProductId($shoppingList);
-        $productsTable = $this->fetchTable('Products');
-        $productIdsOnList = array_values(array_unique(array_map(
-            fn($compositeProductId) => $productsTable->getProductIdAndAttributeId($compositeProductId)['productId'],
-            array_keys($amounts),
-        )));
+        ['products' => $products, 'amounts' => $amounts, 'unavailableCompositeProductIds' => $unavailableCompositeProductIds] = $this->getProductsOfShoppingList($shoppingList);
 
-        $products = [];
-        if (!empty($productIdsOnList)) {
-            // a shopping list is not paginated: load all pages of the catalog
-            $catalogService = new CatalogService();
-            $page = 1;
-            do {
-                $productsOfPage = $catalogService->getProducts(categoryId: 0, page: $page, productIds: $productIdsOnList);
-                $products = array_merge($products, $productsOfPage);
-                $page++;
-            } while (count($productsOfPage) == CatalogService::MAX_PRODUCTS_PER_PAGE);
-            $products = $catalogService->prepareProducts($products);
-        }
-
-        $displayedProductIds = array_map(fn($product) => $product->id_product, $products);
-        $unavailableProductIds = array_values(array_diff($productIdsOnList, $displayedProductIds));
-
-        $this->set(compact('shoppingList', 'products', 'amounts', 'unavailableProductIds'));
-        $this->set('unavailableProductNames', $this->getProductNames($unavailableProductIds));
+        $this->set(compact('shoppingList', 'products', 'amounts', 'unavailableCompositeProductIds'));
+        $this->set('unavailableProductNames', $this->getProductNames($unavailableCompositeProductIds));
         $this->set('title_for_layout', $shoppingList->name);
         return null;
     }
@@ -107,9 +87,59 @@ class ShoppingListsController extends FrontendController
     {
         $this->getRequest()->allowMethod(['post']);
         $shoppingList = $this->getOwnedShoppingList($shoppingListId);
-        $productIds = array_map('intval', (array) $this->getRequest()->getData('productIds'));
-        $removedCount = $this->fetchTable('ShoppingLists')->removeProducts($shoppingList, $productIds);
+        // determined again (and not posted): the products could have become available again in the meantime
+        $unavailableCompositeProductIds = $this->getProductsOfShoppingList($shoppingList)['unavailableCompositeProductIds'];
+        $removedCount = $this->fetchTable('ShoppingLists')->removeProducts($shoppingList, $unavailableCompositeProductIds);
         $this->Flash->success(__('{0,plural,=1{1_product_has} other{#_products_have}}_been_removed_from_the_shopping_list.', [$removedCount]));
+        return $this->redirect(Configure::read('app.slugHelper')->getShoppingListDetail($shoppingList->id, $shoppingList->name));
+    }
+
+    public function removeAllProducts(int $shoppingListId): Response
+    {
+        $this->getRequest()->allowMethod(['post']);
+        $shoppingList = $this->getOwnedShoppingList($shoppingListId);
+        $removedCount = $this->fetchTable('ShoppingLists')->removeAllProducts($shoppingList);
+        $this->Flash->success(__('{0,plural,=1{1_product_has} other{#_products_have}}_been_removed_from_the_shopping_list.', [$removedCount]));
+        return $this->redirect(Configure::read('app.slugHelper')->getShoppingListDetail($shoppingList->id, $shoppingList->name));
+    }
+
+    /**
+     * saves the products of the cart as a new shopping list (with an automatic name)
+     */
+    public function saveCart(): Response
+    {
+        $this->getRequest()->allowMethod(['post']);
+
+        $cart = $this->identity->getCart();
+        $cartProducts = $this->fetchTable('CartProducts')->find()
+            ->where(['CartProducts.id_cart' => $cart['Cart']->id_cart])
+            ->orderBy(['CartProducts.id_cart_product' => 'ASC'])
+            ->all();
+        if ($cartProducts->isEmpty()) {
+            $this->Flash->error(__('Your_cart_is_empty') . '.');
+            return $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
+        }
+
+        $items = [];
+        foreach ($cartProducts as $cartProduct) {
+            $items[] = [
+                'productId' => $cartProduct->id_product,
+                'attributeId' => $cartProduct->id_product_attribute,
+                'amount' => $cartProduct->amount,
+            ];
+        }
+        $shoppingListsTable = $this->fetchTable('ShoppingLists');
+        $shoppingList = $shoppingListsTable->createWithProducts(
+            $this->identity->getId(),
+            $shoppingListsTable->getDefaultName($this->identity->getId()),
+            $items,
+        );
+        if ($shoppingList->hasErrors()) {
+            $this->Flash->error(__('Errors_while_saving!') . '<ul><li>' . join('</li><li>', $shoppingListsTable->getAllValidationErrors($shoppingList)) . '</li></ul>');
+            return $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
+        }
+
+        $this->Flash->success(__('Your_cart_has_been_saved_as_shopping_list_{0}.', ['<b>' . h($shoppingList->name) . '</b>']));
         return $this->redirect(Configure::read('app.slugHelper')->getShoppingListDetail($shoppingList->id, $shoppingList->name));
     }
 
@@ -193,14 +223,7 @@ class ShoppingListsController extends FrontendController
             ->contain(['ProductAttributes.ProductAttributeCombinations.Attributes'])
             ->where(['Products.id_product' => $productId])
             ->firstOrFail();
-        $attributeName = '';
-        foreach ($product->product_attributes as $productAttribute) {
-            if ($productAttribute->id_product_attribute == $attributeId) {
-                $attributeName = $productAttribute->product_attribute_combination->attribute->name ?? '';
-                break;
-            }
-        }
-        $productName = $this->fetchTable('Carts')->getProductNameWithUnity($product->name, $attributeName);
+        $productName = $this->getProductNameWithAttribute($product, $attributeId);
 
         $amountsBefore = [];
         foreach ($listsBefore as $shoppingList) {
@@ -241,27 +264,101 @@ class ShoppingListsController extends FrontendController
     }
 
     /**
-     * @param list<int> $productIds
+     * eg. "Milch : 0,5l" or "Milch : gelöschte Variante"
+     */
+    private function getProductNameWithAttribute(Product $product, int $attributeId): string
+    {
+        if ($attributeId == 0) {
+            return $product->name;
+        }
+        $attributeName = __('deleted_attribute');
+        foreach ($product->product_attributes as $productAttribute) {
+            if ($productAttribute->id_product_attribute == $attributeId) {
+                $attributeName = $productAttribute->product_attribute_combination->attribute->name ?? '';
+                break;
+            }
+        }
+        return $this->fetchTable('Carts')->getProductNameWithUnity($product->name, $attributeName);
+    }
+
+    /**
+     * @param list<string> $compositeProductIds
      * @return list<string>
      */
-    private function getProductNames(array $productIds): array
+    private function getProductNames(array $compositeProductIds): array
     {
-        if (empty($productIds)) {
+        if (empty($compositeProductIds)) {
             return [];
         }
-        $names = $this->fetchTable('Products')->find()
-            ->select(['Products.id_product', 'Products.name'])
-            ->where(['Products.id_product IN' => $productIds])
-            ->orderBy(['Products.name' => 'ASC'])
+        $productsTable = $this->fetchTable('Products');
+        $productIds = array_map(fn($compositeProductId) => $productsTable->getProductIdAndAttributeId($compositeProductId)['productId'], $compositeProductIds);
+        $products = $productsTable->find()
+            ->contain(['ProductAttributes.ProductAttributeCombinations.Attributes'])
+            ->where(['Products.id_product IN' => array_unique($productIds)])
             ->all()
-            ->extract('name')
-            ->toList();
-        // deleted products
-        $deletedCount = count($productIds) - count($names);
+            ->indexBy('id_product')
+            ->toArray();
+
+        $names = [];
+        $deletedCount = 0;
+        foreach ($compositeProductIds as $compositeProductId) {
+            $ids = $productsTable->getProductIdAndAttributeId($compositeProductId);
+            if (!isset($products[$ids['productId']])) {
+                $deletedCount++;
+                continue;
+            }
+            $names[] = $this->getProductNameWithAttribute($products[$ids['productId']], $ids['attributeId']);
+        }
+        sort($names);
+        // products that do not exist any more in the database
         if ($deletedCount > 0) {
             $names[] = __('{0,plural,=1{1_deleted_product} other{#_deleted_products}}', [$deletedCount]);
         }
         return $names;
+    }
+
+    /**
+     * products of the list as they are shown in the catalog (only orderable products) and the products (or variants) that cannot be ordered
+     *
+     * @return array{products: array<mixed>, amounts: array<string, int>, unavailableCompositeProductIds: list<string>}
+     */
+    private function getProductsOfShoppingList(ShoppingList $shoppingList): array
+    {
+        $amounts = $this->fetchTable('ShoppingLists')->getAmountsByCompositeProductId($shoppingList);
+        $productsTable = $this->fetchTable('Products');
+        $productIdsOnList = array_values(array_unique(array_map(
+            fn($compositeProductId) => $productsTable->getProductIdAndAttributeId($compositeProductId)['productId'],
+            array_keys($amounts),
+        )));
+
+        $products = [];
+        if (!empty($productIdsOnList)) {
+            // a shopping list is not paginated: load all pages of the catalog
+            $catalogService = new CatalogService();
+            for ($page = 1; ; $page++) {
+                $productsOfPage = $catalogService->getProducts(categoryId: 0, page: $page, productIds: $productIdsOnList);
+                $products = array_merge($products, $productsOfPage);
+                if (count($productsOfPage) < CatalogService::MAX_PRODUCTS_PER_PAGE) {
+                    break;
+                }
+            }
+            $products = $catalogService->prepareProducts($products);
+        }
+
+        // checked per variant: a variant can be deleted while the product is still shown
+        $orderableCompositeProductIds = [];
+        foreach ($products as $product) {
+            if (empty($product->product_attributes)) {
+                $orderableCompositeProductIds[] = (string) $product->id_product;
+                continue;
+            }
+            foreach ($product->product_attributes as $productAttribute) {
+                $orderableCompositeProductIds[] = (string) $productsTable->getCompositeProductIdAndAttributeId($product->id_product, $productAttribute->id_product_attribute);
+            }
+        }
+        $unavailableCompositeProductIds = array_values(array_diff(array_map('strval', array_keys($amounts)), $orderableCompositeProductIds));
+
+        return compact('products', 'amounts', 'unavailableCompositeProductIds');
     }
 
     private function getOwnedShoppingList(int $shoppingListId): ShoppingList

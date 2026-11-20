@@ -58,10 +58,14 @@ foodcoopshop.ModalShoppingList = {
         var existingMenu = $('.sidebar #shopping-lists-menu');
         if (existingMenu.length > 0) {
             existingMenu.replaceWith(sidebarMenu);
-            return;
+        } else {
+            // first list was created: shopping lists are the first element of the sidebar
+            $('.sidebar').prepend(sidebarMenu);
         }
-        // first list was created: shopping lists are the first element of the sidebar
-        $('.sidebar').prepend(sidebarMenu);
+        // the mobile menu contains copies of the sidebar menu items
+        if (foodcoopshop.Mobile !== undefined) {
+            foodcoopshop.Mobile.updateShoppingListsMenu();
+        }
     },
 
     getDefaultAmount: function (button) {
@@ -250,7 +254,12 @@ foodcoopshop.ModalShoppingList = {
             return hasAddOrChange || hasRemove;
         }
 
-        foodcoopshop.Modal.getSuccessButton(modalSelector).prop('disabled', !hasAddOrChange && !hasRemove);
+        var successButton = foodcoopshop.Modal.getSuccessButton(modalSelector);
+        if (hasAddOrChange || hasRemove) {
+            foodcoopshop.Helper.enableButton(successButton);
+        } else {
+            foodcoopshop.Helper.disableButton(successButton);
+        }
 
         return hasAddOrChange || hasRemove;
     },

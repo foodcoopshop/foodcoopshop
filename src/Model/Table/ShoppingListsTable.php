@@ -184,17 +184,33 @@ class ShoppingListsTable extends AppTable
         );
     }
 
-    /**
-     * @param list<int> $productIds
-     */
-    public function removeProducts(ShoppingList $shoppingList, array $productIds): int
+    public function removeAllProducts(ShoppingList $shoppingList): int
     {
-        if (empty($productIds)) {
+        return $this->ShoppingListProducts->deleteAll([
+            'shopping_list_id' => $shoppingList->id,
+        ]);
+    }
+
+    /**
+     * @param list<string> $compositeProductIds eg. ["12", "12-3"]
+     */
+    public function removeProducts(ShoppingList $shoppingList, array $compositeProductIds): int
+    {
+        if (empty($compositeProductIds)) {
             return 0;
+        }
+        $productsTable = $this->ShoppingListProducts->Products->getTarget();
+        $productConditions = [];
+        foreach ($compositeProductIds as $compositeProductId) {
+            $ids = $productsTable->getProductIdAndAttributeId($compositeProductId);
+            $productConditions[] = [
+                'id_product' => $ids['productId'],
+                'id_product_attribute' => $ids['attributeId'],
+            ];
         }
         return $this->ShoppingListProducts->deleteAll([
             'shopping_list_id' => $shoppingList->id,
-            'id_product IN' => $productIds,
+            'OR' => $productConditions,
         ]);
     }
 
@@ -299,6 +315,36 @@ class ShoppingListsTable extends AppTable
         });
 
         return $errors;
+    }
+
+    /**
+     * if saving fails, the returned entity has errors (also the errors of the products)
+     *
+     * @param list<array{productId: int, attributeId: int, amount: int}> $items
+     */
+    public function createWithProducts(int $customerId, string $name, array $items): ShoppingList
+    {
+        $shoppingList = $this->newEntity(['name' => $name]);
+        $shoppingList->id_customer = $customerId;
+        if ($shoppingList->hasErrors()) {
+            return $shoppingList;
+        }
+
+        $this->getConnection()->transactional(function () use ($shoppingList, $items) {
+            if (!$this->save($shoppingList)) {
+                return false;
+            }
+            foreach ($items as $item) {
+                $shoppingListProduct = $this->ShoppingListProducts->addOrUpdate($shoppingList->id, $item['productId'], $item['attributeId'], $item['amount']);
+                if ($shoppingListProduct->hasErrors()) {
+                    $shoppingList->setErrors(['shopping_list_products' => $this->ShoppingListProducts->getAllValidationErrors($shoppingListProduct)]);
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return $shoppingList;
     }
 
     /**

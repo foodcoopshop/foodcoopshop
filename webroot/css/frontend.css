@@ -2243,13 +2243,43 @@ h1.shopping-list-heading .shopping-list-buttons {
     font-size: 15px;
     line-height: normal;
 }
-h1.shopping-list-heading .shopping-list-buttons form {
+.cart-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 20px;
+}
+.cart-heading {
+    margin-bottom: 10px;
+}
+.cart-heading h1 {
+    width: auto;
+    margin-bottom: 0;
+}
+.cart-heading form {
     margin: 0;
 }
-h1.shopping-list-heading .shopping-list-buttons .btn {
-    padding: 4px 10px;
-    font-size: 15px;
-    line-height: 22px;
+.cart-heading .save-cart-as-shopping-list .btn i.fa-heart {
+    color: var(--theme-color);
+}
+.shopping-list-actions {
+    float: left;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.shopping-list-actions form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+}
+.shopping-list-actions .shopping-list-remove-all-products .btn i {
+    color: var(--not-ok-red);
 }
 .shopping-list-empty i.fa-heart {
     color: var(--theme-color);
@@ -2259,7 +2289,9 @@ h1.shopping-list-heading .shopping-list-buttons .btn {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #d6d4d4;
+    /* transparent: works in light and dark mode */
+    border: 1px solid color-mix(in srgb, var(--not-ok-red) 45%, transparent);
+    background-color: color-mix(in srgb, var(--not-ok-red) 7%, transparent);
     border-radius: 5px;
 }
 .shopping-list-unavailable-products p {
