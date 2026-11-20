@@ -5470,7 +5470,6 @@ msgstr "The following bulk orders with regular pickup day {0} are not moved auto
 msgid "{0}:_{1}_bulk_order_products_with_{2}_ordered_products_and_order_value_{3}"
 msgstr "{0}: {1,plural,=1{1 product} other{# products}}, {2} already ordered, order value {3}"
 
-
 msgid "Products_with_own_order_deadline_for_regular_pickup_day_{0}_moved_forward:"
 msgstr "For the following products with their own order deadline, the order deadline for the regular pickup day {0} is moved forward:"
 
@@ -5483,20 +5482,17 @@ msgstr "Individual order deadline"
 msgid "Bulk_orders"
 msgstr "Bulk orders"
 
-
 msgid "Edit_shopping_list"
 msgstr "Edit shopping list"
 
 msgid "Do_you_really_want_to_delete_the_shopping_list_{0}?"
 msgstr "Do you really want to delete the shopping list \"{0}\"?"
 
-
 msgid "The_shopping_list_{0}_has_been_changed."
 msgstr "The shopping list {0} has been changed."
 
 msgid "The_shopping_list_{0}_has_been_deleted."
 msgstr "The shopping list {0} has been deleted."
-
 
 msgid "Saved_on_shopping_list"
 msgstr "Saved on shopping list"
@@ -5561,7 +5557,6 @@ msgstr "shopping-list"
 msgid "route_shopping_lists"
 msgstr "shopping-lists"
 
-
 msgid "This_shopping_list_is_empty_add_products_with_the_heart."
 msgstr "This shopping list is empty. Click on the heart {0} of a product to add it."
 
@@ -5573,8 +5568,6 @@ msgstr "Remove these products from the shopping list"
 
 msgid "Delete_shopping_list"
 msgstr "Delete shopping list"
-
-
 
 msgid "{0,plural,=1{1_product_has} other{#_products_have}}_been_removed_from_the_shopping_list."
 msgstr "{0,plural,=1{1 product has} other{# products have}} been removed from the shopping list."
@@ -5590,8 +5583,6 @@ msgstr "Create another shopping list and add the product"
 
 msgid "My_shopping_lists"
 msgstr "My shopping lists"
-
-
 
 msgid "The_shopping_list_{0}_has_been_added_to_your_cart."
 msgstr "The shopping list {0} has been added to your cart."

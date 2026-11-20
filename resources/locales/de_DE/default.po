@@ -5832,7 +5832,6 @@ msgstr "Folgende Sammelbestellungen mit regulärem Abholtag {0} werden nicht aut
 msgid "{0}:_{1}_bulk_order_products_with_{2}_ordered_products_and_order_value_{3}"
 msgstr "{0}: {1,plural,=1{1 Produkt} other{# Produkte}}, {2} bereits bestellt, Bestellwert {3}"
 
-
 msgid "Products_with_own_order_deadline_for_regular_pickup_day_{0}_moved_forward:"
 msgstr "Bei folgenden Produkten mit individuellem Bestellschluss wird der Bestellschluss für den regulären Abholtag {0} vorgezogen:"
 
@@ -5845,20 +5844,17 @@ msgstr "Individueller Bestellschluss"
 msgid "Bulk_orders"
 msgstr "Sammelbestellungen"
 
-
 msgid "Edit_shopping_list"
 msgstr "Einkaufsliste bearbeiten"
 
 msgid "Do_you_really_want_to_delete_the_shopping_list_{0}?"
 msgstr "Möchtest du die Einkaufsliste \"{0}\" wirklich löschen?"
 
-
 msgid "The_shopping_list_{0}_has_been_changed."
 msgstr "Die Einkaufsliste {0} wurde geändert."
 
 msgid "The_shopping_list_{0}_has_been_deleted."
 msgstr "Die Einkaufsliste {0} wurde gelöscht."
-
 
 msgid "Saved_on_shopping_list"
 msgstr "Auf Einkaufsliste gespeichert"
@@ -5923,7 +5919,6 @@ msgstr "einkaufsliste"
 msgid "route_shopping_lists"
 msgstr "einkaufslisten"
 
-
 msgid "This_shopping_list_is_empty_add_products_with_the_heart."
 msgstr "Diese Einkaufsliste ist leer. Klicke bei einem Produkt auf das Herz {0}, um es hinzuzufügen."
 
@@ -5935,8 +5930,6 @@ msgstr "Diese Produkte von der Einkaufsliste entfernen"
 
 msgid "Delete_shopping_list"
 msgstr "Einkaufsliste löschen"
-
-
 
 msgid "{0,plural,=1{1_product_has} other{#_products_have}}_been_removed_from_the_shopping_list."
 msgstr "{0,plural,=1{1 Produkt wurde} other{# Produkte wurden}} von der Einkaufsliste entfernt."
@@ -5952,8 +5945,6 @@ msgstr "Weitere Einkaufsliste erstellen und Produkt hinzufügen"
 
 msgid "My_shopping_lists"
 msgstr "Meine Einkaufslisten"
-
-
 
 msgid "The_shopping_list_{0}_has_been_added_to_your_cart."
 msgstr "Die Einkaufsliste {0} wurde zu deinem Warenkorb hinzugefügt."

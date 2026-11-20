@@ -72,9 +72,4 @@ class AddShoppingLists extends BaseMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('fcs_shopping_list_products')->drop()->save();
-        $this->table('fcs_shopping_lists')->drop()->save();
-    }
 }
