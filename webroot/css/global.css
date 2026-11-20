@@ -159,9 +159,14 @@ button,
     background-color: #cec8c8 ! important;
 }
 /* disabled buttons are grey everywhere (important: overrides the colors of the different button types and their hover state)
-   except red buttons (eg. delivery break): the color is the information there */
-.btn.disabled:not(.btn-danger),
-.btn:disabled:not(.btn-danger) {
+   - not for red buttons (eg. delivery break): the color is the information there
+   - not for icon buttons without a button type (eg. +/- in the cart): they have no background and are only greyed out by bootstrap */
+.btn-success.disabled,
+.btn-success:disabled,
+.btn-outline-light.disabled:not(.btn-danger),
+.btn-outline-light:disabled:not(.btn-danger),
+.btn-warning.disabled,
+.btn-warning:disabled {
     background-color: var(--light-grey) ! important;
     border-color: var(--light-grey) ! important;
     color: #fff ! important;
