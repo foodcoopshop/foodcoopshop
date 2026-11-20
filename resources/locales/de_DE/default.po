@@ -5962,7 +5962,7 @@ msgid "Your_cart_has_been_emptied_and_the_shopping_list_{0}_has_been_loaded_into
 msgstr "Dein Warenkorb wurde geleert und die Einkaufsliste {0} in den Warenkorb geladen."
 
 msgid "Load_shopping_list_into_cart"
-msgstr "Einkaufsliste in den Warenkorb hinzufügen"
+msgstr "Einkaufsliste zum Warenkorb hinzufügen"
 
 msgid "Replace_cart_with_shopping_list"
 msgstr "Warenkorb durch Einkaufsliste ersetzen"

@@ -67,8 +67,11 @@ class ShoppingListsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Wocheneinkauf');
         $this->assertResponseContains('Artischocke');
         $this->assertResponseContains('Milch');
-        $this->assertResponseContains('in den Warenkorb dazuladen');
-        $this->assertResponseContains('Warenkorb durch Einkaufsliste ersetzen');
+        // buttons "add to cart" and "replace cart" (checked without the labels, they change often)
+        $this->assertResponseContains('action="' . $this->Slug->getAddShoppingListToCart(ShoppingListsFixture::ID_CUSTOMER_WEEKLY) . '"');
+        $this->assertResponseContains('name="emptyCart" value="0"');
+        $this->assertResponseContains('name="emptyCart" value="1"');
+        $this->assertResponseContains('action="' . $this->Slug->getShoppingListRemoveAllProducts(ShoppingListsFixture::ID_CUSTOMER_WEEKLY) . '"');
         // amounts of the list are preset via javascript
         $expectedAmounts = json_encode([(string) ProductsFixture::ID_ARTICHOKE => 2, ProductsFixture::ID_MILK_0_5L => 1], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_FORCE_OBJECT);
         $this->assertResponseContains('ShoppingListPage.init(' . ShoppingListsFixture::ID_CUSTOMER_WEEKLY . ', ' . $expectedAmounts . ')');

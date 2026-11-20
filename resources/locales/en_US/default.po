@@ -5600,7 +5600,7 @@ msgid "Your_cart_has_been_emptied_and_the_shopping_list_{0}_has_been_loaded_into
 msgstr "Your cart has been emptied and the shopping list {0} has been loaded into your cart."
 
 msgid "Load_shopping_list_into_cart"
-msgstr "Load list into cart"
+msgstr "Add shopping list to cart"
 
 msgid "Replace_cart_with_shopping_list"
 msgstr "Replace cart with list"
