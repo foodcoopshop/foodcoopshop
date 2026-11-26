@@ -63,7 +63,7 @@ services:
     container_name: fcs.phpmyadmin.dev
     restart: unless-stopped
     ports:
-      - '8080:80'
+      - '8090:80'
     environment:
       PMA_HOST: database-dev
       PMA_USER: root
@@ -79,7 +79,7 @@ services:
     container_name: fcs.phpmyadmin.test
     restart: unless-stopped
     ports:
-      - '8081:80'
+      - '8091:80'
     environment:
       PMA_HOST: database-test
       PMA_USER: root

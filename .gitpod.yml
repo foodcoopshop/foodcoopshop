@@ -8,9 +8,9 @@ tasks:
 ports:
   - port: 8001
     onOpen: notify
-  - port: 8080
+  - port: 8090
     onOpen: ignore
-  - port: 8081
+  - port: 8091
     onOpen: ignore
   - port: 3320
     onOpen: ignore
