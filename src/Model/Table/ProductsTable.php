@@ -834,12 +834,17 @@ class ProductsTable extends AppTable
         $productAttributesTable->save($productAttributeEntity);
     }
 
-    private function checkImageContentType(string $image): void
+    /**
+     * returns the file extension based on the mime type (never on the file name)
+     */
+    private function getImageExtensionByContentType(string $image): string
     {
         $mimeContentType = mime_content_type($image);
-        if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
+        $extension = array_search($mimeContentType, Configure::read('app.allowedImageMimeTypes'), true);
+        if ($extension === false) {
             throw new \Exception('file is not an image: ' . $image);
         }
+        return strtolower((string) $extension);
     }
 
     /**
@@ -848,6 +853,7 @@ class ProductsTable extends AppTable
     public function changeImage(array $products): bool
     {
 
+        $extensions = [];
         foreach ($products as $product) {
             $productId = key($product);
             $imageFromRemoteServer = $product[$productId];
@@ -864,14 +870,14 @@ class ProductsTable extends AppTable
                 }
                 $tmpLocalImagePath = TMP . 'tmp-image';
                 copy($imageFromRemoteServer, $tmpLocalImagePath);
-                $this->checkImageContentType($tmpLocalImagePath);
-                unset($tmpLocalImagePath);
+                $extensions[$productId] = $this->getImageExtensionByContentType($tmpLocalImagePath);
+                unlink($tmpLocalImagePath);
             } else {
                 $remoteImage = file_exists($imageFromRemoteServer);
                 if (!$remoteImage) {
                     throw new \Exception('local image not existing: ' . $imageFromRemoteServer);
                 }
-                $this->checkImageContentType($imageFromRemoteServer);
+                $extensions[$productId] = $this->getImageExtensionByContentType($imageFromRemoteServer);
             }
 
         }
@@ -888,7 +894,6 @@ class ProductsTable extends AppTable
 
             $imageFromRemoteServer = $product[$productId];
             $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
-            $extension = strtolower(pathinfo($imageFromRemoteServer, PATHINFO_EXTENSION));
 
             $product = $this->find('all',
             conditions: [
@@ -920,9 +925,16 @@ class ProductsTable extends AppTable
                     mkdir($thumbsPath, 0755, true);
                 }
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extensions[$productId];
                     $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
                     copy($remoteFileName, $thumbsFileName);
+                    // every thumb is a separate file and needs to be checked as well
+                    try {
+                        $this->getImageExtensionByContentType($thumbsFileName);
+                    } catch (\Exception $e) {
+                        unlink($thumbsFileName);
+                        throw $e;
+                    }
                 }
 
             } else {
