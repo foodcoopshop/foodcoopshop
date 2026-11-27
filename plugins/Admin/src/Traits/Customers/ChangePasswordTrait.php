@@ -56,6 +56,9 @@ trait ChangePasswordTrait
                     $customer,
                     [
                         'passwd' => $ph->hash($this->getRequest()->getData('Customers.passwd_1'))
+                    ],
+                    [
+                        'accessibleFields' => ['passwd' => true],
                     ]
                     )
                 );

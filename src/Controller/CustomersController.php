@@ -276,6 +276,13 @@ class CustomersController extends FrontendController
                     'passwd' => (new DefaultPasswordHasher())->hash($newPassword),
                     'tmp_new_passwd' => null,
                     'activate_new_password_code' => null,
+                ],
+                [
+                    'accessibleFields' => [
+                        'passwd' => true,
+                        'tmp_new_passwd' => true,
+                        'activate_new_password_code' => true,
+                    ],
                 ]
             );
             $customersTable->save($patchedEntity);
@@ -358,18 +365,7 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        $ph = new DefaultPasswordHasher();
-        $newPassword = StringComponent::createRandomString(12);
-        $customer = $customersTable->newEntity(
-            [
-                'Customers' => [
-                    'active' => 0,
-                    'id_default_group' => Customer::GROUP_MEMBER,
-                    'terms_of_use_accepted_date' => date('Y-m-d'),
-                    'passwd' => $ph->hash($newPassword)
-                ]
-            ]
-        );
+        $customer = $customersTable->newEntity([]);
 
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getRegistration()) {
             // prevent spam: http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
@@ -394,13 +390,6 @@ class CustomersController extends FrontendController
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
 
-                $this->setRequest($this->getRequest()->withoutData('Customers.active'));
-                $this->setRequest($this->getRequest()->withoutData('Customers.id_default_group'));
-
-                if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
-                    $this->setRequest($this->getRequest()->withData('Customers.activate_email_code', StringComponent::createRandomString(12)));
-                }
-
                 $customer = $customersTable->patchEntity(
                     $customer,
                     $this->getRequest()->getData(),
@@ -411,6 +400,16 @@ class CustomersController extends FrontendController
                         ]
                     ]
                 );
+
+                // protected fields (see Customer::$_accessible) are set explicitly
+                $newPassword = StringComponent::createRandomString(12);
+                $customer->active = APP_OFF;
+                $customer->id_default_group = Customer::GROUP_MEMBER;
+                $customer->terms_of_use_accepted_date = date('Y-m-d');
+                $customer->passwd = (new DefaultPasswordHasher())->hash($newPassword);
+                if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                    $customer->activate_email_code = StringComponent::createRandomString(12);
+                }
 
                 if ($customer->hasErrors()) {
                     $this->Flash->error(__('Errors_while_saving!'));

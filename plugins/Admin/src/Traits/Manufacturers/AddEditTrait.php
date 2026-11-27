@@ -140,10 +140,11 @@ trait AddEditTrait
                 'lastname' => $this->getRequest()->getData('Manufacturers.address_manufacturer.lastname'),
                 'active' => APP_ON
             ];
+            $customerOptions = ['accessibleFields' => ['active' => true]];
             if (empty($customer)) {
-                $customerEntity = $customersTable->newEntity($customerData);
+                $customerEntity = $customersTable->newEntity($customerData, $customerOptions);
             } else {
-                $customerEntity = $customersTable->patchEntity($customer, $customerData);
+                $customerEntity = $customersTable->patchEntity($customer, $customerData, $customerOptions);
             }
             $customersTable->save($customerEntity);
 

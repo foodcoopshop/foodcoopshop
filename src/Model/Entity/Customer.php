@@ -33,6 +33,22 @@ class Customer extends AppEntity implements IdentityInterface
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
 
+    /**
+     * @var array<string, bool>
+     */
+    protected array $_accessible = [
+        '*' => true,
+        'id_customer' => false,
+        'id_default_group' => false,
+        'active' => false,
+        'passwd' => false,
+        'tmp_new_passwd' => false,
+        'activate_new_password_code' => false,
+        'activate_email_code' => false,
+        'shopping_price' => false,
+        'user_id_registrierkasse' => false,
+    ];
+
     const GROUP_SELF_SERVICE_CUSTOMER = 2;
     const GROUP_MEMBER = 3;
     const GROUP_ADMIN = 4;
