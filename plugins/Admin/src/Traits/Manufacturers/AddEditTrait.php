@@ -48,7 +48,10 @@ trait AddEditTrait
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'anonymize_customers' => APP_ON,
             ],
-            ['validate' => false]
+            [
+                'validate' => false,
+                'accessibleFields' => Manufacturer::getAccessibleFieldsForAdmins(true),
+            ]
         );
         $this->set('title_for_layout', __('Add_manufacturer'));
         $this->_processForm($manufacturer, false);
@@ -113,7 +116,8 @@ trait AddEditTrait
             [
                 'associated' => [
                     'AddressManufacturers'
-                ]
+                ],
+                'accessibleFields' => Manufacturer::getAccessibleFieldsForAdmins(!$this->identity->isManufacturer()),
             ]
         );
         if ($manufacturer->hasErrors()) {

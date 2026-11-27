@@ -414,7 +414,10 @@ class Customer extends AppEntity implements IdentityInterface
             $cc->get($this->getCartId()), [
                 'status' => APP_OFF,
             ],
-            ['validate' => false],
+            [
+                'validate' => false,
+                'accessibleFields' => ['status' => true],
+            ],
         );
         $savedCart = $cc->save($patchedEntity);
         return $savedCart;

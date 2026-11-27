@@ -19,6 +19,19 @@ namespace App\Model\Entity;
 class Cart extends AppEntity
 {
 
+    /**
+     * fields that must never be set via mass assignment (newEntity / patchEntity with request data)
+     * set them explicitly or use the "accessibleFields" option
+     * @var array<string, bool>
+     */
+    protected array $_accessible = [
+        '*' => true,
+        'id_cart' => false,
+        'id_customer' => false,
+        'cart_type' => false,
+        'status' => false,
+    ];
+
     const TYPE_WEEKLY_RHYTHM = 1;
     const TYPE_INSTANT_ORDER = 2;
     const TYPE_SELF_SERVICE  = 3;
