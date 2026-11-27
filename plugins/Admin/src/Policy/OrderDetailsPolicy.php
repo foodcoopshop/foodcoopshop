@@ -45,6 +45,10 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                     return true;
                 }
                 if ($identity->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
+                    // iframe actions only render the empty container and do not receive a customer id
+                    if (in_array($request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
+                        return true;
+                    }
                     $customerId = $request->getParam('pass')[0] ?? null;
                     return (int) $customerId == $identity->getId();
                 }
