@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +30,7 @@ trait EditPickupDayCommentTrait
         $customerId = (int) $this->getRequest()->getData('customerId');
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
-        $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
+        $pickupDayComment = (new SanitizeService())->purifyBasicFormatting((string) $this->getRequest()->getData('pickupDayComment'));
 
         $customersTable = $this->getTableLocator()->get('Customers');
         $customer = $customersTable->find('all',

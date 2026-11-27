@@ -71,6 +71,27 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                     }
                 }
                 return false;
+            case 'editPickupDayComment':
+            case 'editProductsPickedUp':
+                if ($identity->isSuperadmin() || $identity->isAdmin()) {
+                    return true;
+                }
+                // customers are only allowed to change their own pickup day
+                if ($identity->isCustomer()) {
+                    $customerIds = $request->getParam('action') == 'editPickupDayComment'
+                        ? [$request->getData('customerId')]
+                        : (array) $request->getData('customerIds');
+                    if (empty($customerIds)) {
+                        return false;
+                    }
+                    foreach ($customerIds as $customerId) {
+                        if ((int) $customerId != $identity->getId()) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
             case 'setElFinderUploadPath':
                 return !$identity->isManufacturer();
             case 'delete':
