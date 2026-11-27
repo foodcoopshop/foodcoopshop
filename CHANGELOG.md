@@ -6,6 +6,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v4.3.1
+- Zahlreiche Security-Fixes.
+
+Datum: 27.11.2026 /  [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v4.3.0...v4.3.1)
+
 ## v4.3
 
 - Die Software ist jetzt kompatibel mit PHP 8.5 (ältere PHP-Versionen werden nicht mehr unterstützt). [I#1274](https://github.com/foodcoopshop/foodcoopshop/issues/1274) / [PR#1275](https://github.com/foodcoopshop/foodcoopshop/pull/1275) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
