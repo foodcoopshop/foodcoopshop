@@ -192,6 +192,15 @@ return [
 
         'isCustomerAllowedToModifyOwnOrders' => true,
 
+        /**
+         * max login attempts (email/password and barcode) per ip address within the given window (seconds)
+         * self-service terminals share one ip address, so the limit must not be too low
+         */
+        'loginRateLimit' => [
+            'limit' => 30,
+            'window' => 600,
+        ],
+
         'isCustomerAllowedToViewOwnOrders' => true,
 
         'isZeroTaxEnabled' => true,

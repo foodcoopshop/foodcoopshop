@@ -4119,6 +4119,9 @@ msgstr "Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)"
 msgid "Signed_in"
 msgstr "Eingeloggt"
 
+msgid "Too many login attempts. Please try again later."
+msgstr "Zu viele Anmeldeversuche. Bitte versuche es später nochmal."
+
 msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
