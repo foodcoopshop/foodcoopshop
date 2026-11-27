@@ -158,7 +158,10 @@ class CartsTable extends AppTable
                 'id_customer' => $customerId,
                 'cart_type' => $cartType,
             ];
-            $newCartEntity = $this->newEntity($cart2save, ['validate' => false]);
+            $newCartEntity = $this->newEntity($cart2save, [
+                'validate' => false,
+                'accessibleFields' => ['id_customer' => true, 'cart_type' => true],
+            ]);
             $cart = $this->save($newCartEntity);
         }
 

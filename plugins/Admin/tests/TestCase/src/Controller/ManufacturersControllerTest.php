@@ -217,6 +217,37 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
+    public function testMyOptionsIgnoresAdminOnlyFields(): void
+    {
+        $this->loginAsVegetableManufacturer();
+        $manufacturerId = 5;
+
+        $adminOnlyData = [
+            'active' => APP_OFF,
+            'variable_member_fee' => 50,
+            'id_customer' => 92,
+            'anonymize_customers' => APP_ON,
+        ];
+
+        // admin-only fields are sent nested and on top level (merged by the marshaller)
+        $this->post(
+            $this->Slug->getManufacturerMyOptions(),
+            array_merge($adminOnlyData, [
+                'Manufacturers' => array_merge($adminOnlyData, [
+                    'send_ordered_product_deleted_notification' => 1,
+                ]),
+                'referer' => '/',
+            ])
+        );
+
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $manufacturersTable->get($manufacturerId);
+        $this->assertEquals(APP_ON, $manufacturer->active);
+        $this->assertEquals(0, $manufacturer->variable_member_fee);
+        $this->assertEquals(88, $manufacturer->id_customer);
+        $this->assertEquals(APP_OFF, $manufacturer->anonymize_customers);
+    }
+
     public function testEditOptionsNoDeliveryDays(): void
     {
         $this->loginAsSuperadmin();

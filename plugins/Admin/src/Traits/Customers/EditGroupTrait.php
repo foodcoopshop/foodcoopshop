@@ -61,7 +61,10 @@ trait EditGroupTrait
             $customersTable->patchEntity(
                 $oldCustomer,
                 [
-                    'id_default_group' => $groupId
+                    'id_default_group' => $groupId,
+                ],
+                [
+                    'accessibleFields' => ['id_default_group' => true],
                 ]
                 )
             );

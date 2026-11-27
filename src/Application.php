@@ -43,6 +43,7 @@ use Authorization\Exception\ForbiddenException;
 use Authentication\Identifier\Resolver\OrmResolver;
 use DateTime;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use Cake\Http\Middleware\RateLimitMiddleware;
 use Cake\Utility\Security;
 use App\Controller\Component\StringComponent;
 use Authentication\Identifier\PasswordIdentifier;
@@ -125,6 +126,20 @@ class Application extends BaseApplication
         ];
     }
 
+    protected function getLoginRateLimitMiddleware(): RateLimitMiddleware
+    {
+        $loginUrl = Configure::read('app.slugHelper')->getLogin();
+        return new RateLimitMiddleware([
+            'limit' => Configure::read('app.loginRateLimit.limit'),
+            'window' => Configure::read('app.loginRateLimit.window'),
+            'strategy' => RateLimitMiddleware::STRATEGY_FIXED_WINDOW,
+            'message' => __('Too many login attempts. Please try again later.'),
+            'skipCheck' => function (ServerRequestInterface $request) use ($loginUrl): bool {
+                return $request->getMethod() !== 'POST' || $request->getUri()->getPath() !== $loginUrl;
+            },
+        ]);
+    }
+
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
 
@@ -189,6 +204,10 @@ class Application extends BaseApplication
             ['CookieAuth'],
             Configure::read('Security.cookieKey')
         ))
+
+        // limit login attempts (email/password and barcode) per ip address
+        // needs to be added before AuthenticationMiddleware, which processes the login
+        ->add($this->getLoginRateLimitMiddleware())
 
         ->add(new AuthenticationMiddleware($this))
 

@@ -429,6 +429,21 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     }
 
+    public function testRegistrationIgnoresProtectedFieldsOnTopLevel(): void
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+
+        // protected fields outside of "Customers" are merged by the marshaller and must not be applied either
+        $this->registrationDataEmpty['id_default_group'] = Customer::GROUP_SUPERADMIN;
+        $this->registrationDataEmpty['active'] = APP_ON;
+        $this->registrationDataEmpty['shopping_price'] = Customer::ZERO_PRICE;
+
+        $email = 'new-foodcoopshop-member-3@mailinator.com';
+        $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
+        $this->assertEquals(Customer::SELLING_PRICE, $customer->shopping_price);
+    }
+
     public function testLoginPageWithOutputStringReplacements(): void
     {
         Configure::write('app.outputStringReplacements',

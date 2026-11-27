@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Manufacturers;
 
 use Cake\Core\Configure;
+use App\Model\Entity\Manufacturer;
 use App\Services\SanitizeService;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\DeliveryRhythmService;
@@ -101,11 +102,8 @@ trait EditOptionsTrait
             return null;
         }
 
-        // if checkbox is disabled, false is returned even if checkbox is active
-        // as i could not find out how to unset a specific request data index, override with value from database
-        if ($this->identity->isManufacturer()) {
-            $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
-        }
+        // fields like "active" or "variable_member_fee" are not accessible for manufacturers (see Manufacturer::$_accessible)
+        $accessibleFields = Manufacturer::getAccessibleFieldsForAdmins(!$this->identity->isManufacturer());
 
         $sanitizeService = new SanitizeService();
         $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
@@ -115,7 +113,8 @@ trait EditOptionsTrait
             $manufacturer,
             $this->getRequest()->getData(),
             [
-                'validate' => 'editOptions'
+                'validate' => 'editOptions',
+                'accessibleFields' => $accessibleFields,
             ]
         );
 
@@ -166,16 +165,13 @@ trait EditOptionsTrait
                 $this->setRequest($this->getRequest()->withData('Manufacturers.no_delivery_days', implode(',', $this->getRequest()->getData('Manufacturers.no_delivery_days'))));
             }
 
-            // remove post data that could theoretically be added
-            if ($this->identity->isManufacturer()) {
-                $this->setRequest($this->getRequest()->withoutData('Manufacturers.variable_member_fee'));
-                $this->setRequest($this->getRequest()->withoutData('Manufacturers.id_customer'));
-            }
-
             // sic! patch again!
             $manufacturer = $manufacturersTable->patchEntity(
                 $manufacturer,
-                $this->getRequest()->getData()
+                $this->getRequest()->getData(),
+                [
+                    'accessibleFields' => $accessibleFields,
+                ]
             );
             $manufacturer = $manufacturersTable->save($manufacturer);
 

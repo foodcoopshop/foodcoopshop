@@ -119,6 +119,11 @@ class ApiController extends Controller
             }
 
             if (isset($product['image'])) {
+                // only images from remote servers (urls) are allowed, local file paths must not be used
+                $image = Configure::read('app.htmlHelper')->removeTimestampFromFile((string) $product['image']);
+                if ($image != 'no-image' && !filter_var($image, FILTER_VALIDATE_URL)) {
+                    throw new \Exception('image needs to be an url: ' . $image);
+                }
                 if ($productIds['attributeId'] == 0) {
                     $products2saveForImage[] = [
                         $productIds['productId'] => $product['image']

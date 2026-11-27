@@ -488,6 +488,9 @@ class CustomersTable extends AppTable
             [
                 'passwd' => $ph->hash($newPassword),
                 'change_password_code' => null
+            ],
+            [
+                'accessibleFields' => ['passwd' => true],
             ]
         );
         $this->save($patchedEntity);

@@ -79,6 +79,45 @@ class ProductsTableTest extends AppCakeTestCase
 
     }
 
+    public function testChangeImageExtensionIsTakenFromContentType(): void
+    {
+        // valid gif header followed by php code, file name ends with .php
+        $polyglotFile = TMP . 'polyglot-test.php';
+        file_put_contents($polyglotFile, 'GIF89a<?php echo "polyglot"; ?>');
+
+        $productsTable = $this->getTableLocator()->get('Products');
+        try {
+            $productsTable->changeImage([
+                [ProductsFixture::ID_ARTICHOKE => $polyglotFile]
+            ]);
+        } finally {
+            unlink($polyglotFile);
+        }
+
+        $product = $productsTable->find('all',
+            conditions: [
+                'Products.id_product' => ProductsFixture::ID_ARTICHOKE,
+            ],
+            contain: [
+                'Images'
+            ]
+        )->first();
+        $imageId = $product->image->id_image;
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($imageId);
+        $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'];
+            $this->assertFileExists($thumbsFileName . '.gif');
+            $this->assertFileDoesNotExist($thumbsFileName . '.php');
+        }
+
+        // cleanup
+        $productsTable->changeImage([
+            [ProductsFixture::ID_ARTICHOKE => 'no-image']
+        ]);
+    }
+
     public function testChangeImageInvalidImage(): void
     {
         $file = WWW_ROOT . '/css/global.css';

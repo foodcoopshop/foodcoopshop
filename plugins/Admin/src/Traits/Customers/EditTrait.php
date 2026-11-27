@@ -79,9 +79,6 @@ trait EditTrait
         $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
         $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
 
-        $this->setRequest($this->getRequest()->withoutData('Customers.active'));
-        $this->setRequest($this->getRequest()->withoutData('Customers.id_default_group'));
-
         $customer = $customersTable->patchEntity(
             $customer,
             $this->getRequest()->getData(),
@@ -89,7 +86,8 @@ trait EditTrait
                 'validate' => 'edit',
                 'associated' => [
                     'AddressCustomers'
-                ]
+                ],
+                'accessibleFields' => ['shopping_price' => $this->identity->isSuperadmin()],
             ]
             );
 

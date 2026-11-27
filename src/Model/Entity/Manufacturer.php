@@ -19,6 +19,39 @@ namespace App\Model\Entity;
 
  class Manufacturer extends AppEntity {
 
+    /**
+     * fields that only admins and superadmins are allowed to change
+     * must be the same as the fields set to false in $_accessible (except id_manufacturer)
+     */
+    const ADMIN_ONLY_FIELDS = [
+        'id_customer',
+        'active',
+        'variable_member_fee',
+        'anonymize_customers',
+        'send_product_sold_out_limit_reached_for_contact_person',
+    ];
+
+    /**
+     * @var array<string, bool>
+     */
+    protected array $_accessible = [
+        '*' => true,
+        'id_manufacturer' => false,
+        'id_customer' => false,
+        'active' => false,
+        'variable_member_fee' => false,
+        'anonymize_customers' => false,
+        'send_product_sold_out_limit_reached_for_contact_person' => false,
+    ];
+
+    /**
+     * @return array<string, bool>
+     */
+    public static function getAccessibleFieldsForAdmins(bool $isAdmin): array
+    {
+        return array_fill_keys(self::ADMIN_ONLY_FIELDS, $isAdmin);
+    }
+
     protected function _getDecodedName(): string
     {
         return html_entity_decode($this->name);

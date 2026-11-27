@@ -48,7 +48,10 @@ trait AddEditTrait
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'anonymize_customers' => APP_ON,
             ],
-            ['validate' => false]
+            [
+                'validate' => false,
+                'accessibleFields' => Manufacturer::getAccessibleFieldsForAdmins(true),
+            ]
         );
         $this->set('title_for_layout', __('Add_manufacturer'));
         $this->_processForm($manufacturer, false);
@@ -113,7 +116,8 @@ trait AddEditTrait
             [
                 'associated' => [
                     'AddressManufacturers'
-                ]
+                ],
+                'accessibleFields' => Manufacturer::getAccessibleFieldsForAdmins(!$this->identity->isManufacturer()),
             ]
         );
         if ($manufacturer->hasErrors()) {
@@ -140,10 +144,11 @@ trait AddEditTrait
                 'lastname' => $this->getRequest()->getData('Manufacturers.address_manufacturer.lastname'),
                 'active' => APP_ON
             ];
+            $customerOptions = ['accessibleFields' => ['active' => true]];
             if (empty($customer)) {
-                $customerEntity = $customersTable->newEntity($customerData);
+                $customerEntity = $customersTable->newEntity($customerData, $customerOptions);
             } else {
-                $customerEntity = $customersTable->patchEntity($customer, $customerData);
+                $customerEntity = $customersTable->patchEntity($customer, $customerData, $customerOptions);
             }
             $customersTable->save($customerEntity);
 

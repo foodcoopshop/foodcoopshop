@@ -40,6 +40,15 @@ class SanitizeService
         return $item;
     }
 
+    public function purifyBasicFormatting(string $string): string
+    {
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', TMP . 'cache' . DS . 'html_purifier');
+        $config->set('HTML.Allowed', 'b,strong,i,em,br');
+        $purifier = new \HTMLPurifier($config);
+        return trim($purifier->purify($string));
+    }
+
     /**
      * @param array<string, mixed> $data
      * @param list<string> $excludedFields
