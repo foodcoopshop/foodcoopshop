@@ -44,8 +44,9 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 if ($identity->isSuperadmin() || $identity->isAdmin()) {
                     return true;
                 }
-                if ($identity->isCustomer() && !Configure::read('app.isCustomerAllowedToEditOwnOrders')) {
-                    return true;
+                if ($identity->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
+                    $customerId = $request->getParam('pass')[0] ?? null;
+                    return (int) $customerId == $identity->getId();
                 }
                 return false;
             case 'editProductName':
@@ -111,11 +112,12 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                  * param orderDetailId / orderDetailIds is passed via ajaxCall
                  */
                 if (!empty($request->getData('orderDetailIds'))) {
-                    $accessAllowed = false;
-                    foreach ($request->getData('orderDetailIds') as $orderDetailId) {
-                        $accessAllowed |= $this->checkOrderDetailIdAccess((int) $orderDetailId, $identity);
+                    foreach ((array) $request->getData('orderDetailIds') as $orderDetailId) {
+                        if (!$this->checkOrderDetailIdAccess((int) $orderDetailId, $identity)) {
+                            return false;
+                        }
                     }
-                    return (bool) $accessAllowed;
+                    return true;
                 }
                 if (!empty($request->getData('orderDetailId'))) {
                     return $this->checkOrderDetailIdAccess((int) $request->getData('orderDetailId'), $identity);
@@ -148,7 +150,7 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 if ($identity->isManufacturer() && $orderDetail->product->id_manufacturer == $identity->getManufacturerId()) {
                     return true;
                 }
-                if ($identity->isCustomer() && !Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $identity->getId()) {
+                if ($identity->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $identity->getId()) {
                     return true;
                 }
             }
